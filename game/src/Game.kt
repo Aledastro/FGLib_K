@@ -11,10 +11,14 @@ class Game: RunnableU {
         room.add(Player(PointN(170.0, 170.0)))
     }
 
+    private var t =0
+
     override fun update() {
         room.next()
-        for(i in 1..10) room.add(ParticleY(PointN(0.0, 0.0)))
+        for(i in 1..10) room.add(ParticleY(PointN(0.0, 0.0), 0.0))
         draw()
+        if(t==100) println(room.toString())
+        t++
     }
 
     private fun draw() {

@@ -17,8 +17,8 @@ internal class Program {
 
         lateinit var gc: GraphicsContext
 
-        internal val pressed = Array(KeyCode.values().size){ false }
-        internal val mouse_pressed = Array(KeyCode.values().size){ false }
+        internal val pressed = Array(KeyCode.values().size) { false }
+        internal val mouse_pressed = Array(KeyCode.values().size) { false }
         internal var mouseP = PointN.ZERO
 
         private var options = LaunchOptions.default
@@ -28,8 +28,8 @@ internal class Program {
         internal fun initWith(runnable: RunnableU, options: LaunchOptions) {
             this.runnable = runnable
             this.options = options
-            WIDTH=options.width
-            HEIGHT=options.height
+            WIDTH = options.width
+            HEIGHT = options.height
         }
 
         internal fun startWith(stage: Stage) {

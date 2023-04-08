@@ -11,7 +11,7 @@ abstract class KeyActivator<Key>(private val size: Int) {
     protected abstract fun from(key: Key): Int
 
     /** extremely important function! **/
-    fun update(){
+    fun update() {
         for(i in 0 until size) {
             timePressed[i]++
             timeReleased[i]++
@@ -24,6 +24,7 @@ abstract class KeyActivator<Key>(private val size: Int) {
             }
         }
     }
+
     private fun pressedInt(code: Int): Boolean = !blocked[code] && pressed0(code)
 
 

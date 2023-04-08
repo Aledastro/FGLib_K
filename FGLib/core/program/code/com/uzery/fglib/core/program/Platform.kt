@@ -13,7 +13,7 @@ import javafx.scene.paint.Color
 import javafx.scene.paint.Paint
 
 class Platform {
-    companion object{
+    companion object {
         val keyboard = object: KeyActivator<KeyCode>(KeyCode.values().size) {
             override fun pressed0(code: Int): Boolean = Program.pressed[code]
             override fun from(key: KeyCode): Int = key.ordinal
