@@ -28,21 +28,21 @@ class ParticleY(pos: PointN, private var layer: Double): GameObject() {
         visuals.add(object: Visualiser() {
             override fun draw(pos: PointN) {
                 DrawLayer(layer)
-                agc().fill.color = Color(1.0, 0.0, 1.0, 0.1)
-                agc().fill.oval(pos, PointN(12.0, 12.0))
+                agc().fill.color = Color(1.0, 1.0, 1.0, 0.1)
+                agc().fill.oval(pos, Game.STEP*12.0)
             }
 
             override fun drawLayer(): DrawLayer = DrawLayer(layer)
         })
 
-        orangeBounds = { Bounds(RectN(PointN(0.0, 0.0), PointN(1.0, 1.0))) }
+        orangeBounds = { Bounds(RectN(PointN.ZERO, Game.STEP)) }
     }
 
     var temp1: () -> TempAction = {
         object: TempAction {
             var t = 0
             override fun next() {
-                stats.POS += PointN(1.0, 0.0)
+                stats.POS += Game.X*Math.random()*3
                 t++
             }
 
@@ -56,7 +56,7 @@ class ParticleY(pos: PointN, private var layer: Double): GameObject() {
             var t = 0
 
             override fun next() {
-                stats.POS += PointN(0.0, 1.0)
+                stats.POS +=  Game.Y*Math.random()*3
                 t++
             }
 
@@ -66,6 +66,6 @@ class ParticleY(pos: PointN, private var layer: Double): GameObject() {
     }
 
     override fun setValues() {
-        name="temp"
+        name = "temp"
     }
 }

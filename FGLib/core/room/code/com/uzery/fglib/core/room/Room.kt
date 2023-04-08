@@ -7,13 +7,15 @@ import com.uzery.fglib.utils.math.FGUtils
 import com.uzery.fglib.utils.math.geom.PointN
 import javafx.scene.paint.Color
 import java.util.*
+import kotlin.collections.ArrayList
 
-class Room {
+class Room(private val width: Int, private val height: Int) {
     private val objects = LinkedList<GameObject>()
     private val new_objects = ArrayList<GameObject>()
 
-    private var width: Int = -1
-    private var height: Int = -1
+    constructor(width: Int,height: Int,objs: List<GameObject>): this(width,height){
+        objects.addAll(objs)
+    }
 
     fun next() {
         objects.addAll(new_objects)
@@ -74,8 +76,10 @@ class Room {
         wr.append("room_width: ").append(width).append("\n")
         wr.append("room_height: ").append(height).append("\n\n")
 
-        for(o in objects)
+        for(o in objects){
+            o.setValues()
             if(o.name != "temp" && o.name != "temporary") wr.append(o)
+        }
 
         return wr.toString()
     }

@@ -7,7 +7,7 @@ import com.uzery.fglib.core.obj.controller.TempAction
 import com.uzery.fglib.core.obj.modificator.Modificator
 import com.uzery.fglib.core.obj.stats.Stats
 import com.uzery.fglib.core.obj.visual.Visualiser
-import com.uzery.fglib.utils.math.value.ObjectValue
+import com.uzery.fglib.utils.math.getter.value.ObjectValue
 import java.util.*
 
 abstract class GameObject {
@@ -27,7 +27,7 @@ abstract class GameObject {
 
     var object_time = 0L
     var name: String = "temp"
-    var values=ArrayList<ObjectValue>()
+    var values = ArrayList<ObjectValue>()
 
     fun next() {
         if(temp == null || temp!!.ends) temp = controller?.get()?.invoke()

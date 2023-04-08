@@ -4,9 +4,8 @@ interface ArrayUtils {
     companion object {
         inline fun <reified T> toArray(vararg xs: T): Array<T> = Array(xs.size) { i -> xs[i] }
         inline fun <reified T> transform(xs: Array<T>, transform: (x: T) -> T): Array<T> {
-            val size = xs.size
-            val result: Array<T> = Array(size) { i -> xs[i] }
-            for(i in 0 until size) {
+            val result: Array<T> = Array(xs.size) { i -> xs[i] }
+            for(i in xs.indices) {
                 result[i] = transform(xs[i])
             }
             return result
@@ -14,11 +13,9 @@ interface ArrayUtils {
 
         inline fun <reified T> transform(xs: Array<T>, ys: Array<T>, transform: (x: T, y: T) -> T): Array<T> {
             if(xs.size != ys.size) throw IllegalArgumentException("dim: ${xs.size}, ${ys.size}")
-            val size = xs.size
-            val result: Array<T> = Array(size) { i -> xs[i] }
-            for(i in 0 until size) {
+            val result: Array<T> = Array(xs.size) { i -> xs[i] }
+            for(i in xs.indices)
                 result[i] = transform(xs[i], ys[i])
-            }
             return result
         }
 

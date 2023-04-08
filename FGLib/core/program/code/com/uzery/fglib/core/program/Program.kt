@@ -66,6 +66,8 @@ internal class Program {
             this.stage.scene.setOnKeyPressed { key -> pressed[key.code.ordinal] = true }
             this.stage.scene.setOnKeyReleased { key -> pressed[key.code.ordinal] = false }
 
+            runnable.init()
+
             class ProgramTimer: AnimationTimer() {
                 override fun handle(t: Long) {
                     runnable.update()

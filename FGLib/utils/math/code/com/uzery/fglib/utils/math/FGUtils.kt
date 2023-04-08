@@ -11,11 +11,13 @@ interface FGUtils {
 
         fun time_YMD(): String {
             val date = LocalDate.now()
-            return "${date.year}.${stain(date.month.ordinal+1,2)}.${stain(date.dayOfMonth, 2)}"
+            return "${date.year}.${stain(date.month.ordinal + 1, 2)}.${stain(date.dayOfMonth, 2)}"
         }
+
         fun time_HMS(): String {
-            return "${stain(hours()%24, 2)}:${stain(minutes()%60,2)}:${stain(seconds()%60, 2)}"
+            return "${stain(hours()%24, 2)}:${stain(minutes()%60, 2)}:${stain(seconds()%60, 2)}"
         }
+
         fun stain(n: Int, rev: Int): String {
             val s = n.toString()
             if(s.length == rev) return s

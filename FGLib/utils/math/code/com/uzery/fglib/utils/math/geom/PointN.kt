@@ -6,7 +6,10 @@ data class PointN(private val xs: Array<Double>) {
     constructor(vararg xs: Double): this(xs.toTypedArray())
     constructor(p: PointN): this(Array(p.dimension()) { i -> p.xs[i] })
 
-    fun get(n: Int): Double = xs[n]
+    fun get(n: Int): Double {
+        if(dimension()==0)return 0.0;
+        return xs[n]
+    }
 
     fun X(): Double = get(0)
     fun Y(): Double = get(1)
