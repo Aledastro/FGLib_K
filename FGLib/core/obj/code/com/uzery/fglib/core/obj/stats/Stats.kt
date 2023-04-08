@@ -3,6 +3,8 @@ package com.uzery.fglib.core.obj.stats
 import com.uzery.fglib.utils.math.geom.PointN
 
 class Stats {
-    lateinit var POS: PointN
 
+    var POS = PointN.ZERO
+    var life = 0
+    var dead = false
 }

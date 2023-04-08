@@ -2,13 +2,7 @@ package com.uzery.fglib.utils.graphics
 
 import com.uzery.fglib.utils.math.geom.PointN
 
-class AffineTransform(transform: (PointN) -> PointN) {
-    private var transform: (PointN) -> PointN
-
-    init {
-        this.transform = transform
-    }
-
+class AffineTransform(val transform: (PointN) -> PointN) {
     fun pos(pos: PointN): PointN {
         return transform(pos)
     }
