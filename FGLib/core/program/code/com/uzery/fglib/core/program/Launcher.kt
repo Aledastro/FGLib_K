@@ -4,26 +4,14 @@ import javafx.application.Application
 import javafx.stage.Stage
 
 class Launcher: Application() {
-    fun initWith(runnable: RunnableU, options: LaunchOptions) {
-        Program.initWith(runnable, options)
-    }
-
-    fun initWith(runnable: RunnableU) {
-        Program.initWith(runnable, LaunchOptions.default)
-    }
-
-    fun startProcess() {
+    fun startProcess(options: LaunchOptions, vararg ets: Extension) {
+        Program.initWith(options, *ets)
         launch()
     }
 
-    fun startProcess(runnable: RunnableU, options: LaunchOptions) {
-        initWith(runnable, options)
-        startProcess()
-    }
-
-    fun startProcess(runnable: RunnableU) {
-        initWith(runnable)
-        startProcess()
+    fun startProcess(vararg ets: Extension) {
+        Program.initWith(LaunchOptions.default, *ets)
+        launch()
     }
 
     override fun start(stage: Stage) {

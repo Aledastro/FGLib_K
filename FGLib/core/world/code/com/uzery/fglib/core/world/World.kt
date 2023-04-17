@@ -6,7 +6,6 @@ import com.uzery.fglib.utils.data.WriteData
 import com.uzery.fglib.utils.math.getter.ClassGetter
 import com.uzery.fglib.utils.math.getter.ClassGetterInstance
 import java.util.*
-import kotlin.collections.ArrayList
 
 class World(instance: ClassGetterInstance<GameObject>) {
     private var room = Room(0, 0)
@@ -46,5 +45,9 @@ class World(instance: ClassGetterInstance<GameObject>) {
 
     fun add(o: GameObject) {
         room.add(o)
+    }
+
+    fun r(): Room {
+        return room
     }
 }

@@ -3,10 +3,12 @@ package com.uzery.fglib.core.program
 import com.uzery.fglib.utils.graphics.AffineGraphics
 import com.uzery.fglib.utils.graphics.AffineTransform
 import com.uzery.fglib.utils.graphics.GeometryGraphics
+import com.uzery.fglib.utils.graphics.ImageGraphics
 import com.uzery.fglib.utils.input.KeyActivator
 import com.uzery.fglib.utils.input.TouchActivator
 import com.uzery.fglib.utils.math.geom.PointN
 import com.uzery.fglib.utils.math.geom.RectN
+import javafx.scene.image.Image
 import javafx.scene.input.KeyCode
 import javafx.scene.input.MouseButton
 import javafx.scene.paint.Color
@@ -26,7 +28,25 @@ class Platform {
             override fun pos0(): PointN = Program.mouseP
         }
         val graphics = object: AffineGraphics() {
-            override val transform: AffineTransform = AffineTransform { p -> p }
+            private val transform: AffineTransform = AffineTransform { p -> p }
+
+            override val image: ImageGraphics = object: ImageGraphics(transform) {
+                override fun draw0(filename: String, pos: PointN, size: PointN) {
+                    Program.gc.drawImage(Image(filename), pos.X(), pos.Y())
+                }
+
+                override fun draw0(image: Image, pos: PointN, size: PointN) {
+                    Program.gc.drawImage(image, pos.X(), pos.Y())
+                }
+
+                override fun draw0(filename: String, pos: PointN) {
+                    Program.gc.drawImage(Image(filename), pos.X(), pos.Y())
+                }
+
+                override fun draw0(image: Image, pos: PointN) {
+                    Program.gc.drawImage(image, pos.X(), pos.Y())
+                }
+            }
 
             override val fill: GeometryGraphics = object: GeometryGraphics(transform) {
                 override var color: Paint = Color(0.0, 0.0, 0.0, 1.0)
@@ -35,15 +55,19 @@ class Platform {
                         Program.gc.fill = value
                     }
 
-                override fun rect(pos: PointN, size: PointN) {
+                override fun rect0(pos: PointN, size: PointN) {
                     Program.gc.fillRect(pos.X(), pos.Y(), size.X(), size.Y())
                 }
 
-                override fun oval(pos: PointN, size: PointN) {
+                override fun oval0(pos: PointN, size: PointN) {
                     Program.gc.fillOval(pos.X(), pos.Y(), size.X(), size.Y())
                 }
 
-                override fun text(pos: PointN, text: String) {
+                override fun line0(pos1: PointN, pos2: PointN) {
+                    Program.gc.strokeLine(pos1.X(), pos1.Y(), pos2.X(), pos2.Y())
+                }
+
+                override fun text0(pos: PointN, text: String) {
                     Program.gc.fillText(text, pos.X(), pos.Y())
                 }
             }
@@ -54,15 +78,19 @@ class Platform {
                         Program.gc.stroke = value
                     }
 
-                override fun rect(pos: PointN, size: PointN) {
+                override fun rect0(pos: PointN, size: PointN) {
                     Program.gc.strokeRect(pos.X(), pos.Y(), size.X(), size.Y())
                 }
 
-                override fun oval(pos: PointN, size: PointN) {
+                override fun oval0(pos: PointN, size: PointN) {
                     Program.gc.strokeOval(pos.X(), pos.Y(), size.X(), size.Y())
                 }
 
-                override fun text(pos: PointN, text: String) {
+                override fun line0(pos1: PointN, pos2: PointN) {
+                    Program.gc.strokeLine(pos1.X(), pos1.Y(), pos2.X(), pos2.Y())
+                }
+
+                override fun text0(pos: PointN, text: String) {
                     Program.gc.strokeText(text, pos.X(), pos.Y())
                 }
             }

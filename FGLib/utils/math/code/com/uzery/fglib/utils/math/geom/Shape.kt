@@ -1,6 +1,8 @@
 package com.uzery.fglib.utils.math.geom
 
 abstract class Shape {
+    abstract fun copy(move: PointN): Shape
+
     abstract val L: PointN
     abstract val R: PointN
     val C: PointN
@@ -8,4 +10,10 @@ abstract class Shape {
 
     val S: PointN
         get() = R - L
+
+    abstract val code: Code
+
+    enum class Code {
+        RECT, OVAL
+    }
 }

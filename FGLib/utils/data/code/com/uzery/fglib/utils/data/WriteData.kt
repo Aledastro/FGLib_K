@@ -2,7 +2,6 @@ package com.uzery.fglib.utils.data
 
 import java.io.*
 import java.util.stream.Collectors
-import kotlin.collections.ArrayList
 
 interface WriteData {
     companion object {

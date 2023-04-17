@@ -1,6 +1,6 @@
 package com.uzery.fglib.core.program
 
-interface RunnableU {
+interface Extension {
     fun update()
     fun init()
 }

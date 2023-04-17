@@ -1,7 +1,6 @@
 package com.uzery.fglib.utils.math.getter
 
 import com.uzery.fglib.utils.math.num.StringN
-import java.lang.StringBuilder
 import java.util.function.Supplier
 
 class ClassGetter<Type>(private val instance: ClassGetterInstance<Type>) {
@@ -19,9 +18,8 @@ class ClassGetter<Type>(private val instance: ClassGetterInstance<Type>) {
         var adding = false
 
         fun collect() {
-            val s=StringBuilder()
-            for(i in collector.indices)
-                s.append(collector[i])
+            val s = StringBuilder()
+            collector.forEach { c -> s.append(c) }
             list.add(s.toString())
             collector = ArrayList()
         }
@@ -55,7 +53,10 @@ class ClassGetter<Type>(private val instance: ClassGetterInstance<Type>) {
         }
         return getMark(name, args)
     }
-    fun getMark(name: String, args: ArrayList<ArrayList<String>>): Supplier<Type> = instance.getMark(StringN(name, args.size), args)
+
+    fun getMark(name: String, args: ArrayList<ArrayList<String>>): Supplier<Type> =
+        instance.getMark(StringN(name, args.size), args)
+
     fun getFrom(name: String, args: ArrayList<ArrayList<String>>): Type = getMark(name, args).get()
     fun getFrom(input: String): Type = getMark(input).get()
 }

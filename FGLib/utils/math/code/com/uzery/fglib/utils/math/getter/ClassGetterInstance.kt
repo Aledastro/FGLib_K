@@ -38,15 +38,15 @@ abstract class ClassGetterInstance<Type> {
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     private val stringX: String
-        get() = input[in_id-1][0]
+        get() = input[in_id - 1][0]
     private val intX: Int
-        get() = input[in_id-1][0].toInt()
+        get() = input[in_id - 1][0].toInt()
     private val doubleX: Double
-        get() = input[in_id-1][0].toDouble()
+        get() = input[in_id - 1][0].toDouble()
     private val longX: Long
-        get() = input[in_id-1][0].toLong()
+        get() = input[in_id - 1][0].toLong()
     private val booleanX: Boolean
-        get() = java.lang.Boolean.parseBoolean(input[in_id-1][0])
+        get() = java.lang.Boolean.parseBoolean(input[in_id - 1][0])
 
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -64,6 +64,7 @@ abstract class ClassGetterInstance<Type> {
         get() = java.lang.Boolean.parseBoolean(input[in_id++][0])
     protected val layer: DrawLayer
         get() = DrawLayer(double)
+
     /*protected val type: TypeValue
         get() {
             val i = in_id++
@@ -74,7 +75,7 @@ abstract class ClassGetterInstance<Type> {
     protected val color: Color
         get() = Color.color(double, doubleX, doubleX, doubleX)
     protected val pos: PointN
-        get(): PointN{
+        get(): PointN {
             return PointN(Array(input[in_id++].size) { doubleX })
         }
     protected val size: PointN

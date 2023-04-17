@@ -10,14 +10,15 @@
       <sourceFolder url="file://$MODULE_DIR$/FGLib/main/resources" type="java-resource" />
       <sourceFolder url="file://$MODULE_DIR$/FGLib/test/kotlin" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/FGLib/test/resources" type="java-test-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/game/src" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/FGLib/utils/data/code" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/FGLib/utils/graphics/code" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/FGLib/utils/math/code" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/FGLib/core/room/code" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/FGLib/utils/input/code" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/game/media" type="java-resource" />
       <sourceFolder url="file://$MODULE_DIR$/FGLib/core/world/code" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/FGLib/extension/event/code" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/test2/media" type="java-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/test2/src" isTestSource="false" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />

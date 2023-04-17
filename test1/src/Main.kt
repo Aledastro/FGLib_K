@@ -2,5 +2,5 @@ import com.uzery.fglib.core.program.LaunchOptions
 import com.uzery.fglib.core.program.Launcher
 
 fun main() {
-    Launcher().startProcess(Game(), LaunchOptions(700.0, 700.0))
+    Launcher().startProcess(LaunchOptions(700.0, 700.0), Game())
 }

@@ -1,48 +1,54 @@
 import com.uzery.fglib.core.obj.DrawLayer
 import com.uzery.fglib.core.obj.GameObject
 import com.uzery.fglib.core.obj.ability.AbilityBox
+import com.uzery.fglib.core.obj.ability.InputAction
 import com.uzery.fglib.core.obj.bounds.Bounds
-import com.uzery.fglib.core.obj.controller.Controller
 import com.uzery.fglib.core.obj.controller.TempAction
+import com.uzery.fglib.core.obj.modificator.Modificator
 import com.uzery.fglib.core.obj.visual.Visualiser
 import com.uzery.fglib.utils.math.geom.PointN
 import com.uzery.fglib.utils.math.geom.RectN
+import com.uzery.fglib.utils.math.getter.value.PosValue
+import com.uzery.fglib.utils.math.scale.AnimationScale
 import javafx.scene.paint.Color
 
-class ParticleY(pos: PointN, private var layer: Double): GameObject() {
+class Food(pos: PointN): GameObject() {
     init {
         stats.POS = pos
         abilityBox = object: AbilityBox {
-            override fun next() {
-                if(Math.random()<0.005) produce(ParticleY(PointN(stats.POS), layer))
-                if(object_time>100) stats.dead = true
-                layer += (Math.random() - 0.5)*0.1
+            override fun run() { /* ignore */
             }
-        }
-        controller = object: Controller {
-            override fun get(): () -> TempAction {
-                if(Math.random()>0.5) return temp1
-                return temp2
+
+            override fun activate(a: InputAction) { /* ignore */
             }
         }
         visuals.add(object: Visualiser() {
+            val scale = AnimationScale(object_time, 30.0) { x -> 4*x + 2 }
+
             override fun draw(pos: PointN) {
-                DrawLayer(layer)
-                agc().fill.color = Color(1.0, 1.0, 1.0, 0.1)
-                agc().fill.oval(pos, Game.STEP*12.0)
+                agc().fill.oval(
+                    pos - Game.STEP*scale.swing(object_time),
+                    Game.STEP*2*scale.swing(object_time),
+                    Color(1.0, 0.0, 0.5, 1.0))
             }
 
-            override fun drawLayer(): DrawLayer = DrawLayer(layer)
+            override fun drawLayer(): DrawLayer {
+                val scale = AnimationScale(0L, 60.0) { k -> k/2 }
+                return DrawLayer(scale.swing(object_time))
+            }
         })
+        bounds.red = { Bounds(RectN(-Game.STEP*20, Game.STEP*40)) }
+        modificators.add(object: Modificator {
+            override fun update() {
 
-        orangeBounds = { Bounds(RectN(PointN.ZERO, Game.STEP)) }
+            }
+        })
     }
 
     var temp1: () -> TempAction = {
         object: TempAction {
             var t = 0
             override fun next() {
-                stats.POS += Game.X*Math.random()*3
                 t++
             }
 
@@ -56,7 +62,6 @@ class ParticleY(pos: PointN, private var layer: Double): GameObject() {
             var t = 0
 
             override fun next() {
-                stats.POS +=  Game.Y*Math.random()*3
                 t++
             }
 
@@ -66,6 +71,7 @@ class ParticleY(pos: PointN, private var layer: Double): GameObject() {
     }
 
     override fun setValues() {
-        name = "temp"
+        name = "player"
+        values.add(PosValue(stats.POS))
     }
 }

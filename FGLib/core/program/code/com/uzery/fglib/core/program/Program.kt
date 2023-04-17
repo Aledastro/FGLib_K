@@ -8,6 +8,7 @@ import javafx.scene.canvas.Canvas
 import javafx.scene.canvas.GraphicsContext
 import javafx.scene.input.KeyCode
 import javafx.stage.Stage
+import java.util.*
 
 internal class Program {
     companion object {
@@ -23,10 +24,10 @@ internal class Program {
 
         private var options = LaunchOptions.default
 
-        private lateinit var runnable: RunnableU
+        private var extensions = LinkedList<Extension>()
 
-        internal fun initWith(runnable: RunnableU, options: LaunchOptions) {
-            this.runnable = runnable
+        internal fun initWith(options: LaunchOptions, vararg ets: Extension) {
+            extensions.addAll(ets)
             this.options = options
             WIDTH = options.width
             HEIGHT = options.height
@@ -66,16 +67,15 @@ internal class Program {
             this.stage.scene.setOnKeyPressed { key -> pressed[key.code.ordinal] = true }
             this.stage.scene.setOnKeyReleased { key -> pressed[key.code.ordinal] = false }
 
-            runnable.init()
+            extensions.forEach { e -> e.init() }
 
             class ProgramTimer: AnimationTimer() {
                 override fun handle(t: Long) {
-                    runnable.update()
+                    extensions.forEach { e -> e.update() }
                 }
             }
 
             val p = ProgramTimer()
-
             p.start()
         }
     }
