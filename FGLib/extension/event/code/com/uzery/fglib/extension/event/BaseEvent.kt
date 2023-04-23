@@ -1,4 +1,6 @@
-package com.uzery.fglib.ext.event
+package com.uzery.fglib.extension.event
+
+import com.uzery.fglib.ext.event.GameEvent
 
 abstract class BaseEvent: GameEvent() {
     override fun ready()= true

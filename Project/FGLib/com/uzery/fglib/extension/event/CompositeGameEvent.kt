@@ -1,4 +1,4 @@
-package com.uzery.fglib.ext.event
+package com.uzery.fglib.extension.event
 
 import java.util.*
 
