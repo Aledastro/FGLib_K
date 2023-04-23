@@ -52,6 +52,7 @@ class Player(pos: PointN): GameObject() {
             }
         })
     }
+
     override fun setValues() {
         name = "player"
         values.add(PosValue(stats.POS))

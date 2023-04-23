@@ -8,6 +8,4 @@ class Stats {
     var POS = PointN.ZERO
     var lPOS = PointN.ZERO
     var nPOS = PointN.ZERO
-
-    var dead = false
 }

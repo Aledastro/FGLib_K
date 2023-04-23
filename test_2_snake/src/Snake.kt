@@ -30,7 +30,7 @@ class Snake(pos: PointN): GameObject() {
         stats.POS = pos
         abilityBox = object: AbilityBox {
             override fun run() {
-                if(object_time%12!=0L)return
+                if(object_time%12!=0)return
                 if(direct == Direct.UP || direct == Direct.DOWN) {
                     if(keyboard.pressed(KeyCode.A)) {
                         nPOS = -Game.X*40
@@ -72,8 +72,6 @@ class Snake(pos: PointN): GameObject() {
 
             override fun draw(pos: PointN) {
                 agc().fill.color = Color(1.0, 0.0, 0.5, 1.0)
-                /*agc().image.draw(Data.get("images/player.png"), stats.POS - Game.STEP*36)
-                body.forEach { p -> agc().image.draw(Data.get("images/player.png"), p - Game.STEP*36) }*/
                 body.forEach { p -> agc().fill.rect(
                     p - Game.STEP*scale.swing(object_time),
                     Game.STEP*2*scale.swing(object_time),
@@ -98,33 +96,8 @@ class Snake(pos: PointN): GameObject() {
         bounds.orange = { Bounds(RectN(-Game.STEP*20, Game.STEP*40)) }
     }
 
-    var temp1: () -> TempAction = {
-        object: TempAction {
-            var t = 0
-            override fun next() {
-                t++
-            }
-
-            override val ends: Boolean
-                get() = t>5
-
-        }
-    }
-    var temp2: () -> TempAction = {
-        object: TempAction {
-            var t = 0
-
-            override fun next() {
-                t++
-            }
-
-            override val ends: Boolean
-                get() = t>5
-        }
-    }
-
     override fun setValues() {
-        name = "player"
+        name = "snake"
         values.add(PosValue(stats.POS))
     }
 

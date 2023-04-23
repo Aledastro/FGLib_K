@@ -20,10 +20,10 @@ class Game: Extension {
     override fun init() {
         world.init("test_2_snake/media/1.map")
         for(i in 1..16) {
-            world.add(Wall(PointN(i*40+20.0,20.0)))
-            world.add(Wall(PointN(i*40+20.0,700.0)))
-            world.add(Wall(PointN(20.0,i*40+20.0)))
-            world.add(Wall(PointN(700.0,i*40+20.0)))
+            world.add(Wall(PointN(i*40 + 20.0, 20.0)))
+            world.add(Wall(PointN(i*40 + 20.0, 700.0)))
+            world.add(Wall(PointN(20.0, i*40 + 20.0)))
+            world.add(Wall(PointN(700.0, i*40 + 20.0)))
         }
     }
 
@@ -32,21 +32,15 @@ class Game: Extension {
         world.run()
 
         if(Math.random()<0.005) {
-            val pos = STEP*60+randP(640).round(40.0)
+            val pos = STEP*60 + randP(640).round(40.0)
             world.add(Food(pos))
         }
         if(Math.random()<0.0005) {
-            val pos = STEP*60+randP(640).round(40.0)
+            val pos = STEP*60 + randP(640).round(40.0)
             world.add(SuperFood(pos))
         }
-        /*for(i in 1..15) {
-            val alpha = Math.random()*2*PI
-            val pos = STEP*350 + PointN(cos(alpha), sin(alpha))*300
-            //world.add(ParticleY(pos, 0.0))
-            world.add(ParticleY(STEP*350, 0.0))
-        }*/
 
-        world.r().objs().forEach { o -> if((o.stats.POS - STEP*350).length()>500) o.stats.dead = true }
+        world.r().objs().forEach { o -> if((o.stats.POS - STEP*350).length()>500) o.collapse() }
 
         if(t == 100) println(world.toString())
         if(draw_bounds) drawBounds()
@@ -84,7 +78,7 @@ class Game: Extension {
             Color.RED,
             Color.ORANGERED,
             Color.BLUE,
-            Color.GREEN)//todo why?
+            Color.GREEN) //todo why?
 
         graphics.setStroke(2.0)
         for(o in world.r().objs()) {

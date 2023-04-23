@@ -44,9 +44,4 @@ class SuperFood(pos: PointN): GameObject() {
         })
         bounds.green = { Bounds(RectN(-Game.STEP*20, Game.STEP*40)) }
     }
-
-    override fun setValues() {
-        name = "s_food"
-        values.add(PosValue(stats.POS))
-    }
 }

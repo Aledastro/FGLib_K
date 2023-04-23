@@ -30,7 +30,7 @@ class Platform {
         val graphics = object: AffineGraphics() {
             private val transform: AffineTransform = AffineTransform { p -> p }
             override fun setStroke(size: Double) {
-                Program.gc.lineWidth=size
+                Program.gc.lineWidth = size
             }
 
             override val image: ImageGraphics = object: ImageGraphics(transform) {

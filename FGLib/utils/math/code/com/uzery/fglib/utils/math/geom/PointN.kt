@@ -61,7 +61,7 @@ data class PointN(private val xs: Array<Double>) {
     fun separate(level: Int) = PointN(Array(dimension()) { i -> if(level == i) xs[i] else 0.0 })
 
     fun transform(transform: (x: Double) -> Double) = PointN(ArrayUtils.transform(xs, transform))
-    fun round(size: Double) = transform { x -> x-MathUtils.mod(x,size) }
+    fun round(size: Double) = transform { x -> x - MathUtils.mod(x, size) }
 
     companion object {
         val ZERO = PointN(Array(0) { 0.0 })

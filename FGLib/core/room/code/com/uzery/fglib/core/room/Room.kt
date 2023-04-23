@@ -32,7 +32,7 @@ class Room(private val width: Int, private val height: Int) {
         objects.forEach { o -> new_objects.addAll(o.children) }
         objects.forEach { o -> o.children.clear() }
 
-        objects.removeIf { o -> o.stats.dead }
+        objects.removeIf { o -> o.dead }
     }
 
 
@@ -148,33 +148,45 @@ class Room(private val width: Int, private val height: Int) {
     private fun nextActivate() {
         for(b in objects) {
             val blue = b.bounds.blue ?: continue
-            for(o in objects) {
-                val orange = o.bounds.orange ?: continue
+            for(m in objects) {
+                val main = m.bounds.main ?: continue
                 blue().elements.forEach { blueE ->
-                    orange().elements.forEach { orangeE ->
-                        if(ShapeUtils.into(orangeE.shape.copy(o.stats.POS), blueE.shape.copy(b.stats.POS))) {
+                    main().elements.forEach { mainE ->
+                        if(ShapeUtils.into(mainE.shape.copy(m.stats.POS), blueE.shape.copy(b.stats.POS))) {
                             b.activate(
                                 InputAction(
-                                    InputAction.CODE.INTERRUPT, "interrupt | ${blueE.name} ${orangeE.name}", o))
-                            o.activate(
+                                    InputAction.CODE.INTERRUPT,
+                                    "interrupt | ${blueE.name} ${mainE.name}",
+                                    m))
+                            m.activate(
                                 InputAction(
-                                    InputAction.CODE.INTERRUPT_I, "interrupt_I | ${orangeE.name} ${blueE.name}", b))
+                                    InputAction.CODE.INTERRUPT_I,
+                                    "interrupt_I | ${mainE.name} ${blueE.name}",
+                                    b))
                         }
                     }
                 }
             }
         }
 
-        for(o in objects) {
-            if(!o.interact())continue
-            val orange = o.bounds.orange ?: continue
+        for(m in objects) {
+            if(!m.interact()) continue
+            val main = m.bounds.main ?: continue
             for(g in objects) {
                 val green = g.bounds.green ?: continue
                 green().elements.forEach { greenE ->
-                    orange().elements.forEach { orangeE ->
-                        if(ShapeUtils.into(orangeE.shape.copy(o.stats.POS), greenE.shape.copy(g.stats.POS))) {
-                            g.activate(InputAction(InputAction.CODE.INTERACT, "interact | ${greenE.name} ${orangeE.name}", o))
-                            o.activate(InputAction(InputAction.CODE.INTERACT_I, "interact_I | ${orangeE.name} ${greenE.name}", g))
+                    main().elements.forEach { mainE ->
+                        if(ShapeUtils.into(mainE.shape.copy(m.stats.POS), greenE.shape.copy(g.stats.POS))) {
+                            g.activate(
+                                InputAction(
+                                    InputAction.CODE.INTERACT,
+                                    "interact | ${greenE.name} ${mainE.name}",
+                                    m))
+                            m.activate(
+                                InputAction(
+                                    InputAction.CODE.INTERACT_I,
+                                    "interact_I | ${mainE.name} ${greenE.name}",
+                                    g))
                         }
                     }
                 }
@@ -184,7 +196,7 @@ class Room(private val width: Int, private val height: Int) {
 
     override fun toString(): String {
         val wr = StringBuilder()
-        wr.append("//Uzery Game Studio 2019-2023\n")
+        wr.append("//Uzery game.Game Studio 2019-2023\n")
         wr.append("//last edit: ").append(FGUtils.time_YMD()).append(" ").append(FGUtils.time_HMS()).append("\n")
 
         wr.append("room_width: ").append(width).append("\n")

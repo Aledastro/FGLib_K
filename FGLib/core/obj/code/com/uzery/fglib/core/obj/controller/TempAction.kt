@@ -5,7 +5,7 @@ import com.uzery.fglib.core.obj.ability.InputAction
 interface TempAction {
     fun next()
 
-    fun activate(action: InputAction){
+    fun activate(action: InputAction) {
         /* ignore */
     }
 

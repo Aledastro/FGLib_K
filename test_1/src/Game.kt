@@ -31,7 +31,7 @@ class Game: Extension {
             //world.add(ParticleY(STEP*350, 0.0))
         }
 
-        world.r().objs().forEach { o -> if((o.stats.POS - STEP*350.0).length()>500) o.stats.dead = true }
+        world.r().objs().forEach { o -> if((o.stats.POS - STEP*350.0).length()>500) o.collapse() }
 
         if(t == 100) println(world.toString())
         if(draw_bounds) drawBounds()

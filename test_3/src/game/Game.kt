@@ -1,3 +1,6 @@
+package game
+
+import com.uzery.fglib.core.obj.GameObject
 import com.uzery.fglib.core.obj.bounds.BoundsBox
 import com.uzery.fglib.core.program.Extension
 import com.uzery.fglib.core.program.Platform.Companion.graphics
@@ -5,25 +8,25 @@ import com.uzery.fglib.core.program.Platform.Companion.keyboard
 import com.uzery.fglib.core.program.Platform.Companion.mouse_keys
 import com.uzery.fglib.core.world.World
 import com.uzery.fglib.utils.math.geom.PointN
+import game.objects.Food
+import game.objects.Wall
 import javafx.scene.input.KeyCode
 import javafx.scene.paint.Color
-import kotlin.math.PI
-import kotlin.math.cos
-import kotlin.math.sin
+import java.util.stream.Stream
 
 class Game: Extension {
     private var draw_bounds = false
-    private var world = World(ClassGetterX())
 
     private var t = 0
 
     override fun init() {
         world.init("test_3/media/1.map")
-        for(i in 1..16) {
-            world.add(Wall(PointN(i*40+20.0,20.0)))
-            world.add(Wall(PointN(i*40+20.0,700.0)))
-            world.add(Wall(PointN(20.0,i*40+20.0)))
-            world.add(Wall(PointN(700.0,i*40+20.0)))
+        for(i in 0..17) {
+            if(i in 7..9) continue
+            world.add(Wall(PointN(i*40 + 20.0, 20.0)))
+            world.add(Wall(PointN(i*40 + 20.0, 700.0)))
+            world.add(Wall(PointN(20.0, i*40 + 20.0)))
+            world.add(Wall(PointN(700.0, i*40 + 20.0)))
         }
     }
 
@@ -31,22 +34,12 @@ class Game: Extension {
         clear()
         world.run()
 
-        if(Math.random()<0.005) {
-            val pos = STEP*60+randP(640).round(40.0)
+        /*if(Math.random()<0.005) {
+            val pos = STEP*60 + randP(640).round(40.0)
             world.add(Food(pos))
-        }
-        if(Math.random()<0.0005) {
-            val pos = STEP*60+randP(640).round(40.0)
-            world.add(SuperFood(pos))
-        }
-        /*for(i in 1..15) {
-            val alpha = Math.random()*2*PI
-            val pos = STEP*350 + PointN(cos(alpha), sin(alpha))*300
-            //world.add(ParticleY(pos, 0.0))
-            world.add(ParticleY(STEP*350, 0.0))
         }*/
 
-        world.r().objs().forEach { o -> if((o.stats.POS - STEP*350).length()>500) o.stats.dead = true }
+        world.r().objs().forEach { o -> if((o.stats.POS - STEP*350).length()>500) o.collapse() }
 
         if(t == 100) println(world.toString())
         if(draw_bounds) drawBounds()
@@ -71,6 +64,12 @@ class Game: Extension {
         fun randP() = PointN(Math.random(), Math.random())
         fun randP(size: Double) = randP()*size
         fun randP(size: Int) = randP()*size
+
+
+        private var world = World(ClassGetterX())
+        fun allTagged(tag: String): Stream<GameObject> {
+            return world.r().objs().stream().filter { o->o.tagged(tag) }
+        }
     }
 
 
@@ -84,7 +83,7 @@ class Game: Extension {
             Color.RED,
             Color.ORANGERED,
             Color.BLUE,
-            Color.GREEN)//todo why?
+            Color.GREEN) //todo why?
 
         graphics.setStroke(2.0)
         for(o in world.r().objs()) {

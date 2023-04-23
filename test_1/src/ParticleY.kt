@@ -28,9 +28,9 @@ class ParticleY(pos: PointN, private var layer: Double): GameObject() {
         abilityBox = object: AbilityBox {
             override fun run() {
                 if(Math.random()<0.0005) produce(ParticleY(PointN(stats.POS), layer))
-                if(object_time>1000) stats.dead = true
+                if(object_time>1000) collapse()
                 layer += (Math.random() - 0.5)*0.1
-                //if((stats.lPOS - stats.POS).length()<1) stats.dead = true
+                //if((stats.lPOS - stats.POS).length()<1) collapse()
             }
 
             override fun activate(a: InputAction) { /* ignore */

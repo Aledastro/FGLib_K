@@ -2,7 +2,6 @@ package com.uzery.fglib.core.obj
 
 import com.uzery.fglib.core.obj.ability.AbilityBox
 import com.uzery.fglib.core.obj.ability.InputAction
-import com.uzery.fglib.core.obj.bounds.Bounds
 import com.uzery.fglib.core.obj.bounds.BoundsBox
 import com.uzery.fglib.core.obj.controller.Controller
 import com.uzery.fglib.core.obj.controller.TempAction
@@ -24,13 +23,17 @@ abstract class GameObject {
     var controller: Controller? = null
     private var temp: TempAction? = null
 
-    var object_time = 0L
+
+    var dead = false
         private set
-    var name: String = "temp"
+
+    var object_time = 0
+        private set
+    var name = "temp"
     val values = ArrayList<ObjectValue>()
 
     fun next() {
-        if(temp==null || temp!!.ends) temp = controller?.get()?.invoke()
+        if(temp == null || temp!!.ends) temp = controller?.get()?.invoke()
         temp?.next()
         abilityBox?.run()
         modificators.forEach { m -> m.update() }
@@ -40,8 +43,10 @@ abstract class GameObject {
 
     fun draw(pos: PointN) = visuals.forEach { v -> v.draw(pos) }
 
-    fun produce(o: GameObject) = children.add(o)
-    abstract fun setValues()
+    protected fun produce(o: GameObject) = children.add(o)
+    open fun setValues() {
+        name = "temp"
+    }
 
     override fun toString(): String {
         values.clear()
@@ -60,4 +65,14 @@ abstract class GameObject {
     }
 
     open fun interact() = false
+
+    fun collapse() {
+        dead = true
+    }
+
+
+    private val tags=LinkedList<String>()
+    fun tag(vararg tag: String) = tags.addAll(tag)
+    fun tagged(tag: String) = tags.contains(tag)
+
 }

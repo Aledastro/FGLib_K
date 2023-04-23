@@ -38,7 +38,7 @@ abstract class GeometryGraphics(private val transform: AffineTransform) {
         }
     }
 
-    fun line(pos1: PointN, pos2: PointN, color: Color){
+    fun line(pos1: PointN, pos2: PointN, color: Color) {
         this.color = color
         line0(transform.pos(pos1), transform.pos(pos2))
     }

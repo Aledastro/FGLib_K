@@ -22,8 +22,8 @@ data class Bounds(val elements: Array<BoundsElement>) {
     }
 
     fun main(): RectN {
-        var min = elements[0].shape.L
-        var max = elements[0].shape.R
+        var min = elements.first().shape.L
+        var max = elements.first().shape.R
         for(el in elements) {
             if(el.shape.L.less(min)) min = el.shape.L
             if(el.shape.R.more(min)) max = el.shape.R

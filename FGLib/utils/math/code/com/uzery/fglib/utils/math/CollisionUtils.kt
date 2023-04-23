@@ -64,7 +64,7 @@ interface CollisionUtils {
             if(path<0) return 0.0
             if(path>1) return 1.0 //throw DebugData.error("err: K=$path")
 
-            return path.coerceIn(0.0,1.0)
+            return path.coerceIn(0.0, 1.0)
         }
     }
 }

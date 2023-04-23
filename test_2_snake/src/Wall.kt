@@ -17,10 +17,11 @@ class Wall(pos: PointN): GameObject() {
         stats.POS = pos
         abilityBox = object: AbilityBox {
             override fun activate(action: InputAction) {
-                if(action.code==InputAction.CODE.INTERRUPT){
-                    stats.dead=true
+                if(action.code == InputAction.CODE.INTERRUPT) {
+                    collapse()
                 }
             }
+
             override fun run() { /* ignore */
             }
         }
@@ -41,6 +42,7 @@ class Wall(pos: PointN): GameObject() {
         })
         bounds.red = { Bounds(RectN(-Game.STEP*20, Game.STEP*40)) }
     }
+
     override fun setValues() {
         name = "wall"
         values.add(PosValue(stats.POS))
