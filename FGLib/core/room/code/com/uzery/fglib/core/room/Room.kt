@@ -1,11 +1,14 @@
 package com.uzery.fglib.core.room
 
 import com.uzery.fglib.core.obj.GameObject
+import com.uzery.fglib.core.obj.ability.InputAction
 import com.uzery.fglib.core.obj.bounds.Bounds
+import com.uzery.fglib.core.obj.bounds.BoundsBox
 import com.uzery.fglib.core.obj.visual.Visualiser
 import com.uzery.fglib.core.program.Platform
 import com.uzery.fglib.utils.math.BoundsUtils
 import com.uzery.fglib.utils.math.FGUtils
+import com.uzery.fglib.utils.math.ShapeUtils
 import com.uzery.fglib.utils.math.geom.PointN
 import javafx.scene.paint.Color
 import java.util.*
@@ -23,7 +26,7 @@ class Room(private val width: Int, private val height: Int) {
         new_objects.clear()
 
         objects.forEach { o -> o.next() }
-        nextMove()
+        nextMoveOld()
         nextActivate()
 
         objects.forEach { o -> new_objects.addAll(o.children) }
@@ -66,43 +69,48 @@ class Room(private val width: Int, private val height: Int) {
         last = System.currentTimeMillis()
         val fps = 1000.0/time
         Platform.graphics.fill.text(PointN(500.0, 80.0), "fps: $fps", Color.BURLYWOOD)
+
+        for(index in 0..3) {
+            var bs_n = 0
+            objects.forEach { o ->
+                val bs = o.bounds[index]
+                if(bs != null) bs_n++
+            }
+            Platform.graphics.fill.text(
+                PointN(500.0, 100.0 + index*20), "bounds[${BoundsBox.name(index)}]: $bs_n", Color.BURLYWOOD)
+        }
     }
 
     fun add(obj: GameObject) = objects.add(obj)
 
     fun objs(): LinkedList<GameObject> = LinkedList(objects)
 
-    private fun nextMove() {
+    private fun nextMoveOld() {
         val all_bounds = LinkedList<Bounds>()
-        val map = HashMap<Bounds, GameObject>()
+        val pos = LinkedList<PointN>()
         objects.forEach { o ->
             val bs = o.bounds.red
             if(bs != null) {
                 all_bounds.add(bs())
-                map[bs()] = o
+                pos.add(o.stats.POS)
             }
         }
         for(obj in objects) {
             obj.stats.lPOS = obj.stats.POS
+            val move_bs = obj.bounds.orange ?: continue
+
+            fun maxMove(move_p: PointN): Double {
+                if(all_bounds.isEmpty()) return 1.0
+
+                return (0 until all_bounds.size).minOf { i ->
+                    BoundsUtils.maxMove(all_bounds[i], move_bs(), pos[i], obj.stats.POS, move_p)
+                }
+            }
 
             fun move(move_p: PointN): Double {
-                val move_bs = obj.bounds.orange
-
-                var min_d = 1.0
-                if(move_bs != null) {
-                    for(bs in all_bounds) {
-                        val stay = map[bs] ?: throw java.lang.IllegalArgumentException()
-                        min_d = min_d.coerceAtMost(
-                            BoundsUtils.maxMove(
-                                bs,
-                                move_bs(),
-                                stay.stats.POS,
-                                obj.stats.POS,
-                                move_p))
-                    }
-                }
-                obj.stats.POS += move_p*min_d
-                return min_d
+                val mm = maxMove(move_p)
+                obj.stats.POS += move_p*mm
+                return mm
             }
 
             val min_d = move(obj.stats.nPOS)
@@ -110,12 +118,68 @@ class Room(private val width: Int, private val height: Int) {
             val np = obj.stats.nPOS*(1 - min_d)
 
             for(i in 0 until np.dimension()) move(np.separate(i))
-
         }
         objects.forEach { o -> o.stats.nPOS = PointN.ZERO }
     }
+
+    private fun nextMove() {
+        for(o in objects) {
+            o.stats.lPOS = o.stats.POS
+            val orange = o.bounds.orange ?: continue
+
+            fun move(move_p: PointN): Double {
+                val mm = objects.minOf { r ->
+                    val red = r.bounds.red ?: return 1.0
+                    BoundsUtils.maxMove(red(), orange(), r.stats.POS, o.stats.POS, move_p)
+                }
+                o.stats.POS += move_p*mm
+                return mm
+            }
+
+            val min_d = move(o.stats.nPOS)
+            o.stats.fly = min_d == 1.0
+            val np = o.stats.nPOS*(1 - min_d)
+
+            for(i in 0 until np.dimension()) move(np.separate(i))
+        }
+        objects.forEach { o -> o.stats.nPOS = PointN.ZERO }
+    }
+
     private fun nextActivate() {
-        objects.forEach {  }
+        for(b in objects) {
+            val blue = b.bounds.blue ?: continue
+            for(o in objects) {
+                val orange = o.bounds.orange ?: continue
+                blue().elements.forEach { blueE ->
+                    orange().elements.forEach { orangeE ->
+                        if(ShapeUtils.into(orangeE.shape.copy(o.stats.POS), blueE.shape.copy(b.stats.POS))) {
+                            b.activate(
+                                InputAction(
+                                    InputAction.CODE.INTERRUPT, "interrupt | ${blueE.name} ${orangeE.name}", o))
+                            o.activate(
+                                InputAction(
+                                    InputAction.CODE.INTERRUPT_I, "interrupt_I | ${orangeE.name} ${blueE.name}", b))
+                        }
+                    }
+                }
+            }
+        }
+
+        for(o in objects) {
+            if(!o.interact())continue
+            val orange = o.bounds.orange ?: continue
+            for(g in objects) {
+                val green = g.bounds.green ?: continue
+                green().elements.forEach { greenE ->
+                    orange().elements.forEach { orangeE ->
+                        if(ShapeUtils.into(orangeE.shape.copy(o.stats.POS), greenE.shape.copy(g.stats.POS))) {
+                            g.activate(InputAction(InputAction.CODE.INTERACT, "interact | ${greenE.name} ${orangeE.name}", o))
+                            o.activate(InputAction(InputAction.CODE.INTERACT_I, "interact_I | ${orangeE.name} ${greenE.name}", g))
+                        }
+                    }
+                }
+            }
+        }
     }
 
     override fun toString(): String {

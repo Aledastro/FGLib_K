@@ -6,7 +6,7 @@ import java.util.*
 data class InputAction(val code: CODE, private val full_info: String, val prime: GameObject) {
 
     enum class CODE {
-        OPEN, INTERACT, INTERACT_I, INTERRUPT, INTERRUPT_I, INTERRUPT_SHAPE, INTERRUPT_SHAPE_I, INTERACT_SHAPE, INTERACT_SHAPE_I, PUSH, PUSH_I, TOUCH, TOUCH_I, DAMAGE
+        OPEN, INTERACT, INTERACT_I, INTERRUPT, INTERRUPT_I, PUSH, PUSH_I, TOUCH, TOUCH_I, DAMAGE
     }
 
     val stats = prime.stats

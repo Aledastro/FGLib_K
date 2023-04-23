@@ -29,6 +29,9 @@ class Platform {
         }
         val graphics = object: AffineGraphics() {
             private val transform: AffineTransform = AffineTransform { p -> p }
+            override fun setStroke(size: Double) {
+                Program.gc.lineWidth=size
+            }
 
             override val image: ImageGraphics = object: ImageGraphics(transform) {
                 override fun draw0(filename: String, pos: PointN, size: PointN) {

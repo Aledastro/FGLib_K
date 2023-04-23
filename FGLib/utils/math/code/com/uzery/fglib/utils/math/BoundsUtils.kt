@@ -8,17 +8,16 @@ interface BoundsUtils {
         fun maxMove(stay: Bounds, move: Bounds, stay_pos: PointN, start_pos: PointN, move_pos: PointN): Double {
             if(!CollisionUtils.intoX(stay.main(), move.main(), move.main().copy(move_pos))) return 1.0
 
-            var min = 1.0
-            for(stayE in stay.elements) {
-                for(moveE in move.elements) {
-                    min = min.coerceAtMost(
-                        CollisionUtils.maxMove(
-                            stayE.shape.copy(stay_pos),
-                            moveE.shape.copy(start_pos),
-                            moveE.shape.copy(start_pos + move_pos)))
+            if(stay.elements.isEmpty() || move.elements.isEmpty()) return 1.0
+
+            return stay.elements.minOf { stayE ->
+                move.elements.minOf { moveE ->
+                    CollisionUtils.maxMove(
+                        stayE.shape.copy(stay_pos),
+                        moveE.shape.copy(start_pos),
+                        moveE.shape.copy(start_pos + move_pos))
                 }
             }
-            return min
         }
     }
 }

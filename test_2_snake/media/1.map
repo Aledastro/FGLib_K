@@ -3,4 +3,4 @@
 room_width: -1
 room_height: -1
 
-player: pos[350, 350]
+snake: pos[340, 340]

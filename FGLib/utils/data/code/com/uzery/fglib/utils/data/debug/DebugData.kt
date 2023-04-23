@@ -1,4 +1,4 @@
-package com.uzery.fglib.utils.data
+package com.uzery.fglib.utils.data.debug
 
 interface DebugData {
     companion object {

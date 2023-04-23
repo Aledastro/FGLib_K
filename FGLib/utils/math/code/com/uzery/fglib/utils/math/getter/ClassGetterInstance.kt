@@ -1,7 +1,7 @@
 package com.uzery.fglib.utils.math.getter
 
 import com.uzery.fglib.core.obj.DrawLayer
-import com.uzery.fglib.utils.data.DebugData
+import com.uzery.fglib.utils.data.debug.DebugData
 import com.uzery.fglib.utils.math.geom.PointN
 import com.uzery.fglib.utils.math.num.StringN
 import javafx.scene.paint.Color

@@ -1,5 +1,6 @@
-package com.uzery.fglib.utils.data
+package com.uzery.fglib.utils.data.file
 
+import com.uzery.fglib.utils.data.debug.DebugData
 import java.io.*
 import java.util.stream.Collectors
 
@@ -85,7 +86,7 @@ interface WriteData {
         }
 
         fun errorStream(): PrintStream {
-            return PrintStream(outFileStream("C:/Data/!errors.txt"))
+            return PrintStream(outFileStream("C:/com.uzery.fglib.utils.data.image.Data/!errors.txt"))
         }
     }
 }

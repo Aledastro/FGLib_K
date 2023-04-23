@@ -1,6 +1,7 @@
 package com.uzery.fglib.core.obj
 
 import com.uzery.fglib.core.obj.ability.AbilityBox
+import com.uzery.fglib.core.obj.ability.InputAction
 import com.uzery.fglib.core.obj.bounds.Bounds
 import com.uzery.fglib.core.obj.bounds.BoundsBox
 import com.uzery.fglib.core.obj.controller.Controller
@@ -13,22 +14,23 @@ import com.uzery.fglib.utils.math.getter.value.ObjectValue
 import java.util.*
 
 abstract class GameObject {
-    var stats = Stats()
+    val stats = Stats()
+    val visuals = ArrayList<Visualiser>()
+    val modificators = LinkedList<Modificator>()
+    val bounds = BoundsBox()
+    val children = ArrayList<GameObject>()
+
     var abilityBox: AbilityBox? = null
     var controller: Controller? = null
-    var visuals = ArrayList<Visualiser>()
-    var modificators = LinkedList<Modificator>()
-    var bounds = BoundsBox()
-
     private var temp: TempAction? = null
-    internal var children = ArrayList<GameObject>()
 
     var object_time = 0L
+        private set
     var name: String = "temp"
-    var values = ArrayList<ObjectValue>()
+    val values = ArrayList<ObjectValue>()
 
     fun next() {
-        if(temp == null || temp!!.ends) temp = controller?.get()?.invoke()
+        if(temp==null || temp!!.ends) temp = controller?.get()?.invoke()
         temp?.next()
         abilityBox?.run()
         modificators.forEach { m -> m.update() }
@@ -47,8 +49,15 @@ abstract class GameObject {
         val s = StringBuilder(name)
         if(values.isNotEmpty()) {
             s.append(":")
-            values.forEach { value -> s.append(" ").append(value) }
+            values.forEach { value -> s.append(" $value") }
         }
         return s.toString()
     }
+
+    fun activate(action: InputAction) {
+        abilityBox?.activate(action)
+        temp?.activate(action)
+    }
+
+    open fun interact() = false
 }

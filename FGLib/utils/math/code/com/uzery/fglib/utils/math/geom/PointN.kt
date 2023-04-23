@@ -1,6 +1,7 @@
 package com.uzery.fglib.utils.math.geom
 
 import com.uzery.fglib.utils.math.ArrayUtils
+import com.uzery.fglib.utils.math.MathUtils
 import kotlin.math.sqrt
 
 data class PointN(private val xs: Array<Double>) {
@@ -59,6 +60,8 @@ data class PointN(private val xs: Array<Double>) {
     fun length() = sqrt(lengthX2())
     fun separate(level: Int) = PointN(Array(dimension()) { i -> if(level == i) xs[i] else 0.0 })
 
+    fun transform(transform: (x: Double) -> Double) = PointN(ArrayUtils.transform(xs, transform))
+    fun round(size: Double) = transform { x -> x-MathUtils.mod(x,size) }
 
     companion object {
         val ZERO = PointN(Array(0) { 0.0 })

@@ -17,7 +17,7 @@ abstract class GameEvent: GameObject() {
 
     init {
         abilityBox = object: AbilityBox {
-            override fun activate(a: InputAction) = activate0(a)
+            override fun activate(action: InputAction) = activate0(action)
 
             override fun run() {
                 if(!init) {

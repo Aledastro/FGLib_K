@@ -8,7 +8,7 @@ interface ShapeUtils {
         fun rect(shape: Shape) = RectN(shape.L, shape.S)
 
         fun into(first: RectN, second: RectN): Boolean {
-            return (0 until first.L.dimension()).any { i -> first.L[i]<second.R[i] && second.L[i]<first.R[i] }
+            return (0 until first.L.dimension()).all { i -> first.L[i]<second.R[i] && second.L[i]<first.R[i] }
         }
 
         fun into(first: Shape, second: Shape): Boolean {

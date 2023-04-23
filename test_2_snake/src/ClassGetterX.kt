@@ -3,7 +3,7 @@ import com.uzery.fglib.utils.math.getter.ClassGetterInstance
 
 class ClassGetterX: ClassGetterInstance<GameObject>() {
     override fun addAll() {
-        add("player", 1) { Snake(pos) }
-
+        add("snake", 1) { Snake(pos) }
+        add("wall", 1) { Wall(pos) }
     }
 }

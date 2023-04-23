@@ -19,7 +19,7 @@ class ParticleY(pos: PointN, private var layer: Double): GameObject() {
         var st = 0
     }
 
-    val alpha = st*0.0003
+    private val alpha = st*0.0003
 
     //Math.random()*2*PI
     init {
@@ -30,7 +30,7 @@ class ParticleY(pos: PointN, private var layer: Double): GameObject() {
                 if(Math.random()<0.0005) produce(ParticleY(PointN(stats.POS), layer))
                 if(object_time>1000) stats.dead = true
                 layer += (Math.random() - 0.5)*0.1
-                if((stats.lPOS - stats.POS).length()<1) object_time += 5
+                //if((stats.lPOS - stats.POS).length()<1) stats.dead = true
             }
 
             override fun activate(a: InputAction) { /* ignore */
@@ -49,10 +49,10 @@ class ParticleY(pos: PointN, private var layer: Double): GameObject() {
                 agc().fill.oval(pos - Game.STEP*3, Game.STEP*6, Color(1.0, 1.0, 1.0, 0.2))
             }
 
-            override fun drawLayer(): DrawLayer = DrawLayer(layer)
+            override fun drawLayer() = DrawLayer(layer)
         })
 
-        orangeBounds = { Bounds(RectN(-Game.STEP*3, Game.STEP*6)) }
+        bounds.orange = { Bounds(RectN(-Game.STEP*3, Game.STEP*6)) }
     }
 
     var temp1: () -> TempAction = {

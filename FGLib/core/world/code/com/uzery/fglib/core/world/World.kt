@@ -2,7 +2,7 @@ package com.uzery.fglib.core.world
 
 import com.uzery.fglib.core.obj.GameObject
 import com.uzery.fglib.core.room.Room
-import com.uzery.fglib.utils.data.WriteData
+import com.uzery.fglib.utils.data.file.WriteData
 import com.uzery.fglib.utils.math.getter.ClassGetter
 import com.uzery.fglib.utils.math.getter.ClassGetterInstance
 import java.util.*

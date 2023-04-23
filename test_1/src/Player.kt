@@ -45,39 +45,13 @@ class Player(pos: PointN): GameObject() {
                 return DrawLayer(scale.swing(object_time))
             }
         })
-        redBounds = { Bounds(RectN(-Game.STEP*62, Game.STEP*124)) }
+        bounds.red = { Bounds(RectN(-Game.STEP*62, Game.STEP*124)) }
         modificators.add(object: Modificator {
             override fun update() {
 
             }
         })
     }
-
-    var temp1: () -> TempAction = {
-        object: TempAction {
-            var t = 0
-            override fun next() {
-                t++
-            }
-
-            override val ends: Boolean
-                get() = t>5
-
-        }
-    }
-    var temp2: () -> TempAction = {
-        object: TempAction {
-            var t = 0
-
-            override fun next() {
-                t++
-            }
-
-            override val ends: Boolean
-                get() = t>5
-        }
-    }
-
     override fun setValues() {
         name = "player"
         values.add(PosValue(stats.POS))
