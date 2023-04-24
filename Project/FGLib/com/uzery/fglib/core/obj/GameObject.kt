@@ -71,7 +71,7 @@ abstract class GameObject {
     }
 
 
-    private val tags=LinkedList<String>()
+    private val tags = LinkedList<String>()
     fun tag(vararg tag: String) = tags.addAll(tag)
     fun tagged(tag: String) = tags.contains(tag)
 

@@ -195,7 +195,7 @@ class Room(private val width: Int, private val height: Int) {
         for(o1 in objects) {
             val orange1 = o1.bounds.orange ?: continue
             for(o2 in objects) {
-                if(o1==o2)continue
+                if(o1 == o2) continue
                 val orange2 = o2.bounds.orange ?: continue
                 orange2().elements.forEach { orange2E ->
                     orange1().elements.forEach { orange1E ->

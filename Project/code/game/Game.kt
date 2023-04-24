@@ -8,7 +8,6 @@ import com.uzery.fglib.core.program.Platform.Companion.keyboard
 import com.uzery.fglib.core.program.Platform.Companion.mouse_keys
 import com.uzery.fglib.core.world.World
 import com.uzery.fglib.utils.math.geom.PointN
-import game.objects.Food
 import game.objects.Wall
 import javafx.scene.input.KeyCode
 import javafx.scene.paint.Color
@@ -68,7 +67,7 @@ class Game: Extension {
 
         private var world = World(ClassGetterX())
         fun allTagged(tag: String): Stream<GameObject> {
-            return world.r().objs().stream().filter { o->o.tagged(tag) }
+            return world.r().objs().stream().filter { o -> o.tagged(tag) }
         }
     }
 

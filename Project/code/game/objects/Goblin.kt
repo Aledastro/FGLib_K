@@ -15,13 +15,13 @@ import com.uzery.fglib.utils.math.geom.RectN
 import com.uzery.fglib.utils.math.scale.AnimationScale
 import game.Game
 import javafx.scene.paint.Color
-import java.lang.IllegalArgumentException
 import kotlin.math.cos
 import kotlin.math.sin
 
 class Goblin(pos: PointN): GameObject() {
 
-    var LIFE=4
+    var LIFE = 4
+
     init {
 
         stats.POS = pos
@@ -34,12 +34,12 @@ class Goblin(pos: PointN): GameObject() {
         abilityBox = object: AbilityBox {
             override fun activate(action: InputAction) {
                 if(action.code == InputAction.CODE.INTERRUPT_I) {
-                    LIFE-=2
+                    LIFE -= 2
                 }
             }
 
             override fun run() {
-                if(LIFE<=0)collapse()
+                if(LIFE<=0) collapse()
             }
         }
         visuals.add(object: Visualiser() {
@@ -62,19 +62,19 @@ class Goblin(pos: PointN): GameObject() {
 
     var attack: () -> TempAction = {
         object: TimeTempAction() {
-            var goal:GameObject?=null
+            var goal: GameObject? = null
             override fun start() {
-                goal=Game.allTagged("player").findFirst().get()
+                goal = Game.allTagged("player").findFirst().get()
             }
 
             override fun update() {
-                val g=goal?:throw IllegalArgumentException()
-                val d=MathUtils.getDegree(stats.POS,g.stats.POS)
+                val g = goal ?: throw IllegalArgumentException()
+                val d = MathUtils.getDegree(stats.POS, g.stats.POS)
                 stats.nPOS += Game.X*cos(d)*1.2
                 stats.nPOS += Game.Y*sin(d)*1.2
             }
 
-            override fun ends()=false
+            override fun ends() = false
         }
     }
 

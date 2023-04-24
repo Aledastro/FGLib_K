@@ -34,8 +34,8 @@ class Cowboy(pos: PointN): GameObject() {
                 if(ready_shoot<0 && keyboard.anyPressed(KeyCode.UP, KeyCode.DOWN, KeyCode.LEFT, KeyCode.RIGHT)) {
                     val s = 8.0
                     ready_shoot = 7
-                    var ix=0
-                    var iy=0
+                    var ix = 0
+                    var iy = 0
                     when {
                         keyboard.pressed(KeyCode.UP) -> iy--
                         keyboard.pressed(KeyCode.DOWN) -> iy++
@@ -50,7 +50,7 @@ class Cowboy(pos: PointN): GameObject() {
             }
 
             override fun activate(action: InputAction) {
-                if(action.code==InputAction.CODE.IMPACT){
+                if(action.code == InputAction.CODE.IMPACT) {
                     collapse()
                 }
                 println(1)
