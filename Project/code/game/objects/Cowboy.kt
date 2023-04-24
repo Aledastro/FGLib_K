@@ -32,8 +32,8 @@ class Cowboy(pos: PointN): GameObject() {
                     stats.POS = Platform.mouse.pos()
                 }
                 if(ready_shoot<0 && keyboard.anyPressed(KeyCode.UP, KeyCode.DOWN, KeyCode.LEFT, KeyCode.RIGHT)) {
-                    val s = 9.0
-                    ready_shoot = 10
+                    val s = 8.0
+                    ready_shoot = 7
                     var ix=0
                     var iy=0
                     when {
@@ -50,7 +50,10 @@ class Cowboy(pos: PointN): GameObject() {
             }
 
             override fun activate(action: InputAction) {
-
+                if(action.code==InputAction.CODE.IMPACT){
+                    collapse()
+                }
+                println(1)
             }
         }
         visuals.add(object: Visualiser() {

@@ -27,7 +27,7 @@ class Wall(pos: PointN): GameObject() {
             }
         }
         visuals.add(object: Visualiser() {
-            val scale = AnimationScale(0L, 30.0) { x -> 6*(x + 2) }
+            val scale = AnimationScale(0L, 30.0) { x -> 2*(x + 6) }
 
             override fun draw(pos: PointN) {
                 agc().fill.rect(

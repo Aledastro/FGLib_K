@@ -57,7 +57,7 @@ class Goblin(pos: PointN): GameObject() {
                 return DrawLayer(scale.swing(object_time))
             }
         })
-        bounds.orange = { Bounds(RectN(-Game.STEP*20, Game.STEP*40)) }
+        bounds.orange = { Bounds(RectN(-Game.STEP*12, Game.STEP*24)) }
     }
 
     var attack: () -> TempAction = {

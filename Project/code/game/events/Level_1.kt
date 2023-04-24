@@ -10,24 +10,23 @@ import javafx.scene.paint.Color
 import java.util.LinkedList
 
 class Level_1: CompositeGameEvent(){
+    var ids_time=0
     init {
         visuals.add(object: Visualiser(){
             override fun draw(pos: PointN) {
-                agc().fill.rect(pos, PointN(10.0,10.0), Color.BURLYWOOD)
+                agc().fill.rect(pos, PointN(720.0,10.0), Color.BURLYWOOD)
+                agc().fill.rect(pos, PointN((ids_time/6_000.0)*720,10.0), Color.GREEN)
             }
-
             override fun drawLayer()= DrawLayer(1.0)
         })
         add(object: BaseEvent(){
             val wave=LinkedList<Int>()
-            var ids_time=0
-
             override fun start() {
-                for(i in 0..1000_000){
+                for(i in 0..6_000){
                     var res=0
                     if(i%50==0)res=1
-                    if(i%500==0)res=10
-                    if(i%5000==0)res=100
+                    if(i%500==250)res=10
+                    if(i%5000==500)res=100
                     wave.add(res)
                 }
             }
@@ -43,7 +42,7 @@ class Level_1: CompositeGameEvent(){
                 }
                 ids_time++
             }
-            override fun ends()=false
+            override fun ends()=ids_time>=6_000
         })
     }
 
