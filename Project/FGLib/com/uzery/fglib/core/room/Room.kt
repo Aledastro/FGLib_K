@@ -10,14 +10,16 @@ import com.uzery.fglib.utils.math.BoundsUtils
 import com.uzery.fglib.utils.math.FGUtils
 import com.uzery.fglib.utils.math.ShapeUtils
 import com.uzery.fglib.utils.math.geom.PointN
+import com.uzery.fglib.utils.math.getter.value.PosValue
+import com.uzery.fglib.utils.math.getter.value.SizeValue
 import javafx.scene.paint.Color
 import java.util.*
 
-class Room(private val width: Int, private val height: Int) {
+class Room(val pos: PointN, val size: PointN) {
     private val objects = LinkedList<GameObject>()
     private val new_objects = ArrayList<GameObject>()
 
-    constructor(width: Int, height: Int, objs: List<GameObject>): this(width, height) {
+    constructor(pos: PointN, size: PointN, objs: List<GameObject>): this(pos, size) {
         objects.addAll(objs)
     }
 
@@ -38,7 +40,7 @@ class Room(private val width: Int, private val height: Int) {
 
     private var last = System.currentTimeMillis()
     private var time = 0L
-    fun draw() {
+    fun draw(draw_pos: PointN) {
         val vis = ArrayList<Visualiser>()
         val map = HashMap<Visualiser, GameObject>()
         objects.forEach { o ->
@@ -51,24 +53,28 @@ class Room(private val width: Int, private val height: Int) {
         vis.forEach { v ->
             run {
                 val o = map[v]
-                if(o != null) v.draw(o.stats.POS)
+                if(o != null) v.draw(draw_pos + o.stats.POS)
                 else throw IllegalArgumentException()
             }
         }
 
+        drawDebug()
+    }
+
+    private fun drawDebug() {
         val maxRam = Runtime.getRuntime().totalMemory()
         val freeRam = Runtime.getRuntime().freeMemory()
         val ram = maxRam - freeRam
-        Platform.graphics.fill.text(PointN(500.0, 20.0), "size: ${objects.size}", Color.BURLYWOOD)
-        Platform.graphics.fill.text(PointN(500.0, 40.0), "ram: ${ram/1000_000}/${maxRam/1000_000}", Color.BURLYWOOD)
+        Platform.graphics.fill.text(PointN(500.0, 20.0), "size: ${objects.size}", Color.DARKBLUE)
+        Platform.graphics.fill.text(PointN(500.0, 40.0), "ram: ${ram/1000_000}/${maxRam/1000_000}", Color.DARKBLUE)
         Platform.graphics.fill.text(
             PointN(500.0, 60.0),
             "ram per obj: ${if(objects.size != 0) (ram/1000/objects.size)*0.001 else 0}",
-            Color.BURLYWOOD)
+            Color.DARKBLUE)
         time = System.currentTimeMillis() - last
         last = System.currentTimeMillis()
         val fps = 1000.0/time
-        Platform.graphics.fill.text(PointN(500.0, 80.0), "fps: $fps", Color.BURLYWOOD)
+        Platform.graphics.fill.text(PointN(500.0, 80.0), "fps: $fps", Color.DARKBLUE)
 
         for(index in 0..3) {
             var bs_n = 0
@@ -77,7 +83,7 @@ class Room(private val width: Int, private val height: Int) {
                 if(bs != null) bs_n++
             }
             Platform.graphics.fill.text(
-                PointN(500.0, 100.0 + index*20), "bounds[${BoundsBox.name(index)}]: $bs_n", Color.BURLYWOOD)
+                PointN(500.0, 100.0 + index*20), "bounds[${BoundsBox.name(index)}]: $bs_n", Color.DARKBLUE)
         }
     }
 
@@ -217,8 +223,8 @@ class Room(private val width: Int, private val height: Int) {
         wr.append("//Uzery game.Game Studio 2019-2023\n")
         wr.append("//last edit: ").append(FGUtils.time_YMD()).append(" ").append(FGUtils.time_HMS()).append("\n")
 
-        wr.append("room_width: ").append(width).append("\n")
-        wr.append("room_height: ").append(height).append("\n\n")
+        wr.append("room_pos: ").append(PosValue(pos)).append("\n")
+        wr.append("room_size: ").append(SizeValue(size)).append("\n\n")
 
         for(o in objects) {
             o.setValues()

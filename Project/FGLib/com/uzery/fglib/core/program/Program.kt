@@ -12,8 +12,6 @@ import java.util.*
 
 internal class Program {
     companion object {
-        var WIDTH: Double = 0.0
-        var HEIGHT: Double = 0.0
         private lateinit var stage: Stage
 
         lateinit var gc: GraphicsContext
@@ -21,24 +19,29 @@ internal class Program {
         internal val pressed = Array(KeyCode.values().size) { false }
         internal val mouse_pressed = Array(KeyCode.values().size) { false }
         internal var mouseP = PointN.ZERO
-
-        private var options = LaunchOptions.default
+        internal var options = LaunchOptions.default
 
         private var extensions = LinkedList<Extension>()
 
         internal fun initWith(options: LaunchOptions, vararg ets: Extension) {
-            extensions.addAll(ets)
+            val list = LinkedList<Extension>()
+            list.addAll(ets)
+            while(list.isNotEmpty()) {
+                val e = list.removeFirst()
+                extensions.add(e)
+                list.addAll(e.children())
+            }
+
             this.options = options
-            WIDTH = options.width
-            HEIGHT = options.height
         }
 
         internal fun startWith(stage: Stage) {
             this.stage = stage
-            val canvas = Canvas(WIDTH, HEIGHT)
+            val canvas = Canvas(options.size.X(), options.size.Y())
             gc = canvas.graphicsContext2D
-            this.stage.scene = Scene(Group(canvas))
-            this.stage.show()
+            stage.scene = Scene(Group(canvas))
+            stage.initStyle(options.style)
+            stage.show()
 
             this.stage.scene.setOnMousePressed { e ->
                 run {

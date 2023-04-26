@@ -42,12 +42,12 @@ class Goblin(pos: PointN): GameObject() {
                 if(LIFE<=0) collapse()
             }
         }
-        visuals.add(object: Visualiser {
+        visuals.add(object: Visualiser() {
             val scale = AnimationScale(0L, 30.0) { x -> 4*(x + 1.5) }
 
-            override fun draw(draw_pos: PointN) {
+            override fun draw(pos: PointN) {
                 agc().fill.rect(
-                    draw_pos - Game.STEP*scale.swing(object_time),
+                    pos - Game.STEP*scale.swing(object_time),
                     Game.STEP*2*scale.swing(object_time),
                     Color(0.7, 0.0, 0.2, 1.0))
             }

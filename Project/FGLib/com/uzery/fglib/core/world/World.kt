@@ -3,12 +3,13 @@ package com.uzery.fglib.core.world
 import com.uzery.fglib.core.obj.GameObject
 import com.uzery.fglib.core.room.Room
 import com.uzery.fglib.utils.data.file.WriteData
+import com.uzery.fglib.utils.math.geom.PointN
 import com.uzery.fglib.utils.math.getter.ClassGetter
 import com.uzery.fglib.utils.math.getter.ClassGetterInstance
 import java.util.*
 
 class World(instance: ClassGetterInstance<GameObject>) {
-    private var room = Room(0, 0)
+    private var room = Room(PointN.ZERO, PointN.ZERO)
 
     private var getter = ClassGetter(instance)
 
@@ -22,15 +23,22 @@ class World(instance: ClassGetterInstance<GameObject>) {
         while(next.startsWith("//") || next.isEmpty()) {
             next = list.removeFirst()
         }
-        val width = next.substring(next.indexOf(':') + 2).toInt()
+        val pos = getP(next.substring(next.indexOf(':') + 2))
         next = list.removeFirst()
-        val height = next.substring(next.indexOf(':') + 2).toInt()
+        val size = getP(next.substring(next.indexOf(':') + 2))
         while(list.isNotEmpty()) {
             next = list.removeFirst()
             if(next.startsWith("//")) continue
             if(next.isNotEmpty()) objects.add(getter.getFrom(next))
         }
-        room = Room(width, height, objects)
+        room = Room(pos, size, objects)
+    }
+
+    private fun getP(s: String): PointN {
+        val c = ClassGetter(object: ClassGetterInstance<PointN>() {
+            override fun addAll() = add("r", 1) { pos }
+        })
+        return c.getFrom("r: $s")
     }
 
 
@@ -40,7 +48,7 @@ class World(instance: ClassGetterInstance<GameObject>) {
 
     fun run() {
         room.next()
-        room.draw()
+        room.draw(room.pos)
     }
 
     fun add(o: GameObject) {

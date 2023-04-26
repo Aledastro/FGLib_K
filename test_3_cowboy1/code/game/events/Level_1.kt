@@ -2,11 +2,9 @@ package game.events
 
 import com.uzery.fglib.core.obj.DrawLayer
 import com.uzery.fglib.core.obj.visual.Visualiser
-import com.uzery.fglib.core.program.Platform
 import com.uzery.fglib.extension.event.BaseEvent
 import com.uzery.fglib.extension.event.CompositeGameEvent
 import com.uzery.fglib.utils.math.geom.PointN
-import game.Game
 import game.objects.Goblin
 import javafx.scene.paint.Color
 import java.util.*
@@ -15,11 +13,10 @@ class Level_1: CompositeGameEvent() {
     var ids_time = 0
 
     init {
-        visuals.add(object: Visualiser {
-            override fun draw(draw_pos: PointN) {
-                val s = Platform.CANVAS.X() - 20
-                agc().fill.rect(Game.STEP*10, PointN(s, 10.0), Color.BURLYWOOD)
-                agc().fill.rect(Game.STEP*10, PointN((ids_time/6_000.0)*s, 10.0), Color.GREEN)
+        visuals.add(object: Visualiser() {
+            override fun draw(pos: PointN) {
+                agc().fill.rect(pos, PointN(720.0, 10.0), Color.BURLYWOOD)
+                agc().fill.rect(pos, PointN((ids_time/6_000.0)*720, 10.0), Color.GREEN)
             }
 
             override fun drawLayer() = DrawLayer(1.0)

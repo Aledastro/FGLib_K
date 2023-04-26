@@ -3,6 +3,7 @@ package game
 import com.uzery.fglib.core.obj.GameObject
 import com.uzery.fglib.core.obj.bounds.BoundsBox
 import com.uzery.fglib.core.program.Extension
+import com.uzery.fglib.core.program.Platform
 import com.uzery.fglib.core.program.Platform.Companion.graphics
 import com.uzery.fglib.core.program.Platform.Companion.keyboard
 import com.uzery.fglib.core.program.Platform.Companion.mouse_keys
@@ -11,6 +12,7 @@ import com.uzery.fglib.utils.math.geom.PointN
 import game.objects.Wall
 import javafx.scene.input.KeyCode
 import javafx.scene.paint.Color
+import java.util.*
 import java.util.stream.Stream
 
 class Game: Extension {
@@ -19,7 +21,7 @@ class Game: Extension {
     private var t = 0
 
     override fun init() {
-        world.init("test_3/media/1.map")
+        world.init("Project/media/1.map")
         for(i in 0..17) {
             if(i in 7..9) continue
             world.add(Wall(PointN(i*40 + 20.0, 20.0)))
@@ -27,6 +29,10 @@ class Game: Extension {
             world.add(Wall(PointN(20.0, i*40 + 20.0)))
             world.add(Wall(PointN(700.0, i*40 + 20.0)))
         }
+    }
+
+    override fun children(): List<Extension> {
+        return LinkedList<Extension>()
     }
 
     override fun update() {
@@ -40,7 +46,6 @@ class Game: Extension {
 
         world.r().objs().forEach { o -> if((o.stats.POS - STEP*350).length()>500) o.collapse() }
 
-        if(t == 100) println(world.toString())
         if(draw_bounds) drawBounds()
         if(keyboard.pressed(KeyCode.CONTROL) && keyboard.inPressed(KeyCode.TAB)) draw_bounds = !draw_bounds
 
@@ -51,14 +56,14 @@ class Game: Extension {
 
     private fun clear() {
         graphics.fill.color = Color(0.7, 0.6, 0.9, 1.0)
-        graphics.fill.rect(PointN.ZERO, STEP*720, Color(0.7, 0.6, 0.9, 1.0))
+        graphics.fill.rect(PointN.ZERO, Platform.CANVAS, Color(0.7, 0.6, 0.9, 1.0))
     }
 
     companion object {
-        val STEP = PointN(arrayOf(1.0, 1.0))
+        val STEP = PointN(1.0, 1.0)
 
-        val X = PointN(arrayOf(1.0, 0.0))
-        val Y = PointN(arrayOf(0.0, 1.0))
+        val X = PointN(1.0, 0.0)
+        val Y = PointN(0.0, 1.0)
 
         fun randP() = PointN(Math.random(), Math.random())
         fun randP(size: Double) = randP()*size

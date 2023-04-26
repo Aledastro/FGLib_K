@@ -20,8 +20,7 @@ abstract class ClassGetterInstance<Type> {
     fun getMark(name: StringN, args: ArrayList<ArrayList<String>>): Supplier<Type> {
         input = args
         in_id = 0
-        if(!map.containsKey(name)) throw DebugData.error("ERROR getMark(): $name | $args")
-        return map[name]!!
+        return map[name] ?: throw DebugData.error("ERROR getMark(): $name | $args")
     }
 
     protected fun add(sn: StringN, mark: Supplier<Type>) {
@@ -37,16 +36,11 @@ abstract class ClassGetterInstance<Type> {
     }
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    private val stringX: String
-        get() = input[in_id - 1][0]
-    private val intX: Int
-        get() = input[in_id - 1][0].toInt()
-    private val doubleX: Double
-        get() = input[in_id - 1][0].toDouble()
-    private val longX: Long
-        get() = input[in_id - 1][0].toLong()
-    private val booleanX: Boolean
-        get() = java.lang.Boolean.parseBoolean(input[in_id - 1][0])
+    private fun stringX(i: Int) = input[in_id - 1][i]
+    private fun intX(i: Int) = input[in_id - 1][i].toInt()
+    private fun doubleX(i: Int) = input[in_id - 1][i].toDouble()
+    private fun longX(i: Int) = input[in_id - 1][i].toLong()
+    private fun boolX(i: Int) = input[in_id - 1][i].toBoolean()
 
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -61,7 +55,7 @@ abstract class ClassGetterInstance<Type> {
     protected val long: Long
         get() = input[in_id++][0].toLong()
     protected val boolean: Boolean
-        get() = java.lang.Boolean.parseBoolean(input[in_id++][0])
+        get() = input[in_id++][0].toBoolean()
     protected val layer: DrawLayer
         get() = DrawLayer(double)
 
@@ -71,13 +65,11 @@ abstract class ClassGetterInstance<Type> {
             return if(input[i].size == 1) TypeValue(input[i][0]) else TypeValue(string, int,int,int,int)
         }*/
     protected val color256: Color
-        get() = Color.rgb(int, intX, intX, intX*1.0/255)
+        get() = Color.rgb(int, intX(1), intX(2), intX(3)*1.0/255)
     protected val color: Color
-        get() = Color.color(double, doubleX, doubleX, doubleX)
+        get() = Color.color(double, doubleX(1), doubleX(2), doubleX(3))
     protected val pos: PointN
-        get(): PointN {
-            return PointN(Array(input[in_id++].size) { doubleX })
-        }
+        get() = PointN(Array(input[in_id++].size) { i -> doubleX(i) })
     protected val size: PointN
-        get() = PointN(Array(input[in_id++].size) { doubleX })
+        get() = PointN(Array(input[in_id++].size) { i -> doubleX(i) })
 }

@@ -16,6 +16,12 @@ import javafx.scene.paint.Paint
 
 class Platform {
     companion object {
+        fun options() = Program.options
+
+
+        val CANVAS
+            get() = PointN(options().size.X(), options().size.Y())
+
         val keyboard = object: KeyActivator<KeyCode>(KeyCode.values().size) {
             override fun pressed0(code: Int): Boolean = Program.pressed[code]
             override fun from(key: KeyCode): Int = key.ordinal
@@ -24,7 +30,7 @@ class Platform {
             override fun pressed0(code: Int): Boolean = Program.mouse_pressed[code]
             override fun from(key: MouseButton): Int = key.ordinal
         }
-        val mouse = object: TouchActivator(RectN(PointN.ZERO, PointN(Program.WIDTH, Program.HEIGHT))) {
+        val mouse = object: TouchActivator(RectN(PointN.ZERO, CANVAS)) {
             override fun pos0(): PointN = Program.mouseP
         }
         val graphics = object: AffineGraphics() {

@@ -8,11 +8,12 @@ import com.uzery.fglib.core.obj.bounds.Bounds
 import com.uzery.fglib.core.obj.visual.Visualiser
 import com.uzery.fglib.utils.math.geom.PointN
 import com.uzery.fglib.utils.math.geom.RectN
+import com.uzery.fglib.utils.math.getter.value.PosValue
 import com.uzery.fglib.utils.math.scale.AnimationScale
 import game.Game
 import javafx.scene.paint.Color
 
-class Bullet(pos: PointN, private val speed: PointN): GameObject() {
+class Wall(pos: PointN): GameObject() {
     init {
         stats.POS = pos
         abilityBox = object: AbilityBox {
@@ -22,19 +23,17 @@ class Bullet(pos: PointN, private val speed: PointN): GameObject() {
                 }
             }
 
-            override fun run() {
-                stats.POS += speed
-                if(object_time>100) collapse()
+            override fun run() { /* ignore */
             }
         }
-        visuals.add(object: Visualiser {
-            val scale = AnimationScale(0L, 30.0) { x -> 4*(x + 0.5) }
+        visuals.add(object: Visualiser() {
+            val scale = AnimationScale(0L, 30.0) { x -> 2*(x + 6) }
 
-            override fun draw(draw_pos: PointN) {
-                agc().fill.oval(
-                    draw_pos - Game.STEP*scale.swing(object_time),
+            override fun draw(pos: PointN) {
+                agc().fill.rect(
+                    pos - Game.STEP*scale.swing(object_time),
                     Game.STEP*2*scale.swing(object_time),
-                    Color(0.9, 0.9, 0.9, 1.0))
+                    Color(0.2, 0.2, 0.2, 1.0))
             }
 
             override fun drawLayer(): DrawLayer {
@@ -42,6 +41,11 @@ class Bullet(pos: PointN, private val speed: PointN): GameObject() {
                 return DrawLayer(scale.swing(object_time))
             }
         })
-        bounds.blue = { Bounds(RectN(-Game.STEP*3, Game.STEP*6)) }
+        bounds.red = { Bounds(RectN(-Game.STEP*20, Game.STEP*40)) }
+    }
+
+    override fun setValues() {
+        name = "wall"
+        values.add(PosValue(stats.POS))
     }
 }

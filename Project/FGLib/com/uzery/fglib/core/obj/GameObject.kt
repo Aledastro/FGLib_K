@@ -41,7 +41,7 @@ abstract class GameObject {
         object_time++
     }
 
-    fun draw(pos: PointN) = visuals.forEach { v -> v.draw(pos) }
+    fun draw(draw_pos: PointN) = visuals.forEach { v -> v.draw(draw_pos) }
 
     protected fun produce(o: GameObject) = children.add(o)
     open fun setValues() {

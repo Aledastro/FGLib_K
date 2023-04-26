@@ -5,9 +5,9 @@ import com.uzery.fglib.core.program.Platform
 import com.uzery.fglib.utils.graphics.AffineGraphics
 import com.uzery.fglib.utils.math.geom.PointN
 
-abstract class Visualiser {
-    abstract fun draw(pos: PointN)
+interface Visualiser {
+    fun draw(draw_pos: PointN)
 
     fun agc(): AffineGraphics = Platform.graphics
-    abstract fun drawLayer(): DrawLayer
+    fun drawLayer(): DrawLayer
 }

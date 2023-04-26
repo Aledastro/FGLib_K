@@ -53,26 +53,27 @@ class Cowboy(pos: PointN): GameObject() {
                 if(action.code == InputAction.CODE.IMPACT) {
                     collapse()
                 }
+                println(1)
             }
         }
-        visuals.add(object: Visualiser {
+        visuals.add(object: Visualiser() {
             val scale = AnimationScale(0L, 30.0) { x -> 6*(x + 2) }
             val scaleL = AnimationScale(0L, 60.0) { k -> k/2 }
 
-            override fun draw(draw_pos: PointN) {
+            override fun draw(pos: PointN) {
                 agc().fill.color = Color(1.0, 0.0, 0.5, 1.0)
                 /*agc().image.draw(Data.get("images/player.png"), stats.POS - game.Game.STEP*36)
                 body.forEach { p -> agc().image.draw(Data.get("images/player.png"), p - game.Game.STEP*36) }*/
                 agc().fill.rect(
-                    draw_pos - Game.STEP*scale.swing(object_time),
+                    pos - Game.STEP*scale.swing(object_time),
                     Game.STEP*2*scale.swing(object_time),
                     Color(0.4, 0.7, 0.15, 1.0))
                 agc().fill.rect(
-                    draw_pos - PointN(3.0, 2.0)*0.15*scale.swing(object_time),
+                    pos - PointN(3.0, 2.0)*0.15*scale.swing(object_time),
                     PointN(1.0, 2.0)*0.3*scale.swing(object_time),
                     Color(0.1, 0.1, 0.1, 1.0))
                 agc().fill.rect(
-                    draw_pos - PointN(-1.0, 2.0)*0.15*scale.swing(object_time),
+                    pos - PointN(-1.0, 2.0)*0.15*scale.swing(object_time),
                     PointN(1.0, 2.0)*0.3*scale.swing(object_time),
                     Color(0.1, 0.1, 0.1, 1.0))
             }

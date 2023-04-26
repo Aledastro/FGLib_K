@@ -12,16 +12,14 @@ class ClassGetter<Type>(private val instance: ClassGetterInstance<Type>) {
         val name = input.substring(0, startIndex)
         val argsInput = input.substring(startIndex + 1)
 
-        var collector = ArrayList<Char>()
+        val collector = StringBuilder()
         val list = ArrayList<String>()
         var special = false
         var adding = false
 
         fun collect() {
-            val s = StringBuilder()
-            collector.forEach { c -> s.append(c) }
-            list.add(s.toString())
-            collector = ArrayList()
+            list.add(collector.toString())
+            collector.clear()
         }
 
         for(element in argsInput) {
@@ -34,7 +32,7 @@ class ClassGetter<Type>(private val instance: ClassGetterInstance<Type>) {
                     special = false
                     continue
                 }
-                collector.add(element)
+                collector.append(element)
             }
             when(element) {
                 '[' -> adding = true
@@ -45,10 +43,10 @@ class ClassGetter<Type>(private val instance: ClassGetterInstance<Type>) {
                     adding = false
                 }
 
-                ' ' -> {}
+                ' ' -> continue
                 ',' -> if(collector.isNotEmpty()) collect()
 
-                else -> if(adding) collector.add(element)
+                else -> if(adding) collector.append(element)
             }
         }
         return getMark(name, args)
