@@ -1,0 +1,7 @@
+//Uzery game.Game Studio 2019-2023
+//last edit: 2023.04.08 22:47:56
+room_pos: pos[210.0, 30.0]
+room_size: size[720.0, 720.0]
+
+cowboy: pos[340, 340]
+level_1

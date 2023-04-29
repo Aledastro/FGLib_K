@@ -1,0 +1,120 @@
+package com.uzery.fglib.utils.math.geom
+
+import com.uzery.fglib.utils.math.ArrayUtils
+import com.uzery.fglib.utils.math.MathUtils
+import kotlin.math.cos
+import kotlin.math.sin
+import kotlin.math.sqrt
+
+data class PointN(private val xs: Array<Double>) {
+    constructor(vararg xs: Double): this(xs.toTypedArray())
+    constructor(p: PointN): this(Array(p.dimension()) { i -> p.xs[i] })
+
+    operator fun get(n: Int): Double {
+        if(dimension() == 0) return 0.0;
+        return xs[n]
+    }
+
+    var X: Double = 0.0
+        get() = get(0)
+        set(d) {
+            xs[0] = d
+            field = d
+        }
+    var Y: Double = 0.0
+        get() = get(1)
+        set(d) {
+            xs[1] = d
+            field = d
+        }
+    var Z: Double = 0.0
+        get() = get(2)
+        set(d) {
+            xs[2] = d
+            field = d
+        }
+
+
+    override fun equals(other: Any?): Boolean {
+        if(this === other) return true
+        if(javaClass != other?.javaClass) return false
+
+        other as PointN
+
+        if(!xs.contentEquals(other.xs)) return false
+
+        return true
+    }
+
+    override fun hashCode(): Int = xs.contentHashCode()
+
+    operator fun plus(p: PointN): PointN =
+        PointN(ArrayUtils.transformP(xs, p.xs, 0.0) { x, y -> x + y })
+
+    operator fun minus(p: PointN): PointN =
+        PointN(ArrayUtils.transformP(xs, p.xs, 0.0) { x, y -> x - y })
+
+    operator fun div(p: PointN) = PointN(ArrayUtils.transformP(xs, p.xs, 0.0) { x, y -> x/y })
+    operator fun div(v: Double) = PointN(ArrayUtils.transform(xs) { x -> x/v })
+    operator fun div(v: Int) = PointN(ArrayUtils.transform(xs) { x -> x/v })
+
+    operator fun times(p: PointN) = PointN(ArrayUtils.transformP(xs, p.xs, 0.0) { x, y -> x*y })
+    operator fun times(v: Double) = PointN(ArrayUtils.transform(xs) { x -> x*v })
+    operator fun times(v: Int) = PointN(ArrayUtils.transform(xs) { x -> x*v })
+
+    operator fun unaryMinus() = PointN(ArrayUtils.transform(xs) { x -> -x })
+    fun dimension() = xs.size
+    fun less(other: PointN) = (this - other).isNegative()
+    fun more(other: PointN) = (other - this).isNegative()
+
+    private fun isNegative() = xs.all { i -> i<=0 }
+    fun lengthX2(): Double {
+        var sum = 0.0
+        xs.forEach { x -> sum += x*x }
+        return sum
+    }
+
+    fun length() = sqrt(lengthX2())
+    fun separate(level: Int) = PointN(Array(dimension()) { i -> if(level == i) xs[i] else 0.0 })
+
+    fun transform(transform: (x: Double) -> Double) = PointN(ArrayUtils.transform(xs, transform))
+    fun round(size: Double) = transform { x -> x - MathUtils.mod(x, size) }
+    fun interpolate(pos: PointN, k: Double): PointN {
+        return this + (pos - this)*k
+    }
+
+    fun rotateXY(d: Double): PointN {
+        val p = PointN(this)
+        val alpha = MathUtils.getDegree(p.X, p.Y) + d
+        val length = PointN(p.X, p.Y).length()
+        p.X = cos(alpha)*length
+        p.Y = sin(alpha)*length
+        return p
+    }
+
+    fun rotateXZ(d: Double): PointN {
+        val p = PointN(this)
+        val alpha = MathUtils.getDegree(p.X, p.Z) + d
+        val length = PointN(p.X, p.Z).length()
+        p.X = cos(alpha)*length
+        p.Z = sin(alpha)*length
+        return p
+    }
+
+    fun rotateYZ(d: Double): PointN {
+        val p = PointN(this)
+        val alpha = MathUtils.getDegree(p.Y, p.Z) + d
+        val length = PointN(p.Y, p.Z).length()
+        p.Y = cos(alpha)*length
+        p.Z = sin(alpha)*length
+        return p
+    }
+
+    companion object {
+        val ZERO = PointN(Array(0) { 0.0 })
+
+        fun transform(p1: PointN, p2: PointN, transform: (x: Double, y: Double) -> Double): PointN {
+            return PointN(ArrayUtils.transformP(p1.xs, p2.xs, 0.0, transform))
+        }
+    }
+}

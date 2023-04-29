@@ -1,0 +1,22 @@
+package game.objects
+
+import com.uzery.fglib.core.obj.GameObject
+import com.uzery.fglib.core.obj.ability.AbilityBox
+import com.uzery.fglib.utils.math.getter.Drop
+
+abstract class Enemy(protected var LIFE: Int): GameObject() {
+
+    abstract val drop: Drop<GameObject?>
+
+    init {
+        abilities.add(object: AbilityBox {
+            override fun run() {
+                if(LIFE<0) {
+                    drop.get()?.also { o -> produce(o) }
+                    collapse()
+                }
+            }
+        })
+
+    }
+}

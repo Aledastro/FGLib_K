@@ -2,7 +2,7 @@
   <artifact type="jar" name="Project:jar">
     <output-path>$PROJECT_DIR$/bin/Project_jar</output-path>
     <root id="archive" name="Project.jar">
-      <element id="module-output" name="Project" />
+      <element id="module-output" name="project" />
       <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/jetbrains/kotlin/kotlin-stdlib-jdk8/1.7.20/kotlin-stdlib-jdk8-1.7.20.jar" path-in-jar="/" />
       <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/jetbrains/kotlin/kotlin-stdlib/1.7.20/kotlin-stdlib-1.7.20.jar" path-in-jar="/" />
       <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/jetbrains/kotlin/kotlin-stdlib-common/1.7.20/kotlin-stdlib-common-1.7.20.jar" path-in-jar="/" />
