@@ -4,8 +4,12 @@ import com.uzery.fglib.utils.math.geom.PointN
 import com.uzery.fglib.utils.math.geom.Shape
 import javafx.scene.paint.Color
 import javafx.scene.paint.Paint
+import javafx.scene.text.Font
+import javafx.scene.text.TextAlignment
 
 abstract class GeometryGraphics(private val transform: AffineTransform) {
+    var font = Font.font(10.0)
+    protected var text_align = TextAlignment.RIGHT
     abstract var color: Paint
 
     protected abstract fun rect0(pos: PointN, size: PointN)
@@ -28,6 +32,25 @@ abstract class GeometryGraphics(private val transform: AffineTransform) {
 
     fun text(pos: PointN, text: String, color: Color) {
         this.color = color
+        this.text_align = TextAlignment.LEFT
+        text0(transform.pos(pos), text)
+    }
+
+    fun textL(pos: PointN, text: String, color: Color) {
+        this.color = color
+        this.text_align = TextAlignment.LEFT
+        text0(transform.pos(pos), text)
+    }
+
+    fun textC(pos: PointN, text: String, color: Color) {
+        this.color = color
+        this.text_align = TextAlignment.CENTER
+        text0(transform.pos(pos), text)
+    }
+
+    fun textR(pos: PointN, text: String, color: Color) {
+        this.color = color
+        this.text_align = TextAlignment.RIGHT
         text0(transform.pos(pos), text)
     }
 

@@ -1,8 +1,14 @@
 package com.uzery.fglib.extension.event
 
+import com.uzery.fglib.core.obj.DrawLayer
 import com.uzery.fglib.core.obj.GameObject
 import com.uzery.fglib.core.obj.ability.AbilityBox
 import com.uzery.fglib.core.obj.ability.InputAction
+import com.uzery.fglib.core.obj.visual.LayerVisualiser
+import com.uzery.fglib.utils.math.geom.PointN
+import javafx.scene.paint.Color
+import javafx.scene.text.Font
+import javafx.scene.text.FontWeight
 
 abstract class GameEvent: GameObject() {
     var repeatable = false
@@ -40,6 +46,15 @@ abstract class GameEvent: GameObject() {
                         collapse()
                     }
                 }
+            }
+        })
+        visuals.add(object: LayerVisualiser(DrawLayer(0.0, 3.0)) {
+            override fun draw(draw_pos: PointN) {
+                agc().fill.oval(
+                    draw_pos - PointN(10.0, 10.0),
+                    PointN(20.0, 20.0), Color.CORAL.interpolate(Color.TRANSPARENT, 0.1))
+                agc().fill.font = Font.font("TimesNewRoman", FontWeight.BOLD, 15.0)
+                agc().fill.textC(draw_pos + PointN(0.0, 6.0), "E", Color.WHITE)
             }
         })
     }

@@ -1,10 +1,9 @@
 package com.uzery.fglib.utils.math.getter
 
 import com.uzery.fglib.utils.math.num.StringN
-import java.util.function.Supplier
 
 class ClassGetter<Type>(private val instance: ClassGetterInstance<Type>) {
-    fun getMark(input: String): Supplier<Type> {
+    private fun getMark(input: String): () -> Type {
         val args = ArrayList<ArrayList<String>>()
         val startIndex = input.indexOf(':')
         if(startIndex == -1) return getMark(input, args)
@@ -52,9 +51,16 @@ class ClassGetter<Type>(private val instance: ClassGetterInstance<Type>) {
         return getMark(name, args)
     }
 
-    fun getMark(name: String, args: ArrayList<ArrayList<String>>): Supplier<Type> =
+    private fun getMark(name: String, args: ArrayList<ArrayList<String>>): () -> Type =
         instance.getMark(StringN(name, args.size), args)
 
-    fun getFrom(name: String, args: ArrayList<ArrayList<String>>): Type = getMark(name, args).get()
-    fun getFrom(input: String): Type = getMark(input).get()
+    fun getFrom(name: String, args: ArrayList<ArrayList<String>>): Type = getMark(name, args).invoke()
+    fun getFrom(input: String): Type = getMark(input).invoke()
+    fun getEntry(id: Int): Type {
+        return instance.getEntry(id).invoke()
+    }
+
+    fun entry_size(): Int {
+        return instance.entry_size()
+    }
 }

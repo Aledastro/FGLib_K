@@ -8,6 +8,7 @@ import com.uzery.fglib.core.obj.controller.Controller
 import com.uzery.fglib.core.obj.controller.TempAction
 import com.uzery.fglib.core.obj.controller.TimeTempAction
 import com.uzery.fglib.core.obj.visual.LayerVisualiser
+import com.uzery.fglib.core.world.World
 import com.uzery.fglib.utils.data.image.Data
 import com.uzery.fglib.utils.math.MathUtils
 import com.uzery.fglib.utils.math.geom.PointN
@@ -49,7 +50,7 @@ class Goblin(pos: PointN): Enemy(4) {
         object: TimeTempAction() {
             var goal: GameObject? = null
             override fun start() {
-                goal = Game.allTagged("player").findFirst().orElse(null)
+                goal = World.allTagged("player").findFirst().orElse(null)
             }
 
             override fun update() {

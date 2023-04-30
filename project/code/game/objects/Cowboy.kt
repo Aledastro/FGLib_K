@@ -11,6 +11,7 @@ import com.uzery.fglib.core.obj.controller.TimeTempAction
 import com.uzery.fglib.core.obj.visual.LayerVisualiser
 import com.uzery.fglib.core.program.Platform
 import com.uzery.fglib.core.program.Platform.Companion.keyboard
+import com.uzery.fglib.core.world.World
 import com.uzery.fglib.utils.data.image.Data
 import com.uzery.fglib.utils.math.geom.Direct
 import com.uzery.fglib.utils.math.geom.PointN
@@ -21,7 +22,6 @@ import com.uzery.fglib.utils.math.num.IntI
 import game.Game
 import game.camera.LazyCamera
 import javafx.scene.input.KeyCode
-import javafx.scene.input.MouseButton
 import javafx.scene.paint.Color
 
 class Cowboy(pos: PointN): Enemy(1000) {
@@ -35,13 +35,10 @@ class Cowboy(pos: PointN): Enemy(1000) {
                 return stay
             }
         }
-        Game.world.camera = LazyCamera(stats)
+        World.camera = LazyCamera(stats)
 
         abilities.add(object: AbilityBox {
             override fun run() {
-                if(Platform.mouse_keys.pressed(MouseButton.PRIMARY)) {
-                    stats.POS = Platform.mouse.pos() - Game.world.room.pos
-                }
                 LIFE++
                 LIFE = LIFE.coerceIn(0..1000)
             }
@@ -84,7 +81,7 @@ class Cowboy(pos: PointN): Enemy(1000) {
                 agc().fill.rect(
                     PointN.ZERO,
                     Platform.CANVAS,
-                    Color.color(1.0, 0.0, 0.0, (1.0 - LIFE/1000.0).coerceIn(0.0, 1.0)))
+                    Color.color(1.0, 0.0, 0.0, (1.0 - LIFE/1000.0).coerceIn(0.0, 0.1)))
             }
         })
 

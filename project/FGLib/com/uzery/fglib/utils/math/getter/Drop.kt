@@ -14,6 +14,8 @@ class Drop<T> {
 
     fun get(): T? {
         var size = priorities.sum()
+        if(size == 0.0) return null
+
         if(full != -1.0) {
             if(full<size) throw DebugData.error("full is too small: SUM=$size / FULL=$full")
             size = full

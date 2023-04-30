@@ -1,26 +1,22 @@
 package game
 
 import com.uzery.fglib.core.obj.DrawLayer
-import com.uzery.fglib.core.obj.GameObject
 import com.uzery.fglib.core.obj.bounds.BoundsBox
 import com.uzery.fglib.core.program.Extension
 import com.uzery.fglib.core.program.Platform
 import com.uzery.fglib.core.program.Platform.Companion.graphics
 import com.uzery.fglib.core.program.Platform.Companion.keyboard
-import com.uzery.fglib.core.program.Platform.Companion.mouse_keys
 import com.uzery.fglib.core.world.World
 import com.uzery.fglib.utils.math.geom.PointN
+import com.uzery.fglib.utils.math.getter.ClassGetter
 import game.objects.Wall
 import javafx.scene.input.KeyCode
 import javafx.scene.paint.Color
-import java.util.*
-import java.util.stream.Stream
 
 class Game: Extension {
     private var t = 0
 
     override fun init() {
-        world.init("project/media/1.map")
         for(i in 0..17) {
             if(i in 7..9) continue
             world.add(Wall(PointN(i*40 + 20.0, 20.0)))
@@ -37,10 +33,6 @@ class Game: Extension {
         Platform.whole_draw = true
     }
 
-    override fun children(): List<Extension> {
-        return LinkedList<Extension>()
-    }
-
     override fun update() {
         clear()
         world.run()
@@ -50,8 +42,7 @@ class Game: Extension {
         if(draw_bounds) drawBounds()
         if(keyboard.pressed(KeyCode.CONTROL) && keyboard.inPressed(KeyCode.TAB)) draw_bounds = !draw_bounds
 
-        keyboard.update()
-        mouse_keys.update()
+        Platform.update()
         t++
     }
 
@@ -60,6 +51,8 @@ class Game: Extension {
         graphics.layer = DrawLayer.CAMERA_OFF
         graphics.fill.rect(PointN.ZERO, Platform.CANVAS, Color(0.7, 0.6, 0.9, 1.0))
     }
+
+    var world = World(ClassGetter(ClassGetterX()))
 
     companion object {
         val STEP = PointN(1.0, 1.0)
@@ -71,19 +64,13 @@ class Game: Extension {
         fun randP(size: Double) = randP()*size
         fun randP(size: Int) = randP()*size
 
-
-        var world = World(ClassGetterX())
-        fun allTagged(tag: String): Stream<GameObject> {
-            return world.room.objs().stream().filter { o -> o.tagged(tag) }
-        }
-
         var draw_bounds = false
     }
 
 
     private fun drawBounds() {
-        val dp = world.room.pos
-        for(o in world.room.objs()) {
+        val dp = World.room.pos
+        for(o in World.room.objects) {
             val c = if(o.stats.fly) Color.color(1.0, 1.0, 0.2, 0.7) else Color.color(1.0, 0.2, 1.0, 0.7)
             graphics.fill.oval(dp + o.stats.POS - STEP*2, STEP*4, c)
         }
@@ -92,10 +79,10 @@ class Game: Extension {
             Color.RED,
             Color.ORANGERED,
             Color.BLUE,
-            Color.GREEN) //todo why?
+            Color.GREEN)
 
         graphics.setStroke(2.0)
-        for(o in world.room.objs()) {
+        for(o in World.room.objects) {
             for(i in 0 until BoundsBox.size) {
                 val bs = o.bounds[i] ?: continue
                 for(element in bs().elements) {

@@ -5,6 +5,10 @@ data class RectN(private val pos: PointN, private val size: PointN): Shape() {
         return RectN(pos + move, size)
     }
 
+    override fun into(pos: PointN): Boolean {
+        return L.less(pos) && pos.less(R)
+    }
+
     override val L = pos
     override val R = pos + size
 

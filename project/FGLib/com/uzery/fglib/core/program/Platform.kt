@@ -18,6 +18,11 @@ class Platform {
     companion object {
         fun options() = Program.options
 
+        fun update() {
+            keyboard.update()
+            mouse_keys.update()
+        }
+
         var whole_draw = false
         val CANVAS
             get() = PointN(options().size.X, options().size.Y)
@@ -35,7 +40,11 @@ class Platform {
         }
         val graphics = object: AffineGraphics() {
             private val transform =
-                AffineTransform { p -> if(whole_draw) (p - drawPOS*layer.z).round(1.0) else (p - drawPOS*layer.z) }
+                AffineTransform { p ->
+                    var x = (p - drawPOS*layer.z)
+                    if(whole_draw) x = p.round(1.0)
+                    x
+                }
 
             override fun setStroke(size: Double) {
                 Program.gc.lineWidth = size
@@ -79,6 +88,8 @@ class Platform {
                 }
 
                 override fun text0(pos: PointN, text: String) {
+                    Program.gc.textAlign = text_align
+                    Program.gc.font = font
                     Program.gc.fillText(text, pos.X, pos.Y)
                 }
             }
@@ -102,6 +113,8 @@ class Platform {
                 }
 
                 override fun text0(pos: PointN, text: String) {
+                    Program.gc.textAlign = text_align
+                    Program.gc.font = font
                     Program.gc.strokeText(text, pos.X, pos.Y)
                 }
             }

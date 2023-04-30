@@ -10,13 +10,19 @@ import com.uzery.fglib.utils.math.getter.ClassGetter
 import com.uzery.fglib.utils.math.getter.ClassGetterInstance
 import javafx.scene.paint.Color
 import java.util.*
+import java.util.stream.Stream
 
-class World(instance: ClassGetterInstance<GameObject>) {
-    var room = Room(PointN.ZERO, PointN.ZERO)
-        private set
-    var camera: Camera? = null
+class World(private val getter: ClassGetter<GameObject>) {
+    companion object {
+        var room = Room(PointN.ZERO, PointN.ZERO)
+            private set
 
-    private var getter = ClassGetter(instance)
+        fun allTagged(tag: String): Stream<GameObject> {
+            return room.objects.stream().filter { o -> o.tagged(tag) }
+        }
+
+        var camera: Camera? = null
+    }
 
     fun setRoom(filename: String) {
         readInfo(WriteData[filename])

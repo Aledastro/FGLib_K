@@ -14,7 +14,10 @@ import java.util.*
 class Level_1: CompositeGameEvent() {
     var ids_time = 0
 
+    private val pp: PointN = PointN(16.0, -48.0)
+
     init {
+        stats.POS = pp
         visuals.add(object: Visualiser {
             override fun draw(draw_pos: PointN) {
                 val s = Platform.CANVAS.X - 20
@@ -58,5 +61,9 @@ class Level_1: CompositeGameEvent() {
 
     override fun finish() {
 
+    }
+
+    override fun setValues() {
+        name = "level_1"
     }
 }

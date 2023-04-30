@@ -25,6 +25,7 @@ data class Bounds(val elements: Array<BoundsElement>) {
         var min = elements.first().shape.L
         var max = elements.first().shape.R
         for(el in elements) {
+            //todo
             if(el.shape.L.less(min)) min = el.shape.L
             if(el.shape.R.more(min)) max = el.shape.R
         }

@@ -6,7 +6,7 @@ import com.uzery.fglib.core.obj.ability.InputAction
 import com.uzery.fglib.core.obj.bounds.Bounds
 import com.uzery.fglib.core.obj.bounds.BoundsBox
 import com.uzery.fglib.core.obj.visual.Visualiser
-import com.uzery.fglib.core.program.Platform
+import com.uzery.fglib.core.program.Platform.Companion.graphics
 import com.uzery.fglib.utils.math.BoundsUtils
 import com.uzery.fglib.utils.math.FGUtils
 import com.uzery.fglib.utils.math.ShapeUtils
@@ -14,10 +14,12 @@ import com.uzery.fglib.utils.math.geom.PointN
 import com.uzery.fglib.utils.math.getter.value.PosValue
 import com.uzery.fglib.utils.math.getter.value.SizeValue
 import javafx.scene.paint.Color
+import javafx.scene.text.Font
+import javafx.scene.text.FontWeight
 import java.util.*
 
 class Room(val pos: PointN, val size: PointN) {
-    private val objects = LinkedList<GameObject>()
+    val objects = LinkedList<GameObject>()
     private val new_objects = ArrayList<GameObject>()
 
     constructor(pos: PointN, size: PointN, objs: List<GameObject>): this(pos, size) {
@@ -62,7 +64,7 @@ class Room(val pos: PointN, val size: PointN) {
             }
         }
 
-        drawDebug()
+        drawDebug(draw_pos)
     }
 
     private var ids_time = 0
@@ -70,20 +72,22 @@ class Room(val pos: PointN, val size: PointN) {
     private var maxRam = 0L
     private var freeRam = 0L
     private var ram = 0L
-    private fun drawDebug() {
-        Platform.graphics.layer = DrawLayer.CAMERA_OFF
+    private fun drawDebug(draw_pos: PointN) {
+        graphics.layer = DrawLayer.CAMERA_OFF
+        graphics.fill.font = Font.font("TimesNewRoman", FontWeight.BOLD, 12.0)
+
         val b = (ids_time%20 == 0)
         if(b) maxRam = Runtime.getRuntime().totalMemory()
         if(b) freeRam = Runtime.getRuntime().freeMemory()
         if(b) ram = maxRam - freeRam
-        val p = PointN(970.0, 50.0)
+        val p = draw_pos + PointN(size.X + 10, 0.0)
 
-        Platform.graphics.fill.text(p + PointN(0.0, 20.0), "size: ${objects.size}", Color.DARKBLUE)
-        Platform.graphics.fill.text(
+        graphics.fill.text(p + PointN(0.0, 20.0), "size: ${objects.size}", Color.DARKBLUE)
+        graphics.fill.text(
             p + PointN(0.0, 40.0),
             "ram (MB): ${ram/1000_000}/${maxRam/1000_000}",
             Color.DARKBLUE)
-        Platform.graphics.fill.text(
+        graphics.fill.text(
             p + PointN(0.0, 60.0),
             "ram (KB) per obj: ${if(objects.size != 0) (ram/1000/objects.size).toInt() else 0}",
             Color.DARKBLUE)
@@ -91,7 +95,7 @@ class Room(val pos: PointN, val size: PointN) {
         last = System.currentTimeMillis()
         fps += (1000.0/time)
         fps *= 0.99
-        Platform.graphics.fill.text(p + PointN(0.0, 80.0), "fps: ${(fps/100).toInt()}", Color.DARKBLUE)
+        graphics.fill.text(p + PointN(0.0, 80.0), "FPS: ${(fps/100).toInt()}", Color.DARKBLUE)
 
         for(index in 0..3) {
             var bs_n = 0
@@ -99,15 +103,13 @@ class Room(val pos: PointN, val size: PointN) {
                 val bs = o.bounds[index]
                 if(bs != null) bs_n++
             }
-            Platform.graphics.fill.text(
+            graphics.fill.text(
                 p + PointN(0.0, 100.0 + index*20), "bounds[${BoundsBox.name(index)}]: $bs_n", Color.DARKBLUE)
         }
         ids_time++
     }
 
     fun add(obj: GameObject) = objects.add(obj)
-
-    fun objs(): LinkedList<GameObject> = LinkedList(objects)
 
     private fun nextMoveOld() {
         val all_bounds = LinkedList<Bounds>()
