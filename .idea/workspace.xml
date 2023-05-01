@@ -12,38 +12,38 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="82970e50-af90-458e-a847-e0b07c98f932" name="Changes" comment="3.0">
-      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/project/FGLib/com/uzery/fglib/extension/room_editor/RoomEditor.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/project/FGLib/com/uzery/fglib/extension/ui/Button.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/project/FGLib/com/uzery/fglib/extension/ui/UIBox.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/project/FGLib/com/uzery/fglib/extension/ui/UICanvas.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/project/FGLib/com/uzery/fglib/extension/ui/UIElement.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/project/FGLib/com/uzery/fglib/extension/ui/VBox.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/project/code/launch/RELauncher.kt" afterDir="false" />
+    <list default="true" id="82970e50-af90-458e-a847-e0b07c98f932" name="Changes" comment="3.1">
+      <change afterPath="$PROJECT_DIR$/project/code/game/objects/map/Decor.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/project/FGLib/com/uzery/fglib/core/obj/bounds/Bounds.kt" beforeDir="false" afterPath="$PROJECT_DIR$/project/FGLib/com/uzery/fglib/core/obj/bounds/Bounds.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/FGLib/com/uzery/fglib/core/program/Extension.kt" beforeDir="false" afterPath="$PROJECT_DIR$/project/FGLib/com/uzery/fglib/core/program/Extension.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/FGLib/com/uzery/fglib/core/program/LaunchOptions.kt" beforeDir="false" afterPath="$PROJECT_DIR$/project/FGLib/com/uzery/fglib/core/program/LaunchOptions.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/FGLib/com/uzery/fglib/core/program/Platform.kt" beforeDir="false" afterPath="$PROJECT_DIR$/project/FGLib/com/uzery/fglib/core/program/Platform.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/FGLib/com/uzery/fglib/core/program/Program.kt" beforeDir="false" afterPath="$PROJECT_DIR$/project/FGLib/com/uzery/fglib/core/program/Program.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/FGLib/com/uzery/fglib/core/obj/bounds/BoundsBox.kt" beforeDir="false" afterPath="$PROJECT_DIR$/project/FGLib/com/uzery/fglib/core/obj/bounds/BoundsBox.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/project/FGLib/com/uzery/fglib/core/room/Room.kt" beforeDir="false" afterPath="$PROJECT_DIR$/project/FGLib/com/uzery/fglib/core/room/Room.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/project/FGLib/com/uzery/fglib/core/world/World.kt" beforeDir="false" afterPath="$PROJECT_DIR$/project/FGLib/com/uzery/fglib/core/world/World.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/FGLib/com/uzery/fglib/extension/event/GameEvent.kt" beforeDir="false" afterPath="$PROJECT_DIR$/project/FGLib/com/uzery/fglib/extension/event/GameEvent.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/FGLib/com/uzery/fglib/utils/graphics/GeometryGraphics.kt" beforeDir="false" afterPath="$PROJECT_DIR$/project/FGLib/com/uzery/fglib/utils/graphics/GeometryGraphics.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/FGLib/com/uzery/fglib/utils/input/TouchActivator.kt" beforeDir="false" afterPath="$PROJECT_DIR$/project/FGLib/com/uzery/fglib/utils/input/TouchActivator.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/FGLib/com/uzery/fglib/utils/math/geom/RectN.kt" beforeDir="false" afterPath="$PROJECT_DIR$/project/FGLib/com/uzery/fglib/utils/math/geom/RectN.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/FGLib/com/uzery/fglib/extension/room_editor/RoomEditor.kt" beforeDir="false" afterPath="$PROJECT_DIR$/project/FGLib/com/uzery/fglib/extension/room_editor/RoomEditor.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/FGLib/com/uzery/fglib/extension/ui/Button.kt" beforeDir="false" afterPath="$PROJECT_DIR$/project/FGLib/com/uzery/fglib/extension/ui/Button.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/FGLib/com/uzery/fglib/extension/ui/UIBox.kt" beforeDir="false" afterPath="$PROJECT_DIR$/project/FGLib/com/uzery/fglib/extension/ui/UIBox.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/FGLib/com/uzery/fglib/extension/ui/UIElement.kt" beforeDir="false" afterPath="$PROJECT_DIR$/project/FGLib/com/uzery/fglib/extension/ui/UIElement.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/FGLib/com/uzery/fglib/extension/ui/VBox.kt" beforeDir="false" afterPath="$PROJECT_DIR$/project/FGLib/com/uzery/fglib/extension/ui/VBox.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/FGLib/com/uzery/fglib/utils/data/image/Data.kt" beforeDir="false" afterPath="$PROJECT_DIR$/project/FGLib/com/uzery/fglib/utils/data/image/Data.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/FGLib/com/uzery/fglib/utils/math/CollisionUtils.kt" beforeDir="false" afterPath="$PROJECT_DIR$/project/FGLib/com/uzery/fglib/utils/math/CollisionUtils.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/FGLib/com/uzery/fglib/utils/math/ShapeUtils.kt" beforeDir="false" afterPath="$PROJECT_DIR$/project/FGLib/com/uzery/fglib/utils/math/ShapeUtils.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/project/FGLib/com/uzery/fglib/utils/math/geom/Shape.kt" beforeDir="false" afterPath="$PROJECT_DIR$/project/FGLib/com/uzery/fglib/utils/math/geom/Shape.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/FGLib/com/uzery/fglib/utils/math/getter/ClassGetter.kt" beforeDir="false" afterPath="$PROJECT_DIR$/project/FGLib/com/uzery/fglib/utils/math/getter/ClassGetter.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/project/FGLib/com/uzery/fglib/utils/math/getter/ClassGetterInstance.kt" beforeDir="false" afterPath="$PROJECT_DIR$/project/FGLib/com/uzery/fglib/utils/math/getter/ClassGetterInstance.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/FGLib/com/uzery/fglib/utils/math/getter/Drop.kt" beforeDir="false" afterPath="$PROJECT_DIR$/project/FGLib/com/uzery/fglib/utils/math/getter/Drop.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/FGLib/com/uzery/fglib/utils/math/getter/value/PosValue.kt" beforeDir="false" afterPath="$PROJECT_DIR$/project/FGLib/com/uzery/fglib/utils/math/getter/value/PosValue.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/FGLib/com/uzery/fglib/utils/math/getter/value/SizeValue.kt" beforeDir="false" afterPath="$PROJECT_DIR$/project/FGLib/com/uzery/fglib/utils/math/getter/value/SizeValue.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/code/game/ClassGetterX.kt" beforeDir="false" afterPath="$PROJECT_DIR$/project/code/game/ClassGetterX.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/project/code/game/Game.kt" beforeDir="false" afterPath="$PROJECT_DIR$/project/code/game/Game.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/code/game/camera/LazyCamera.kt" beforeDir="false" afterPath="$PROJECT_DIR$/project/code/game/camera/LazyCamera.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/project/code/game/events/Level_1.kt" beforeDir="false" afterPath="$PROJECT_DIR$/project/code/game/events/Level_1.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/code/game/objects/Cowboy.kt" beforeDir="false" afterPath="$PROJECT_DIR$/project/code/game/objects/Cowboy.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/code/game/objects/Goblin.kt" beforeDir="false" afterPath="$PROJECT_DIR$/project/code/game/objects/Goblin.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/code/launch/Main.kt" beforeDir="false" afterPath="$PROJECT_DIR$/project/code/launch/GameLauncher.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/media/META-INF/MANIFEST.MF" beforeDir="false" afterPath="$PROJECT_DIR$/project/media/META-INF/MANIFEST.MF" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/code/game/objects/Bullet.kt" beforeDir="false" afterPath="$PROJECT_DIR$/project/code/game/objects/character/Bullet.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/code/game/objects/Cowboy.kt" beforeDir="false" afterPath="$PROJECT_DIR$/project/code/game/objects/character/Cowboy.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/code/game/objects/Enemy.kt" beforeDir="false" afterPath="$PROJECT_DIR$/project/code/game/objects/enemy/Enemy.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/code/game/objects/Goblin.kt" beforeDir="false" afterPath="$PROJECT_DIR$/project/code/game/objects/enemy/Goblin.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/code/game/objects/Wall.kt" beforeDir="false" afterPath="$PROJECT_DIR$/project/code/game/objects/map/Wall.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/code/game/objects/items/EffectItem.kt" beforeDir="false" afterPath="$PROJECT_DIR$/project/code/game/objects/items/EffectItem.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/media/1.map" beforeDir="false" afterPath="$PROJECT_DIR$/project/media/1.room" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/media/images/cowboy.png" beforeDir="false" afterPath="$PROJECT_DIR$/project/media/images/world/character/cowboy.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/media/images/goblin.png" beforeDir="false" afterPath="$PROJECT_DIR$/project/media/images/world/enemy/goblin.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/media/images/items.png" beforeDir="false" afterPath="$PROJECT_DIR$/project/media/images/world/items/items.png" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -86,7 +86,7 @@
     "project.structure.proportion": "0.15",
     "project.structure.side.proportion": "0.2",
     "run.code.analysis.last.selected.profile": "pProject Default",
-    "settings.editor.selected.configurable": "preferences.sourceCode.Kotlin"
+    "settings.editor.selected.configurable": "preferences.fileTypes"
   }
 }]]></component>
   <component name="RecentsManager">
@@ -98,11 +98,11 @@
       <recent name="C:\Users\User\IdeaProjects\lib\FGLib_K\test_3_cowboy1" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\User\IdeaProjects\lib\FGLib_K\project\media\images\world\items" />
+      <recent name="C:\Users\User\IdeaProjects\lib\FGLib_K\project\media\images\world\enemy" />
+      <recent name="C:\Users\User\IdeaProjects\lib\FGLib_K\project\media\images\world\character" />
+      <recent name="C:\Users\User\IdeaProjects\lib\FGLib_K\project\media\images\world" />
       <recent name="C:\Users\User\IdeaProjects\lib\FGLib_K" />
-      <recent name="C:\Users\User\IdeaProjects\lib\FGLib_K\Project" />
-      <recent name="C:\Users\User\IdeaProjects\lib\FGLib_K\test_3\src\launch" />
-      <recent name="C:\Users\User\IdeaProjects\lib\FGLib_K\FGLib" />
-      <recent name="C:\Users\User\IdeaProjects\lib\FGLib_K\FGLib\core\room\code\com\uzery\fglib\core\room" />
     </key>
     <key name="CreateKotlinClassDialog.RecentsKey">
       <recent name="com.uzery.fglib.extension.ui" />
@@ -112,18 +112,18 @@
       <recent name="" />
     </key>
     <key name="MoveKotlinTopLevelDeclarationsDialog.RECENTS_KEY">
+      <recent name="game.objects.character" />
+      <recent name="game.objects.map" />
+      <recent name="game.objects.enemy" />
       <recent name="com.uzery.fglib.utils.math.getter" />
       <recent name="com.uzery.fglib.utils.math.geom" />
-      <recent name="game.objects" />
-      <recent name="game" />
-      <recent name="com.uzery.fglib.utils.data.debug" />
     </key>
     <key name="CopyKotlinDeclarationDialog.RECENTS_KEY">
+      <recent name="game.objects.map" />
       <recent name="com.uzery.fglib.extension.ui" />
       <recent name="game.objects.items" />
       <recent name="game.camera" />
       <recent name="com.uzery.fglib.utils.math.num" />
-      <recent name="com.uzery.fglib.core.obj.controller" />
     </key>
   </component>
   <component name="RunManager" selected="Kotlin.RELauncherKt">
@@ -241,7 +241,14 @@
       <option name="project" value="LOCAL" />
       <updated>1682786124296</updated>
     </task>
-    <option name="localTasksCounter" value="13" />
+    <task id="LOCAL-00013" summary="3.1">
+      <created>1682822505557</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1682822505557</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
     <servers />
   </component>
   <component name="UnknownFeatures">
@@ -271,7 +278,8 @@
     <MESSAGE value="2.0.2" />
     <MESSAGE value="2.1" />
     <MESSAGE value="3.0" />
-    <option name="LAST_COMMIT_MESSAGE" value="3.0" />
+    <MESSAGE value="3.1" />
+    <option name="LAST_COMMIT_MESSAGE" value="3.1" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

@@ -18,8 +18,7 @@ interface CollisionUtils {
         }
 
         private fun maxMoveRect(stay: RectN, start: RectN, finish: RectN): Double {
-            //todo dimension
-            return (0 until start.S.dimension()).minOf { level -> maxMoveRect(stay, start, finish, level) }
+            return (0 until start.dimension()).minOf { level -> maxMoveRect(stay, start, finish, level) }
         }
 
         fun intoX(stay: Shape, start: Shape, finish: Shape): Boolean {
@@ -49,7 +48,7 @@ interface CollisionUtils {
             if(abs(fl - sl)>LITTLE) path1 = (r - fl)/(sl - fl)
             if(abs(fr - sr)>LITTLE) path2 = (l - fr)/(sr - fr)
 
-            val n = stay.L.dimension()
+            val n = stay.dimension()
             for(i in 1 until n) {
                 val lv = MathUtils.mod(level + i, n)
                 val rect1 = ShapeUtils.interpolate(start, finish, path1)
@@ -59,7 +58,7 @@ interface CollisionUtils {
                 if(!(stay.L[lv]<=rect2.R[lv] && stay.R[lv]>=rect2.L[lv] && path2 in (0.0..1.0))) path2 = 1.0
             }
 
-            val path = path1.coerceAtMost(path2)
+            val path = kotlin.math.min(path1, path2)
 
             if(path<0) return 0.0
             if(path>1) return 1.0 //throw DebugData.error("err: K=$path")

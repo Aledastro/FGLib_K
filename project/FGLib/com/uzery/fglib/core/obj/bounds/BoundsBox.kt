@@ -34,6 +34,4 @@ class BoundsBox {
 
         const val size = 4
     }
-
-
 }

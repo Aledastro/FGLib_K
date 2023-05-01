@@ -28,7 +28,7 @@ open class EffectItem(pos: PointN, id: Int, private val effect_name: String, pri
 
             }
         })
-        val filename = "items.png"
+        val filename = "item|items.png"
         Data.set(filename, IntI(16, 16), 2)
         visuals.add(object: LayerVisualiser(DrawLayer.CAMERA_FOLLOW) {
             override fun draw(draw_pos: PointN) {

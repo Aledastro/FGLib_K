@@ -1,7 +1,10 @@
 package com.uzery.fglib.core.obj.bounds
 
+import com.uzery.fglib.utils.math.geom.PointN
 import com.uzery.fglib.utils.math.geom.RectN
 import com.uzery.fglib.utils.math.geom.Shape
+import kotlin.math.max
+import kotlin.math.min
 
 data class Bounds(val elements: Array<BoundsElement>) {
     constructor(vararg shapes: Shape): this(Array(shapes.size) { i -> BoundsElement(shapes[i]) })
@@ -25,9 +28,8 @@ data class Bounds(val elements: Array<BoundsElement>) {
         var min = elements.first().shape.L
         var max = elements.first().shape.R
         for(el in elements) {
-            //todo
-            if(el.shape.L.less(min)) min = el.shape.L
-            if(el.shape.R.more(min)) max = el.shape.R
+            min = PointN.transform(min, el.shape.L) { a, b -> min(a, b) }
+            max = PointN.transform(max, el.shape.R) { a, b -> max(a, b) }
         }
         return RectN.rectLR(min, max)
     }

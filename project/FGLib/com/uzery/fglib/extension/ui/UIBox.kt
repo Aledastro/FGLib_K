@@ -22,7 +22,8 @@ class UIBox: Extension {
     override fun update() {
         active = list.stream().filter { a -> RectN(a.pos, a.size).into(mouse.pos()) }
             .sorted { o1, o2 -> -o1.priority.compareTo(o2.priority) }.findFirst().get()
-        active?.update()
+        active?.ifActive()
+        list.forEach { o -> o.update() }
 
         list.forEach { o ->
             Platform.graphics.fill.rect(

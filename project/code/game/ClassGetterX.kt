@@ -3,8 +3,8 @@ package game
 import com.uzery.fglib.core.obj.GameObject
 import com.uzery.fglib.utils.math.getter.ClassGetterInstance
 import game.events.Level_1
-import game.objects.Cowboy
-import game.objects.Wall
+import game.objects.character.Cowboy
+import game.objects.map.Wall
 
 class ClassGetterX: ClassGetterInstance<GameObject>() {
     override fun addAll() {

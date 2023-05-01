@@ -27,8 +27,12 @@ abstract class Button: UIElement() {
         graphics.fill.textC(pos + PointN(size.X*0.5, size.Y*1.6), name, Color.DARKBLUE)
     }
 
+    final override fun ifActive() {
+        if(rePressed(pos, size)) value = !value
+    }
+
     final override fun update() {
-        if(pressed || rePressed(pos, size)) value = !value
+        if(pressed) value = !value
     }
 
     fun action() {

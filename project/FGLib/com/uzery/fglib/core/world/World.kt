@@ -2,7 +2,7 @@ package com.uzery.fglib.core.world
 
 import com.uzery.fglib.core.obj.DrawLayer
 import com.uzery.fglib.core.obj.GameObject
-import com.uzery.fglib.core.program.Platform
+import com.uzery.fglib.core.program.Platform.Companion.graphics
 import com.uzery.fglib.core.room.Room
 import com.uzery.fglib.utils.data.file.WriteData
 import com.uzery.fglib.utils.math.geom.PointN
@@ -22,6 +22,21 @@ class World(private val getter: ClassGetter<GameObject>) {
         }
 
         var camera: Camera? = null
+
+        fun next() {
+            room.next()
+
+            camera?.update()
+
+            graphics.drawPOS = camera?.drawPOS() ?: PointN.ZERO
+        }
+
+        fun draw(pos: PointN = PointN.ZERO) {
+            room.draw(pos + room.pos)
+
+            graphics.layer = DrawLayer.CAMERA_FOLLOW
+            graphics.stroke.rect(pos + room.pos, room.size, Color.DARKBLUE)
+        }
     }
 
     fun setRoom(filename: String) {
@@ -34,9 +49,10 @@ class World(private val getter: ClassGetter<GameObject>) {
         while(next.startsWith("//") || next.isEmpty()) {
             next = list.removeFirst()
         }
-        val pos = getP(next.substring(next.indexOf(':') + 2))
-        next = list.removeFirst()
-        val size = getP(next.substring(next.indexOf(':') + 2))
+        val t = StringTokenizer(next)
+        t.nextToken()
+        val pos = getP(t.nextToken() + t.nextToken())
+        val size = getP(t.nextToken() + t.nextToken())
         while(list.isNotEmpty()) {
             next = list.removeFirst()
             if(next.startsWith("//")) continue
@@ -55,17 +71,6 @@ class World(private val getter: ClassGetter<GameObject>) {
 
     fun init(filename: String) {
         setRoom(filename)
-    }
-
-    fun run() {
-        room.next()
-
-        room.draw(room.pos)
-        camera?.update()
-        Platform.graphics.drawPOS = camera?.drawPOS() ?: PointN.ZERO
-
-        Platform.graphics.layer = DrawLayer.CAMERA_FOLLOW
-        Platform.graphics.stroke.rect(room.pos, room.size, Color.DARKBLUE)
     }
 
     fun add(o: GameObject) {

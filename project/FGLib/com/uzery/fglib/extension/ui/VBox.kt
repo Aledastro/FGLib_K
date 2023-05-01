@@ -14,6 +14,10 @@ abstract class VBox(private val full: Int, private val rows: Int): UIElement() {
         get() = PointN(70.0*rows, 80.0*((full - 1)/rows + 1))
     private var name = LinkedList<String>()
 
+    override fun update() {
+        /*ignore*/
+    }
+
     var value = false
 
     var select = 0
@@ -42,7 +46,7 @@ abstract class VBox(private val full: Int, private val rows: Int): UIElement() {
         }
     }
 
-    final override fun update() {
+    final override fun ifActive() {
         for(id in 0 until full) {
             if(pressed(pos + fromID(id), sizeOne)) select = id
         }

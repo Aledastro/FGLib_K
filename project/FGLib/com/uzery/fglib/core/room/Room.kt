@@ -241,14 +241,13 @@ class Room(val pos: PointN, val size: PointN) {
     override fun toString(): String {
         val wr = StringBuilder()
         wr.append("//Uzery game.Game Studio 2019-2023\n")
-        wr.append("//last edit: ").append(FGUtils.time_YMD()).append(" ").append(FGUtils.time_HMS()).append("\n")
+        wr.append("//last edit: ${FGUtils.time_YMD()} ${FGUtils.time_HMS()}\n\n")
 
-        wr.append("room_pos: ").append(PosValue(pos)).append("\n")
-        wr.append("room_size: ").append(SizeValue(size)).append("\n\n")
+        wr.append("room: ${PosValue(pos)} ${SizeValue(size)}\n\n")
 
         for(o in objects) {
             o.setValues()
-            if(o.name != "temp" && o.name != "temporary") wr.append(o)
+            if(o.name != "temp" && o.name != "temporary") wr.append("$o\n")
         }
 
         return wr.toString()

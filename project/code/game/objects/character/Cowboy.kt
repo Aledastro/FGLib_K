@@ -1,4 +1,4 @@
-package game.objects
+package game.objects.character
 
 import com.uzery.fglib.core.obj.DrawLayer
 import com.uzery.fglib.core.obj.GameObject
@@ -11,7 +11,6 @@ import com.uzery.fglib.core.obj.controller.TimeTempAction
 import com.uzery.fglib.core.obj.visual.LayerVisualiser
 import com.uzery.fglib.core.program.Platform
 import com.uzery.fglib.core.program.Platform.Companion.keyboard
-import com.uzery.fglib.core.world.World
 import com.uzery.fglib.utils.data.image.Data
 import com.uzery.fglib.utils.math.geom.Direct
 import com.uzery.fglib.utils.math.geom.PointN
@@ -20,7 +19,7 @@ import com.uzery.fglib.utils.math.getter.Drop
 import com.uzery.fglib.utils.math.getter.value.PosValue
 import com.uzery.fglib.utils.math.num.IntI
 import game.Game
-import game.camera.LazyCamera
+import game.objects.enemy.Enemy
 import javafx.scene.input.KeyCode
 import javafx.scene.paint.Color
 
@@ -35,7 +34,7 @@ class Cowboy(pos: PointN): Enemy(1000) {
                 return stay
             }
         }
-        World.camera = LazyCamera(stats)
+        //World.camera = LazyCamera(stats)
 
         abilities.add(object: AbilityBox {
             override fun run() {
@@ -49,7 +48,7 @@ class Cowboy(pos: PointN): Enemy(1000) {
                 }
             }
         })
-        val filename = "cowboy.png"
+        val filename = "char|cowboy.png"
         Data.set(filename, IntI(16, 16), 2)
         visuals.add(object: LayerVisualiser(1.0) {
             override fun draw(draw_pos: PointN) {
@@ -124,6 +123,15 @@ class Cowboy(pos: PointN): Enemy(1000) {
 
             private fun shootTo(pos: PointN, speed: PointN) {
                 when {
+                    effected("wheel_bullets") && effectedAny("three_bullets", "master") -> {
+                        for(i in 0..7) {
+                            for(j in -1..1) {
+                                val sp = speed.rotateXY(i*Math.PI/4 + j*Math.PI/8)
+                                produce(Bullet(pos + sp*2, sp))
+                            }
+                        }
+                    }
+
                     effectedAny("three_bullets", "master") -> {
                         for(i in -1..1) {
                             val sp = speed.rotateXY(i*Math.PI/8)

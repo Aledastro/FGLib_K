@@ -11,7 +11,6 @@ abstract class ClassGetterInstance<Type> {
     private var no_info = false
     private val map: TreeMap<StringN, () -> Type> = TreeMap<StringN, () -> Type>()
 
-    //todo can be override
     init {
         this.addAll()
     }
@@ -42,8 +41,7 @@ abstract class ClassGetterInstance<Type> {
 
     protected fun add(s: String, mark: () -> Type) {
         map[StringN(s)] = mark
-    }
-    //////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    } //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     private fun stringX(i: Int) = if(no_info) "" else input[in_id - 1][i]
     private fun intX(i: Int) = if(no_info) 0 else input[in_id - 1][i].toInt()

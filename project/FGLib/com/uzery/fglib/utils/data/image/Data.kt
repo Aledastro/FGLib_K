@@ -3,42 +3,54 @@ package com.uzery.fglib.utils.data.image
 import com.uzery.fglib.utils.data.debug.DebugData
 import com.uzery.fglib.utils.math.num.IntI
 import javafx.scene.image.Image
+import kotlin.math.max
 
 class Data {
     companion object {
         private val origins = HashMap<String, Image>()
         private val sprites = HashMap<String, SpriteImage>()
-        fun get(filename: String): Image {
-            val input = origins[filename]
-            return if(input == null) {
-                println("deprecated: $filename")
-                val img = Image(filename)
-                origins[filename] = img
-                img
-            } else input
+        fun get(name: String): Image {
+            val input = origins[name]
+            return input ?: throw DebugData.error("no origin from: $name")
         }
 
-        fun set(filename: String) {
-            if(origins[filename] != null) return
-            origins[filename] = Image(getPath(filename))
+        fun set(name: String) {
+            if(origins[name] != null) return
+            origins[name] = Image(resolvePath(name))
         }
 
-        fun get(filename: String, pos: IntI): Image {
-            return sprites[filename]?.get(pos) ?: throw DebugData.error("no sprite from: $filename $pos")
+        fun get(name: String, pos: IntI): Image {
+            return sprites[name]?.get(pos) ?: throw DebugData.error("no sprite from: $name $pos")
         }
 
-        fun set(filename: String, size: IntI, scale: Int = -1) {
-            val path = getPath(filename)
-            if(sprites[filename] != null) {
-                if(sprites[filename]!!.size != size)
-                    throw DebugData.error("duplicate sprite set: $filename old: [${sprites[filename]!!.size}] | new: [$size]")
+        fun set(name: String, size: IntI, scale: Int = -1) {
+            val path = resolvePath(name)
+            if(sprites[name] != null) {
+                if(sprites[name]!!.size != size)
+                    throw DebugData.error("duplicate sprite set: $name old: [${sprites[name]!!.size}] | new: [$size]")
                 return
             }
-            sprites[filename] = SpriteImage(path, size, scale)
+            sprites[name] = SpriteImage(path, size, scale)
         }
 
-        private fun getPath(filename: String): String {
-            return "C:\\Users\\User\\IdeaProjects\\lib\\FGLib_K\\project\\media\\images\\$filename"
+        private fun resolvePath(name: String): String {
+            //todo move from fglib to project files
+            var local_path = ""
+            var last = name
+            if(name.indexOf('|') != -1) {
+                local_path = when(name.substring(0 until name.indexOf('|'))) {
+                    "wld" -> "world/"
+                    "map" -> "world/map/"
+                    "mob" -> "world/enemy/"
+                    "char" -> "world/character/"
+                    "item" -> "world/items/"
+                    "ui" -> "ui/"
+                    else -> ""
+                }
+                last = name.substring(max(0, name.indexOf('|') + 1))
+            }
+
+            return "C:/Users/User/IdeaProjects/lib/FGLib_K/project/media/images/$local_path$last".replace('/', '\\')
         }
     }
 }

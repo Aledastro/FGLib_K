@@ -1,4 +1,4 @@
-package game.objects
+package game.objects.enemy
 
 import com.uzery.fglib.core.obj.GameObject
 import com.uzery.fglib.core.obj.ability.AbilityBox

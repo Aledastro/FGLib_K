@@ -9,7 +9,7 @@ import com.uzery.fglib.core.program.Platform.Companion.keyboard
 import com.uzery.fglib.core.world.World
 import com.uzery.fglib.utils.math.geom.PointN
 import com.uzery.fglib.utils.math.getter.ClassGetter
-import game.objects.Wall
+import game.objects.map.Wall
 import javafx.scene.input.KeyCode
 import javafx.scene.paint.Color
 
@@ -17,6 +17,7 @@ class Game: Extension {
     private var t = 0
 
     override fun init() {
+        world.init("project/media/1.room")
         for(i in 0..17) {
             if(i in 7..9) continue
             world.add(Wall(PointN(i*40 + 20.0, 20.0)))
@@ -35,7 +36,8 @@ class Game: Extension {
 
     override fun update() {
         clear()
-        world.run()
+        World.next()
+        World.draw()
 
         //world.r().objs().forEach { o -> if((o.stats.POS - STEP*350).length()>500) o.collapse() }
 

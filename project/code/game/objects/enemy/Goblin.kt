@@ -1,4 +1,4 @@
-package game.objects
+package game.objects.enemy
 
 import com.uzery.fglib.core.obj.GameObject
 import com.uzery.fglib.core.obj.ability.AbilityBox
@@ -36,7 +36,7 @@ class Goblin(pos: PointN): Enemy(4) {
                 }
             }
         })
-        val filename = "goblin.png"
+        val filename = "mob|goblin.png"
         Data.set(filename, IntI(16, 16), 2)
         visuals.add(object: LayerVisualiser(1.0) {
             override fun draw(draw_pos: PointN) {

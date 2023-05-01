@@ -7,7 +7,7 @@ import com.uzery.fglib.extension.event.BaseEvent
 import com.uzery.fglib.extension.event.CompositeGameEvent
 import com.uzery.fglib.utils.math.geom.PointN
 import game.Game
-import game.objects.Goblin
+import game.objects.enemy.Goblin
 import javafx.scene.paint.Color
 import java.util.*
 
@@ -42,10 +42,10 @@ class Level_1: CompositeGameEvent() {
             override fun update() {
                 for(i in 0 until wave[ids_time]) {
                     when(Math.random()) {
-                        in (0.0..0.25) -> produce(Goblin(PointN(20.0, 350.0)))
-                        in (0.25..0.5) -> produce(Goblin(PointN(680.0, 350.0)))
-                        in (0.5..0.75) -> produce(Goblin(PointN(350.0, 20.0)))
-                        in (0.75..1.0) -> produce(Goblin(PointN(350.0, 680.0)))
+                        in (0.0..0.25) -> produce(Goblin(PointN(0.0, 256.0)))
+                        in (0.25..0.5) -> produce(Goblin(PointN(512.0, 256.0)))
+                        in (0.5..0.75) -> produce(Goblin(PointN(256.0, 0.0)))
+                        in (0.75..1.0) -> produce(Goblin(PointN(256.0, 512.0)))
                     }
                 }
                 ids_time++
