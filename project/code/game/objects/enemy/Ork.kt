@@ -20,9 +20,9 @@ import game.objects.items.EffectItem
 import kotlin.math.cos
 import kotlin.math.sin
 
-class Goblin(pos: PointN): Enemy(4) {
+class Ork(pos: PointN): Enemy(8) {
 
-    private val SPEED = 1.2
+    private val SPEED = 0.6
 
     init {
         stats.POS = pos
@@ -39,7 +39,7 @@ class Goblin(pos: PointN): Enemy(4) {
                 }
             }
         })
-        val filename = "mob|goblin.png"
+        val filename = "mob|ork.png"
         Data.set(filename, IntI(16, 16), 2)
         visuals.add(object: LayerVisualiser(1.0) {
             override fun draw(draw_pos: PointN) {

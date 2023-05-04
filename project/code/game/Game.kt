@@ -9,7 +9,6 @@ import com.uzery.fglib.core.program.Platform.Companion.keyboard
 import com.uzery.fglib.core.world.World
 import com.uzery.fglib.utils.math.geom.PointN
 import com.uzery.fglib.utils.math.getter.ClassGetter
-import game.objects.map.Wall
 import javafx.scene.input.KeyCode
 import javafx.scene.paint.Color
 
@@ -18,19 +17,6 @@ class Game: Extension {
 
     override fun init() {
         world.init("project/media/1.room")
-        for(i in 0..17) {
-            if(i in 7..9) continue
-            world.add(Wall(PointN(i*40 + 20.0, 20.0)))
-            world.add(Wall(PointN(i*40 + 20.0, 700.0)))
-            world.add(Wall(PointN(20.0, i*40 + 20.0)))
-            world.add(Wall(PointN(700.0, i*40 + 20.0)))
-        }
-        for(i in 6..10) {
-            for(j in 6..10) {
-                if(i in 7..9 && j in 7..9) continue
-                world.add(Wall(PointN(i*40 + 20.0, j*40 + 20.0)))
-            }
-        }
         Platform.whole_draw = true
     }
 

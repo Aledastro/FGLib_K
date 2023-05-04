@@ -11,7 +11,7 @@ abstract class Enemy(protected var LIFE: Int): GameObject() {
     init {
         abilities.add(object: AbilityBox {
             override fun run() {
-                if(LIFE<0) {
+                if(LIFE<=0) {
                     drop.get()?.also { o -> produce(o) }
                     collapse()
                 }

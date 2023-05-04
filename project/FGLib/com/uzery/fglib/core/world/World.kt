@@ -17,11 +17,9 @@ class World(private val getter: ClassGetter<GameObject>) {
         var room = Room(PointN.ZERO, PointN.ZERO)
             private set
 
-        fun allTagged(tag: String): Stream<GameObject> {
-            return room.objects.stream().filter { o -> o.tagged(tag) }
-        }
+        fun allTagged(tag: String): Stream<GameObject> = room.objects.stream().filter { o -> o.tagged(tag) }
 
-        var camera: Camera? = null
+        private var camera: Camera? = null
 
         fun next() {
             room.next()
@@ -39,7 +37,7 @@ class World(private val getter: ClassGetter<GameObject>) {
         }
     }
 
-    fun setRoom(filename: String) {
+    private fun setRoom(filename: String) {
         readInfo(WriteData[filename])
     }
 

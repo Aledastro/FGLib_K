@@ -8,7 +8,7 @@ import javafx.scene.text.Font
 import javafx.scene.text.FontWeight
 import java.util.*
 
-abstract class VBox(private val full: Int, private val rows: Int): UIElement() {
+abstract class VBox(protected val full: Int, protected val rows: Int): UIElement() {
     private val sizeOne = PointN(50.0, 50.0)
     final override val size: PointN
         get() = PointN(70.0*rows, 80.0*((full - 1)/rows + 1))
@@ -28,7 +28,7 @@ abstract class VBox(private val full: Int, private val rows: Int): UIElement() {
 
     override fun draw() {
         graphics.layer = DrawLayer.CAMERA_OFF
-        graphics.setStroke(2.0)
+        graphics.setStroke(4.0)
 
 
         for(i in 0 until full) {
@@ -55,6 +55,6 @@ abstract class VBox(private val full: Int, private val rows: Int): UIElement() {
     fun fromID(id: Int): PointN {
         val line = id/rows
         val row = id%rows
-        return PointN(row*70.0, line*80.0)
+        return PointN(10.0 + row*70.0, 10.0 + line*80.0)
     }
 }

@@ -1,9 +1,9 @@
 //Uzery Game Studio 2019-2023
-//last edit: 2023.05.04 09:42:43
+//last edit: 2023.05.04 09:44:56
 
 room: pos[256, 32] size[512, 512]
 
-level_1
+level_2
 wall: pos[16, 16]
 wall: pos[16, 48]
 wall: pos[16, 80]
@@ -53,3 +53,15 @@ wall: pos[16, 208]
 wall: pos[496, 208]
 wall: pos[208, 16]
 wall: pos[208, 496]
+wall: pos[400, 368]
+wall: pos[400, 400]
+wall: pos[368, 400]
+wall: pos[144, 368]
+wall: pos[144, 400]
+wall: pos[176, 400]
+wall: pos[144, 144]
+wall: pos[144, 176]
+wall: pos[176, 144]
+wall: pos[368, 144]
+wall: pos[400, 144]
+wall: pos[400, 176]

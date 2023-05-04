@@ -2,6 +2,7 @@ package com.uzery.fglib.core.program
 
 import com.uzery.fglib.utils.math.geom.PointN
 import javafx.animation.AnimationTimer
+import javafx.scene.Cursor
 import javafx.scene.Group
 import javafx.scene.Scene
 import javafx.scene.canvas.Canvas
@@ -13,6 +14,11 @@ import java.util.*
 
 internal class Program {
     companion object {
+        var cursor: Cursor? = null
+            set(value) {
+                field = value
+                stage.scene.cursor = value
+            }
         private lateinit var stage: Stage
 
         internal lateinit var gc: GraphicsContext

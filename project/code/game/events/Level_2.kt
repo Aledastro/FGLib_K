@@ -8,11 +8,12 @@ import com.uzery.fglib.extension.event.CompositeGameEvent
 import com.uzery.fglib.utils.math.geom.PointN
 import game.Game
 import game.objects.enemy.Goblin
+import game.objects.enemy.Ork
 import javafx.scene.paint.Color
 import java.util.*
 
-class Level_1: CompositeGameEvent() {
-    private val DURATION_TIME = 300
+class Level_2: CompositeGameEvent() {
+    private val DURATION_TIME = 3000
 
     //3000*16ms=48s
     var ids_time = 0
@@ -51,7 +52,8 @@ class Level_1: CompositeGameEvent() {
                         in (0.75..1.0) -> PointN(256.0, 512.0)
                         else -> throw IllegalArgumentException()
                     }
-                    produce(Goblin(pos))
+                    if(Math.random()<0.2) produce(Ork(pos))
+                    else produce(Goblin(pos))
                 }
                 ids_time++
             }
@@ -69,6 +71,6 @@ class Level_1: CompositeGameEvent() {
     }
 
     override fun setValues() {
-        name = "level_1"
+        name = "level_2"
     }
 }

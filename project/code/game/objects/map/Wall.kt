@@ -38,7 +38,7 @@ class Wall(pos: PointN): GameObject() {
                 return DrawLayer(1.0, scale.swing(object_time))
             }
         })
-        bounds.red = { Bounds(RectN(-Game.STEP*20, Game.STEP*40)) }
+        bounds.red = { Bounds(RectN(-Game.STEP*16, Game.STEP*32)) }
     }
 
     override fun setValues() {
