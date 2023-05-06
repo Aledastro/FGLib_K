@@ -13,20 +13,20 @@ import javafx.scene.paint.Color
 import java.util.*
 
 class Level_2: CompositeGameEvent() {
-    private val DURATION_TIME = 3000
+    private val DURATION_TIME = 300
 
     //3000*16ms=48s
     var ids_time = 0
 
-    private val pp: PointN = PointN(16.0, -48.0)
+    private val pp: PointN = PointN(16, -48)
 
     init {
         stats.POS = pp
         visuals.add(object: Visualiser {
             override fun draw(draw_pos: PointN) {
-                val s = Platform.CANVAS.X - 20
-                agc().fill.rect(Game.STEP*10, PointN(s, 10.0), Color.BURLYWOOD)
-                agc().fill.rect(Game.STEP*10, PointN((ids_time*1.0/DURATION_TIME)*s, 10.0), Color.GREEN)
+                val len = Platform.CANVAS.X - 20
+                agc().fill.rect(Game.STEP*10, PointN(len, 10.0), Color.BURLYWOOD)
+                agc().fill.rect(Game.STEP*10, PointN((ids_time*1.0/DURATION_TIME)*len, 10.0), Color.GREEN)
             }
 
             override fun drawLayer() = DrawLayer.CAMERA_OFF
@@ -46,10 +46,10 @@ class Level_2: CompositeGameEvent() {
             override fun update() {
                 for(i in 0 until wave[ids_time]) {
                     val pos = when(Math.random()) {
-                        in (0.0..0.25) -> PointN(0.0, 256.0)
-                        in (0.25..0.5) -> PointN(512.0, 256.0)
-                        in (0.5..0.75) -> PointN(256.0, 0.0)
-                        in (0.75..1.0) -> PointN(256.0, 512.0)
+                        in (0.0..0.25) -> PointN(0, 256)
+                        in (0.25..0.5) -> PointN(512, 256)
+                        in (0.5..0.75) -> PointN(256, 0)
+                        in (0.75..1.0) -> PointN(256, 512)
                         else -> throw IllegalArgumentException()
                     }
                     if(Math.random()<0.2) produce(Ork(pos))
@@ -60,6 +60,7 @@ class Level_2: CompositeGameEvent() {
 
             override fun ends() = ids_time>=DURATION_TIME
         })
+        tag("level_2")
     }
 
     override fun start() {

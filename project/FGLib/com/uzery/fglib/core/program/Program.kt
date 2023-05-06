@@ -14,6 +14,7 @@ import java.util.*
 
 internal class Program {
     companion object {
+        //todo
         var cursor: Cursor? = null
             set(value) {
                 field = value

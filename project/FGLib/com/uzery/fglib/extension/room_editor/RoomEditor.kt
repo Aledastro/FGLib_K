@@ -12,9 +12,11 @@ import com.uzery.fglib.core.program.Program
 import com.uzery.fglib.core.world.World
 import com.uzery.fglib.extension.ui.*
 import com.uzery.fglib.utils.data.file.WriteData
+import com.uzery.fglib.utils.math.FGUtils
 import com.uzery.fglib.utils.math.MathUtils
 import com.uzery.fglib.utils.math.geom.PointN
 import com.uzery.fglib.utils.math.getter.ClassGetter
+import game.ClassGetterX
 import javafx.scene.Cursor
 import javafx.scene.input.KeyCode
 import javafx.scene.input.MouseButton
@@ -32,7 +34,6 @@ class RoomEditor(private val getter: ClassGetter<GameObject>): Extension {
     private val GRID = 32.0
     private val GRID_P = PointN(GRID, GRID)
     private lateinit var room_pos: PointN
-    private var world = World(getter)
 
     private var draw_pos = PointN.ZERO
 
@@ -51,7 +52,7 @@ class RoomEditor(private val getter: ClassGetter<GameObject>): Extension {
 
     private fun checkForSave() {
         if(keyboard.allPressed(KeyCode.CONTROL, KeyCode.SHIFT) && keyboard.inPressed(KeyCode.S)) {
-            WriteData.write(filename, World.room.toString())
+            WriteData.write(filename, World.active_room.toString())
             println("saved")
         }
     }
@@ -64,10 +65,11 @@ class RoomEditor(private val getter: ClassGetter<GameObject>): Extension {
 
 
     override fun init() {
-        world.init(filename)
+        World.getter = ClassGetter(ClassGetterX())
+        World.init(filename)
         Platform.whole_draw = true
         //todo
-        room_pos = Platform.options().size/2 - PointN(World.room.size.X, World.room.size.Y/2)
+        room_pos = Platform.options().size/2 - World.active_room.size*PointN(1.0,0.5)
         UIBox.add(canvasX, play_button, objects_vbox, layers_vbox, info_box)
 
         /*World.camera = object: Camera {
@@ -87,9 +89,9 @@ class RoomEditor(private val getter: ClassGetter<GameObject>): Extension {
 
     private var play_button = object: Button() {
         override val pos: PointN
-            get() = Platform.CANVAS - PointN(90.0, 90.0)
+            get() = Platform.CANVAS - PointN(90, 90)
 
-        override val size = PointN(42.0, 42.0)
+        override val size = PointN(42, 42)
 
         override val pressed: Boolean
             get() = keyboard.pressed(KeyCode.CONTROL) && keyboard.inPressed(KeyCode.SPACE)
@@ -128,17 +130,17 @@ class RoomEditor(private val getter: ClassGetter<GameObject>): Extension {
             drawLines()
 
             graphics.layer = DrawLayer.CAMERA_FOLLOW
-            graphics.stroke.rect(room_pos + draw_pos - World.room.pos, Platform.CANVAS, Color.DARKBLUE)
+            graphics.stroke.rect(room_pos + draw_pos - World.active_room.pos, Platform.CANVAS, Color.DARKBLUE)
         }
 
         private fun drawLines() {
-            val c = Color.WHITE.interpolate(Color.TRANSPARENT, 0.9)
+            val c = FGUtils.transparent(Color.WHITE, 0.1)
             graphics.layer = DrawLayer.CAMERA_FOLLOW
             for(i in -70..70) {
                 graphics.setStroke(1.0)
-                val pp = room_pos - World.room.pos + draw_pos.transform { x -> MathUtils.mod(x, GRID) }
-                graphics.stroke.line(pp + PointN(-Platform.CANVAS.X, i*GRID), pp + PointN(Platform.CANVAS.X, i*GRID), c)
-                graphics.stroke.line(pp + PointN(i*GRID, -Platform.CANVAS.Y), pp + PointN(i*GRID, Platform.CANVAS.Y), c)
+                val pp = room_pos - World.active_room.pos + draw_pos.transform { x -> MathUtils.mod(x, GRID) }
+                graphics.stroke.line(pp - Platform.CANVAS.XP + PointN(0.0, i*GRID), Platform.CANVAS.XP*2, c)
+                graphics.stroke.line(pp - Platform.CANVAS.YP + PointN(i*GRID, 0.0), Platform.CANVAS.YP*2, c)
             }
         }
 
@@ -160,19 +162,19 @@ class RoomEditor(private val getter: ClassGetter<GameObject>): Extension {
         private fun checkForAdd() {
             if(mouse_keys.pressed(MouseButton.PRIMARY)) {
                 val o = getter.getEntry(objects_vbox.select)
-                val pp = (mouse.pos() - room_pos - World.room.pos - draw_pos).round(GRID) + GRID_P/2
+                val pp = (mouse.pos() - room_pos - World.active_room.pos - draw_pos).round(GRID) + GRID_P/2
                 if(lastPOS == pp) return
                 o.stats.POS = pp
                 lastPOS = pp
-                World.room.add(o)
+                World.active_room.add(o)
                 select_obj = o
             }
         }
 
         private fun checkForRemove() {
             if(mouse_keys.pressed(MouseButton.SECONDARY)) {
-                World.room.objects.removeIf { o -> (o.stats.POS - (mouse.pos() - room_pos - World.room.pos - draw_pos)).length()<GRID/2 }
-                if(!World.room.objects.contains(select_obj)) select_obj = null
+                World.active_room.objects.removeIf { o -> (o.stats.POS - (mouse.pos() - room_pos - World.active_room.pos - draw_pos)).length()<GRID/2 }
+                if(!World.active_room.objects.contains(select_obj)) select_obj = null
             }
         }
 
@@ -190,7 +192,7 @@ class RoomEditor(private val getter: ClassGetter<GameObject>): Extension {
 
     private var layers_vbox = object: VBox(12, 12) {
         override val pos
-            get() = PointN(Platform.CANVAS.X/2 - size.X/2, Platform.CANVAS.Y - OFFSET - size.Y)
+            get() = (Platform.CANVAS - size)*PointN(0.5,1.0) + PointN(0.0, -OFFSET)
 
         override fun setNames(id: Int): String {
             return when(id) {
@@ -207,7 +209,7 @@ class RoomEditor(private val getter: ClassGetter<GameObject>): Extension {
                 full - 1 -> "R"
                 else -> "L$id"
             }
-            graphics.fill.textC(pos + PointN(0.0, 9.0), name, Color.DARKBLUE)
+            graphics.fill.textC(pos + PointN(0, 9), name, Color.DARKBLUE)
         }
     }
 
@@ -246,7 +248,7 @@ class RoomEditor(private val getter: ClassGetter<GameObject>): Extension {
         }
 
         override val pos
-            get() = PointN(Platform.CANVAS.X - size.X - OFFSET, 170.0)
-        override val size = PointN(350.0, 400.0)
+            get() = (Platform.CANVAS - size).XP + PointN( - OFFSET, 170.0)
+        override val size = PointN(350, 400)
     }
 }

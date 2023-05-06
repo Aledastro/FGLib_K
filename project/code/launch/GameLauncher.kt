@@ -6,5 +6,5 @@ import com.uzery.fglib.utils.math.geom.PointN
 import game.Game
 
 fun main(args: Array<String>) {
-    Launcher().startProcess(LaunchOptions(PointN(512.0 + 512.0, 512.0 + 64.0)), Game())
+    Launcher().startProcess(LaunchOptions(PointN(512 + 512, 512 + 512)), Game())
 }

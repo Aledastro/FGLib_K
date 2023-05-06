@@ -15,17 +15,17 @@ class LazyCamera(private val stats: Stats): Camera {
     private var follow = false
 
     override fun update() {
-        if((pos - stats.POS).length()<10.0) follow = false
-        if((pos - stats.POS).length()>160.0) follow = true
+        if((pos - stats.POS).length()<10) follow = false
+        if((pos - stats.POS).length()>160) follow = true
         if(follow) pos = pos.interpolate(stats.POS, 0.05)
         if(Game.draw_bounds) {
             Platform.graphics.layer = DrawLayer.CAMERA_FOLLOW
-            Platform.graphics.stroke.oval(pos + World.room.pos - Game.STEP*160.0, Game.STEP*320.0, Color.DARKBLUE)
+            Platform.graphics.stroke.oval(pos + World.active_room.pos - Game.STEP*160, Game.STEP*320, Color.DARKBLUE)
         }
 
     }
 
     override fun drawPOS(): PointN {
-        return pos - World.room.size*0.5
+        return pos - World.active_room.size*0.5
     }
 }

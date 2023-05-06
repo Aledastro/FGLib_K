@@ -80,31 +80,31 @@ class Room(val pos: PointN, val size: PointN) {
         if(b) maxRam = Runtime.getRuntime().totalMemory()
         if(b) freeRam = Runtime.getRuntime().freeMemory()
         if(b) ram = maxRam - freeRam
-        val p = draw_pos + PointN(size.X + 10, 0.0)
+        val p = draw_pos + size.XP + PointN(10, 0)
 
-        graphics.fill.text(p + PointN(0.0, 20.0), "size: ${objects.size}", Color.DARKBLUE)
+        graphics.fill.text(p + PointN(0, 20), "size: ${objects.size}", Color.DARKBLUE)
         graphics.fill.text(
-            p + PointN(0.0, 40.0),
+            p + PointN(0, 40),
             "ram (MB): ${ram/1000_000}/${maxRam/1000_000}",
             Color.DARKBLUE)
         graphics.fill.text(
-            p + PointN(0.0, 60.0),
+            p + PointN(0, 60),
             "ram (KB) per obj: ${if(objects.size != 0) (ram/1000/objects.size).toInt() else 0}",
             Color.DARKBLUE)
         time = System.currentTimeMillis() - last
         last = System.currentTimeMillis()
         fps += (1000.0/time)
         fps *= 0.99
-        graphics.fill.text(p + PointN(0.0, 80.0), "FPS: ${(fps/100).toInt()}", Color.DARKBLUE)
+        graphics.fill.text(p + PointN(0, 80), "FPS: ${(fps/100).toInt()}", Color.DARKBLUE)
 
-        for(index in 0..3) {
+        for(index in 0 until BoundsBox.SIZE) {
             var bs_n = 0
             objects.forEach { o ->
                 val bs = o.bounds[index]
                 if(bs != null) bs_n++
             }
             graphics.fill.text(
-                p + PointN(0.0, 100.0 + index*20), "bounds[${BoundsBox.name(index)}]: $bs_n", Color.DARKBLUE)
+                p + PointN(0, 100 + index*20), "bounds[${BoundsBox.name(index)}]: $bs_n", Color.DARKBLUE)
         }
         ids_time++
     }

@@ -19,11 +19,10 @@ import com.uzery.fglib.utils.math.getter.Drop
 import com.uzery.fglib.utils.math.getter.value.PosValue
 import com.uzery.fglib.utils.math.num.IntI
 import game.Game
-import game.objects.enemy.Enemy
 import javafx.scene.input.KeyCode
 import javafx.scene.paint.Color
 
-class Cowboy(pos: PointN): Enemy(1000) {
+class Cowboy(pos: PointN): GameCharacter(1000) {
 
     init {
         stats.POS = pos

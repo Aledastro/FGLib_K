@@ -3,6 +3,7 @@ package com.uzery.fglib.extension.ui
 import com.uzery.fglib.core.program.Extension
 import com.uzery.fglib.core.program.Platform
 import com.uzery.fglib.core.program.Platform.Companion.mouse
+import com.uzery.fglib.utils.math.FGUtils
 import com.uzery.fglib.utils.math.geom.RectN
 import javafx.scene.paint.Color
 import java.util.*
@@ -29,7 +30,7 @@ class UIBox: Extension {
             Platform.graphics.fill.rect(
                 o.pos,
                 o.size,
-                Color.DARKBLUE.interpolate(Color.TRANSPARENT, 0.9))
+                FGUtils.transparent(Color.DARKBLUE,0.1))
         }
         list.forEach { o -> o.draw() }
     }

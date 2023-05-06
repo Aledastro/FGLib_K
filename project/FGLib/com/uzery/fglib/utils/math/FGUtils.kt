@@ -1,5 +1,6 @@
 package com.uzery.fglib.utils.math
 
+import javafx.scene.paint.Color
 import java.time.LocalDate
 import java.time.LocalTime
 
@@ -23,5 +24,7 @@ interface FGUtils {
             if(s.length == rev) return s
             return if(s.length>rev) s.substring(s.length - rev) else "0".repeat(rev - s.length) + s
         }
+
+        fun transparent(color: Color, k: Double): Color = Color.TRANSPARENT.interpolate(color, k)
     }
 }

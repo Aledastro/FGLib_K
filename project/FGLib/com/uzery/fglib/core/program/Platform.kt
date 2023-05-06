@@ -25,7 +25,7 @@ class Platform {
 
         var whole_draw = false
         val CANVAS
-            get() = PointN(options().size.X, options().size.Y)
+            get() = PointN(options().size)
 
         val keyboard = object: KeyActivator<KeyCode>(KeyCode.values().size) {
             override fun pressed0(code: Int): Boolean = Program.pressed[code]

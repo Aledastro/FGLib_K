@@ -10,7 +10,7 @@ abstract class InfoBox: UIElement() {
     abstract val text_size: Int
     override fun draw() {
         graphics.fill.font = Font.font("TimesNewRoman", FontWeight.BOLD, 20.0)
-        for(id in 0 until text_size) graphics.fill.text(pos + PointN(10.0, 30.0 + 30*id), text(id), color(id))
+        for(id in 0 until text_size) graphics.fill.text(pos + PointN(10, 30 + 30*id), text(id), color(id))
     }
 
     override fun ifActive() {

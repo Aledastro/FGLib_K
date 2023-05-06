@@ -1,9 +1,11 @@
 //Uzery Game Studio 2019-2023
 //last edit: 2023.05.04 09:44:56
 
-room: pos[256, 32] size[512, 512]
+room: pos[256, 0] size[512, 512]
 
 level_2
+cowboy: pos[272, 272]
+
 wall: pos[16, 16]
 wall: pos[16, 48]
 wall: pos[16, 80]
@@ -48,7 +50,6 @@ wall: pos[144, 16]
 wall: pos[112, 16]
 wall: pos[80, 16]
 wall: pos[48, 16]
-cowboy: pos[272, 272]
 wall: pos[16, 208]
 wall: pos[496, 208]
 wall: pos[208, 16]

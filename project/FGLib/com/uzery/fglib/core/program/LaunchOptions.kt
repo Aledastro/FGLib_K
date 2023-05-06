@@ -9,6 +9,6 @@ data class LaunchOptions(
     val style: StageStyle = StageStyle.UNDECORATED,
 ) {
     companion object {
-        val default = LaunchOptions(PointN(700.0, 700.0))
+        val default = LaunchOptions(PointN(700, 700))
     }
 }

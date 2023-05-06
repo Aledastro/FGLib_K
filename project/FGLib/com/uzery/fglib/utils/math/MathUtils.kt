@@ -15,16 +15,12 @@ interface MathUtils {
 
         fun max(vararg xs: Double) = xs.max()
 
-        fun getDegree(cx: Double, cy: Double, px: Double, py: Double): Double {
+        fun getDegree(p: PointN): Double {
             var alpha = PI/2
-            if(cx != px) alpha = atan((py - cy)/(px - cx))
-            if(cx>px) alpha += PI
-            if(cx == px && cy>py) alpha += PI
+            if(p.X != 0.0) alpha = atan(p.Y/p.X)
+            if(p.X<0.0 || p.X == 0.0 && p.Y<0.0) alpha += PI
             return alpha
         }
-
-        fun getDegree(px: Double, py: Double) = getDegree(0.0, 0.0, px, py)
-        fun getDegree(c: PointN, p: PointN) = getDegree(c.X, c.Y, p.X, p.Y)
-        fun getDegree(p: PointN) = getDegree(0.0, 0.0, p.X, p.Y)
+        fun getDegree(c: PointN, p: PointN) = getDegree(p-c)
     }
 }

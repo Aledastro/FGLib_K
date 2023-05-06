@@ -7,7 +7,8 @@ import kotlin.math.sin
 import kotlin.math.sqrt
 
 data class PointN(private val xs: Array<Double>) {
-    constructor(vararg xs: Double): this(xs.toTypedArray())
+    constructor(vararg xs: Double): this(Array<Double>(xs.size) { i -> xs[i] })
+    constructor(vararg xs: Int): this(Array<Double>(xs.size) { i -> xs[i].toDouble() })
     constructor(p: PointN): this(Array(p.dimension()) { i -> p.xs[i] })
 
     operator fun get(n: Int): Double {
@@ -15,25 +16,27 @@ data class PointN(private val xs: Array<Double>) {
         return xs[n]
     }
 
-    var X: Double = 0.0
+    var X: Double
         get() = get(0)
-        set(d) {
-            xs[0] = d
-            field = d
+        set(value) {
+            xs[0] = value
         }
-    var Y: Double = 0.0
+    var Y: Double
         get() = get(1)
-        set(d) {
-            xs[1] = d
-            field = d
+        set(value) {
+            xs[1] = value
         }
-    var Z: Double = 0.0
+    var Z: Double
         get() = get(2)
-        set(d) {
-            xs[2] = d
-            field = d
+        set(value) {
+            xs[2] = value
         }
-
+    val XP: PointN
+        get() = separate(0)
+    val YP: PointN
+        get() = separate(1)
+    val ZP: PointN
+        get() = separate(2)
 
     override fun equals(other: Any?): Boolean {
         if(this === other) return true
@@ -85,7 +88,7 @@ data class PointN(private val xs: Array<Double>) {
 
     fun rotateXY(d: Double): PointN {
         val p = PointN(this)
-        val alpha = MathUtils.getDegree(p.X, p.Y) + d
+        val alpha = MathUtils.getDegree(PointN(p.X, p.Y) ) + d
         val length = PointN(p.X, p.Y).length()
         p.X = cos(alpha)*length
         p.Y = sin(alpha)*length
@@ -94,7 +97,7 @@ data class PointN(private val xs: Array<Double>) {
 
     fun rotateXZ(d: Double): PointN {
         val p = PointN(this)
-        val alpha = MathUtils.getDegree(p.X, p.Z) + d
+        val alpha = MathUtils.getDegree(PointN(p.X, p.Z)) + d
         val length = PointN(p.X, p.Z).length()
         p.X = cos(alpha)*length
         p.Z = sin(alpha)*length
@@ -103,7 +106,7 @@ data class PointN(private val xs: Array<Double>) {
 
     fun rotateYZ(d: Double): PointN {
         val p = PointN(this)
-        val alpha = MathUtils.getDegree(p.Y, p.Z) + d
+        val alpha = MathUtils.getDegree(PointN(p.Y, p.Z)) + d
         val length = PointN(p.Y, p.Z).length()
         p.Y = cos(alpha)*length
         p.Z = sin(alpha)*length

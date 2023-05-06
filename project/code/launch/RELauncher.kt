@@ -9,6 +9,6 @@ import game.ClassGetterX
 
 fun main(args: Array<String>) {
     Launcher().startProcess(
-        LaunchOptions(PointN(1920.0, 1080.0), fullscreen = true),
+        LaunchOptions(PointN(1920, 1080), fullscreen = true),
         RoomEditor(ClassGetter(ClassGetterX())))
 }
