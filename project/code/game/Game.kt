@@ -46,7 +46,7 @@ class Game: Extension {
             World.active_room.objects.removeIf { o->o.tagged("player") }
             World.add(cowboy)
 
-            last = 2 - last
+            last = 1 - last
         }
 
         Platform.update()
