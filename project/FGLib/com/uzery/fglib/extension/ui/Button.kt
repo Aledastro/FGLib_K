@@ -24,7 +24,7 @@ abstract class Button: UIElement() {
         else graphics.stroke.rect(pos, size, Color.DARKBLUE)
 
         graphics.fill.font = Font.font("TimesNewRoman", FontWeight.BOLD, 20.0)
-        graphics.fill.textC(pos + size*PointN(0.5,1.6), name, Color.DARKBLUE)
+        graphics.fill.textC(pos + size*PointN(0.5, 1.6), name, Color.DARKBLUE)
     }
 
     final override fun ifActive() {

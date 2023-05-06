@@ -88,7 +88,7 @@ data class PointN(private val xs: Array<Double>) {
 
     fun rotateXY(d: Double): PointN {
         val p = PointN(this)
-        val alpha = MathUtils.getDegree(PointN(p.X, p.Y) ) + d
+        val alpha = MathUtils.getDegree(PointN(p.X, p.Y)) + d
         val length = PointN(p.X, p.Y).length()
         p.X = cos(alpha)*length
         p.Y = sin(alpha)*length

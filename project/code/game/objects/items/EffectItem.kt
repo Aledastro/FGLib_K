@@ -28,14 +28,14 @@ open class EffectItem(pos: PointN, id: Int, private val effect_name: String, pri
             }
 
             override fun run() {
-                if(object_time>DURATION_TIME)collapse()
+                if(object_time>DURATION_TIME) collapse()
             }
         })
         val filename = "item|items.png"
         Data.set(filename, IntI(16, 16), 2)
         visuals.add(object: LayerVisualiser(DrawLayer.CAMERA_FOLLOW) {
             override fun draw(draw_pos: PointN) {
-                if(object_time>DURATION_TIME-REACT_TIME && object_time%20<10)return
+                if(object_time>DURATION_TIME - REACT_TIME && object_time%20<10) return
                 agc().image.draw(Data.get(filename, IntI(id, 0)), draw_pos - Game.STEP*16)
             }
         })

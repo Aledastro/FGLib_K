@@ -30,7 +30,7 @@ class UIBox: Extension {
             Platform.graphics.fill.rect(
                 o.pos,
                 o.size,
-                FGUtils.transparent(Color.DARKBLUE,0.1))
+                FGUtils.transparent(Color.DARKBLUE, 0.1))
         }
         list.forEach { o -> o.draw() }
     }

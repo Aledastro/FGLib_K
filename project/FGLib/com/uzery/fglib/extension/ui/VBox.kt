@@ -37,13 +37,13 @@ abstract class VBox(protected val full: Int, protected val rows: Int): UIElement
         }
         for(id in 0 until full) {
             val ps = pos + fromID(id)
-            graphics.fill.rect(ps, sizeOne, FGUtils.transparent(Color.DARKBLUE,0.1))
+            graphics.fill.rect(ps, sizeOne, FGUtils.transparent(Color.DARKBLUE, 0.1))
 
             graphics.fill.font = Font.font("TimesNewRoman", FontWeight.BOLD, 12.0)
             graphics.fill.textC(ps + PointN(sizeOne).apply { X /= 2;Y *= 1.3 }, name[id], Color.DARKBLUE)
             draw(ps + sizeOne/2, id)
 
-            if(id == select) graphics.stroke.rect(ps, sizeOne, FGUtils.transparent(Color.DARKBLUE,0.6))
+            if(id == select) graphics.stroke.rect(ps, sizeOne, FGUtils.transparent(Color.DARKBLUE, 0.6))
         }
     }
 

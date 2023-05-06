@@ -18,17 +18,17 @@ class Game: Extension {
     private var t = 0
 
     override fun init() {
-        World.getter=ClassGetter(ClassGetterX())
+        World.getter = ClassGetter(ClassGetterX())
         Platform.whole_draw = true
 
-        cowboy=Cowboy(PointN(256,256))
+        cowboy = Cowboy(PointN(256, 256))
 
-        World.init("project/media/1.room","project/media/2.room")
-        World.active_room.objects.removeIf { o->o.tagged("player") }
+        World.init("project/media/1.room", "project/media/2.room")
+        World.active_room.objects.removeIf { o -> o.tagged("player") }
         World.add(cowboy)
     }
 
-    private var last=0
+    private var last = 0
 
     private lateinit var cowboy: Cowboy
     override fun update() {
@@ -41,9 +41,9 @@ class Game: Extension {
         if(draw_bounds) drawBounds()
         if(keyboard.pressed(KeyCode.CONTROL) && keyboard.inPressed(KeyCode.TAB)) draw_bounds = !draw_bounds
 
-        if(World.noneExists("level_1","level_2","enemy")){
+        if(World.noneExists("level_1", "level_2", "enemy")) {
             World.respawn(last)
-            World.active_room.objects.removeIf { o->o.tagged("player") }
+            World.active_room.objects.removeIf { o -> o.tagged("player") }
             World.add(cowboy)
 
             last = 1 - last
@@ -91,9 +91,12 @@ class Game: Extension {
             for(i in 0 until BoundsBox.SIZE) {
                 val bs = o.bounds[i] ?: continue
                 for(element in bs().elements) {
-                    graphics.fill.draw(dp + o.stats.POS, element.shape, FGUtils.transparent(colors[i],0.1))
-                    graphics.stroke.draw(dp + o.stats.POS, element.shape, FGUtils.transparent(colors[i],0.6))
-                    graphics.stroke.line(dp + o.stats.POS + element.shape.L, element.shape.S, FGUtils.transparent(colors[i],0.5))
+                    graphics.fill.draw(dp + o.stats.POS, element.shape, FGUtils.transparent(colors[i], 0.1))
+                    graphics.stroke.draw(dp + o.stats.POS, element.shape, FGUtils.transparent(colors[i], 0.6))
+                    graphics.stroke.line(
+                        dp + o.stats.POS + element.shape.L,
+                        element.shape.S,
+                        FGUtils.transparent(colors[i], 0.5))
                 }
             }
         }

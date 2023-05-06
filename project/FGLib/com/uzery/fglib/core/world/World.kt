@@ -13,7 +13,7 @@ import javafx.scene.paint.Color
 import java.util.*
 import java.util.stream.Stream
 
-interface World{
+interface World {
     companion object {
         var active_room = Room(PointN.ZERO, PointN.ZERO)
             private set
@@ -21,10 +21,10 @@ interface World{
         private val filenames = LinkedList<String>()
 
         fun allTagged(tag: String): Stream<GameObject> = active_room.objects.stream().filter { o -> o.tagged(tag) }
-        fun allExists(vararg tag: String) = tag.all { t->allTagged(t).count()!=0L }
-        fun anyExists(vararg tag: String) = tag.any { t->allTagged(t).count()!=0L }
+        fun allExists(vararg tag: String) = tag.all { t -> allTagged(t).count() != 0L }
+        fun anyExists(vararg tag: String) = tag.any { t -> allTagged(t).count() != 0L }
 
-        fun noneExists(vararg tag: String) = tag.all { t->allTagged(t).count()==0L }
+        fun noneExists(vararg tag: String) = tag.all { t -> allTagged(t).count() == 0L }
 
         var camera: Camera? = null
 
@@ -42,10 +42,11 @@ interface World{
             graphics.layer = DrawLayer.CAMERA_FOLLOW
             graphics.stroke.rect(pos + active_room.pos, active_room.size, Color.DARKBLUE)
         }
-        var getter: ClassGetter<GameObject>?=null
+
+        var getter: ClassGetter<GameObject>? = null
 
         private fun readInfo(filename: String): Room {
-            if(getter==null)throw DebugData.error("getter not loaded")
+            if(getter == null) throw DebugData.error("getter not loaded")
 
             val list = WriteData[filename]
             val objects = LinkedList<GameObject>()
@@ -69,7 +70,9 @@ interface World{
         }
 
         private fun getP(s: String): PointN {
-            val c = ClassGetter(object: ClassGetterInstance<PointN>() { override fun addAll() = add("pos", 1) { pos } })
+            val c = ClassGetter(object: ClassGetterInstance<PointN>() {
+                override fun addAll() = add("pos", 1) { pos }
+            })
             return c.getFrom("pos: $s")
         }
 
@@ -77,15 +80,16 @@ interface World{
         fun init(vararg filename: String) {
             rooms.clear()
             for(i in filename.indices) filenames.add(filename[i])
-            filenames.forEach { name->rooms.add(readInfo(name)) }
+            filenames.forEach { name -> rooms.add(readInfo(name)) }
             set(0)
         }
 
-        fun set(id: Int){
+        fun set(id: Int) {
             active_room = rooms[id]
         }
-        fun respawn(id: Int){
-            rooms[id]=readInfo(filenames[id])
+
+        fun respawn(id: Int) {
+            rooms[id] = readInfo(filenames[id])
             active_room = rooms[id]
         }
 

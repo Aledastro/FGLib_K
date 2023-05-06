@@ -21,6 +21,7 @@ interface MathUtils {
             if(p.X<0.0 || p.X == 0.0 && p.Y<0.0) alpha += PI
             return alpha
         }
-        fun getDegree(c: PointN, p: PointN) = getDegree(p-c)
+
+        fun getDegree(c: PointN, p: PointN) = getDegree(p - c)
     }
 }

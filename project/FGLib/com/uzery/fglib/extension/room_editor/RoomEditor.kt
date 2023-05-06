@@ -69,7 +69,7 @@ class RoomEditor(private val getter: ClassGetter<GameObject>): Extension {
         World.init(filename)
         Platform.whole_draw = true
         //todo
-        room_pos = Platform.options().size/2 - World.active_room.size*PointN(1.0,0.5)
+        room_pos = Platform.options().size/2 - World.active_room.size*PointN(1.0, 0.5)
         UIBox.add(canvasX, play_button, objects_vbox, layers_vbox, info_box)
 
         /*World.camera = object: Camera {
@@ -192,7 +192,7 @@ class RoomEditor(private val getter: ClassGetter<GameObject>): Extension {
 
     private var layers_vbox = object: VBox(12, 12) {
         override val pos
-            get() = (Platform.CANVAS - size)*PointN(0.5,1.0) + PointN(0.0, -OFFSET)
+            get() = (Platform.CANVAS - size)*PointN(0.5, 1.0) + PointN(0.0, -OFFSET)
 
         override fun setNames(id: Int): String {
             return when(id) {
@@ -248,7 +248,7 @@ class RoomEditor(private val getter: ClassGetter<GameObject>): Extension {
         }
 
         override val pos
-            get() = (Platform.CANVAS - size).XP + PointN( - OFFSET, 170.0)
+            get() = (Platform.CANVAS - size).XP + PointN(-OFFSET, 170.0)
         override val size = PointN(350, 400)
     }
 }

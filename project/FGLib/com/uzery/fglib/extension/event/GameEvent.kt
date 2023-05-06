@@ -55,7 +55,7 @@ abstract class GameEvent: GameObject() {
                     draw_pos - PointN(10, 10),
                     PointN(20, 20), FGUtils.transparent(Color.CORAL, 0.9))
                 agc().fill.font = Font.font("TimesNewRoman", FontWeight.BOLD, 15.0)
-                agc().fill.textC(draw_pos + PointN(0,6), "E", Color.WHITE)
+                agc().fill.textC(draw_pos + PointN(0, 6), "E", Color.WHITE)
             }
         })
     }
