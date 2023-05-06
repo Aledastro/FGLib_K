@@ -20,6 +20,8 @@ interface World {
         val rooms = LinkedList<Room>()
         private val filenames = LinkedList<String>()
 
+        var controller: WorldController? = null
+
         fun allTagged(tag: String): Stream<GameObject> = active_room.objects.stream().filter { o -> o.tagged(tag) }
         fun allExists(vararg tag: String) = tag.all { t -> allTagged(t).count() != 0L }
         fun anyExists(vararg tag: String) = tag.any { t -> allTagged(t).count() != 0L }
@@ -32,15 +34,19 @@ interface World {
             active_room.next()
 
             camera?.update()
-
             graphics.drawPOS = camera?.drawPOS() ?: PointN.ZERO
+
+            if(controller != null && controller!!.ready()) {
+                controller?.action()
+                //if(controller!!.ready()) throw DebugData.error("")
+            }
         }
 
         fun draw(pos: PointN = PointN.ZERO) {
-            active_room.draw(pos + active_room.pos)
+            active_room.draw(active_room.pos + pos)
 
             graphics.layer = DrawLayer.CAMERA_FOLLOW
-            graphics.stroke.rect(pos + active_room.pos, active_room.size, Color.DARKBLUE)
+            graphics.stroke.draw(pos, active_room.main, Color.DARKBLUE)
         }
 
         var getter: ClassGetter<GameObject>? = null
@@ -76,13 +82,15 @@ interface World {
             return c.getFrom("pos: $s")
         }
 
-
-        fun init(vararg filename: String) {
+        fun init(controller: WorldController?, vararg filename: String) {
+            World.controller = controller
             rooms.clear()
             for(i in filename.indices) filenames.add(filename[i])
             filenames.forEach { name -> rooms.add(readInfo(name)) }
             set(0)
         }
+
+        fun init(vararg filename: String) = init(null, *filename)
 
         fun set(id: Int) {
             active_room = rooms[id]

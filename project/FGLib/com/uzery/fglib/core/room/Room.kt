@@ -11,6 +11,7 @@ import com.uzery.fglib.utils.math.BoundsUtils
 import com.uzery.fglib.utils.math.FGUtils
 import com.uzery.fglib.utils.math.ShapeUtils
 import com.uzery.fglib.utils.math.geom.PointN
+import com.uzery.fglib.utils.math.geom.RectN
 import com.uzery.fglib.utils.math.getter.value.PosValue
 import com.uzery.fglib.utils.math.getter.value.SizeValue
 import javafx.scene.paint.Color
@@ -21,6 +22,8 @@ import java.util.*
 class Room(val pos: PointN, val size: PointN) {
     val objects = LinkedList<GameObject>()
     private val new_objects = ArrayList<GameObject>()
+
+    val main = RectN(pos, size)
 
     constructor(pos: PointN, size: PointN, objs: List<GameObject>): this(pos, size) {
         objects.addAll(objs)

@@ -1,7 +1,7 @@
 //Uzery Game Studio 2019-2023
 //last edit: 2023.05.04 09:44:56
 
-room: pos[256, 0] size[512, 512]
+room: pos[512, 256] size[512, 512]
 
 level_2
 cowboy: pos[272, 272]

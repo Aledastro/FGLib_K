@@ -6,6 +6,7 @@ import com.uzery.fglib.core.program.Extension
 import com.uzery.fglib.core.program.Platform
 import com.uzery.fglib.core.program.Platform.Companion.graphics
 import com.uzery.fglib.core.program.Platform.Companion.keyboard
+import com.uzery.fglib.core.world.MovableWorldController
 import com.uzery.fglib.core.world.World
 import com.uzery.fglib.utils.math.FGUtils
 import com.uzery.fglib.utils.math.geom.PointN
@@ -23,7 +24,7 @@ class Game: Extension {
 
         cowboy = Cowboy(PointN(256, 256))
 
-        World.init("project/media/1.room", "project/media/2.room")
+        World.init(MovableWorldController(cowboy), "project/media/1.room", "project/media/2.room")
         World.active_room.objects.removeIf { o -> o.tagged("player") }
         World.add(cowboy)
     }
@@ -41,13 +42,13 @@ class Game: Extension {
         if(draw_bounds) drawBounds()
         if(keyboard.pressed(KeyCode.CONTROL) && keyboard.inPressed(KeyCode.TAB)) draw_bounds = !draw_bounds
 
-        if(World.noneExists("level_1", "level_2", "enemy")) {
+        /*if(World.noneExists("level_1", "level_2", "enemy")) {
             World.respawn(last)
             World.active_room.objects.removeIf { o -> o.tagged("player") }
             World.add(cowboy)
 
             last = 1 - last
-        }
+        }*/
 
         Platform.update()
         t++
