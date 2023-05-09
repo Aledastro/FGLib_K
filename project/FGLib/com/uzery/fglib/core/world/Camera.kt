@@ -9,4 +9,5 @@ interface Camera {
     }
 
     fun drawPOS(): PointN
+    fun move(p: PointN)
 }

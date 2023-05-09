@@ -10,6 +10,10 @@ interface MathUtils {
 
         fun mod(input: Int, mod: Int) = input%mod + (if(input<0) mod else 0)
 
+        //todo it's roundL (round to less value)
+        fun round(input: Double, mod: Double) = input - mod(input, mod)
+        fun round(input: Int, mod: Int) = input - mod(input, mod)
+
 
         fun min(vararg xs: Double) = xs.min()
 

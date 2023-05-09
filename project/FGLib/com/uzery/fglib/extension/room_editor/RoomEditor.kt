@@ -162,7 +162,7 @@ class RoomEditor(private val getter: ClassGetter<GameObject>): Extension {
         private fun checkForAdd() {
             if(mouse_keys.pressed(MouseButton.PRIMARY)) {
                 val o = getter.getEntry(objects_vbox.select)
-                val pp = (mouse.pos() - room_pos - World.active_room.pos - draw_pos).round(GRID) + GRID_P/2
+                val pp = (mouse.pos() - room_pos - draw_pos).round(GRID) + GRID_P/2
                 if(lastPOS == pp) return
                 o.stats.POS = pp
                 lastPOS = pp

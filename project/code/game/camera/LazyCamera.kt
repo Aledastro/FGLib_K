@@ -26,6 +26,10 @@ class LazyCamera(private val stats: Stats): Camera {
     }
 
     override fun drawPOS(): PointN {
-        return pos - World.active_room.size*0.5
+        return pos - Platform.CANVAS/2
+    }
+
+    override fun move(p: PointN) {
+        pos -= p
     }
 }

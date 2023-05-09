@@ -1,5 +1,6 @@
 package game.objects.enemy
 
+import com.uzery.fglib.core.obj.DrawLayer
 import com.uzery.fglib.core.obj.GameObject
 import com.uzery.fglib.core.obj.ability.AbilityBox
 import com.uzery.fglib.core.obj.ability.InputAction
@@ -41,7 +42,7 @@ class Goblin(pos: PointN): Enemy(4) {
         })
         val filename = "mob|goblin.png"
         Data.set(filename, IntI(16, 16), 2)
-        visuals.add(object: LayerVisualiser(1.0) {
+        visuals.add(object: LayerVisualiser(DrawLayer.CAMERA_FOLLOW) {
             override fun draw(draw_pos: PointN) {
                 agc().image.draw(Data.get(filename, IntI(object_time/10%2, 0)), draw_pos - Game.STEP*16)
             }

@@ -38,7 +38,7 @@ class Data {
             var local_path = ""
             var last = name
             if(name.indexOf('|') != -1) {
-                local_path = when(name.substring(0 until name.indexOf('|'))) {
+                local_path = when(name.substring(0, name.indexOf('|'))) {
                     "wld" -> "world/"
                     "map" -> "world/map/"
                     "mob" -> "world/enemy/"

@@ -76,7 +76,7 @@ class Room(val pos: PointN, val size: PointN) {
     private var freeRam = 0L
     private var ram = 0L
     private fun drawDebug(draw_pos: PointN) {
-        graphics.layer = DrawLayer.CAMERA_OFF
+        graphics.layer = DrawLayer.CAMERA_FOLLOW
         graphics.fill.font = Font.font("TimesNewRoman", FontWeight.BOLD, 12.0)
 
         val b = (ids_time%20 == 0)
@@ -131,7 +131,7 @@ class Room(val pos: PointN, val size: PointN) {
             fun maxMove(move_p: PointN): Double {
                 if(all_bounds.isEmpty()) return 1.0
 
-                return (0 until all_bounds.size).minOf { i ->
+                return all_bounds.indices.minOf { i ->
                     BoundsUtils.maxMove(all_bounds[i], move_bs(), pos[i], obj.stats.POS, move_p)
                 }
             }

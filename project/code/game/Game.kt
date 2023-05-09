@@ -6,7 +6,6 @@ import com.uzery.fglib.core.program.Extension
 import com.uzery.fglib.core.program.Platform
 import com.uzery.fglib.core.program.Platform.Companion.graphics
 import com.uzery.fglib.core.program.Platform.Companion.keyboard
-import com.uzery.fglib.core.world.MovableWorldController
 import com.uzery.fglib.core.world.World
 import com.uzery.fglib.utils.math.FGUtils
 import com.uzery.fglib.utils.math.geom.PointN
@@ -75,6 +74,8 @@ class Game: Extension {
 
 
     private fun drawBounds() {
+        graphics.layer = DrawLayer.CAMERA_FOLLOW
+
         val dp = World.active_room.pos
         for(o in World.active_room.objects) {
             val c = if(o.stats.fly) Color.color(1.0, 1.0, 0.2, 0.7) else Color.color(1.0, 0.2, 1.0, 0.7)

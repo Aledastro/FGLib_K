@@ -33,7 +33,6 @@ class Cowboy(pos: PointN): GameCharacter(1000) {
                 return stay
             }
         }
-        //World.camera = LazyCamera(stats)
 
         abilities.add(object: AbilityBox {
             override fun run() {
@@ -49,7 +48,7 @@ class Cowboy(pos: PointN): GameCharacter(1000) {
         })
         val filename = "char|cowboy.png"
         Data.set(filename, IntI(16, 16), 2)
-        visuals.add(object: LayerVisualiser(1.0) {
+        visuals.add(object: LayerVisualiser(DrawLayer.CAMERA_FOLLOW) {
             override fun draw(draw_pos: PointN) {
                 when(mode) {
                     MODE.STAY -> agc().image.draw(Data.get(filename, IntI(1, 1)), draw_pos - Game.STEP*16)

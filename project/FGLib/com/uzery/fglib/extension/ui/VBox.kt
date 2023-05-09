@@ -32,9 +32,7 @@ abstract class VBox(protected val full: Int, protected val rows: Int): UIElement
         graphics.setStroke(4.0)
 
 
-        for(i in 0 until full) {
-            name.add(this.setNames(i))
-        }
+        for(i in 0 until full) name.add(this.setNames(i))
         for(id in 0 until full) {
             val ps = pos + fromID(id)
             graphics.fill.rect(ps, sizeOne, FGUtils.transparent(Color.DARKBLUE, 0.1))

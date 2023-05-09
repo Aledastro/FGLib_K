@@ -6,6 +6,7 @@ import com.uzery.fglib.core.program.Platform.Companion.graphics
 import com.uzery.fglib.core.room.Room
 import com.uzery.fglib.utils.data.debug.DebugData
 import com.uzery.fglib.utils.data.file.WriteData
+import com.uzery.fglib.utils.math.FGUtils
 import com.uzery.fglib.utils.math.geom.PointN
 import com.uzery.fglib.utils.math.getter.ClassGetter
 import com.uzery.fglib.utils.math.getter.ClassGetterInstance
@@ -17,6 +18,7 @@ interface World {
     companion object {
         var active_room = Room(PointN.ZERO, PointN.ZERO)
             private set
+        var active_id = -1
         val rooms = LinkedList<Room>()
         private val filenames = LinkedList<String>()
 
@@ -36,17 +38,29 @@ interface World {
             camera?.update()
             graphics.drawPOS = camera?.drawPOS() ?: PointN.ZERO
 
+            controller?.update()
             if(controller != null && controller!!.ready()) {
-                controller?.action()
+                controller?.changeRoom()
                 //if(controller!!.ready()) throw DebugData.error("")
             }
         }
 
         fun draw(pos: PointN = PointN.ZERO) {
-            active_room.draw(active_room.pos + pos)
+            drawNotActiveRooms(pos)
+            active_room.draw(pos)
 
             graphics.layer = DrawLayer.CAMERA_FOLLOW
-            graphics.stroke.draw(pos, active_room.main, Color.DARKBLUE)
+            graphics.stroke.rect(pos, active_room.size, Color.DARKBLUE)
+        }
+
+        private fun drawNotActiveRooms(pos: PointN) {
+            graphics.layer = DrawLayer.CAMERA_FOLLOW
+            rooms.forEach { room ->
+                graphics.stroke.rect(
+                    room.pos - active_room.pos + pos,
+                    room.size,
+                    FGUtils.transparent(Color.LIGHTGRAY, 0.5))
+            }
         }
 
         var getter: ClassGetter<GameObject>? = null
@@ -84,6 +98,7 @@ interface World {
 
         fun init(controller: WorldController?, vararg filename: String) {
             World.controller = controller
+            World.controller?.init()
             rooms.clear()
             for(i in filename.indices) filenames.add(filename[i])
             filenames.forEach { name -> rooms.add(readInfo(name)) }
@@ -94,11 +109,16 @@ interface World {
 
         fun set(id: Int) {
             active_room = rooms[id]
+            active_id = id
+        }
+
+        fun reset() {
+            respawn(active_id)
         }
 
         fun respawn(id: Int) {
             rooms[id] = readInfo(filenames[id])
-            active_room = rooms[id]
+            set(id)
         }
 
         fun add(o: GameObject) = active_room.add(o)
