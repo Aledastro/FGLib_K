@@ -12,7 +12,7 @@ import com.uzery.fglib.utils.math.getter.value.PosValue
 import com.uzery.fglib.utils.math.num.IntI
 import game.Game
 
-class Wall(pos: PointN): GameObject() {
+class Cactus(pos: PointN): GameObject() {
     init {
         stats.POS = pos
         abilities.add(object: AbilityBox {
@@ -26,14 +26,15 @@ class Wall(pos: PointN): GameObject() {
         Data.set(filename, IntI(16, 16), 2)
         visuals.add(object: LayerVisualiser(Game.layer("OBJ")) {
             override fun draw(draw_pos: PointN) {
-                agc().image.draw(Data.get(filename, IntI(7, 2)), draw_pos - Game.STEP*16)
+                agc().image.draw(Data.get(filename, IntI(if(object_time%80<40) 5 else 6, 2)), draw_pos - Game.STEP*16)
             }
         })
         bounds.red = { Bounds(RectN(-Game.STEP*16, Game.STEP*32)) }
+        tag("bullet_go")
     }
 
     override fun setValues() {
-        name = "wall"
+        name = "cactus"
         values.add(PosValue(stats.POS))
     }
 }

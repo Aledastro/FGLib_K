@@ -9,7 +9,6 @@ import com.uzery.fglib.core.obj.modificator.Modificator
 import com.uzery.fglib.core.obj.stats.Stats
 import com.uzery.fglib.core.obj.visual.Visualiser
 import com.uzery.fglib.utils.math.geom.PointN
-import com.uzery.fglib.utils.math.getter.value.ObjectValue
 import java.util.*
 
 abstract class GameObject {
@@ -33,7 +32,7 @@ abstract class GameObject {
     var object_time = 0
         private set
     var name = "temp"
-    val values = ArrayList<ObjectValue>()
+    val values = ArrayList<Any>()
 
     fun next() {
         if(temp == null || temp!!.ends) temp = controller?.get()?.invoke()
@@ -73,7 +72,11 @@ abstract class GameObject {
         val s = StringBuilder(name)
         if(values.isNotEmpty()) {
             s.append(":")
-            values.forEach { value -> s.append(" $value") }
+            values.forEach { value ->
+                val ss = value.toString()
+                if(ss[ss.lastIndex] == ']') s.append(" $ss")
+                else s.append(" [$ss]")
+            }
         }
         return s.toString()
     }

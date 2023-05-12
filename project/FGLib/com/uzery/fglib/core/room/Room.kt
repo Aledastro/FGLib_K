@@ -1,12 +1,9 @@
 package com.uzery.fglib.core.room
 
-import com.uzery.fglib.core.obj.DrawLayer
 import com.uzery.fglib.core.obj.GameObject
 import com.uzery.fglib.core.obj.ability.InputAction
 import com.uzery.fglib.core.obj.bounds.Bounds
-import com.uzery.fglib.core.obj.bounds.BoundsBox
 import com.uzery.fglib.core.obj.visual.Visualiser
-import com.uzery.fglib.core.program.Platform.Companion.graphics
 import com.uzery.fglib.utils.math.BoundsUtils
 import com.uzery.fglib.utils.math.FGUtils
 import com.uzery.fglib.utils.math.ShapeUtils
@@ -14,9 +11,6 @@ import com.uzery.fglib.utils.math.geom.PointN
 import com.uzery.fglib.utils.math.geom.RectN
 import com.uzery.fglib.utils.math.getter.value.PosValue
 import com.uzery.fglib.utils.math.getter.value.SizeValue
-import javafx.scene.paint.Color
-import javafx.scene.text.Font
-import javafx.scene.text.FontWeight
 import java.util.*
 
 class Room(val pos: PointN, val size: PointN) {
@@ -44,9 +38,6 @@ class Room(val pos: PointN, val size: PointN) {
 
     }
 
-
-    private var last = System.currentTimeMillis()
-    private var time = 0L
     fun draw(draw_pos: PointN) {
         val vis = ArrayList<Visualiser>()
         val map = HashMap<Visualiser, GameObject>()
@@ -66,51 +57,8 @@ class Room(val pos: PointN, val size: PointN) {
                 } else throw IllegalArgumentException()
             }
         }
-
-        drawDebug(draw_pos)
     }
 
-    private var ids_time = 0
-    private var fps = 6000.0
-    private var maxRam = 0L
-    private var freeRam = 0L
-    private var ram = 0L
-    private fun drawDebug(draw_pos: PointN) {
-        graphics.layer = DrawLayer.CAMERA_FOLLOW
-        graphics.fill.font = Font.font("TimesNewRoman", FontWeight.BOLD, 12.0)
-
-        val b = (ids_time%20 == 0)
-        if(b) maxRam = Runtime.getRuntime().totalMemory()
-        if(b) freeRam = Runtime.getRuntime().freeMemory()
-        if(b) ram = maxRam - freeRam
-        val p = draw_pos + size.XP + PointN(10, 0)
-
-        graphics.fill.text(p + PointN(0, 20), "size: ${objects.size}", Color.DARKBLUE)
-        graphics.fill.text(
-            p + PointN(0, 40),
-            "ram (MB): ${ram/1000_000}/${maxRam/1000_000}",
-            Color.DARKBLUE)
-        graphics.fill.text(
-            p + PointN(0, 60),
-            "ram (KB) per obj: ${if(objects.size != 0) (ram/1000/objects.size).toInt() else 0}",
-            Color.DARKBLUE)
-        time = System.currentTimeMillis() - last
-        last = System.currentTimeMillis()
-        fps += (1000.0/time)
-        fps *= 0.99
-        graphics.fill.text(p + PointN(0, 80), "FPS: ${(fps/100).toInt()}", Color.DARKBLUE)
-
-        for(index in 0 until BoundsBox.SIZE) {
-            var bs_n = 0
-            objects.forEach { o ->
-                val bs = o.bounds[index]
-                if(bs != null) bs_n++
-            }
-            graphics.fill.text(
-                p + PointN(0, 100 + index*20), "bounds[${BoundsBox.name(index)}]: $bs_n", Color.DARKBLUE)
-        }
-        ids_time++
-    }
 
     fun add(obj: GameObject) = objects.add(obj)
 
@@ -153,6 +101,7 @@ class Room(val pos: PointN, val size: PointN) {
 
     private fun nextMove() {
         for(o in objects) {
+            if(o.tagged("#immovable")) continue
             o.stats.lPOS = o.stats.POS
             val orange = o.bounds.orange ?: continue
 
@@ -175,9 +124,13 @@ class Room(val pos: PointN, val size: PointN) {
     }
 
     private fun nextActivate() {
+        //todo less code
         for(b in objects) {
+            if(b.tagged("#inactive")) continue
+
             val blue = b.bounds.blue ?: continue
             for(m in objects) {
+                if(m.tagged("#inactive")) continue
                 val main = m.bounds.main ?: continue
                 blue().elements.forEach { blueE ->
                     main().elements.forEach { mainE ->
@@ -199,9 +152,10 @@ class Room(val pos: PointN, val size: PointN) {
         }
 
         for(m in objects) {
-            if(!m.interact()) continue
+            if(!m.interact() || m.tagged("#inactive")) continue
             val main = m.bounds.main ?: continue
             for(g in objects) {
+                if(g.tagged("#inactive")) continue
                 val green = g.bounds.green ?: continue
                 green().elements.forEach { greenE ->
                     main().elements.forEach { mainE ->
@@ -222,9 +176,10 @@ class Room(val pos: PointN, val size: PointN) {
             }
         }
         for(o1 in objects) {
+            if(o1.tagged("#inactive")) continue
             val orange1 = o1.bounds.orange ?: continue
             for(o2 in objects) {
-                if(o1 == o2) continue
+                if(o1 == o2 || o2.tagged("#inactive")) continue
                 val orange2 = o2.bounds.orange ?: continue
                 orange2().elements.forEach { orange2E ->
                     orange1().elements.forEach { orange1E ->

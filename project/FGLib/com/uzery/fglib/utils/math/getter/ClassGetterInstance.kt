@@ -1,6 +1,5 @@
 package com.uzery.fglib.utils.math.getter
 
-import com.uzery.fglib.core.obj.DrawLayer
 import com.uzery.fglib.utils.data.debug.DebugData
 import com.uzery.fglib.utils.math.geom.PointN
 import com.uzery.fglib.utils.math.num.StringN
@@ -8,7 +7,7 @@ import javafx.scene.paint.Color
 import java.util.*
 
 abstract class ClassGetterInstance<Type> {
-    private var no_info = false
+    protected var no_info = false
     private val map: TreeMap<StringN, () -> Type> = TreeMap<StringN, () -> Type>()
 
     init {
@@ -43,11 +42,11 @@ abstract class ClassGetterInstance<Type> {
         map[StringN(s)] = mark
     } //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    private fun stringX(i: Int) = if(no_info) "" else input[in_id - 1][i]
-    private fun intX(i: Int) = if(no_info) 0 else input[in_id - 1][i].toInt()
-    private fun doubleX(i: Int) = if(no_info) 0.0 else input[in_id - 1][i].toDouble()
-    private fun longX(i: Int) = if(no_info) 0L else input[in_id - 1][i].toLong()
-    private fun boolX(i: Int) = if(no_info) false else input[in_id - 1][i].toBoolean()
+    protected fun stringX(i: Int) = if(no_info) "" else input[in_id - 1][i]
+    protected fun intX(i: Int) = if(no_info) 0 else input[in_id - 1][i].toInt()
+    protected fun doubleX(i: Int) = if(no_info) 0.0 else input[in_id - 1][i].toDouble()
+    protected fun longX(i: Int) = if(no_info) 0L else input[in_id - 1][i].toLong()
+    protected fun boolX(i: Int) = if(no_info) false else input[in_id - 1][i].toBoolean()
 
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -63,16 +62,12 @@ abstract class ClassGetterInstance<Type> {
         get() = if(no_info) 0L else input[in_id++][0].toLong()
     protected val boolean: Boolean
         get() = if(no_info) false else input[in_id++][0].toBoolean()
-    protected val layer: DrawLayer
-        get() = if(no_info) DrawLayer.CAMERA_OFF else DrawLayer(double)
 
     /*protected val type: TypeValue
         get() {
             val i = in_id++
             return if(input[i].size == 1) TypeValue(input[i][0]) else TypeValue(string, int,int,int,int)
         }*/
-    protected val color256: Color
-        get() = if(no_info) Color.BLACK else Color.rgb(int, intX(1), intX(2), intX(3)*1.0/255)
     protected val color: Color
         get() = if(no_info) Color.BLACK else Color.color(double, doubleX(1), doubleX(2), doubleX(3))
     protected val pos: PointN

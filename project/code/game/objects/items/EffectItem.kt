@@ -1,6 +1,5 @@
 package game.objects.items
 
-import com.uzery.fglib.core.obj.DrawLayer
 import com.uzery.fglib.core.obj.GameObject
 import com.uzery.fglib.core.obj.TagEffect
 import com.uzery.fglib.core.obj.ability.AbilityBox
@@ -33,7 +32,7 @@ open class EffectItem(pos: PointN, id: Int, private val effect_name: String, pri
         })
         val filename = "item|items.png"
         Data.set(filename, IntI(16, 16), 2)
-        visuals.add(object: LayerVisualiser(DrawLayer.CAMERA_FOLLOW) {
+        visuals.add(object: LayerVisualiser(Game.layer("OBJ-")) {
             override fun draw(draw_pos: PointN) {
                 if(object_time>DURATION_TIME - REACT_TIME && object_time%20<10) return
                 agc().image.draw(Data.get(filename, IntI(id, 0)), draw_pos - Game.STEP*16)

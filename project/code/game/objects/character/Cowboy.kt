@@ -48,7 +48,7 @@ class Cowboy(pos: PointN): GameCharacter(1000) {
         })
         val filename = "char|cowboy.png"
         Data.set(filename, IntI(16, 16), 2)
-        visuals.add(object: LayerVisualiser(DrawLayer.CAMERA_FOLLOW) {
+        visuals.add(object: LayerVisualiser(Game.layer("OBJ")) {
             override fun draw(draw_pos: PointN) {
                 when(mode) {
                     MODE.STAY -> agc().image.draw(Data.get(filename, IntI(1, 1)), draw_pos - Game.STEP*16)
@@ -101,7 +101,7 @@ class Cowboy(pos: PointN): GameCharacter(1000) {
     enum class MODE { STAY, MOVE, SHOOT }
 
     val cowboy_speed
-        get() = if(effectedAny("coffee", "master")) 3.4 else 2.4
+        get() = if(effectedAny("coffee", "master")) 5.4 else 7.4
 
     val shoot: () -> TempAction = {
         object: TimeTempAction() {

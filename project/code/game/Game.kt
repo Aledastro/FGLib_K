@@ -1,15 +1,17 @@
 package game
 
 import com.uzery.fglib.core.obj.DrawLayer
-import com.uzery.fglib.core.obj.bounds.BoundsBox
 import com.uzery.fglib.core.program.Extension
 import com.uzery.fglib.core.program.Platform
+import com.uzery.fglib.core.program.Platform.Companion.develop_mode
 import com.uzery.fglib.core.program.Platform.Companion.graphics
 import com.uzery.fglib.core.program.Platform.Companion.keyboard
 import com.uzery.fglib.core.world.World
-import com.uzery.fglib.utils.math.FGUtils
+import com.uzery.fglib.core.world.WorldUtils
+import com.uzery.fglib.utils.data.debug.DebugData
 import com.uzery.fglib.utils.math.geom.PointN
 import com.uzery.fglib.utils.math.getter.ClassGetter
+import com.uzery.fglib.utils.math.num.StringD
 import game.objects.character.Cowboy
 import javafx.scene.input.KeyCode
 import javafx.scene.paint.Color
@@ -23,12 +25,15 @@ class Game: Extension {
 
         cowboy = Cowboy(PointN(256, 256))
 
-        World.init(MovableWorldController(cowboy), "project/media/1.room", "project/media/2.room")
+        World.init(MovableWorldController(cowboy), "1.room", "2.room", "3.room", "4.room", "5.room")
         World.active_room.objects.removeIf { o -> o.tagged("player") }
         World.add(cowboy)
     }
 
     private var last = 0
+
+
+    var draw_bounds = false
 
     private lateinit var cowboy: Cowboy
     override fun update() {
@@ -36,10 +41,12 @@ class Game: Extension {
         World.next()
         World.draw()
 
-        //world.r().objs().forEach { o -> if((o.stats.POS - STEP*350).length()>500) o.collapse() }
-
-        if(draw_bounds) drawBounds()
         if(keyboard.pressed(KeyCode.CONTROL) && keyboard.inPressed(KeyCode.TAB)) draw_bounds = !draw_bounds
+        if(draw_bounds) WorldUtils.drawBounds()
+
+        develop_mode = draw_bounds
+
+        //world.r().objs().forEach { o -> if((o.stats.POS - STEP*350).length()>500) o.collapse() }
 
         /*if(World.noneExists("level_1", "level_2", "enemy")) {
             World.respawn(last)
@@ -60,6 +67,36 @@ class Game: Extension {
     }
 
     companion object {
+        const val current_filename = "5.room"
+
+        private val layers = HashMap<String, DrawLayer>()
+
+        init {
+            //todo BG & SP
+            val names = arrayOf(
+                StringD("SKY", 0.0),
+                StringD("BG1", 0.2),
+                StringD("BG2", 0.4),
+                StringD("BG3", 0.8),
+                StringD("DRT", 1.0),
+                StringD("OBJ", 1.0),
+                StringD("BLK", 1.0),
+                StringD("EFF", 1.0),
+                StringD("SP1", 1.2),
+                StringD("SP2", 1.5),
+                StringD("SP3", 2.0),
+                StringD("UI", 0.0))
+            val suf = arrayOf("--", "-", "", "+", "++")
+            fun addL(name: String, z: Double, sort: Int) {
+                for(i in 0..2) {
+                    layers[name + suf[i]] = DrawLayer(z, sort*10 + i, name + suf[i])
+                }
+            }
+            for(i in names.indices) {
+                addL(names[i].s, names[i].d, i)
+            }
+        }
+
         val STEP = PointN(1, 1)
 
         val X = PointN(1, 0)
@@ -68,39 +105,8 @@ class Game: Extension {
         fun randP() = PointN(Math.random(), Math.random())
         fun randP(size: Double) = randP()*size
         fun randP(size: Int) = randP()*size
-
-        var draw_bounds = false
-    }
-
-
-    private fun drawBounds() {
-        graphics.layer = DrawLayer.CAMERA_FOLLOW
-
-        val dp = World.active_room.pos
-        for(o in World.active_room.objects) {
-            val c = if(o.stats.fly) Color.color(1.0, 1.0, 0.2, 0.7) else Color.color(1.0, 0.2, 1.0, 0.7)
-            graphics.fill.oval(dp + o.stats.POS - STEP*2, STEP*4, c)
-        }
-
-        val colors = arrayOf(
-            Color.RED,
-            Color.ORANGERED,
-            Color.BLUE,
-            Color.GREEN)
-
-        graphics.setStroke(2.0)
-        for(o in World.active_room.objects) {
-            for(i in 0 until BoundsBox.SIZE) {
-                val bs = o.bounds[i] ?: continue
-                for(element in bs().elements) {
-                    graphics.fill.draw(dp + o.stats.POS, element.shape, FGUtils.transparent(colors[i], 0.1))
-                    graphics.stroke.draw(dp + o.stats.POS, element.shape, FGUtils.transparent(colors[i], 0.6))
-                    graphics.stroke.line(
-                        dp + o.stats.POS + element.shape.L,
-                        element.shape.S,
-                        FGUtils.transparent(colors[i], 0.5))
-                }
-            }
+        fun layer(input: String): DrawLayer {
+            return layers[input] ?: throw DebugData.error("from: $input")
         }
     }
 }

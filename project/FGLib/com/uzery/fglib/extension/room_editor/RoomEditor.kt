@@ -10,10 +10,10 @@ import com.uzery.fglib.core.program.Platform.Companion.mouse
 import com.uzery.fglib.core.program.Platform.Companion.mouse_keys
 import com.uzery.fglib.core.program.Program
 import com.uzery.fglib.core.world.World
+import com.uzery.fglib.core.world.WorldUtils
 import com.uzery.fglib.extension.ui.*
 import com.uzery.fglib.utils.data.file.WriteData
 import com.uzery.fglib.utils.math.FGUtils
-import com.uzery.fglib.utils.math.MathUtils
 import com.uzery.fglib.utils.math.geom.PointN
 import com.uzery.fglib.utils.math.getter.ClassGetter
 import game.ClassGetterX
@@ -25,10 +25,8 @@ import javafx.scene.text.Font
 import javafx.scene.text.FontWeight
 import java.util.*
 
-class RoomEditor(private val getter: ClassGetter<GameObject>): Extension {
+class RoomEditor(private val filename: String, private val getter: ClassGetter<GameObject>): Extension {
     override fun children() = LinkedList<Extension>().apply { add(UIBox()) }
-
-    private val filename = "project/media/2.room"
 
     private val OFFSET = 40.0
     private val GRID = 32.0
@@ -52,7 +50,7 @@ class RoomEditor(private val getter: ClassGetter<GameObject>): Extension {
 
     private fun checkForSave() {
         if(keyboard.allPressed(KeyCode.CONTROL, KeyCode.SHIFT) && keyboard.inPressed(KeyCode.S)) {
-            WriteData.write(filename, World.active_room.toString())
+            WriteData.write(from(filename), World.active_room.toString())
             println("saved")
         }
     }
@@ -78,6 +76,8 @@ class RoomEditor(private val getter: ClassGetter<GameObject>): Extension {
             }
         }*/
     }
+
+    private fun from(filename: String) = "project/media/$filename"
 
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -124,8 +124,11 @@ class RoomEditor(private val getter: ClassGetter<GameObject>): Extension {
         override val size: PointN
             get() = Platform.CANVAS
 
+        var draw_bounds = false
+
         override fun draw() {
             World.draw(room_pos + draw_pos)
+            if(draw_bounds) WorldUtils.drawBounds(room_pos + draw_pos)
 
             drawLines()
 
@@ -138,7 +141,7 @@ class RoomEditor(private val getter: ClassGetter<GameObject>): Extension {
             graphics.layer = DrawLayer.CAMERA_FOLLOW
             for(i in -70..70) {
                 graphics.setStroke(1.0)
-                val pp = room_pos - World.active_room.pos + draw_pos.transform { x -> MathUtils.mod(x, GRID) }
+                val pp = room_pos.mod(GRID) + draw_pos.mod(GRID)
                 graphics.stroke.line(pp - Platform.CANVAS.XP + PointN(0.0, i*GRID), Platform.CANVAS.XP*2, c)
                 graphics.stroke.line(pp - Platform.CANVAS.YP + PointN(i*GRID, 0.0), Platform.CANVAS.YP*2, c)
             }
@@ -156,6 +159,7 @@ class RoomEditor(private val getter: ClassGetter<GameObject>): Extension {
 
         override fun update() {
             last_mouse_pos = mouse.pos()
+            if(keyboard.pressed(KeyCode.CONTROL) && keyboard.inPressed(KeyCode.TAB)) draw_bounds = !draw_bounds
         }
 
         var lastPOS = PointN.ZERO
@@ -173,7 +177,7 @@ class RoomEditor(private val getter: ClassGetter<GameObject>): Extension {
 
         private fun checkForRemove() {
             if(mouse_keys.pressed(MouseButton.SECONDARY)) {
-                World.active_room.objects.removeIf { o -> (o.stats.POS - (mouse.pos() - room_pos - World.active_room.pos - draw_pos)).length()<GRID/2 }
+                World.active_room.objects.removeIf { o -> (o.stats.POS - (mouse.pos() - room_pos - draw_pos)).length()<GRID/2 }
                 if(!World.active_room.objects.contains(select_obj)) select_obj = null
             }
         }
@@ -183,7 +187,7 @@ class RoomEditor(private val getter: ClassGetter<GameObject>): Extension {
                 Program.cursor = Cursor.DEFAULT
                 return false
             }
-            if(mouse_keys.pressed(MouseButton.PRIMARY)) draw_pos += mouse.pos() - last_mouse_pos
+            if(mouse_keys.anyPressed(*MouseButton.values())) draw_pos += mouse.pos() - last_mouse_pos
             Program.cursor = Cursor.CLOSED_HAND
 
             return true

@@ -35,14 +35,14 @@ interface World {
         fun next() {
             active_room.next()
 
-            camera?.update()
-            graphics.drawPOS = camera?.drawPOS() ?: PointN.ZERO
-
             controller?.update()
             if(controller != null && controller!!.ready()) {
                 controller?.changeRoom()
                 //if(controller!!.ready()) throw DebugData.error("")
             }
+            camera?.update()
+            graphics.drawPOS = camera?.drawPOS() ?: PointN.ZERO
+
         }
 
         fun draw(pos: PointN = PointN.ZERO) {
@@ -51,6 +51,8 @@ interface World {
 
             graphics.layer = DrawLayer.CAMERA_FOLLOW
             graphics.stroke.rect(pos, active_room.size, Color.DARKBLUE)
+
+            WorldUtils.drawDebug(pos, active_room)
         }
 
         private fun drawNotActiveRooms(pos: PointN) {
@@ -100,7 +102,7 @@ interface World {
             World.controller = controller
             World.controller?.init()
             rooms.clear()
-            for(i in filename.indices) filenames.add(filename[i])
+            for(i in filename.indices) filenames.add("project/media/${filename[i]}")
             filenames.forEach { name -> rooms.add(readInfo(name)) }
             set(0)
         }
@@ -122,5 +124,7 @@ interface World {
         }
 
         fun add(o: GameObject) = active_room.add(o)
+
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////
     }
 }

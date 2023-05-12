@@ -70,6 +70,6 @@ abstract class GeometryGraphics(private val transform: AffineTransform) {
 
     fun line(pos: PointN, size: PointN, color: Color) {
         this.color = color
-        line0(transform.pos(pos), pos + transform.size(pos, size))
+        line0(transform.pos(pos), transform.pos(pos) + transform.size(pos, size))
     }
 }

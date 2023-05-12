@@ -24,6 +24,8 @@ class Platform {
             mouse_keys.update()
         }
 
+        var develop_mode = false
+
         var whole_draw = false
         val CANVAS
             get() = PointN(options().size)
