@@ -12,54 +12,66 @@ import com.uzery.fglib.utils.math.getter.ClassGetter
 import com.uzery.fglib.utils.math.getter.ClassGetterInstance
 import javafx.scene.paint.Color
 import java.util.*
-import java.util.stream.Stream
 
 interface World {
     companion object {
-        var active_room = Room(PointN.ZERO, PointN.ZERO)
-            private set
-        var active_id = -1
         val rooms = LinkedList<Room>()
+        val active_rooms = LinkedList<Room>()
+        private val last_active = LinkedList<Boolean>()
+
         private val filenames = LinkedList<String>()
 
-        var controller: WorldController? = null
+        private lateinit var controller: WorldController
 
-        fun allTagged(tag: String): Stream<GameObject> = active_room.objects.stream().filter { o -> o.tagged(tag) }
-        fun allExists(vararg tag: String) = tag.all { t -> allTagged(t).count() != 0L }
-        fun anyExists(vararg tag: String) = tag.any { t -> allTagged(t).count() != 0L }
+        fun allTagged(tag: String): LinkedList<GameObject> {
+            val res = LinkedList<GameObject>()
+            for(room in active_rooms) {
+                res.addAll(room.objects.stream().filter { it.tagged(tag) }.toList())
+            }
+            return res
+        }
 
-        fun noneExists(vararg tag: String) = tag.all { t -> allTagged(t).count() == 0L }
+        fun allExists(vararg tag: String) = tag.all { allTagged(it).isNotEmpty() }
+        fun anyExists(vararg tag: String) = tag.any { allTagged(it).isNotEmpty() }
+
+        fun noneExists(vararg tag: String) = tag.all { allTagged(it).isNotEmpty() }
 
         var camera: Camera? = null
 
         fun next() {
-            active_room.next()
+            active_rooms.forEach { it.next() }
 
-            controller?.update()
-            if(controller != null && controller!!.ready()) {
-                controller?.changeRoom()
-                //if(controller!!.ready()) throw DebugData.error("")
+            controller.update()
+            active_rooms.clear()
+            for(id in rooms.indices) {
+                if(controller.isActive(rooms[id])) {
+                    if(!last_active[id]) controller.onAppear(rooms[id])
+                    active_rooms.add(rooms[id])
+                    last_active[id] = true
+                } else {
+                    if(last_active[id]) controller.onDisappear(rooms[id])
+                    last_active[id] = false
+                }
             }
             camera?.update()
-            graphics.drawPOS = camera?.drawPOS() ?: PointN.ZERO
-
+            graphics.drawPOS = controller.drawPOS() + (camera?.drawPOS() ?: PointN.ZERO)
         }
 
         fun draw(pos: PointN = PointN.ZERO) {
             drawNotActiveRooms(pos)
-            active_room.draw(pos)
+            active_rooms.forEach { it.draw(pos + it.pos) }
 
             graphics.layer = DrawLayer.CAMERA_FOLLOW
-            graphics.stroke.rect(pos, active_room.size, Color.DARKBLUE)
+            active_rooms.forEach { graphics.stroke.rect(pos + it.pos, it.size, Color.DARKBLUE) }
 
-            WorldUtils.drawDebug(pos, active_room)
+            active_rooms.forEach { WorldUtils.drawDebug(pos + it.pos, it) }
         }
 
         private fun drawNotActiveRooms(pos: PointN) {
             graphics.layer = DrawLayer.CAMERA_FOLLOW
             rooms.forEach { room ->
                 graphics.stroke.rect(
-                    room.pos - active_room.pos + pos,
+                    room.pos + pos,
                     room.size,
                     FGUtils.transparent(Color.LIGHTGRAY, 0.5))
             }
@@ -98,32 +110,18 @@ interface World {
             return c.getFrom("pos: $s")
         }
 
-        fun init(controller: WorldController?, vararg filename: String) {
+        fun init(controller: WorldController, vararg filename: String) {
             World.controller = controller
-            World.controller?.init()
+            World.controller.init()
             rooms.clear()
             for(i in filename.indices) filenames.add("project/media/${filename[i]}")
-            filenames.forEach { name -> rooms.add(readInfo(name)) }
-            set(0)
+            filenames.forEach { rooms.add(readInfo(it)) }
+            for(i in rooms.indices) last_active.add(false)
         }
 
-        fun init(vararg filename: String) = init(null, *filename)
-
-        fun set(id: Int) {
-            active_room = rooms[id]
-            active_id = id
+        fun add(o: GameObject) {
+            controller.roomFor(o).add(o)
         }
-
-        fun reset() {
-            respawn(active_id)
-        }
-
-        fun respawn(id: Int) {
-            rooms[id] = readInfo(filenames[id])
-            set(id)
-        }
-
-        fun add(o: GameObject) = active_room.add(o)
 
         //////////////////////////////////////////////////////////////////////////////////////////////////////////
     }

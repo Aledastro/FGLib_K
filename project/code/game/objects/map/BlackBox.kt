@@ -24,7 +24,7 @@ class BlackBox(pos: PointN): GameObject() {
             }
         })
         visuals.add(object: Visualiser {
-            val scale = AnimationScale(0L, 30.0) { x -> 2*(x + 6) }
+            val scale = AnimationScale(0L, 30.0) { 2*(it + 6) }
 
             override fun draw(draw_pos: PointN) {
                 agc().fill.rect(
@@ -34,7 +34,7 @@ class BlackBox(pos: PointN): GameObject() {
             }
 
             override fun drawLayer(): DrawLayer {
-                val scale = AnimationScale(0L, 60.0) { k -> k/2 }
+                val scale = AnimationScale(0L, 60.0) { it/2 }
                 return DrawLayer(1.0, scale.swing(object_time))
             }
         })

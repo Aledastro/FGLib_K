@@ -37,23 +37,23 @@ abstract class GameObject {
     fun next() {
         if(temp == null || temp!!.ends) temp = controller?.get()?.invoke()
         temp?.next()
-        abilities.forEach { a -> a.run() }
-        modificators.forEach { m -> m.update() }
-        effects.forEach { e -> e.update() }
-        effects.removeIf { e -> e.dead }
+        abilities.forEach { it.run() }
+        modificators.forEach { it.update() }
+        effects.forEach { it.update() }
+        effects.removeIf { it.dead }
 
         object_time++
     }
 
-    fun draw(draw_pos: PointN) = visuals.forEach { v -> v.draw(draw_pos) }
+    fun draw(draw_pos: PointN) = visuals.forEach { it.draw(draw_pos) }
 
     protected fun produce(vararg os: GameObject) = children.addAll(os)
     protected fun produce(os: List<GameObject>) = children.addAll(os)
 
     fun grab(vararg os: GameObject) {
         grabbed.addAll(os)
-        os.forEach { o -> o.owner = this }
-        os.forEach { o -> o.onGrab() }
+        os.forEach { it.owner = this }
+        os.forEach { it.onGrab() }
     }
 
     fun grab(os: List<GameObject>) {

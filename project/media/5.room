@@ -1,5 +1,5 @@
 //Uzery Game Studio 2019-2023
-//last edit: 2023.05.12 08:11:30
+//last edit: 2023.05.14 04:44:49
 
 room: pos[256, 2048] size[512, 512]
 
@@ -321,3 +321,6 @@ decor: pos[16, 368] [map|tiles.png] [16, 16] [0, 2] layer[DRT]
 decor: pos[16, 400] [map|tiles.png] [16, 16] [0, 2] layer[DRT]
 decor: pos[16, 432] [map|tiles.png] [16, 16] [0, 2] layer[DRT]
 decor: pos[16, 464] [map|tiles.png] [16, 16] [0, 2] layer[DRT]
+wall: pos[240, 528]
+wall: pos[272, 528]
+wall: pos[304, 528]

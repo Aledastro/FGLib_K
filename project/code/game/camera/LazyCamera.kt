@@ -28,6 +28,6 @@ class LazyCamera(private val stats: Stats): Camera {
     }
 
     override fun move(p: PointN) {
-        pos -= p
+        pos += p
     }
 }

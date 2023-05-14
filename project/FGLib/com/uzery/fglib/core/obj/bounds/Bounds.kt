@@ -7,7 +7,7 @@ import kotlin.math.max
 import kotlin.math.min
 
 data class Bounds(val elements: Array<BoundsElement>) {
-    constructor(vararg shapes: Shape): this(Array(shapes.size) { i -> BoundsElement(shapes[i]) })
+    constructor(vararg shapes: Shape): this(Array(shapes.size) { BoundsElement(shapes[it]) })
 
     override fun equals(other: Any?): Boolean {
         if(this === other) return true

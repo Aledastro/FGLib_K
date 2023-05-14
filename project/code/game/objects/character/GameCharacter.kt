@@ -12,7 +12,7 @@ abstract class GameCharacter(protected var LIFE: Int): GameObject() {
         abilities.add(object: AbilityBox {
             override fun run() {
                 if(LIFE<=0) {
-                    drop.get()?.also { o -> produce(o) }
+                    drop.get()?.also { produce(it) }
                     collapse()
                 }
             }

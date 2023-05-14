@@ -9,6 +9,7 @@ import com.uzery.fglib.core.program.Platform.Companion.keyboard
 import com.uzery.fglib.core.program.Platform.Companion.mouse
 import com.uzery.fglib.core.program.Platform.Companion.mouse_keys
 import com.uzery.fglib.core.program.Program
+import com.uzery.fglib.core.room.Room
 import com.uzery.fglib.core.world.World
 import com.uzery.fglib.core.world.WorldUtils
 import com.uzery.fglib.extension.ui.*
@@ -28,10 +29,10 @@ import java.util.*
 class RoomEditor(private val filename: String, private val getter: ClassGetter<GameObject>): Extension {
     override fun children() = LinkedList<Extension>().apply { add(UIBox()) }
 
+    private lateinit var edit: Room
     private val OFFSET = 40.0
     private val GRID = 32.0
     private val GRID_P = PointN(GRID, GRID)
-    private lateinit var room_pos: PointN
 
     private var draw_pos = PointN.ZERO
 
@@ -50,7 +51,7 @@ class RoomEditor(private val filename: String, private val getter: ClassGetter<G
 
     private fun checkForSave() {
         if(keyboard.allPressed(KeyCode.CONTROL, KeyCode.SHIFT) && keyboard.inPressed(KeyCode.S)) {
-            WriteData.write(from(filename), World.active_room.toString())
+            WriteData.write(from(filename), edit.toString())
             println("saved")
         }
     }
@@ -64,10 +65,16 @@ class RoomEditor(private val filename: String, private val getter: ClassGetter<G
 
     override fun init() {
         World.getter = ClassGetter(ClassGetterX())
-        World.init(filename)
+
+        //todo
+        val c = OneRoomController()
+        World.init(c, filename)
+        edit = World.rooms[0]
+        c.room = edit
+
         Platform.whole_draw = true
         //todo
-        room_pos = Platform.options().size/2 - World.active_room.size*PointN(1.0, 0.5)
+        draw_pos = Platform.options().size/2 - edit.size*PointN(1.0, 0.5)
         UIBox.add(canvasX, play_button, objects_vbox, layers_vbox, info_box)
 
         /*World.camera = object: Camera {
@@ -75,6 +82,7 @@ class RoomEditor(private val filename: String, private val getter: ClassGetter<G
                 return draw_pos + PointN(1.0, 1000.0) + Platform.CANVAS/2
             }
         }*/
+        World.next()
     }
 
     private fun from(filename: String) = "project/media/$filename"
@@ -127,13 +135,14 @@ class RoomEditor(private val filename: String, private val getter: ClassGetter<G
         var draw_bounds = false
 
         override fun draw() {
-            World.draw(room_pos + draw_pos)
-            if(draw_bounds) WorldUtils.drawBounds(room_pos + draw_pos)
+            World.draw(draw_pos - edit.pos)
+
+            if(draw_bounds) WorldUtils.drawBounds(edit, draw_pos)
 
             drawLines()
 
             graphics.layer = DrawLayer.CAMERA_FOLLOW
-            graphics.stroke.rect(room_pos + draw_pos - World.active_room.pos, Platform.CANVAS, Color.DARKBLUE)
+            graphics.stroke.rect(draw_pos, Platform.CANVAS, Color.DARKBLUE)
         }
 
         private fun drawLines() {
@@ -141,7 +150,7 @@ class RoomEditor(private val filename: String, private val getter: ClassGetter<G
             graphics.layer = DrawLayer.CAMERA_FOLLOW
             for(i in -70..70) {
                 graphics.setStroke(1.0)
-                val pp = room_pos.mod(GRID) + draw_pos.mod(GRID)
+                val pp = draw_pos.mod(GRID)
                 graphics.stroke.line(pp - Platform.CANVAS.XP + PointN(0.0, i*GRID), Platform.CANVAS.XP*2, c)
                 graphics.stroke.line(pp - Platform.CANVAS.YP + PointN(i*GRID, 0.0), Platform.CANVAS.YP*2, c)
             }
@@ -166,19 +175,19 @@ class RoomEditor(private val filename: String, private val getter: ClassGetter<G
         private fun checkForAdd() {
             if(mouse_keys.pressed(MouseButton.PRIMARY)) {
                 val o = getter.getEntry(objects_vbox.select)
-                val pp = (mouse.pos() - room_pos - draw_pos).round(GRID) + GRID_P/2
+                val pp = (mouse.pos() - draw_pos).round(GRID) + GRID_P/2
                 if(lastPOS == pp) return
                 o.stats.POS = pp
                 lastPOS = pp
-                World.active_room.add(o)
+                edit.objects.add(o)
                 select_obj = o
             }
         }
 
         private fun checkForRemove() {
             if(mouse_keys.pressed(MouseButton.SECONDARY)) {
-                World.active_room.objects.removeIf { o -> (o.stats.POS - (mouse.pos() - room_pos - draw_pos)).length()<GRID/2 }
-                if(!World.active_room.objects.contains(select_obj)) select_obj = null
+                edit.objects.removeIf { o -> (o.stats.POS - (mouse.pos() - draw_pos)).length()<GRID/2 }
+                if(!edit.objects.contains(select_obj)) select_obj = null
             }
         }
 

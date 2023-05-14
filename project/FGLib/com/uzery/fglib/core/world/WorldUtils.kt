@@ -12,11 +12,11 @@ import javafx.scene.text.FontWeight
 
 interface WorldUtils {
     companion object {
-        fun drawBounds(pos: PointN = PointN.ZERO) {
+        fun drawBounds(room: Room, pos: PointN = PointN.ZERO) {
             val STEP = PointN(1.0, 1.0)
             Platform.graphics.layer = DrawLayer.CAMERA_FOLLOW
 
-            for(o in World.active_room.objects) {
+            for(o in room.objects) {
                 val c = if(o.stats.fly) Color.color(1.0, 1.0, 0.2, 0.7) else Color.color(1.0, 0.2, 1.0, 0.7)
                 Platform.graphics.fill.oval(pos + o.stats.POS - STEP*2, STEP*4, c)
             }
@@ -28,7 +28,7 @@ interface WorldUtils {
                 Color.GREEN)
 
             Platform.graphics.setStroke(2.0)
-            for(o in World.active_room.objects) {
+            for(o in room.objects) {
                 for(i in 0 until BoundsBox.SIZE) {
                     val bs = o.bounds[i] ?: continue
                     for(el in bs().elements) {
@@ -61,29 +61,31 @@ interface WorldUtils {
             if(b) ram = maxRam - freeRam
             val p = draw_pos + room.size.XP + PointN(10, 0)
 
-            Platform.graphics.fill.text(p + PointN(0, 20), "size: ${room.objects.size}", Color.DARKBLUE)
+            Platform.graphics.fill.text(p + PointN(0, 20), "pos: ${room.pos}", Color.DARKBLUE)
+            Platform.graphics.fill.text(p + PointN(0, 40), "size: ${room.size}", Color.DARKBLUE)
+            Platform.graphics.fill.text(p + PointN(0, 60), "objects: ${room.objects.size}", Color.DARKBLUE)
             Platform.graphics.fill.text(
-                p + PointN(0, 40),
+                p + PointN(0, 80),
                 "ram (MB): ${ram/1000_000}/${maxRam/1000_000}",
                 Color.DARKBLUE)
             Platform.graphics.fill.text(
-                p + PointN(0, 60),
+                p + PointN(0, 100),
                 "ram (KB) per obj: ${if(room.objects.size != 0) (ram/1000/room.objects.size).toInt() else 0}",
                 Color.DARKBLUE)
             time = System.currentTimeMillis() - last
             last = System.currentTimeMillis()
             fps += (1000.0/time)
             fps *= 0.99
-            Platform.graphics.fill.text(p + PointN(0, 80), "FPS: ${(fps/100).toInt()}", Color.DARKBLUE)
+            Platform.graphics.fill.text(p + PointN(0, 120), "FPS: ${(fps/100).toInt()}", Color.DARKBLUE)
 
             for(index in 0 until BoundsBox.SIZE) {
                 var bs_n = 0
-                room.objects.forEach { o ->
-                    val bs = o.bounds[index]
+                room.objects.forEach {
+                    val bs = it.bounds[index]
                     if(bs != null) bs_n++
                 }
                 Platform.graphics.fill.text(
-                    p + PointN(0, 100 + index*20), "bounds[${BoundsBox.name(index)}]: $bs_n", Color.DARKBLUE)
+                    p + PointN(0, 140 + index*20), "bounds[${BoundsBox.name(index)}]: $bs_n", Color.DARKBLUE)
             }
             ids_time++
         }

@@ -25,9 +25,10 @@ class Game: Extension {
 
         cowboy = Cowboy(PointN(256, 256))
 
-        World.init(MovableWorldController(cowboy), "1.room", "2.room", "3.room", "4.room", "5.room")
-        World.active_room.objects.removeIf { o -> o.tagged("player") }
-        World.add(cowboy)
+        World.init(MovableWC(cowboy), "1.room", "2.room", "3.room", "4.room", "5.room")
+        //World.init(MovableWC(cowboy), "1.room", "3.room", "5.room")
+        /*World.active_rooms.forEach { room -> room.objects.removeIf { o -> o.tagged("player") } }
+        World.add(cowboy)*/
     }
 
     private var last = 0
@@ -42,7 +43,7 @@ class Game: Extension {
         World.draw()
 
         if(keyboard.pressed(KeyCode.CONTROL) && keyboard.inPressed(KeyCode.TAB)) draw_bounds = !draw_bounds
-        if(draw_bounds) WorldUtils.drawBounds()
+        if(draw_bounds) World.active_rooms.forEach { room -> WorldUtils.drawBounds(room, room.pos) }
 
         develop_mode = draw_bounds
 

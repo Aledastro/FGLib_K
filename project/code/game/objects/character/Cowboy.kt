@@ -101,7 +101,7 @@ class Cowboy(pos: PointN): GameCharacter(1000) {
     enum class MODE { STAY, MOVE, SHOOT }
 
     val cowboy_speed
-        get() = if(effectedAny("coffee", "master")) 5.4 else 7.4
+        get() = if(effectedAny("coffee", "master")) 4.4 else 3.4
 
     val shoot: () -> TempAction = {
         object: TimeTempAction() {
@@ -172,7 +172,7 @@ class Cowboy(pos: PointN): GameCharacter(1000) {
                 if(keyboard.pressed(KeyCode.A)) direct += Direct.LEFT
                 if(keyboard.pressed(KeyCode.D)) direct += Direct.RIGHT
 
-                stats.nPOS += direct.p*cowboy_speed
+                stats.POS += direct.p*cowboy_speed
             }
 
             override fun ends() = ids_time>20 || readyShoot() || !readyMove()

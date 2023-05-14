@@ -29,7 +29,7 @@ class Bullet(pos: PointN, private val speed: PointN): GameObject() {
             }
         })
         visuals.add(object: LayerVisualiser(Game.layer("OBJ-")) {
-            val scale = AnimationScale(0L, 30.0) { x -> 4*(x + 0.5) }
+            val scale = AnimationScale(0L, 30.0) { 4*(it + 0.5) }
 
             override fun draw(draw_pos: PointN) {
                 agc().fill.oval(

@@ -14,6 +14,7 @@ import com.uzery.fglib.utils.math.getter.value.SizeValue
 import java.util.*
 
 class Room(val pos: PointN, val size: PointN) {
+    //todo private
     val objects = LinkedList<GameObject>()
     private val new_objects = ArrayList<GameObject>()
 
@@ -27,49 +28,51 @@ class Room(val pos: PointN, val size: PointN) {
         objects.addAll(new_objects)
         new_objects.clear()
 
-        objects.forEach { o -> o.next() }
+        objects.forEach { it.next() }
         nextMoveOld()
         nextActivate()
 
-        objects.forEach { o -> new_objects.addAll(o.children) }
-        objects.forEach { o -> o.children.clear() }
+        objects.forEach { new_objects.addAll(it.children) }
+        objects.forEach { it.children.clear() }
 
-        objects.removeIf { o -> o.dead || o.owner != null }
+        objects.removeIf { it.dead || it.owner != null }
 
     }
 
     fun draw(draw_pos: PointN) {
         val vis = ArrayList<Visualiser>()
         val map = HashMap<Visualiser, GameObject>()
-        objects.forEach { o ->
+        objects.forEach { obj ->
             run {
-                vis.addAll(o.visuals)
-                o.visuals.forEach { v -> map[v] = o }
+                vis.addAll(obj.visuals)
+                obj.visuals.forEach { map[it] = obj }
             }
         }
-        vis.sortBy { v -> v.drawLayer().sort }
-        vis.forEach { v ->
+        vis.sortBy { it.drawLayer().sort }
+        vis.forEach { visual ->
             run {
-                val o = map[v]
+                val o = map[visual]
                 if(o != null) {
-                    v.agc().layer = v.drawLayer()
-                    v.draw(draw_pos + o.stats.POS)
+                    visual.agc().layer = visual.drawLayer()
+                    visual.draw(draw_pos + o.stats.POS)
                 } else throw IllegalArgumentException()
             }
         }
     }
 
 
-    fun add(obj: GameObject) = objects.add(obj)
+    //todo remove from objects not new_objects
+    fun add(obj: GameObject) = new_objects.add(obj)
+    fun remove(obj: GameObject) = objects.remove(obj)
 
     private fun nextMoveOld() {
         val all_bounds = LinkedList<Bounds>()
         val pos = LinkedList<PointN>()
-        objects.forEach { o ->
-            val bs = o.bounds.red
+        objects.forEach {
+            val bs = it.bounds.red
             if(bs != null) {
                 all_bounds.add(bs())
-                pos.add(o.stats.POS)
+                pos.add(it.stats.POS)
             }
         }
         for(obj in objects) {
@@ -79,8 +82,8 @@ class Room(val pos: PointN, val size: PointN) {
             fun maxMove(move_p: PointN): Double {
                 if(all_bounds.isEmpty()) return 1.0
 
-                return all_bounds.indices.minOf { i ->
-                    BoundsUtils.maxMove(all_bounds[i], move_bs(), pos[i], obj.stats.POS, move_p)
+                return all_bounds.indices.minOf {
+                    BoundsUtils.maxMove(all_bounds[it], move_bs(), pos[it], obj.stats.POS, move_p)
                 }
             }
 
@@ -96,7 +99,7 @@ class Room(val pos: PointN, val size: PointN) {
 
             for(i in 0 until np.dimension()) move(np.separate(i))
         }
-        objects.forEach { o -> o.stats.nPOS = PointN.ZERO }
+        objects.forEach { it.stats.nPOS = PointN.ZERO }
     }
 
     private fun nextMove() {
@@ -106,9 +109,9 @@ class Room(val pos: PointN, val size: PointN) {
             val orange = o.bounds.orange ?: continue
 
             fun move(move_p: PointN): Double {
-                val mm = objects.minOf { r ->
-                    val red = r.bounds.red ?: return 1.0
-                    BoundsUtils.maxMove(red(), orange(), r.stats.POS, o.stats.POS, move_p)
+                val mm = objects.minOf {
+                    val red = it.bounds.red ?: return 1.0
+                    BoundsUtils.maxMove(red(), orange(), it.stats.POS, o.stats.POS, move_p)
                 }
                 o.stats.POS += move_p*mm
                 return mm
@@ -120,7 +123,7 @@ class Room(val pos: PointN, val size: PointN) {
 
             for(i in 0 until np.dimension()) move(np.separate(i))
         }
-        objects.forEach { o -> o.stats.nPOS = PointN.ZERO }
+        objects.forEach { it.stats.nPOS = PointN.ZERO }
     }
 
     private fun nextActivate() {

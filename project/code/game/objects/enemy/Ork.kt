@@ -53,7 +53,7 @@ class Ork(pos: PointN): Enemy(8) {
         object: TimeTempAction() {
             var goal: GameObject? = null
             override fun start() {
-                goal = World.allTagged("player").findFirst().orElse(null)
+                goal = World.allTagged("player").firstOrNull()
             }
 
             override fun update() {

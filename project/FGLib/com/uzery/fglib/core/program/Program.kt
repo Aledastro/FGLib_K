@@ -80,11 +80,11 @@ internal class Program {
             this.stage.scene.setOnKeyPressed { key -> pressed[key.code.ordinal] = true }
             this.stage.scene.setOnKeyReleased { key -> pressed[key.code.ordinal] = false }
 
-            extensions.forEach { e -> e.init() }
+            extensions.forEach { it.init() }
 
             class ProgramTimer: AnimationTimer() {
                 override fun handle(t: Long) {
-                    extensions.forEach { e -> e.update() }
+                    extensions.forEach { it.update() }
                 }
             }
 
