@@ -3,6 +3,12 @@ package com.uzery.fglib.utils.math.scale
 data class AnimationScale(val startTime: Long, val frames: Double, val scale: GradientScale) {
     constructor(startTime: Long, frames: Double, f: (Double) -> Double): this(startTime, frames, GradientScale(f))
 
+    constructor(startTime: Int, frames: Double, scale: GradientScale): this(startTime.toLong(), frames, scale)
+    constructor(startTime: Int, frames: Double, f: (Double) -> Double): this(
+        startTime.toLong(),
+        frames,
+        GradientScale(f))
+
     fun linear(time: Double): Double = scale.linear(get(time))
     fun linear(time: Int): Double = scale.linear(get(time.toDouble()))
     fun linear(time: Long): Double = scale.linear(get(time.toDouble()))

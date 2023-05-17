@@ -28,6 +28,7 @@ class ClassGetterX: ClassGetterInstance<GameObject>() {
         add("black_box", 1) { BlackBox(pos) }
 
         add("decor", 5) { Decor(pos, string, intI, intI, layer) }
+        add("animation", 5) { Decor(pos, string, intI, intI, layer) }
 
         for(i in 0..10) {
             add("decor#$i") {

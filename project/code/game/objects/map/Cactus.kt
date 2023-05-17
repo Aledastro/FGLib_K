@@ -26,10 +26,10 @@ class Cactus(pos: PointN): GameObject() {
         Data.set(filename, IntI(16, 16), 2)
         visuals.add(object: LayerVisualiser(Game.layer("OBJ")) {
             override fun draw(draw_pos: PointN) {
-                agc().image.draw(Data.get(filename, IntI(if(object_time%80<40) 5 else 6, 2)), draw_pos - Game.STEP*16)
+                agc().image.drawC(Data.get(filename, IntI(if(object_time%80<40) 5 else 6, 2)), draw_pos)
             }
         })
-        bounds.red = { Bounds(RectN(-Game.STEP*16, Game.STEP*32)) }
+        bounds.red = { Bounds(RectN(-Game.STEP*8, Game.STEP*16)) }
         tag("bullet_go")
     }
 

@@ -51,6 +51,7 @@ class RoomEditor(private val filename: String, private val getter: ClassGetter<G
 
     private fun checkForSave() {
         if(keyboard.allPressed(KeyCode.CONTROL, KeyCode.SHIFT) && keyboard.inPressed(KeyCode.S)) {
+            edit.objects.forEach { it.stats.POS /= 2 }
             WriteData.write(from(filename), edit.toString())
             println("saved")
         }
@@ -186,7 +187,7 @@ class RoomEditor(private val filename: String, private val getter: ClassGetter<G
 
         private fun checkForRemove() {
             if(mouse_keys.pressed(MouseButton.SECONDARY)) {
-                edit.objects.removeIf { o -> (o.stats.POS - (mouse.pos() - draw_pos)).length()<GRID/2 }
+                edit.objects.removeIf { o -> (o.stats.POS.lengthTo(mouse.pos() - draw_pos))<GRID/2 }
                 if(!edit.objects.contains(select_obj)) select_obj = null
             }
         }

@@ -34,7 +34,7 @@ interface World {
         fun allExists(vararg tag: String) = tag.all { allTagged(it).isNotEmpty() }
         fun anyExists(vararg tag: String) = tag.any { allTagged(it).isNotEmpty() }
 
-        fun noneExists(vararg tag: String) = tag.all { allTagged(it).isNotEmpty() }
+        fun noneExists(vararg tag: String) = !anyExists(*tag)
 
         var camera: Camera? = null
 

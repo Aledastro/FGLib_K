@@ -1,12 +1,14 @@
 package game.events
 
+import com.uzery.fglib.core.obj.GameObject
 import com.uzery.fglib.extension.event.BaseEvent
 import com.uzery.fglib.utils.math.geom.PointN
+import com.uzery.fglib.utils.math.getter.Drop
 import game.objects.enemy.Goblin
 import game.objects.enemy.Ork
 import java.util.*
 
-class Level_2: Level(3000) {
+class Level_2: Level(300) {
     init {
         add(object: BaseEvent() {
             val wave = LinkedList<Int>()
@@ -22,15 +24,21 @@ class Level_2: Level(3000) {
 
             override fun update() {
                 for(i in 0 until wave[ids_time]) {
-                    val pos = when(Math.random()) {
-                        in (0.0..0.25) -> PointN(0, 256)
-                        in (0.25..0.5) -> PointN(512, 256)
-                        in (0.5..0.75) -> PointN(256, 0)
-                        in (0.75..1.0) -> PointN(256, 512)
-                        else -> throw IllegalArgumentException()
+                    val obj = Drop<GameObject>()
+
+                    fun getP(): PointN {
+                        val pos = Drop<PointN>()
+                        pos.add { PointN(0, 128) }
+                        pos.add { PointN(256, 128) }
+                        pos.add { PointN(128, 0) }
+                        pos.add { PointN(128, 256) }
+                        return pos.get2()
                     }
-                    if(Math.random()<0.2) produce(Ork(pos))
-                    else produce(Goblin(pos))
+
+                    obj.add(0.8) { Goblin(getP()) }
+                    obj.add(0.2) { Ork(getP()) }
+
+                    produce(obj.get2())
                 }
                 ids_time++
             }

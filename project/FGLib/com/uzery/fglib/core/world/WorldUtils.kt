@@ -18,7 +18,7 @@ interface WorldUtils {
 
             for(o in room.objects) {
                 val c = if(o.stats.fly) Color.color(1.0, 1.0, 0.2, 0.7) else Color.color(1.0, 0.2, 1.0, 0.7)
-                Platform.graphics.fill.oval(pos + o.stats.POS - STEP*2, STEP*4, c)
+                Platform.graphics.fill.ovalC(pos + o.stats.POS, STEP*3, c)
             }
 
             val colors = arrayOf(
@@ -61,22 +61,22 @@ interface WorldUtils {
             if(b) ram = maxRam - freeRam
             val p = draw_pos + room.size.XP + PointN(10, 0)
 
-            Platform.graphics.fill.text(p + PointN(0, 20), "pos: ${room.pos}", Color.DARKBLUE)
-            Platform.graphics.fill.text(p + PointN(0, 40), "size: ${room.size}", Color.DARKBLUE)
-            Platform.graphics.fill.text(p + PointN(0, 60), "objects: ${room.objects.size}", Color.DARKBLUE)
+            Platform.graphics.fill.text(p + PointN(0, 10), "pos: ${room.pos}", Color.DARKBLUE)
+            Platform.graphics.fill.text(p + PointN(0, 20), "size: ${room.size}", Color.DARKBLUE)
+            Platform.graphics.fill.text(p + PointN(0, 30), "objects: ${room.objects.size}", Color.DARKBLUE)
             Platform.graphics.fill.text(
-                p + PointN(0, 80),
+                p + PointN(0, 40),
                 "ram (MB): ${ram/1000_000}/${maxRam/1000_000}",
                 Color.DARKBLUE)
             Platform.graphics.fill.text(
-                p + PointN(0, 100),
+                p + PointN(0, 50),
                 "ram (KB) per obj: ${if(room.objects.size != 0) (ram/1000/room.objects.size).toInt() else 0}",
                 Color.DARKBLUE)
             time = System.currentTimeMillis() - last
             last = System.currentTimeMillis()
             fps += (1000.0/time)
             fps *= 0.99
-            Platform.graphics.fill.text(p + PointN(0, 120), "FPS: ${(fps/100).toInt()}", Color.DARKBLUE)
+            Platform.graphics.fill.text(p + PointN(0, 60), "FPS: ${(fps/100).toInt()}", Color.DARKBLUE)
 
             for(index in 0 until BoundsBox.SIZE) {
                 var bs_n = 0
@@ -85,7 +85,7 @@ interface WorldUtils {
                     if(bs != null) bs_n++
                 }
                 Platform.graphics.fill.text(
-                    p + PointN(0, 140 + index*20), "bounds[${BoundsBox.name(index)}]: $bs_n", Color.DARKBLUE)
+                    p + PointN(0, 70 + index*10), "bounds[${BoundsBox.name(index)}]: $bs_n", Color.DARKBLUE)
             }
             ids_time++
         }

@@ -32,9 +32,9 @@ class Bullet(pos: PointN, private val speed: PointN): GameObject() {
         Data.set(filename, IntI(4, 4), 2)
         visuals.add(object: LayerVisualiser(Game.layer("OBJ-")) {
             override fun draw(draw_pos: PointN) {
-                agc().image.draw(Data.get(filename, IntI(0, 0)), draw_pos - Game.STEP*3)
+                agc().image.drawC(Data.get(filename, IntI(0, 0)), draw_pos)
             }
         })
-        bounds.blue = { Bounds(RectN(-Game.STEP*3, Game.STEP*6)) }
+        bounds.blue = { Bounds(RectN(-Game.STEP*1.5, Game.STEP*3)) }
     }
 }

@@ -20,15 +20,31 @@ abstract class GeometryGraphics(private val transform: AffineTransform) {
 
     protected abstract fun text0(pos: PointN, text: String)
 
+    ///////////////////////////////////////////////////////////////////////////
+
     fun rect(pos: PointN, size: PointN, color: Color) {
         this.color = color
         rect0(transform.pos(pos), transform.size(pos, size))
     }
 
+    fun rectL(pos: PointN, size: PointN, color: Color) = rect(pos, size, color)
+    fun rectC(pos: PointN, size: PointN, color: Color) = rect(pos - size/2, size, color)
+    fun rectR(pos: PointN, size: PointN, color: Color) = rect(pos - size, size, color)
+
+    ///////////////////////////////////////////////////////////////////////////
+
     fun oval(pos: PointN, size: PointN, color: Color) {
         this.color = color
         oval0(transform.pos(pos), transform.size(pos, size))
     }
+
+    fun ovalL(pos: PointN, size: PointN, color: Color) = oval(pos, size, color)
+
+    fun ovalC(pos: PointN, size: PointN, color: Color) = oval(pos - size/2, size, color)
+
+    fun ovalR(pos: PointN, size: PointN, color: Color) = oval(pos - size, size, color)
+
+    ///////////////////////////////////////////////////////////////////////////
 
     fun text(pos: PointN, text: String, color: Color) {
         this.color = color
@@ -54,6 +70,8 @@ abstract class GeometryGraphics(private val transform: AffineTransform) {
         text0(transform.pos(pos), text)
     }
 
+    ///////////////////////////////////////////////////////////////////////////
+
     fun draw(pos: PointN, shape: Shape, color: Color) {
         when(shape.code) {
             Shape.Code.RECT -> rect(pos + shape.L, shape.S, color)
@@ -61,7 +79,13 @@ abstract class GeometryGraphics(private val transform: AffineTransform) {
         }
     }
 
+    fun drawL(pos: PointN, shape: Shape, color: Color) = draw(pos, shape, color)
+    fun drawC(pos: PointN, shape: Shape, color: Color) = draw(pos - shape.S/2, shape, color)
+    fun drawR(pos: PointN, shape: Shape, color: Color) = draw(pos - shape.S, shape, color)
+
     fun draw(shape: Shape, color: Color) = draw(PointN.ZERO, shape, color)
+
+    ///////////////////////////////////////////////////////////////////////////
 
     fun lineTo(pos1: PointN, pos2: PointN, color: Color) {
         this.color = color

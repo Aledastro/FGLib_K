@@ -51,13 +51,13 @@ class Cowboy(pos: PointN): GameCharacter(1000) {
         visuals.add(object: LayerVisualiser(Game.layer("OBJ")) {
             override fun draw(draw_pos: PointN) {
                 when(mode) {
-                    MODE.STAY -> agc().image.draw(Data.get(filename, IntI(1, 1)), draw_pos - Game.STEP*16)
+                    MODE.STAY -> agc().image.drawC(Data.get(filename, IntI(1, 1)), draw_pos)
                     MODE.MOVE, MODE.SHOOT -> {
-                        agc().image.draw(
+                        agc().image.drawC(
                             Data.get(filename, IntI(drawDirect(direct).ordinal, 0)),
-                            draw_pos - Game.STEP*16)
+                            draw_pos)
                         val ii = IntI(if(readyMove()) object_time/7%4 else 1, 2)
-                        agc().image.draw(Data.get(filename, ii), draw_pos - Game.STEP*16)
+                        agc().image.drawC(Data.get(filename, ii), draw_pos)
                     }
                 }
             }
@@ -82,7 +82,7 @@ class Cowboy(pos: PointN): GameCharacter(1000) {
             }
         })
 
-        bounds.orange = { Bounds(RectN(PointN(-12, -7), Game.STEP*24)) }
+        bounds.orange = { Bounds(RectN(PointN(-6.0, -3.5), Game.STEP*12)) }
         tag("player")
     }
 
@@ -101,12 +101,12 @@ class Cowboy(pos: PointN): GameCharacter(1000) {
     enum class MODE { STAY, MOVE, SHOOT }
 
     val cowboy_speed
-        get() = if(effectedAny("coffee", "master")) 3.4 else 2.4
+        get() = if(effectedAny("coffee", "master")) 2.4 else 1.4
 
     val shoot: () -> TempAction = {
         object: TimeTempAction() {
             override fun start() {
-                val s = 6.0
+                val s = 4.0
                 direct = Direct.CENTER
                 when {
                     keyboard.pressed(KeyCode.UP) -> direct += Direct.UP

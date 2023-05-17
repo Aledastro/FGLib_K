@@ -22,7 +22,7 @@ import kotlin.math.sin
 
 class Ork(pos: PointN): Enemy(8) {
 
-    private val SPEED = 0.6
+    private val SPEED = 0.3
 
     init {
         stats.POS = pos
@@ -43,10 +43,10 @@ class Ork(pos: PointN): Enemy(8) {
         Data.set(filename, IntI(16, 16), 2)
         visuals.add(object: LayerVisualiser(Game.layer("OBJ")) {
             override fun draw(draw_pos: PointN) {
-                agc().image.draw(Data.get(filename, IntI(object_time/10%2, 0)), draw_pos - Game.STEP*16)
+                agc().image.drawC(Data.get(filename, IntI(object_time/10%2, 0)), draw_pos)
             }
         })
-        bounds.orange = { Bounds(RectN(-Game.STEP*14, Game.STEP*28)) }
+        bounds.orange = { Bounds(RectN(-Game.STEP*7, Game.STEP*14)) }
     }
 
     var attack: () -> TempAction = {

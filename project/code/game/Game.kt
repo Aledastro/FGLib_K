@@ -23,7 +23,7 @@ class Game: Extension {
         World.getter = ClassGetter(ClassGetterX())
         Platform.whole_draw = true
 
-        cowboy = Cowboy(PointN(256, 256))
+        cowboy = Cowboy(PointN(256, 128))
 
         World.init(MovableWC(cowboy), "1.room", "2.room", "3.room", "4.room", "5.room")
         //World.init(MovableWC(cowboy), "1.room", "3.room", "5.room")
@@ -34,13 +34,22 @@ class Game: Extension {
     private var last = 0
 
 
-    var draw_bounds = false
+    private var draw_bounds = false
 
     private lateinit var cowboy: Cowboy
+
     override fun update() {
         clear()
         World.next()
         World.draw()
+        graphics.layer = DrawLayer.CAMERA_FOLLOW
+        val c = Color.gray(0.04)
+        val sx = 512
+        val sy = 512
+        graphics.fill.rect(ppp + PointN(-sx, -sy), PointN(sx*2 + 256, sy), c)
+        graphics.fill.rect(ppp + PointN(-sx, 256), PointN(sx*2 + 256, sy), c)
+        graphics.fill.rect(ppp + PointN(-sx, -sy), PointN(sx, sy*2 + 256), c)
+        graphics.fill.rect(ppp + PointN(256, -sy), PointN(sx, sy*2 + 256), c)
 
         if(keyboard.pressed(KeyCode.CONTROL) && keyboard.inPressed(KeyCode.TAB)) draw_bounds = !draw_bounds
         if(draw_bounds) World.active_rooms.forEach { room -> WorldUtils.drawBounds(room, room.pos) }
@@ -68,7 +77,9 @@ class Game: Extension {
     }
 
     companion object {
-        const val current_filename = "5.room"
+        //todo remove ppp
+        var ppp = PointN.ZERO
+        const val current_filename = "4.room"
 
         private val layers = HashMap<String, DrawLayer>()
 

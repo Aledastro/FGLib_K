@@ -13,13 +13,25 @@ import com.uzery.fglib.utils.math.getter.value.PosValue
 import com.uzery.fglib.utils.math.num.IntI
 import game.Game
 
-class Decor(pos: PointN, var filename: String, var set: IntI, var get: IntI, var layer: DrawLayer): GameObject() {
+open class Animation(
+    pos: PointN,
+    var filename: String,
+    var set: IntI,
+    var get: IntI,
+    var layer: DrawLayer,
+    var length: Int,
+    var frames: Double,
+): GameObject() {
+    var progress = 0
+
     init {
         if(filename == "") {
             filename = "map|tiles.png"
             set = IntI(16, 16)
             get = IntI(0, 0)
             layer = Game.layer("DRT")
+            length = 1
+            frames = 10.0
             //todo
         }
         stats.POS = pos
@@ -29,22 +41,32 @@ class Decor(pos: PointN, var filename: String, var set: IntI, var get: IntI, var
                     collapse()
                 }
             }
+
+            override fun run() {
+                //todo
+                progress = (object_time/frames*length).toInt()
+                if(progress == length) progress--
+
+                if(object_time>=frames) collapse()
+            }
         })
         Data.set(filename, set, 2)
         visuals.add(object: LayerVisualiser(layer) {
             override fun draw(draw_pos: PointN) {
-                agc().image.drawC(Data.get(filename, get), draw_pos)
+                agc().image.draw(Data.get(filename, IntI(get.n + progress, get.m)), draw_pos - PointN(set)/2)
             }
         })
-        tag("#inactive", "#immovable")
+        tag("#inactive")
     }
 
     override fun setValues() {
-        name = "decor"
+        name = "animation"
         values.add(PosValue(stats.POS))
         values.add(filename)
         values.add(IntIValue(set))
         values.add(IntIValue(get))
         values.add(DrawLayerValue(layer))
+        values.add(length)
+        values.add(frames)
     }
 }

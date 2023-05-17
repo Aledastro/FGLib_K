@@ -2,6 +2,7 @@ package com.uzery.fglib.utils.math.geom
 
 import com.uzery.fglib.utils.math.ArrayUtils
 import com.uzery.fglib.utils.math.MathUtils
+import com.uzery.fglib.utils.math.num.IntI
 import kotlin.math.cos
 import kotlin.math.sin
 import kotlin.math.sqrt
@@ -10,6 +11,8 @@ data class PointN(private val xs: Array<Double>) {
     constructor(vararg xs: Double): this(Array<Double>(xs.size) { i -> xs[i] })
     constructor(vararg xs: Int): this(Array<Double>(xs.size) { i -> xs[i].toDouble() })
     constructor(p: PointN): this(Array(p.dimension()) { i -> p.xs[i] })
+
+    constructor(p: IntI): this(p.n, p.m)
 
     operator fun get(n: Int): Double {
         if(dimension() == 0) return 0.0;
@@ -78,6 +81,9 @@ data class PointN(private val xs: Array<Double>) {
     }
 
     fun length() = sqrt(lengthX2())
+
+    fun lengthTo(pos: PointN) = (this - pos).length()
+
     fun separate(level: Int) = PointN(Array(dimension()) { i -> if(level == i) xs[i] else 0.0 })
 
     fun transform(transform: (x: Double) -> Double) = PointN(ArrayUtils.transform(xs, transform))

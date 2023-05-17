@@ -35,11 +35,11 @@ open class EffectItem(pos: PointN, id: Int, private val effect_name: String, pri
         visuals.add(object: LayerVisualiser(Game.layer("OBJ-")) {
             override fun draw(draw_pos: PointN) {
                 if(object_time>DURATION_TIME - REACT_TIME && object_time%20<10) return
-                agc().image.draw(Data.get(filename, IntI(id, 0)), draw_pos - Game.STEP*16)
+                agc().image.drawC(Data.get(filename, IntI(id, 0)), draw_pos)
             }
         })
 
-        bounds.blue = { Bounds(RectN(-Game.STEP*16, Game.STEP*32)) }
+        bounds.blue = { Bounds(RectN(-Game.STEP*8, Game.STEP*16)) }
     }
 
     final override fun onGrab() {

@@ -19,7 +19,7 @@ class RedBox(pos: PointN): GameObject() {
                 }
             }
         })
-        bounds.red = { Bounds(RectN(-Game.STEP*16, Game.STEP*32)) }
+        bounds.red = { Bounds(RectN(-Game.STEP*8, Game.STEP*16)) }
         tag("#immovable")
     }
 

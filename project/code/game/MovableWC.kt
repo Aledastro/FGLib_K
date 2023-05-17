@@ -8,7 +8,7 @@ import com.uzery.fglib.core.world.World.Companion.rooms
 import com.uzery.fglib.core.world.WorldController
 import com.uzery.fglib.utils.math.geom.PointN
 import com.uzery.fglib.utils.math.geom.RectN
-import game.camera.LazyCamera
+import game.camera.LevelCamera
 import javafx.scene.paint.Color
 import javafx.scene.text.Font
 import javafx.scene.text.FontWeight
@@ -18,12 +18,13 @@ class MovableWC(private var goal: GameObject): WorldController {
     private var goal_room = void
 
     override fun init() {
-        camera = LazyCamera(goal.stats)
+        camera = LevelCamera()
         void.add(goal)
+        println(goal.stats.POS)
     }
 
     override fun isActive(r: Room): Boolean {
-        val p = PointN(200, 200)
+        val p = PointN(0, 0)
         return RectN(r.pos - p, r.size + p*2).into(goal.stats.POS + goal_room.pos)
     }
 

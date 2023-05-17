@@ -27,8 +27,13 @@ class Platform {
         var develop_mode = false
 
         var whole_draw = false
-        val CANVAS
+
+        var scale = 2
+
+        val WINDOW
             get() = PointN(options().size)
+        val CANVAS
+            get() = WINDOW/scale
 
         val keyboard = object: KeyActivator<KeyCode>(KeyCode.values().size) {
             override fun pressed0(code: Int): Boolean = Program.pressed[code]
@@ -44,7 +49,7 @@ class Platform {
         val graphics = object: AffineGraphics() {
             private val transform =
                 AffineTransform {
-                    var x = (it - drawPOS*layer.z)
+                    var x = (it - drawPOS*layer.z)*scale
                     if(whole_draw) x = x.round(1.0)
                     x
                 }
