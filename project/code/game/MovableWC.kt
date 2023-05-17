@@ -23,6 +23,11 @@ class MovableWC(private var goal: GameObject): WorldController {
     }
 
     override fun isActive(r: Room): Boolean {
+        val p = PointN(200, 200)
+        return RectN(r.pos - p, r.size + p*2).into(goal.stats.POS + goal_room.pos)
+    }
+
+    private fun isInArea(r: Room): Boolean {
         return RectN(r.pos, r.size).into(goal.stats.POS + goal_room.pos)
     }
 
@@ -31,7 +36,6 @@ class MovableWC(private var goal: GameObject): WorldController {
     }
 
     override fun onDisappear(r: Room) {
-        println(1)
         for(o in r.objects) {
             /*if(roomFor(o)!=void){
                 World.add(o)
@@ -53,7 +57,7 @@ class MovableWC(private var goal: GameObject): WorldController {
     }
 
     override fun roomFor(o: GameObject): Room {
-        return rooms.firstOrNull { isActive(it) } ?: void
+        return rooms.firstOrNull { isInArea(it) } ?: void
     }
 
     override fun update() {
@@ -63,9 +67,10 @@ class MovableWC(private var goal: GameObject): WorldController {
             active_rooms.forEach { room->room.objects.removeIf { it.tagged("player") } }
             World.add(goal)
         }*/
-        goal.next()
         void.next()
         void.draw(PointN.ZERO)
+
+        moveObjs()
     }
 
     override fun drawPOS(): PointN {

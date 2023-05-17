@@ -10,9 +10,7 @@ import game.events.Level_2
 import game.objects.character.Cowboy
 import game.objects.enemy.Goblin
 import game.objects.enemy.Ork
-import game.objects.map.Cactus
-import game.objects.map.Decor
-import game.objects.map.Wall
+import game.objects.map.*
 import javafx.scene.paint.Color
 
 class ClassGetterX: ClassGetterInstance<GameObject>() {
@@ -25,6 +23,9 @@ class ClassGetterX: ClassGetterInstance<GameObject>() {
         add("ork", 1) { Ork(pos) }
         add("wall", 1) { Wall(pos) }
         add("cactus", 1) { Cactus(pos) }
+
+        add("red_box", 1) { RedBox(pos) }
+        add("black_box", 1) { BlackBox(pos) }
 
         add("decor", 5) { Decor(pos, string, intI, intI, layer) }
 

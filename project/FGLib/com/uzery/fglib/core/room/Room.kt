@@ -77,6 +77,7 @@ class Room(val pos: PointN, val size: PointN) {
         }
         for(obj in objects) {
             obj.stats.lPOS = obj.stats.POS
+            if(obj.tagged("#immovable")) continue
             val move_bs = obj.bounds.orange ?: continue
 
             fun maxMove(move_p: PointN): Double {

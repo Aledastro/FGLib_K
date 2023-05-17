@@ -5,11 +5,11 @@ import com.uzery.fglib.core.obj.ability.AbilityBox
 import com.uzery.fglib.core.obj.ability.InputAction
 import com.uzery.fglib.core.obj.bounds.Bounds
 import com.uzery.fglib.core.obj.visual.LayerVisualiser
+import com.uzery.fglib.utils.data.image.Data
 import com.uzery.fglib.utils.math.geom.PointN
 import com.uzery.fglib.utils.math.geom.RectN
-import com.uzery.fglib.utils.math.scale.AnimationScale
+import com.uzery.fglib.utils.math.num.IntI
 import game.Game
-import javafx.scene.paint.Color
 
 class Bullet(pos: PointN, private val speed: PointN): GameObject() {
     init {
@@ -28,14 +28,11 @@ class Bullet(pos: PointN, private val speed: PointN): GameObject() {
                 if(object_time>100) collapse()
             }
         })
+        val filename = "char|bullets.png"
+        Data.set(filename, IntI(4, 4), 2)
         visuals.add(object: LayerVisualiser(Game.layer("OBJ-")) {
-            val scale = AnimationScale(0L, 30.0) { 4*(it + 0.5) }
-
             override fun draw(draw_pos: PointN) {
-                agc().fill.oval(
-                    draw_pos - Game.STEP*scale.swing(object_time),
-                    Game.STEP*2*scale.swing(object_time),
-                    Color(0.9, 0.9, 0.9, 1.0))
+                agc().image.draw(Data.get(filename, IntI(0, 0)), draw_pos - Game.STEP*3)
             }
         })
         bounds.blue = { Bounds(RectN(-Game.STEP*3, Game.STEP*6)) }

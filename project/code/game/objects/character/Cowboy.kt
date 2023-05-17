@@ -82,7 +82,7 @@ class Cowboy(pos: PointN): GameCharacter(1000) {
             }
         })
 
-        bounds.orange = { Bounds(RectN(-Game.STEP*12, Game.STEP*24)) }
+        bounds.orange = { Bounds(RectN(PointN(-12, -7), Game.STEP*24)) }
         tag("player")
     }
 
@@ -101,12 +101,12 @@ class Cowboy(pos: PointN): GameCharacter(1000) {
     enum class MODE { STAY, MOVE, SHOOT }
 
     val cowboy_speed
-        get() = if(effectedAny("coffee", "master")) 4.4 else 3.4
+        get() = if(effectedAny("coffee", "master")) 3.4 else 2.4
 
     val shoot: () -> TempAction = {
         object: TimeTempAction() {
             override fun start() {
-                val s = 8.0
+                val s = 6.0
                 direct = Direct.CENTER
                 when {
                     keyboard.pressed(KeyCode.UP) -> direct += Direct.UP
@@ -120,12 +120,13 @@ class Cowboy(pos: PointN): GameCharacter(1000) {
             }
 
             private fun shootTo(pos: PointN, speed: PointN) {
+                val xc = 4
                 when {
                     effected("wheel_bullets") && effectedAny("three_bullets", "master") -> {
                         for(i in 0..7) {
                             for(j in -1..1) {
                                 val sp = speed.rotateXY(i*Math.PI/4 + j*Math.PI/8)
-                                produce(Bullet(pos + sp*2, sp))
+                                produce(Bullet(pos + sp*xc, sp))
                             }
                         }
                     }
@@ -133,18 +134,18 @@ class Cowboy(pos: PointN): GameCharacter(1000) {
                     effectedAny("three_bullets", "master") -> {
                         for(i in -1..1) {
                             val sp = speed.rotateXY(i*Math.PI/8)
-                            produce(Bullet(pos + sp*2, sp))
+                            produce(Bullet(pos + sp*xc, sp))
                         }
                     }
 
                     effected("wheel_bullets") -> {
                         for(i in 0..7) {
                             val sp = speed.rotateXY(i*Math.PI/4)
-                            produce(Bullet(pos + sp*2, sp))
+                            produce(Bullet(pos + sp*xc, sp))
                         }
                     }
 
-                    else -> produce(Bullet(pos + speed*2, speed))
+                    else -> produce(Bullet(pos + speed*xc, speed))
                 }
             }
 
@@ -172,7 +173,7 @@ class Cowboy(pos: PointN): GameCharacter(1000) {
                 if(keyboard.pressed(KeyCode.A)) direct += Direct.LEFT
                 if(keyboard.pressed(KeyCode.D)) direct += Direct.RIGHT
 
-                stats.POS += direct.p*cowboy_speed
+                stats.nPOS += direct.p*cowboy_speed
             }
 
             override fun ends() = ids_time>20 || readyShoot() || !readyMove()

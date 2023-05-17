@@ -9,7 +9,7 @@ import com.uzery.fglib.utils.math.geom.RectN
 import com.uzery.fglib.utils.math.getter.value.PosValue
 import game.Game
 
-class BlackBox(pos: PointN): GameObject() {
+class RedBox(pos: PointN): GameObject() {
     init {
         stats.POS = pos
         abilities.add(object: AbilityBox {
@@ -20,11 +20,11 @@ class BlackBox(pos: PointN): GameObject() {
             }
         })
         bounds.red = { Bounds(RectN(-Game.STEP*16, Game.STEP*32)) }
-        tag("#immovable", "bullet_go")
+        tag("#immovable")
     }
 
     override fun setValues() {
-        name = "black_box"
+        name = "red_box"
         values.add(PosValue(stats.POS))
     }
 }

@@ -1,36 +1,13 @@
 package game.events
 
-import com.uzery.fglib.core.obj.DrawLayer
-import com.uzery.fglib.core.obj.visual.Visualiser
-import com.uzery.fglib.core.program.Platform
 import com.uzery.fglib.extension.event.BaseEvent
-import com.uzery.fglib.extension.event.CompositeGameEvent
 import com.uzery.fglib.utils.math.geom.PointN
-import game.Game
 import game.objects.enemy.Goblin
 import game.objects.enemy.Ork
-import javafx.scene.paint.Color
 import java.util.*
 
-class Level_2: CompositeGameEvent() {
-    private val DURATION_TIME = 300
-
-    //3000*16ms=48s
-    var ids_time = 0
-
-    private val pp: PointN = PointN(16, -48)
-
+class Level_2: Level(3000) {
     init {
-        stats.POS = pp
-        visuals.add(object: Visualiser {
-            override fun draw(draw_pos: PointN) {
-                val len = Platform.CANVAS.X - 20
-                agc().fill.rect(Game.STEP*10, PointN(len, 10.0), Color.BURLYWOOD)
-                agc().fill.rect(Game.STEP*10, PointN((ids_time*1.0/DURATION_TIME)*len, 10.0), Color.GREEN)
-            }
-
-            override fun drawLayer() = DrawLayer.CAMERA_OFF
-        })
         add(object: BaseEvent() {
             val wave = LinkedList<Int>()
             override fun start() {
@@ -64,10 +41,6 @@ class Level_2: CompositeGameEvent() {
     }
 
     override fun start() {
-
-    }
-
-    override fun finish() {
 
     }
 
