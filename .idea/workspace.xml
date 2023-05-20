@@ -12,7 +12,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="82970e50-af90-458e-a847-e0b07c98f932" name="Changes" comment="FGLib v.0.4.4.2 [K]" />
+    <list default="true" id="82970e50-af90-458e-a847-e0b07c98f932" name="Changes" comment="FGLib v.0.4.5.0 [K]" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -42,7 +42,7 @@
     <option name="selectedUrlAndAccountId">
       <UrlAndAccount>
         <option name="accountId" value="c510601b-2e73-48aa-afe7-8bec159dcb5a" />
-        <option name="url" value="https://github.com/SilksongSorrow/FGLib-K.git" />
+        <option name="url" value="https://github.com/SilksongSorrow/FGLib_K.git" />
       </UrlAndAccount>
     </option>
   </component>
@@ -335,7 +335,28 @@
       <option name="project" value="LOCAL" />
       <updated>1684561440147</updated>
     </task>
-    <option name="localTasksCounter" value="29" />
+    <task id="LOCAL-00029" summary="FGLib v.0.4.4.3 [K]">
+      <created>1684561667487</created>
+      <option name="number" value="00029" />
+      <option name="presentableId" value="LOCAL-00029" />
+      <option name="project" value="LOCAL" />
+      <updated>1684561667487</updated>
+    </task>
+    <task id="LOCAL-00030" summary="FGLib v.0.4.4.4 [K]">
+      <created>1684561706415</created>
+      <option name="number" value="00030" />
+      <option name="presentableId" value="LOCAL-00030" />
+      <option name="project" value="LOCAL" />
+      <updated>1684561706415</updated>
+    </task>
+    <task id="LOCAL-00031" summary="FGLib v.0.4.5.0 [K]">
+      <created>1684561884854</created>
+      <option name="number" value="00031" />
+      <option name="presentableId" value="LOCAL-00031" />
+      <option name="project" value="LOCAL" />
+      <updated>1684561884854</updated>
+    </task>
+    <option name="localTasksCounter" value="32" />
     <servers />
   </component>
   <component name="UnknownFeatures">
@@ -365,9 +386,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="1.3" />
-    <MESSAGE value="1.4" />
-    <MESSAGE value="1.5" />
     <MESSAGE value="1.6" />
     <MESSAGE value="2.0" />
     <MESSAGE value="2.0.1" />
@@ -390,7 +408,10 @@
     <MESSAGE value="FGLib v.0.4.3.1 [K]" />
     <MESSAGE value="FGLib v.0.4.4.1 [K]" />
     <MESSAGE value="FGLib v.0.4.4.2 [K]" />
-    <option name="LAST_COMMIT_MESSAGE" value="FGLib v.0.4.4.2 [K]" />
+    <MESSAGE value="FGLib v.0.4.4.3 [K]" />
+    <MESSAGE value="FGLib v.0.4.4.4 [K]" />
+    <MESSAGE value="FGLib v.0.4.5.0 [K]" />
+    <option name="LAST_COMMIT_MESSAGE" value="FGLib v.0.4.5.0 [K]" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
