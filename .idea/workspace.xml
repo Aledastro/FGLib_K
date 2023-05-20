@@ -12,23 +12,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="82970e50-af90-458e-a847-e0b07c98f932" name="Changes" comment="FGLib v.0.4.3.1 [K]">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/FGLib/com/uzery/fglib/core/obj/controller/TimeTempAction.kt" beforeDir="false" afterPath="$PROJECT_DIR$/project/FGLib/com/uzery/fglib/core/obj/controller/TimeTempAction.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/FGLib/com/uzery/fglib/core/program/Platform.kt" beforeDir="false" afterPath="$PROJECT_DIR$/project/FGLib/com/uzery/fglib/core/program/Platform.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/FGLib/com/uzery/fglib/extension/room_editor/RoomEditor.kt" beforeDir="false" afterPath="$PROJECT_DIR$/project/FGLib/com/uzery/fglib/extension/room_editor/RoomEditor.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/FGLib/com/uzery/fglib/extension/ui/Button.kt" beforeDir="false" afterPath="$PROJECT_DIR$/project/FGLib/com/uzery/fglib/extension/ui/Button.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/FGLib/com/uzery/fglib/extension/ui/InfoBox.kt" beforeDir="false" afterPath="$PROJECT_DIR$/project/FGLib/com/uzery/fglib/extension/ui/InfoBox.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/FGLib/com/uzery/fglib/extension/ui/UIBox.kt" beforeDir="false" afterPath="$PROJECT_DIR$/project/FGLib/com/uzery/fglib/extension/ui/UIBox.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/FGLib/com/uzery/fglib/extension/ui/UICanvas.kt" beforeDir="false" afterPath="$PROJECT_DIR$/project/FGLib/com/uzery/fglib/extension/ui/UICanvas.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/FGLib/com/uzery/fglib/extension/ui/UIElement.kt" beforeDir="false" afterPath="$PROJECT_DIR$/project/FGLib/com/uzery/fglib/extension/ui/UIElement.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/FGLib/com/uzery/fglib/extension/ui/VBox.kt" beforeDir="false" afterPath="$PROJECT_DIR$/project/FGLib/com/uzery/fglib/extension/ui/VBox.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/code/game/events/Level.kt" beforeDir="false" afterPath="$PROJECT_DIR$/project/code/game/events/Level.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/code/game/events/Level_4.kt" beforeDir="false" afterPath="$PROJECT_DIR$/project/code/game/events/Level_4.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/code/game/objects/character/Cowboy.kt" beforeDir="false" afterPath="$PROJECT_DIR$/project/code/game/objects/character/Cowboy.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/code/game/objects/enemy/Medusa.kt" beforeDir="false" afterPath="$PROJECT_DIR$/project/code/game/objects/enemy/Medusa.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/media/files/map/4.room" beforeDir="false" afterPath="$PROJECT_DIR$/project/media/files/map/4.room" afterDir="false" />
-    </list>
+    <list default="true" id="82970e50-af90-458e-a847-e0b07c98f932" name="Changes" comment="FGLib v.0.4.4.2 [K]" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -47,12 +31,13 @@
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="RESET_MODE" value="MIXED" />
   </component>
-  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
-  "lastFilter": {
-    "state": "OPEN"
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;
   }
-}]]></component>
+}</component>
   <component name="GithubPullRequestsUISettings">
     <option name="selectedUrlAndAccountId">
       <UrlAndAccount>
@@ -72,20 +57,20 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "jdk.selected.JAVA_MODULE": "19",
-    "last_opened_file_path": "C:/Users/User/IdeaProjects/lib/FGLib_K/project/media/files/map",
-    "project.structure.last.edited": "SDKs",
-    "project.structure.proportion": "0.15",
-    "project.structure.side.proportion": "0.2",
-    "run.code.analysis.last.selected.profile": "pProject Default",
-    "settings.editor.selected.configurable": "preferences.fileTypes"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;jdk.selected.JAVA_MODULE&quot;: &quot;19&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/User/IdeaProjects/lib/FGLib_K/project/media/files/map&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;SDKs&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
+    &quot;run.code.analysis.last.selected.profile&quot;: &quot;pProject Default&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.fileTypes&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\User\IdeaProjects\lib\FGLib_K\project\media\files\map" />
@@ -329,7 +314,28 @@
       <option name="project" value="LOCAL" />
       <updated>1684546799240</updated>
     </task>
-    <option name="localTasksCounter" value="26" />
+    <task id="LOCAL-00026" summary="FGLib v.0.4.4.1 [K]">
+      <created>1684561246287</created>
+      <option name="number" value="00026" />
+      <option name="presentableId" value="LOCAL-00026" />
+      <option name="project" value="LOCAL" />
+      <updated>1684561246287</updated>
+    </task>
+    <task id="LOCAL-00027" summary="FGLib v.0.4.4.1 [K]">
+      <created>1684561339566</created>
+      <option name="number" value="00027" />
+      <option name="presentableId" value="LOCAL-00027" />
+      <option name="project" value="LOCAL" />
+      <updated>1684561339566</updated>
+    </task>
+    <task id="LOCAL-00028" summary="FGLib v.0.4.4.2 [K]">
+      <created>1684561440147</created>
+      <option name="number" value="00028" />
+      <option name="presentableId" value="LOCAL-00028" />
+      <option name="project" value="LOCAL" />
+      <updated>1684561440147</updated>
+    </task>
+    <option name="localTasksCounter" value="29" />
     <servers />
   </component>
   <component name="UnknownFeatures">
@@ -340,15 +346,25 @@
       <map>
         <entry key="MAIN">
           <value>
-            <State />
+            <State>
+              <option name="FILTERS">
+                <map>
+                  <entry key="branch">
+                    <value>
+                      <list>
+                        <option value="origin/master" />
+                      </list>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+            </State>
           </value>
         </entry>
       </map>
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="1.1" />
-    <MESSAGE value="1.2" />
     <MESSAGE value="1.3" />
     <MESSAGE value="1.4" />
     <MESSAGE value="1.5" />
@@ -372,7 +388,9 @@
     <MESSAGE value="FGLib v.0.4.2.0 [K]" />
     <MESSAGE value="FGLib v.0.4.3.0 [K]" />
     <MESSAGE value="FGLib v.0.4.3.1 [K]" />
-    <option name="LAST_COMMIT_MESSAGE" value="FGLib v.0.4.3.1 [K]" />
+    <MESSAGE value="FGLib v.0.4.4.1 [K]" />
+    <MESSAGE value="FGLib v.0.4.4.2 [K]" />
+    <option name="LAST_COMMIT_MESSAGE" value="FGLib v.0.4.4.2 [K]" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
