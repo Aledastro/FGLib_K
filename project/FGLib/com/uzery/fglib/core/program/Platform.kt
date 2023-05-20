@@ -35,6 +35,11 @@ class Platform {
         val CANVAS
             get() = WINDOW/scale
 
+        val CANVAS_R
+            get() = RectN(PointN.ZERO, CANVAS)
+        val WINDOW_R
+            get() = RectN(PointN.ZERO, WINDOW)
+
         val keyboard = object: KeyActivator<KeyCode>(KeyCode.values().size) {
             override fun pressed0(code: Int): Boolean = Program.pressed[code]
             override fun from(key: KeyCode): Int = key.ordinal

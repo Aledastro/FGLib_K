@@ -24,11 +24,12 @@ class Medusa(pos: PointN): Enemy(2) {
 
     private val SPEED = 0.6
 
-    private enum class MODE(val value: Int){
-        BLOCK(1),ATTACK(0)
+    private enum class MODE(val value: Int) {
+        BLOCK(1), ATTACK(0)
     }
-    private var mode=MODE.ATTACK
-    private var progress=0
+
+    private var mode = MODE.ATTACK
+    private var progress = 0
 
     init {
         stats.POS = pos
@@ -68,7 +69,7 @@ class Medusa(pos: PointN): Enemy(2) {
                     stats.nPOS += Game.X*cos(d)*SPEED
                     stats.nPOS += Game.Y*sin(d)*SPEED
                 }
-                progress=object_time/10%2
+                progress = object_time/10%2
             }
 
             override fun ends() = temp_time>20
@@ -77,16 +78,13 @@ class Medusa(pos: PointN): Enemy(2) {
 
     var block: () -> TempAction = {
         object: TimeTempAction() {
-            var t = 0
-
             override fun start() {
-                LIFE+=5
+                LIFE += 5
             }
 
-            override fun next() {
-                mode= MODE.BLOCK
-                progress=(t/10).coerceIn(0..3)
-                t++
+            override fun update() {
+                mode = MODE.BLOCK
+                progress = (temp_time/10).coerceIn(0..3)
             }
 
             override fun ends() = false

@@ -1,5 +1,5 @@
 //Uzery Game Studio 2019-2023
-//last edit: 2023.05.17 07:27:08
+//last edit: 2023.05.20 06:49:46
 
 room: pos[128, 768] size[256, 256]
 
@@ -70,8 +70,6 @@ cactus: pos[216, 8]
 cactus: pos[200, 8]
 cactus: pos[184, 8]
 cactus: pos[168, 8]
-decor: pos[184, 104] [map|tiles.png] [16, 16] [7, 2] layer[DRT]
-decor: pos[184, 120] [map|tiles.png] [16, 16] [7, 2] layer[DRT]
 decor: pos[168, 104] [map|tiles.png] [16, 16] [3, 2] layer[DRT]
 decor: pos[152, 104] [map|tiles.png] [16, 16] [3, 2] layer[DRT]
 decor: pos[136, 104] [map|tiles.png] [16, 16] [3, 2] layer[DRT]
@@ -260,3 +258,5 @@ decor: pos[248, 152] [map|tiles.png] [16, 16] [0, 2] layer[DRT]
 decor: pos[120, 248] [map|tiles.png] [16, 16] [0, 2] layer[DRT]
 decor: pos[136, 248] [map|tiles.png] [16, 16] [0, 2] layer[DRT]
 decor: pos[152, 248] [map|tiles.png] [16, 16] [0, 2] layer[DRT]
+wall: pos[184, 104]
+wall: pos[184, 120]

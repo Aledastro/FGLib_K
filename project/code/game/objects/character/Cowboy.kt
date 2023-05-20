@@ -82,7 +82,7 @@ class Cowboy(pos: PointN): GameCharacter(1000) {
             }
         })
 
-        bounds.orange = { Bounds(RectN(PointN(-6.0, -3.5), Game.STEP*12)) }
+        bounds.orange = { Bounds(RectN(PointN(-6, -3), Game.STEP*12)) }
         tag("player")
     }
 

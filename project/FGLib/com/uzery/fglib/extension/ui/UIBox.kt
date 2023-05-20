@@ -1,10 +1,8 @@
 package com.uzery.fglib.extension.ui
 
 import com.uzery.fglib.core.program.Extension
-import com.uzery.fglib.core.program.Platform
-import com.uzery.fglib.core.program.Platform.Companion.mouse
+import com.uzery.fglib.core.program.Platform.Companion.graphics
 import com.uzery.fglib.utils.math.FGUtils
-import com.uzery.fglib.utils.math.geom.RectN
 import javafx.scene.paint.Color
 import java.util.*
 
@@ -21,17 +19,23 @@ class UIBox: Extension {
     }
 
     override fun update() {
-        active = list.stream().filter { a -> RectN(a.pos, a.size).into(mouse.pos()) }
-            .sorted { o1, o2 -> -o1.priority.compareTo(o2.priority) }.findFirst().get()
+        active = list.stream().filter { el -> el.isA(el.pos, el.size) }
+            .sorted { o1, o2 -> -o1.priority.compareTo(o2.priority) }.findFirst().orElse(null)
         active?.ifActive()
         list.forEach { o -> o.update() }
 
         list.forEach { o ->
-            Platform.graphics.fill.rect(
+            graphics.fill.rect(
                 o.pos,
                 o.size,
                 FGUtils.transparent(Color.DARKBLUE, 0.1))
         }
+        if(active != null) {
+            graphics.setStroke(1.5)
+            graphics.stroke.rect(active!!.pos, active!!.size, FGUtils.transparent(Color.WHITE, 0.9))
+        }
+
+
         list.forEach { o -> o.draw() }
     }
 }

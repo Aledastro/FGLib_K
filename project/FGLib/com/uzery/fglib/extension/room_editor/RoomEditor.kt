@@ -4,10 +4,13 @@ import com.uzery.fglib.core.obj.DrawLayer
 import com.uzery.fglib.core.obj.GameObject
 import com.uzery.fglib.core.program.Extension
 import com.uzery.fglib.core.program.Platform
+import com.uzery.fglib.core.program.Platform.Companion.CANVAS
+import com.uzery.fglib.core.program.Platform.Companion.CANVAS_R
 import com.uzery.fglib.core.program.Platform.Companion.graphics
 import com.uzery.fglib.core.program.Platform.Companion.keyboard
 import com.uzery.fglib.core.program.Platform.Companion.mouse
 import com.uzery.fglib.core.program.Platform.Companion.mouse_keys
+import com.uzery.fglib.core.program.Platform.Companion.scale
 import com.uzery.fglib.core.program.Program
 import com.uzery.fglib.core.room.Room
 import com.uzery.fglib.core.world.World
@@ -16,6 +19,7 @@ import com.uzery.fglib.extension.ui.*
 import com.uzery.fglib.utils.data.file.WriteData
 import com.uzery.fglib.utils.math.FGUtils
 import com.uzery.fglib.utils.math.geom.PointN
+import com.uzery.fglib.utils.math.geom.RectN
 import com.uzery.fglib.utils.math.getter.ClassGetter
 import game.ClassGetterX
 import javafx.scene.Cursor
@@ -31,8 +35,10 @@ class RoomEditor(private val filename: String, private val getter: ClassGetter<G
 
     private lateinit var edit: Room
     private val OFFSET = 40.0
-    private val GRID = 32.0
-    private val GRID_P = PointN(GRID, GRID)
+    private val GRID
+        get() = 32.0/scale
+    private val GRID_P
+        get() = PointN(GRID, GRID)
 
     private var draw_pos = PointN.ZERO
 
@@ -51,7 +57,7 @@ class RoomEditor(private val filename: String, private val getter: ClassGetter<G
 
     private fun checkForSave() {
         if(keyboard.allPressed(KeyCode.CONTROL, KeyCode.SHIFT) && keyboard.inPressed(KeyCode.S)) {
-            edit.objects.forEach { it.stats.POS /= 2 }
+            //edit.objects.forEach { it.stats.POS /= 2 }
             WriteData.write(from(filename), edit.toString())
             println("saved")
         }
@@ -60,11 +66,12 @@ class RoomEditor(private val filename: String, private val getter: ClassGetter<G
     private fun clear() {
         graphics.layer = DrawLayer.CAMERA_OFF
         graphics.fill.color = Color(0.7, 0.6, 0.9, 1.0)
-        graphics.fill.rect(PointN.ZERO, Platform.CANVAS, Color(0.7, 0.6, 0.9, 1.0))
+        graphics.fill.rect(PointN.ZERO, CANVAS, Color(0.7, 0.6, 0.9, 1.0))
     }
 
 
     override fun init() {
+        scale = 2
         World.getter = ClassGetter(ClassGetterX())
 
         //todo
@@ -98,9 +105,12 @@ class RoomEditor(private val filename: String, private val getter: ClassGetter<G
 
     private var play_button = object: Button() {
         override val pos: PointN
-            get() = Platform.CANVAS - PointN(90, 90)
+            get() = CANVAS - PointN(110, 110)/scale
 
-        override val size = PointN(42, 42)
+        override val size
+            get() = PointN(52, 52)/scale
+        override val window: RectN
+            get() = CANVAS_R
 
         override val pressed: Boolean
             get() = keyboard.pressed(KeyCode.CONTROL) && keyboard.inPressed(KeyCode.SPACE)
@@ -115,6 +125,10 @@ class RoomEditor(private val filename: String, private val getter: ClassGetter<G
 
     private var objects_vbox = object: VBox(getter.entry_size(), 5) {
         override val pos = PointN(OFFSET, 170.0)
+        override val window: RectN
+            get() = CANVAS_R
+        override val sizeOne: PointN
+            get() = PointN(50, 50)/scale
 
         override fun setNames(id: Int): String {
             val o = getter.getEntry(id)
@@ -131,7 +145,9 @@ class RoomEditor(private val filename: String, private val getter: ClassGetter<G
         override val pos: PointN
             get() = PointN.ZERO
         override val size: PointN
-            get() = Platform.CANVAS
+            get() = CANVAS
+        override val window: RectN
+            get() = CANVAS_R
 
         var draw_bounds = false
 
@@ -143,17 +159,22 @@ class RoomEditor(private val filename: String, private val getter: ClassGetter<G
             drawLines()
 
             graphics.layer = DrawLayer.CAMERA_FOLLOW
-            graphics.stroke.rect(draw_pos, Platform.CANVAS, Color.DARKBLUE)
+            graphics.stroke.rect(draw_pos, CANVAS, Color.DARKBLUE)
         }
 
         private fun drawLines() {
             val c = FGUtils.transparent(Color.WHITE, 0.1)
             graphics.layer = DrawLayer.CAMERA_FOLLOW
-            for(i in -70..70) {
-                graphics.setStroke(1.0)
-                val pp = draw_pos.mod(GRID)
-                graphics.stroke.line(pp - Platform.CANVAS.XP + PointN(0.0, i*GRID), Platform.CANVAS.XP*2, c)
-                graphics.stroke.line(pp - Platform.CANVAS.YP + PointN(i*GRID, 0.0), Platform.CANVAS.YP*2, c)
+            graphics.setStroke(1.0)
+            for(i in 0..(window.S.Y/GRID + 1).toInt()) {
+                graphics.stroke.line(
+                    -GRID_P + draw_pos.mod(GRID)
+                            + PointN(0.0, i*GRID), PointN(window.S.X + GRID, 0.0), c)
+            }
+            for(i in 0..(window.S.X/GRID + 1).toInt()) {
+                graphics.stroke.line(
+                    -GRID_P + draw_pos.mod(GRID)
+                            + PointN(i*GRID, 0.0), PointN(0.0, window.S.Y + GRID), c)
             }
         }
 
@@ -176,7 +197,7 @@ class RoomEditor(private val filename: String, private val getter: ClassGetter<G
         private fun checkForAdd() {
             if(mouse_keys.pressed(MouseButton.PRIMARY)) {
                 val o = getter.getEntry(objects_vbox.select)
-                val pp = (mouse.pos() - draw_pos).round(GRID) + GRID_P/2
+                val pp = (mouse.pos()/scale - draw_pos).round(GRID) + GRID_P/2
                 if(lastPOS == pp) return
                 o.stats.POS = pp
                 lastPOS = pp
@@ -187,7 +208,7 @@ class RoomEditor(private val filename: String, private val getter: ClassGetter<G
 
         private fun checkForRemove() {
             if(mouse_keys.pressed(MouseButton.SECONDARY)) {
-                edit.objects.removeIf { o -> (o.stats.POS.lengthTo(mouse.pos() - draw_pos))<GRID/2 }
+                edit.objects.removeIf { o -> (o.stats.POS.lengthTo(mouse.pos()/scale - draw_pos))<GRID/2 }
                 if(!edit.objects.contains(select_obj)) select_obj = null
             }
         }
@@ -197,7 +218,7 @@ class RoomEditor(private val filename: String, private val getter: ClassGetter<G
                 Program.cursor = Cursor.DEFAULT
                 return false
             }
-            if(mouse_keys.anyPressed(*MouseButton.values())) draw_pos += mouse.pos() - last_mouse_pos
+            if(mouse_keys.anyPressed(*MouseButton.values())) draw_pos += (mouse.pos() - last_mouse_pos)/scale
             Program.cursor = Cursor.CLOSED_HAND
 
             return true
@@ -206,7 +227,11 @@ class RoomEditor(private val filename: String, private val getter: ClassGetter<G
 
     private var layers_vbox = object: VBox(12, 12) {
         override val pos
-            get() = (Platform.CANVAS - size)*PointN(0.5, 1.0) + PointN(0.0, -OFFSET)
+            get() = (CANVAS - size)*PointN(0.5, 1.0) + PointN(0.0, -OFFSET)
+        override val window: RectN
+            get() = CANVAS_R
+        override val sizeOne: PointN
+            get() = PointN(50, 50)/scale
 
         override fun setNames(id: Int): String {
             return when(id) {
@@ -238,7 +263,6 @@ class RoomEditor(private val filename: String, private val getter: ClassGetter<G
                 return res
             }
 
-
             val name = s.substring(0, index)
             val args = s.substring(index + 1)
             val t = StringTokenizer(args, "]")
@@ -262,7 +286,10 @@ class RoomEditor(private val filename: String, private val getter: ClassGetter<G
         }
 
         override val pos
-            get() = (Platform.CANVAS - size).XP + PointN(-OFFSET, 170.0)
-        override val size = PointN(350, 400)
+            get() = (CANVAS - size).XP + PointN(-OFFSET, 170.0)
+        override val size
+            get() = PointN(350, 400)/scale
+        override val window: RectN
+            get() = CANVAS_R
     }
 }

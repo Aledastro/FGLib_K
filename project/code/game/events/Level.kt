@@ -19,15 +19,14 @@ import javafx.scene.text.FontWeight
 abstract class Level(protected val DURATION_TIME: Int): CompositeGameEvent() {
     //3000*16ms=48s
     protected var ids_time = 0
-    private val pp: PointN = PointN(8, -24)
 
     init {
         visuals.add(object: LayerVisualiser(DrawLayer(1.0, 3.0)) {
             override fun draw(draw_pos: PointN) {
                 agc().fill.oval(
-                    draw_pos - stats.POS + pp + PointN(-5, -5), PointN(10, 10), FGUtils.transparent(Color.CORAL, 0.9))
+                    draw_pos - stats.POS + PointN(-5, -5), PointN(10, 10), FGUtils.transparent(Color.CORAL, 0.9))
                 agc().fill.font = Font.font("TimesNewRoman", FontWeight.BOLD, 15.0)
-                agc().fill.textC(draw_pos - stats.POS + pp + PointN(0.0, 2.5), "E", Color.WHITE)
+                agc().fill.textC(draw_pos - stats.POS + PointN(0.0, 2.5), "E", Color.WHITE)
             }
         })
         visuals.add(object: Visualiser {

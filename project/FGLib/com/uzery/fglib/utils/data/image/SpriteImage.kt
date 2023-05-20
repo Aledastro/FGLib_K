@@ -12,8 +12,8 @@ class SpriteImage(private val filename: String, val size: IntI, scale: Int = -1)
     private var SCALE: Int
 
     init {
-        SCALE=scale
-        if(SCALE==-1)SCALE=Platform.scale
+        SCALE = scale
+        if(SCALE == -1) SCALE = Platform.scale
 
         val read = Image(filename)
         val origin_size = IntI(read.width.toInt(), read.height.toInt())

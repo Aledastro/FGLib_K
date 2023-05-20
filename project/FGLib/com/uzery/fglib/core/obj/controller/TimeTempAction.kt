@@ -4,7 +4,7 @@ abstract class TimeTempAction: TempAction {
     protected var temp_time = 0
     private var finished = false
 
-    override fun next() {
+    final override fun next() {
         if(temp_time == 0) start()
 
         update()

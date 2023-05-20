@@ -47,7 +47,7 @@ class Level_4: Level(3000) {
 
             override fun ends() = ids_time>=DURATION_TIME
         })
-        tag("level_3")
+        tag("level_4")
     }
 
     override fun start() {
@@ -55,6 +55,6 @@ class Level_4: Level(3000) {
     }
 
     override fun setValues() {
-        name = "level_3"
+        name = "level_4"
     }
 }
