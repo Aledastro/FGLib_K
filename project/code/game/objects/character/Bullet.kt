@@ -29,7 +29,7 @@ class Bullet(pos: PointN, private val speed: PointN): GameObject() {
             }
         })
         val filename = "char|bullets.png"
-        Data.set(filename, IntI(4, 4), 2)
+        Data.set(filename, IntI(4, 4))
         visuals.add(object: LayerVisualiser(Game.layer("OBJ-")) {
             override fun draw(draw_pos: PointN) {
                 agc().image.drawC(Data.get(filename, IntI(0, 0)), draw_pos)

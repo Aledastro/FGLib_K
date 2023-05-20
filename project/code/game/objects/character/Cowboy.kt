@@ -47,7 +47,7 @@ class Cowboy(pos: PointN): GameCharacter(1000) {
             }
         })
         val filename = "char|cowboy.png"
-        Data.set(filename, IntI(16, 16), 2)
+        Data.set(filename, IntI(16, 16))
         visuals.add(object: LayerVisualiser(Game.layer("OBJ")) {
             override fun draw(draw_pos: PointN) {
                 when(mode) {
@@ -159,7 +159,7 @@ class Cowboy(pos: PointN): GameCharacter(1000) {
                 stats.nPOS += dir.p*cowboy_speed
             }
 
-            override fun ends() = ids_time>if(effectedAny("fast_bullets", "master")) 2 else 8
+            override fun ends() = temp_time>if(effectedAny("fast_bullets", "master")) 2 else 8
         }
     }
     val move: () -> TempAction = {
@@ -176,7 +176,7 @@ class Cowboy(pos: PointN): GameCharacter(1000) {
                 stats.nPOS += direct.p*cowboy_speed
             }
 
-            override fun ends() = ids_time>20 || readyShoot() || !readyMove()
+            override fun ends() = temp_time>20 || readyShoot() || !readyMove()
         }
     }
     val stay: () -> TempAction = {
@@ -185,7 +185,7 @@ class Cowboy(pos: PointN): GameCharacter(1000) {
                 mode = MODE.STAY
             }
 
-            override fun ends() = ids_time>20 || readyMove() || readyShoot()
+            override fun ends() = temp_time>20 || readyMove() || readyShoot()
         }
     }
 

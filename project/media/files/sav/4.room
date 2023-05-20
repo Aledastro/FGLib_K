@@ -3,7 +3,7 @@
 
 room: pos[128, 768] size[256, 256]
 
-level_2
+level_3
 wall: pos[168, 184]
 wall: pos[184, 184]
 wall: pos[184, 168]

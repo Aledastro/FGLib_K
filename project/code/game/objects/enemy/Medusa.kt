@@ -20,16 +20,22 @@ import game.objects.items.EffectItem
 import kotlin.math.cos
 import kotlin.math.sin
 
-class Goblin(pos: PointN): Enemy(4) {
+class Medusa(pos: PointN): Enemy(2) {
 
     private val SPEED = 0.6
+
+    private enum class MODE(val value: Int){
+        BLOCK(1),ATTACK(0)
+    }
+    private var mode=MODE.ATTACK
+    private var progress=0
 
     init {
         stats.POS = pos
         controller = object: Controller {
             override fun get(): () -> TempAction {
-                if(Math.random()>0.5) return attack
-                return stay
+                if(Math.random()<0.1) return block
+                return attack
             }
         }
         abilities.add(object: AbilityBox {
@@ -39,11 +45,11 @@ class Goblin(pos: PointN): Enemy(4) {
                 }
             }
         })
-        val filename = "mob|goblin.png"
+        val filename = "mob|medusa.png"
         Data.set(filename, IntI(16, 16))
         visuals.add(object: LayerVisualiser(Game.layer("OBJ")) {
             override fun draw(draw_pos: PointN) {
-                agc().image.drawC(Data.get(filename, IntI(object_time/10%2, 0)), draw_pos)
+                agc().image.drawC(Data.get(filename, IntI(progress, mode.value)), draw_pos)
             }
         })
         bounds.orange = { Bounds(RectN(-Game.STEP*7, Game.STEP*14)) }
@@ -62,25 +68,28 @@ class Goblin(pos: PointN): Enemy(4) {
                     stats.nPOS += Game.X*cos(d)*SPEED
                     stats.nPOS += Game.Y*sin(d)*SPEED
                 }
+                progress=object_time/10%2
             }
 
-            override fun ends() = false
+            override fun ends() = temp_time>20
         }
     }
 
-    var stay: () -> TempAction = {
-        object: TempAction {
+    var block: () -> TempAction = {
+        object: TimeTempAction() {
             var t = 0
 
+            override fun start() {
+                LIFE+=5
+            }
+
             override fun next() {
-                val r = Math.random()
-                stats.nPOS -= Game.X*r*2
-                stats.nPOS -= Game.Y*r*2
+                mode= MODE.BLOCK
+                progress=(t/10).coerceIn(0..3)
                 t++
             }
 
-            override val ends: Boolean
-                get() = t>5
+            override fun ends() = false
         }
     }
 

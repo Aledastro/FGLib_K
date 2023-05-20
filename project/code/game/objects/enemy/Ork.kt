@@ -40,7 +40,7 @@ class Ork(pos: PointN): Enemy(8) {
             }
         })
         val filename = "mob|ork.png"
-        Data.set(filename, IntI(16, 16), 2)
+        Data.set(filename, IntI(16, 16))
         visuals.add(object: LayerVisualiser(Game.layer("OBJ")) {
             override fun draw(draw_pos: PointN) {
                 agc().image.drawC(Data.get(filename, IntI(object_time/10%2, 0)), draw_pos)

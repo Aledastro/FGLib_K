@@ -7,8 +7,11 @@ import com.uzery.fglib.utils.math.getter.ClassGetterInstance
 import com.uzery.fglib.utils.math.num.IntI
 import game.events.Level_1
 import game.events.Level_2
+import game.events.Level_3
+import game.events.Level_4
 import game.objects.character.Cowboy
 import game.objects.enemy.Goblin
+import game.objects.enemy.Medusa
 import game.objects.enemy.Ork
 import game.objects.map.*
 import javafx.scene.paint.Color
@@ -17,10 +20,14 @@ class ClassGetterX: ClassGetterInstance<GameObject>() {
     override fun addAll() {
         add("level_1") { Level_1() }
         add("level_2") { Level_2() }
+        add("level_3") { Level_3() }
+        add("level_4") { Level_4() }
 
         add("cowboy", 1) { Cowboy(pos) }
         add("goblin", 1) { Goblin(pos) }
         add("ork", 1) { Ork(pos) }
+        add("medusa", 1) { Medusa(pos) }
+
         add("wall", 1) { Wall(pos) }
         add("cactus", 1) { Cactus(pos) }
 

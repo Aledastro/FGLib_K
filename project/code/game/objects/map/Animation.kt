@@ -50,7 +50,7 @@ open class Animation(
                 if(object_time>=frames) collapse()
             }
         })
-        Data.set(filename, set, 2)
+        Data.set(filename, set)
         visuals.add(object: LayerVisualiser(layer) {
             override fun draw(draw_pos: PointN) {
                 agc().image.draw(Data.get(filename, IntI(get.n + progress, get.m)), draw_pos - PointN(set)/2)

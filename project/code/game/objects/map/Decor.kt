@@ -30,7 +30,7 @@ class Decor(pos: PointN, var filename: String, var set: IntI, var get: IntI, var
                 }
             }
         })
-        Data.set(filename, set, 2)
+        Data.set(filename, set)
         visuals.add(object: LayerVisualiser(layer) {
             override fun draw(draw_pos: PointN) {
                 agc().image.drawC(Data.get(filename, get), draw_pos)

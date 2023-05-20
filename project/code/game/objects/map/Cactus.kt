@@ -23,7 +23,7 @@ class Cactus(pos: PointN): GameObject() {
             }
         })
         val filename = "map|tiles.png"
-        Data.set(filename, IntI(16, 16), 2)
+        Data.set(filename, IntI(16, 16))
         visuals.add(object: LayerVisualiser(Game.layer("OBJ")) {
             override fun draw(draw_pos: PointN) {
                 agc().image.drawC(Data.get(filename, IntI(if(object_time%80<40) 5 else 6, 2)), draw_pos)

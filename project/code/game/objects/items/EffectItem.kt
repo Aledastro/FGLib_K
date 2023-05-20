@@ -31,7 +31,7 @@ open class EffectItem(pos: PointN, id: Int, private val effect_name: String, pri
             }
         })
         val filename = "item|items.png"
-        Data.set(filename, IntI(16, 16), 2)
+        Data.set(filename, IntI(16, 16))
         visuals.add(object: LayerVisualiser(Game.layer("OBJ-")) {
             override fun draw(draw_pos: PointN) {
                 if(object_time>DURATION_TIME - REACT_TIME && object_time%20<10) return

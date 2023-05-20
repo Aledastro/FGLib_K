@@ -25,7 +25,7 @@ class Game: Extension {
 
         cowboy = Cowboy(PointN(256, 128))
 
-        World.init(MovableWC(cowboy), "1.room", "2.room", "3.room", "4.room", "5.room")
+        World.init(MovableWC(cowboy), "files/map/1.room", "files/map/2.room", "files/map/3.room", "files/map/4.room", "files/map/5.room")
         //World.init(MovableWC(cowboy), "1.room", "3.room", "5.room")
         /*World.active_rooms.forEach { room -> room.objects.removeIf { o -> o.tagged("player") } }
         World.add(cowboy)*/
@@ -79,7 +79,7 @@ class Game: Extension {
     companion object {
         //todo remove ppp
         var ppp = PointN.ZERO
-        const val current_filename = "4.room"
+        const val current_filename = "files/map/4.room"
 
         private val layers = HashMap<String, DrawLayer>()
 

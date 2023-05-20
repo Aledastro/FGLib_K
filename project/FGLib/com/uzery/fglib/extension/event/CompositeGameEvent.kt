@@ -18,9 +18,7 @@ abstract class CompositeGameEvent: GameEvent() {
         }
     }
 
-    final override fun ends(): Boolean {
-        return events.isEmpty() && current?.ends() ?: false
-    }
+    final override fun ends() = events.isEmpty() && current?.ends() ?: false
 
     protected fun add(event: GameEvent) = events.addLast(event)
 }

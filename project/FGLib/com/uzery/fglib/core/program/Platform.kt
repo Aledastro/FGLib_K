@@ -28,7 +28,7 @@ class Platform {
 
         var whole_draw = false
 
-        var scale = 2
+        var scale = 3
 
         val WINDOW
             get() = PointN(options().size)
