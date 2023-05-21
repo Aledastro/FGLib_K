@@ -50,7 +50,7 @@ class Data {
                 last = name.substring(max(0, name.indexOf('|') + 1))
             }
 
-            return "C:/Users/User/IdeaProjects/lib/FGLib_K/project/media/images/$local_path$last".replace('/', '\\')
+            return "C:/Users/User/IdeaProjects/lib/FGLib_K_GIT/project/media/images/$local_path$last".replace('/', '\\')
         }
     }
 }

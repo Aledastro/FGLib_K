@@ -22,7 +22,9 @@ import game.Game
 import javafx.scene.input.KeyCode
 import javafx.scene.paint.Color
 
-class Cowboy(pos: PointN): GameCharacter(1000) {
+class Cowboy(pos: PointN): GameCharacter(100) {
+
+    override val immortal=false
 
     init {
         stats.POS = pos
@@ -37,12 +39,23 @@ class Cowboy(pos: PointN): GameCharacter(1000) {
         abilities.add(object: AbilityBox {
             override fun run() {
                 LIFE++
-                LIFE = LIFE.coerceIn(0..1000)
+                LIFE = LIFE.coerceIn(-1..1000)
             }
 
             override fun activate(action: InputAction) {
-                if(action.code == InputAction.CODE.IMPACT) {
-                    LIFE -= 10
+                when(action.code){
+                    InputAction.CODE.IMPACT->{
+                        LIFE -= 10000
+                        //todo bug
+                    }
+                    InputAction.CODE.OPEN->{
+                        if(action.info=="block4"){
+                            stats.POS.X=stats.POS.X.coerceIn(16.0,256.0-16.0)
+                            stats.POS.Y=stats.POS.Y.coerceIn(16.0,256.0-16.0)
+                        }
+                    }
+
+                    else -> {}
                 }
             }
         })

@@ -10,6 +10,7 @@ import game.events.Level_2
 import game.events.Level_3
 import game.events.Level_4
 import game.objects.character.Cowboy
+import game.objects.enemy.CowboyBoss
 import game.objects.enemy.Goblin
 import game.objects.enemy.Medusa
 import game.objects.enemy.Ork
@@ -27,6 +28,9 @@ class ClassGetterX: ClassGetterInstance<GameObject>() {
         add("goblin", 1) { Goblin(pos) }
         add("ork", 1) { Ork(pos) }
         add("medusa", 1) { Medusa(pos) }
+
+        add("cowboy_boss", 1) { CowboyBoss(pos) }
+
 
         add("wall", 1) { Wall(pos) }
         add("cactus", 1) { Cactus(pos) }

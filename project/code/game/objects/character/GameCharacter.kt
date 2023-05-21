@@ -8,10 +8,12 @@ abstract class GameCharacter(protected var LIFE: Int): GameObject() {
 
     abstract val drop: Drop<GameObject?>
 
+    protected open val immortal=false
+
     init {
         abilities.add(object: AbilityBox {
             override fun run() {
-                if(LIFE<=0) {
+                if(LIFE<=0 && !immortal) {
                     drop.get()?.also { produce(it) }
                     collapse()
                 }

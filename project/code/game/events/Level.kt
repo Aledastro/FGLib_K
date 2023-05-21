@@ -2,9 +2,11 @@ package game.events
 
 import com.uzery.fglib.core.obj.DrawLayer
 import com.uzery.fglib.core.obj.ability.AbilityBox
+import com.uzery.fglib.core.obj.ability.InputAction
 import com.uzery.fglib.core.obj.visual.LayerVisualiser
 import com.uzery.fglib.core.obj.visual.Visualiser
 import com.uzery.fglib.core.program.Platform
+import com.uzery.fglib.core.world.World
 import com.uzery.fglib.extension.event.CompositeGameEvent
 import com.uzery.fglib.utils.math.FGUtils
 import com.uzery.fglib.utils.math.geom.PointN
@@ -35,8 +37,12 @@ abstract class Level(protected val DURATION_TIME: Int): CompositeGameEvent() {
                 agc().fill.rect(Game.STEP*5, PointN(len, 5.0), Color.BURLYWOOD)
                 agc().fill.rect(Game.STEP*5, PointN((ids_time*1.0/DURATION_TIME)*len, 5.0), Color.GREEN)
             }
-
             override fun drawLayer() = DrawLayer.CAMERA_OFF
+        })
+        abilities.add(object : AbilityBox{
+            override fun run() {
+                World.allTagged("player").forEach { it.activate(InputAction(InputAction.CODE.OPEN,"block4",this@Level)) }
+            }
         })
         /*bounds.red = {
             Bounds(

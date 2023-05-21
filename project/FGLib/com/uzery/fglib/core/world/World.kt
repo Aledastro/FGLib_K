@@ -70,10 +70,7 @@ interface World {
         private fun drawNotActiveRooms(pos: PointN) {
             graphics.layer = DrawLayer.CAMERA_FOLLOW
             rooms.forEach { room ->
-                graphics.stroke.rect(
-                    room.pos + pos,
-                    room.size,
-                    FGUtils.transparent(Color.LIGHTGRAY, 0.5))
+                graphics.stroke.rect(room.pos + pos, room.size, FGUtils.transparent(Color.LIGHTGRAY, 0.5))
             }
         }
 

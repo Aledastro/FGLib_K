@@ -9,7 +9,7 @@ import game.objects.enemy.Medusa
 import game.objects.enemy.Ork
 import java.util.*
 
-class Level_4: Level(3000) {
+class Level_4: Level(300) {
     init {
         add(object: BaseEvent() {
             val wave = LinkedList<Int>()

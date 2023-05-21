@@ -1,5 +1,5 @@
 //Uzery Game Studio 2019-2023
-//last edit: 2023.05.17 07:26:10
+//last edit: 2023.05.20 10:11:18
 
 room: pos[128, 1024] size[256, 256]
 
@@ -339,3 +339,4 @@ black_box: pos[200, 136]
 black_box: pos[216, 136]
 black_box: pos[232, 136]
 black_box: pos[248, 136]
+cowboy_boss: pos[136, 216]

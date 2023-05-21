@@ -23,7 +23,7 @@ class Game: Extension {
         World.getter = ClassGetter(ClassGetterX())
         Platform.whole_draw = true
 
-        cowboy = Cowboy(PointN(256, 128))
+        cowboy = Cowboy(PointN(256, 128))//*9
 
         World.init(
             MovableWC(cowboy),
@@ -49,6 +49,7 @@ class Game: Extension {
         World.next()
         World.draw()
         graphics.layer = DrawLayer.CAMERA_FOLLOW
+
         val c = Color.gray(0.04)
         val sx = 512
         val sy = 512
@@ -85,7 +86,7 @@ class Game: Extension {
     companion object {
         //todo remove ppp
         var ppp = PointN.ZERO
-        const val current_filename = "files/map/4.room"
+        const val current_filename = "files/map/5.room"
 
         private val layers = HashMap<String, DrawLayer>()
 
