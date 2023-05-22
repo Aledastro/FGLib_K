@@ -24,7 +24,8 @@ import javafx.scene.paint.Color
 
 class Cowboy(pos: PointN): GameCharacter(100) {
 
-    override val immortal=false
+    private val blocked4 = false
+    override val immortal = false
 
     init {
         stats.POS = pos
@@ -43,15 +44,17 @@ class Cowboy(pos: PointN): GameCharacter(100) {
             }
 
             override fun activate(action: InputAction) {
-                when(action.code){
-                    InputAction.CODE.IMPACT->{
+                when(action.code) {
+                    InputAction.CODE.IMPACT -> {
                         LIFE -= 10000
                         //todo bug
                     }
-                    InputAction.CODE.OPEN->{
-                        if(action.info=="block4"){
-                            stats.POS.X=stats.POS.X.coerceIn(16.0,256.0-16.0)
-                            stats.POS.Y=stats.POS.Y.coerceIn(16.0,256.0-16.0)
+                    InputAction.CODE.OPEN -> {
+                        if(blocked4){
+                            if(action.info == "block4") {
+                                stats.POS.X = stats.POS.X.coerceIn(16.0, 256.0 - 16.0)
+                                stats.POS.Y = stats.POS.Y.coerceIn(16.0, 256.0 - 16.0)
+                            }
                         }
                     }
 
@@ -119,7 +122,7 @@ class Cowboy(pos: PointN): GameCharacter(100) {
     val shoot: () -> TempAction = {
         object: TimeTempAction() {
             override fun start() {
-                val s = 4.0
+                val s = 3.0
                 direct = Direct.CENTER
                 when {
                     keyboard.pressed(KeyCode.UP) -> direct += Direct.UP
@@ -172,7 +175,7 @@ class Cowboy(pos: PointN): GameCharacter(100) {
                 stats.nPOS += dir.p*cowboy_speed
             }
 
-            override fun ends() = temp_time>if(effectedAny("fast_bullets", "master")) 2 else 8
+            override fun ends() = temp_time>if(effectedAny("fast_bullets", "master")) 4 else 16
         }
     }
     val move: () -> TempAction = {

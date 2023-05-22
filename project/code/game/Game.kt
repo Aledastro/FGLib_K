@@ -23,7 +23,7 @@ class Game: Extension {
         World.getter = ClassGetter(ClassGetterX())
         Platform.whole_draw = true
 
-        cowboy = Cowboy(PointN(256, 128))//*9
+        cowboy = Cowboy(PointN(256, 128)) //*9
 
         World.init(
             MovableWC(cowboy),

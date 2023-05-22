@@ -12,20 +12,24 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="82970e50-af90-458e-a847-e0b07c98f932" name="Changes" comment="FGLib v.0.4.5.0 [K]">
-      <change afterPath="$PROJECT_DIR$/project/code/game/objects/enemy/CowboyBoss.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/project/media/images/world/enemy/cowboy_boss.png" afterDir="false" />
+    <list default="true" id="82970e50-af90-458e-a847-e0b07c98f932" name="Changes" comment="FGLib v.0.4.5.1 [K]">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/FGLib/com/uzery/fglib/core/program/Platform.kt" beforeDir="false" afterPath="$PROJECT_DIR$/project/FGLib/com/uzery/fglib/core/program/Platform.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/FGLib/com/uzery/fglib/core/world/World.kt" beforeDir="false" afterPath="$PROJECT_DIR$/project/FGLib/com/uzery/fglib/core/world/World.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/FGLib/com/uzery/fglib/utils/data/image/Data.kt" beforeDir="false" afterPath="$PROJECT_DIR$/project/FGLib/com/uzery/fglib/utils/data/image/Data.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/code/game/ClassGetterX.kt" beforeDir="false" afterPath="$PROJECT_DIR$/project/code/game/ClassGetterX.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/FGLib/com/uzery/fglib/utils/math/getter/Drop.kt" beforeDir="false" afterPath="$PROJECT_DIR$/project/FGLib/com/uzery/fglib/utils/math/getter/Drop.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/project/code/game/Game.kt" beforeDir="false" afterPath="$PROJECT_DIR$/project/code/game/Game.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/project/code/game/events/Level.kt" beforeDir="false" afterPath="$PROJECT_DIR$/project/code/game/events/Level.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/code/game/events/Level_2.kt" beforeDir="false" afterPath="$PROJECT_DIR$/project/code/game/events/Level_2.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/code/game/events/Level_3.kt" beforeDir="false" afterPath="$PROJECT_DIR$/project/code/game/events/Level_3.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/project/code/game/events/Level_4.kt" beforeDir="false" afterPath="$PROJECT_DIR$/project/code/game/events/Level_4.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/project/code/game/objects/character/Cowboy.kt" beforeDir="false" afterPath="$PROJECT_DIR$/project/code/game/objects/character/Cowboy.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/project/code/game/objects/character/GameCharacter.kt" beforeDir="false" afterPath="$PROJECT_DIR$/project/code/game/objects/character/GameCharacter.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/media/files/map/5.room" beforeDir="false" afterPath="$PROJECT_DIR$/project/media/files/map/5.room" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/code/game/objects/enemy/CowboyBoss.kt" beforeDir="false" afterPath="$PROJECT_DIR$/project/code/game/objects/enemy/CowboyBoss.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/code/game/objects/enemy/Goblin.kt" beforeDir="false" afterPath="$PROJECT_DIR$/project/code/game/objects/enemy/Goblin.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/code/game/objects/enemy/Medusa.kt" beforeDir="false" afterPath="$PROJECT_DIR$/project/code/game/objects/enemy/Medusa.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/code/game/objects/enemy/Ork.kt" beforeDir="false" afterPath="$PROJECT_DIR$/project/code/game/objects/enemy/Ork.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/media/images/world/enemy/cowboy_boss.png" beforeDir="false" afterPath="$PROJECT_DIR$/project/media/images/world/enemy/cowboy_boss.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/media/images/world/enemy/goblin.png" beforeDir="false" afterPath="$PROJECT_DIR$/project/media/images/world/enemy/goblin.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/media/images/world/enemy/medusa.png" beforeDir="false" afterPath="$PROJECT_DIR$/project/media/images/world/enemy/medusa.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/media/images/world/enemy/ork.png" beforeDir="false" afterPath="$PROJECT_DIR$/project/media/images/world/enemy/ork.png" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -71,20 +75,20 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "jdk.selected.JAVA_MODULE": "19",
-    "last_opened_file_path": "C:/Users/User/IdeaProjects/lib/FGLib_K_GIT/project/media/images/world/enemy",
-    "project.structure.last.edited": "SDKs",
-    "project.structure.proportion": "0.15",
-    "project.structure.side.proportion": "0.2",
-    "run.code.analysis.last.selected.profile": "pProject Default",
-    "settings.editor.selected.configurable": "preferences.fileTypes"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;jdk.selected.JAVA_MODULE&quot;: &quot;19&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/User/IdeaProjects/lib/FGLib_K_GIT/project/media/images/world/enemy&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;SDKs&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
+    &quot;run.code.analysis.last.selected.profile&quot;: &quot;pProject Default&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.fileTypes&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\User\IdeaProjects\lib\FGLib_K_GIT\project\media\images\world\enemy" />
@@ -377,7 +381,14 @@
       <option name="project" value="LOCAL" />
       <updated>1684562099377</updated>
     </task>
-    <option name="localTasksCounter" value="33" />
+    <task id="LOCAL-00033" summary="FGLib v.0.4.5.1 [K]">
+      <created>1684640833349</created>
+      <option name="number" value="00033" />
+      <option name="presentableId" value="LOCAL-00033" />
+      <option name="project" value="LOCAL" />
+      <updated>1684640833349</updated>
+    </task>
+    <option name="localTasksCounter" value="34" />
     <servers />
   </component>
   <component name="UnknownFeatures">
@@ -407,7 +418,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="1.6" />
     <MESSAGE value="2.0" />
     <MESSAGE value="2.0.1" />
     <MESSAGE value="2.0.2" />
@@ -432,7 +442,8 @@
     <MESSAGE value="FGLib v.0.4.4.3 [K]" />
     <MESSAGE value="FGLib v.0.4.4.4 [K]" />
     <MESSAGE value="FGLib v.0.4.5.0 [K]" />
-    <option name="LAST_COMMIT_MESSAGE" value="FGLib v.0.4.5.0 [K]" />
+    <MESSAGE value="FGLib v.0.4.5.1 [K]" />
+    <option name="LAST_COMMIT_MESSAGE" value="FGLib v.0.4.5.1 [K]" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

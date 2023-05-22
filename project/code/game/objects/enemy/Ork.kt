@@ -20,9 +20,11 @@ import game.objects.items.EffectItem
 import kotlin.math.cos
 import kotlin.math.sin
 
-class Ork(pos: PointN): Enemy(8) {
+class Ork(pos: PointN): Enemy(6) {
 
     private val SPEED = 0.3
+
+    private var take_damage = 0
 
     init {
         stats.POS = pos
@@ -34,16 +36,22 @@ class Ork(pos: PointN): Enemy(8) {
         }
         abilities.add(object: AbilityBox {
             override fun activate(action: InputAction) {
-                if(action.code == InputAction.CODE.DAMAGE) {
+                if(action.code == InputAction.CODE.DAMAGE && take_damage<0) {
                     LIFE -= 2
+                    take_damage = 5
                 }
+            }
+
+            override fun run() {
+                take_damage--
             }
         })
         val filename = "mob|ork.png"
         Data.set(filename, IntI(16, 16))
         visuals.add(object: LayerVisualiser(Game.layer("OBJ")) {
             override fun draw(draw_pos: PointN) {
-                agc().image.drawC(Data.get(filename, IntI(object_time/10%2, 0)), draw_pos)
+                if(take_damage<0) agc().image.drawC(Data.get(filename, IntI(object_time/10%2, 0)), draw_pos)
+                else agc().image.drawC(Data.get(filename, IntI(0, 1)), draw_pos)
             }
         })
         bounds.orange = { Bounds(RectN(-Game.STEP*7, Game.STEP*14)) }

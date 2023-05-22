@@ -37,11 +37,13 @@ abstract class Level(protected val DURATION_TIME: Int): CompositeGameEvent() {
                 agc().fill.rect(Game.STEP*5, PointN(len, 5.0), Color.BURLYWOOD)
                 agc().fill.rect(Game.STEP*5, PointN((ids_time*1.0/DURATION_TIME)*len, 5.0), Color.GREEN)
             }
+
             override fun drawLayer() = DrawLayer.CAMERA_OFF
         })
-        abilities.add(object : AbilityBox{
+        abilities.add(object: AbilityBox {
             override fun run() {
-                World.allTagged("player").forEach { it.activate(InputAction(InputAction.CODE.OPEN,"block4",this@Level)) }
+                World.allTagged("player")
+                    .forEach { it.activate(InputAction(InputAction.CODE.OPEN, "block4", this@Level)) }
             }
         })
         /*bounds.red = {

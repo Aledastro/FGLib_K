@@ -3,7 +3,11 @@ package com.uzery.fglib.utils.math.getter
 import com.uzery.fglib.utils.data.debug.DebugData
 import java.util.*
 
-class Drop<T> {
+class Drop<T>() {
+    constructor(f: () -> T): this() {
+        add(f)
+    }
+
     private var full = -1.0
     private val list = LinkedList<() -> T>()
     private val priorities = LinkedList<Double>()

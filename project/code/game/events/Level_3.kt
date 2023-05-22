@@ -1,6 +1,7 @@
 package game.events
 
 import com.uzery.fglib.core.obj.GameObject
+import com.uzery.fglib.core.world.World
 import com.uzery.fglib.extension.event.BaseEvent
 import com.uzery.fglib.utils.math.geom.PointN
 import com.uzery.fglib.utils.math.getter.Drop
@@ -46,6 +47,11 @@ class Level_3: Level(300) {
             }
 
             override fun ends() = ids_time>=DURATION_TIME
+        })
+        add(object: BaseEvent() {
+            override fun ends(): Boolean {
+                return World.noneExists("enemy")
+            }
         })
         tag("level_3")
     }

@@ -8,7 +8,7 @@ abstract class GameCharacter(protected var LIFE: Int): GameObject() {
 
     abstract val drop: Drop<GameObject?>
 
-    protected open val immortal=false
+    protected open val immortal = false
 
     init {
         abilities.add(object: AbilityBox {

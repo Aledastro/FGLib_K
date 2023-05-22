@@ -31,6 +31,8 @@ class CowboyBoss(pos: PointN): Enemy(100) {
     private var mode = MODE.SHOOT
     private var progress = 0
 
+    private var take_damage = 0
+
     init {
         stats.POS = pos
         controller = object: Controller {
@@ -42,16 +44,22 @@ class CowboyBoss(pos: PointN): Enemy(100) {
         }
         abilities.add(object: AbilityBox {
             override fun activate(action: InputAction) {
-                if(action.code == InputAction.CODE.DAMAGE) {
+                if(action.code == InputAction.CODE.DAMAGE && take_damage<0) {
                     LIFE -= 2
+                    take_damage = 5
                 }
+            }
+
+            override fun run() {
+                take_damage--
             }
         })
         val filename = "mob|cowboy_boss.png"
         Data.set(filename, IntI(16, 16))
         visuals.add(object: LayerVisualiser(Game.layer("OBJ")) {
             override fun draw(draw_pos: PointN) {
-                agc().image.drawC(Data.get(filename, IntI(progress, mode.value)), draw_pos)
+                if(take_damage<0) agc().image.drawC(Data.get(filename, IntI(progress, mode.value)), draw_pos)
+                else agc().image.drawC(Data.get(filename, IntI(mode.value, 2)), draw_pos)
             }
         })
         bounds.orange = { Bounds(RectN(-Game.STEP*7, Game.STEP*14)) }
@@ -63,14 +71,14 @@ class CowboyBoss(pos: PointN): Enemy(100) {
 
             override fun update() {
                 goal = World.allTagged("player").firstOrNull()
-                mode=MODE.SHOOT
-                progress=object_time/10%2
+                mode = MODE.SHOOT
+                progress = object_time/10%2
                 goal?.let {
-                    var r=it.stats.POS.X.compareTo(stats.POS.X)
-                    if(abs(it.stats.POS.X-stats.POS.X)<SPEED)r=0
+                    var r = it.stats.POS.X.compareTo(stats.POS.X)
+                    if(abs(it.stats.POS.X - stats.POS.X)<SPEED) r = 0
                     stats.nPOS = Game.X*SPEED*r
                 }
-                if(temp_time%20==0)produce(Bullet(stats.POS+PointN(0,-3)*6, PointN(0,-3)))
+                if(temp_time%20 == 0) produce(Bullet(stats.POS + PointN(0, -3)*6, PointN(0, -3)))
             }
 
             override fun ends() = temp_time>100
@@ -78,19 +86,22 @@ class CowboyBoss(pos: PointN): Enemy(100) {
     }
     var attack2: () -> TempAction = {
         object: TimeTempAction() {
-            val t=90
+            val t = 90
 
             override fun update() {
-                mode=MODE.SHOOT
-                progress=object_time/10%2
+                mode = if(temp_time in (t*3 until t*5)) MODE.STAY else MODE.SHOOT
+                progress = object_time/10%2
 
-                when(temp_time){
+                when(temp_time) {
                     in 0 until t -> stats.nPOS = Game.X*SPEED
                     in t until t*3 -> stats.nPOS = -Game.X*SPEED
                     in t*5 until t*6 -> stats.nPOS = Game.X*SPEED
                 }
 
-                if(temp_time%20==0 && temp_time !in (t*3 until t*6))produce(Bullet(stats.POS+PointN(0,-3)*3, PointN(0,-3)))
+                if(temp_time%20 == 0 && temp_time !in (t*3 until t*5)) produce(
+                    Bullet(
+                        stats.POS + PointN(0, -3)*3,
+                        PointN(0, -3)))
             }
 
             override fun ends() = temp_time>t*6
@@ -100,8 +111,8 @@ class CowboyBoss(pos: PointN): Enemy(100) {
     var stay: () -> TempAction = {
         object: TimeTempAction() {
             override fun update() {
-                mode=MODE.STAY
-                progress=object_time/10%2
+                mode = MODE.STAY
+                progress = object_time/10%2
             }
 
             override fun ends() = temp_time>20
@@ -110,21 +121,11 @@ class CowboyBoss(pos: PointN): Enemy(100) {
 
     override val drop: Drop<GameObject?>
         get() {
-            val drop = Drop<GameObject?>()
-            drop.setFull(100.0)
-            drop.add(2.0) { EffectItem(stats.POS, 3, "coin", 400) }
-            drop.add(0.3) { EffectItem(stats.POS, 4, "5-coin", 400) }
-            drop.add(1.0) { EffectItem(stats.POS, 5, "wheel_bullets", 400) }
-            drop.add(1.0) { EffectItem(stats.POS, 6, "fast_bullets", 400) }
-            drop.add(1.0) { EffectItem(stats.POS, 9, "coffee", 400) }
-            drop.add(1.0) { EffectItem(stats.POS, 10, "three_bullets", 400) }
-            drop.add(1.0) { EffectItem(stats.POS, 11, "life", 400) }
-            drop.add(1.0) { EffectItem(stats.POS, 13, "master", 400) }
-            return drop
+            return Drop { EffectItem(stats.POS, 2, "gate", 400) }
         }
 
     override fun setValues() {
-        name="cowboy_boss"
+        name = "cowboy_boss"
         values.add(PosValue(stats.POS))
     }
 }

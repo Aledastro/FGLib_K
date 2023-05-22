@@ -20,7 +20,7 @@ import game.objects.items.EffectItem
 import kotlin.math.cos
 import kotlin.math.sin
 
-class Medusa(pos: PointN): Enemy(2) {
+class Medusa(pos: PointN): Enemy(3) {
 
     private val SPEED = 0.6
 
@@ -30,6 +30,8 @@ class Medusa(pos: PointN): Enemy(2) {
 
     private var mode = MODE.ATTACK
     private var progress = 0
+
+    private var take_damage = 0
 
     init {
         stats.POS = pos
@@ -41,16 +43,22 @@ class Medusa(pos: PointN): Enemy(2) {
         }
         abilities.add(object: AbilityBox {
             override fun activate(action: InputAction) {
-                if(action.code == InputAction.CODE.DAMAGE) {
+                if(action.code == InputAction.CODE.DAMAGE && take_damage<0) {
                     LIFE -= 2
+                    take_damage = 5
                 }
+            }
+
+            override fun run() {
+                take_damage--
             }
         })
         val filename = "mob|medusa.png"
         Data.set(filename, IntI(16, 16))
         visuals.add(object: LayerVisualiser(Game.layer("OBJ")) {
             override fun draw(draw_pos: PointN) {
-                agc().image.drawC(Data.get(filename, IntI(progress, mode.value)), draw_pos)
+                if(take_damage<0) agc().image.drawC(Data.get(filename, IntI(progress, mode.value)), draw_pos)
+                else agc().image.drawC(Data.get(filename, IntI(mode.value, 2)), draw_pos)
             }
         })
         bounds.orange = { Bounds(RectN(-Game.STEP*7, Game.STEP*14)) }
