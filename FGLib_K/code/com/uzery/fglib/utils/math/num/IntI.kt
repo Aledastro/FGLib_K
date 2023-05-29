@@ -1,7 +1,7 @@
 package com.uzery.fglib.utils.math.num
 
 data class IntI(val n: Int, val m: Int): Comparable<IntI> {
-    constructor(s: String): this(0, 0)
+    constructor(): this(0, 0)
 
     override fun compareTo(other: IntI): Int {
         val i = n.compareTo(other.n)
