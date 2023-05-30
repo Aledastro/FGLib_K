@@ -36,6 +36,12 @@ class Platform {
         val CANVAS
             get() = WINDOW/scale
 
+        var global_alpha: Double = 0.0
+            set(alpha){
+                gc.globalAlpha=alpha
+                field = alpha
+            }
+
         val CANVAS_R
             get() = RectN(PointN.ZERO, CANVAS)
         val WINDOW_R

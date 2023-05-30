@@ -29,7 +29,7 @@ import javafx.scene.text.Font
 import javafx.scene.text.FontWeight
 import java.util.*
 
-class RoomEditor(private val filename: String, private val getter: ClassGetter<GameObject>): Extension {
+class RoomEditor(private val getter: ClassGetter<GameObject>, private vararg val filenames: String): Extension {
     override fun children() = LinkedList<Extension>().apply { add(UIBox()) }
 
     private lateinit var edit: Room
@@ -41,30 +41,45 @@ class RoomEditor(private val filename: String, private val getter: ClassGetter<G
 
     private var draw_pos = PointN.ZERO
 
+    private var edit_n = 0
+
     override fun update() {
         clear()
         next()
     }
 
     private fun next() {
+        edit = World.rooms[edit_n]
+
         play_button.action()
         Platform.update()
         checkForSave()
 
+        checkForEditN()
         //world.room.objs().removeIf {o->o.tagged("player")}
+    }
+
+    private fun checkForEditN() {
+        if(!keyboard.pressed(KeyCode.CONTROL)) return
+
+        if(keyboard.inPressed(KeyCode.UP)) edit_n -= 5
+        if(keyboard.inPressed(KeyCode.DOWN)) edit_n += 5
+        if(keyboard.inPressed(KeyCode.LEFT)) edit_n--
+        if(keyboard.inPressed(KeyCode.RIGHT)) edit_n++
+
+        edit_n = edit_n.coerceIn(filenames.indices)
     }
 
     private fun checkForSave() {
         if(keyboard.allPressed(KeyCode.CONTROL, KeyCode.SHIFT) && keyboard.inPressed(KeyCode.S)) {
             //edit.objects.forEach { it.stats.POS /= 2 }
-            WriteData.write(from(filename), edit.toString())
+            WriteData.write(from(filenames[edit_n]), edit.toString())
             println("saved")
         }
     }
 
     private fun clear() {
         graphics.layer = DrawLayer.CAMERA_OFF
-        graphics.fill.color = Color(0.7, 0.6, 0.9, 1.0)
         graphics.fill.rect(PointN.ZERO, CANVAS, Color(0.7, 0.6, 0.9, 1.0))
     }
 
@@ -75,13 +90,13 @@ class RoomEditor(private val filename: String, private val getter: ClassGetter<G
 
         //todo
         val c = OneRoomController()
-        World.init(c, filename)
-        edit = World.rooms[0]
+        World.init(c, *filenames)
+        edit = World.rooms[edit_n]
         c.room = edit
 
         Platform.whole_draw = true
         //todo
-        draw_pos = Platform.options().size/2 - edit.size*PointN(1.0, 0.5)
+        draw_pos = Platform.options().size/4 - edit.size*PointN(0.5, 0.5)
         UIBox.add(canvasX, play_button, objects_vbox, layers_vbox, info_box)
 
         /*World.camera = object: Camera {
@@ -151,7 +166,11 @@ class RoomEditor(private val filename: String, private val getter: ClassGetter<G
         var draw_bounds = false
 
         override fun draw() {
+            Platform.global_alpha=0.2
             World.draw(draw_pos - edit.pos)
+            Platform.global_alpha=1.0
+
+            edit.draw(draw_pos)
 
             if(draw_bounds) WorldUtils.drawBounds(edit, draw_pos)
 
@@ -159,6 +178,17 @@ class RoomEditor(private val filename: String, private val getter: ClassGetter<G
 
             graphics.layer = DrawLayer.CAMERA_FOLLOW
             graphics.stroke.rect(draw_pos, CANVAS, Color.DARKBLUE)
+
+            //drawFields()
+        }
+
+        private fun drawFields() {
+            World.rooms.forEach { r ->
+                if(r != edit) graphics.fill.rect(
+                    draw_pos - edit.pos + r.pos,
+                    r.size,
+                    FGUtils.transparent(Color(0.7, 0.6, 0.9, 1.0), 0.8))
+            }
         }
 
         private fun drawLines() {
