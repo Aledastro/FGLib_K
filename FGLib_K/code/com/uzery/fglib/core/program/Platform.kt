@@ -37,8 +37,8 @@ class Platform {
             get() = WINDOW/scale
 
         var global_alpha: Double = 0.0
-            set(alpha){
-                gc.globalAlpha=alpha
+            set(alpha) {
+                gc.globalAlpha = alpha
                 field = alpha
             }
 

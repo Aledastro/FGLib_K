@@ -35,7 +35,7 @@ abstract class GameObject {
     val values = ArrayList<Any>()
 
     fun next() {
-        if(object_time==0) afterInit()
+        if(object_time == 0) afterInit()
         if(temp == null || temp!!.ends) temp = controller?.get()?.invoke()
         temp?.next()
         abilities.forEach { it.run() }
@@ -46,7 +46,7 @@ abstract class GameObject {
         object_time++
     }
 
-    open fun afterInit(){
+    open fun afterInit() {
         /* ignore */
     }
 

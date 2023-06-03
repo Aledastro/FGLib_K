@@ -67,7 +67,7 @@ class RoomEditor(private val getter: ClassGetter<GameObject>, private vararg val
             if(keyboard.inPressed(KeyCode.LEFT)) rp -= edit.size.XP/2 + PointN(10, 0)
             if(keyboard.inPressed(KeyCode.RIGHT)) rp += edit.size.XP/2 + PointN(10, 0)
 
-            if(rp != PointN.ZERO){
+            if(rp != PointN.ZERO) {
                 for(index in filenames.indices) {
                     val r = World.rooms[index]
                     if(r.main.into(edit.pos + edit.size/2 + rp)) {
@@ -75,7 +75,7 @@ class RoomEditor(private val getter: ClassGetter<GameObject>, private vararg val
                     }
                 }
             }
-        }else if(keyboard.pressed(KeyCode.ALT)) {
+        } else if(keyboard.pressed(KeyCode.ALT)) {
             if(keyboard.inPressed(KeyCode.UP)) edit_n -= 5
             if(keyboard.inPressed(KeyCode.DOWN)) edit_n += 5
             if(keyboard.inPressed(KeyCode.LEFT)) edit_n--

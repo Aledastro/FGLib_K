@@ -6,8 +6,8 @@ import com.uzery.fglib.utils.math.geom.PointN
 interface BoundsUtils {
     companion object {
         fun maxMove(stay: Bounds, move: Bounds, stay_pos: PointN, start_pos: PointN, move_pos: PointN): Double {
-            val r_stay=stay.main()?:return 1.0
-            val r_move=move.main()?:return 1.0
+            val r_stay = stay.main() ?: return 1.0
+            val r_move = move.main() ?: return 1.0
 
             if(!CollisionUtils.intoX(r_stay, r_move, r_move.copy(move_pos))) return 1.0
 

@@ -2,6 +2,7 @@ package com.uzery.fglib.core.world
 
 import com.uzery.fglib.core.obj.DrawLayer
 import com.uzery.fglib.core.obj.GameObject
+import com.uzery.fglib.core.program.Platform.Companion.develop_mode
 import com.uzery.fglib.core.program.Platform.Companion.graphics
 import com.uzery.fglib.core.room.Room
 import com.uzery.fglib.utils.data.debug.DebugData
@@ -64,6 +65,7 @@ interface World {
             drawNotActiveRooms(pos)
             active_rooms.forEach { it.draw(pos + it.pos) }
 
+            if(!develop_mode) return
             graphics.layer = DrawLayer.CAMERA_FOLLOW
             active_rooms.forEach { graphics.stroke.rect(pos + it.pos, it.size, Color.DARKBLUE) }
 
@@ -71,6 +73,8 @@ interface World {
         }
 
         private fun drawNotActiveRooms(pos: PointN) {
+            if(!develop_mode) return
+
             graphics.layer = DrawLayer.CAMERA_FOLLOW
             rooms.forEach { room ->
                 graphics.stroke.rect(room.pos + pos, room.size, FGUtils.transparent(Color.LIGHTGRAY, 0.5))
