@@ -2,6 +2,7 @@ package com.uzery.fglib.core.world
 
 import com.uzery.fglib.core.obj.DrawLayer
 import com.uzery.fglib.core.obj.GameObject
+import com.uzery.fglib.core.obj.visual.Visualiser
 import com.uzery.fglib.core.program.Platform.Companion.develop_mode
 import com.uzery.fglib.core.program.Platform.Companion.graphics
 import com.uzery.fglib.core.room.Room
@@ -63,9 +64,31 @@ interface World {
 
         fun draw(pos: PointN = PointN.ZERO) {
             drawNotActiveRooms(pos)
-            active_rooms.forEach { it.draw(pos + it.pos) }
+            drawRooms(pos)
+            if(develop_mode) drawRoomsDebug(pos)
+        }
 
-            if(!develop_mode) return
+        private fun drawRooms(pos: PointN) {
+            val vis = ArrayList<Visualiser>()
+            val pos_map = HashMap<Visualiser, PointN>()
+            rooms.forEach { room ->
+                room.objects.forEach { obj ->
+                    vis.addAll(obj.visuals)
+                    obj.visuals.forEach { pos_map[it] = obj.stats.POS + room.pos }
+                }
+            }
+            vis.sortBy { it.drawLayer().sort }
+            vis.forEach { visual ->
+                visual.agc().layer = visual.drawLayer()
+                visual.draw(pos + pos_map[visual]!!)
+            }
+        }
+
+        private fun drawRoomsOld(pos: PointN) {
+            active_rooms.forEach { it.draw(pos + it.pos) }
+        }
+
+        private fun drawRoomsDebug(pos: PointN) {
             graphics.layer = DrawLayer.CAMERA_FOLLOW
             active_rooms.forEach { graphics.stroke.rect(pos + it.pos, it.size, Color.DARKBLUE) }
 

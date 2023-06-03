@@ -41,22 +41,15 @@ class Room(val pos: PointN, val size: PointN) {
 
     fun draw(draw_pos: PointN) {
         val vis = ArrayList<Visualiser>()
-        val map = HashMap<Visualiser, GameObject>()
+        val pos_map = HashMap<Visualiser, PointN>()
         objects.forEach { obj ->
-            run {
-                vis.addAll(obj.visuals)
-                obj.visuals.forEach { map[it] = obj }
-            }
+            vis.addAll(obj.visuals)
+            obj.visuals.forEach { pos_map[it] = obj.stats.POS }
         }
         vis.sortBy { it.drawLayer().sort }
         vis.forEach { visual ->
-            run {
-                val o = map[visual]
-                if(o != null) {
-                    visual.agc().layer = visual.drawLayer()
-                    visual.draw(draw_pos + o.stats.POS)
-                } else throw IllegalArgumentException()
-            }
+            visual.agc().layer = visual.drawLayer()
+            visual.draw(draw_pos + pos_map[visual]!!)
         }
     }
 
