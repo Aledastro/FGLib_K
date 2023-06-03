@@ -60,12 +60,27 @@ class RoomEditor(private val getter: ClassGetter<GameObject>, private vararg val
     }
 
     private fun checkForEditN() {
-        if(!keyboard.pressed(KeyCode.CONTROL)) return
+        if(keyboard.pressed(KeyCode.CONTROL)) {
+            var rp = PointN.ZERO
+            if(keyboard.inPressed(KeyCode.UP)) rp -= edit.size.YP/2 + PointN(0, 10)
+            if(keyboard.inPressed(KeyCode.DOWN)) rp += edit.size.YP/2 + PointN(0, 10)
+            if(keyboard.inPressed(KeyCode.LEFT)) rp -= edit.size.XP/2 + PointN(10, 0)
+            if(keyboard.inPressed(KeyCode.RIGHT)) rp += edit.size.XP/2 + PointN(10, 0)
 
-        if(keyboard.inPressed(KeyCode.UP)) edit_n -= 5
-        if(keyboard.inPressed(KeyCode.DOWN)) edit_n += 5
-        if(keyboard.inPressed(KeyCode.LEFT)) edit_n--
-        if(keyboard.inPressed(KeyCode.RIGHT)) edit_n++
+            if(rp != PointN.ZERO){
+                for(index in filenames.indices) {
+                    val r = World.rooms[index]
+                    if(r.main.into(edit.pos + edit.size/2 + rp)) {
+                        edit_n = index
+                    }
+                }
+            }
+        }else if(keyboard.pressed(KeyCode.ALT)) {
+            if(keyboard.inPressed(KeyCode.UP)) edit_n -= 5
+            if(keyboard.inPressed(KeyCode.DOWN)) edit_n += 5
+            if(keyboard.inPressed(KeyCode.LEFT)) edit_n--
+            if(keyboard.inPressed(KeyCode.RIGHT)) edit_n++
+        }
 
         edit_n = edit_n.coerceIn(filenames.indices)
     }
@@ -73,7 +88,7 @@ class RoomEditor(private val getter: ClassGetter<GameObject>, private vararg val
     private fun checkForSave() {
         if(keyboard.allPressed(KeyCode.CONTROL, KeyCode.SHIFT) && keyboard.inPressed(KeyCode.S)) {
             //edit.objects.forEach { it.stats.POS /= 2 }
-            WriteData.write(from(filenames[edit_n]), edit.toString())
+            filenames.indices.forEach { i -> WriteData.write(from(filenames[i]), World.rooms[i].toString()) }
             println("saved")
         }
     }
@@ -166,9 +181,9 @@ class RoomEditor(private val getter: ClassGetter<GameObject>, private vararg val
         var draw_bounds = false
 
         override fun draw() {
-            Platform.global_alpha=0.2
+            Platform.global_alpha = 0.2
             World.draw(draw_pos - edit.pos)
-            Platform.global_alpha=1.0
+            Platform.global_alpha = 1.0
 
             edit.draw(draw_pos)
 

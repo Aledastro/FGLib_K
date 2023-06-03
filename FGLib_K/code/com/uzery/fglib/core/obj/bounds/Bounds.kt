@@ -24,7 +24,8 @@ data class Bounds(val elements: Array<BoundsElement>) {
         return elements.contentHashCode()
     }
 
-    fun main(): RectN {
+    fun main(): RectN? {
+        if(elements.isEmpty()) return null
         var min = elements.first().shape.L
         var max = elements.first().shape.R
         for(el in elements) {

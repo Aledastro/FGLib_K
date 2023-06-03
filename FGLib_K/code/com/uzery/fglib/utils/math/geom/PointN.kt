@@ -4,6 +4,7 @@ import com.uzery.fglib.utils.math.ArrayUtils
 import com.uzery.fglib.utils.math.MathUtils
 import com.uzery.fglib.utils.math.num.IntI
 import kotlin.math.cos
+import kotlin.math.max
 import kotlin.math.sin
 import kotlin.math.sqrt
 
@@ -92,6 +93,10 @@ data class PointN(private val xs: Array<Double>) {
     fun interpolate(pos: PointN, k: Double): PointN {
         return this + (pos - this)*k
     }
+
+    fun coerceIn(posL: PointN, posR: PointN) = PointN(Array(dimension()) { i ->
+        xs[i].coerceIn(posL[i], max(posL[i], posR[i]))
+    })
 
     fun rotateXY(d: Double): PointN {
         val p = PointN(this)

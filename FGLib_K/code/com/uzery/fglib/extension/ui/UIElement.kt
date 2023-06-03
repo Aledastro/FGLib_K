@@ -12,6 +12,8 @@ abstract class UIElement {
     abstract val size: PointN
     abstract val window: RectN
 
+    open val visible = true
+
     open val priority = 0
     abstract fun draw()
     abstract fun ifActive()

@@ -19,15 +19,16 @@ class UIBox: Extension {
     }
 
     override fun update() {
-        active = list.stream().filter { el -> el.isA(el.pos, el.size) }
+        active = list.stream().filter { el -> el.visible && el.isA(el.pos, el.size) }
             .sorted { o1, o2 -> -o1.priority.compareTo(o2.priority) }.findFirst().orElse(null)
         active?.ifActive()
-        list.forEach { o -> o.update() }
+        list.forEach { it.update() }
 
-        list.forEach { o ->
+        list.forEach {
+            if(!it.visible) return
             graphics.fill.rect(
-                o.pos,
-                o.size,
+                it.pos,
+                it.size,
                 FGUtils.transparent(Color.DARKBLUE, 0.1))
         }
         if(active != null) {
@@ -36,6 +37,6 @@ class UIBox: Extension {
         }
 
 
-        list.forEach { o -> o.draw() }
+        list.forEach { if(it.visible) it.draw() }
     }
 }
