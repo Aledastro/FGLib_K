@@ -153,7 +153,7 @@ class RoomEditor(private val getter: ClassGetter<GameObject>, private vararg val
     }
 
     private var objects_vbox = object: VBox(getter.entry_size(), 5) {
-        override val pos = PointN(OFFSET, 170.0)
+        override val pos = PointN(OFFSET, 70.0)
         override val window: RectN
             get() = CANVAS_R
         override val sizeOne: PointN
@@ -191,19 +191,19 @@ class RoomEditor(private val getter: ClassGetter<GameObject>, private vararg val
 
             drawLines()
 
-            graphics.layer = DrawLayer.CAMERA_FOLLOW
-            graphics.stroke.rect(draw_pos, CANVAS, Color.DARKBLUE)
+            //graphics.layer = DrawLayer.CAMERA_FOLLOW
+            //graphics.stroke.rect(draw_pos, CANVAS, Color.DARKBLUE)
 
-            //drawFields()
+            drawFields()
         }
 
         private fun drawFields() {
-            World.rooms.forEach { r ->
-                if(r != edit) graphics.fill.rect(
-                    draw_pos - edit.pos + r.pos,
-                    r.size,
-                    FGUtils.transparent(Color(0.7, 0.6, 0.9, 1.0), 0.8))
-            }
+            graphics.setStroke(3.0)
+            /*World.active_rooms.forEach { r ->
+                if(r != edit) graphics.stroke.rect(draw_pos - edit.pos + r.pos, r.size, FGUtils.transparent(Color.WHITE, 0.8))
+            }*/
+
+            graphics.stroke.rect(draw_pos - edit.pos + edit.pos, edit.size, Color.WHITE)
         }
 
         private fun drawLines() {
@@ -300,6 +300,10 @@ class RoomEditor(private val getter: ClassGetter<GameObject>, private vararg val
         private fun getL(): LinkedList<String> {
             val res = LinkedList<String>()
 
+            res.add("room: ${filenames[edit_n]}")
+            res.add("")
+
+
             val s = select_obj.toString()
             val index = s.indexOf(':')
             if(index == -1) {
@@ -330,7 +334,7 @@ class RoomEditor(private val getter: ClassGetter<GameObject>, private vararg val
         }
 
         override val pos
-            get() = (CANVAS - size).XP + PointN(-OFFSET, 170.0)
+            get() = (CANVAS - size).XP + PointN(-OFFSET, 70.0)
         override val size
             get() = PointN(350, 400)/scale
         override val window: RectN
