@@ -28,7 +28,7 @@ interface World {
 
         private lateinit var controller: WorldController
 
-        fun allTagged(tag: String): LinkedList<GameObject> {
+        fun allTagged(tag: String): List<GameObject> {
             val res = LinkedList<GameObject>()
             for(room in active_rooms) {
                 res.addAll(room.objects.stream().filter { it.tagged(tag) }.toList())

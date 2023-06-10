@@ -297,7 +297,7 @@ class RoomEditor(private val getter: ClassGetter<GameObject>, private vararg val
     }
 
     private var info_box = object: InfoBox() {
-        private fun getL(): LinkedList<String> {
+        private fun getL(): List<String> {
             val res = LinkedList<String>()
 
             res.add("room: ${filenames[edit_n]}")
