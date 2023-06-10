@@ -21,7 +21,6 @@ interface ImageUtils {
         }
 
         private fun draw(origin: WritableImage, image: Image, pos: IntI) {
-            println("${origin.width} ${image.width}")
             /*origin.pixelWriter.setPixels(pos.n, pos.m, min(origin.width-pos.n, image.width).toInt(),
                 min(origin.height-pos.m, image.height).toInt(), image.pixelReader, 0, 0)*/
             for(i in 0 until min(origin.width - pos.n, image.width).toInt()) {
