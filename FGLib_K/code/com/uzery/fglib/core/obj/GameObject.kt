@@ -14,19 +14,20 @@ import java.util.*
 
 abstract class GameObject {
     val stats = Stats()
-    val visuals = ArrayList<Visualiser>()
-    val modificators = LinkedList<Modificator>()
+    val visuals = SList<Visualiser>()
+    val modificators = SList<Modificator>()
     val bounds = BoundsBox()
-    val abilities = LinkedList<AbilityBox>()
-    val properties = LinkedList<GameProperty>()
+    val abilities = SList<AbilityBox>()
+    val properties = SList<GameProperty>()
 
-    val children = ArrayList<GameObject>()
-    val grabbed = LinkedList<GameObject>()
+    val children = SList<GameObject>()
+    val grabbed = SList<GameObject>()
     var owner: GameObject? = null
 
     var controller: Controller? = null
     private var temp: TempAction? = null
 
+    private val tags = SList<String>()
 
     var dead = false
         private set
@@ -34,7 +35,7 @@ abstract class GameObject {
     var object_time = 0
         private set
     var name = "temp"
-    val values = ArrayList<Any>()
+    val values = SList<Any>()
 
     fun next() {
         if(object_time == 0) afterInit()
@@ -113,8 +114,6 @@ abstract class GameObject {
         /* ignore */
     }
 
-
-    private val tags = LinkedList<String>()
     fun tag(vararg tag: String) = tags.addAll(tag)
     fun tagged(tag: String) = tags.contains(tag)
 
