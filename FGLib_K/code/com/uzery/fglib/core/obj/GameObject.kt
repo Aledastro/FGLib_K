@@ -3,6 +3,7 @@ package com.uzery.fglib.core.obj
 import com.uzery.fglib.core.obj.ability.AbilityBox
 import com.uzery.fglib.core.obj.ability.InputAction
 import com.uzery.fglib.core.obj.bounds.BoundsBox
+import com.uzery.fglib.core.obj.property.GameProperty
 import com.uzery.fglib.core.obj.controller.Controller
 import com.uzery.fglib.core.obj.controller.TempAction
 import com.uzery.fglib.core.obj.modificator.Modificator
@@ -17,6 +18,7 @@ abstract class GameObject {
     val modificators = LinkedList<Modificator>()
     val bounds = BoundsBox()
     val abilities = LinkedList<AbilityBox>()
+    val properties = LinkedList<GameProperty<Any>>()
 
     val children = ArrayList<GameObject>()
     val grabbed = LinkedList<GameObject>()
@@ -36,10 +38,15 @@ abstract class GameObject {
 
     fun next() {
         if(object_time == 0) afterInit()
+
         if(temp == null || temp!!.ends) temp = controller?.get()?.invoke()
         temp?.next()
+
         abilities.forEach { it.run() }
+
         modificators.forEach { it.update() }
+        properties.forEach { it.update() }
+
         effects.forEach { it.update() }
         effects.removeIf { it.dead }
 
