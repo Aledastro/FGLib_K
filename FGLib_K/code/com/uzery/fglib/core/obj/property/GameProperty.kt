@@ -1,7 +1,5 @@
 package com.uzery.fglib.core.obj.property
 
-interface GameProperty<Type> {
+interface GameProperty {
     fun update()
-
-    fun get(): Type
 }

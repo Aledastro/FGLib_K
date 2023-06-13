@@ -18,7 +18,7 @@ abstract class GameObject {
     val modificators = LinkedList<Modificator>()
     val bounds = BoundsBox()
     val abilities = LinkedList<AbilityBox>()
-    val properties = LinkedList<GameProperty<Any>>()
+    val properties = LinkedList<GameProperty>()
 
     val children = ArrayList<GameObject>()
     val grabbed = LinkedList<GameObject>()
