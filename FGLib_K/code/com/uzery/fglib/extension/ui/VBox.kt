@@ -9,7 +9,7 @@ import javafx.scene.text.Font
 import javafx.scene.text.FontWeight
 import java.util.*
 
-abstract class VBox(protected val full: Int, protected val rows: Int): UIElement() {
+abstract class VBox(protected open val full: Int, protected val rows: Int): UIElement() {
     abstract val sizeOne: PointN
     private val offset
         get() = sizeOne/5
@@ -18,6 +18,10 @@ abstract class VBox(protected val full: Int, protected val rows: Int): UIElement
     private var name = LinkedList<String>()
 
     override fun update() {
+        /*ignore*/
+    }
+
+    open fun ifActiveUpdate() {
         /*ignore*/
     }
 
@@ -51,6 +55,7 @@ abstract class VBox(protected val full: Int, protected val rows: Int): UIElement
         for(id in 0 until full) {
             if(pressed(pos + fromID(id), sizeOne)) select = id
         }
+        ifActiveUpdate()
     }
 
     private fun fromID(id: Int): PointN {

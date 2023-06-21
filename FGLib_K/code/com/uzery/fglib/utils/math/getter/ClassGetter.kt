@@ -56,11 +56,8 @@ class ClassGetter<Type>(private val instance: ClassGetterInstance<Type>) {
 
     fun getFrom(name: String, args: ArrayList<ArrayList<String>>): Type = getMark(name, args).invoke()
     fun getFrom(input: String): Type = getMark(input).invoke()
-    fun getEntry(id: Int): Type {
-        return instance.getEntry(id).invoke()
-    }
+    fun getEntry(id: Int) = instance.getEntry(id).invoke()
+    fun getEntryName(id: Int) = instance.getEntryName(id)
 
-    fun entry_size(): Int {
-        return instance.entry_size()
-    }
+    fun entry_size() = instance.entry_size()
 }

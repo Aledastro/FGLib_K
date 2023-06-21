@@ -16,9 +16,11 @@ abstract class ClassGetterInstance<Type> {
 
     protected abstract fun addAll()
 
+    fun getEntryName(id: Int) = map.keys.elementAt(id)
+
     fun getEntry(id: Int): () -> Type {
         no_info = true
-        return map[map.keys.elementAt(id)] ?: throw DebugData.error("wrong id: $id")
+        return map[getEntryName(id)] ?: throw DebugData.error("wrong id: $id")
     }
 
     fun entry_size() = map.keys.size

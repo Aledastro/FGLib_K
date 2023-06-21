@@ -3,10 +3,10 @@ package com.uzery.fglib.core.obj
 import com.uzery.fglib.core.obj.ability.AbilityBox
 import com.uzery.fglib.core.obj.ability.InputAction
 import com.uzery.fglib.core.obj.bounds.BoundsBox
-import com.uzery.fglib.core.obj.property.GameProperty
 import com.uzery.fglib.core.obj.controller.Controller
 import com.uzery.fglib.core.obj.controller.TempAction
 import com.uzery.fglib.core.obj.modificator.Modificator
+import com.uzery.fglib.core.obj.property.GameProperty
 import com.uzery.fglib.core.obj.stats.Stats
 import com.uzery.fglib.core.obj.visual.Visualiser
 import com.uzery.fglib.utils.math.geom.PointN
@@ -14,28 +14,29 @@ import java.util.*
 
 abstract class GameObject {
     val stats = Stats()
-    val visuals = SList<Visualiser>()
-    val modificators = SList<Modificator>()
+    val visuals = LinkedList<Visualiser>()
+    val modificators = LinkedList<Modificator>()
     val bounds = BoundsBox()
-    val abilities = SList<AbilityBox>()
-    val properties = SList<GameProperty>()
+    val abilities = LinkedList<AbilityBox>()
+    val properties = LinkedList<GameProperty>()
 
-    val children = SList<GameObject>()
-    val grabbed = SList<GameObject>()
+    val children = LinkedList<GameObject>()
+    val grabbed = LinkedList<GameObject>()
     var owner: GameObject? = null
 
     var controller: Controller? = null
     private var temp: TempAction? = null
 
-    private val tags = SList<String>()
+    private val tags = LinkedList<String>()
+
+    var name = "temp"
+    val values = LinkedList<Any>()
 
     var dead = false
         private set
 
     var object_time = 0
         private set
-    var name = "temp"
-    val values = SList<Any>()
 
     fun next() {
         if(object_time == 0) afterInit()
