@@ -8,6 +8,8 @@ import com.uzery.fglib.core.program.Platform.Companion.CANVAS
 import com.uzery.fglib.core.program.Platform.Companion.CANVAS_R
 import com.uzery.fglib.core.program.Platform.Companion.graphics
 import com.uzery.fglib.core.program.Platform.Companion.keyboard
+import com.uzery.fglib.core.program.Platform.Companion.mouse
+import com.uzery.fglib.core.program.Platform.Companion.mouse_keys
 import com.uzery.fglib.core.program.Platform.Companion.scale
 import com.uzery.fglib.core.program.Program
 import com.uzery.fglib.core.room.Room
@@ -183,14 +185,20 @@ class RoomEditor(private val getter: ClassGetter<GameObject>, private vararg val
             //graphics.stroke.rect(draw_pos, CANVAS, Color.DARKBLUE)
 
             drawFields()
+
+            Platform.global_alpha = 0.3
+            val pp = (mouse.pos()/scale - draw_pos).round(GRID) + draw_pos + GRID_P/2
+            objects_vbox.select_obj.draw(pp)
+            Platform.global_alpha = 1.0
         }
 
         private fun drawFields() {
-            graphics.setStroke(3.0)
-            /*World.active_rooms.forEach { r ->
+            graphics.setStroke(1.0)
+            World.active_rooms.forEach { r ->
                 if(r != edit) graphics.stroke.rect(draw_pos - edit.pos + r.pos, r.size, FGUtils.transparent(Color.WHITE, 0.8))
-            }*/
+            }
 
+            graphics.setStroke(3.0)
             graphics.stroke.rect(draw_pos - edit.pos + edit.pos, edit.size, Color.WHITE)
         }
 
@@ -222,16 +230,15 @@ class RoomEditor(private val getter: ClassGetter<GameObject>, private vararg val
 
         override fun update() {
 
-            last_mouse_pos = Platform.mouse.pos()
-            if(keyboard.pressed(KeyCode.CONTROL) && keyboard.inPressed(KeyCode.TAB)) draw_bounds =
-                !draw_bounds
+            last_mouse_pos = mouse.pos()
+            if(keyboard.pressed(KeyCode.CONTROL) && keyboard.inPressed(KeyCode.TAB)) draw_bounds = !draw_bounds
         }
 
         var lastPOS = PointN.ZERO
         private fun checkForAdd() {
-            if(Platform.mouse_keys.pressed(MouseButton.PRIMARY)) {
+            if(mouse_keys.pressed(MouseButton.PRIMARY)) {
                 val o = getter.getEntry(objects_vbox.chosen())
-                val pp = (Platform.mouse.pos()/Platform.scale - draw_pos).round(GRID) + GRID_P/2
+                val pp = (mouse.pos()/scale - draw_pos).round(GRID) + GRID_P/2
                 if(lastPOS == pp) return
                 o.stats.POS = pp
                 lastPOS = pp
@@ -241,8 +248,8 @@ class RoomEditor(private val getter: ClassGetter<GameObject>, private vararg val
         }
 
         private fun checkForRemove() {
-            if(Platform.mouse_keys.pressed(MouseButton.SECONDARY)) {
-                edit.objects.removeIf { o -> (o.stats.POS.lengthTo(Platform.mouse.pos()/Platform.scale - draw_pos))<GRID/2 }
+            if(mouse_keys.pressed(MouseButton.SECONDARY)) {
+                edit.objects.removeIf { o -> (o.stats.POS.lengthTo(mouse.pos()/scale - draw_pos))<GRID/2 }
                 if(!edit.objects.contains(select_obj)) select_obj = null
             }
         }
@@ -252,7 +259,7 @@ class RoomEditor(private val getter: ClassGetter<GameObject>, private vararg val
                 Program.cursor = Cursor.DEFAULT
                 return false
             }
-            if(Platform.mouse_keys.anyPressed(*MouseButton.values())) draw_pos += (Platform.mouse.pos() - last_mouse_pos)/Platform.scale
+            if(mouse_keys.anyPressed(*MouseButton.values())) draw_pos += (mouse.pos() - last_mouse_pos)/scale
             Program.cursor = Cursor.CLOSED_HAND
 
             return true

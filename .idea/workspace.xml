@@ -12,17 +12,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="82970e50-af90-458e-a847-e0b07c98f932" name="Changes" comment="FGLib v.0.5.5.3 [K]">
-      <change afterPath="$PROJECT_DIR$/FGLib_K/code/com/uzery/fglib/extension/room_editor/DataGetterRE.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/FGLib_K/code/com/uzery/fglib/extension/room_editor/DataRE.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/FGLib_K/code/com/uzery/fglib/extension/room_editor/ObjectVBoxRE.kt" afterDir="false" />
+    <list default="true" id="82970e50-af90-458e-a847-e0b07c98f932" name="Changes" comment="FGLib v.0.5.6.0 [K]">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FGLib_K/code/com/uzery/fglib/core/obj/GameObject.kt" beforeDir="false" afterPath="$PROJECT_DIR$/FGLib_K/code/com/uzery/fglib/core/obj/GameObject.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FGLib_K/code/com/uzery/fglib/core/obj/SList.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/FGLib_K/code/com/uzery/fglib/extension/room_editor/ObjectVBoxRE.kt" beforeDir="false" afterPath="$PROJECT_DIR$/FGLib_K/code/com/uzery/fglib/extension/room_editor/ObjectVBoxRE.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/FGLib_K/code/com/uzery/fglib/extension/room_editor/RoomEditor.kt" beforeDir="false" afterPath="$PROJECT_DIR$/FGLib_K/code/com/uzery/fglib/extension/room_editor/RoomEditor.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FGLib_K/code/com/uzery/fglib/extension/ui/VBox.kt" beforeDir="false" afterPath="$PROJECT_DIR$/FGLib_K/code/com/uzery/fglib/extension/ui/VBox.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FGLib_K/code/com/uzery/fglib/utils/math/getter/ClassGetter.kt" beforeDir="false" afterPath="$PROJECT_DIR$/FGLib_K/code/com/uzery/fglib/utils/math/getter/ClassGetter.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FGLib_K/code/com/uzery/fglib/utils/math/getter/ClassGetterInstance.kt" beforeDir="false" afterPath="$PROJECT_DIR$/FGLib_K/code/com/uzery/fglib/utils/math/getter/ClassGetterInstance.kt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -127,13 +120,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1680386967444</updated>
-    </task>
-    <task id="LOCAL-00003" summary="1.2">
-      <created>1680922910392</created>
-      <option name="number" value="00003" />
-      <option name="presentableId" value="LOCAL-00003" />
-      <option name="project" value="LOCAL" />
-      <updated>1680922910392</updated>
     </task>
     <task id="LOCAL-00004" summary="1.3">
       <created>1680992056594</created>
@@ -471,7 +457,14 @@
       <option name="project" value="LOCAL" />
       <updated>1686696963765</updated>
     </task>
-    <option name="localTasksCounter" value="52" />
+    <task id="LOCAL-00052" summary="FGLib v.0.5.6.0 [K]">
+      <created>1687322622164</created>
+      <option name="number" value="00052" />
+      <option name="presentableId" value="LOCAL-00052" />
+      <option name="project" value="LOCAL" />
+      <updated>1687322622164</updated>
+    </task>
+    <option name="localTasksCounter" value="53" />
     <servers />
   </component>
   <component name="UnknownFeatures">
@@ -501,7 +494,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="FGLib v.0.4.3.1 [K]" />
     <MESSAGE value="FGLib v.0.4.4.1 [K]" />
     <MESSAGE value="FGLib v.0.4.4.2 [K]" />
     <MESSAGE value="FGLib v.0.4.4.3 [K]" />
@@ -526,7 +518,8 @@
     <MESSAGE value="FGLib v.0.5.5.1 [K]" />
     <MESSAGE value="FGLib v.0.5.5.2 [K]" />
     <MESSAGE value="FGLib v.0.5.5.3 [K]" />
-    <option name="LAST_COMMIT_MESSAGE" value="FGLib v.0.5.5.3 [K]" />
+    <MESSAGE value="FGLib v.0.5.6.0 [K]" />
+    <option name="LAST_COMMIT_MESSAGE" value="FGLib v.0.5.6.0 [K]" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

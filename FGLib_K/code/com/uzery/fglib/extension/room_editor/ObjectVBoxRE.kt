@@ -2,6 +2,7 @@ package com.uzery.fglib.extension.room_editor
 
 import com.uzery.fglib.core.program.Platform
 import com.uzery.fglib.core.program.Platform.Companion.keyboard
+import com.uzery.fglib.core.program.Platform.Companion.scale
 import com.uzery.fglib.extension.ui.VBox
 import com.uzery.fglib.utils.math.geom.PointN
 import com.uzery.fglib.utils.math.geom.RectN
@@ -10,16 +11,15 @@ import javafx.scene.input.KeyCode
 import java.util.*
 
 class ObjectVBoxRE(private val data: DataGetterRE): VBox(0, 5) {
+    val select_obj
+        get()= data.get().getter.getEntry(chosen())
+
     //todo code is REALLY complicated
     private var t = 0
     override fun update() {
         if(t == 0) init0()
         t++
 
-        coerceGroups()
-    }
-
-    override fun ifActiveUpdate() {
         if(keyboard.inPressed(KeyCode.DOWN)) {
             groups_select[groups[select].first] = groups_select[groups[select].first]!! + 1
         }
@@ -27,6 +27,10 @@ class ObjectVBoxRE(private val data: DataGetterRE): VBox(0, 5) {
             groups_select[groups[select].first] = groups_select[groups[select].first]!! - 1
         }
         coerceGroups()
+    }
+
+    override fun ifActiveUpdate() {
+
     }
 
     private fun coerceGroups() {
@@ -46,7 +50,7 @@ class ObjectVBoxRE(private val data: DataGetterRE): VBox(0, 5) {
     override val window: RectN
         get() = Platform.CANVAS_R
     override val sizeOne: PointN
-        get() = PointN(50, 50)/Platform.scale
+        get() = PointN(50, 50)/scale
 
     override fun setNames(id: Int): String {
         return groups[id].first
@@ -84,12 +88,6 @@ class ObjectVBoxRE(private val data: DataGetterRE): VBox(0, 5) {
         for(pair in groups) {
             groups_select[pair.first] = 10
         }
-
-        println(groups_map)
-        entries.forEach { print("$it ") }
-        println()
-        println(ids)
-        println(groups)
 
         init0 = true
     }
