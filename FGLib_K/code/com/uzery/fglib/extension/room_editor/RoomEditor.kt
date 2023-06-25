@@ -189,6 +189,7 @@ class RoomEditor(private val getter: ClassGetter<GameObject>, private vararg val
             Platform.global_alpha = 0.3
             val pp = (mouse.pos()/scale - draw_pos).round(GRID) + draw_pos + GRID_P/2
             objects_vbox.select_obj.draw(pp)
+            if(draw_bounds) WorldUtils.drawBoundsFor(objects_vbox.select_obj, pp)
             Platform.global_alpha = 1.0
         }
 

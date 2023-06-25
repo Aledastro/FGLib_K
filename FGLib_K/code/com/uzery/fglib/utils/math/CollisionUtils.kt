@@ -5,6 +5,8 @@ import com.uzery.fglib.utils.math.geom.PointN
 import com.uzery.fglib.utils.math.geom.RectN
 import com.uzery.fglib.utils.math.geom.Shape
 import kotlin.math.abs
+import kotlin.math.max
+import kotlin.math.min
 
 interface CollisionUtils {
     companion object {
@@ -30,40 +32,35 @@ interface CollisionUtils {
             return ShapeUtils.into(stay, RectN.rectLR(min(start.L, finish.L), max(start.R, finish.R)))
         }
 
-        private fun min(a: PointN, b: PointN) = PointN.transform(a, b) { x, y -> MathUtils.min(x, y) }
-        private fun max(a: PointN, b: PointN) = PointN.transform(a, b) { x, y -> MathUtils.max(x, y) }
+        private fun min(a: PointN, b: PointN) = PointN.transform(a, b) { x, y -> min(x, y) }
+        private fun max(a: PointN, b: PointN) = PointN.transform(a, b) { x, y -> max(x, y) }
 
         private fun maxMoveRect(stay: RectN, start: RectN, finish: RectN, level: Int): Double {
-            var path1 = 1.0
-            var path2 = 1.0
+            val L1 = start.L[level]
+            val R1 = start.R[level]
+            val L2 = finish.L[level]
+            val R2 = finish.R[level]
+            val SL = stay.L[level]
+            val SR = stay.R[level]
+            val dim = stay.dimension()
 
-            val fl = start.L[level]
-            val fr = start.R[level]
-            val sl = finish.L[level]
-            val sr = finish.R[level]
+            var path1 = if(abs(L1 - L2)<LITTLE) 1.0 else (SR - L1)/(L2 - L1)
+            var path2 = if(abs(R1 - R2)<LITTLE) 1.0 else (SL - R1)/(R2 - R1)
 
-            val l = stay.L[level]
-            val r = stay.R[level]
-
-            if(abs(fl - sl)>LITTLE) path1 = (r - fl)/(sl - fl)
-            if(abs(fr - sr)>LITTLE) path2 = (l - fr)/(sr - fr)
-
-            val n = stay.dimension()
-            for(i in 1 until n) {
-                val lv = MathUtils.mod(level + i, n)
-                val rect1 = ShapeUtils.interpolate(start, finish, path1)
-                if(!(stay.L[lv]<=rect1.R[lv] && stay.R[lv]>=rect1.L[lv] && path1 in (0.0..1.0))) path1 = 1.0
-
-                val rect2 = ShapeUtils.interpolate(start, finish, path2)
-                if(!(stay.L[lv]<=rect2.R[lv] && stay.R[lv]>=rect2.L[lv] && path2 in (0.0..1.0))) path2 = 1.0
+            fun checkMoveOn(k: Double, lv: Int): Double {
+                val shade = ShapeUtils.interpolate(start, finish, k)
+                val blockedMove = stay.L[lv]<shade.R[lv] && shade.L[lv]<stay.R[lv] && k in (0.0..1.0)
+                return if(blockedMove) k else 1.0
             }
 
-            val path = kotlin.math.min(path1, path2)
+            for(i in 1 until dim) {
+                val lv = MathUtils.mod(level + i, dim)
 
-            if(path<0) return 0.0
-            if(path>1) return 1.0 //throw DebugData.error("err: K=$path")
+                path1 = checkMoveOn(path1, lv)
+                path2 = checkMoveOn(path2, lv)
+            }
 
-            return path.coerceIn(0.0, 1.0)
+            return min(path1, path2).coerceIn(0.0, 1.0)
         }
     }
 }

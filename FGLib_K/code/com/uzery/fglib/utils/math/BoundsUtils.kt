@@ -2,6 +2,7 @@ package com.uzery.fglib.utils.math
 
 import com.uzery.fglib.core.obj.bounds.Bounds
 import com.uzery.fglib.utils.math.geom.PointN
+import com.uzery.fglib.utils.math.geom.RectN
 
 interface BoundsUtils {
     companion object {

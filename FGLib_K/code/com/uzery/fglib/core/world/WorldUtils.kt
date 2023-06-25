@@ -1,6 +1,7 @@
 package com.uzery.fglib.core.world
 
 import com.uzery.fglib.core.obj.DrawLayer
+import com.uzery.fglib.core.obj.GameObject
 import com.uzery.fglib.core.obj.bounds.BoundsBox
 import com.uzery.fglib.core.program.Platform
 import com.uzery.fglib.core.room.Room
@@ -21,24 +22,26 @@ interface WorldUtils {
                 Platform.graphics.fill.ovalC(pos + o.stats.POS, STEP*3, c)
             }
 
+            Platform.graphics.setStroke(2.0)
+            for(o in room.objects) drawBoundsFor(o, pos)
+        }
+
+        fun drawBoundsFor(o: GameObject,pos: PointN) {
             val colors = arrayOf(
                 Color.RED,
                 Color.ORANGERED,
                 Color.BLUE,
                 Color.GREEN)
 
-            Platform.graphics.setStroke(2.0)
-            for(o in room.objects) {
-                for(i in 0 until BoundsBox.SIZE) {
-                    val bs = o.bounds[i] ?: continue
-                    for(el in bs().elements) {
-                        Platform.graphics.fill.draw(pos + o.stats.POS, el.shape, FGUtils.transparent(colors[i], 0.1))
-                        Platform.graphics.stroke.draw(pos + o.stats.POS, el.shape, FGUtils.transparent(colors[i], 0.6))
-                        Platform.graphics.stroke.line(
-                            pos + o.stats.POS + el.shape.L,
-                            el.shape.S,
-                            FGUtils.transparent(colors[i], 0.5))
-                    }
+            for(i in 0 until BoundsBox.SIZE) {
+                val bs = o.bounds[i] ?: continue
+                for(el in bs().elements) {
+                    Platform.graphics.fill.draw(pos + o.stats.POS, el.shape, FGUtils.transparent(colors[i], 0.1))
+                    Platform.graphics.stroke.draw(pos + o.stats.POS, el.shape, FGUtils.transparent(colors[i], 0.6))
+                    Platform.graphics.stroke.line(
+                        pos + o.stats.POS + el.shape.L,
+                        el.shape.S,
+                        FGUtils.transparent(colors[i], 0.5))
                 }
             }
         }

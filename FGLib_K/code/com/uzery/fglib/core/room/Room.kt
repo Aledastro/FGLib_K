@@ -59,12 +59,12 @@ class Room(val pos: PointN, val size: PointN) {
     fun remove(obj: GameObject) = objects.remove(obj)
 
     private fun nextMoveOld() {
-        val all_bounds = LinkedList<Bounds>()
+        val red_bounds = LinkedList<Bounds>()
         val pos = LinkedList<PointN>()
         objects.forEach {
             val bs = it.bounds.red
             if(bs != null) {
-                all_bounds.add(bs())
+                red_bounds.add(bs())
                 pos.add(it.stats.POS)
             }
         }
@@ -74,10 +74,10 @@ class Room(val pos: PointN, val size: PointN) {
             val move_bs = obj.bounds.orange ?: continue
 
             fun maxMove(move_p: PointN): Double {
-                if(all_bounds.isEmpty()) return 1.0
+                if(red_bounds.isEmpty()) return 1.0
 
-                return all_bounds.indices.minOf {
-                    BoundsUtils.maxMove(all_bounds[it], move_bs(), pos[it], obj.stats.POS, move_p)
+                return red_bounds.indices.minOf {
+                    BoundsUtils.maxMove(red_bounds[it], move_bs(), pos[it], obj.stats.POS, move_p)
                 }
             }
 
