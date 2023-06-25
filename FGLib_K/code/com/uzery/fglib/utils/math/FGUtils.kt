@@ -27,10 +27,11 @@ interface FGUtils {
 
         fun transparent(color: Color, k: Double): Color = Color.TRANSPARENT.interpolate(color, k)
         fun subBefore(input: String, index: String, delta: Int = 0): String {
-            return input.substring(0 until input.indexOf(index)+delta)
+            return input.substring(0 until input.indexOf(index) + delta)
         }
+
         fun subAfter(input: String, index: String, delta: Int = 0): String {
-            return input.substring(input.indexOf(index)+1+delta)
+            return input.substring(input.indexOf(index) + 1 + delta)
         }
     }
 }

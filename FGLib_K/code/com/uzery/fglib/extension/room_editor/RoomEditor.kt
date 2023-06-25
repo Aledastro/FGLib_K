@@ -311,8 +311,8 @@ class RoomEditor(private val getter: ClassGetter<GameObject>, private vararg val
                 return res
             }
 
-            val name = FGUtils.subBefore(s,":")
-            val args = FGUtils.subAfter(s,":")
+            val name = FGUtils.subBefore(s, ":")
+            val args = FGUtils.subAfter(s, ":")
             val t = StringTokenizer(args, "]")
 
             res.add("object: $name")

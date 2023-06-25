@@ -79,7 +79,7 @@ class ObjectVBoxRE(private val data: DataGetterRE): VBox(0, 5) {
                 continue
             }
 
-            val name = StringN(FGUtils.subBefore(entry.s,"#"), entry.n)
+            val name = StringN(FGUtils.subBefore(entry.s, "#"), entry.n)
             if(groups_map[name] == null) addNewEntry(name, entry)
             else groups_map[name]?.add(entry)
         }

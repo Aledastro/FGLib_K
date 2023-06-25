@@ -8,8 +8,8 @@ class ClassGetter<Type>(private val instance: ClassGetterInstance<Type>) {
         val args = ArrayList<ArrayList<String>>()
         if(input.indexOf(':') == -1) return getMark(input, args)
 
-        val name = FGUtils.subBefore(input,":")
-        val argsInput = FGUtils.subAfter(input,":")
+        val name = FGUtils.subBefore(input, ":")
+        val argsInput = FGUtils.subAfter(input, ":")
 
         val collector = StringBuilder()
         val list = ArrayList<String>()

@@ -73,7 +73,10 @@ abstract class ClassGetterInstance<Type> {
     protected val color: Color
         get() = if(no_info) Color.BLACK else Color.color(double, doubleX(1), doubleX(2), doubleX(3))
     protected val pos: PointN
-        get() = if(no_info) PointN.ZERO else PointN(Array(input[in_id++].size) { i -> doubleX(i) })
+        get() {
+            return if(no_info || input[in_id][0] == "ZERO") PointN.ZERO
+            else PointN(Array(input[in_id++].size) { i -> doubleX(i) })
+        }
     protected val size: PointN
-        get() = if(no_info) PointN.ZERO else PointN(Array(input[in_id++].size) { i -> doubleX(i) })
+        get() = pos
 }

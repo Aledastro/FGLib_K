@@ -55,11 +55,9 @@ data class PointN(private val xs: Array<Double>) {
 
     override fun hashCode(): Int = xs.contentHashCode()
 
-    operator fun plus(p: PointN): PointN =
-        PointN(ArrayUtils.transformP(xs, p.xs, 0.0) { x, y -> x + y })
+    operator fun plus(p: PointN) = PointN(ArrayUtils.transformP(xs, p.xs, 0.0) { x, y -> x + y })
 
-    operator fun minus(p: PointN): PointN =
-        PointN(ArrayUtils.transformP(xs, p.xs, 0.0) { x, y -> x - y })
+    operator fun minus(p: PointN) = PointN(ArrayUtils.transformP(xs, p.xs, 0.0) { x, y -> x - y })
 
     operator fun div(p: PointN) = PointN(ArrayUtils.transformP(xs, p.xs, 0.0) { x, y -> x/y })
     operator fun div(v: Double) = PointN(ArrayUtils.transform(xs) { x -> x/v })

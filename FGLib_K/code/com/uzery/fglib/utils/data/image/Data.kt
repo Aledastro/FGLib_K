@@ -4,7 +4,6 @@ import com.uzery.fglib.utils.data.debug.DebugData
 import com.uzery.fglib.utils.math.FGUtils
 import com.uzery.fglib.utils.math.num.IntI
 import javafx.scene.image.Image
-import kotlin.math.max
 
 class Data {
     companion object {
@@ -64,7 +63,7 @@ class Data {
                     else -> ""
                 }
                 last = if(name.indexOf('|') + 1<0) name
-                else FGUtils.subAfter(name,"|")
+                else FGUtils.subAfter(name, "|")
             }
 
             return "$filename$local_path$last".replace('/', '\\')
