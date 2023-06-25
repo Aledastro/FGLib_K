@@ -196,7 +196,10 @@ class RoomEditor(private val getter: ClassGetter<GameObject>, private vararg val
         private fun drawFields() {
             graphics.setStroke(1.0)
             World.active_rooms.forEach { r ->
-                if(r != edit) graphics.stroke.rect(draw_pos - edit.pos + r.pos, r.size, FGUtils.transparent(Color.WHITE, 0.8))
+                if(r != edit) graphics.stroke.rect(
+                    draw_pos - edit.pos + r.pos,
+                    r.size,
+                    FGUtils.transparent(Color.WHITE, 0.8))
             }
 
             graphics.setStroke(3.0)
@@ -303,14 +306,13 @@ class RoomEditor(private val getter: ClassGetter<GameObject>, private vararg val
 
 
             val s = select_obj.toString()
-            val index = s.indexOf(':')
-            if(index == -1) {
+            if(s.indexOf(':') == -1) {
                 res.add("object: $s")
                 return res
             }
 
-            val name = s.substring(0, index)
-            val args = s.substring(index + 1)
+            val name = FGUtils.subBefore(s,":")
+            val args = FGUtils.subAfter(s,":")
             val t = StringTokenizer(args, "]")
 
             res.add("object: $name")

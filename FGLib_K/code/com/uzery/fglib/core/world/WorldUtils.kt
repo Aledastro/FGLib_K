@@ -26,7 +26,7 @@ interface WorldUtils {
             for(o in room.objects) drawBoundsFor(o, pos)
         }
 
-        fun drawBoundsFor(o: GameObject,pos: PointN) {
+        fun drawBoundsFor(o: GameObject, pos: PointN) {
             val colors = arrayOf(
                 Color.RED,
                 Color.ORANGERED,

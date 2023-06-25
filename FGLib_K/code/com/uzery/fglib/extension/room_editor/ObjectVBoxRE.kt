@@ -4,6 +4,7 @@ import com.uzery.fglib.core.program.Platform
 import com.uzery.fglib.core.program.Platform.Companion.keyboard
 import com.uzery.fglib.core.program.Platform.Companion.scale
 import com.uzery.fglib.extension.ui.VBox
+import com.uzery.fglib.utils.math.FGUtils
 import com.uzery.fglib.utils.math.geom.PointN
 import com.uzery.fglib.utils.math.geom.RectN
 import com.uzery.fglib.utils.math.num.StringN
@@ -12,7 +13,7 @@ import java.util.*
 
 class ObjectVBoxRE(private val data: DataGetterRE): VBox(0, 5) {
     val select_obj
-        get()= data.get().getter.getEntry(chosen())
+        get() = data.get().getter.getEntry(chosen())
 
     //todo code is REALLY complicated
     private var t = 0
@@ -53,7 +54,7 @@ class ObjectVBoxRE(private val data: DataGetterRE): VBox(0, 5) {
         get() = PointN(50, 50)/scale
 
     override fun setNames(id: Int): String {
-        return groups[id].first
+        return groups[id].first.s
     }
 
     override fun draw(pos: PointN, id: Int) {
@@ -64,29 +65,28 @@ class ObjectVBoxRE(private val data: DataGetterRE): VBox(0, 5) {
     private fun init0() {
         entries = Array(data.get().getter.entry_size()) { data.get().getter.getEntryName(it) }
 
-        for(id in entries.indices) ids[entries[id].s] = id
+        for(id in entries.indices) ids[entries[id]] = id
 
-        fun addNewEntry(name: String, entry: String) {
-            val list = LinkedList<String>()
+        fun addNewEntry(name: StringN, entry: StringN) {
+            val list = LinkedList<StringN>()
             list.add(entry)
             groups_map[name] = list
         }
 
-        for(entryN in entries) {
-            val entry = entryN.s
-            if(!entry.contains("#")) {
+        for(entry in entries) {
+            if(!entry.s.contains("#")) {
                 addNewEntry(entry, entry)
                 continue
             }
-            val name = entry.substring(0, entry.indexOf('#'))
 
+            val name = StringN(FGUtils.subBefore(entry.s,"#"), entry.n)
             if(groups_map[name] == null) addNewEntry(name, entry)
             else groups_map[name]?.add(entry)
         }
         groups_map.keys.forEach { groups.add(Pair(it, groups_map[it]!!)) }
 
         for(pair in groups) {
-            groups_select[pair.first] = 10
+            groups_select[pair.first] = 0
         }
 
         init0 = true
@@ -97,8 +97,8 @@ class ObjectVBoxRE(private val data: DataGetterRE): VBox(0, 5) {
     }
 
     private lateinit var entries: Array<StringN>
-    private val ids = TreeMap<String, Int>()
-    private val groups_map = TreeMap<String, LinkedList<String>>()
-    private val groups = LinkedList<Pair<String, LinkedList<String>>>()
-    private val groups_select = TreeMap<String, Int>()
+    private val ids = TreeMap<StringN, Int>()
+    private val groups_map = TreeMap<StringN, LinkedList<StringN>>()
+    private val groups = LinkedList<Pair<StringN, LinkedList<StringN>>>()
+    private val groups_select = TreeMap<StringN, Int>()
 }

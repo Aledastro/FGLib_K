@@ -1,15 +1,15 @@
 package com.uzery.fglib.utils.math.getter
 
+import com.uzery.fglib.utils.math.FGUtils
 import com.uzery.fglib.utils.math.num.StringN
 
 class ClassGetter<Type>(private val instance: ClassGetterInstance<Type>) {
     private fun getMark(input: String): () -> Type {
         val args = ArrayList<ArrayList<String>>()
-        val startIndex = input.indexOf(':')
-        if(startIndex == -1) return getMark(input, args)
+        if(input.indexOf(':') == -1) return getMark(input, args)
 
-        val name = input.substring(0, startIndex)
-        val argsInput = input.substring(startIndex + 1)
+        val name = FGUtils.subBefore(input,":")
+        val argsInput = FGUtils.subAfter(input,":")
 
         val collector = StringBuilder()
         val list = ArrayList<String>()

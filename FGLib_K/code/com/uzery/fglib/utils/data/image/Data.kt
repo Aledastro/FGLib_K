@@ -1,6 +1,7 @@
 package com.uzery.fglib.utils.data.image
 
 import com.uzery.fglib.utils.data.debug.DebugData
+import com.uzery.fglib.utils.math.FGUtils
 import com.uzery.fglib.utils.math.num.IntI
 import javafx.scene.image.Image
 import kotlin.math.max
@@ -53,7 +54,7 @@ class Data {
             var local_path = ""
             var last = name
             if(name.indexOf('|') != -1) {
-                local_path = when(name.substring(0, name.indexOf('|'))) {
+                local_path = when(FGUtils.subBefore(name, "|")) {
                     "wld" -> "world/"
                     "map" -> "world/map/"
                     "mob" -> "world/enemy/"
@@ -62,7 +63,8 @@ class Data {
                     "ui" -> "ui/"
                     else -> ""
                 }
-                last = name.substring(max(0, name.indexOf('|') + 1))
+                last = if(name.indexOf('|') + 1<0) name
+                else FGUtils.subAfter(name,"|")
             }
 
             return "$filename$local_path$last".replace('/', '\\')
