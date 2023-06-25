@@ -67,7 +67,7 @@ class Platform {
                 }
 
             override fun setStroke(size: Double) {
-                gc.lineWidth = size
+                gc.lineWidth = size*scale
             }
 
             override val image: ImageGraphics = object: ImageGraphics(transform) {

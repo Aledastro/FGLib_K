@@ -1,5 +1,5 @@
 package com.uzery.fglib.core.obj.controller
 
-interface Controller {
+fun interface Controller {
     fun get(): () -> TempAction
 }

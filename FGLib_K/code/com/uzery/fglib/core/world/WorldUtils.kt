@@ -22,7 +22,6 @@ interface WorldUtils {
                 Platform.graphics.fill.ovalC(pos + o.stats.POS, STEP*3, c)
             }
 
-            Platform.graphics.setStroke(2.0)
             for(o in room.objects) drawBoundsFor(o, pos)
         }
 
@@ -33,6 +32,7 @@ interface WorldUtils {
                 Color.BLUE,
                 Color.GREEN)
 
+            Platform.graphics.setStroke(1.0)
             for(i in 0 until BoundsBox.SIZE) {
                 val bs = o.bounds[i] ?: continue
                 for(el in bs().elements) {

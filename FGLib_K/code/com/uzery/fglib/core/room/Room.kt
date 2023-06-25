@@ -83,7 +83,7 @@ class Room(val pos: PointN, val size: PointN) {
 
             fun move(move_p: PointN): Double {
                 val mm = maxMove(move_p)
-                obj.stats.POS += move_p*mm
+                obj.stats.POS += move_p*mm*0.999
                 return mm
             }
 

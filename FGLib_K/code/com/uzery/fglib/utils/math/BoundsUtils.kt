@@ -10,7 +10,6 @@ interface BoundsUtils {
             val r_move = move.main() ?: return 1.0
 
             if(!CollisionUtils.intoX(r_stay, r_move, r_move.copy(move_pos))) return 1.0
-
             if(stay.elements.isEmpty() || move.elements.isEmpty()) return 1.0
 
             return stay.elements.minOf { stayE ->

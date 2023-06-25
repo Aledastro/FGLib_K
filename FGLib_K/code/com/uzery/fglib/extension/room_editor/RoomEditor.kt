@@ -253,7 +253,12 @@ class RoomEditor(private val getter: ClassGetter<GameObject>, private vararg val
 
         private fun checkForRemove() {
             if(mouse_keys.pressed(MouseButton.SECONDARY)) {
-                edit.objects.removeIf { o -> (o.stats.POS.lengthTo(mouse.pos()/scale - draw_pos))<GRID/2 }
+                val sel = getter.getEntry(objects_vbox.chosen())
+                sel.setValues()
+                edit.objects.removeIf { o ->
+                    o.setValues()
+                    (o.stats.POS.lengthTo(mouse.pos()/scale - draw_pos))<GRID/2 && sel.name == o.name
+                }
                 if(!edit.objects.contains(select_obj)) select_obj = null
             }
         }
