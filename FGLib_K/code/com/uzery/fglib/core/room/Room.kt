@@ -12,6 +12,7 @@ import com.uzery.fglib.utils.math.geom.RectN
 import com.uzery.fglib.utils.math.getter.value.PosValue
 import com.uzery.fglib.utils.math.getter.value.SizeValue
 import java.util.*
+import kotlin.math.sign
 
 class Room(val pos: PointN, val size: PointN) {
     //todo private
@@ -46,7 +47,12 @@ class Room(val pos: PointN, val size: PointN) {
             vis.addAll(obj.visuals)
             obj.visuals.forEach { pos_map[it] = obj.stats.POS }
         }
-        vis.sortBy { it.drawLayer().sort }
+        vis.sortWith { v1, v2 ->
+            when {
+                v1.drawLayer().sort != v2.drawLayer().sort -> (v1.drawLayer().sort - v2.drawLayer().sort).toInt()
+                else -> sign(pos_map[v1]!!.Y - pos_map[v2]!!.Y).toInt()
+            }
+        }
         vis.forEach { visual ->
             visual.agc().layer = visual.drawLayer()
             visual.draw(draw_pos + pos_map[visual]!!)
