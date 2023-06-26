@@ -18,6 +18,7 @@ import com.uzery.fglib.core.world.WorldUtils
 import com.uzery.fglib.extension.ui.*
 import com.uzery.fglib.utils.data.file.WriteData
 import com.uzery.fglib.utils.math.FGUtils
+import com.uzery.fglib.utils.math.MathUtils
 import com.uzery.fglib.utils.math.geom.PointN
 import com.uzery.fglib.utils.math.geom.RectN
 import com.uzery.fglib.utils.math.getter.ClassGetter
@@ -170,6 +171,9 @@ class RoomEditor(private val getter: ClassGetter<GameObject>, private vararg val
 
         var draw_bounds = false
 
+        val grid_offset = arrayOf(GRID_P/2, PointN.ZERO, GRID_P.XP/2, GRID_P.YP/2)
+        var grid_offset_id = 0
+
         override fun draw() {
             Platform.global_alpha = 0.2
             World.draw(draw_pos - edit.pos)
@@ -187,7 +191,7 @@ class RoomEditor(private val getter: ClassGetter<GameObject>, private vararg val
             drawFields()
 
             Platform.global_alpha = 0.3
-            val pp = (mouse.pos()/scale - draw_pos).round(GRID) + draw_pos + GRID_P/2
+            val pp = (mouse.pos()/scale - draw_pos).round(GRID) + draw_pos + grid_offset[grid_offset_id]
             objects_vbox.select_obj.draw(pp)
             if(draw_bounds) WorldUtils.drawBoundsFor(objects_vbox.select_obj, pp)
             Platform.global_alpha = 1.0
@@ -228,6 +232,7 @@ class RoomEditor(private val getter: ClassGetter<GameObject>, private vararg val
             }
             checkForAdd()
             checkForRemove()
+            if(keyboard.inPressed(KeyCode.P)) grid_offset_id = MathUtils.mod(grid_offset_id + 1, grid_offset.size)
         }
 
         private var last_mouse_pos = PointN.ZERO
@@ -242,7 +247,7 @@ class RoomEditor(private val getter: ClassGetter<GameObject>, private vararg val
         private fun checkForAdd() {
             if(mouse_keys.pressed(MouseButton.PRIMARY)) {
                 val o = getter.getEntry(objects_vbox.chosen())
-                val pp = (mouse.pos()/scale - draw_pos).round(GRID) + GRID_P/2
+                val pp = (mouse.pos()/scale - draw_pos).round(GRID) + grid_offset[grid_offset_id]
                 if(lastPOS == pp) return
                 o.stats.POS = pp
                 lastPOS = pp
@@ -257,7 +262,7 @@ class RoomEditor(private val getter: ClassGetter<GameObject>, private vararg val
                 sel.setValues()
                 edit.objects.removeIf { o ->
                     o.setValues()
-                    (o.stats.POS.lengthTo(mouse.pos()/scale - draw_pos))<GRID/2 && sel.name == o.name
+                    (o.stats.POS.lengthTo(mouse.pos()/scale - draw_pos))<=GRID/2 && sel.name == o.name
                 }
                 if(!edit.objects.contains(select_obj)) select_obj = null
             }
