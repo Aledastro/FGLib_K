@@ -17,11 +17,11 @@ import com.uzery.fglib.core.world.World
 import com.uzery.fglib.core.world.WorldUtils
 import com.uzery.fglib.extension.ui.*
 import com.uzery.fglib.utils.data.file.WriteData
+import com.uzery.fglib.utils.data.getter.ClassGetter
 import com.uzery.fglib.utils.math.FGUtils
 import com.uzery.fglib.utils.math.MathUtils
 import com.uzery.fglib.utils.math.geom.PointN
 import com.uzery.fglib.utils.math.geom.RectN
-import com.uzery.fglib.utils.math.getter.ClassGetter
 import javafx.scene.Cursor
 import javafx.scene.input.KeyCode
 import javafx.scene.input.MouseButton
@@ -89,7 +89,7 @@ class RoomEditor(private val getter: ClassGetter<GameObject>, private vararg val
     private fun checkForSave() {
         if(keyboard.allPressed(KeyCode.CONTROL, KeyCode.SHIFT) && keyboard.inPressed(KeyCode.S)) {
             //edit.objects.forEach { it.stats.POS /= 2 }
-            filenames.indices.forEach { i -> WriteData.write(from(filenames[i]), World.rooms[i].toString()) }
+            filenames.indices.forEach { i -> WriteData.write(filenames[i], World.rooms[i].toString()) }
             println("saved")
         }
     }
@@ -122,8 +122,6 @@ class RoomEditor(private val getter: ClassGetter<GameObject>, private vararg val
         }*/
         World.next()
     }
-
-    private fun from(filename: String) = "${World.directory}$filename"
 
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -246,7 +244,7 @@ class RoomEditor(private val getter: ClassGetter<GameObject>, private vararg val
         var lastPOS = PointN.ZERO
         private fun checkForAdd() {
             if(mouse_keys.pressed(MouseButton.PRIMARY)) {
-                val o = getter.getEntry(objects_vbox.chosen())
+                val o = getter.getEntry(objects_vbox.chosen())()
                 val pp = (mouse.pos()/scale - draw_pos).round(GRID) + grid_offset[grid_offset_id]
                 if(lastPOS == pp) return
                 o.stats.POS = pp
@@ -258,7 +256,7 @@ class RoomEditor(private val getter: ClassGetter<GameObject>, private vararg val
 
         private fun checkForRemove() {
             if(mouse_keys.pressed(MouseButton.SECONDARY)) {
-                val sel = getter.getEntry(objects_vbox.chosen())
+                val sel = getter.getEntry(objects_vbox.chosen())()
                 sel.setValues()
                 edit.objects.removeIf { o ->
                     o.setValues()

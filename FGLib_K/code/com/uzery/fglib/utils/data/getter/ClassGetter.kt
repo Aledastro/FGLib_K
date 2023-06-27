@@ -1,4 +1,4 @@
-package com.uzery.fglib.utils.math.getter
+package com.uzery.fglib.utils.data.getter
 
 import com.uzery.fglib.utils.data.debug.DebugData
 import com.uzery.fglib.utils.math.geom.PointN
@@ -6,16 +6,10 @@ import com.uzery.fglib.utils.math.num.StringN
 import javafx.scene.paint.Color
 import java.util.*
 
-abstract class ClassGetterInstance<Type> {
-    protected var no_info = false
-    private val map: TreeMap<StringN, () -> Type> = TreeMap<StringN, () -> Type>()
+abstract class ClassGetter<Type> {
 
-    init {
-        this.addAll()
-    }
-
-    protected abstract fun addAll()
-
+    operator fun get(name: String, args: ArrayList<ArrayList<String>>): Type = getMark(name, args).invoke()
+    operator fun get(input: String): Type = getMark(FGFormat[input].first, FGFormat[input].second).invoke()
     fun getEntryName(id: Int) = map.keys.elementAt(id)
 
     fun getEntry(id: Int): () -> Type {
@@ -25,12 +19,27 @@ abstract class ClassGetterInstance<Type> {
 
     fun entry_size() = map.keys.size
 
-    fun getMark(name: StringN, args: ArrayList<ArrayList<String>>): () -> Type {
+    fun getMark(name: String, args: ArrayList<ArrayList<String>>): () -> Type {
         input = args
         in_id = 0
         no_info = false
-        return map[name] ?: throw DebugData.error("ERROR getMark(): $name | $args")
+        return map[StringN(name,args.size)] ?: throw DebugData.error("ERROR getMark(): $name | $args")
     }
+
+
+
+
+
+    ////////////////////////////////////////////////////////////////////////////////
+    protected var no_info = false
+    private val map: TreeMap<StringN, () -> Type> = TreeMap<StringN, () -> Type>()
+
+    init {
+        this.addAll()
+    }
+
+    protected abstract fun addAll()
+
 
     protected fun add(sn: StringN, mark: () -> Type) {
         map[sn] = mark
@@ -42,7 +51,9 @@ abstract class ClassGetterInstance<Type> {
 
     protected fun add(s: String, mark: () -> Type) {
         map[StringN(s)] = mark
-    } //////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    }
+
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     protected fun stringX(i: Int) = if(no_info) "" else input[in_id - 1][i]
     protected fun intX(i: Int) = if(no_info) 0 else input[in_id - 1][i].toInt()

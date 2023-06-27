@@ -1,4 +1,4 @@
-package com.uzery.fglib.utils.math.getter.value
+package com.uzery.fglib.utils.data.getter.value
 
 import com.uzery.fglib.core.obj.DrawLayer
 

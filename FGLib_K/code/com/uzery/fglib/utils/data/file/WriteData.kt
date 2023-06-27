@@ -6,11 +6,12 @@ import java.util.stream.Collectors
 
 interface WriteData {
     companion object {
+        var directory = ""
         private const val RUN_JAR = false
         private const val BUFFER_FORMAT = "UTF-8"
 
         operator fun get(filename: String): ArrayList<String> {
-            return getReader(filename).lines().collect(Collectors.toCollection { ArrayList() })
+            return getReader("${directory}$filename").lines().collect(Collectors.toCollection { ArrayList() })
         }
 
         fun write(filename: String, write: String) {

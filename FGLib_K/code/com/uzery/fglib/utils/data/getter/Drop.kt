@@ -1,4 +1,4 @@
-package com.uzery.fglib.utils.math.getter
+package com.uzery.fglib.utils.data.getter
 
 import com.uzery.fglib.utils.data.debug.DebugData
 import java.util.*

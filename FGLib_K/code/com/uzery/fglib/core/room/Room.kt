@@ -9,8 +9,8 @@ import com.uzery.fglib.utils.math.FGUtils
 import com.uzery.fglib.utils.math.ShapeUtils
 import com.uzery.fglib.utils.math.geom.PointN
 import com.uzery.fglib.utils.math.geom.RectN
-import com.uzery.fglib.utils.math.getter.value.PosValue
-import com.uzery.fglib.utils.math.getter.value.SizeValue
+import com.uzery.fglib.utils.data.getter.value.PosValue
+import com.uzery.fglib.utils.data.getter.value.SizeValue
 import java.util.*
 import kotlin.math.sign
 

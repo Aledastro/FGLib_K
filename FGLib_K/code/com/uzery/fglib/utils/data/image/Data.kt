@@ -10,11 +10,7 @@ class Data {
         private val origins = HashMap<String, Image>()
         private val sprites = HashMap<String, SpriteImage>()
         private val combinations = HashMap<String, CombinationImage>()
-        private var filename = ""
-
-        fun setInitDirectory(directory: String) {
-            filename = directory
-        }
+        var directory = ""
 
         fun get(name: String) = origins[name] ?: throw DebugData.error("no origin from: $name")
 
@@ -66,7 +62,7 @@ class Data {
                 else FGUtils.subAfter(name, "|")
             }
 
-            return "$filename$local_path$last".replace('/', '\\')
+            return "$directory$local_path$last".replace('/', '\\')
         }
     }
 }

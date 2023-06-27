@@ -13,7 +13,7 @@ import java.util.*
 
 class ObjectVBoxRE(private val data: DataGetterRE): VBox(0, 5) {
     val select_obj
-        get() = data.get().getter.getEntry(chosen())
+        get() = data.get().getter.getEntry(chosen())()
 
     //todo code is REALLY complicated
     private var t = 0
@@ -58,7 +58,8 @@ class ObjectVBoxRE(private val data: DataGetterRE): VBox(0, 5) {
     }
 
     override fun draw(pos: PointN, id: Int) {
-        data.get().getter.getEntry(ids[groups[id].second[groups_select[groups[id].first]!!]]!!).draw(pos)
+        //todo it's terrible
+        data.get().getter.getEntry(ids[groups[id].second[groups_select[groups[id].first]!!]]!!)().draw(pos)
     }
 
     /////////////////////////////////////////////////////////////////////////////////////////////////

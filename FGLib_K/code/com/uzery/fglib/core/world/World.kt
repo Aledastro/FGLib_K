@@ -10,17 +10,13 @@ import com.uzery.fglib.utils.data.debug.DebugData
 import com.uzery.fglib.utils.data.file.WriteData
 import com.uzery.fglib.utils.math.FGUtils
 import com.uzery.fglib.utils.math.geom.PointN
-import com.uzery.fglib.utils.math.getter.ClassGetter
-import com.uzery.fglib.utils.math.getter.ClassGetterInstance
+import com.uzery.fglib.utils.data.getter.ClassGetter
 import javafx.scene.paint.Color
 import java.util.*
 import kotlin.math.sign
 
 interface World {
     companion object {
-        var directory = ""
-
-
         val rooms = LinkedList<Room>()
         val active_rooms = LinkedList<Room>()
         private val last_active = LinkedList<Boolean>()
@@ -130,24 +126,24 @@ interface World {
             while(list.isNotEmpty()) {
                 next = list.removeFirst()
                 if(next.startsWith("//")) continue
-                if(next.isNotEmpty()) objects.add(getter!!.getFrom(next))
+                if(next.isNotEmpty()) objects.add(getter!![next])
             }
 
             return Room(pos, size, objects)
         }
 
         private fun getP(s: String): PointN {
-            val c = ClassGetter(object: ClassGetterInstance<PointN>() {
+            val c = object: ClassGetter<PointN>() {
                 override fun addAll() = add("pos", 1) { pos }
-            })
-            return c.getFrom("pos: $s")
+            }
+            return c["pos: $s"]
         }
 
         fun init(controller: WorldController, vararg filename: String) {
             World.controller = controller
             World.controller.init()
             rooms.clear()
-            for(i in filename.indices) filenames.add("$directory${filename[i]}")
+            for(i in filename.indices) filenames.add(filename[i])
             filenames.forEach { rooms.add(readInfo(it)) }
             for(i in rooms.indices) last_active.add(false)
         }

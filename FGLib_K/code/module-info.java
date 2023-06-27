@@ -23,6 +23,8 @@ module FGLib_K {
 
     exports com.uzery.fglib.utils.data.debug;
     exports com.uzery.fglib.utils.data.file;
+    exports com.uzery.fglib.utils.data.getter;
+    exports com.uzery.fglib.utils.data.getter.value;
     exports com.uzery.fglib.utils.data.image;
 
     exports com.uzery.fglib.utils.graphics;
@@ -31,8 +33,6 @@ module FGLib_K {
 
     exports com.uzery.fglib.utils.math;
     exports com.uzery.fglib.utils.math.geom;
-    exports com.uzery.fglib.utils.math.getter;
-    exports com.uzery.fglib.utils.math.getter.value;
     exports com.uzery.fglib.utils.math.num;
     exports com.uzery.fglib.utils.math.scale;
 
