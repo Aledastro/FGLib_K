@@ -15,7 +15,7 @@ interface WriteData {
         }
 
         fun write(filename: String, write: String) {
-            val wr = getWriter(filename)
+            val wr = getWriter("${directory}$filename")
             try {
                 wr.write(write)
                 wr.close()

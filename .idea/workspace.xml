@@ -12,25 +12,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="82970e50-af90-458e-a847-e0b07c98f932" name="Changes" comment="FGLib v.0.5.9.0 [K]">
-      <change afterPath="$PROJECT_DIR$/FGLib_K/code/com/uzery/fglib/utils/data/getter/FGFormat.kt" afterDir="false" />
+    <list default="true" id="82970e50-af90-458e-a847-e0b07c98f932" name="Changes" comment="FGLib v.0.5.10.0 [K]">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FGLib_K/code/com/uzery/fglib/core/room/Room.kt" beforeDir="false" afterPath="$PROJECT_DIR$/FGLib_K/code/com/uzery/fglib/core/room/Room.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FGLib_K/code/com/uzery/fglib/core/world/World.kt" beforeDir="false" afterPath="$PROJECT_DIR$/FGLib_K/code/com/uzery/fglib/core/world/World.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FGLib_K/code/com/uzery/fglib/extension/room_editor/DataRE.kt" beforeDir="false" afterPath="$PROJECT_DIR$/FGLib_K/code/com/uzery/fglib/extension/room_editor/DataRE.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FGLib_K/code/com/uzery/fglib/extension/room_editor/ObjectVBoxRE.kt" beforeDir="false" afterPath="$PROJECT_DIR$/FGLib_K/code/com/uzery/fglib/extension/room_editor/ObjectVBoxRE.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FGLib_K/code/com/uzery/fglib/extension/room_editor/RoomEditor.kt" beforeDir="false" afterPath="$PROJECT_DIR$/FGLib_K/code/com/uzery/fglib/extension/room_editor/RoomEditor.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/FGLib_K/code/com/uzery/fglib/utils/data/file/WriteData.kt" beforeDir="false" afterPath="$PROJECT_DIR$/FGLib_K/code/com/uzery/fglib/utils/data/file/WriteData.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FGLib_K/code/com/uzery/fglib/utils/data/image/Data.kt" beforeDir="false" afterPath="$PROJECT_DIR$/FGLib_K/code/com/uzery/fglib/utils/data/image/Data.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FGLib_K/code/com/uzery/fglib/utils/math/getter/ClassGetter.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/FGLib_K/code/com/uzery/fglib/utils/math/getter/ClassGetterInstance.kt" beforeDir="false" afterPath="$PROJECT_DIR$/FGLib_K/code/com/uzery/fglib/utils/data/getter/ClassGetter.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FGLib_K/code/com/uzery/fglib/utils/math/getter/Drop.kt" beforeDir="false" afterPath="$PROJECT_DIR$/FGLib_K/code/com/uzery/fglib/utils/data/getter/Drop.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FGLib_K/code/com/uzery/fglib/utils/math/getter/value/DrawLayerValue.kt" beforeDir="false" afterPath="$PROJECT_DIR$/FGLib_K/code/com/uzery/fglib/utils/data/getter/value/DrawLayerValue.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FGLib_K/code/com/uzery/fglib/utils/math/getter/value/IntIValue.kt" beforeDir="false" afterPath="$PROJECT_DIR$/FGLib_K/code/com/uzery/fglib/utils/data/getter/value/IntIValue.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FGLib_K/code/com/uzery/fglib/utils/math/getter/value/ObjectValue.kt" beforeDir="false" afterPath="$PROJECT_DIR$/FGLib_K/code/com/uzery/fglib/utils/data/getter/value/ObjectValue.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FGLib_K/code/com/uzery/fglib/utils/math/getter/value/PosValue.kt" beforeDir="false" afterPath="$PROJECT_DIR$/FGLib_K/code/com/uzery/fglib/utils/data/getter/value/PosValue.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FGLib_K/code/com/uzery/fglib/utils/math/getter/value/SizeValue.kt" beforeDir="false" afterPath="$PROJECT_DIR$/FGLib_K/code/com/uzery/fglib/utils/data/getter/value/SizeValue.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FGLib_K/code/module-info.java" beforeDir="false" afterPath="$PROJECT_DIR$/FGLib_K/code/module-info.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -135,13 +119,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1680386967444</updated>
-    </task>
-    <task id="LOCAL-00011" summary="2.1">
-      <created>1682468851633</created>
-      <option name="number" value="00011" />
-      <option name="presentableId" value="LOCAL-00011" />
-      <option name="project" value="LOCAL" />
-      <updated>1682468851633</updated>
     </task>
     <task id="LOCAL-00012" summary="3.0">
       <created>1682786124295</created>
@@ -479,7 +456,14 @@
       <option name="project" value="LOCAL" />
       <updated>1687779584401</updated>
     </task>
-    <option name="localTasksCounter" value="60" />
+    <task id="LOCAL-00060" summary="FGLib v.0.5.10.0 [K]">
+      <created>1687864757044</created>
+      <option name="number" value="00060" />
+      <option name="presentableId" value="LOCAL-00060" />
+      <option name="project" value="LOCAL" />
+      <updated>1687864757044</updated>
+    </task>
+    <option name="localTasksCounter" value="61" />
     <servers />
   </component>
   <component name="UnknownFeatures">
@@ -509,7 +493,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="FGLib v.0.5.0.0 [K]" />
     <MESSAGE value="FGLib v.0.5.0.1 [K]" />
     <MESSAGE value="FGLib v.0.5.0.2 [K]" />
     <MESSAGE value="FGLib v.0.5.0.3 [K]" />
@@ -534,7 +517,8 @@
     <MESSAGE value="FGLib v.0.5.8.3 [K]" />
     <MESSAGE value="FGLib v.0.5.8.4 [K]" />
     <MESSAGE value="FGLib v.0.5.9.0 [K]" />
-    <option name="LAST_COMMIT_MESSAGE" value="FGLib v.0.5.9.0 [K]" />
+    <MESSAGE value="FGLib v.0.5.10.0 [K]" />
+    <option name="LAST_COMMIT_MESSAGE" value="FGLib v.0.5.10.0 [K]" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
