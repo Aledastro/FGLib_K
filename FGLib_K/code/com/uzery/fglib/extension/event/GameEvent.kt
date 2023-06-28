@@ -21,8 +21,6 @@ abstract class GameEvent: GameObject() {
 
     init {
         abilities.add(object: AbilityBox {
-            override fun activate(action: InputAction) = activate0(action)
-
             override fun run() {
                 if(!init) {
                     if(ready()) {
@@ -42,9 +40,5 @@ abstract class GameEvent: GameObject() {
                 }
             }
         })
-    }
-
-    open fun activate0(action: InputAction) {
-        /* #ignore */
     }
 }

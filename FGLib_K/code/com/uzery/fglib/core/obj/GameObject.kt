@@ -1,6 +1,7 @@
 package com.uzery.fglib.core.obj
 
 import com.uzery.fglib.core.obj.ability.AbilityBox
+import com.uzery.fglib.core.obj.ability.ActionListener
 import com.uzery.fglib.core.obj.ability.InputAction
 import com.uzery.fglib.core.obj.bounds.BoundsBox
 import com.uzery.fglib.core.obj.controller.Controller
@@ -14,20 +15,23 @@ import java.util.*
 
 abstract class GameObject {
     val stats = Stats()
-    val visuals = LinkedList<Visualiser>()
-    val modificators = LinkedList<Modificator>()
     val bounds = BoundsBox()
-    val abilities = LinkedList<AbilityBox>()
-    val properties = LinkedList<GameProperty>()
+
+    private var controller: Controller? = null
+    private var temp: TempAction? = null
+
+    internal val visuals = LinkedList<Visualiser>()
+    private val modificators = LinkedList<Modificator>()
+    internal val abilities = LinkedList<AbilityBox>()
+    private val listeners = LinkedList<ActionListener>()
+    private val properties = LinkedList<GameProperty>()
 
     val children = LinkedList<GameObject>()
     val grabbed = LinkedList<GameObject>()
     var owner: GameObject? = null
 
-    var controller: Controller? = null
-    private var temp: TempAction? = null
-
     private val tags = LinkedList<String>()
+    private val effects = LinkedList<TagEffect>()
 
     var name = "temp"
     val values = LinkedList<Any>()
@@ -37,6 +41,23 @@ abstract class GameObject {
 
     var object_time = 0
         private set
+
+
+    fun setController(controller: () -> () -> TempAction){
+        this.controller=Controller { controller() }
+    }
+    fun setController(controller: Controller){
+        this.controller=controller
+    }
+    fun addListener(listener: (InputAction) -> Unit) = listeners.add(ActionListener { listener(it) })
+    fun addListener(listener: ActionListener) = listeners.add(listener)
+    fun addAbility(ability: () -> Unit) = abilities.add(AbilityBox { ability() })
+    fun addAbility(ability: AbilityBox) = abilities.add(ability)
+    fun addProperty(property: () -> Unit) = properties.add(GameProperty { property() })
+    fun addProperty(property: GameProperty) = properties.add(property)
+    fun addMod(mod: () -> Unit) = modificators.add(Modificator { mod() })
+    fun addMod(mod: Modificator) = modificators.add(mod)
+    fun addVisual(visual: Visualiser) = visuals.add(visual)
 
     fun next() {
         if(object_time == 0) afterInit()
@@ -96,7 +117,7 @@ abstract class GameObject {
     }
 
     fun activate(action: InputAction) {
-        abilities.forEach { a -> a.activate(action) }
+        listeners.forEach { a -> a.activate(action) }
         temp?.activate(action)
     }
 
@@ -117,8 +138,6 @@ abstract class GameObject {
 
     fun tag(vararg tag: String) = tags.addAll(tag)
     fun tagged(tag: String) = tags.contains(tag)
-
-    private val effects = LinkedList<TagEffect>()
     fun addEffect(vararg effect: TagEffect) = effects.addAll(effect)
     fun effected(effect: String) = effects.any { a -> a.name == effect }
     fun effectedAny(vararg effect: String) = effect.any { eff -> effected(eff) }
