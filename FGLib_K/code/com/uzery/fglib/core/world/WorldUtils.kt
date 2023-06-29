@@ -34,14 +34,13 @@ interface WorldUtils {
 
             Platform.graphics.setStroke(1.0)
             for(i in 0 until BoundsBox.SIZE) {
-                val bs = o.bounds[i] ?: continue
-                for(el in bs().elements) {
-                    Platform.graphics.fill.draw(pos + o.stats.POS, el.shape, FGUtils.transparent(colors[i], 0.1))
-                    Platform.graphics.stroke.draw(pos + o.stats.POS, el.shape, FGUtils.transparent(colors[i], 0.6))
-                    Platform.graphics.stroke.line(
-                        pos + o.stats.POS + el.shape.L,
-                        el.shape.S,
-                        FGUtils.transparent(colors[i], 0.5))
+                val bs = o.bounds[i]
+                if(bs.isEmpty()) continue
+                for(el in bs.elements) {
+                    val shape=el.shape()?:continue
+                    Platform.graphics.fill.draw(pos + o.stats.POS, shape, FGUtils.transparent(colors[i], 0.1))
+                    Platform.graphics.stroke.draw(pos + o.stats.POS, shape, FGUtils.transparent(colors[i], 0.6))
+                    Platform.graphics.stroke.line(pos + o.stats.POS + shape.L, shape.S, FGUtils.transparent(colors[i], 0.5))
                 }
             }
         }
@@ -85,7 +84,7 @@ interface WorldUtils {
                 var bs_n = 0
                 room.objects.forEach {
                     val bs = it.bounds[index]
-                    if(bs != null) bs_n++
+                    if(!bs.isEmpty()) bs_n++
                 }
                 Platform.graphics.fill.text(
                     p + PointN(0, 70 + index*10), "bounds[${BoundsBox.name(index)}]: $bs_n", Color.DARKBLUE)

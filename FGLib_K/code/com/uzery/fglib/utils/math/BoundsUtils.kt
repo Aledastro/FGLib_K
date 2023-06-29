@@ -14,10 +14,9 @@ interface BoundsUtils {
 
             return stay.elements.minOf { stayE ->
                 move.elements.minOf { moveE ->
-                    CollisionUtils.maxMove(
-                        stayE.shape.copy(stay_pos),
-                        moveE.shape.copy(start_pos),
-                        moveE.shape.copy(start_pos + move_pos))
+                    val staySh=stayE.shape()?:return 1.0
+                    val moveSh=moveE.shape()?:return 1.0
+                    CollisionUtils.maxMove(staySh.copy(stay_pos), moveSh.copy(start_pos), moveSh.copy(start_pos + move_pos))
                 }
             }
         }

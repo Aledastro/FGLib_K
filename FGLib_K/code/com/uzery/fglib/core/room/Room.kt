@@ -3,14 +3,15 @@ package com.uzery.fglib.core.room
 import com.uzery.fglib.core.obj.GameObject
 import com.uzery.fglib.core.obj.ability.InputAction
 import com.uzery.fglib.core.obj.bounds.Bounds
+import com.uzery.fglib.core.obj.bounds.BoundsElement
 import com.uzery.fglib.core.obj.visual.Visualiser
+import com.uzery.fglib.utils.data.getter.value.PosValue
+import com.uzery.fglib.utils.data.getter.value.SizeValue
 import com.uzery.fglib.utils.math.BoundsUtils
 import com.uzery.fglib.utils.math.FGUtils
 import com.uzery.fglib.utils.math.ShapeUtils
 import com.uzery.fglib.utils.math.geom.PointN
 import com.uzery.fglib.utils.math.geom.RectN
-import com.uzery.fglib.utils.data.getter.value.PosValue
-import com.uzery.fglib.utils.data.getter.value.SizeValue
 import java.util.*
 import kotlin.math.sign
 
@@ -69,21 +70,22 @@ class Room(val pos: PointN, val size: PointN) {
         val pos = LinkedList<PointN>()
         objects.forEach {
             val bs = it.bounds.red
-            if(bs != null) {
-                red_bounds.add(bs())
+            if(!bs.isEmpty()) {
+                red_bounds.add(bs)
                 pos.add(it.stats.POS)
             }
         }
         for(obj in objects) {
             obj.stats.lPOS = obj.stats.POS
             if(obj.tagged("#immovable")) continue
-            val move_bs = obj.bounds.orange ?: continue
+            val move_bs = obj.bounds.orange
+            if(move_bs.isEmpty()) continue
 
             fun maxMove(move_p: PointN): Double {
                 if(red_bounds.isEmpty()) return 1.0
 
                 return red_bounds.indices.minOf {
-                    BoundsUtils.maxMove(red_bounds[it], move_bs(), pos[it], obj.stats.POS, move_p)
+                    BoundsUtils.maxMove(red_bounds[it], move_bs, pos[it], obj.stats.POS, move_p)
                 }
             }
 
@@ -106,12 +108,14 @@ class Room(val pos: PointN, val size: PointN) {
         for(o in objects) {
             if(o.tagged("#immovable")) continue
             o.stats.lPOS = o.stats.POS
-            val orange = o.bounds.orange ?: continue
+            val orange = o.bounds.orange
+            if(orange.isEmpty()) continue
 
             fun move(move_p: PointN): Double {
                 val mm = objects.minOf {
-                    val red = it.bounds.red ?: return 1.0
-                    BoundsUtils.maxMove(red(), orange(), it.stats.POS, o.stats.POS, move_p)
+                    val red = it.bounds.red
+                    if(red.isEmpty()) return 1.0
+                    BoundsUtils.maxMove(red, orange, it.stats.POS, o.stats.POS, move_p)
                 }
                 o.stats.POS += move_p*mm
                 return mm
@@ -128,71 +132,67 @@ class Room(val pos: PointN, val size: PointN) {
 
     private fun nextActivate() {
         //todo less code
-        for(b in objects) {
-            if(b.tagged("#inactive")) continue
 
-            val blue = b.bounds.blue ?: continue
-            for(m in objects) {
-                if(m.tagged("#inactive")) continue
-                val main = m.bounds.main ?: continue
-                blue().elements.forEach { blueE ->
-                    main().elements.forEach { mainE ->
-                        if(ShapeUtils.into(mainE.shape.copy(m.stats.POS), blueE.shape.copy(b.stats.POS))) {
-                            b.activate(
-                                InputAction(
-                                    InputAction.CODE.INTERRUPT,
-                                    "interrupt | ${blueE.name} ${mainE.name}",
-                                    m))
-                            m.activate(
-                                InputAction(
-                                    InputAction.CODE.INTERRUPT_I,
-                                    "interrupt_I | ${mainE.name} ${blueE.name}",
-                                    b))
-                        }
+        fun setActivate(
+            o1: GameObject,
+            sh1: BoundsElement,
+            o2: GameObject,
+            sh2: BoundsElement,
+            code: InputAction.CODE,
+            message: String,
+        ) {
+            val shape1 = sh1.shape() ?: return
+            val shape2 = sh2.shape() ?: return
+            if(ShapeUtils.into(shape1.copy(o1.stats.POS), shape2.copy(o2.stats.POS))) {
+                o1.activate(InputAction(code, "$message | ${sh1.name} ${sh2.name}", o2))
+            }
+        }
+
+        for(blueObj in objects) {
+            if(blueObj.tagged("#inactive")) continue
+
+            val blueBounds = blueObj.bounds.blue
+            if(blueBounds.isEmpty()) continue
+            for(mainObj in objects) {
+                if(mainObj.tagged("#inactive")) continue
+                val mainBounds = mainObj.bounds.main
+                if(mainBounds.isEmpty()) continue
+                blueBounds.elements.forEach { blueElement ->
+                    mainBounds.elements.forEach { mainElement ->
+                        setActivate(blueObj, blueElement, mainObj, mainElement, InputAction.CODE.INTERRUPT, "#interrupt")
+                        setActivate(mainObj, mainElement, blueObj, blueElement, InputAction.CODE.INTERRUPT_I, "#interrupt_I")
                     }
                 }
             }
         }
 
-        for(m in objects) {
-            if(!m.interact() || m.tagged("#inactive")) continue
-            val main = m.bounds.main ?: continue
-            for(g in objects) {
-                if(g.tagged("#inactive")) continue
-                val green = g.bounds.green ?: continue
-                green().elements.forEach { greenE ->
-                    main().elements.forEach { mainE ->
-                        if(ShapeUtils.into(mainE.shape.copy(m.stats.POS), greenE.shape.copy(g.stats.POS))) {
-                            g.activate(
-                                InputAction(
-                                    InputAction.CODE.INTERACT,
-                                    "interact | ${greenE.name} ${mainE.name}",
-                                    m))
-                            m.activate(
-                                InputAction(
-                                    InputAction.CODE.INTERACT_I,
-                                    "interact_I | ${mainE.name} ${greenE.name}",
-                                    g))
-                        }
+        for(mainObj in objects) {
+            if(!mainObj.interact() || mainObj.tagged("#inactive")) continue
+            val mainBounds = mainObj.bounds.main
+            if(mainBounds.isEmpty()) continue
+            for(greenObj in objects) {
+                if(greenObj.tagged("#inactive")) continue
+                val greenBounds = greenObj.bounds.green
+                if(greenBounds.isEmpty()) continue
+                greenBounds.elements.forEach { greenElement ->
+                    mainBounds.elements.forEach { mainElement ->
+                        setActivate(greenObj, greenElement, mainObj, mainElement, InputAction.CODE.INTERACT, "#interact")
+                        setActivate(mainObj, mainElement, greenObj, greenElement, InputAction.CODE.INTERACT_I, "#interact_I")
                     }
                 }
             }
         }
-        for(o1 in objects) {
-            if(o1.tagged("#inactive")) continue
-            val orange1 = o1.bounds.orange ?: continue
-            for(o2 in objects) {
-                if(o1 == o2 || o2.tagged("#inactive")) continue
-                val orange2 = o2.bounds.orange ?: continue
-                orange2().elements.forEach { orange2E ->
-                    orange1().elements.forEach { orange1E ->
-                        if(ShapeUtils.into(orange1E.shape.copy(o1.stats.POS), orange2E.shape.copy(o2.stats.POS))) {
-                            o1.activate(
-                                InputAction(
-                                    InputAction.CODE.IMPACT,
-                                    "impact | ${orange1E.name} ${orange2E.name}",
-                                    o2))
-                        }
+        for(obj1 in objects) {
+            if(obj1.tagged("#inactive")) continue
+            val bounds1 = obj1.bounds.orange
+            if(bounds1.isEmpty()) continue
+            for(obj2 in objects) {
+                if(obj1 == obj2 || obj2.tagged("#inactive")) continue
+                val bounds2 = obj2.bounds.orange
+                if(bounds2.isEmpty()) continue
+                bounds2.elements.forEach { element2 ->
+                    bounds1.elements.forEach { element1 ->
+                        setActivate(obj1, element1, obj2, element2, InputAction.CODE.IMPACT, "#impact")
                     }
                 }
             }

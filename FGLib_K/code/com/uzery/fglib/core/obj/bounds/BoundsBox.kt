@@ -1,35 +1,23 @@
 package com.uzery.fglib.core.obj.bounds
 
 class BoundsBox {
-    val bounds = Array<(() -> Bounds)?>(SIZE) { null }
+    val bounds = Array(SIZE) { Bounds() }
     operator fun get(index: Int) = bounds[index]
 
-    var red: (() -> Bounds)?
+    val red: Bounds
         get() = bounds[CODE.RED.ordinal]
-        set(value) {
-            bounds[CODE.RED.ordinal] = value
-        }
-    var orange: (() -> Bounds)?
+    val orange: Bounds
         get() = bounds[CODE.ORANGE.ordinal]
-        set(value) {
-            bounds[CODE.ORANGE.ordinal] = value
-        }
-    var blue: (() -> Bounds)?
+    val blue: Bounds
         get() = bounds[CODE.BLUE.ordinal]
-        set(value) {
-            bounds[CODE.BLUE.ordinal] = value
-        }
-    var green: (() -> Bounds)?
+    val green: Bounds
         get() = bounds[CODE.GREEN.ordinal]
-        set(value) {
-            bounds[CODE.GREEN.ordinal] = value
-        }
-    val main: (() -> Bounds)?
-        get() = if(red != null) red else orange
+    val main: Bounds
+        get() = if(red.isEmpty()) orange else red
 
 
     companion object {
-        private enum class CODE { RED, ORANGE, BLUE, GREEN }
+        enum class CODE { RED, ORANGE, BLUE, GREEN }
 
         fun name(index: Int) = CODE.values()[index].name
         fun index(name: String) = CODE.valueOf(name).ordinal

@@ -3,7 +3,10 @@ package com.uzery.fglib.core.obj
 import com.uzery.fglib.core.obj.ability.AbilityBox
 import com.uzery.fglib.core.obj.ability.ActionListener
 import com.uzery.fglib.core.obj.ability.InputAction
+import com.uzery.fglib.core.obj.bounds.Bounds
 import com.uzery.fglib.core.obj.bounds.BoundsBox
+import com.uzery.fglib.core.obj.bounds.BoundsBox.Companion.CODE
+import com.uzery.fglib.core.obj.bounds.BoundsElement
 import com.uzery.fglib.core.obj.controller.Controller
 import com.uzery.fglib.core.obj.controller.TempAction
 import com.uzery.fglib.core.obj.modificator.Modificator
@@ -11,6 +14,7 @@ import com.uzery.fglib.core.obj.property.GameProperty
 import com.uzery.fglib.core.obj.stats.Stats
 import com.uzery.fglib.core.obj.visual.Visualiser
 import com.uzery.fglib.utils.math.geom.PointN
+import com.uzery.fglib.utils.math.geom.Shape
 import java.util.*
 
 abstract class GameObject {
@@ -26,7 +30,7 @@ abstract class GameObject {
     private val listeners = LinkedList<ActionListener>()
     private val properties = LinkedList<GameProperty>()
 
-    val children = LinkedList<GameObject>()
+    internal val children = LinkedList<GameObject>()
     val grabbed = LinkedList<GameObject>()
     var owner: GameObject? = null
 
@@ -41,6 +45,26 @@ abstract class GameObject {
 
     var object_time = 0
         private set
+
+    private fun addBounds(code: CODE, vararg bs: BoundsElement) = bounds[code.ordinal].add(*bs)
+    private fun addBounds(code: CODE, shape: ()->Shape?) = bounds[code.ordinal].add(shape)
+    private fun addBounds(code: CODE, name: String, shape: ()->Shape?) = bounds[code.ordinal].add(BoundsElement(name, shape))
+
+    fun addRedBounds(vararg bs: BoundsElement) = addBounds(CODE.RED, *bs)
+    fun addRedBounds(shape: ()->Shape?) = addBounds(CODE.RED, shape)
+    fun addRedBounds(name: String, shape: ()->Shape?) = addBounds(CODE.RED, name, shape)
+
+    fun addOrangeBounds(vararg bs: BoundsElement) = addBounds(CODE.ORANGE, *bs)
+    fun addOrangeBounds(shape: ()->Shape?) = addBounds(CODE.ORANGE, shape)
+    fun addOrangeBounds(name: String, shape: ()->Shape?) = addBounds(CODE.ORANGE, name, shape)
+
+    fun addBlueBounds(vararg bs: BoundsElement) = addBounds(CODE.BLUE, *bs)
+    fun addBlueBounds(shape: ()->Shape?) = addBounds(CODE.BLUE, shape)
+    fun addBlueBounds(name: String, shape: ()->Shape?) = addBounds(CODE.BLUE, name, shape)
+
+    fun addGreenBounds(vararg bs: BoundsElement) = addBounds(CODE.GREEN, *bs)
+    fun addGreenBounds(shape: ()->Shape?) = addBounds(CODE.GREEN, shape)
+    fun addGreenBounds(name: String, shape: ()->Shape?) = addBounds(CODE.GREEN, name, shape)
 
 
     fun setController(controller: () -> () -> TempAction){
