@@ -148,6 +148,7 @@ abstract class GameObject {
     open fun interact() = false
 
     fun collapse() {
+        if(dead) return
         onDeath()
         dead = true
     }
