@@ -18,6 +18,8 @@ abstract class GameEvent: GameObject() {
     abstract fun ends(): Boolean
 
     private var init = false
+    protected var event_time=0
+        private set
 
     init {
         abilities.add(object: AbilityBox {
@@ -38,6 +40,7 @@ abstract class GameEvent: GameObject() {
                         collapse()
                     }
                 }
+                event_time++
             }
         })
     }

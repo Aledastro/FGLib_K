@@ -19,7 +19,7 @@ import java.util.*
 
 abstract class GameObject {
     val stats = Stats()
-    val bounds = BoundsBox()
+    var bounds = BoundsBox()
 
     private var controller: Controller? = null
     private var temp: TempAction? = null
@@ -106,8 +106,12 @@ abstract class GameObject {
 
     fun draw(draw_pos: PointN) = visuals.forEach { it.draw(draw_pos) }
 
-    protected fun produce(vararg os: GameObject) = children.addAll(os)
-    protected fun produce(os: List<GameObject>) = children.addAll(os)
+    protected fun produce(vararg os: GameObject){
+        children.addAll(os)
+    }
+    protected fun produce(os: List<GameObject>){
+        children.addAll(os)
+    }
 
     fun grab(vararg os: GameObject) {
         grabbed.addAll(os)

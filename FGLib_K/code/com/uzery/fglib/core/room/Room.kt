@@ -13,12 +13,14 @@ import com.uzery.fglib.utils.math.ShapeUtils
 import com.uzery.fglib.utils.math.geom.PointN
 import com.uzery.fglib.utils.math.geom.RectN
 import java.util.*
+import kotlin.collections.HashSet
 import kotlin.math.sign
 
 class Room(val pos: PointN, val size: PointN) {
     //todo private
     val objects = LinkedList<GameObject>()
     private val new_objects = ArrayList<GameObject>()
+    private val old_objects = HashSet<GameObject>()
 
     val main = RectN(pos, size)
 
@@ -39,6 +41,8 @@ class Room(val pos: PointN, val size: PointN) {
 
         objects.removeIf { it.dead || it.owner != null }
 
+        objects.removeAll(old_objects)
+        old_objects.clear()
     }
 
     fun draw(draw_pos: PointN) {
@@ -63,7 +67,7 @@ class Room(val pos: PointN, val size: PointN) {
 
     //todo remove from objects not new_objects
     fun add(obj: GameObject) = new_objects.add(obj)
-    fun remove(obj: GameObject) = objects.remove(obj)
+    fun remove(obj: GameObject) = old_objects.add(obj)
 
     private fun nextMoveOld() {
         val red_bounds = LinkedList<Bounds>()
