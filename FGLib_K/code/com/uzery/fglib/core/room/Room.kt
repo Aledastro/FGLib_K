@@ -66,8 +66,11 @@ class Room(val pos: PointN, val size: PointN) {
 
 
     //todo remove from objects not new_objects
-    fun add(obj: GameObject) = new_objects.add(obj)
-    fun remove(obj: GameObject) = old_objects.add(obj)
+    fun add(vararg objs: GameObject) = new_objects.addAll(objs)
+    fun remove(vararg objs: GameObject) = old_objects.addAll(objs)
+
+    fun add(objs: List<GameObject>) = new_objects.addAll(objs)
+    fun remove(objs: List<GameObject>) = old_objects.addAll(objs)
 
     private fun nextMoveOld() {
         val red_bounds = LinkedList<Bounds>()
