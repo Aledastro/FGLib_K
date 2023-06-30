@@ -12,6 +12,10 @@ enum class Direct(private val x: Int, private val y: Int) {
 
     operator fun plus(dir: Direct) = from(x + dir.x, y + dir.y)
 
+    operator fun minus(dir: Direct) = from(x - dir.x, y - dir.y)
+
+    operator fun unaryMinus() = from(-x, -y)
+
     companion object{
         fun from(x: Int, y: Int): Direct {
             when(IntI(x.coerceIn(-1, 1), y.coerceIn(-1, 1))) {

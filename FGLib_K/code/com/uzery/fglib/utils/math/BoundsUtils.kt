@@ -14,9 +14,12 @@ interface BoundsUtils {
 
             return stay.elements.minOf { stayE ->
                 move.elements.minOf { moveE ->
-                    val staySh=stayE.shape()?:return 1.0
-                    val moveSh=moveE.shape()?:return 1.0
-                    CollisionUtils.maxMove(staySh.copy(stay_pos), moveSh.copy(start_pos), moveSh.copy(start_pos + move_pos))
+                    if(stayE.shape()==null || moveE.shape()==null) 1.0
+                    else{
+                        val staySh=stayE.shape()!!
+                        val moveSh=moveE.shape()!!
+                        CollisionUtils.maxMove(staySh.copy(stay_pos), moveSh.copy(start_pos), moveSh.copy(start_pos + move_pos))
+                    }
                 }
             }
         }
