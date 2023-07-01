@@ -25,11 +25,7 @@ class UIBox: Extension {
         list.forEach { it.update() }
 
         list.forEach {
-            if(!it.visible) return
-            graphics.fill.rect(
-                it.pos,
-                it.size,
-                FGUtils.transparent(Color.DARKBLUE, 0.1))
+            if(it.visible) graphics.fill.rect(it.pos, it.size, FGUtils.transparent(Color.DARKBLUE, 0.1))
         }
         if(active != null) {
             graphics.setStroke(1.5)
