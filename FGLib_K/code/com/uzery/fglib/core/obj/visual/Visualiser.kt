@@ -8,6 +8,8 @@ import com.uzery.fglib.utils.math.geom.PointN
 interface Visualiser {
     fun draw(draw_pos: PointN)
 
-    fun agc(): AffineGraphics = Platform.graphics
+    val agc: AffineGraphics
+        get() = Platform.graphics
+
     fun drawLayer(): DrawLayer
 }

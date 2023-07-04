@@ -59,7 +59,7 @@ class Room(val pos: PointN, val size: PointN) {
             }
         }
         vis.forEach { visual ->
-            visual.agc().layer = visual.drawLayer()
+            visual.agc.layer = visual.drawLayer()
             visual.draw(draw_pos + pos_map[visual]!!)
         }
     }
