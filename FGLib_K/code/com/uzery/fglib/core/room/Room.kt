@@ -5,6 +5,7 @@ import com.uzery.fglib.core.obj.ability.InputAction
 import com.uzery.fglib.core.obj.bounds.Bounds
 import com.uzery.fglib.core.obj.bounds.BoundsElement
 import com.uzery.fglib.core.obj.visual.Visualiser
+import com.uzery.fglib.utils.data.file.ConstL
 import com.uzery.fglib.utils.data.getter.value.PosValue
 import com.uzery.fglib.utils.data.getter.value.SizeValue
 import com.uzery.fglib.utils.math.BoundsUtils
@@ -98,7 +99,7 @@ class Room(val pos: PointN, val size: PointN) {
 
             fun move(move_p: PointN): Double {
                 val mm = maxMove(move_p)
-                obj.stats.POS += move_p*mm*0.999
+                obj.stats.POS += move_p*mm*(1-ConstL.LITTLE)
                 return mm
             }
 

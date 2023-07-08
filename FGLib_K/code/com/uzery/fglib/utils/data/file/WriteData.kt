@@ -1,17 +1,17 @@
 package com.uzery.fglib.utils.data.file
 
 import com.uzery.fglib.utils.data.debug.DebugData
+import com.uzery.fglib.utils.data.file.ConstL.Companion.BUFFER_FORMAT
+import com.uzery.fglib.utils.data.file.ConstL.Companion.RUN_JAR
 import java.io.*
 import java.util.stream.Collectors
 
 interface WriteData {
     companion object {
         var directory = ""
-        private const val RUN_JAR = false
-        private const val BUFFER_FORMAT = "UTF-8"
 
         operator fun get(filename: String): ArrayList<String> {
-            return getReader("${directory}$filename").lines().collect(Collectors.toCollection { ArrayList() })
+            return getReader(resolvePath(filename)).lines().collect(Collectors.toCollection { ArrayList() })
         }
 
         fun write(filename: String, write: String) {
@@ -89,5 +89,9 @@ interface WriteData {
         fun errorStream(): PrintStream {
             return PrintStream(outFileStream("C:/com.uzery.fglib.utils.data.image.Data/!errors.txt"))
         }
+        private fun resolvePath(name: String): String {
+            return "$directory$name".replace("/", File.separator)
+        }
+
     }
 }

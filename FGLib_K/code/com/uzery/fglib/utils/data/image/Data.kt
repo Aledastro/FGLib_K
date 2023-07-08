@@ -4,6 +4,7 @@ import com.uzery.fglib.utils.data.debug.DebugData
 import com.uzery.fglib.utils.math.FGUtils
 import com.uzery.fglib.utils.math.num.IntI
 import javafx.scene.image.Image
+import java.io.File
 
 class Data {
     companion object {
@@ -44,25 +45,18 @@ class Data {
             return combinations[name]?.get(pos) ?: throw DebugData.error("no combination from: $name $pos")
         }
 
+        val dictionary = HashMap<String, String>()
+
         private fun resolvePath(name: String): String {
-            //todo move from fglib to project files
             var local_path = ""
             var last = name
             if(name.indexOf('|') != -1) {
-                local_path = when(FGUtils.subBefore(name, "|")) {
-                    "wld" -> "world/"
-                    "map" -> "world/map/"
-                    "mob" -> "world/enemy/"
-                    "char" -> "world/character/"
-                    "item" -> "world/items/"
-                    "ui" -> "ui/"
-                    else -> ""
-                }
+                local_path = dictionary[FGUtils.subBefore(name, "|")].orEmpty()
                 last = if(name.indexOf('|') + 1<0) name
                 else FGUtils.subAfter(name, "|")
             }
 
-            return "$directory$local_path$last".replace('/', '\\')
+            return "$directory$local_path$last".replace("/", File.separator)
         }
     }
 }

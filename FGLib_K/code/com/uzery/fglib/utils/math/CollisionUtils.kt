@@ -1,5 +1,6 @@
 package com.uzery.fglib.utils.math
 
+import com.uzery.fglib.utils.data.file.ConstL.Companion.LITTLE
 import com.uzery.fglib.utils.math.ShapeUtils.Companion.rect
 import com.uzery.fglib.utils.math.geom.PointN
 import com.uzery.fglib.utils.math.geom.RectN
@@ -10,8 +11,6 @@ import kotlin.math.min
 
 interface CollisionUtils {
     companion object {
-        private const val LITTLE = 0.00001
-
         fun maxMove(stay: Shape, start: Shape, finish: Shape): Double {
             if(!intoX(stay, start, finish)) return 1.0
 
