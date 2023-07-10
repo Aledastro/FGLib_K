@@ -2,6 +2,7 @@ package com.uzery.fglib.extension.room_editor
 
 import com.uzery.fglib.core.obj.DrawLayer
 import com.uzery.fglib.core.obj.GameObject
+import com.uzery.fglib.core.obj.visual.Visualiser
 import com.uzery.fglib.core.program.Extension
 import com.uzery.fglib.core.program.Platform
 import com.uzery.fglib.core.program.Platform.Companion.CANVAS
@@ -33,6 +34,10 @@ import java.util.*
 
 class RoomEditor(private val getter: ClassGetter<GameObject>, private vararg val filenames: String): Extension {
     override fun children() = LinkedList<Extension>().apply { add(UIBox()) }
+
+    val layers = LinkedList<DrawLayer>()
+    private val select_layer: Int
+        get() = layers_vbox.select
 
     private lateinit var edit: Room
     private val OFFSET = 40.0
@@ -148,7 +153,7 @@ class RoomEditor(private val getter: ClassGetter<GameObject>, private vararg val
             groups_map[name] = list
         }
 
-        fun getName(entry: StringN): StringN{
+        fun getName(entry: StringN): StringN {
             if(!entry.s.contains("#")) {
                 return entry
             }
@@ -164,8 +169,8 @@ class RoomEditor(private val getter: ClassGetter<GameObject>, private vararg val
         for(i in groups_map.keys) {
             groupsValues.add(LinkedList())
         }
-        for((id, key) in groups_map.keys.withIndex()){
-            val value=groups_map[key]!!
+        for((id, key) in groups_map.keys.withIndex()) {
+            val value = groups_map[key]!!
             groupsValues[id].addAll(value)
             names.add(getName(key))
         }
@@ -223,7 +228,28 @@ class RoomEditor(private val getter: ClassGetter<GameObject>, private vararg val
             World.draw(draw_pos - edit.pos)
             Platform.global_alpha = 1.0
 
-            edit.draw(draw_pos)
+            if(select_layer == 0) {
+                edit.draw(draw_pos)
+            } else {
+                Platform.global_alpha = 0.5
+                edit.draw(draw_pos)
+                Platform.global_alpha = 1.0
+
+                val visuals = ArrayList<Visualiser>()
+                val pos_map = HashMap<Visualiser, PointN>()
+                edit.objects.forEach { obj ->
+                    obj.visuals.forEach { vis ->
+                        if(vis.drawLayer() == layers[select_layer - 1]) {
+                            pos_map[vis] = obj.stats.POS
+                            visuals.add(vis)
+                        }
+                    }
+                }
+                Room.drawVisuals(draw_pos, visuals, pos_map)
+
+                edit.objects.forEach { it.visuals }
+            }
+
 
             if(draw_bounds) WorldUtils.drawBounds(edit, draw_pos)
 
@@ -282,19 +308,19 @@ class RoomEditor(private val getter: ClassGetter<GameObject>, private vararg val
         private var last_mouse_pos = PointN.ZERO
 
         override fun update() {
-
             last_mouse_pos = mouse.pos()
             if(keyboard.pressed(KeyCode.CONTROL) && keyboard.inPressed(KeyCode.TAB)) draw_bounds = !draw_bounds
         }
 
-        var lastPOS = PointN.ZERO
         private fun checkForAdd() {
             if(mouse_keys.pressed(MouseButton.PRIMARY)) {
                 val o = getter.getEntry(objects_vbox.chosen())()
+                if(select_layer != 0 && o.visuals.all { vis -> vis.drawLayer() != layers[select_layer - 1] }) return
                 val pp = (mouse.pos()/scale - draw_pos).round(GRID) + grid_offset[grid_offset_id]
-                if(lastPOS == pp) return
+
                 o.stats.POS = pp
-                lastPOS = pp
+                if(edit.objects.any { it.equalsS(o) }) return
+
                 edit.objects.add(o)
                 select_obj = o
             }
@@ -303,10 +329,9 @@ class RoomEditor(private val getter: ClassGetter<GameObject>, private vararg val
         private fun checkForRemove() {
             if(mouse_keys.pressed(MouseButton.SECONDARY)) {
                 val sel = getter.getEntry(objects_vbox.chosen())()
-                sel.setValues()
                 edit.objects.removeIf { o ->
-                    o.setValues()
-                    (o.stats.POS.lengthTo(mouse.pos()/scale - draw_pos))<=GRID/2 && sel.name == o.name
+                    (o.stats.POS.lengthTo(mouse.pos()/scale - draw_pos))<=GRID/2 && sel.equalsName(o) &&
+                            (select_layer == 0 || o.visuals.any { vis -> vis.drawLayer() == layers[select_layer - 1] })
                 }
                 if(!edit.objects.contains(select_obj)) select_obj = null
             }
@@ -324,30 +349,31 @@ class RoomEditor(private val getter: ClassGetter<GameObject>, private vararg val
         }
     }
 
-    private var layers_vbox = object: VBox(12, 12) {
+    private var layers_vbox = object: VBox(0, 24) {
+        override val full: Int
+            get() = layers.size + 1
+
+        override val rows: Int
+            get() = layers.size + 1
+
         override val pos
             get() = (CANVAS - size)*PointN(0.5, 1.0) + PointN(0.0, -OFFSET)
         override val window: RectN
             get() = CANVAS_R
         override val sizeOne: PointN
-            get() = PointN(50, 50)/scale
+            get() = PointN(78, 56)/scale
 
         override fun setNames(id: Int): String {
-            return when(id) {
-                0 -> "ALL"
-                full - 1 -> "etc layers"
-                else -> "layer $id"
-            }
+            return ""
         }
 
         override fun draw(pos: PointN, id: Int) {
-            graphics.fill.font = Font.font("TimesNewRoman", FontWeight.BOLD, 22.0)
+            graphics.fill.font = Font.font("TimesNewRoman", FontWeight.EXTRA_BOLD, 22.0)
             val name = when(id) {
                 0 -> "ALL"
-                full - 1 -> "R"
-                else -> "L$id"
+                else -> layers[id - 1].name
             }
-            graphics.fill.textC(pos + PointN(0, 9), name, Color.DARKBLUE)
+            graphics.fill.textC(pos + PointN(0, 4), name, Color.DARKBLUE)
         }
     }
 
@@ -356,6 +382,7 @@ class RoomEditor(private val getter: ClassGetter<GameObject>, private vararg val
             val res = LinkedList<String>()
 
             res.add("room: ${filenames[edit_n]}")
+            res.add("objects size: ${edit.objects.size}")
             res.add("")
 
 

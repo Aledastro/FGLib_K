@@ -23,7 +23,7 @@ abstract class GameObject {
     private var controller: Controller? = null
     private var temp: TempAction? = null
 
-    internal val visuals = LinkedList<Visualiser>()
+    val visuals = LinkedList<Visualiser>()
     private val modificators = LinkedList<Modificator>()
     internal val abilities = LinkedList<AbilityBox>()
     private val listeners = LinkedList<ActionListener>()
@@ -174,4 +174,14 @@ abstract class GameObject {
     fun effected(effect: String) = effects.any { a -> a.name == effect }
     fun effectedAny(vararg effect: String) = effect.any { eff -> effected(eff) }
     fun effectedAll(vararg effect: String) = effect.all { eff -> effected(eff) }
+    fun equalsS(other: GameObject): Boolean {
+        this.setValues()
+        other.setValues()
+        return this.toString()==other.toString()
+    }
+    fun equalsName(other: GameObject): Boolean {
+        this.setValues()
+        other.setValues()
+        return this.name==other.name
+    }
 }

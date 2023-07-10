@@ -1,3 +1,3 @@
 FGLib K
 
-release FGLib v.0.5.12.10 [K]
+release FGLib v.0.6.0.0 [K]

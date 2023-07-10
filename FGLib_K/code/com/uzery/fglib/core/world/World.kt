@@ -13,7 +13,6 @@ import com.uzery.fglib.utils.math.FGUtils
 import com.uzery.fglib.utils.math.geom.PointN
 import javafx.scene.paint.Color
 import java.util.*
-import kotlin.math.sign
 
 interface World {
     companion object {
@@ -74,15 +73,7 @@ interface World {
                     obj.visuals.forEach { pos_map[it] = obj.stats.POS + room.pos }
                 }
             }
-            vis.sortWith { v1, v2 ->
-                when {
-                    v1.drawLayer().sort != v2.drawLayer().sort -> (v1.drawLayer().sort - v2.drawLayer().sort).toInt()
-                    else -> sign(pos_map[v1]!!.Y - pos_map[v2]!!.Y).toInt()
-                }
-            }
-            vis.forEach { visual ->
-                visual.drawWithDefaults(pos + pos_map[visual]!!)
-            }
+            Room.drawVisuals(pos, vis, pos_map)
         }
 
         private fun drawRoomsOld(pos: PointN) {

@@ -9,7 +9,7 @@ import javafx.scene.text.Font
 import javafx.scene.text.FontWeight
 import java.util.*
 
-abstract class VBox(protected open val full: Int, protected val rows: Int): UIElement() {
+abstract class VBox(protected open val full: Int, protected open val rows: Int): UIElement() {
     abstract val sizeOne: PointN
     private val offset
         get() = sizeOne/5
@@ -28,6 +28,7 @@ abstract class VBox(protected open val full: Int, protected val rows: Int): UIEl
     var value = false
 
     var select = 0
+        get()=field.coerceIn(0 until full)
 
     abstract fun setNames(id: Int): String
 

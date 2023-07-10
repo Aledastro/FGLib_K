@@ -73,11 +73,6 @@ abstract class ClassGetter<Type> {
     protected val boolean: Boolean
         get() = if(no_info) false else input[in_id++][0].toBoolean()
 
-    /*protected val type: TypeValue
-        get() {
-            val i = in_id++
-            return if(input[i].size == 1) TypeValue(input[i][0]) else TypeValue(string, int,int,int,int)
-        }*/
     protected val color: Color
         get() = if(no_info) Color.BLACK else Color.color(double, doubleX(1), doubleX(2), doubleX(3))
     protected val pos: PointN
