@@ -58,7 +58,6 @@ class RoomEditor(private val getter: ClassGetter<GameObject>, private vararg val
         checkForSave()
 
         checkForEditN()
-        //world.room.objs().removeIf {o->o.tagged("player")}
     }
 
     private fun checkForEditN() {

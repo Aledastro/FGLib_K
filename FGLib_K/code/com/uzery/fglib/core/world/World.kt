@@ -81,8 +81,7 @@ interface World {
                 }
             }
             vis.forEach { visual ->
-                visual.agc.layer = visual.drawLayer()
-                visual.draw(pos + pos_map[visual]!!)
+                visual.drawWithDefaults(pos + pos_map[visual]!!)
             }
         }
 

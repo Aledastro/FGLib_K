@@ -36,10 +36,10 @@ class Platform {
         val CANVAS
             get() = WINDOW/scale
 
-        var global_alpha: Double = 0.0
-            set(alpha) {
-                gc.globalAlpha = alpha
-                field = alpha
+        var global_alpha = 1.0
+            set(input) {
+                gc.globalAlpha = input*Platform.global_alpha
+                field = input
             }
 
         val CANVAS_R
