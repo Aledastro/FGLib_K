@@ -14,7 +14,6 @@ import com.uzery.fglib.utils.math.ShapeUtils
 import com.uzery.fglib.utils.math.geom.PointN
 import com.uzery.fglib.utils.math.geom.RectN
 import java.util.*
-import kotlin.collections.HashSet
 import kotlin.math.sign
 
 class Room(val pos: PointN, val size: PointN) {
@@ -99,7 +98,7 @@ class Room(val pos: PointN, val size: PointN) {
 
             fun move(move_p: PointN): Double {
                 val mm = maxMove(move_p)
-                obj.stats.POS += move_p*mm*(1-ConstL.LITTLE)
+                obj.stats.POS += move_p*mm*(1 - ConstL.LITTLE)
                 return mm
             }
 
@@ -167,8 +166,20 @@ class Room(val pos: PointN, val size: PointN) {
                 if(mainBounds.isEmpty()) continue
                 blueBounds.elements.forEach { blueElement ->
                     mainBounds.elements.forEach { mainElement ->
-                        setActivate(blueObj, blueElement, mainObj, mainElement, InputAction.CODE.INTERRUPT, "#interrupt")
-                        setActivate(mainObj, mainElement, blueObj, blueElement, InputAction.CODE.INTERRUPT_I, "#interrupt_I")
+                        setActivate(
+                            blueObj,
+                            blueElement,
+                            mainObj,
+                            mainElement,
+                            InputAction.CODE.INTERRUPT,
+                            "#interrupt")
+                        setActivate(
+                            mainObj,
+                            mainElement,
+                            blueObj,
+                            blueElement,
+                            InputAction.CODE.INTERRUPT_I,
+                            "#interrupt_I")
                     }
                 }
             }
@@ -184,8 +195,20 @@ class Room(val pos: PointN, val size: PointN) {
                 if(greenBounds.isEmpty()) continue
                 greenBounds.elements.forEach { greenElement ->
                     mainBounds.elements.forEach { mainElement ->
-                        setActivate(greenObj, greenElement, mainObj, mainElement, InputAction.CODE.INTERACT, "#interact")
-                        setActivate(mainObj, mainElement, greenObj, greenElement, InputAction.CODE.INTERACT_I, "#interact_I")
+                        setActivate(
+                            greenObj,
+                            greenElement,
+                            mainObj,
+                            mainElement,
+                            InputAction.CODE.INTERACT,
+                            "#interact")
+                        setActivate(
+                            mainObj,
+                            mainElement,
+                            greenObj,
+                            greenElement,
+                            InputAction.CODE.INTERACT_I,
+                            "#interact_I")
                     }
                 }
             }

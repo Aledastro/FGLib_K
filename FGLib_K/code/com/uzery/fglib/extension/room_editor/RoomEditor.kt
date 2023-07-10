@@ -22,6 +22,7 @@ import com.uzery.fglib.utils.math.FGUtils
 import com.uzery.fglib.utils.math.MathUtils
 import com.uzery.fglib.utils.math.geom.PointN
 import com.uzery.fglib.utils.math.geom.RectN
+import com.uzery.fglib.utils.math.num.StringN
 import javafx.scene.Cursor
 import javafx.scene.input.KeyCode
 import javafx.scene.input.MouseButton
@@ -121,6 +122,7 @@ class RoomEditor(private val getter: ClassGetter<GameObject>, private vararg val
             }
         }*/
         World.next()
+        init0()
     }
 
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -128,6 +130,51 @@ class RoomEditor(private val getter: ClassGetter<GameObject>, private vararg val
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    private val entries = LinkedList<StringN>()
+    private val names = LinkedList<StringN>()
+    private val ids = TreeMap<StringN, Int>()
+    private val groupsValues = LinkedList<LinkedList<StringN>>()
+    private val groupsSelect = LinkedList<Int>()
+    private fun init0() {
+        entries.addAll(Array(getter.entry_size()) { getter.getEntryName(it) })
+
+        for(id in entries.indices) ids[entries[id]] = id
+
+        val groups_map = TreeMap<StringN, LinkedList<StringN>>()
+
+        fun addNewEntry(name: StringN, entry: StringN) {
+            val list = LinkedList<StringN>()
+            list.add(entry)
+            groups_map[name] = list
+        }
+
+        fun getName(entry: StringN): StringN{
+            if(!entry.s.contains("#")) {
+                return entry
+            }
+            return StringN(FGUtils.subBefore(entry.s, "#"), entry.n)
+        }
+
+        for(entry in entries) {
+            val name = getName(entry)
+            if(groups_map[name] == null) addNewEntry(name, entry)
+            else groups_map[name]?.add(entry)
+        }
+
+        for(i in groups_map.keys) {
+            groupsValues.add(LinkedList())
+        }
+        for((id, key) in groups_map.keys.withIndex()){
+            val value=groups_map[key]!!
+            groupsValues[id].addAll(value)
+            names.add(getName(key))
+        }
+
+        for(i in groupsValues.indices) {
+            groupsSelect.add(0)
+        }
+    }
 
     private var select_obj: GameObject? = null
 
@@ -153,7 +200,7 @@ class RoomEditor(private val getter: ClassGetter<GameObject>, private vararg val
 
     private val obj = object: DataGetterRE() {
         override fun get(): DataRE {
-            return DataRE(draw_pos, edit, OFFSET, getter, GRID, GRID_P)
+            return DataRE(draw_pos, edit, OFFSET, getter, GRID, GRID_P, entries, names, ids, groupsValues, groupsSelect)
         }
     }
 

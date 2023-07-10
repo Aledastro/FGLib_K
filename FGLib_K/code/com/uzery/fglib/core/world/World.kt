@@ -8,9 +8,9 @@ import com.uzery.fglib.core.program.Platform.Companion.graphics
 import com.uzery.fglib.core.room.Room
 import com.uzery.fglib.utils.data.debug.DebugData
 import com.uzery.fglib.utils.data.file.WriteData
+import com.uzery.fglib.utils.data.getter.ClassGetter
 import com.uzery.fglib.utils.math.FGUtils
 import com.uzery.fglib.utils.math.geom.PointN
-import com.uzery.fglib.utils.data.getter.ClassGetter
 import javafx.scene.paint.Color
 import java.util.*
 import kotlin.math.sign

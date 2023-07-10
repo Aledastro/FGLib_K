@@ -23,11 +23,8 @@ abstract class ClassGetter<Type> {
         input = args
         in_id = 0
         no_info = false
-        return map[StringN(name,args.size)] ?: throw DebugData.error("ERROR getMark(): $name | $args")
+        return map[StringN(name, args.size)] ?: throw DebugData.error("ERROR getMark(): $name | $args")
     }
-
-
-
 
 
     ////////////////////////////////////////////////////////////////////////////////

@@ -89,6 +89,7 @@ interface WriteData {
         fun errorStream(): PrintStream {
             return PrintStream(outFileStream("C:/com.uzery.fglib.utils.data.image.Data/!errors.txt"))
         }
+
         private fun resolvePath(name: String): String {
             return "$directory$name".replace("/", File.separator)
         }

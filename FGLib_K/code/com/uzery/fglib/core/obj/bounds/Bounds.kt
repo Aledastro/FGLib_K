@@ -18,16 +18,16 @@ class Bounds {
     fun main(): RectN? {
         if(isEmpty()) return null
 
-        var min=PointN.ZERO
-        var max=PointN.ZERO
-        var first=true
+        var min = PointN.ZERO
+        var max = PointN.ZERO
+        var first = true
 
         for(element in elements) {
-            val shape = element.shape()?:continue
-            if(first){
+            val shape = element.shape() ?: continue
+            if(first) {
                 min = shape.L
                 max = shape.R
-                first=false
+                first = false
             }
             min = PointN.transform(min, shape.L) { a, b -> min(a, b) }
             max = PointN.transform(max, shape.R) { a, b -> max(a, b) }

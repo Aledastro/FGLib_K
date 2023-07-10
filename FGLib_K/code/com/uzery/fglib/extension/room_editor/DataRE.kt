@@ -4,6 +4,8 @@ import com.uzery.fglib.core.obj.GameObject
 import com.uzery.fglib.core.room.Room
 import com.uzery.fglib.utils.data.getter.ClassGetter
 import com.uzery.fglib.utils.math.geom.PointN
+import com.uzery.fglib.utils.math.num.StringN
+import java.util.*
 
 data class DataRE(
     val draw_pos: PointN,
@@ -12,4 +14,9 @@ data class DataRE(
     val getter: ClassGetter<GameObject>,
     val GRID: Double,
     val GRID_P: PointN,
+    val entries: LinkedList<StringN>,
+    val names: LinkedList<StringN>,
+    val ids: TreeMap<StringN, Int>,
+    val groupsValues: LinkedList<LinkedList<StringN>>,
+    val groupsSelect: LinkedList<Int>,
 )

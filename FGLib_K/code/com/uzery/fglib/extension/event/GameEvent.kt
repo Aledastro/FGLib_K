@@ -2,7 +2,6 @@ package com.uzery.fglib.extension.event
 
 import com.uzery.fglib.core.obj.GameObject
 import com.uzery.fglib.core.obj.ability.AbilityBox
-import com.uzery.fglib.core.obj.ability.InputAction
 
 abstract class GameEvent: GameObject() {
     var repeatable = false
@@ -18,7 +17,7 @@ abstract class GameEvent: GameObject() {
     abstract fun ends(): Boolean
 
     private var init = false
-    protected var event_time=0
+    protected var event_time = 0
         private set
 
     init {

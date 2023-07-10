@@ -3,7 +3,6 @@ package com.uzery.fglib.core.obj
 import com.uzery.fglib.core.obj.ability.AbilityBox
 import com.uzery.fglib.core.obj.ability.ActionListener
 import com.uzery.fglib.core.obj.ability.InputAction
-import com.uzery.fglib.core.obj.bounds.Bounds
 import com.uzery.fglib.core.obj.bounds.BoundsBox
 import com.uzery.fglib.core.obj.bounds.BoundsBox.Companion.CODE
 import com.uzery.fglib.core.obj.bounds.BoundsElement
@@ -47,32 +46,35 @@ abstract class GameObject {
         private set
 
     private fun addBounds(code: CODE, vararg bs: BoundsElement) = bounds[code.ordinal].add(*bs)
-    private fun addBounds(code: CODE, shape: ()->Shape?) = bounds[code.ordinal].add(shape)
-    private fun addBounds(code: CODE, name: String, shape: ()->Shape?) = bounds[code.ordinal].add(BoundsElement(name, shape))
+    private fun addBounds(code: CODE, shape: () -> Shape?) = bounds[code.ordinal].add(shape)
+    private fun addBounds(code: CODE, name: String, shape: () -> Shape?) =
+        bounds[code.ordinal].add(BoundsElement(name, shape))
 
     fun addRedBounds(vararg bs: BoundsElement) = addBounds(CODE.RED, *bs)
-    fun addRedBounds(shape: ()->Shape?) = addBounds(CODE.RED, shape)
-    fun addRedBounds(name: String, shape: ()->Shape?) = addBounds(CODE.RED, name, shape)
+    fun addRedBounds(shape: () -> Shape?) = addBounds(CODE.RED, shape)
+    fun addRedBounds(name: String, shape: () -> Shape?) = addBounds(CODE.RED, name, shape)
 
     fun addOrangeBounds(vararg bs: BoundsElement) = addBounds(CODE.ORANGE, *bs)
-    fun addOrangeBounds(shape: ()->Shape?) = addBounds(CODE.ORANGE, shape)
-    fun addOrangeBounds(name: String, shape: ()->Shape?) = addBounds(CODE.ORANGE, name, shape)
+    fun addOrangeBounds(shape: () -> Shape?) = addBounds(CODE.ORANGE, shape)
+    fun addOrangeBounds(name: String, shape: () -> Shape?) = addBounds(CODE.ORANGE, name, shape)
 
     fun addBlueBounds(vararg bs: BoundsElement) = addBounds(CODE.BLUE, *bs)
-    fun addBlueBounds(shape: ()->Shape?) = addBounds(CODE.BLUE, shape)
-    fun addBlueBounds(name: String, shape: ()->Shape?) = addBounds(CODE.BLUE, name, shape)
+    fun addBlueBounds(shape: () -> Shape?) = addBounds(CODE.BLUE, shape)
+    fun addBlueBounds(name: String, shape: () -> Shape?) = addBounds(CODE.BLUE, name, shape)
 
     fun addGreenBounds(vararg bs: BoundsElement) = addBounds(CODE.GREEN, *bs)
-    fun addGreenBounds(shape: ()->Shape?) = addBounds(CODE.GREEN, shape)
-    fun addGreenBounds(name: String, shape: ()->Shape?) = addBounds(CODE.GREEN, name, shape)
+    fun addGreenBounds(shape: () -> Shape?) = addBounds(CODE.GREEN, shape)
+    fun addGreenBounds(name: String, shape: () -> Shape?) = addBounds(CODE.GREEN, name, shape)
 
 
-    fun setController(controller: () -> () -> TempAction){
-        this.controller=Controller { controller() }
+    fun setController(controller: () -> () -> TempAction) {
+        this.controller = Controller { controller() }
     }
-    fun setController(controller: Controller){
-        this.controller=controller
+
+    fun setController(controller: Controller) {
+        this.controller = controller
     }
+
     fun addListener(listener: (InputAction) -> Unit) = listeners.add(ActionListener { listener(it) })
     fun addListener(listener: ActionListener) = listeners.add(listener)
     fun addAbility(ability: () -> Unit) = abilities.add(AbilityBox { ability() })
@@ -106,10 +108,11 @@ abstract class GameObject {
 
     fun draw(draw_pos: PointN) = visuals.forEach { it.draw(draw_pos) }
 
-    protected fun produce(vararg os: GameObject){
+    protected fun produce(vararg os: GameObject) {
         children.addAll(os)
     }
-    protected fun produce(os: List<GameObject>){
+
+    protected fun produce(os: List<GameObject>) {
         children.addAll(os)
     }
 

@@ -37,10 +37,13 @@ interface WorldUtils {
                 val bs = o.bounds[i]
                 if(bs.isEmpty()) continue
                 for(el in bs.elements) {
-                    val shape=el.shape()?:continue
+                    val shape = el.shape() ?: continue
                     Platform.graphics.fill.draw(pos + o.stats.POS, shape, FGUtils.transparent(colors[i], 0.1))
                     Platform.graphics.stroke.draw(pos + o.stats.POS, shape, FGUtils.transparent(colors[i], 0.6))
-                    Platform.graphics.stroke.line(pos + o.stats.POS + shape.L, shape.S, FGUtils.transparent(colors[i], 0.5))
+                    Platform.graphics.stroke.line(
+                        pos + o.stats.POS + shape.L,
+                        shape.S,
+                        FGUtils.transparent(colors[i], 0.5))
                 }
             }
         }

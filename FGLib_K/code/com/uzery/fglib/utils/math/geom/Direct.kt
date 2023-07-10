@@ -16,7 +16,7 @@ enum class Direct(private val x: Int, private val y: Int) {
 
     operator fun unaryMinus() = from(-x, -y)
 
-    companion object{
+    companion object {
         fun from(x: Int, y: Int): Direct {
             when(IntI(x.coerceIn(-1, 1), y.coerceIn(-1, 1))) {
                 IntI(-1, -1) -> return UP_LEFT
@@ -31,8 +31,9 @@ enum class Direct(private val x: Int, private val y: Int) {
             }
             throw DebugData.error("from: $x $y")
         }
+
         fun from(x: Double, y: Double): Direct {
-            return from(x.sign.toInt(),y.sign.toInt())
+            return from(x.sign.toInt(), y.sign.toInt())
         }
     }
 }

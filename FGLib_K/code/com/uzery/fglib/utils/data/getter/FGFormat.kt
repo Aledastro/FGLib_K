@@ -3,10 +3,10 @@ package com.uzery.fglib.utils.data.getter
 import com.uzery.fglib.utils.math.FGUtils
 
 interface FGFormat {
-    companion object{
-        operator fun get(input: String): Pair<String,ArrayList<ArrayList<String>>>{
+    companion object {
+        operator fun get(input: String): Pair<String, ArrayList<ArrayList<String>>> {
             val args = ArrayList<ArrayList<String>>()
-            if(input.indexOf(':') == -1) return Pair(input,ArrayList())
+            if(input.indexOf(':') == -1) return Pair(input, ArrayList())
 
             val name = FGUtils.subBefore(input, ":")
             val argsInput = FGUtils.subAfter(input, ":")
@@ -44,23 +44,23 @@ interface FGFormat {
                     }
 
                     ' ' -> {
-                        if(adding && !waiting){
+                        if(adding && !waiting) {
                             collector.append(element)
-                        }
-                        else continue
-                    }
-                    ',' ->{
-                        if(collector.isNotEmpty()) collect()
-                        waiting=true
+                        } else continue
                     }
 
-                    else -> if(adding){
+                    ',' -> {
+                        if(collector.isNotEmpty()) collect()
+                        waiting = true
+                    }
+
+                    else -> if(adding) {
                         collector.append(element)
-                        waiting=false
+                        waiting = false
                     }
                 }
             }
-            return Pair(name,args)
+            return Pair(name, args)
         }
     }
 }
