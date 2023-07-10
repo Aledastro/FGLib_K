@@ -8,8 +8,8 @@ import com.uzery.fglib.utils.math.geom.PointN
 interface Visualiser {
     fun draw(draw_pos: PointN)
 
-    fun drawWithDefaults(draw_pos: PointN){
-        agc.alpha=1.0
+    fun drawWithDefaults(draw_pos: PointN) {
+        agc.alpha = 1.0
         agc.layer = drawLayer()
         draw(draw_pos)
     }

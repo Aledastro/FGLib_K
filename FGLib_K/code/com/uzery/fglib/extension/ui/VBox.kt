@@ -28,7 +28,7 @@ abstract class VBox(protected open val full: Int, protected open val rows: Int):
     var value = false
 
     var select = 0
-        get()=field.coerceIn(0 until full)
+        get() = field.coerceIn(0 until full)
 
     abstract fun setNames(id: Int): String
 

@@ -177,11 +177,12 @@ abstract class GameObject {
     fun equalsS(other: GameObject): Boolean {
         this.setValues()
         other.setValues()
-        return this.toString()==other.toString()
+        return this.toString() == other.toString()
     }
+
     fun equalsName(other: GameObject): Boolean {
         this.setValues()
         other.setValues()
-        return this.name==other.name
+        return this.name == other.name
     }
 }
