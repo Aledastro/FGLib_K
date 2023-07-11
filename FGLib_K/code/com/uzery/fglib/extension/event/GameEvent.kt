@@ -10,14 +10,21 @@ abstract class GameEvent: GameObject() {
     var finished = false
         private set
 
-    abstract fun ready(): Boolean
+    protected abstract fun ready(): Boolean
     abstract fun start()
     abstract fun update()
     abstract fun finish()
     abstract fun ends(): Boolean
 
     private var init = false
-    protected var event_time = 0
+
+    fun wasReady(): Boolean{
+        return init || ready()
+    }
+    fun wasReadyAndEnds(): Boolean{
+        return wasReady() && ends()
+    }
+    var event_time = 0
         private set
 
     init {
