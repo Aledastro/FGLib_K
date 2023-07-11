@@ -12,10 +12,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="82970e50-af90-458e-a847-e0b07c98f932" name="Changes" comment="FGLib v.0.6.0.1 [K]">
+    <list default="true" id="82970e50-af90-458e-a847-e0b07c98f932" name="Changes" comment="FGLib v.0.6.1.0 [K]">
+      <change afterPath="$PROJECT_DIR$/FGLib_K/code/com/uzery/fglib/extension/event/ParallelGameEvent.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/FGLib_K/code/com/uzery/fglib/extension/event/CompositeGameEvent.kt" beforeDir="false" afterPath="$PROJECT_DIR$/FGLib_K/code/com/uzery/fglib/extension/event/CompositeGameEvent.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FGLib_K/code/com/uzery/fglib/extension/event/GameEvent.kt" beforeDir="false" afterPath="$PROJECT_DIR$/FGLib_K/code/com/uzery/fglib/extension/event/GameEvent.kt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -108,11 +108,11 @@
       <recent name="game.objects.enemy" />
     </key>
     <key name="CopyKotlinDeclarationDialog.RECENTS_KEY">
+      <recent name="com.uzery.fglib.extension.event" />
       <recent name="game.objects.enemy" />
       <recent name="game.events" />
       <recent name="game.camera" />
       <recent name="game.objects.map" />
-      <recent name="com.uzery.fglib.utils.math.getter.value" />
     </key>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
@@ -123,13 +123,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1680386967444</updated>
-    </task>
-    <task id="LOCAL-00027" summary="FGLib v.0.4.4.1 [K]">
-      <created>1684561339566</created>
-      <option name="number" value="00027" />
-      <option name="presentableId" value="LOCAL-00027" />
-      <option name="project" value="LOCAL" />
-      <updated>1684561339566</updated>
     </task>
     <task id="LOCAL-00028" summary="FGLib v.0.4.4.2 [K]">
       <created>1684561440147</created>
@@ -467,7 +460,14 @@
       <option name="project" value="LOCAL" />
       <updated>1689018651315</updated>
     </task>
-    <option name="localTasksCounter" value="76" />
+    <task id="LOCAL-00076" summary="FGLib v.0.6.1.0 [K]">
+      <created>1689039248248</created>
+      <option name="number" value="00076" />
+      <option name="presentableId" value="LOCAL-00076" />
+      <option name="project" value="LOCAL" />
+      <updated>1689039248248</updated>
+    </task>
+    <option name="localTasksCounter" value="77" />
     <servers />
   </component>
   <component name="UnknownFeatures">
@@ -497,7 +497,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="FGLib v.0.5.5.3 [K]" />
     <MESSAGE value="FGLib v.0.5.6.0 [K]" />
     <MESSAGE value="FGLib v.0.5.7.0 [K]" />
     <MESSAGE value="FGLib v.0.5.8.0 [K]" />
@@ -522,7 +521,8 @@
     <MESSAGE value="FGLib v.0.5.12.10 [K]" />
     <MESSAGE value="FGLib v.0.6.0.0 [K]" />
     <MESSAGE value="FGLib v.0.6.0.1 [K]" />
-    <option name="LAST_COMMIT_MESSAGE" value="FGLib v.0.6.0.1 [K]" />
+    <MESSAGE value="FGLib v.0.6.1.0 [K]" />
+    <option name="LAST_COMMIT_MESSAGE" value="FGLib v.0.6.1.0 [K]" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

@@ -1,6 +1,5 @@
 package com.uzery.fglib.extension.event
 
-import com.uzery.fglib.utils.data.debug.DebugData
 import java.util.*
 
 abstract class CompositeGameEvent: GameEvent() {
@@ -8,23 +7,22 @@ abstract class CompositeGameEvent: GameEvent() {
     private var current: GameEvent? = null
 
     init {
-        addListener { current?.activate(it) }
-    }
-
-    final override fun ready() = if(events.isNotEmpty()) events.first.wasReady() else {
-        setValues()
-        throw DebugData.error("events empty: $name")
-    }
-
-    final override fun update() {
-        if(current == null || current!!.wasReadyAndEnds() && events.isNotEmpty()){
-            current = events.removeFirst()
-            produce(current!!)
-            println(current!!.event_time)
+        addAbility{
+            if(event_time>0 && (current==null || current!!.wasReadyAndEnds() && events.isNotEmpty())){
+                current = events.removeFirst()
+                produce(current!!)
+                println(current!!.event_time)
+            }
         }
     }
 
+    final override fun ready() = true
+
     final override fun ends() = events.isEmpty() && (current?.wasReadyAndEnds() ?: false)
+
+    override fun start() {}
+    override fun update() {}
+    override fun finish() {}
 
     protected fun add(event: GameEvent) = events.addLast(event)
 }
