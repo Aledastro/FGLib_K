@@ -11,7 +11,6 @@ abstract class CompositeGameEvent: GameEvent() {
             if(event_time>0 && (current==null || current!!.wasReadyAndEnds() && events.isNotEmpty())){
                 current = events.removeFirst()
                 produce(current!!)
-                println(current!!.event_time)
             }
         }
     }
