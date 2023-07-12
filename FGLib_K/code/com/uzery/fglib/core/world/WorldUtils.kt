@@ -4,6 +4,7 @@ import com.uzery.fglib.core.obj.DrawLayer
 import com.uzery.fglib.core.obj.GameObject
 import com.uzery.fglib.core.obj.bounds.BoundsBox
 import com.uzery.fglib.core.program.Platform
+import com.uzery.fglib.core.program.Platform.Companion.graphics
 import com.uzery.fglib.core.room.Room
 import com.uzery.fglib.utils.math.FGUtils
 import com.uzery.fglib.utils.math.geom.PointN
@@ -15,11 +16,11 @@ interface WorldUtils {
     companion object {
         fun drawBounds(room: Room, pos: PointN = PointN.ZERO) {
             val STEP = PointN(1.0, 1.0)
-            Platform.graphics.layer = DrawLayer.CAMERA_FOLLOW
+            graphics.layer = DrawLayer.CAMERA_FOLLOW
 
             for(o in room.objects) {
                 val c = if(o.stats.fly) Color.color(1.0, 1.0, 0.2, 0.7) else Color.color(1.0, 0.2, 1.0, 0.7)
-                Platform.graphics.fill.ovalC(pos + o.stats.POS, STEP*3, c)
+                graphics.fill.ovalC(pos + o.stats.POS, STEP*3, c)
             }
 
             for(o in room.objects) drawBoundsFor(o, pos)
@@ -32,15 +33,15 @@ interface WorldUtils {
                 Color.BLUE,
                 Color.GREEN)
 
-            Platform.graphics.setStroke(1.0)
+            graphics.setStroke(1.0)
             for(i in 0 until BoundsBox.SIZE) {
                 val bs = o.bounds[i]
                 if(bs.isEmpty()) continue
                 for(el in bs.elements) {
                     val shape = el.shape() ?: continue
-                    Platform.graphics.fill.draw(pos + o.stats.POS, shape, FGUtils.transparent(colors[i], 0.1))
-                    Platform.graphics.stroke.draw(pos + o.stats.POS, shape, FGUtils.transparent(colors[i], 0.6))
-                    Platform.graphics.stroke.line(
+                    graphics.fill.draw(pos + o.stats.POS, shape, FGUtils.transparent(colors[i], 0.1))
+                    graphics.stroke.draw(pos + o.stats.POS, shape, FGUtils.transparent(colors[i], 0.6))
+                    graphics.stroke.line(
                         pos + o.stats.POS + shape.L,
                         shape.S,
                         FGUtils.transparent(colors[i], 0.5))
@@ -49,50 +50,64 @@ interface WorldUtils {
         }
 
         private var ids_time = 0
-        private var fps = 6000.0
-        private var maxRam = 0L
-        private var freeRam = 0L
-        private var ram = 0L
-        private var last = System.currentTimeMillis()
-        private var time = 0L
+        var fps = 6000.0
+            private set
+        var maxRam = 0L
+            private set
+        var freeRam = 0L
+            private set
+        var ram = 0L
+            private set
+        var last = System.currentTimeMillis()
+            private set
+        var time = 0L
+            private set
 
-        fun drawDebug(draw_pos: PointN, room: Room) {
-            Platform.graphics.layer = DrawLayer.CAMERA_FOLLOW
-            Platform.graphics.fill.font = Font.font("TimesNewRoman", FontWeight.BOLD, 12.0)
+        val bs_n = HashMap<Room,Array<Int>>()
 
+        fun nextDebug(){
             val b = (ids_time%20 == 0)
             if(b) maxRam = Runtime.getRuntime().totalMemory()
             if(b) freeRam = Runtime.getRuntime().freeMemory()
             if(b) ram = maxRam - freeRam
-            val p = draw_pos + room.size.XP + PointN(10, 0)
 
-            Platform.graphics.fill.text(p + PointN(0, 10), "pos: ${room.pos}", Color.DARKBLUE)
-            Platform.graphics.fill.text(p + PointN(0, 20), "size: ${room.size}", Color.DARKBLUE)
-            Platform.graphics.fill.text(p + PointN(0, 30), "objects: ${room.objects.size}", Color.DARKBLUE)
-            Platform.graphics.fill.text(
-                p + PointN(0, 40),
-                "ram (MB): ${ram/1000_000}/${maxRam/1000_000}",
-                Color.DARKBLUE)
-            Platform.graphics.fill.text(
-                p + PointN(0, 50),
-                "ram (KB) per obj: ${if(room.objects.size != 0) (ram/1000/room.objects.size).toInt() else 0}",
-                Color.DARKBLUE)
             time = System.currentTimeMillis() - last
             last = System.currentTimeMillis()
             fps += (1000.0/time)
             fps *= 0.99
-            Platform.graphics.fill.text(p + PointN(0, 60), "FPS: ${(fps/100).toInt()}", Color.DARKBLUE)
+
+            ids_time++
+        }
+        fun nextDebugForRoom(room: Room){
+            if(bs_n[room]==null) bs_n[room]= Array(BoundsBox.SIZE){ 0 }
+            for(index in 0 until BoundsBox.SIZE) {
+                bs_n[room]!![index]=room.objects.count { !it.bounds[index].isEmpty() }
+            }
+        }
+        fun drawDebug(draw_pos: PointN, room: Room) {
+            graphics.layer = DrawLayer.CAMERA_FOLLOW
+            graphics.fill.font = Font.font("TimesNewRoman", FontWeight.BOLD, 12.0)
+
+            val p = draw_pos + room.size.XP + PointN(10, 0)
+
+            graphics.fill.text(p + PointN(0, 10), "pos: ${room.pos}", Color.DARKBLUE)
+            graphics.fill.text(p + PointN(0, 20), "size: ${room.size}", Color.DARKBLUE)
+            graphics.fill.text(p + PointN(0, 30), "objects: ${room.objects.size}", Color.DARKBLUE)
+            graphics.fill.text(
+                p + PointN(0, 40),
+                "ram (MB): ${ram/1000_000}/${maxRam/1000_000}",
+                Color.DARKBLUE)
+            graphics.fill.text(
+                p + PointN(0, 50),
+                "ram (KB) per obj: ${if(room.objects.size != 0) (ram/1000/room.objects.size).toInt() else 0}",
+                Color.DARKBLUE)
+
+            graphics.fill.text(p + PointN(0, 60), "FPS: ${(fps/100).toInt()}", Color.DARKBLUE)
 
             for(index in 0 until BoundsBox.SIZE) {
-                var bs_n = 0
-                room.objects.forEach {
-                    val bs = it.bounds[index]
-                    if(!bs.isEmpty()) bs_n++
-                }
-                Platform.graphics.fill.text(
-                    p + PointN(0, 70 + index*10), "bounds[${BoundsBox.name(index)}]: $bs_n", Color.DARKBLUE)
+                graphics.fill.text(
+                    p + PointN(0, 70 + index*10), "bounds[${BoundsBox.name(index)}]: ${bs_n[room]!![index]}", Color.DARKBLUE)
             }
-            ids_time++
         }
     }
 }

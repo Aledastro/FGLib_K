@@ -74,9 +74,7 @@ data class PointN(private val xs: Array<Double>) {
 
     private fun isNegative() = xs.all { i -> i<=0 }
     fun lengthX2(): Double {
-        var sum = 0.0
-        xs.forEach { x -> sum += x*x }
-        return sum
+        return xs.sumOf { x -> x*x }
     }
 
     fun length() = sqrt(lengthX2())
@@ -121,6 +119,10 @@ data class PointN(private val xs: Array<Double>) {
         p.Y = cos(alpha)*length
         p.Z = sin(alpha)*length
         return p
+    }
+
+    override fun toString(): String {
+        return "PointN${Array(xs.size) { xs[it].toInt() }.toList()}}"
     }
 
     companion object {

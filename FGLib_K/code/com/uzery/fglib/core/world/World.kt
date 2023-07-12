@@ -56,6 +56,9 @@ interface World {
             }
             camera?.update()
             graphics.drawPOS = controller.drawPOS() + (camera?.drawPOS() ?: PointN.ZERO)
+
+            WorldUtils.nextDebug()
+            active_rooms.forEach { WorldUtils.nextDebugForRoom(it) }
         }
 
         fun draw(pos: PointN = PointN.ZERO) {

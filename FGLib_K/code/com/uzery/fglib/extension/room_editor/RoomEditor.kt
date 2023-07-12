@@ -2,6 +2,7 @@ package com.uzery.fglib.extension.room_editor
 
 import com.uzery.fglib.core.obj.DrawLayer
 import com.uzery.fglib.core.obj.GameObject
+import com.uzery.fglib.core.obj.bounds.BoundsBox
 import com.uzery.fglib.core.obj.visual.Visualiser
 import com.uzery.fglib.core.program.Extension
 import com.uzery.fglib.core.program.Platform
@@ -443,11 +444,21 @@ class RoomEditor(private val getter: ClassGetter<GameObject>, private vararg val
     }
 
     private var info_box = object: InfoBox() {
+        override val text_draw_offset: Double
+            get() = -0.2
         private fun getL(): List<String> {
             val res = LinkedList<String>()
 
             res.add("room: ${filenames[edit_n]}")
+            res.add("")
+            res.add("pos: ${edit.pos}")
+            res.add("size: ${edit.size}")
             res.add("objects size: ${edit.objects.size}")
+            for(index in 0 until BoundsBox.SIZE) {
+                res.add("bounds[${BoundsBox.name(index)}]: ${WorldUtils.bs_n[edit]!![index]}")
+            }
+
+            res.add("")
             res.add("")
 
 
@@ -468,8 +479,12 @@ class RoomEditor(private val getter: ClassGetter<GameObject>, private vararg val
             return res
         }
 
+        override fun update() {
+            WorldUtils.nextDebugForRoom(edit)
+        }
+
         override fun text(id: Int) = getL()[id]
-        override val text_size: Int
+        override val text_data_size: Int
             get() = getL().size
 
         override fun color(id: Int): Color {
@@ -482,7 +497,7 @@ class RoomEditor(private val getter: ClassGetter<GameObject>, private vararg val
         override val pos
             get() = (CANVAS - size).XP + PointN(-OFFSET, 70.0)
         override val size
-            get() = PointN(350, 400)/scale
+            get() = PointN(350, 450)/scale
         override val window: RectN
             get() = CANVAS_R
     }
