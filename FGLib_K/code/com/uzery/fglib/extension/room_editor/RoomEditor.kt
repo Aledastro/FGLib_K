@@ -101,6 +101,8 @@ class RoomEditor(private val getter: ClassGetter<GameObject>, private vararg val
 
     private fun clear() {
         graphics.layer = DrawLayer.CAMERA_OFF
+        graphics.alpha=1.0
+        Platform.global_alpha=1.0
         graphics.fill.rect(PointN.ZERO, CANVAS, Color(0.7, 0.6, 0.9, 1.0))
     }
 
@@ -210,6 +212,15 @@ class RoomEditor(private val getter: ClassGetter<GameObject>, private vararg val
 
     private var objects_vbox = ObjectVBoxRE(obj)
 
+    private enum class DRAW_MODE{
+        FOCUSED, ALL_ROOMS, OVERVIEW;
+
+        fun nextMode(): DRAW_MODE {
+            return DRAW_MODE.values()[MathUtils.mod(this.ordinal+1,DRAW_MODE.values().size)]
+        }
+    }
+    private var draw_mode = DRAW_MODE.FOCUSED
+
     private var canvasX = object: UICanvas() {
         override val pos: PointN
             get() = PointN.ZERO
@@ -224,20 +235,20 @@ class RoomEditor(private val getter: ClassGetter<GameObject>, private vararg val
         var grid_offset_id = 0
 
         override fun draw() {
-            Platform.global_alpha = 0.2
-            World.draw(draw_pos - edit.pos)
-            Platform.global_alpha = 1.0
-
-            if(select_layer == 0) {
-                edit.draw(draw_pos)
-            } else {
-                Platform.global_alpha = 0.5
+            fun drawEditRoom(alpha: Double = 1.0){
+                Platform.global_alpha = alpha
                 edit.draw(draw_pos)
                 Platform.global_alpha = 1.0
-
+            }
+            fun drawWorld(alpha: Double = 1.0){
+                Platform.global_alpha = alpha
+                World.draw(draw_pos-edit.pos)
+                Platform.global_alpha = 1.0
+            }
+            fun drawSelectLayerVisuals(room: Room, pos: PointN = PointN.ZERO) {
                 val visuals = ArrayList<Visualiser>()
                 val pos_map = HashMap<Visualiser, PointN>()
-                edit.objects.forEach { obj ->
+                room.objects.forEach { obj ->
                     obj.visuals.forEach { vis ->
                         if(vis.drawLayer() == layers[select_layer - 1]) {
                             pos_map[vis] = obj.stats.POS
@@ -245,58 +256,135 @@ class RoomEditor(private val getter: ClassGetter<GameObject>, private vararg val
                         }
                     }
                 }
-                Room.drawVisuals(draw_pos, visuals, pos_map)
-
-                edit.objects.forEach { it.visuals }
+                Room.drawVisuals(pos+draw_pos, visuals, pos_map)
             }
+            fun drawFields() {
+                graphics.setStroke(1.0)
+                World.active_rooms.forEach { r ->
+                    if(r != edit) graphics.stroke.rect(
+                        draw_pos - edit.pos + r.pos,
+                        r.size,
+                        FGUtils.transparent(Color.WHITE, 0.8))
+                }
 
-
-            if(draw_bounds) WorldUtils.drawBounds(edit, draw_pos)
-
-            drawLines()
-
-            //graphics.layer = DrawLayer.CAMERA_FOLLOW
-            //graphics.stroke.rect(draw_pos, CANVAS, Color.DARKBLUE)
-
-            drawFields()
-
-            Platform.global_alpha = 0.3
-            val pp = (mouse.pos()/scale - draw_pos).round(GRID) + draw_pos + grid_offset[grid_offset_id]
-            objects_vbox.select_obj.draw(pp)
-            if(draw_bounds) WorldUtils.drawBoundsFor(objects_vbox.select_obj, pp)
-            Platform.global_alpha = 1.0
-        }
-
-        private fun drawFields() {
-            graphics.setStroke(1.0)
-            World.active_rooms.forEach { r ->
-                if(r != edit) graphics.stroke.rect(
-                    draw_pos - edit.pos + r.pos,
-                    r.size,
-                    FGUtils.transparent(Color.WHITE, 0.8))
+                graphics.setStroke(3.0)
+                graphics.stroke.rect(draw_pos - edit.pos + edit.pos, edit.size, Color.WHITE)
             }
-
-            graphics.setStroke(3.0)
-            graphics.stroke.rect(draw_pos - edit.pos + edit.pos, edit.size, Color.WHITE)
-        }
-
-        private fun drawLines() {
-            val c = FGUtils.transparent(Color.WHITE, 0.1)
-            graphics.layer = DrawLayer.CAMERA_FOLLOW
-            graphics.setStroke(1.0)
-            for(i in 0..(window.S.Y/GRID + 1).toInt()) {
-                graphics.stroke.line(
-                    -GRID_P + draw_pos.mod(GRID)
-                            + PointN(0.0, i*GRID), PointN(window.S.X + GRID, 0.0), c)
+            fun drawSelectObj(alpha: Double = 1.0){
+                Platform.global_alpha = alpha
+                val pp = (mouse.pos()/scale - draw_pos).round(GRID) + draw_pos + grid_offset[grid_offset_id]
+                objects_vbox.select_obj.draw(pp)
+                if(draw_bounds) WorldUtils.drawBoundsFor(objects_vbox.select_obj, pp)
+                Platform.global_alpha = 1.0
             }
-            for(i in 0..(window.S.X/GRID + 1).toInt()) {
-                graphics.stroke.line(
-                    -GRID_P + draw_pos.mod(GRID)
-                            + PointN(i*GRID, 0.0), PointN(0.0, window.S.Y + GRID), c)
+            fun drawLines() {
+                val c = FGUtils.transparent(Color.WHITE, 0.1)
+                graphics.layer = DrawLayer.CAMERA_FOLLOW
+                graphics.setStroke(1.0)
+                for(i in 0..(window.S.Y/GRID + 1).toInt()) {
+                    graphics.stroke.line(
+                        -GRID_P + draw_pos.mod(GRID)
+                                + PointN(0.0, i*GRID), PointN(window.S.X + GRID, 0.0), c)
+                }
+                for(i in 0..(window.S.X/GRID + 1).toInt()) {
+                    graphics.stroke.line(
+                        -GRID_P + draw_pos.mod(GRID)
+                                + PointN(i*GRID, 0.0), PointN(0.0, window.S.Y + GRID), c)
+                }
+            }
+            fun drawBounds(room: Room, pos: PointN = PointN.ZERO){
+                if(draw_bounds) WorldUtils.drawBounds(room, pos+draw_pos)
+            }
+            when(draw_mode){
+                DRAW_MODE.FOCUSED -> {
+                    drawWorld(0.2)
+
+                    if(select_layer == 0) {
+                        drawEditRoom()
+                    } else {
+                        drawEditRoom(0.5)
+                        drawSelectLayerVisuals(edit)
+                    }
+                    drawLines()
+                    drawFields()
+                    drawSelectObj(0.3)
+                    drawBounds(edit)
+                }
+                DRAW_MODE.ALL_ROOMS -> {
+                    if(select_layer == 0) {
+                        drawWorld()
+                    } else {
+                        drawWorld(0.2)
+                        World.rooms.forEach { drawSelectLayerVisuals(it, it.pos-edit.pos) }
+                    }
+                    drawLines()
+                    drawSelectObj(0.3)
+                    World.rooms.forEach { drawBounds(it, it.pos-edit.pos) }
+                }
+                DRAW_MODE.OVERVIEW -> {
+                    drawWorld()
+                    World.rooms.forEach { drawBounds(it, it.pos-edit.pos) }
+                }
             }
         }
 
         override fun ifActive() {
+            fun checkForMove(): Boolean {
+                if(!keyboard.pressed(KeyCode.SPACE)) {
+                    Program.cursor = Cursor.DEFAULT
+                    return false
+                }
+                if(mouse_keys.anyPressed(*MouseButton.values())) draw_pos += (mouse.pos() - last_mouse_pos)/scale
+                Program.cursor = Cursor.CLOSED_HAND
+
+                return true
+            }
+            fun checkForAdd() {
+                if(mouse_keys.pressed(MouseButton.PRIMARY)) {
+                    val o = getter.getEntry(objects_vbox.chosen())()
+                    if(select_layer != 0 && o.visuals.all { vis -> vis.drawLayer() != layers[select_layer - 1] }) return
+                    o.stats.POS = (mouse.pos()/scale - draw_pos).round(GRID) + grid_offset[grid_offset_id]
+
+                    when(draw_mode){
+                        DRAW_MODE.FOCUSED -> {
+                            if(edit.objects.any { it.equalsS(o) }) return
+
+                            edit.objects.add(o)
+                        }
+                        DRAW_MODE.ALL_ROOMS -> {
+                            //todo
+                            if(edit.objects.any { it.equalsS(o) }) return
+
+                            edit.objects.add(o)
+                        }
+                        DRAW_MODE.OVERVIEW -> return
+                    }
+                    select_obj = o
+                }
+            }
+            fun checkForRemove() {
+                if(mouse_keys.pressed(MouseButton.SECONDARY)) {
+                    val sel = getter.getEntry(objects_vbox.chosen())()
+                    when(draw_mode){
+                        DRAW_MODE.FOCUSED -> {
+                            edit.objects.removeIf { o ->
+                                (o.stats.POS.lengthTo(mouse.pos()/scale - draw_pos))<=GRID/2 && sel.equalsName(o) &&
+                                        (select_layer == 0 || o.visuals.any { vis -> vis.drawLayer() == layers[select_layer - 1] })
+                            }
+                            if(!edit.objects.contains(select_obj)) select_obj = null
+                        }
+                        DRAW_MODE.ALL_ROOMS -> {
+                            edit.objects.removeIf { o ->
+                                (o.stats.POS.lengthTo(mouse.pos()/scale - draw_pos))<=GRID/2 && sel.equalsName(o) &&
+                                        (select_layer == 0 || o.visuals.any { vis -> vis.drawLayer() == layers[select_layer - 1] })
+                            }
+                            if(!edit.objects.contains(select_obj)) select_obj = null
+                        }
+                        DRAW_MODE.OVERVIEW -> return
+                    }
+                }
+            }
+
             if(checkForMove()) {
                 return
             }
@@ -310,42 +398,19 @@ class RoomEditor(private val getter: ClassGetter<GameObject>, private vararg val
         override fun update() {
             last_mouse_pos = mouse.pos()
             if(keyboard.pressed(KeyCode.CONTROL) && keyboard.inPressed(KeyCode.TAB)) draw_bounds = !draw_bounds
-        }
-
-        private fun checkForAdd() {
-            if(mouse_keys.pressed(MouseButton.PRIMARY)) {
-                val o = getter.getEntry(objects_vbox.chosen())()
-                if(select_layer != 0 && o.visuals.all { vis -> vis.drawLayer() != layers[select_layer - 1] }) return
-                val pp = (mouse.pos()/scale - draw_pos).round(GRID) + grid_offset[grid_offset_id]
-
-                o.stats.POS = pp
-                if(edit.objects.any { it.equalsS(o) }) return
-
-                edit.objects.add(o)
-                select_obj = o
-            }
-        }
-
-        private fun checkForRemove() {
-            if(mouse_keys.pressed(MouseButton.SECONDARY)) {
-                val sel = getter.getEntry(objects_vbox.chosen())()
-                edit.objects.removeIf { o ->
-                    (o.stats.POS.lengthTo(mouse.pos()/scale - draw_pos))<=GRID/2 && sel.equalsName(o) &&
-                            (select_layer == 0 || o.visuals.any { vis -> vis.drawLayer() == layers[select_layer - 1] })
+            if(keyboard.pressed(KeyCode.CONTROL) && keyboard.inPressed(KeyCode.M)){
+                draw_mode=draw_mode.nextMode()
+                if(draw_mode==DRAW_MODE.OVERVIEW){
+                    objects_vbox.hide()
+                    layers_vbox.hide()
+                    info_box.hide()
                 }
-                if(!edit.objects.contains(select_obj)) select_obj = null
+                if(draw_mode!=DRAW_MODE.OVERVIEW){
+                    objects_vbox.show()
+                    layers_vbox.show()
+                    info_box.show()
+                }
             }
-        }
-
-        private fun checkForMove(): Boolean {
-            if(!keyboard.pressed(KeyCode.SPACE)) {
-                Program.cursor = Cursor.DEFAULT
-                return false
-            }
-            if(mouse_keys.anyPressed(*MouseButton.values())) draw_pos += (mouse.pos() - last_mouse_pos)/scale
-            Program.cursor = Cursor.CLOSED_HAND
-
-            return true
         }
     }
 

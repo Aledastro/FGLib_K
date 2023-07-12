@@ -38,7 +38,7 @@ class Platform {
 
         var global_alpha = 1.0
             set(input) {
-                gc.globalAlpha = input*Platform.global_alpha
+                gc.globalAlpha = input*graphics.alpha
                 field = input
             }
 

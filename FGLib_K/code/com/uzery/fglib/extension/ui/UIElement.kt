@@ -12,7 +12,18 @@ abstract class UIElement {
     abstract val size: PointN
     abstract val window: RectN
 
-    open val visible = true
+    internal var visible = true
+        private set
+
+    fun show(){
+        visible=true
+    }
+    fun hide(){
+        visible=false
+    }
+    fun switch(){
+        visible=!visible
+    }
 
     open val priority = 0
     abstract fun draw()
