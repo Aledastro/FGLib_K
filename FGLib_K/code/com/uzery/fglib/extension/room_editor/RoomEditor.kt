@@ -443,7 +443,7 @@ class RoomEditor(private val getter: ClassGetter<GameObject>, private vararg val
             get() = layers.size + 1
 
         override val pos
-            get() = (CANVAS - size)*PointN(0.5, 1.0) + PointN(0.0, -OFFSET)
+            get() = (CANVAS - size)*PointN(0.5, 1.0) + PointN(0.0, -OFFSET/2)
         override val window: RectN
             get() = CANVAS_R
         override val sizeOne: PointN
