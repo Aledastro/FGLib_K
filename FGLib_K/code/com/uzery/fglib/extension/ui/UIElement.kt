@@ -15,14 +15,16 @@ abstract class UIElement {
     internal var visible = false
         private set
 
-    fun show(){
-        visible=true
+    fun show() {
+        visible = true
     }
-    fun hide(){
-        visible=false
+
+    fun hide() {
+        visible = false
     }
-    fun switch(){
-        visible=!visible
+
+    fun switch() {
+        visible = !visible
     }
 
     open val priority = 0

@@ -3,7 +3,6 @@ package com.uzery.fglib.core.world
 import com.uzery.fglib.core.obj.DrawLayer
 import com.uzery.fglib.core.obj.GameObject
 import com.uzery.fglib.core.obj.bounds.BoundsBox
-import com.uzery.fglib.core.program.Platform
 import com.uzery.fglib.core.program.Platform.Companion.graphics
 import com.uzery.fglib.core.room.Room
 import com.uzery.fglib.utils.math.FGUtils
@@ -63,9 +62,9 @@ interface WorldUtils {
         var time = 0L
             private set
 
-        val bs_n = HashMap<Room,Array<Int>>()
+        val bs_n = HashMap<Room, Array<Int>>()
 
-        fun nextDebug(){
+        fun nextDebug() {
             val b = (ids_time%20 == 0)
             if(b) maxRam = Runtime.getRuntime().totalMemory()
             if(b) freeRam = Runtime.getRuntime().freeMemory()
@@ -78,12 +77,14 @@ interface WorldUtils {
 
             ids_time++
         }
-        fun nextDebugForRoom(room: Room){
-            if(bs_n[room]==null) bs_n[room]= Array(BoundsBox.SIZE){ 0 }
+
+        fun nextDebugForRoom(room: Room) {
+            if(bs_n[room] == null) bs_n[room] = Array(BoundsBox.SIZE) { 0 }
             for(index in 0 until BoundsBox.SIZE) {
-                bs_n[room]!![index]=room.objects.count { !it.bounds[index].isEmpty() }
+                bs_n[room]!![index] = room.objects.count { !it.bounds[index].isEmpty() }
             }
         }
+
         fun drawDebug(draw_pos: PointN, room: Room) {
             graphics.layer = DrawLayer.CAMERA_FOLLOW
             graphics.fill.font = Font.font("TimesNewRoman", FontWeight.BOLD, 12.0)
@@ -106,7 +107,9 @@ interface WorldUtils {
 
             for(index in 0 until BoundsBox.SIZE) {
                 graphics.fill.text(
-                    p + PointN(0, 70 + index*10), "bounds[${BoundsBox.name(index)}]: ${bs_n[room]!![index]}", Color.DARKBLUE)
+                    p + PointN(0, 70 + index*10),
+                    "bounds[${BoundsBox.name(index)}]: ${bs_n[room]!![index]}",
+                    Color.DARKBLUE)
             }
         }
     }

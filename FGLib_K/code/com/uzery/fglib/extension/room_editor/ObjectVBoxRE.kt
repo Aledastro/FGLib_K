@@ -52,7 +52,7 @@ class ObjectVBoxRE(private val input: DataGetterRE): VBox(0, 5) {
     }
 
     override fun draw(pos: PointN, id: Int) {
-        val obj=data.getter.getEntry(from(id))()
+        val obj = data.getter.getEntry(from(id))()
         obj.draw(pos)
         if(data.draw_bounds) WorldUtils.drawBoundsFor(obj, pos)
     }

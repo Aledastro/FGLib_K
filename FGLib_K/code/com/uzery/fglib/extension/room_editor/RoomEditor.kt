@@ -95,6 +95,11 @@ class RoomEditor(private val getter: ClassGetter<GameObject>, private vararg val
         //todo
         draw_pos = Platform.options().size/4 - edit.size*PointN(0.5, 0.5)
         UIBox.add(canvasX, play_button, objects_vbox, layers_vbox, info_box)
+        canvasX.show()
+        play_button.show()
+        objects_vbox.show()
+        layers_vbox.show()
+        info_box.show()
 
         /*World.camera = object: Camera {
             override fun drawPOS(): PointN {
@@ -180,7 +185,19 @@ class RoomEditor(private val getter: ClassGetter<GameObject>, private vararg val
 
     private val obj = object: DataGetterRE() {
         override fun get(): DataRE {
-            return DataRE(draw_pos, edit, OFFSET, getter, GRID, GRID_P, entries, names, ids, groupsValues, groupsSelect, draw_bounds)
+            return DataRE(
+                draw_pos,
+                edit,
+                OFFSET,
+                getter,
+                GRID,
+                GRID_P,
+                entries,
+                names,
+                ids,
+                groupsValues,
+                groupsSelect,
+                draw_bounds)
         }
     }
 
@@ -212,7 +229,7 @@ class RoomEditor(private val getter: ClassGetter<GameObject>, private vararg val
         val grid_offset = arrayOf(GRID_P/2, PointN.ZERO, GRID_P.XP/2, GRID_P.YP/2)
         var grid_offset_id = 0
 
-        var add_size=0
+        var add_size = 0
 
         override fun draw() {
             fun drawEditRoom(alpha: Double = 1.0) {
@@ -257,10 +274,10 @@ class RoomEditor(private val getter: ClassGetter<GameObject>, private vararg val
             fun drawSelectObj(alpha: Double = 1.0) {
                 Platform.global_alpha = alpha
                 val pp = (mouse.pos()/scale - draw_pos).round(GRID) + draw_pos + grid_offset[grid_offset_id]
-                for(i in -add_size..add_size){
-                    for(j in -add_size..add_size){
-                        objects_vbox.select_obj.draw(PointN(i,j)*GRID+pp)
-                        if(draw_bounds) WorldUtils.drawBoundsFor(objects_vbox.select_obj, PointN(i,j)*GRID+pp)
+                for(i in -add_size..add_size) {
+                    for(j in -add_size..add_size) {
+                        objects_vbox.select_obj.draw(PointN(i, j)*GRID + pp)
+                        if(draw_bounds) WorldUtils.drawBoundsFor(objects_vbox.select_obj, PointN(i, j)*GRID + pp)
                     }
                 }
 
@@ -342,26 +359,27 @@ class RoomEditor(private val getter: ClassGetter<GameObject>, private vararg val
             fun roomFrom(pos: PointN): Room? {
                 return when(draw_mode) {
                     DRAW_MODE.FOCUSED -> edit
-                    DRAW_MODE.ALL_ROOMS -> World.rooms.find { it.main.into(pos+edit.pos) }
+                    DRAW_MODE.ALL_ROOMS -> World.rooms.find { it.main.into(pos + edit.pos) }
                     DRAW_MODE.OVERVIEW -> null
                 }
             }
 
-            fun onSelectLayer(o: GameObject): Boolean{
+            fun onSelectLayer(o: GameObject): Boolean {
                 return select_layer == 0 || o.visuals.any { vis -> vis.drawLayer() == layers[select_layer - 1] }
             }
+
             val mouseRealPos = mouse.pos()/scale - draw_pos
 
             fun checkForAdd() {
-                if(keyboard.pressed(KeyCode.CONTROL) && keyboard.inPressed(KeyCode.MINUS)){
+                if(keyboard.inPressed(KeyCode.MINUS)) {
                     add_size--
                 }
-                if(keyboard.pressed(KeyCode.CONTROL) && keyboard.inPressed(KeyCode.EQUALS)){
+                if(keyboard.inPressed(KeyCode.EQUALS)) {
                     add_size++
                 }
-                add_size=add_size.coerceIn(0..5)
+                add_size = add_size.coerceIn(0..10)
 
-                fun add(pos: PointN){
+                fun add(pos: PointN) {
                     if(mouse_keys.pressed(MouseButton.PRIMARY)) {
                         val o = getter.getEntry(objects_vbox.chosen())()
                         if(select_layer != 0 && !onSelectLayer(o)) return
@@ -378,9 +396,9 @@ class RoomEditor(private val getter: ClassGetter<GameObject>, private vararg val
                         select_obj = o
                     }
                 }
-                for(i in -add_size..add_size){
-                    for(j in -add_size..add_size){
-                        add(PointN(i,j)*GRID)
+                for(i in -add_size..add_size) {
+                    for(j in -add_size..add_size) {
+                        add(PointN(i, j)*GRID)
                     }
                 }
             }
@@ -391,14 +409,15 @@ class RoomEditor(private val getter: ClassGetter<GameObject>, private vararg val
                     val room = roomFrom(mouseRealPos) ?: return
 
                     room.objects.removeIf { o ->
-                        val len = (o.stats.POS - edit.pos + room.pos).lengthTo(mouseRealPos.round(GRID)+GRID_P/2)
-                        len<=GRID/2*(add_size*2+1) && sel.equalsName(o) && onSelectLayer(o)
+                        val len = (o.stats.POS - edit.pos + room.pos).lengthTo(mouseRealPos.round(GRID) + GRID_P/2)
+                        len<=GRID/2*(add_size*2 + 1) && sel.equalsName(o) && onSelectLayer(o)
                     }
                     addLastInfo()
 
                     if(!room.objects.contains(select_obj)) select_obj = null
                 }
             }
+
             fun checkForEditN() {
                 if(keyboard.pressed(KeyCode.CONTROL)) {
                     var rp = PointN.ZERO

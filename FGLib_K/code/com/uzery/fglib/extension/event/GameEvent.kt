@@ -18,12 +18,14 @@ abstract class GameEvent: GameObject() {
 
     private var init = false
 
-    fun wasReady(): Boolean{
+    fun wasReady(): Boolean {
         return init || ready()
     }
-    fun wasReadyAndEnds(): Boolean{
+
+    fun wasReadyAndEnds(): Boolean {
         return wasReady() && ends()
     }
+
     var event_time = 0
         private set
 

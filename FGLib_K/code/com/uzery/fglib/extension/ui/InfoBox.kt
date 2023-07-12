@@ -21,7 +21,7 @@ abstract class InfoBox: UIElement() {
     override fun draw() {
         graphics.fill.font = Font.font("TimesNewRoman", FontWeight.BOLD, d)
         for(id in 0 until text_data_size)
-            graphics.fill.text(pos + PointN(d/2, d*(1+text_draw_offset)*(id + 1)), text(id), color(id))
+            graphics.fill.text(pos + PointN(d/2, d*(1 + text_draw_offset)*(id + 1)), text(id), color(id))
     }
 
     override fun ifActive() {

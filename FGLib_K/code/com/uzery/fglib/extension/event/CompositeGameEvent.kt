@@ -7,8 +7,8 @@ abstract class CompositeGameEvent: GameEvent() {
     private var current: GameEvent? = null
 
     init {
-        addAbility{
-            if(event_time>0 && (current==null || current!!.wasReadyAndEnds() && events.isNotEmpty())){
+        addAbility {
+            if(event_time>0 && (current == null || current!!.wasReadyAndEnds() && events.isNotEmpty())) {
                 current = events.removeFirst()
                 produce(current!!)
             }
