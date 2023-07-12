@@ -3,6 +3,7 @@ package com.uzery.fglib.extension.room_editor
 import com.uzery.fglib.core.program.Platform
 import com.uzery.fglib.core.program.Platform.Companion.keyboard
 import com.uzery.fglib.core.program.Platform.Companion.scale
+import com.uzery.fglib.core.world.WorldUtils
 import com.uzery.fglib.extension.ui.VBox
 import com.uzery.fglib.utils.math.geom.PointN
 import com.uzery.fglib.utils.math.geom.RectN
@@ -51,7 +52,9 @@ class ObjectVBoxRE(private val input: DataGetterRE): VBox(0, 5) {
     }
 
     override fun draw(pos: PointN, id: Int) {
-        data.getter.getEntry(from(id))().draw(pos)
+        val obj=data.getter.getEntry(from(id))()
+        obj.draw(pos)
+        if(data.draw_bounds) WorldUtils.drawBoundsFor(obj, pos)
     }
 
     fun chosen(): Int {

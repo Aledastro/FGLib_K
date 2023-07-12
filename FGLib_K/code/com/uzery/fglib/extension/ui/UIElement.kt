@@ -12,7 +12,7 @@ abstract class UIElement {
     abstract val size: PointN
     abstract val window: RectN
 
-    internal var visible = true
+    internal var visible = false
         private set
 
     fun show(){

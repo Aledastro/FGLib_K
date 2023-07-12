@@ -19,4 +19,5 @@ data class DataRE(
     val ids: TreeMap<StringN, Int>,
     val groupsValues: LinkedList<LinkedList<StringN>>,
     val groupsSelect: LinkedList<Int>,
+    val draw_bounds: Boolean
 )
