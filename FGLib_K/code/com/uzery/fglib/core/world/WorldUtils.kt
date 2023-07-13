@@ -26,6 +26,12 @@ interface WorldUtils {
         }
 
         fun drawBoundsFor(o: GameObject, pos: PointN) {
+            for(i in 0 until BoundsBox.SIZE) {
+                drawBoundsFor(o, pos, i)
+            }
+        }
+
+        fun drawBoundsFor(o: GameObject, pos: PointN, id: Int) {
             val colors = arrayOf(
                 Color.RED,
                 Color.ORANGERED,
@@ -33,18 +39,16 @@ interface WorldUtils {
                 Color.GREEN)
 
             graphics.setStroke(1.0)
-            for(i in 0 until BoundsBox.SIZE) {
-                val bs = o.bounds[i]
-                if(bs.isEmpty()) continue
-                for(el in bs.elements) {
-                    val shape = el.shape() ?: continue
-                    graphics.fill.draw(pos + o.stats.POS, shape, FGUtils.transparent(colors[i], 0.1))
-                    graphics.stroke.draw(pos + o.stats.POS, shape, FGUtils.transparent(colors[i], 0.6))
-                    graphics.stroke.line(
-                        pos + o.stats.POS + shape.L,
-                        shape.S,
-                        FGUtils.transparent(colors[i], 0.5))
-                }
+            val bs = o.bounds[id]
+            if(bs.isEmpty()) return
+            for(el in bs.elements) {
+                val shape = el.shape() ?: continue
+                graphics.fill.draw(pos + o.stats.POS, shape, FGUtils.transparent(colors[id], 0.1))
+                graphics.stroke.draw(pos + o.stats.POS, shape, FGUtils.transparent(colors[id], 0.6))
+                graphics.stroke.line(
+                    pos + o.stats.POS + shape.L,
+                    shape.S,
+                    FGUtils.transparent(colors[id], 0.5))
             }
         }
 
