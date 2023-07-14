@@ -1,6 +1,7 @@
 package com.uzery.fglib.extension.ui
 
 import com.uzery.fglib.core.program.Extension
+import com.uzery.fglib.core.program.Platform.Companion.develop_mode
 import com.uzery.fglib.core.program.Platform.Companion.graphics
 import com.uzery.fglib.utils.math.FGUtils
 import javafx.scene.paint.Color
@@ -19,20 +20,21 @@ class UIBox: Extension {
     }
 
     override fun update() {
-        active = list.stream().filter { el -> el.visible && el.isA(el.pos, el.size) }
+        active = list.stream().filter { el -> el.showing && el.isA(el.pos, el.size) }
             .sorted { o1, o2 -> -o1.priority.compareTo(o2.priority) }.findFirst().orElse(null)
         active?.ifActive()
         list.forEach { it.update() }
 
-        list.forEach {
-            if(it.visible) graphics.fill.rect(it.pos, it.size, FGUtils.transparent(Color.DARKBLUE, 0.1))
-        }
-        if(active != null) {
-            graphics.setStroke(1.5)
-            graphics.stroke.rect(active!!.pos, active!!.size, FGUtils.transparent(Color.WHITE, 0.9))
+        if(develop_mode){
+            list.forEach {
+                if(it.showing) graphics.fill.rect(it.pos, it.size, FGUtils.transparent(Color.DARKBLUE, 0.1))
+            }
+            if(active != null) {
+                graphics.setStroke(1.5)
+                graphics.stroke.rect(active!!.pos, active!!.size, FGUtils.transparent(Color.WHITE, 0.9))
+            }
         }
 
-
-        list.forEach { if(it.visible) it.draw() }
+        list.forEach { if(it.showing) it.draw() }
     }
 }

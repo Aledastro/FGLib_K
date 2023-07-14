@@ -12,19 +12,19 @@ abstract class UIElement {
     abstract val size: PointN
     abstract val window: RectN
 
-    internal var visible = false
+    var showing = false
         private set
 
     fun show() {
-        visible = true
+        showing = true
     }
 
     fun hide() {
-        visible = false
+        showing = false
     }
 
     fun switch() {
-        visible = !visible
+        showing = !showing
     }
 
     open val priority = 0

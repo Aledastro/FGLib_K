@@ -64,7 +64,7 @@ interface World {
         fun draw(pos: PointN = PointN.ZERO) {
             drawNotActiveRooms(pos)
             drawRooms(pos)
-            if(develop_mode) drawRoomsDebug(pos)
+            //if(develop_mode) drawRoomsDebug(pos)
         }
 
         private fun drawRooms(pos: PointN) {
