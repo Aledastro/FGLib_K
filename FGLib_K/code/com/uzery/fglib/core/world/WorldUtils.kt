@@ -31,7 +31,7 @@ interface WorldUtils {
             }
         }
 
-        fun drawBoundsFor(o: GameObject, pos: PointN, id: Int) {
+        fun drawBoundsFor(o: GameObject, pos: PointN, color_id: Int) {
             val colors = arrayOf(
                 Color.RED,
                 Color.ORANGERED,
@@ -39,16 +39,13 @@ interface WorldUtils {
                 Color.GREEN)
 
             graphics.setStroke(1.0)
-            val bs = o.bounds[id]
+            val bs = o.bounds[color_id]
             if(bs.isEmpty()) return
-            for(el in bs.elements) {
-                val shape = el.shape() ?: continue
-                graphics.fill.draw(pos + o.stats.POS, shape, FGUtils.transparent(colors[id], 0.1))
-                graphics.stroke.draw(pos + o.stats.POS, shape, FGUtils.transparent(colors[id], 0.6))
-                graphics.stroke.line(
-                    pos + o.stats.POS + shape.L,
-                    shape.S,
-                    FGUtils.transparent(colors[id], 0.5))
+            for(shade in bs.shades) {
+                val shape = shade.shape ?: continue
+                graphics.fill.draw(pos, shape, FGUtils.transparent(colors[color_id], 0.1))
+                graphics.stroke.draw(pos, shape, FGUtils.transparent(colors[color_id], 0.6))
+                graphics.stroke.line(pos + shape.L, shape.S, FGUtils.transparent(colors[color_id], 0.5))
             }
         }
 

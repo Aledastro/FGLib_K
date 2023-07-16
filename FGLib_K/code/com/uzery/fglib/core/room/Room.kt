@@ -35,9 +35,10 @@ class Room(val pos: PointN, val size: PointN) {
 
         objects.forEach { it.next() }
 
-        updateCells()
+        //updateBounds()
+        //updateCells()
         t++
-        nextMove()
+        nextMoveOld()
         //nextActivate()
 
         objects.forEach { new_objects.addAll(it.children) }
@@ -82,7 +83,12 @@ class Room(val pos: PointN, val size: PointN) {
     fun add(objs: List<GameObject>) = new_objects.addAll(objs)
     fun remove(objs: List<GameObject>) = old_objects.addAll(objs)
 
-    private val ROOM_GRID = 64 //todo to project files
+
+    private fun updateBounds() {
+        objects.forEach { o -> o.bounds.update(o.stats.POS) }
+    }
+
+    private val ROOM_GRID = 5 //todo to project files
 
     private val dim = 2 // todo objects.first.stats.POS.dimension()
     private val cell_sizes = Array(dim) { -1..size[it].toInt()/ROOM_GRID + 1 }
@@ -116,12 +122,12 @@ class Room(val pos: PointN, val size: PointN) {
 
     private fun updateCellsFor(id: Int, bounds_color: Int) {
         val obj = objects[id]
-        val main = obj.bounds[bounds_color].main() ?: return
+        val main = obj.bounds[bounds_color].main ?: return
 
-        val move_area = ShapeUtils.rectX(main.copy(obj.stats.POS), main.copy(obj.stats.POS + obj.stats.nPOS))
+        val move_area = ShapeUtils.rectX(main, main.copy(obj.stats.nPOS))
 
         val x1 = (move_area.L[0].toInt()/ROOM_GRID).coerceIn(cell_sizes[0])
-        val x2 = (move_area.R[0].toInt()/ROOM_GRID).coerceIn(cell_sizes[0])
+        val x2 = (move_area.R[0].toInt()/ROOM_GRID).coerceIn(cell_sizes[0]) //todo +-1
         val y1 = (move_area.L[1].toInt()/ROOM_GRID).coerceIn(cell_sizes[1])
         val y2 = (move_area.R[1].toInt()/ROOM_GRID).coerceIn(cell_sizes[1])
 
@@ -150,18 +156,16 @@ class Room(val pos: PointN, val size: PointN) {
             if(move_bs.isEmpty()) continue
 
             fun maxMove(move_p: PointN): Double {
-                val rangeX = cells_ranges[0][id]
-                val rangeY = cells_ranges[1][id]
-
                 fun maxPathIn(ix: Int, iy: Int): Double {
                     val cell = cells[CellData(ix, iy, BoundsBox.RED)] ?: return 1.0
 
-                    return cell.minOf { stayID ->
-                        val stay = objects[stayID]
-                        BoundsUtils.maxMove(stay.bounds.red, move_bs, stay.stats.POS, obj.stats.POS, move_p)
+                    return cell.minOf { stay ->
+                        BoundsUtils.maxMove(objects[stay].bounds.red, move_bs, -move_p)
                     }
                 }
 
+                val rangeX = cells_ranges[0][id]
+                val rangeY = cells_ranges[1][id]
                 return rangeX.minOf { ix -> rangeY.minOf { iy -> maxPathIn(ix, iy) } }
             }
 
@@ -180,7 +184,34 @@ class Room(val pos: PointN, val size: PointN) {
         }
     }
 
-    private fun nextActivate() {
+    private fun nextMoveOld() {
+        for(o in objects) {
+            if(o.tagged("#immovable")) continue
+            o.stats.lPOS = o.stats.POS
+            val orange = o.bounds.orange
+            if(orange.isEmpty()) continue
+
+            fun move(move_p: PointN): Double {
+                val mm = objects.minOf {
+                    val red = it.bounds.red
+                    if(red.isEmpty()) return 1.0
+                    BoundsUtils.maxMoveOld(red, orange, it.stats.POS, o.stats.POS, move_p)
+                }
+                o.stats.POS += move_p*mm
+                return mm
+            }
+
+            val min_d = move(o.stats.nPOS)
+            o.stats.fly = min_d == 1.0
+            val np = o.stats.nPOS*(1 - min_d)
+
+            for(i in 0 until np.dimension()) move(np.separate(i))
+        }
+        objects.forEach { it.stats.nPOS = PointN.ZERO }
+    }
+
+
+    /*private fun nextActivate() {
         //todo less code
 
         fun setActivate(
@@ -274,7 +305,7 @@ class Room(val pos: PointN, val size: PointN) {
                 }
             }
         }
-    }
+    }*/
 
     override fun toString(): String {
         val wr = StringBuilder()
