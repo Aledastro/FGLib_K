@@ -56,8 +56,8 @@ class ObjectVBoxRE(private val input: DataGetterRE): VBox(0, 5) {
         val obj = data.getter.getEntry(from(id))()
         obj.draw(pos)
         if(data.draw_bounds){
-            WorldUtils.drawBoundsFor(obj, pos, BoundsBox.index("RED"))
-            WorldUtils.drawBoundsFor(obj, pos, BoundsBox.index("ORANGE"))
+            WorldUtils.drawBoundsFor(obj, pos, BoundsBox.RED)
+            WorldUtils.drawBoundsFor(obj, pos, BoundsBox.ORANGE)
         }
     }
 

@@ -28,11 +28,8 @@ interface CollisionUtils {
         }
 
         private fun intoX(stay: RectN, start: RectN, finish: RectN): Boolean {
-            return ShapeUtils.into(stay, RectN.rectLR(min(start.L, finish.L), max(start.R, finish.R)))
+            return ShapeUtils.into(stay, ShapeUtils.rectX(start, finish))
         }
-
-        private fun min(a: PointN, b: PointN) = PointN.transform(a, b) { x, y -> min(x, y) }
-        private fun max(a: PointN, b: PointN) = PointN.transform(a, b) { x, y -> max(x, y) }
 
         private fun maxMoveRect(stay: RectN, start: RectN, finish: RectN, level: Int): Double {
             val L1 = start.L[level]

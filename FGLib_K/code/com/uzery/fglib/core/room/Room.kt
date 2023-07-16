@@ -2,7 +2,7 @@ package com.uzery.fglib.core.room
 
 import com.uzery.fglib.core.obj.GameObject
 import com.uzery.fglib.core.obj.ability.InputAction
-import com.uzery.fglib.core.obj.bounds.Bounds
+import com.uzery.fglib.core.obj.bounds.BoundsBox
 import com.uzery.fglib.core.obj.bounds.BoundsElement
 import com.uzery.fglib.core.obj.visual.Visualiser
 import com.uzery.fglib.utils.data.file.ConstL
@@ -28,13 +28,17 @@ class Room(val pos: PointN, val size: PointN) {
         objects.addAll(objs)
     }
 
+    var t = 0
     fun next() {
         objects.addAll(new_objects)
         new_objects.clear()
 
         objects.forEach { it.next() }
-        nextMoveOld()
-        nextActivate()
+
+        updateCells()
+        t++
+        nextMove()
+        //nextActivate()
 
         objects.forEach { new_objects.addAll(it.children) }
         objects.forEach { it.children.clear() }
@@ -78,28 +82,87 @@ class Room(val pos: PointN, val size: PointN) {
     fun add(objs: List<GameObject>) = new_objects.addAll(objs)
     fun remove(objs: List<GameObject>) = old_objects.addAll(objs)
 
-    private fun nextMoveOld() {
-        val red_bounds = LinkedList<Bounds>()
-        val pos = LinkedList<PointN>()
-        objects.forEach {
-            val bs = it.bounds.red
-            if(!bs.isEmpty()) {
-                red_bounds.add(bs)
-                pos.add(it.stats.POS)
+    private val ROOM_GRID = 64 //todo to project files
+
+    private val dim = 2 // todo objects.first.stats.POS.dimension()
+    private val cell_sizes = Array(dim) { -1..size[it].toInt()/ROOM_GRID + 1 }
+    private val cells_size = BoundsBox.SIZE*(cell_sizes[0].last + 2)*(cell_sizes[1].last + 2)
+
+    private val cells = HashMap<CellData, LinkedList<Int>>()
+    private val cells_ranges = LinkedList<LinkedList<IntRange>>()
+
+    private fun updateCells() {
+        val t = System.nanoTime()
+
+        cells.clear()
+        cells_ranges.clear()
+
+        for(i in 0 until dim) {
+            cells_ranges.add(LinkedList())
+
+            for(j in 0 until objects.size) {
+                cells_ranges[i].add(0..0)
             }
         }
-        for(obj in objects) {
+
+        for(id in objects.indices) {
+            updateCellsFor(id, BoundsBox.RED)
+            updateCellsFor(id, BoundsBox.ORANGE)
+            updateCellsFor(id, BoundsBox.BLUE)
+            updateCellsFor(id, BoundsBox.GREEN)
+        }
+        println(System.nanoTime() - t)
+    }
+
+    private fun updateCellsFor(id: Int, bounds_color: Int) {
+        val obj = objects[id]
+        val main = obj.bounds[bounds_color].main() ?: return
+
+        val move_area = ShapeUtils.rectX(main.copy(obj.stats.POS), main.copy(obj.stats.POS + obj.stats.nPOS))
+
+        val x1 = (move_area.L[0].toInt()/ROOM_GRID).coerceIn(cell_sizes[0])
+        val x2 = (move_area.R[0].toInt()/ROOM_GRID).coerceIn(cell_sizes[0])
+        val y1 = (move_area.L[1].toInt()/ROOM_GRID).coerceIn(cell_sizes[1])
+        val y2 = (move_area.R[1].toInt()/ROOM_GRID).coerceIn(cell_sizes[1])
+
+        //todo n dim
+
+        for(ix in x1..x2) {
+            for(iy in y1..y2) {
+                val data = CellData(ix, iy, bounds_color)
+                if(!cells.contains(data)) cells[data] = LinkedList()
+                cells[data]!!.add(id)
+            }
+        }
+        cells_ranges[0][id] = x1..x2 //cell_sizes[0]
+        cells_ranges[1][id] = y1..y2 //cell_sizes[1]
+
+        //println("O/C: "+objects.size + " - "+cells.sumOf { it.count() }+" "+sum)
+    }
+
+    private fun nextMove() {
+        for(id in objects.indices) {
+            val obj = objects[id]
             obj.stats.lPOS = obj.stats.POS
             if(obj.tagged("#immovable")) continue
+
             val move_bs = obj.bounds.orange
             if(move_bs.isEmpty()) continue
 
             fun maxMove(move_p: PointN): Double {
-                if(red_bounds.isEmpty()) return 1.0
+                val rangeX = cells_ranges[0][id]
+                val rangeY = cells_ranges[1][id]
 
-                return red_bounds.indices.minOf {
-                    BoundsUtils.maxMove(red_bounds[it], move_bs, pos[it], obj.stats.POS, move_p)
+                fun maxPathIn(ix: Int, iy: Int): Double {
+                    val cell = cells[CellData(ix, iy, BoundsBox.RED)] ?: return 1.0
+
+                    return cell.minOf { stayID ->
+                        val stay = objects[stayID]
+                        BoundsUtils.maxMove(stay.bounds.red, move_bs, stay.stats.POS, obj.stats.POS, move_p)
+                    }
                 }
+
+                return rangeX.minOf { ix -> rangeY.minOf { iy -> maxPathIn(ix, iy) } }
             }
 
             fun move(move_p: PointN): Double {
@@ -111,36 +174,10 @@ class Room(val pos: PointN, val size: PointN) {
             val min_d = move(obj.stats.nPOS)
             obj.stats.fly = min_d == 1.0
             val np = obj.stats.nPOS*(1 - min_d)
+            (0 until np.dimension()).forEach { move(np.separate(it)) }
 
-            for(i in 0 until np.dimension()) move(np.separate(i))
+            obj.stats.nPOS = PointN.ZERO
         }
-        objects.forEach { it.stats.nPOS = PointN.ZERO }
-    }
-
-    private fun nextMove() {
-        for(o in objects) {
-            if(o.tagged("#immovable")) continue
-            o.stats.lPOS = o.stats.POS
-            val orange = o.bounds.orange
-            if(orange.isEmpty()) continue
-
-            fun move(move_p: PointN): Double {
-                val mm = objects.minOf {
-                    val red = it.bounds.red
-                    if(red.isEmpty()) return 1.0
-                    BoundsUtils.maxMove(red, orange, it.stats.POS, o.stats.POS, move_p)
-                }
-                o.stats.POS += move_p*mm
-                return mm
-            }
-
-            val min_d = move(o.stats.nPOS)
-            o.stats.fly = min_d == 1.0
-            val np = o.stats.nPOS*(1 - min_d)
-
-            for(i in 0 until np.dimension()) move(np.separate(i))
-        }
-        objects.forEach { it.stats.nPOS = PointN.ZERO }
     }
 
     private fun nextActivate() {
@@ -161,8 +198,11 @@ class Room(val pos: PointN, val size: PointN) {
             }
         }
 
-        for(blueObj in objects) {
+        for(blueObjID in objects.indices) {
+            val blueObj = objects[blueObjID]
             if(blueObj.tagged("#inactive")) continue
+
+            //cell_range[BoundsBox.index("BLUE")]
 
             val blueBounds = blueObj.bounds.blue
             if(blueBounds.isEmpty()) continue

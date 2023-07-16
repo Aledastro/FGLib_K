@@ -5,13 +5,13 @@ class BoundsBox {
     operator fun get(index: Int) = bounds[index]
 
     val red: Bounds
-        get() = bounds[CODE.RED.ordinal]
+        get() = bounds[RED]
     val orange: Bounds
-        get() = bounds[CODE.ORANGE.ordinal]
+        get() = bounds[ORANGE]
     val blue: Bounds
-        get() = bounds[CODE.BLUE.ordinal]
+        get() = bounds[BLUE]
     val green: Bounds
-        get() = bounds[CODE.GREEN.ordinal]
+        get() = bounds[GREEN]
     val main: Bounds
         get() = if(red.isEmpty()) orange else red
 
@@ -23,5 +23,10 @@ class BoundsBox {
         fun index(name: String) = CODE.valueOf(name).ordinal
 
         val SIZE = CODE.values().size
+
+        val RED = CODE.RED.ordinal
+        val ORANGE = CODE.ORANGE.ordinal
+        val BLUE = CODE.BLUE.ordinal
+        val GREEN = CODE.GREEN.ordinal
     }
 }

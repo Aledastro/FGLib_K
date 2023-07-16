@@ -4,6 +4,7 @@ import com.uzery.fglib.utils.math.geom.PointN
 import com.uzery.fglib.utils.math.geom.RectN
 import com.uzery.fglib.utils.math.geom.Shape
 import java.util.*
+import kotlin.collections.List
 import kotlin.math.max
 import kotlin.math.min
 
@@ -11,6 +12,9 @@ class Bounds {
     val elements = LinkedList<BoundsElement>()
 
     fun add(vararg els: BoundsElement) = els.forEach { element -> elements.add(element) }
+
+    fun add(els: List<BoundsElement>) = els.forEach { element -> elements.add(element) }
+
     fun add(vararg shapes: () -> Shape?) = shapes.forEach { shape -> elements.add(BoundsElement(shape)) }
     fun add(shape: () -> Shape?) = elements.add(BoundsElement(shape))
     fun add(name: String, shape: () -> Shape?) = elements.add(BoundsElement(name, shape))
@@ -36,4 +40,9 @@ class Bounds {
     }
 
     fun isEmpty() = elements.isEmpty()
+    fun copy(pos: PointN): Bounds {
+        val els = LinkedList<BoundsElement>()
+        elements.indices.forEach { i->els.add(elements[i].copy(pos)) }
+        return Bounds().also { it.add(els) }
+    }
 }
