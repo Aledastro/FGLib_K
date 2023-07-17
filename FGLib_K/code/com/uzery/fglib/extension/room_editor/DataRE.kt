@@ -12,12 +12,13 @@ import java.util.*
 
 class DataRE(val getter: ClassGetter<GameObject>, val filenames: Array<out String>) {
     var hide_ui = false
-    var chosen = 0
+    var chosen_entry = 0
     lateinit var edit: Room
     var groupsValues: LinkedList<LinkedList<StringN>> = LinkedList<LinkedList<StringN>>()
     var groupsSelect: LinkedList<Int> = LinkedList<Int>()
     var draw_bounds = false
     var select_obj: GameObject? = null
+    var chosen_obj: GameObject? = null
     var draw_pos = PointN.ZERO
 
     var edit_n = 0
@@ -26,6 +27,7 @@ class DataRE(val getter: ClassGetter<GameObject>, val filenames: Array<out Strin
 
     var layers = LinkedList<DrawLayer>()
     var select_layer = 0
+    var select_group = 0
 
     val OFFSET = 40.0
     val GRID

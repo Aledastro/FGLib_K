@@ -37,7 +37,18 @@ class RoomEditor(private val getter: ClassGetter<GameObject>, private vararg val
         data.last_edit_room = data.edit
 
         data.select_layer = layers_vbox.select
-        data.chosen = objects_vbox.chosen()
+
+        data.select_group = objects_vbox.select
+        data.chosen_entry = objects_vbox.chosenEntry()
+        data.chosen_obj = data.getter.getEntry(data.chosen_entry)()
+
+
+        if(keyboard.pressed(KeyCode.SHIFT)){
+            choose_objects_vbox.show()
+        }else{
+            choose_objects_vbox.hide()
+        }
+        data.groupsSelect[data.select_group]=choose_objects_vbox.select
 
         if(data.hide_ui) {
             objects_vbox.hide()
@@ -83,7 +94,7 @@ class RoomEditor(private val getter: ClassGetter<GameObject>, private vararg val
         Platform.whole_draw = true
         //todo
         data.draw_pos = Platform.options().size/4 - data.edit.size*PointN(0.5, 0.5)
-        UIBox.add(canvasX, play_button, objects_vbox, layers_vbox, info_box)
+        UIBox.add(canvasX, play_button, objects_vbox, layers_vbox, info_box, choose_objects_vbox)
         canvasX.show()
         play_button.show()
         objects_vbox.show()
@@ -101,6 +112,7 @@ class RoomEditor(private val getter: ClassGetter<GameObject>, private vararg val
 
     private var play_button = PlayButtonRE()
     private var objects_vbox = ObjectVBoxRE(data)
+    private var choose_objects_vbox = ChooseObjectVBoxRE(data)
     private var canvasX = CanvasRE(data)
     private var layers_vbox = LayerVBoxRE(data)
     private var info_box = InfoBoxRE(data)

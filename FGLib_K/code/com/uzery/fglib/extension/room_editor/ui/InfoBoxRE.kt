@@ -15,6 +15,13 @@ class InfoBoxRE(private val data: DataRE): InfoBox() {
     override val text_draw_offset: Double
         get() = -0.2
 
+    override fun draw() {
+        Platform.graphics.alpha=0.3
+        Platform.graphics.fill.rect(pos,size, Color.BEIGE)
+        Platform.graphics.alpha=1.0
+        super.draw()
+    }
+
     private fun getL(): List<String> {
         val res = LinkedList<String>()
 

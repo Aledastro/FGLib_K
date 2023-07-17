@@ -10,12 +10,9 @@ import com.uzery.fglib.extension.ui.VBox
 import com.uzery.fglib.utils.math.geom.PointN
 import com.uzery.fglib.utils.math.geom.RectN
 import javafx.scene.input.KeyCode
+import javafx.scene.paint.Color
 
 class ObjectVBoxRE(private val data: DataRE): VBox(0, 5) {
-
-    val select_obj
-        get() = data.getter.getEntry(chosen())()
-
     override fun update() {
         if(keyboard.inPressed(KeyCode.DOWN)) {
             data.groupsSelect[select]++
@@ -51,6 +48,13 @@ class ObjectVBoxRE(private val data: DataRE): VBox(0, 5) {
         return data.names[id].s
     }
 
+    override fun draw() {
+        Platform.graphics.alpha=0.3
+        Platform.graphics.fill.rect(pos,size, Color.BEIGE)
+        Platform.graphics.alpha=1.0
+        super.draw()
+    }
+
     override fun draw(pos: PointN, id: Int) {
         val obj = data.getter.getEntry(from(id))()
         obj.draw(pos)
@@ -60,7 +64,7 @@ class ObjectVBoxRE(private val data: DataRE): VBox(0, 5) {
         }
     }
 
-    fun chosen(): Int {
+    fun chosenEntry(): Int {
         return from(select)
     }
 

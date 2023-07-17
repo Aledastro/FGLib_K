@@ -16,6 +16,13 @@ class LayerVBoxRE(private val data: DataRE): VBox(0, 24) {
     override val rows: Int
         get() = data.layers.size + 1
 
+    override fun draw() {
+        Platform.graphics.alpha=0.3
+        Platform.graphics.fill.rect(pos,size, Color.BEIGE)
+        Platform.graphics.alpha=1.0
+        super.draw()
+    }
+
     override val pos
         get() = (Platform.CANVAS - size)*PointN(0.5, 1.0) + PointN(0.0, -data.OFFSET/2)
     override val window: RectN

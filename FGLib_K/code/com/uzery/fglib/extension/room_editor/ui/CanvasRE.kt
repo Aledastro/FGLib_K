@@ -89,7 +89,7 @@ class CanvasRE(private val data: DataRE): UICanvas() {
                 (Platform.mouse.pos()/Platform.scale - data.draw_pos).round(data.GRID) + data.draw_pos + grid_offset[grid_offset_id]
             for(i in -add_size..add_size) {
                 for(j in -add_size..add_size) {
-                    val obj = data.select_obj ?: continue
+                    val obj = data.chosen_obj ?: continue
                     obj.draw(PointN(i, j)*data.GRID + pp)
                     if(data.draw_bounds) WorldUtils.drawBoundsFor(obj, PointN(i, j)*data.GRID + pp)
                 }
@@ -179,7 +179,7 @@ class CanvasRE(private val data: DataRE): UICanvas() {
         }
 
         fun onSelectLayer(o: GameObject): Boolean {
-            return data.select_layer == 0 || o.visuals.any { vis -> vis.drawLayer() == data.layers[data.select_layer - 1] }
+            return data.select_layer == 0 || o.visuals.isEmpty() || o.visuals.any { vis -> vis.drawLayer() == data.layers[data.select_layer - 1] }
         }
 
         val mouseRealPos = Platform.mouse.pos()/Platform.scale - data.draw_pos
@@ -195,7 +195,7 @@ class CanvasRE(private val data: DataRE): UICanvas() {
 
             fun add(pos: PointN) {
                 if(Platform.mouse_keys.pressed(MouseButton.PRIMARY)) {
-                    val o = data.getter.getEntry(data.chosen)()
+                    val o = data.getter.getEntry(data.chosen_entry)()
                     if(data.select_layer != 0 && !onSelectLayer(o)) return
                     val posWithOffset = pos + mouseRealPos.round(data.GRID) + grid_offset[grid_offset_id]
 
@@ -219,7 +219,7 @@ class CanvasRE(private val data: DataRE): UICanvas() {
 
         fun checkForRemove() {
             if(Platform.mouse_keys.pressed(MouseButton.SECONDARY)) {
-                val sel = data.getter.getEntry(data.chosen)()
+                val sel = data.getter.getEntry(data.chosen_entry)()
                 val room = roomFrom(mouseRealPos) ?: return
 
                 room.objects.removeIf { o ->
