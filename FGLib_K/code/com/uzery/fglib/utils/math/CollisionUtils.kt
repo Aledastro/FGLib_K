@@ -2,11 +2,9 @@ package com.uzery.fglib.utils.math
 
 import com.uzery.fglib.utils.data.file.ConstL.Companion.LITTLE
 import com.uzery.fglib.utils.math.ShapeUtils.Companion.rect
-import com.uzery.fglib.utils.math.geom.PointN
 import com.uzery.fglib.utils.math.geom.RectN
 import com.uzery.fglib.utils.math.geom.Shape
 import kotlin.math.abs
-import kotlin.math.max
 import kotlin.math.min
 
 interface CollisionUtils {

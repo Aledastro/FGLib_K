@@ -41,8 +41,8 @@ interface WorldUtils {
             graphics.setStroke(1.0)
             val bs = o.bounds[color_id]
             if(bs.isEmpty()) return
-            for(shade in bs.shades) {
-                val shape = shade.shape ?: continue
+            for(shade in bs.elements) {
+                val shape = shade.shape() ?: continue
                 graphics.fill.draw(pos, shape, FGUtils.transparent(colors[color_id], 0.1))
                 graphics.stroke.draw(pos, shape, FGUtils.transparent(colors[color_id], 0.6))
                 graphics.stroke.line(pos + shape.L, shape.S, FGUtils.transparent(colors[color_id], 0.5))

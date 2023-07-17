@@ -10,7 +10,7 @@ import com.uzery.fglib.utils.math.geom.PointN
 import com.uzery.fglib.utils.math.num.StringN
 import java.util.*
 
-class DataRE(val getter: ClassGetter<GameObject>, val filenames: Array<out String>){
+class DataRE(val getter: ClassGetter<GameObject>, val filenames: Array<out String>) {
     var hide_ui = false
     var chosen = 0
     lateinit var edit: Room

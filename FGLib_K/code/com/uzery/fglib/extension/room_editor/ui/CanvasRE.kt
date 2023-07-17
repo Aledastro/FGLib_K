@@ -18,8 +18,6 @@ import javafx.scene.Cursor
 import javafx.scene.input.KeyCode
 import javafx.scene.input.MouseButton
 import javafx.scene.paint.Color
-import java.util.ArrayList
-import java.util.HashMap
 
 class CanvasRE(private val data: DataRE): UICanvas() {
     private enum class DRAW_MODE {
@@ -31,7 +29,6 @@ class CanvasRE(private val data: DataRE): UICanvas() {
     }
 
     private var draw_mode = DRAW_MODE.FOCUSED
-
 
 
     override val pos: PointN
@@ -88,10 +85,11 @@ class CanvasRE(private val data: DataRE): UICanvas() {
 
         fun drawSelectObj(alpha: Double = 1.0) {
             Platform.global_alpha = alpha
-            val pp = (Platform.mouse.pos()/Platform.scale - data.draw_pos).round(data.GRID) + data.draw_pos + grid_offset[grid_offset_id]
+            val pp =
+                (Platform.mouse.pos()/Platform.scale - data.draw_pos).round(data.GRID) + data.draw_pos + grid_offset[grid_offset_id]
             for(i in -add_size..add_size) {
                 for(j in -add_size..add_size) {
-                    val obj = data.select_obj?: continue
+                    val obj = data.select_obj ?: continue
                     obj.draw(PointN(i, j)*data.GRID + pp)
                     if(data.draw_bounds) WorldUtils.drawBoundsFor(obj, PointN(i, j)*data.GRID + pp)
                 }
@@ -225,7 +223,8 @@ class CanvasRE(private val data: DataRE): UICanvas() {
                 val room = roomFrom(mouseRealPos) ?: return
 
                 room.objects.removeIf { o ->
-                    val len = (o.stats.POS - data.edit.pos + room.pos).lengthTo(mouseRealPos.round(data.GRID) + data.GRID_P/2)
+                    val len =
+                        (o.stats.POS - data.edit.pos + room.pos).lengthTo(mouseRealPos.round(data.GRID) + data.GRID_P/2)
                     len<=data.GRID/2*(add_size*2 + 1) && sel.equalsName(o) && onSelectLayer(o)
                 }
                 addLastInfo()
@@ -275,7 +274,8 @@ class CanvasRE(private val data: DataRE): UICanvas() {
 
     override fun update() {
         last_mouse_pos = Platform.mouse.pos()
-        if(Platform.keyboard.pressed(KeyCode.CONTROL) && Platform.keyboard.inPressed(KeyCode.TAB)) data.draw_bounds = !data.draw_bounds
+        if(Platform.keyboard.pressed(KeyCode.CONTROL) && Platform.keyboard.inPressed(KeyCode.TAB)) data.draw_bounds =
+            !data.draw_bounds
         if(Platform.keyboard.pressed(KeyCode.CONTROL) && Platform.keyboard.inPressed(KeyCode.M)) {
             draw_mode = draw_mode.nextMode()
             data.hide_ui = draw_mode == DRAW_MODE.OVERVIEW

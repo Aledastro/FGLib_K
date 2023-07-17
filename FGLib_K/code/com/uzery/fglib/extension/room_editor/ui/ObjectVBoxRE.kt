@@ -54,7 +54,7 @@ class ObjectVBoxRE(private val data: DataRE): VBox(0, 5) {
     override fun draw(pos: PointN, id: Int) {
         val obj = data.getter.getEntry(from(id))()
         obj.draw(pos)
-        if(data.draw_bounds){
+        if(data.draw_bounds) {
             WorldUtils.drawBoundsFor(obj, pos, BoundsBox.RED)
             WorldUtils.drawBoundsFor(obj, pos, BoundsBox.ORANGE)
         }

@@ -11,7 +11,7 @@ import com.uzery.fglib.utils.math.geom.RectN
 import javafx.scene.paint.Color
 import java.util.*
 
-class InfoBoxRE(private val data: DataRE): InfoBox(){
+class InfoBoxRE(private val data: DataRE): InfoBox() {
     override val text_draw_offset: Double
         get() = -0.2
 

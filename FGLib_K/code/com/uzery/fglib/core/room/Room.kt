@@ -2,10 +2,8 @@ package com.uzery.fglib.core.room
 
 import com.uzery.fglib.core.obj.GameObject
 import com.uzery.fglib.core.obj.ability.InputAction
-import com.uzery.fglib.core.obj.bounds.BoundsBox
 import com.uzery.fglib.core.obj.bounds.BoundsElement
 import com.uzery.fglib.core.obj.visual.Visualiser
-import com.uzery.fglib.utils.data.file.ConstL
 import com.uzery.fglib.utils.data.getter.value.PosValue
 import com.uzery.fglib.utils.data.getter.value.SizeValue
 import com.uzery.fglib.utils.math.BoundsUtils
@@ -35,11 +33,9 @@ class Room(val pos: PointN, val size: PointN) {
 
         objects.forEach { it.next() }
 
-        //updateBounds()
-        //updateCells()
         t++
         nextMoveOld()
-        //nextActivate()
+        nextActivate()
 
         objects.forEach { new_objects.addAll(it.children) }
         objects.forEach { it.children.clear() }
@@ -82,107 +78,6 @@ class Room(val pos: PointN, val size: PointN) {
     fun add(objs: List<GameObject>) = new_objects.addAll(objs)
     fun remove(objs: List<GameObject>) = old_objects.addAll(objs)
 
-
-    private fun updateBounds() {
-        objects.forEach { o -> o.bounds.update(o.stats.POS) }
-    }
-
-    private val ROOM_GRID = 5 //todo to project files
-
-    private val dim = 2 // todo objects.first.stats.POS.dimension()
-    private val cell_sizes = Array(dim) { -1..size[it].toInt()/ROOM_GRID + 1 }
-    private val cells_size = BoundsBox.SIZE*(cell_sizes[0].last + 2)*(cell_sizes[1].last + 2)
-
-    private val cells = HashMap<CellData, LinkedList<Int>>()
-    private val cells_ranges = LinkedList<LinkedList<IntRange>>()
-
-    private fun updateCells() {
-        val t = System.nanoTime()
-
-        cells.clear()
-        cells_ranges.clear()
-
-        for(i in 0 until dim) {
-            cells_ranges.add(LinkedList())
-
-            for(j in 0 until objects.size) {
-                cells_ranges[i].add(0..0)
-            }
-        }
-
-        for(id in objects.indices) {
-            updateCellsFor(id, BoundsBox.RED)
-            updateCellsFor(id, BoundsBox.ORANGE)
-            updateCellsFor(id, BoundsBox.BLUE)
-            updateCellsFor(id, BoundsBox.GREEN)
-        }
-        println(System.nanoTime() - t)
-    }
-
-    private fun updateCellsFor(id: Int, bounds_color: Int) {
-        val obj = objects[id]
-        val main = obj.bounds[bounds_color].main ?: return
-
-        val move_area = ShapeUtils.rectX(main, main.copy(obj.stats.nPOS))
-
-        val x1 = (move_area.L[0].toInt()/ROOM_GRID).coerceIn(cell_sizes[0])
-        val x2 = (move_area.R[0].toInt()/ROOM_GRID).coerceIn(cell_sizes[0]) //todo +-1
-        val y1 = (move_area.L[1].toInt()/ROOM_GRID).coerceIn(cell_sizes[1])
-        val y2 = (move_area.R[1].toInt()/ROOM_GRID).coerceIn(cell_sizes[1])
-
-        //todo n dim
-
-        for(ix in x1..x2) {
-            for(iy in y1..y2) {
-                val data = CellData(ix, iy, bounds_color)
-                if(!cells.contains(data)) cells[data] = LinkedList()
-                cells[data]!!.add(id)
-            }
-        }
-        cells_ranges[0][id] = x1..x2 //cell_sizes[0]
-        cells_ranges[1][id] = y1..y2 //cell_sizes[1]
-
-        //println("O/C: "+objects.size + " - "+cells.sumOf { it.count() }+" "+sum)
-    }
-
-    private fun nextMove() {
-        for(id in objects.indices) {
-            val obj = objects[id]
-            obj.stats.lPOS = obj.stats.POS
-            if(obj.tagged("#immovable")) continue
-
-            val move_bs = obj.bounds.orange
-            if(move_bs.isEmpty()) continue
-
-            fun maxMove(move_p: PointN): Double {
-                fun maxPathIn(ix: Int, iy: Int): Double {
-                    val cell = cells[CellData(ix, iy, BoundsBox.RED)] ?: return 1.0
-
-                    return cell.minOf { stay ->
-                        BoundsUtils.maxMove(objects[stay].bounds.red, move_bs, -move_p)
-                    }
-                }
-
-                val rangeX = cells_ranges[0][id]
-                val rangeY = cells_ranges[1][id]
-                return rangeX.minOf { ix -> rangeY.minOf { iy -> maxPathIn(ix, iy) } }
-            }
-
-            fun move(move_p: PointN): Double {
-                val mm = maxMove(move_p)
-                obj.stats.POS += move_p*mm*(1 - ConstL.LITTLE)
-                return mm
-            }
-
-            val min_d = move(obj.stats.nPOS)
-            obj.stats.fly = min_d == 1.0
-            val np = obj.stats.nPOS*(1 - min_d)
-            (0 until np.dimension()).forEach { move(np.separate(it)) }
-
-            obj.stats.nPOS = PointN.ZERO
-        }
-    }
-
     private fun nextMoveOld() {
         for(o in objects) {
             if(o.tagged("#immovable")) continue
@@ -210,7 +105,7 @@ class Room(val pos: PointN, val size: PointN) {
     }
 
 
-    /*private fun nextActivate() {
+    private fun nextActivate() {
         //todo less code
 
         fun setActivate(
@@ -304,7 +199,7 @@ class Room(val pos: PointN, val size: PointN) {
                 }
             }
         }
-    }*/
+    }
 
     override fun toString(): String {
         val wr = StringBuilder()

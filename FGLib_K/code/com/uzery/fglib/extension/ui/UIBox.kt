@@ -25,7 +25,7 @@ class UIBox: Extension {
         active?.ifActive()
         list.forEach { it.update() }
 
-        if(develop_mode){
+        if(develop_mode) {
             list.forEach {
                 if(it.showing) graphics.fill.rect(it.pos, it.size, FGUtils.transparent(Color.DARKBLUE, 0.1))
             }

@@ -1,13 +1,8 @@
 package com.uzery.fglib.core.obj.bounds
 
-import com.uzery.fglib.utils.math.geom.PointN
-
 class BoundsBox {
     private val bounds = Array(SIZE) { Bounds() }
     operator fun get(index: Int) = bounds[index]
-    fun update(pos: PointN) {
-        for(bs in bounds) bs.update(pos)
-    }
 
     val red: Bounds
         get() = bounds[RED]

@@ -3,7 +3,6 @@ package com.uzery.fglib.core.world
 import com.uzery.fglib.core.obj.DrawLayer
 import com.uzery.fglib.core.obj.GameObject
 import com.uzery.fglib.core.obj.visual.Visualiser
-import com.uzery.fglib.core.program.Platform.Companion.CANVAS_R
 import com.uzery.fglib.core.program.Platform.Companion.develop_mode
 import com.uzery.fglib.core.program.Platform.Companion.graphics
 import com.uzery.fglib.core.room.Room
@@ -11,7 +10,6 @@ import com.uzery.fglib.utils.data.debug.DebugData
 import com.uzery.fglib.utils.data.file.WriteData
 import com.uzery.fglib.utils.data.getter.ClassGetter
 import com.uzery.fglib.utils.math.FGUtils
-import com.uzery.fglib.utils.math.ShapeUtils
 import com.uzery.fglib.utils.math.geom.PointN
 import javafx.scene.paint.Color
 import java.util.*

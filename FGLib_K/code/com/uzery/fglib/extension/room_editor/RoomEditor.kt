@@ -2,36 +2,29 @@ package com.uzery.fglib.extension.room_editor
 
 import com.uzery.fglib.core.obj.DrawLayer
 import com.uzery.fglib.core.obj.GameObject
-import com.uzery.fglib.core.obj.bounds.BoundsBox
 import com.uzery.fglib.core.program.Extension
 import com.uzery.fglib.core.program.Platform
 import com.uzery.fglib.core.program.Platform.Companion.CANVAS
-import com.uzery.fglib.core.program.Platform.Companion.CANVAS_R
 import com.uzery.fglib.core.program.Platform.Companion.graphics
 import com.uzery.fglib.core.program.Platform.Companion.keyboard
 import com.uzery.fglib.core.program.Platform.Companion.scale
 import com.uzery.fglib.core.world.World
-import com.uzery.fglib.core.world.WorldUtils
 import com.uzery.fglib.extension.room_editor.ui.*
-import com.uzery.fglib.extension.ui.*
+import com.uzery.fglib.extension.ui.UIBox
 import com.uzery.fglib.utils.data.file.WriteData
 import com.uzery.fglib.utils.data.getter.ClassGetter
-import com.uzery.fglib.utils.math.FGUtils
 import com.uzery.fglib.utils.math.geom.PointN
-import com.uzery.fglib.utils.math.geom.RectN
 import javafx.scene.input.KeyCode
 import javafx.scene.paint.Color
-import javafx.scene.text.Font
-import javafx.scene.text.FontWeight
 import java.util.*
 
 class RoomEditor(private val getter: ClassGetter<GameObject>, private vararg val filenames: String): Extension {
     override fun children() = LinkedList<Extension>().apply { add(UIBox()) }
 
-    private val data = DataRE(getter,filenames)
+    private val data = DataRE(getter, filenames)
 
-    fun setLayers(list: LinkedList<DrawLayer>){
-        data.layers=list
+    fun setLayers(list: LinkedList<DrawLayer>) {
+        data.layers = list
     }
 
     override fun update() {
