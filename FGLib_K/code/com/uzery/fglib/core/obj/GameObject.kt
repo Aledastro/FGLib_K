@@ -106,7 +106,10 @@ abstract class GameObject {
         /* ignore */
     }
 
-    fun draw(draw_pos: PointN) = visuals.forEach { it.drawWithDefaults(draw_pos) }
+    fun draw(draw_pos: PointN) {
+        visuals.sortBy { v -> v.drawLayer().sort }
+        visuals.forEach { it.drawWithDefaults(draw_pos) }
+    }
 
     protected fun produce(vararg os: GameObject) {
         children.addAll(os)
