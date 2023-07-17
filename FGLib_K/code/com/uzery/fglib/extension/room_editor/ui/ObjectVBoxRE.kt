@@ -1,18 +1,17 @@
-package com.uzery.fglib.extension.room_editor
+package com.uzery.fglib.extension.room_editor.ui
 
 import com.uzery.fglib.core.obj.bounds.BoundsBox
 import com.uzery.fglib.core.program.Platform
 import com.uzery.fglib.core.program.Platform.Companion.keyboard
 import com.uzery.fglib.core.program.Platform.Companion.scale
 import com.uzery.fglib.core.world.WorldUtils
+import com.uzery.fglib.extension.room_editor.DataRE
 import com.uzery.fglib.extension.ui.VBox
 import com.uzery.fglib.utils.math.geom.PointN
 import com.uzery.fglib.utils.math.geom.RectN
 import javafx.scene.input.KeyCode
 
-class ObjectVBoxRE(private val input: DataGetterRE): VBox(0, 5) {
-    val data: DataRE
-        get() = input.get()
+class ObjectVBoxRE(private val data: DataRE): VBox(0, 5) {
 
     val select_obj
         get() = data.getter.getEntry(chosen())()

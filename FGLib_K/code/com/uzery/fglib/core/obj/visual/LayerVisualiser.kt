@@ -1,10 +1,14 @@
 package com.uzery.fglib.core.obj.visual
 
 import com.uzery.fglib.core.obj.DrawLayer
+import com.uzery.fglib.utils.math.geom.PointN
+import com.uzery.fglib.utils.math.geom.RectN
 
-abstract class LayerVisualiser(private val layer: DrawLayer): Visualiser {
+abstract class LayerVisualiser(private val pos: PointN, private val size: PointN, private val layer: DrawLayer): Visualiser {
+    override val main: RectN
+        get() = RectN(pos, size)
 
-    constructor(d: Double): this(DrawLayer(d))
+    constructor(size: PointN, layer: DrawLayer): this(-size/2, size, layer)
 
     override fun drawLayer(): DrawLayer = layer
 }

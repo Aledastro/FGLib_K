@@ -1,3 +1,3 @@
 FGLib K
 
-release FGLib v.0.6.4.7 [K] unstable
+release FGLib v.0.6.5.0 [K]
