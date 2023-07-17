@@ -8,8 +8,6 @@ import kotlin.math.max
 import kotlin.math.min
 
 class Bounds {
-    var main: Shape? = null
-        private set
     val elements = LinkedList<BoundsElement>()
 
     fun add(vararg els: BoundsElement) = els.forEach { element -> elements.add(element) }

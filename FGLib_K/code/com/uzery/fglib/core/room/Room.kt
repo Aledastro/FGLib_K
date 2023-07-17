@@ -2,8 +2,10 @@ package com.uzery.fglib.core.room
 
 import com.uzery.fglib.core.obj.GameObject
 import com.uzery.fglib.core.obj.ability.InputAction
+import com.uzery.fglib.core.obj.bounds.Bounds
 import com.uzery.fglib.core.obj.bounds.BoundsElement
 import com.uzery.fglib.core.obj.visual.Visualiser
+import com.uzery.fglib.utils.data.file.ConstL
 import com.uzery.fglib.utils.data.getter.value.PosValue
 import com.uzery.fglib.utils.data.getter.value.SizeValue
 import com.uzery.fglib.utils.math.BoundsUtils
@@ -76,31 +78,43 @@ class Room(val pos: PointN, val size: PointN) {
     fun remove(objs: List<GameObject>) = old_objects.addAll(objs)
 
     private fun nextMoveOld() {
-        for(o in objects) {
-            if(o.tagged("#immovable")) continue
-            o.stats.lPOS = o.stats.POS
-            val orange = o.bounds.orange
-            if(orange.isEmpty()) continue
+        val red_bounds = LinkedList<Bounds>()
+        val pos = LinkedList<PointN>()
+        objects.forEach {
+            val bs = it.bounds.red
+            if(!bs.isEmpty()) {
+                red_bounds.add(bs)
+                pos.add(it.stats.POS)
+            }
+        }
+        for(obj in objects) {
+            obj.stats.lPOS = obj.stats.POS
+            if(obj.tagged("#immovable")) continue
+            val move_bs = obj.bounds.orange
+            if(move_bs.isEmpty()) continue
+
+            fun maxMove(move_p: PointN): Double {
+                if(red_bounds.isEmpty()) return 1.0
+
+                return red_bounds.indices.minOf {
+                    BoundsUtils.maxMoveOld(red_bounds[it], move_bs, pos[it], obj.stats.POS, move_p)
+                }
+            }
 
             fun move(move_p: PointN): Double {
-                val mm = objects.minOf {
-                    val red = it.bounds.red
-                    if(red.isEmpty()) return 1.0
-                    BoundsUtils.maxMoveOld(red, orange, it.stats.POS, o.stats.POS, move_p)
-                }
-                o.stats.POS += move_p*mm
+                val mm = maxMove(move_p)
+                obj.stats.POS += move_p*mm*(1 - ConstL.LITTLE)
                 return mm
             }
 
-            val min_d = move(o.stats.nPOS)
-            o.stats.fly = min_d == 1.0
-            val np = o.stats.nPOS*(1 - min_d)
+            val min_d = move(obj.stats.nPOS)
+            obj.stats.fly = min_d == 1.0
+            val np = obj.stats.nPOS*(1 - min_d)
 
             for(i in 0 until np.dimension()) move(np.separate(i))
         }
         objects.forEach { it.stats.nPOS = PointN.ZERO }
     }
-
 
     private fun nextActivate() {
         //todo less code
