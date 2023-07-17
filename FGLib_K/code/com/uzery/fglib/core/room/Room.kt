@@ -26,14 +26,11 @@ class Room(val pos: PointN, val size: PointN) {
         objects.addAll(objs)
     }
 
-    var t = 0
     fun next() {
         objects.addAll(new_objects)
         new_objects.clear()
 
         objects.forEach { it.next() }
-
-        t++
         nextMoveOld()
         nextActivate()
 
@@ -126,8 +123,6 @@ class Room(val pos: PointN, val size: PointN) {
         for(blueObjID in objects.indices) {
             val blueObj = objects[blueObjID]
             if(blueObj.tagged("#inactive")) continue
-
-            //cell_range[BoundsBox.index("BLUE")]
 
             val blueBounds = blueObj.bounds.blue
             if(blueBounds.isEmpty()) continue
