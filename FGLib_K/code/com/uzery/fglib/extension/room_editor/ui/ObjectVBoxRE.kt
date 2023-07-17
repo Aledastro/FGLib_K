@@ -14,12 +14,6 @@ import javafx.scene.paint.Color
 
 class ObjectVBoxRE(private val data: DataRE): VBox(0, 5) {
     override fun update() {
-        if(keyboard.inPressed(KeyCode.DOWN)) {
-            data.groupsSelect[select]++
-        }
-        if(keyboard.inPressed(KeyCode.UP)) {
-            data.groupsSelect[select]--
-        }
         coerceGroups()
     }
 
