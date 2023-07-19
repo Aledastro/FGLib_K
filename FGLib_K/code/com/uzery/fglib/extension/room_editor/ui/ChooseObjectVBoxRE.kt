@@ -10,7 +10,7 @@ import com.uzery.fglib.utils.math.geom.RectN
 import javafx.scene.paint.Color
 import kotlin.math.min
 
-class ChooseObjectVBoxRE(private val data: DataRE): VBox(0, 0) {
+class ChooseObjectVBoxRE(private val data: DataRE): VBox() {
     override val full: Int
         get() = data.groupsValues[data.select_group].size
 
@@ -22,7 +22,7 @@ class ChooseObjectVBoxRE(private val data: DataRE): VBox(0, 0) {
     override val window: RectN
         get() = Platform.CANVAS_R
     override val sizeOne: PointN
-        get() = PointN(50, 50)/Platform.scale
+        get() = PointN(60, 60)/Platform.scale
 
     override fun setNames(id: Int): String {
         return "$id"

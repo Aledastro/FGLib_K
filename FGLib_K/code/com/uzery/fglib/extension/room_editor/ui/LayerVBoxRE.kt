@@ -9,7 +9,7 @@ import javafx.scene.paint.Color
 import javafx.scene.text.Font
 import javafx.scene.text.FontWeight
 
-class LayerVBoxRE(private val data: DataRE): VBox(0, 24) {
+class LayerVBoxRE(private val data: DataRE): VBox() {
     override val full: Int
         get() = data.layers.size+1
 

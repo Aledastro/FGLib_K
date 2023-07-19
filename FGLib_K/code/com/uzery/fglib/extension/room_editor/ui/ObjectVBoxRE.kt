@@ -10,8 +10,12 @@ import com.uzery.fglib.utils.math.geom.PointN
 import com.uzery.fglib.utils.math.geom.RectN
 import javafx.scene.paint.Color
 
-class ObjectVBoxRE(private val data: DataRE): VBox(0, 5) {
+class ObjectVBoxRE(private val data: DataRE): VBox() {
+
+    override val rows = 5
+
     override fun update() {
+        super.update()
         coerceGroups()
     }
 
@@ -34,7 +38,7 @@ class ObjectVBoxRE(private val data: DataRE): VBox(0, 5) {
     override val window: RectN
         get() = Platform.CANVAS_R
     override val sizeOne: PointN
-        get() = PointN(50, 50)/scale
+        get() = PointN(60, 60)/scale
 
     override fun setNames(id: Int): String {
         return data.names[id].s

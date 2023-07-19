@@ -34,18 +34,20 @@ abstract class UIElement {
     abstract fun update()
 
     protected fun pressed(pos: PointN, size: PointN, button: MouseButton = MouseButton.PRIMARY): Boolean {
-        return isA(pos, size) && mouse_keys.pressed(button)
+        return isAt(pos, size) && mouse_keys.pressed(button)
     }
 
     protected fun inPressed(pos: PointN, size: PointN, button: MouseButton = MouseButton.PRIMARY): Boolean {
-        return isA(pos, size) && mouse_keys.inPressed(button)
+        return isAt(pos, size) && mouse_keys.inPressed(button)
     }
 
     protected fun rePressed(pos: PointN, size: PointN, button: MouseButton = MouseButton.PRIMARY): Boolean {
-        return isA(pos, size) && mouse_keys.rePressed(button)
+        return isAt(pos, size) && mouse_keys.rePressed(button)
     }
 
-    fun isA(pos: PointN, size: PointN): Boolean {
+    protected fun isAt(pos: PointN, size: PointN): Boolean {
         return RectN(pos, size).into(mouse.pos()/scale)
     }
+
+    fun isActive() = isAt(pos, size)
 }

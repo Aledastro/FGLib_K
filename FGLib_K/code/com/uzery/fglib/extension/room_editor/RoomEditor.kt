@@ -54,6 +54,7 @@ class RoomEditor(private val getter: ClassGetter<GameObject>, private vararg val
             objects_vbox.hide()
             layers_vbox.hide()
             info_box.hide()
+            choose_objects_vbox.hide()
         } else {
             objects_vbox.show()
             layers_vbox.show()

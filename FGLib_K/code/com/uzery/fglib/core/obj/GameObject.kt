@@ -144,7 +144,7 @@ abstract class GameObject {
             s.append(":")
             values.forEach { value ->
                 val ss = value.toString()
-                if(ss=="")throw DebugData.error("NULLABLE VALUE: $name: $values")
+                if (ss == "") throw DebugData.error("NULLABLE VALUE: $name: $values")
                 s.append(if (ss[ss.lastIndex] == ']') " $ss" else " [$ss]")
             }
         }

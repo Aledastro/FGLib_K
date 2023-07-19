@@ -20,7 +20,7 @@ class UIBox: Extension {
     }
 
     override fun update() {
-        active = list.stream().filter { el -> el.showing && el.isA(el.pos, el.size) }
+        active = list.stream().filter { el -> el.showing && el.isActive() }
             .sorted { o1, o2 -> -o1.priority.compareTo(o2.priority) }.findFirst().orElse(null)
         active?.ifActive()
         list.forEach { it.update() }
