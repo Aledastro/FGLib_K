@@ -179,8 +179,6 @@ abstract class GameObject {
     fun effectedAny(vararg effect: String) = effect.any { eff -> effected(eff) }
     fun effectedAll(vararg effect: String) = effect.all { eff -> effected(eff) }
     fun equalsS(other: GameObject): Boolean {
-        this.setValues()
-        other.setValues()
         return this.toString() == other.toString()
     }
 

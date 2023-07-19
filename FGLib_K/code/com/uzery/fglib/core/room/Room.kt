@@ -222,7 +222,6 @@ class Room(val pos: PointN, val size: PointN) {
         wr.append("room: ${PosValue(pos)} ${SizeValue(size)}\n\n")
 
         for (o in objects) {
-            o.setValues()
             if (o.name != "temp" && o.name != "temporary") wr.append("$o\n")
         }
 
