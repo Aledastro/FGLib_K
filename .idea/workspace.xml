@@ -12,7 +12,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="82970e50-af90-458e-a847-e0b07c98f932" name="Changes" comment="FGLib v.0.6.6.6 [K] hell yes it work" />
+    <list default="true" id="82970e50-af90-458e-a847-e0b07c98f932" name="Changes" comment="FGLib v.0.6.6.7 [K]">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -120,13 +122,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1680386967444</updated>
-    </task>
-    <task id="LOCAL-00049" summary="FGLib v.0.5.5.1 [K]">
-      <created>1686693366586</created>
-      <option name="number" value="00049" />
-      <option name="presentableId" value="LOCAL-00049" />
-      <option name="project" value="LOCAL" />
-      <updated>1686693366586</updated>
     </task>
     <task id="LOCAL-00050" summary="FGLib v.0.5.5.2 [K]">
       <created>1686694406609</created>
@@ -464,7 +459,14 @@
       <option name="project" value="LOCAL" />
       <updated>1689732744855</updated>
     </task>
-    <option name="localTasksCounter" value="98" />
+    <task id="LOCAL-00098" summary="FGLib v.0.6.6.7 [K]">
+      <created>1689741468671</created>
+      <option name="number" value="00098" />
+      <option name="presentableId" value="LOCAL-00098" />
+      <option name="project" value="LOCAL" />
+      <updated>1689741468671</updated>
+    </task>
+    <option name="localTasksCounter" value="99" />
     <servers />
   </component>
   <component name="UnknownFeatures">
@@ -494,7 +496,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="FGLib v.0.5.12.9 [K]" />
     <MESSAGE value="FGLib v.0.5.12.10 [K]" />
     <MESSAGE value="FGLib v.0.6.0.0 [K]" />
     <MESSAGE value="FGLib v.0.6.0.1 [K]" />
@@ -519,7 +520,8 @@
     <MESSAGE value="FGLib v.0.6.6.4 [K]" />
     <MESSAGE value="FGLib v.0.6.6.5 [K]" />
     <MESSAGE value="FGLib v.0.6.6.6 [K] hell yes it work" />
-    <option name="LAST_COMMIT_MESSAGE" value="FGLib v.0.6.6.6 [K] hell yes it work" />
+    <MESSAGE value="FGLib v.0.6.6.7 [K]" />
+    <option name="LAST_COMMIT_MESSAGE" value="FGLib v.0.6.6.7 [K]" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
