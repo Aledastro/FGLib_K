@@ -76,13 +76,13 @@ abstract class GameObject {
     }
 
     fun addListener(listener: (InputAction) -> Unit) = listeners.add(ActionListener { listener(it) })
-    fun addListener(listener: ActionListener) = listeners.add(listener)
+    fun addListener(vararg listener: ActionListener) = listeners.addAll(listener)
     fun addAbility(ability: () -> Unit) = abilities.add(AbilityBox { ability() })
-    fun addAbility(ability: AbilityBox) = abilities.add(ability)
+    fun addAbility(vararg ability: AbilityBox) = abilities.addAll(ability)
     fun addProperty(property: () -> Unit) = properties.add(GameProperty { property() })
-    fun addProperty(property: GameProperty) = properties.add(property)
+    fun addProperty(vararg property: GameProperty) = properties.addAll(property)
     fun addMod(mod: () -> Unit) = modificators.add(Modificator { mod() })
-    fun addMod(mod: Modificator) = modificators.add(mod)
+    fun addMod(vararg mod: Modificator) = modificators.addAll(mod)
     fun addVisual(visual: Visualiser) = visuals.add(visual)
 
     fun next() {
