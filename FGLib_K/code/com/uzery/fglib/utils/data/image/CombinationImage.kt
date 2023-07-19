@@ -7,7 +7,7 @@ import javafx.scene.image.Image
 class CombinationImage(name: String, val size: IntI, private val rule: ImageCombinationRule, scale: Int = -1):
     FGLImage() {
 
-    private var SCALE = if(scale == -1) Platform.scale else scale
+    private var SCALE = if (scale == -1) Platform.scale else scale
     private val origin: Image
 
     init {

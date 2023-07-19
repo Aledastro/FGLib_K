@@ -26,7 +26,7 @@ interface World {
 
         fun allTagged(tag: String): List<GameObject> {
             val res = LinkedList<GameObject>()
-            for(room in active_rooms) {
+            for (room in active_rooms) {
                 res.addAll(room.objects.stream().filter { it.tagged(tag) }.toList())
             }
             return res
@@ -44,18 +44,18 @@ interface World {
 
             controller.update()
             active_rooms.clear()
-            for(id in rooms.indices) {
-                if(controller.isActive(rooms[id])) {
-                    if(!last_active[id]) controller.onAppear(rooms[id])
+            for (id in rooms.indices) {
+                if (controller.isActive(rooms[id])) {
+                    if (!last_active[id]) controller.onAppear(rooms[id])
                     active_rooms.add(rooms[id])
                     last_active[id] = true
                 } else {
-                    if(last_active[id]) controller.onDisappear(rooms[id])
+                    if (last_active[id]) controller.onDisappear(rooms[id])
                     last_active[id] = false
                 }
             }
             camera?.update()
-            graphics.drawPOS = controller.drawPOS() + (camera?.drawPOS() ?: PointN.ZERO)
+            graphics.drawPOS = controller.drawPOS()+(camera?.drawPOS() ?: PointN.ZERO)
 
             WorldUtils.nextDebug()
             active_rooms.forEach { WorldUtils.nextDebugForRoom(it) }
@@ -73,7 +73,7 @@ interface World {
             active_rooms.forEach { room ->
                 room.objects.forEach { obj ->
                     obj.visuals.forEach {
-                        pos_map[it] = obj.stats.POS + room.pos
+                        pos_map[it] = obj.stats.POS+room.pos
                         vis.add(it)
                     }
                 }
@@ -82,46 +82,46 @@ interface World {
         }
 
         private fun drawRoomsOld(pos: PointN) {
-            active_rooms.forEach { it.draw(pos + it.pos) }
+            active_rooms.forEach { it.draw(pos+it.pos) }
         }
 
         private fun drawRoomsDebug(pos: PointN) {
             graphics.layer = DrawLayer.CAMERA_FOLLOW
-            active_rooms.forEach { graphics.stroke.rect(pos + it.pos, it.size, Color.DARKBLUE) }
+            active_rooms.forEach { graphics.stroke.rect(pos+it.pos, it.size, Color.DARKBLUE) }
 
-            active_rooms.forEach { WorldUtils.drawDebug(pos + it.pos, it) }
+            active_rooms.forEach { WorldUtils.drawDebug(pos+it.pos, it) }
         }
 
         private fun drawNotActiveRooms(pos: PointN) {
-            if(!develop_mode) return
+            if (!develop_mode) return
 
             graphics.layer = DrawLayer.CAMERA_FOLLOW
             rooms.forEach { room ->
-                graphics.stroke.rect(room.pos + pos, room.size, FGUtils.transparent(Color.LIGHTGRAY, 0.5))
+                graphics.stroke.rect(room.pos+pos, room.size, FGUtils.transparent(Color.LIGHTGRAY, 0.5))
             }
         }
 
         var getter: ClassGetter<GameObject>? = null
 
         private fun readInfo(filename: String): Room {
-            if(getter == null) throw DebugData.error("getter not loaded")
+            if (getter == null) throw DebugData.error("getter not loaded")
 
             val list = WriteData[filename]
             val objects = LinkedList<GameObject>()
             var next = ""
 
-            while(next.startsWith("//") || next.isEmpty()) {
+            while (next.startsWith("//") || next.isEmpty()) {
                 next = list.removeFirst()
             }
             val t = StringTokenizer(next)
             t.nextToken()
 
-            val pos = getP(t.nextToken() + t.nextToken())
-            val size = getP(t.nextToken() + t.nextToken())
-            while(list.isNotEmpty()) {
+            val pos = getP(t.nextToken()+t.nextToken())
+            val size = getP(t.nextToken()+t.nextToken())
+            while (list.isNotEmpty()) {
                 next = list.removeFirst()
-                if(next.startsWith("//")) continue
-                if(next.isNotEmpty()) objects.add(getter!![next])
+                if (next.startsWith("//")) continue
+                if (next.isNotEmpty()) objects.add(getter!![next])
             }
 
             return Room(pos, size, objects)
@@ -138,9 +138,9 @@ interface World {
             World.controller = controller
             World.controller.init()
             rooms.clear()
-            for(i in filename.indices) filenames.add(filename[i])
+            for (i in filename.indices) filenames.add(filename[i])
             filenames.forEach { rooms.add(readInfo(it)) }
-            for(i in rooms.indices) last_active.add(false)
+            for (i in rooms.indices) last_active.add(false)
         }
 
         fun add(o: GameObject) {

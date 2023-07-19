@@ -8,6 +8,6 @@ class AffineTransform(val transform: (PointN) -> PointN) {
     }
 
     fun size(pos: PointN, size: PointN): PointN {
-        return transform(pos + size) - transform(pos)
+        return transform(pos+size)-transform(pos)
     }
 }

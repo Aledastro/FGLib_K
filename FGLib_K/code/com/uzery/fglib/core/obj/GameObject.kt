@@ -86,9 +86,9 @@ abstract class GameObject {
     fun addVisual(visual: Visualiser) = visuals.add(visual)
 
     fun next() {
-        if(object_time == 0) afterInit()
+        if (object_time == 0) afterInit()
 
-        if(temp == null || temp!!.ends) temp = controller?.get()?.invoke()
+        if (temp == null || temp!!.ends) temp = controller?.get()?.invoke()
         temp?.next()
 
         abilities.forEach { it.run() }
@@ -139,11 +139,11 @@ abstract class GameObject {
         values.clear()
         setValues()
         val s = StringBuilder(name)
-        if(values.isNotEmpty()) {
+        if (values.isNotEmpty()) {
             s.append(":")
             values.forEach { value ->
                 val ss = value.toString()
-                if(ss[ss.lastIndex] == ']') s.append(" $ss")
+                if (ss[ss.lastIndex] == ']') s.append(" $ss")
                 else s.append(" [$ss]")
             }
         }
@@ -158,7 +158,7 @@ abstract class GameObject {
     open fun interact() = false
 
     fun collapse() {
-        if(dead) return
+        if (dead) return
         onDeath()
         dead = true
     }

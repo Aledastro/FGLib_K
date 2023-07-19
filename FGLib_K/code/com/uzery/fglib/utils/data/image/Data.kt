@@ -16,7 +16,7 @@ class Data {
         fun get(name: String) = origins[name] ?: throw DebugData.error("no origin from: $name")
 
         fun set(name: String) {
-            if(origins[name] != null) return
+            if (origins[name] != null) return
             origins[name] = Image(resolvePath(name))
         }
 
@@ -24,8 +24,8 @@ class Data {
             sprites[name]?.get(pos) ?: throw DebugData.error("no sprite from: $name $pos")
 
         fun set(name: String, size: IntI, scale: Int = -1) {
-            if(sprites[name] != null) {
-                if(sprites[name]!!.size != size)
+            if (sprites[name] != null) {
+                if (sprites[name]!!.size != size)
                     throw DebugData.error("duplicate sprite set: $name old: [${sprites[name]!!.size}] | new: [$size]")
                 return
             }
@@ -33,8 +33,8 @@ class Data {
         }
 
         fun setCombination(name: String, size: IntI, rule: ImageCombinationRule, scale: Int = -1) {
-            if(combinations[name] != null) {
-                if(combinations[name]!!.size != size)
+            if (combinations[name] != null) {
+                if (combinations[name]!!.size != size)
                     throw DebugData.error("duplicate combination set: $name old: [${combinations[name]!!.size}] | new: [$size]")
                 return
             }
@@ -50,9 +50,9 @@ class Data {
         private fun resolvePath(name: String): String {
             var local_path = ""
             var last = name
-            if(name.indexOf('|') != -1) {
+            if (name.indexOf('|') != -1) {
                 local_path = dictionary[FGUtils.subBefore(name, "|")].orEmpty()
-                last = if(name.indexOf('|') + 1<0) name
+                last = if (name.indexOf('|')+1 < 0) name
                 else FGUtils.subAfter(name, "|")
             }
 

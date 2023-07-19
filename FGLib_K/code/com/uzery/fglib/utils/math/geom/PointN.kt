@@ -16,7 +16,7 @@ data class PointN(private val xs: Array<Double>) {
     constructor(p: IntI): this(p.n, p.m)
 
     operator fun get(n: Int): Double {
-        if(dimension() == 0) return 0.0;
+        if (dimension() == 0) return 0.0;
         return xs[n]
     }
 
@@ -43,21 +43,21 @@ data class PointN(private val xs: Array<Double>) {
         get() = separate(2)
 
     override fun equals(other: Any?): Boolean {
-        if(this === other) return true
-        if(javaClass != other?.javaClass) return false
+        if (this === other) return true
+        if (javaClass != other?.javaClass) return false
 
         other as PointN
 
-        if(!xs.contentEquals(other.xs)) return false
+        if (!xs.contentEquals(other.xs)) return false
 
         return true
     }
 
     override fun hashCode(): Int = xs.contentHashCode()
 
-    operator fun plus(p: PointN) = PointN(ArrayUtils.transformP(xs, p.xs, 0.0) { x, y -> x + y })
+    operator fun plus(p: PointN) = PointN(ArrayUtils.transformP(xs, p.xs, 0.0) { x, y -> x+y })
 
-    operator fun minus(p: PointN) = PointN(ArrayUtils.transformP(xs, p.xs, 0.0) { x, y -> x - y })
+    operator fun minus(p: PointN) = PointN(ArrayUtils.transformP(xs, p.xs, 0.0) { x, y -> x-y })
 
     operator fun div(p: PointN) = PointN(ArrayUtils.transformP(xs, p.xs, 0.0) { x, y -> x/y })
     operator fun div(v: Double) = PointN(ArrayUtils.transform(xs) { x -> x/v })
@@ -69,25 +69,25 @@ data class PointN(private val xs: Array<Double>) {
 
     operator fun unaryMinus() = PointN(ArrayUtils.transform(xs) { x -> -x })
     fun dimension() = xs.size
-    fun less(other: PointN) = (this - other).isNegative()
-    fun more(other: PointN) = (other - this).isNegative()
+    fun less(other: PointN) = (this-other).isNegative()
+    fun more(other: PointN) = (other-this).isNegative()
 
-    private fun isNegative() = xs.all { i -> i<=0 }
+    private fun isNegative() = xs.all { i -> i <= 0 }
     fun lengthX2(): Double {
         return xs.sumOf { x -> x*x }
     }
 
     fun length() = sqrt(lengthX2())
 
-    fun lengthTo(pos: PointN) = (this - pos).length()
+    fun lengthTo(pos: PointN) = (this-pos).length()
 
-    fun separate(level: Int) = PointN(Array(dimension()) { i -> if(level == i) xs[i] else 0.0 })
+    fun separate(level: Int) = PointN(Array(dimension()) { i -> if (level == i) xs[i] else 0.0 })
 
     fun transform(transform: (x: Double) -> Double) = PointN(ArrayUtils.transform(xs, transform))
     fun round(size: Double) = transform { x -> MathUtils.round(x, size) }
     fun mod(size: Double) = transform { x -> MathUtils.mod(x, size) }
     fun interpolate(pos: PointN, k: Double): PointN {
-        return this + (pos - this)*k
+        return this+(pos-this)*k
     }
 
     fun coerceIn(posL: PointN, posR: PointN) = PointN(Array(dimension()) { i ->
@@ -96,7 +96,7 @@ data class PointN(private val xs: Array<Double>) {
 
     fun rotateXY(d: Double): PointN {
         val p = PointN(this)
-        val alpha = MathUtils.getDegree(PointN(p.X, p.Y)) + d
+        val alpha = MathUtils.getDegree(PointN(p.X, p.Y))+d
         val length = PointN(p.X, p.Y).length()
         p.X = cos(alpha)*length
         p.Y = sin(alpha)*length
@@ -105,7 +105,7 @@ data class PointN(private val xs: Array<Double>) {
 
     fun rotateXZ(d: Double): PointN {
         val p = PointN(this)
-        val alpha = MathUtils.getDegree(PointN(p.X, p.Z)) + d
+        val alpha = MathUtils.getDegree(PointN(p.X, p.Z))+d
         val length = PointN(p.X, p.Z).length()
         p.X = cos(alpha)*length
         p.Z = sin(alpha)*length
@@ -114,7 +114,7 @@ data class PointN(private val xs: Array<Double>) {
 
     fun rotateYZ(d: Double): PointN {
         val p = PointN(this)
-        val alpha = MathUtils.getDegree(PointN(p.Y, p.Z)) + d
+        val alpha = MathUtils.getDegree(PointN(p.Y, p.Z))+d
         val length = PointN(p.Y, p.Z).length()
         p.Y = cos(alpha)*length
         p.Z = sin(alpha)*length

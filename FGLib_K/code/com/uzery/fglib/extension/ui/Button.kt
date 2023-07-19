@@ -22,23 +22,23 @@ abstract class Button: UIElement() {
         graphics.layer = DrawLayer.CAMERA_OFF
         graphics.setStroke(20.0/scale)
 
-        if(value) graphics.stroke.oval(pos, size, Color.DARKBLUE)
+        if (value) graphics.stroke.oval(pos, size, Color.DARKBLUE)
         else graphics.stroke.rect(pos, size, Color.DARKBLUE)
 
         graphics.fill.font = Font.font("TimesNewRoman", FontWeight.BOLD, 20.0)
-        graphics.fill.textC(pos + size*PointN(0.5, 1.6), name, Color.DARKBLUE)
+        graphics.fill.textC(pos+size*PointN(0.5, 1.6), name, Color.DARKBLUE)
     }
 
     final override fun ifActive() {
-        if(rePressed(pos, size)) value = !value
+        if (rePressed(pos, size)) value = !value
     }
 
     final override fun update() {
-        if(pressed) value = !value
+        if (pressed) value = !value
     }
 
     fun action() {
-        name = if(value) whenPressed()
+        name = if (value) whenPressed()
         else whenNotPressed()
     }
 }

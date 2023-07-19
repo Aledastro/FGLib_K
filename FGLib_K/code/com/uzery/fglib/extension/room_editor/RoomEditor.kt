@@ -43,14 +43,14 @@ class RoomEditor(private val getter: ClassGetter<GameObject>, private vararg val
         data.chosen_obj = data.getter.getEntry(data.chosen_entry)()
 
 
-        if(keyboard.pressed(KeyCode.SHIFT)){
+        if (keyboard.pressed(KeyCode.SHIFT)) {
             choose_objects_vbox.show()
-        }else{
+        } else {
             choose_objects_vbox.hide()
         }
-        data.groupsSelect[data.select_group]=choose_objects_vbox.select
+        data.groupsSelect[data.select_group] = choose_objects_vbox.select
 
-        if(data.hide_ui) {
+        if (data.hide_ui) {
             objects_vbox.hide()
             layers_vbox.hide()
             info_box.hide()
@@ -66,7 +66,7 @@ class RoomEditor(private val getter: ClassGetter<GameObject>, private vararg val
     }
 
     private fun checkForSave() {
-        if(keyboard.allPressed(KeyCode.CONTROL, KeyCode.SHIFT) && keyboard.inPressed(KeyCode.S)) {
+        if (keyboard.allPressed(KeyCode.CONTROL, KeyCode.SHIFT) && keyboard.inPressed(KeyCode.S)) {
             //edit.objects.forEach { it.stats.POS /= 2 }
             filenames.indices.forEach { i -> WriteData.write(filenames[i], World.rooms[i].toString()) }
             println("saved")
@@ -93,7 +93,7 @@ class RoomEditor(private val getter: ClassGetter<GameObject>, private vararg val
 
         Platform.whole_draw = true
         //todo
-        data.draw_pos = Platform.options().size/4 - data.edit.size*PointN(0.5, 0.5)
+        data.draw_pos = Platform.options().size/4-data.edit.size*PointN(0.5, 0.5)
         UIBox.add(canvasX, play_button, objects_vbox, layers_vbox, info_box, choose_objects_vbox)
         canvasX.show()
         play_button.show()

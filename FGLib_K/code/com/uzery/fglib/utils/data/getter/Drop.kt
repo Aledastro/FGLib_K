@@ -23,10 +23,10 @@ class Drop<T>() {
 
     fun get(): T? {
         var size = priorities.sum()
-        if(size == 0.0) return null
+        if (size == 0.0) return null
 
-        if(full != -1.0) {
-            if(full<size) throw DebugData.error("full is too small: SUM=$size / FULL=$full")
+        if (full != -1.0) {
+            if (full < size) throw DebugData.error("full is too small: SUM=$size / FULL=$full")
             size = full
         }
         return getWithSize(size)
@@ -40,12 +40,12 @@ class Drop<T>() {
         val rand = Math.random()*size
         var p = 0.0
         var cycle = 0
-        while(rand>p) {
-            if(cycle>=list.size) return null
+        while (rand > p) {
+            if (cycle >= list.size) return null
             p += priorities[cycle]
             cycle++
         }
-        return list[cycle - 1]()
+        return list[cycle-1]()
     }
 
     fun setFull(full: Double) {

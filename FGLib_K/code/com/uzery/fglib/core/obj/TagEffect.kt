@@ -7,6 +7,6 @@ data class TagEffect(val name: String, val duration: Int) {
 
     fun update() {
         time_left--
-        if(time_left<0) dead = true
+        if (time_left < 0) dead = true
     }
 }

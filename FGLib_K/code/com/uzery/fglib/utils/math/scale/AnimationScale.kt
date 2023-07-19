@@ -7,7 +7,8 @@ data class AnimationScale(val startTime: Long, val frames: Double, val scale: Gr
     constructor(startTime: Int, frames: Double, f: (Double) -> Double): this(
         startTime.toLong(),
         frames,
-        GradientScale(f))
+        GradientScale(f)
+    )
 
     fun linear(time: Double): Double = scale.linear(get(time))
     fun linear(time: Int): Double = scale.linear(get(time.toDouble()))
@@ -22,5 +23,5 @@ data class AnimationScale(val startTime: Long, val frames: Double, val scale: Gr
     fun swing(time: Long): Double = scale.swing(get(time.toDouble()))
 
 
-    private fun get(time: Double): Double = (time - startTime)/frames
+    private fun get(time: Double): Double = (time-startTime)/frames
 }

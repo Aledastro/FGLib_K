@@ -7,7 +7,7 @@ abstract class ParallelGameEvent: GameEvent() {
 
     init {
         addAbility {
-            if(event_time == 0) events.forEach { produce(it) }
+            if (event_time == 0) events.forEach { produce(it) }
         }
     }
 

@@ -8,7 +8,7 @@ abstract class CompositeGameEvent: GameEvent() {
 
     init {
         addAbility {
-            if(event_time>0 && (current == null || current!!.wasReadyAndEnds() && events.isNotEmpty())) {
+            if (event_time > 0 && (current == null || current!!.wasReadyAndEnds() && events.isNotEmpty())) {
                 current = events.removeFirst()
                 produce(current!!)
             }

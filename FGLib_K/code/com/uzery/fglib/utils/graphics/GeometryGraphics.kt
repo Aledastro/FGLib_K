@@ -28,8 +28,8 @@ abstract class GeometryGraphics(private val transform: AffineTransform) {
     }
 
     fun rectL(pos: PointN, size: PointN, color: Color) = rect(pos, size, color)
-    fun rectC(pos: PointN, size: PointN, color: Color) = rect(pos - size/2, size, color)
-    fun rectR(pos: PointN, size: PointN, color: Color) = rect(pos - size, size, color)
+    fun rectC(pos: PointN, size: PointN, color: Color) = rect(pos-size/2, size, color)
+    fun rectR(pos: PointN, size: PointN, color: Color) = rect(pos-size, size, color)
 
     ///////////////////////////////////////////////////////////////////////////
 
@@ -40,9 +40,9 @@ abstract class GeometryGraphics(private val transform: AffineTransform) {
 
     fun ovalL(pos: PointN, size: PointN, color: Color) = oval(pos, size, color)
 
-    fun ovalC(pos: PointN, size: PointN, color: Color) = oval(pos - size/2, size, color)
+    fun ovalC(pos: PointN, size: PointN, color: Color) = oval(pos-size/2, size, color)
 
-    fun ovalR(pos: PointN, size: PointN, color: Color) = oval(pos - size, size, color)
+    fun ovalR(pos: PointN, size: PointN, color: Color) = oval(pos-size, size, color)
 
     ///////////////////////////////////////////////////////////////////////////
 
@@ -73,15 +73,15 @@ abstract class GeometryGraphics(private val transform: AffineTransform) {
     ///////////////////////////////////////////////////////////////////////////
 
     fun draw(pos: PointN, shape: Shape, color: Color) {
-        when(shape.code) {
-            Shape.Code.RECT -> rect(pos + shape.L, shape.S, color)
-            Shape.Code.OVAL -> oval(pos + shape.L, shape.S, color)
+        when (shape.code) {
+            Shape.Code.RECT -> rect(pos+shape.L, shape.S, color)
+            Shape.Code.OVAL -> oval(pos+shape.L, shape.S, color)
         }
     }
 
     fun drawL(pos: PointN, shape: Shape, color: Color) = draw(pos, shape, color)
-    fun drawC(pos: PointN, shape: Shape, color: Color) = draw(pos - shape.S/2, shape, color)
-    fun drawR(pos: PointN, shape: Shape, color: Color) = draw(pos - shape.S, shape, color)
+    fun drawC(pos: PointN, shape: Shape, color: Color) = draw(pos-shape.S/2, shape, color)
+    fun drawR(pos: PointN, shape: Shape, color: Color) = draw(pos-shape.S, shape, color)
 
     fun draw(shape: Shape, color: Color) = draw(PointN.ZERO, shape, color)
 
@@ -94,6 +94,6 @@ abstract class GeometryGraphics(private val transform: AffineTransform) {
 
     fun line(pos: PointN, size: PointN, color: Color) {
         this.color = color
-        line0(transform.pos(pos), transform.pos(pos) + transform.size(pos, size))
+        line0(transform.pos(pos), transform.pos(pos)+transform.size(pos, size))
     }
 }

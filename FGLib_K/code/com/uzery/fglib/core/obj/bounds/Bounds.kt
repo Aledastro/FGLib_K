@@ -19,15 +19,15 @@ class Bounds {
     fun add(name: String, shape: () -> Shape?) = elements.add(BoundsElement(name, shape))
 
     fun main(): RectN? {
-        if(isEmpty()) return null
+        if (isEmpty()) return null
 
         var min = PointN.ZERO
         var max = PointN.ZERO
         var first = true
 
-        for(element in elements) {
+        for (element in elements) {
             val shape = element.shape() ?: continue
-            if(first) {
+            if (first) {
                 min = shape.L
                 max = shape.R
                 first = false

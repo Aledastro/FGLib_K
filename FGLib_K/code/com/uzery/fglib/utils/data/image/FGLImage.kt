@@ -15,7 +15,7 @@ abstract class FGLImage {
 
     protected fun setData(name: String, count: IntI) {
         this.name = name
-        for(i in count.indices) {
+        for (i in count.indices) {
             data[i] = from(i)
         }
     }

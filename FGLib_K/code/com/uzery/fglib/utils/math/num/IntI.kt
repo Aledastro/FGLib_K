@@ -10,9 +10,9 @@ data class IntI(val n: Int, val m: Int) {
 
     operator fun div(other: IntI) = IntI(n/other.n, m/other.m)
 
-    operator fun plus(other: IntI) = IntI(n + other.n, m + other.m)
+    operator fun plus(other: IntI) = IntI(n+other.n, m+other.m)
 
-    operator fun minus(other: IntI) = IntI(n - other.n, m - other.m)
+    operator fun minus(other: IntI) = IntI(n-other.n, m-other.m)
 
     operator fun times(other: Int) = IntI(n*other, m*other)
     operator fun div(other: Int) = IntI(n/other, m/other)

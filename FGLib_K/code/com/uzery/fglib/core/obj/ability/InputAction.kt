@@ -21,9 +21,9 @@ data class InputAction(val code: CODE, private val full_info: String, val prime:
     constructor(code: CODE, prime: GameObject): this(code, "no_info", prime)
 
     private fun resolve(info: String): String {
-        if(!info.contains(" | ")) return info
+        if (!info.contains(" | ")) return info
         val tokenizer = StringTokenizer(FGUtils.subAfter(info, "|"))
-        while(tokenizer.hasMoreTokens()) {
+        while (tokenizer.hasMoreTokens()) {
             options.add(tokenizer.nextToken())
         }
         return FGUtils.subBefore(info, "|", -1)

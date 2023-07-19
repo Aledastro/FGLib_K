@@ -10,7 +10,7 @@ import kotlin.math.min
 interface CollisionUtils {
     companion object {
         fun maxMove(stay: Shape, start: Shape, finish: Shape): Double {
-            if(!intoX(stay, start, finish)) return 1.0
+            if (!intoX(stay, start, finish)) return 1.0
 
             //todo when(shape)
             return maxMoveRect(rect(stay), rect(start), rect(finish))
@@ -38,17 +38,17 @@ interface CollisionUtils {
             val SR = stay.R[level]
             val dim = stay.dimension()
 
-            var path1 = if(abs(L1 - L2)<LITTLE) 1.0 else (SR - L1)/(L2 - L1)
-            var path2 = if(abs(R1 - R2)<LITTLE) 1.0 else (SL - R1)/(R2 - R1)
+            var path1 = if (abs(L1-L2) < LITTLE) 1.0 else (SR-L1)/(L2-L1)
+            var path2 = if (abs(R1-R2) < LITTLE) 1.0 else (SL-R1)/(R2-R1)
 
             fun checkMoveOn(k: Double, lv: Int): Double {
                 val shade = ShapeUtils.interpolate(start, finish, k)
-                val blockedMove = stay.L[lv]<shade.R[lv] && shade.L[lv]<stay.R[lv] && k in (0.0..1.0)
-                return if(blockedMove) k else 1.0
+                val blockedMove = stay.L[lv] < shade.R[lv] && shade.L[lv] < stay.R[lv] && k in (0.0..1.0)
+                return if (blockedMove) k else 1.0
             }
 
-            for(i in 1 until dim) {
-                val lv = MathUtils.mod(level + i, dim)
+            for (i in 1 until dim) {
+                val lv = MathUtils.mod(level+i, dim)
 
                 path1 = checkMoveOn(path1, lv)
                 path2 = checkMoveOn(path2, lv)

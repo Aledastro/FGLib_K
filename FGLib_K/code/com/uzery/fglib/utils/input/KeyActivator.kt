@@ -12,10 +12,10 @@ abstract class KeyActivator<Key>(private val size: Int) {
 
     /** extremely important function! **/
     fun update() {
-        for(i in 0 until size) {
+        for (i in 0 until size) {
             timePressed[i]++
             timeReleased[i]++
-            if(pressedInt(i)) {
+            if (pressedInt(i)) {
                 lastTimeReleased[i] = timeReleased[i]
                 timeReleased[i] = 0
             } else {
@@ -48,7 +48,7 @@ abstract class KeyActivator<Key>(private val size: Int) {
     ///////////////////////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////////////////////////////////
     fun pressed(key: Key) = pressedInt(from(key))
-    fun pressedIn(frames: Int, key: Key) = timeReleased(key)<frames || pressed(key)
+    fun pressedIn(frames: Int, key: Key) = timeReleased(key) < frames || pressed(key)
     fun inPressedIn(frames: Int, key: Key) = timePressed(key) in 1..frames
     fun rePressedIn(frames: Int, key: Key) = timeReleased(key) in 1..frames
     fun inPressed(key: Key) = inPressedIn(1, key)

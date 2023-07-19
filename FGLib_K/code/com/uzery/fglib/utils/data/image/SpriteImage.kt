@@ -9,7 +9,7 @@ class SpriteImage(image: Image, name: String, val size: IntI, scale: Int = -1): 
 
     private val origin: Image
 
-    private var SCALE = if(scale == -1) Platform.scale else scale
+    private var SCALE = if (scale == -1) Platform.scale else scale
 
     init {
         val origin_size = IntI(image.width.toInt(), image.height.toInt())

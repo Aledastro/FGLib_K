@@ -14,7 +14,7 @@ abstract class VBox(protected open val full: Int, protected open val rows: Int):
     private val offset
         get() = sizeOne/5
     final override val size: PointN
-        get() = PointN(sizeOne.X*7/5*rows, sizeOne.Y*8/5*((full - 1)/rows + 1))
+        get() = PointN(sizeOne.X*7/5*rows, sizeOne.Y*8/5*((full-1)/rows+1))
     private var name = LinkedList<String>()
 
     override fun update() {
@@ -39,23 +39,23 @@ abstract class VBox(protected open val full: Int, protected open val rows: Int):
         graphics.setStroke(4.0)
 
 
-        for(id in 0 until full) {
+        for (id in 0 until full) {
             name.add(this.setNames(id))
 
-            val ps = pos + fromID(id)
+            val ps = pos+fromID(id)
             graphics.fill.rect(ps, sizeOne, FGUtils.transparent(Color.DARKBLUE, 0.1))
 
             graphics.fill.font = Font.font("TimesNewRoman", FontWeight.BOLD, 12.0)
-            graphics.fill.textC(ps + sizeOne*PointN(0.5, 1.3), name[id], Color.DARKBLUE)
-            draw(ps + sizeOne/2, id)
+            graphics.fill.textC(ps+sizeOne*PointN(0.5, 1.3), name[id], Color.DARKBLUE)
+            draw(ps+sizeOne/2, id)
 
-            if(id == select) graphics.stroke.rect(ps, sizeOne, FGUtils.transparent(Color.DARKBLUE, 0.6))
+            if (id == select) graphics.stroke.rect(ps, sizeOne, FGUtils.transparent(Color.DARKBLUE, 0.6))
         }
     }
 
     final override fun ifActive() {
-        for(id in 0 until full) {
-            if(pressed(pos + fromID(id), sizeOne)) select = id
+        for (id in 0 until full) {
+            if (pressed(pos+fromID(id), sizeOne)) select = id
         }
         ifActiveUpdate()
     }
@@ -63,6 +63,6 @@ abstract class VBox(protected open val full: Int, protected open val rows: Int):
     private fun fromID(id: Int): PointN {
         val line = id/rows
         val row = id%rows
-        return offset + sizeOne*PointN(row*1.4, line*1.6)
+        return offset+sizeOne*PointN(row*1.4, line*1.6)
     }
 }

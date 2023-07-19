@@ -32,16 +32,16 @@ abstract class GameEvent: GameObject() {
     init {
         abilities.add(object: AbilityBox {
             override fun run() {
-                if(!init) {
-                    if(ready()) {
+                if (!init) {
+                    if (ready()) {
                         start()
                         init = true
                     } else return
                 }
                 update()
-                if(ends()) {
+                if (ends()) {
                     finish()
-                    if(repeatable) {
+                    if (repeatable) {
                         init = false
                     } else {
                         finished = true

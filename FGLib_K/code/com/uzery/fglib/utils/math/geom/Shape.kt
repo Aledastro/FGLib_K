@@ -10,10 +10,10 @@ abstract class Shape {
     abstract val L: PointN
     abstract val R: PointN
     val C: PointN
-        get() = (L + R)/2
+        get() = (L+R)/2
 
     val S: PointN
-        get() = R - L
+        get() = R-L
 
     abstract val code: Code
 

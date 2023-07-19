@@ -8,6 +8,6 @@ data class GradientScale(val f: (Double) -> Double) {
 
     fun swing(input: Double): Double {
         val x = MathUtils.mod(input, 2.0)
-        return if(x<1) f(x) else f(2 - x)
+        return if (x < 1) f(x) else f(2-x)
     }
 }

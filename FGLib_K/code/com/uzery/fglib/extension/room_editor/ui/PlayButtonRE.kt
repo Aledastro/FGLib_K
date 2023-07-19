@@ -9,7 +9,7 @@ import javafx.scene.input.KeyCode
 
 class PlayButtonRE: Button() {
     override val pos: PointN
-        get() = Platform.CANVAS - PointN(110, 110)/Platform.scale
+        get() = Platform.CANVAS-PointN(110, 110)/Platform.scale
 
     override val size
         get() = PointN(52, 52)/Platform.scale

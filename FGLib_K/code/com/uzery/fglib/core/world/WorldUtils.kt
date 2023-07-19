@@ -17,16 +17,16 @@ interface WorldUtils {
             val STEP = PointN(1.0, 1.0)
             graphics.layer = DrawLayer.CAMERA_FOLLOW
 
-            for(o in room.objects) {
-                val c = if(o.stats.fly) Color.color(1.0, 1.0, 0.2, 0.7) else Color.color(1.0, 0.2, 1.0, 0.7)
-                graphics.fill.ovalC(pos + o.stats.POS, STEP*3, c)
+            for (o in room.objects) {
+                val c = if (o.stats.fly) Color.color(1.0, 1.0, 0.2, 0.7) else Color.color(1.0, 0.2, 1.0, 0.7)
+                graphics.fill.ovalC(pos+o.stats.POS, STEP*3, c)
             }
 
-            for(o in room.objects) drawBoundsFor(o, pos)
+            for (o in room.objects) drawBoundsFor(o, pos)
         }
 
         fun drawBoundsFor(o: GameObject, pos: PointN) {
-            for(i in 0 until BoundsBox.SIZE) {
+            for (i in 0 until BoundsBox.SIZE) {
                 drawBoundsFor(o, pos, i)
             }
         }
@@ -36,16 +36,17 @@ interface WorldUtils {
                 Color.RED,
                 Color.ORANGERED,
                 Color.BLUE,
-                Color.GREEN)
+                Color.GREEN
+            )
 
             graphics.setStroke(1.0)
             val bs = o.bounds[color_id]
-            if(bs.isEmpty()) return
-            for(el in bs.elements) {
+            if (bs.isEmpty()) return
+            for (el in bs.elements) {
                 val shape = el.shape() ?: continue
-                graphics.fill.draw(pos + o.stats.POS, shape, FGUtils.transparent(colors[color_id], 0.1))
-                graphics.stroke.draw(pos + o.stats.POS, shape, FGUtils.transparent(colors[color_id], 0.6))
-                graphics.stroke.line(pos + o.stats.POS + shape.L, shape.S, FGUtils.transparent(colors[color_id], 0.5))
+                graphics.fill.draw(pos+o.stats.POS, shape, FGUtils.transparent(colors[color_id], 0.1))
+                graphics.stroke.draw(pos+o.stats.POS, shape, FGUtils.transparent(colors[color_id], 0.6))
+                graphics.stroke.line(pos+o.stats.POS+shape.L, shape.S, FGUtils.transparent(colors[color_id], 0.5))
             }
         }
 
@@ -67,11 +68,11 @@ interface WorldUtils {
 
         fun nextDebug() {
             val b = (ids_time%20 == 0)
-            if(b) maxRam = Runtime.getRuntime().totalMemory()
-            if(b) freeRam = Runtime.getRuntime().freeMemory()
-            if(b) ram = maxRam - freeRam
+            if (b) maxRam = Runtime.getRuntime().totalMemory()
+            if (b) freeRam = Runtime.getRuntime().freeMemory()
+            if (b) ram = maxRam-freeRam
 
-            time = System.currentTimeMillis() - last
+            time = System.currentTimeMillis()-last
             last = System.currentTimeMillis()
             fps += (1000.0/time)
             fps *= 0.99
@@ -80,8 +81,8 @@ interface WorldUtils {
         }
 
         fun nextDebugForRoom(room: Room) {
-            if(bs_n[room] == null) bs_n[room] = Array(BoundsBox.SIZE) { 0 }
-            for(index in 0 until BoundsBox.SIZE) {
+            if (bs_n[room] == null) bs_n[room] = Array(BoundsBox.SIZE) { 0 }
+            for (index in 0 until BoundsBox.SIZE) {
                 bs_n[room]!![index] = room.objects.count { !it.bounds[index].isEmpty() }
             }
         }
@@ -90,27 +91,30 @@ interface WorldUtils {
             graphics.layer = DrawLayer.CAMERA_FOLLOW
             graphics.fill.font = Font.font("TimesNewRoman", FontWeight.BOLD, 12.0)
 
-            val p = draw_pos + room.size.XP + PointN(10, 0)
+            val p = draw_pos+room.size.XP+PointN(10, 0)
 
-            graphics.fill.text(p + PointN(0, 10), "pos: ${room.pos}", Color.DARKBLUE)
-            graphics.fill.text(p + PointN(0, 20), "size: ${room.size}", Color.DARKBLUE)
-            graphics.fill.text(p + PointN(0, 30), "objects: ${room.objects.size}", Color.DARKBLUE)
+            graphics.fill.text(p+PointN(0, 10), "pos: ${room.pos}", Color.DARKBLUE)
+            graphics.fill.text(p+PointN(0, 20), "size: ${room.size}", Color.DARKBLUE)
+            graphics.fill.text(p+PointN(0, 30), "objects: ${room.objects.size}", Color.DARKBLUE)
             graphics.fill.text(
-                p + PointN(0, 40),
+                p+PointN(0, 40),
                 "ram (MB): ${ram/1000_000}/${maxRam/1000_000}",
-                Color.DARKBLUE)
+                Color.DARKBLUE
+            )
             graphics.fill.text(
-                p + PointN(0, 50),
-                "ram (KB) per obj: ${if(room.objects.size != 0) (ram/1000/room.objects.size).toInt() else 0}",
-                Color.DARKBLUE)
+                p+PointN(0, 50),
+                "ram (KB) per obj: ${if (room.objects.size != 0) (ram/1000/room.objects.size).toInt() else 0}",
+                Color.DARKBLUE
+            )
 
-            graphics.fill.text(p + PointN(0, 60), "FPS: ${(fps/100).toInt()}", Color.DARKBLUE)
+            graphics.fill.text(p+PointN(0, 60), "FPS: ${(fps/100).toInt()}", Color.DARKBLUE)
 
-            for(index in 0 until BoundsBox.SIZE) {
+            for (index in 0 until BoundsBox.SIZE) {
                 graphics.fill.text(
-                    p + PointN(0, 70 + index*10),
+                    p+PointN(0, 70+index*10),
                     "bounds[${BoundsBox.name(index)}]: ${bs_n[room]!![index]}",
-                    Color.DARKBLUE)
+                    Color.DARKBLUE
+                )
             }
         }
     }

@@ -2,14 +2,12 @@ package com.uzery.fglib.extension.room_editor.ui
 
 import com.uzery.fglib.core.obj.bounds.BoundsBox
 import com.uzery.fglib.core.program.Platform
-import com.uzery.fglib.core.program.Platform.Companion.keyboard
 import com.uzery.fglib.core.program.Platform.Companion.scale
 import com.uzery.fglib.core.world.WorldUtils
 import com.uzery.fglib.extension.room_editor.DataRE
 import com.uzery.fglib.extension.ui.VBox
 import com.uzery.fglib.utils.math.geom.PointN
 import com.uzery.fglib.utils.math.geom.RectN
-import javafx.scene.input.KeyCode
 import javafx.scene.paint.Color
 
 class ObjectVBoxRE(private val data: DataRE): VBox(0, 5) {
@@ -22,7 +20,7 @@ class ObjectVBoxRE(private val data: DataRE): VBox(0, 5) {
     }
 
     private fun coerceGroups() {
-        for(i in data.groupsSelect.indices) {
+        for (i in data.groupsSelect.indices) {
             val size = data.groupsValues[i].size
             data.groupsSelect[i] = data.groupsSelect[i].coerceIn(0 until size)
         }
@@ -43,16 +41,16 @@ class ObjectVBoxRE(private val data: DataRE): VBox(0, 5) {
     }
 
     override fun draw() {
-        Platform.graphics.alpha=0.3
-        Platform.graphics.fill.rect(pos,size, Color.BEIGE)
-        Platform.graphics.alpha=1.0
+        Platform.graphics.alpha = 0.3
+        Platform.graphics.fill.rect(pos, size, Color.BEIGE)
+        Platform.graphics.alpha = 1.0
         super.draw()
     }
 
     override fun draw(pos: PointN, id: Int) {
         val obj = data.getter.getEntry(from(id))()
         obj.draw(pos)
-        if(data.draw_bounds) {
+        if (data.draw_bounds) {
             WorldUtils.drawBoundsFor(obj, pos, BoundsBox.RED)
             WorldUtils.drawBoundsFor(obj, pos, BoundsBox.ORANGE)
         }

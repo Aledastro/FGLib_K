@@ -5,7 +5,7 @@ data class StringN(val s: String, val n: Int): Comparable<StringN> {
 
     override fun compareTo(other: StringN): Int {
         val i = s.compareTo(other.s)
-        if(i != 0) return i
+        if (i != 0) return i
         return n.compareTo(other.n)
     }
 }

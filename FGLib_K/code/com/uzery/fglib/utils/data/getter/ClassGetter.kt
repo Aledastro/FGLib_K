@@ -52,32 +52,32 @@ abstract class ClassGetter<Type> {
 
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    protected fun stringX(i: Int) = if(no_info) "" else input[in_id - 1][i]
-    protected fun intX(i: Int) = if(no_info) 0 else input[in_id - 1][i].toInt()
-    protected fun doubleX(i: Int) = if(no_info) 0.0 else input[in_id - 1][i].toDouble()
-    protected fun longX(i: Int) = if(no_info) 0L else input[in_id - 1][i].toLong()
-    protected fun boolX(i: Int) = if(no_info) false else input[in_id - 1][i].toBoolean()
+    protected fun stringX(i: Int) = if (no_info) "" else input[in_id-1][i]
+    protected fun intX(i: Int) = if (no_info) 0 else input[in_id-1][i].toInt()
+    protected fun doubleX(i: Int) = if (no_info) 0.0 else input[in_id-1][i].toDouble()
+    protected fun longX(i: Int) = if (no_info) 0L else input[in_id-1][i].toLong()
+    protected fun boolX(i: Int) = if (no_info) false else input[in_id-1][i].toBoolean()
 
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     private var in_id = 0
     private var input = ArrayList<ArrayList<String>>()
     protected val string: String
-        get() = if(no_info) "" else input[in_id++][0]
+        get() = if (no_info) "" else input[in_id++][0]
     protected val int: Int
-        get() = if(no_info) 0 else input[in_id++][0].toInt()
+        get() = if (no_info) 0 else input[in_id++][0].toInt()
     protected val double: Double
-        get() = if(no_info) 0.0 else input[in_id++][0].toDouble()
+        get() = if (no_info) 0.0 else input[in_id++][0].toDouble()
     protected val long: Long
-        get() = if(no_info) 0L else input[in_id++][0].toLong()
+        get() = if (no_info) 0L else input[in_id++][0].toLong()
     protected val boolean: Boolean
-        get() = if(no_info) false else input[in_id++][0].toBoolean()
+        get() = if (no_info) false else input[in_id++][0].toBoolean()
 
     protected val color: Color
-        get() = if(no_info) Color.BLACK else Color.color(double, doubleX(1), doubleX(2), doubleX(3))
+        get() = if (no_info) Color.BLACK else Color.color(double, doubleX(1), doubleX(2), doubleX(3))
     protected val pos: PointN
         get() {
-            return if(no_info || input[in_id][0] == "ZERO") PointN.ZERO
+            return if (no_info || input[in_id][0] == "ZERO") PointN.ZERO
             else PointN(Array(input[in_id++].size) { i -> doubleX(i) })
         }
     protected val size: PointN

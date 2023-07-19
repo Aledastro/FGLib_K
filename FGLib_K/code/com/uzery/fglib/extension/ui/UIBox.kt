@@ -25,16 +25,16 @@ class UIBox: Extension {
         active?.ifActive()
         list.forEach { it.update() }
 
-        if(develop_mode) {
+        if (develop_mode) {
             list.forEach {
-                if(it.showing) graphics.fill.rect(it.pos, it.size, FGUtils.transparent(Color.DARKBLUE, 0.1))
+                if (it.showing) graphics.fill.rect(it.pos, it.size, FGUtils.transparent(Color.DARKBLUE, 0.1))
             }
-            if(active != null) {
+            if (active != null) {
                 graphics.setStroke(1.5)
                 graphics.stroke.rect(active!!.pos, active!!.size, FGUtils.transparent(Color.WHITE, 0.9))
             }
         }
 
-        list.forEach { if(it.showing) it.draw() }
+        list.forEach { if (it.showing) it.draw() }
     }
 }

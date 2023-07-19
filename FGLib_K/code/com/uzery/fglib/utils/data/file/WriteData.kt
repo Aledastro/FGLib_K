@@ -19,7 +19,7 @@ interface WriteData {
             try {
                 wr.write(write)
                 wr.close()
-            } catch(e: IOException) {
+            } catch (e: IOException) {
                 throw DebugData.error("[ERROR] FilesData in write(): filename=$filename")
             }
         }
@@ -36,7 +36,7 @@ interface WriteData {
         private fun getWriter(stream: OutputStream): BufferedWriter {
             return try {
                 BufferedWriter(OutputStreamWriter(stream, BUFFER_FORMAT))
-            } catch(e: IOException) {
+            } catch (e: IOException) {
                 throw DebugData.error("[ERROR] FilesData in getWriter(): stream=$stream")
             }
         }
@@ -44,19 +44,19 @@ interface WriteData {
         private fun getReader(stream: InputStream): BufferedReader {
             return try {
                 BufferedReader(InputStreamReader(stream, BUFFER_FORMAT))
-            } catch(e: IOException) {
+            } catch (e: IOException) {
                 throw DebugData.error("[ERROR] FilesData in getReader(): stream=$stream")
             }
         }
 
         private fun inFileStream(filename: String): InputStream {
-            return if(RUN_JAR) {
+            return if (RUN_JAR) {
                 return WriteData::class.java.getResourceAsStream("/$filename")
                     ?: throw DebugData.error("Can't run stream from: $filename")
             } else {
                 try {
                     FileInputStream(File(filename).absolutePath)
-                } catch(e: Exception) {
+                } catch (e: Exception) {
                     throw DebugData.error("Can't run stream from: $filename")
                 }
             }
@@ -65,22 +65,22 @@ interface WriteData {
         private fun outFileStream(filename: String): OutputStream {
             return try {
                 FileOutputStream(filename)
-            } catch(e: FileNotFoundException) {
+            } catch (e: FileNotFoundException) {
                 throw DebugData.error("Can't run stream from: $filename")
             }
         }
 
         private fun outFileStreamX(filename: String): OutputStream {
-            return if(RUN_JAR) {
+            return if (RUN_JAR) {
                 try {
                     FileOutputStream("/$filename")
-                } catch(e: FileNotFoundException) {
+                } catch (e: FileNotFoundException) {
                     throw DebugData.error("Can't run stream from: $filename")
                 }
             } else {
                 try {
                     FileOutputStream("src/$filename")
-                } catch(e: IOException) {
+                } catch (e: IOException) {
                     throw DebugData.error("Can't run stream from: $filename")
                 }
             }

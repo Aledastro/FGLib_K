@@ -61,8 +61,8 @@ class Platform {
         val graphics = object: AffineGraphics() {
             private val transform =
                 AffineTransform {
-                    var x = (it - drawPOS*layer.z)*scale
-                    if(whole_draw) x = x.round(1.0)
+                    var x = (it-drawPOS*layer.z)*scale
+                    if (whole_draw) x = x.round(1.0)
                     x
                 }
 

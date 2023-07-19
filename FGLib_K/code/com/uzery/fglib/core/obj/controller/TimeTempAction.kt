@@ -5,11 +5,11 @@ abstract class TimeTempAction: TempAction {
     private var finished = false
 
     final override fun next() {
-        if(temp_time == 0) start()
+        if (temp_time == 0) start()
 
         update()
 
-        if(ends()) {
+        if (ends()) {
             finish()
             finished = true
         }

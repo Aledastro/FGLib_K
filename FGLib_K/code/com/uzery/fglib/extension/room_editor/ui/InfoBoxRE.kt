@@ -16,9 +16,9 @@ class InfoBoxRE(private val data: DataRE): InfoBox() {
         get() = -0.2
 
     override fun draw() {
-        Platform.graphics.alpha=0.3
-        Platform.graphics.fill.rect(pos,size, Color.BEIGE)
-        Platform.graphics.alpha=1.0
+        Platform.graphics.alpha = 0.3
+        Platform.graphics.fill.rect(pos, size, Color.BEIGE)
+        Platform.graphics.alpha = 1.0
         super.draw()
     }
 
@@ -30,7 +30,7 @@ class InfoBoxRE(private val data: DataRE): InfoBox() {
         res.add("pos: ${data.last_edit_room.pos}")
         res.add("size: ${data.last_edit_room.size}")
         res.add("objects size: ${data.last_edit_room.objects.size}")
-        for(index in 0 until BoundsBox.SIZE) {
+        for (index in 0 until BoundsBox.SIZE) {
             res.add("bounds[${BoundsBox.name(index)}]: ${WorldUtils.bs_n[data.last_edit_room]!![index]}")
         }
 
@@ -39,7 +39,7 @@ class InfoBoxRE(private val data: DataRE): InfoBox() {
 
 
         val s = data.select_obj.toString()
-        if(s.indexOf(':') == -1) {
+        if (s.indexOf(':') == -1) {
             res.add("object: $s")
             return res
         }
@@ -49,8 +49,8 @@ class InfoBoxRE(private val data: DataRE): InfoBox() {
         val t = StringTokenizer(args, "]")
 
         res.add("object: $name")
-        while(t.hasMoreTokens()) {
-            res.add((t.nextToken() + "]\n").substring(1))
+        while (t.hasMoreTokens()) {
+            res.add((t.nextToken()+"]\n").substring(1))
         }
         return res
     }
@@ -64,14 +64,14 @@ class InfoBoxRE(private val data: DataRE): InfoBox() {
         get() = getL().size
 
     override fun color(id: Int): Color {
-        return when(id) {
+        return when (id) {
             0 -> Color.PURPLE
             else -> Color.PURPLE
         }
     }
 
     override val pos
-        get() = (Platform.CANVAS - size).XP + PointN(-data.OFFSET, 70.0)
+        get() = (Platform.CANVAS-size).XP+PointN(-data.OFFSET, 70.0)
     override val size
         get() = PointN(350, 450)/Platform.scale
     override val window: RectN

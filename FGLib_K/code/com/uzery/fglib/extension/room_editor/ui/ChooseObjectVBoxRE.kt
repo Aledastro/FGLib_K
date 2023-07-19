@@ -8,8 +8,6 @@ import com.uzery.fglib.extension.ui.VBox
 import com.uzery.fglib.utils.math.geom.PointN
 import com.uzery.fglib.utils.math.geom.RectN
 import javafx.scene.paint.Color
-import javafx.scene.text.Font
-import javafx.scene.text.FontWeight
 import kotlin.math.min
 
 class ChooseObjectVBoxRE(private val data: DataRE): VBox(0, 0) {
@@ -20,7 +18,7 @@ class ChooseObjectVBoxRE(private val data: DataRE): VBox(0, 0) {
         get() = min(10, data.groupsValues[data.select_group].size)
 
     override val pos
-        get() = (Platform.CANVAS - size)/2
+        get() = (Platform.CANVAS-size)/2
     override val window: RectN
         get() = Platform.CANVAS_R
     override val sizeOne: PointN
@@ -31,16 +29,16 @@ class ChooseObjectVBoxRE(private val data: DataRE): VBox(0, 0) {
     }
 
     override fun draw() {
-        Platform.graphics.alpha=0.7
-        Platform.graphics.fill.rect(pos,size, Color.BEIGE)
-        Platform.graphics.alpha=1.0
+        Platform.graphics.alpha = 0.7
+        Platform.graphics.fill.rect(pos, size, Color.BEIGE)
+        Platform.graphics.alpha = 1.0
         super.draw()
     }
 
     override fun draw(pos: PointN, id: Int) {
         val obj = data.getter.getEntry(from(id))()
         obj.draw(pos)
-        if(data.draw_bounds) {
+        if (data.draw_bounds) {
             WorldUtils.drawBoundsFor(obj, pos, BoundsBox.RED)
             WorldUtils.drawBoundsFor(obj, pos, BoundsBox.ORANGE)
         }

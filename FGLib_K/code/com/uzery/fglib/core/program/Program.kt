@@ -34,7 +34,7 @@ internal class Program {
         internal fun initWith(options: LaunchOptions, vararg ets: Extension) {
             val list = LinkedList<Extension>()
             list.addAll(ets)
-            while(list.isNotEmpty()) {
+            while (list.isNotEmpty()) {
                 val e = list.removeFirst()
                 extensions.add(e)
                 list.addAll(e.children())

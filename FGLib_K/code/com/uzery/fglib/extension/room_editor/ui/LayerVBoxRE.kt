@@ -11,20 +11,20 @@ import javafx.scene.text.FontWeight
 
 class LayerVBoxRE(private val data: DataRE): VBox(0, 24) {
     override val full: Int
-        get() = data.layers.size + 1
+        get() = data.layers.size+1
 
     override val rows: Int
-        get() = data.layers.size + 1
+        get() = data.layers.size+1
 
     override fun draw() {
-        Platform.graphics.alpha=0.3
-        Platform.graphics.fill.rect(pos,size, Color.BEIGE)
-        Platform.graphics.alpha=1.0
+        Platform.graphics.alpha = 0.3
+        Platform.graphics.fill.rect(pos, size, Color.BEIGE)
+        Platform.graphics.alpha = 1.0
         super.draw()
     }
 
     override val pos
-        get() = (Platform.CANVAS - size)*PointN(0.5, 1.0) + PointN(0.0, -data.OFFSET/2)
+        get() = (Platform.CANVAS-size)*PointN(0.5, 1.0)+PointN(0.0, -data.OFFSET/2)
     override val window: RectN
         get() = Platform.CANVAS_R
     override val sizeOne: PointN
@@ -36,10 +36,10 @@ class LayerVBoxRE(private val data: DataRE): VBox(0, 24) {
 
     override fun draw(pos: PointN, id: Int) {
         Platform.graphics.fill.font = Font.font("TimesNewRoman", FontWeight.EXTRA_BOLD, 22.0)
-        val name = when(id) {
+        val name = when (id) {
             0 -> "ALL"
-            else -> data.layers[id - 1].name
+            else -> data.layers[id-1].name
         }
-        Platform.graphics.fill.textC(pos + PointN(0, 4), name, Color.DARKBLUE)
+        Platform.graphics.fill.textC(pos+PointN(0, 4), name, Color.DARKBLUE)
     }
 }
