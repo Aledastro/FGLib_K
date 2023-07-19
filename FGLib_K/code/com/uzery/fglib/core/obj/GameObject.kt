@@ -12,6 +12,7 @@ import com.uzery.fglib.core.obj.modificator.Modificator
 import com.uzery.fglib.core.obj.property.GameProperty
 import com.uzery.fglib.core.obj.stats.Stats
 import com.uzery.fglib.core.obj.visual.Visualiser
+import com.uzery.fglib.utils.data.debug.DebugData
 import com.uzery.fglib.utils.math.geom.PointN
 import com.uzery.fglib.utils.math.geom.Shape
 import java.util.*
@@ -143,8 +144,8 @@ abstract class GameObject {
             s.append(":")
             values.forEach { value ->
                 val ss = value.toString()
-                if (ss[ss.lastIndex] == ']') s.append(" $ss")
-                else s.append(" [$ss]")
+                if(ss=="")throw DebugData.error("NULLABLE VALUE: $name: $values")
+                s.append(if (ss[ss.lastIndex] == ']') " $ss" else " [$ss]")
             }
         }
         return s.toString()
