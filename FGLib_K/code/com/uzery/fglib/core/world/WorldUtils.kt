@@ -5,14 +5,56 @@ import com.uzery.fglib.core.obj.GameObject
 import com.uzery.fglib.core.obj.bounds.BoundsBox
 import com.uzery.fglib.core.program.Platform.Companion.graphics
 import com.uzery.fglib.core.room.Room
+import com.uzery.fglib.utils.data.debug.DebugData
+import com.uzery.fglib.utils.data.file.WriteData
+import com.uzery.fglib.utils.data.getter.ClassGetter
 import com.uzery.fglib.utils.math.FGUtils
 import com.uzery.fglib.utils.math.geom.PointN
 import javafx.scene.paint.Color
 import javafx.scene.text.Font
 import javafx.scene.text.FontWeight
+import java.util.*
+import kotlin.collections.ArrayList
 
 interface WorldUtils {
     companion object {
+        fun readInfo(filename: String): Room {
+            return readInfo(WriteData[filename])
+        }
+
+        fun readInfo(input: List<String>): Room {
+            if (World.getter == null) throw DebugData.error("getter not loaded")
+
+            val list = ArrayList<String>()
+            list.addAll(input)
+
+            val objects = LinkedList<GameObject>()
+            var next = ""
+
+            while (next.startsWith("//") || next.isEmpty()) {
+                next = list.removeFirst()
+            }
+            val t = StringTokenizer(next)
+            t.nextToken()
+
+            val pos = getP(t.nextToken()+t.nextToken())
+            val size = getP(t.nextToken()+t.nextToken())
+            while (list.isNotEmpty()) {
+                next = list.removeFirst()
+                if (next.startsWith("//")) continue
+                if (next.isNotEmpty()) objects.add(World.getter!![next])
+            }
+
+            return Room(pos, size, objects)
+        }
+
+        private fun getP(s: String): PointN {
+            val c = object: ClassGetter<PointN>() {
+                override fun addAll() = add("pos", 1) { pos }
+            }
+            return c["pos: $s"]
+        }
+
         fun drawBounds(room: Room, pos: PointN = PointN.ZERO) {
             val STEP = PointN(1.0, 1.0)
             graphics.layer = DrawLayer.CAMERA_FOLLOW

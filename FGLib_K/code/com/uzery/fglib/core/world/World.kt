@@ -6,6 +6,7 @@ import com.uzery.fglib.core.obj.visual.Visualiser
 import com.uzery.fglib.core.program.Platform.Companion.develop_mode
 import com.uzery.fglib.core.program.Platform.Companion.graphics
 import com.uzery.fglib.core.room.Room
+import com.uzery.fglib.core.world.WorldUtils.Companion.readInfo
 import com.uzery.fglib.utils.data.debug.DebugData
 import com.uzery.fglib.utils.data.file.WriteData
 import com.uzery.fglib.utils.data.getter.ClassGetter
@@ -102,37 +103,6 @@ interface World {
         }
 
         var getter: ClassGetter<GameObject>? = null
-
-        private fun readInfo(filename: String): Room {
-            if (getter == null) throw DebugData.error("getter not loaded")
-
-            val list = WriteData[filename]
-            val objects = LinkedList<GameObject>()
-            var next = ""
-
-            while (next.startsWith("//") || next.isEmpty()) {
-                next = list.removeFirst()
-            }
-            val t = StringTokenizer(next)
-            t.nextToken()
-
-            val pos = getP(t.nextToken()+t.nextToken())
-            val size = getP(t.nextToken()+t.nextToken())
-            while (list.isNotEmpty()) {
-                next = list.removeFirst()
-                if (next.startsWith("//")) continue
-                if (next.isNotEmpty()) objects.add(getter!![next])
-            }
-
-            return Room(pos, size, objects)
-        }
-
-        private fun getP(s: String): PointN {
-            val c = object: ClassGetter<PointN>() {
-                override fun addAll() = add("pos", 1) { pos }
-            }
-            return c["pos: $s"]
-        }
 
         fun init(controller: WorldController, vararg filename: String) {
             World.controller = controller

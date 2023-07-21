@@ -11,6 +11,8 @@ import com.uzery.fglib.utils.math.num.StringN
 import java.util.*
 
 class DataRE(val getter: ClassGetter<GameObject>, val filenames: Array<out String>) {
+    var world_play = false
+    var last_world_play = false
     var hide_ui = false
     var chosen_entry = 0
     lateinit var edit: Room

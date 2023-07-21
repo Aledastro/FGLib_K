@@ -9,6 +9,7 @@ import com.uzery.fglib.core.program.Platform.Companion.graphics
 import com.uzery.fglib.core.program.Platform.Companion.keyboard
 import com.uzery.fglib.core.program.Platform.Companion.scale
 import com.uzery.fglib.core.world.World
+import com.uzery.fglib.core.world.WorldUtils
 import com.uzery.fglib.extension.room_editor.ui.*
 import com.uzery.fglib.extension.ui.UIBox
 import com.uzery.fglib.utils.data.file.WriteData
@@ -21,6 +22,7 @@ import java.util.*
 class RoomEditor(private val getter: ClassGetter<GameObject>, private vararg val filenames: String): Extension {
     override fun children() = LinkedList<Extension>().apply { add(UIBox()) }
 
+    private lateinit var world_save: Array<String>
     private val data = DataRE(getter, filenames)
 
     fun setLayers(list: LinkedList<DrawLayer>) {
@@ -62,6 +64,18 @@ class RoomEditor(private val getter: ClassGetter<GameObject>, private vararg val
         }
 
         play_button.action()
+        if (data.world_play) {
+            if (!data.last_world_play) {
+                world_save = Array(World.rooms.size) { World.rooms[it].toString() }
+            }
+            World.next()
+        } else if (data.last_world_play) {
+            for (i in World.rooms.indices) {
+                World.rooms[i] = WorldUtils.readInfo(world_save[i].split("\n"))
+            }
+        }//todo do more simple way
+        data.last_world_play = data.world_play
+
         Platform.update()
         checkForSave()
     }
@@ -107,11 +121,13 @@ class RoomEditor(private val getter: ClassGetter<GameObject>, private vararg val
                 return draw_pos + PointN(1.0, 1000.0) + Platform.CANVAS/2
             }
         }*/
-        World.next()
+        World.next() //todo why it needed?
         data.init()
+
+        world_save = Array(World.rooms.size) { World.rooms[it].toString() }
     }
 
-    private var play_button = PlayButtonRE()
+    private var play_button = PlayButtonRE(data)
     private var objects_vbox = ObjectVBoxRE(data)
     private var choose_objects_vbox = ChooseObjectVBoxRE(data)
     private var canvasX = CanvasRE(data)

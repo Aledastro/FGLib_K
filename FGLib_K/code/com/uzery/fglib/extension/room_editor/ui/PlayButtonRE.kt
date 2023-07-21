@@ -2,12 +2,13 @@ package com.uzery.fglib.extension.room_editor.ui
 
 import com.uzery.fglib.core.program.Platform
 import com.uzery.fglib.core.world.World
+import com.uzery.fglib.extension.room_editor.DataRE
 import com.uzery.fglib.extension.ui.Button
 import com.uzery.fglib.utils.math.geom.PointN
 import com.uzery.fglib.utils.math.geom.RectN
 import javafx.scene.input.KeyCode
 
-class PlayButtonRE: Button() {
+class PlayButtonRE(val data: DataRE): Button() {
     override val pos: PointN
         get() = Platform.CANVAS-PointN(110, 110)/Platform.scale
 
@@ -20,9 +21,12 @@ class PlayButtonRE: Button() {
         get() = Platform.keyboard.pressed(KeyCode.CONTROL) && Platform.keyboard.inPressed(KeyCode.SPACE)
 
     override fun whenPressed(): String {
-        World.next()
+        data.world_play=true
         return "- play -"
     }
 
-    override fun whenNotPressed() = "- stop - "
+    override fun whenNotPressed(): String {
+        data.world_play=false
+        return "- stop - "
+    }
 }
