@@ -6,7 +6,7 @@ import com.uzery.fglib.core.obj.visual.Visualiser
 import com.uzery.fglib.core.program.Platform.Companion.develop_mode
 import com.uzery.fglib.core.program.Platform.Companion.graphics
 import com.uzery.fglib.core.room.Room
-import com.uzery.fglib.core.world.WorldUtils.Companion.readInfo
+import com.uzery.fglib.core.world.WorldUtils.readInfo
 import com.uzery.fglib.utils.data.debug.DebugData
 import com.uzery.fglib.utils.data.file.WriteData
 import com.uzery.fglib.utils.data.getter.ClassGetter
