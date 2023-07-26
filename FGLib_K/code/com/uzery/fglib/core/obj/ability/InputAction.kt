@@ -4,7 +4,7 @@ import com.uzery.fglib.core.obj.GameObject
 import com.uzery.fglib.utils.math.FGUtils
 import java.util.*
 
-data class InputAction(val code: CODE, private val full_info: String, val prime: GameObject) {
+data class InputAction(val code: CODE, val prime: GameObject, private val full_info: String = "no_info") {
 
     enum class CODE {
         OPEN, INTERACT, INTERACT_I, INTERRUPT, INTERRUPT_I, IMPACT, PUSH, PUSH_I, TOUCH, TOUCH_I, DAMAGE
@@ -18,7 +18,7 @@ data class InputAction(val code: CODE, private val full_info: String, val prime:
         info = resolve(full_info)
     }
 
-    constructor(code: CODE, prime: GameObject): this(code, "no_info", prime)
+    constructor(name: String, prime: GameObject, full_info: String = "no_info"): this(CODE.valueOf(name), prime, full_info)
 
     private fun resolve(info: String): String {
         if (!info.contains(" | ")) return info

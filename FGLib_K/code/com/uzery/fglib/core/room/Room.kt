@@ -130,7 +130,7 @@ class Room(val pos: PointN, val size: PointN) {
             val shape1 = sh1.shape() ?: return
             val shape2 = sh2.shape() ?: return
             if (ShapeUtils.into(shape1.copy(o1.stats.POS), shape2.copy(o2.stats.POS))) {
-                o1.activate(InputAction(code, "$message | ${sh1.name} ${sh2.name}", o2))
+                o1.activate(InputAction(code, o2, "$message | ${sh1.name} ${sh2.name}"))
             }
         }
 
