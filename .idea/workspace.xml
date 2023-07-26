@@ -12,8 +12,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="82970e50-af90-458e-a847-e0b07c98f932" name="Changes" comment="FGLib v.0.6.8.2 [K]">
+    <list default="true" id="82970e50-af90-458e-a847-e0b07c98f932" name="Changes" comment="FGLib v.0.6.8.3 [K]">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/FGLib_K/code/com/uzery/fglib/core/obj/ability/InputAction.kt" beforeDir="false" afterPath="$PROJECT_DIR$/FGLib_K/code/com/uzery/fglib/core/obj/ability/InputAction.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FGLib_K/code/com/uzery/fglib/core/room/Room.kt" beforeDir="false" afterPath="$PROJECT_DIR$/FGLib_K/code/com/uzery/fglib/core/room/Room.kt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -122,13 +124,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1680386967444</updated>
-    </task>
-    <task id="LOCAL-00055" summary="FGLib v.0.5.8.1 [K]">
-      <created>1687686888155</created>
-      <option name="number" value="00055" />
-      <option name="presentableId" value="LOCAL-00055" />
-      <option name="project" value="LOCAL" />
-      <updated>1687686888155</updated>
     </task>
     <task id="LOCAL-00056" summary="FGLib v.0.5.8.2 [K]">
       <created>1687688212581</created>
@@ -466,7 +461,14 @@
       <option name="project" value="LOCAL" />
       <updated>1690382034686</updated>
     </task>
-    <option name="localTasksCounter" value="104" />
+    <task id="LOCAL-00104" summary="FGLib v.0.6.8.3 [K]">
+      <created>1690382426411</created>
+      <option name="number" value="00104" />
+      <option name="presentableId" value="LOCAL-00104" />
+      <option name="project" value="LOCAL" />
+      <updated>1690382426411</updated>
+    </task>
+    <option name="localTasksCounter" value="105" />
     <servers />
   </component>
   <component name="UnknownFeatures">
@@ -496,7 +498,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="FGLib v.0.6.2.1 [K]" />
     <MESSAGE value="FGLib v.0.6.3.0 [K]" />
     <MESSAGE value="FGLib v.0.6.3.1 [K]" />
     <MESSAGE value="FGLib v.0.6.4.0 [K]" />
@@ -521,7 +522,8 @@
     <MESSAGE value="FGLib v.0.6.8.0 [K]" />
     <MESSAGE value="FGLib v.0.6.8.1 [K]" />
     <MESSAGE value="FGLib v.0.6.8.2 [K]" />
-    <option name="LAST_COMMIT_MESSAGE" value="FGLib v.0.6.8.2 [K]" />
+    <MESSAGE value="FGLib v.0.6.8.3 [K]" />
+    <option name="LAST_COMMIT_MESSAGE" value="FGLib v.0.6.8.3 [K]" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

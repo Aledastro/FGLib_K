@@ -124,13 +124,12 @@ class Room(val pos: PointN, val size: PointN) {
             sh1: BoundsElement,
             o2: GameObject,
             sh2: BoundsElement,
-            code: InputAction.CODE,
-            message: String,
+            code: String,
         ) {
             val shape1 = sh1.shape() ?: return
             val shape2 = sh2.shape() ?: return
             if (ShapeUtils.into(shape1.copy(o1.stats.POS), shape2.copy(o2.stats.POS))) {
-                o1.activate(InputAction(code, o2, "$message | ${sh1.name} ${sh2.name}"))
+                o1.activate(InputAction(code, o2, "elements | ${sh1.name} ${sh2.name}"))
             }
         }
 
@@ -151,16 +150,14 @@ class Room(val pos: PointN, val size: PointN) {
                             blueElement,
                             mainObj,
                             mainElement,
-                            InputAction.CODE.INTERRUPT,
-                            "#interrupt"
+                            "#INTERRUPT"
                         )
                         setActivate(
                             mainObj,
                             mainElement,
                             blueObj,
                             blueElement,
-                            InputAction.CODE.INTERRUPT_I,
-                            "#interrupt_I"
+                            "#INTERRUPT_I"
                         )
                     }
                 }
@@ -182,16 +179,14 @@ class Room(val pos: PointN, val size: PointN) {
                             greenElement,
                             mainObj,
                             mainElement,
-                            InputAction.CODE.INTERACT,
-                            "#interact"
+                            "#INTERACT"
                         )
                         setActivate(
                             mainObj,
                             mainElement,
                             greenObj,
                             greenElement,
-                            InputAction.CODE.INTERACT_I,
-                            "#interact_I"
+                            "#INTERACT_I"
                         )
                     }
                 }
@@ -207,7 +202,7 @@ class Room(val pos: PointN, val size: PointN) {
                 if (bounds2.isEmpty()) continue
                 bounds2.elements.forEach { element2 ->
                     bounds1.elements.forEach { element1 ->
-                        setActivate(obj1, element1, obj2, element2, InputAction.CODE.IMPACT, "#impact")
+                        setActivate(obj1, element1, obj2, element2, "#IMPACT")
                     }
                 }
             }
