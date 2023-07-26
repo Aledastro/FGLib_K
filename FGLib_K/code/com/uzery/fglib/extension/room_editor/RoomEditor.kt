@@ -116,11 +116,6 @@ class RoomEditor(private val getter: ClassGetter<GameObject>, private vararg val
         layers_vbox.show()
         info_box.show()
 
-        /*World.camera = object: Camera {
-            override fun drawPOS(): PointN {
-                return draw_pos + PointN(1.0, 1000.0) + Platform.CANVAS/2
-            }
-        }*/
         World.next() //todo why it needed?
         data.init()
 

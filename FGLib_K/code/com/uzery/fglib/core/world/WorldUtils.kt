@@ -9,6 +9,7 @@ import com.uzery.fglib.utils.data.debug.DebugData
 import com.uzery.fglib.utils.data.file.WriteData
 import com.uzery.fglib.utils.data.getter.ClassGetter
 import com.uzery.fglib.utils.math.FGUtils
+import com.uzery.fglib.utils.math.FGUtils.Companion.getPosFrom
 import com.uzery.fglib.utils.math.geom.PointN
 import javafx.scene.paint.Color
 import javafx.scene.text.Font
@@ -37,8 +38,8 @@ interface WorldUtils {
             val t = StringTokenizer(next)
             t.nextToken()
 
-            val pos = getP(t.nextToken()+t.nextToken())
-            val size = getP(t.nextToken()+t.nextToken())
+            val pos = getPosFrom(t.nextToken()+t.nextToken())
+            val size = getPosFrom(t.nextToken()+t.nextToken())
             while (list.isNotEmpty()) {
                 next = list.removeFirst()
                 if (next.startsWith("//")) continue
@@ -46,13 +47,6 @@ interface WorldUtils {
             }
 
             return Room(pos, size, objects)
-        }
-
-        private fun getP(s: String): PointN {
-            val c = object: ClassGetter<PointN>() {
-                override fun addAll() = add("pos", 1) { pos }
-            }
-            return c["pos: $s"]
         }
 
         fun drawBounds(room: Room, pos: PointN = PointN.ZERO) {

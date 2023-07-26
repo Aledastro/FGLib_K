@@ -55,7 +55,7 @@ interface World {
                     last_active[id] = false
                 }
             }
-            camera?.update()
+            camera?.next()
             graphics.drawPOS = controller.drawPOS()+(camera?.drawPOS() ?: PointN.ZERO)
 
             WorldUtils.nextDebug()

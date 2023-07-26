@@ -1,5 +1,7 @@
 package com.uzery.fglib.utils.math
 
+import com.uzery.fglib.utils.data.getter.ClassGetter
+import com.uzery.fglib.utils.math.geom.PointN
 import javafx.scene.paint.Color
 import java.time.LocalDate
 import java.time.LocalTime
@@ -32,6 +34,13 @@ interface FGUtils {
 
         fun subAfter(input: String, index: String, delta: Int = 0): String {
             return input.substring(input.indexOf(index)+1+delta)
+        }
+
+        fun getPosFrom(s: String): PointN {
+            val c = object: ClassGetter<PointN>() {
+                override fun addAll() = add("pos", 1) { pos }
+            }
+            return c["pos: $s"]
         }
     }
 }
