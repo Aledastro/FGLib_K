@@ -1,7 +1,6 @@
 package com.uzery.fglib.extension.room_editor.ui
 
 import com.uzery.fglib.core.program.Platform
-import com.uzery.fglib.core.world.World
 import com.uzery.fglib.extension.room_editor.DataRE
 import com.uzery.fglib.extension.ui.Button
 import com.uzery.fglib.utils.math.geom.PointN
@@ -21,12 +20,12 @@ class PlayButtonRE(val data: DataRE): Button() {
         get() = Platform.keyboard.pressed(KeyCode.CONTROL) && Platform.keyboard.inPressed(KeyCode.SPACE)
 
     override fun whenPressed(): String {
-        data.world_play=true
+        data.world_play = true
         return "- play -"
     }
 
     override fun whenNotPressed(): String {
-        data.world_play=false
+        data.world_play = false
         return "- stop - "
     }
 }

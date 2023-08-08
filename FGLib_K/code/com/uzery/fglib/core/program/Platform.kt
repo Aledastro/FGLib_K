@@ -74,12 +74,13 @@ class Platform {
                 override fun draw0(filename: String, pos: PointN, size: PointN) =
                     gc.drawImage(Image(filename), pos.X, pos.Y, size.X, size.Y)
 
-                override fun draw0(image: Image, pos: PointN, size: PointN) = gc.drawImage(image, pos.X, pos.Y)
+                override fun draw0(image: Image, pos: PointN, size: PointN) =
+                    gc.drawImage(image, pos.X, pos.Y, size.X, size.Y)
 
                 override fun draw0(filename: String, pos: PointN) = gc.drawImage(Image(filename), pos.X, pos.Y)
 
-
-                override fun draw0(image: Image, pos: PointN) = gc.drawImage(image, pos.X, pos.Y)
+                override fun draw0(image: Image, pos: PointN) =
+                    gc.drawImage(image, pos.X, pos.Y, image.width*scale, image.height*scale)
 
             }
 

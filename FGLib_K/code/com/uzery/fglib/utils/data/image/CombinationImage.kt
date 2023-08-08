@@ -11,17 +11,16 @@ class CombinationImage(name: String, val size: IntI, private val rule: ImageComb
     private val origin: Image
 
     init {
-        val image = Image(name)
-        origin = ImageUtils.scale(image, IntI(SCALE, SCALE))
+        origin = Image(name)
 
         setData(name, rule.count)
     }
 
     override fun from(pos: IntI): Image {
         val list = rule.from(pos)
-        val array = Array(list.size) { ImageUtils.split(origin, list[it]*size*SCALE, size*SCALE) }
+        val array = Array(list.size) { ImageUtils.split(origin, list[it]*size, size) }
 
-        val positions = rule.positions(pos) ?: return ImageUtils.combination(size*SCALE, array)
-        return ImageUtils.combination(size*SCALE, array, positions)
+        val positions = rule.positions(pos) ?: return ImageUtils.combination(size, array)
+        return ImageUtils.combination(size, array, positions)
     }
 }

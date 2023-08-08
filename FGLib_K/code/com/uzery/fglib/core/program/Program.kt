@@ -47,6 +47,7 @@ internal class Program {
             this.stage = stage
             val canvas = Canvas(options.size.X, options.size.Y)
             gc = canvas.graphicsContext2D
+            gc.isImageSmoothing = false
             stage.scene = Scene(Group(canvas))
             stage.initStyle(options.style)
             stage.isFullScreen = options.fullscreen

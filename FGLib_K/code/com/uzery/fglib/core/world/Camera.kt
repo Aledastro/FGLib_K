@@ -9,6 +9,6 @@ abstract class Camera: GameObject() {
     abstract fun move(p: PointN)
 
     final override fun setValues() {
-        name="temp"
+        name = "temp"
     }
 }

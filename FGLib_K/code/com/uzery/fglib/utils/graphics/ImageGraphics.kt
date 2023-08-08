@@ -1,5 +1,6 @@
 package com.uzery.fglib.utils.graphics
 
+import com.uzery.fglib.core.program.Platform
 import com.uzery.fglib.utils.math.geom.PointN
 import javafx.scene.image.Image
 
@@ -31,13 +32,12 @@ abstract class ImageGraphics(private val transform: AffineTransform) {
 
     ///////////////////////////////////////////////////////////////////////////
 
-    fun draw(filename: String, pos: PointN) = draw0(filename, transform.pos(pos))
-
-    ///////////////////////////////////////////////////////////////////////////
-
     fun draw(image: Image, pos: PointN) = draw0(image, transform.pos(pos))
 
     fun drawL(image: Image, pos: PointN) = draw(image, pos)
-    fun drawC(image: Image, pos: PointN) = draw0(image, transform.pos(pos)-PointN(image.width, image.height)/2)
-    fun drawR(image: Image, pos: PointN) = draw0(image, transform.pos(pos)-PointN(image.width, image.height))
+    fun drawC(image: Image, pos: PointN) =
+        draw0(image, transform.pos(pos)-PointN(image.width, image.height)*Platform.scale/2)
+
+    fun drawR(image: Image, pos: PointN) =
+        draw0(image, transform.pos(pos)-PointN(image.width, image.height)*Platform.scale)
 }

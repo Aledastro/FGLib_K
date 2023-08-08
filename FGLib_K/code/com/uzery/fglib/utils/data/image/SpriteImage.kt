@@ -13,10 +13,10 @@ class SpriteImage(image: Image, name: String, val size: IntI, scale: Int = -1): 
 
     init {
         val origin_size = IntI(image.width.toInt(), image.height.toInt())
-        origin = ImageUtils.scale(image, IntI(SCALE, SCALE))
+        origin = image
 
         setData(name, origin_size/size)
     }
 
-    override fun from(pos: IntI) = ImageUtils.split(origin, pos*size*SCALE, size*SCALE)
+    override fun from(pos: IntI) = ImageUtils.split(origin, pos*size, size)
 }

@@ -15,7 +15,7 @@ abstract class VBox: UIElement() {
     protected abstract val full: Int
     protected abstract val rows: Int
 
-    private val pp = PointN(1.2,1.4)
+    private val pp = PointN(1.2, 1.4)
 
     abstract val sizeOne: PointN
     private val offset
