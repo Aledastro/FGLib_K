@@ -118,6 +118,7 @@ class Room(val pos: PointN, val size: PointN) {
 
     private fun nextActivate() {
         //todo less code
+        val list = objects.stream().filter { !it.tagged("#inactive") }.toList()
 
         fun setActivate(
             o1: GameObject,
@@ -133,14 +134,12 @@ class Room(val pos: PointN, val size: PointN) {
             }
         }
 
-        for (blueObjID in objects.indices) {
-            val blueObj = objects[blueObjID]
-            if (blueObj.tagged("#inactive")) continue
+        for (blueObjID in list.indices) {
+            val blueObj = list[blueObjID]
 
             val blueBounds = blueObj.bounds.blue
             if (blueBounds.isEmpty()) continue
             for (mainObj in objects) {
-                if (mainObj.tagged("#inactive")) continue
                 val mainBounds = mainObj.bounds.main
                 if (mainBounds.isEmpty()) continue
                 blueBounds.elements.forEach { blueElement ->
@@ -164,12 +163,11 @@ class Room(val pos: PointN, val size: PointN) {
             }
         }
 
-        for (mainObj in objects) {
-            if (!mainObj.interact() || mainObj.tagged("#inactive")) continue
+        for (mainObj in list) {
+            if (!mainObj.interact()) continue
             val mainBounds = mainObj.bounds.main
             if (mainBounds.isEmpty()) continue
-            for (greenObj in objects) {
-                if (greenObj.tagged("#inactive")) continue
+            for (greenObj in list) {
                 val greenBounds = greenObj.bounds.green
                 if (greenBounds.isEmpty()) continue
                 greenBounds.elements.forEach { greenElement ->
@@ -192,12 +190,11 @@ class Room(val pos: PointN, val size: PointN) {
                 }
             }
         }
-        for (obj1 in objects) {
-            if (obj1.tagged("#inactive")) continue
+        for (obj1 in list) {
             val bounds1 = obj1.bounds.orange
             if (bounds1.isEmpty()) continue
-            for (obj2 in objects) {
-                if (obj1 == obj2 || obj2.tagged("#inactive")) continue
+            for (obj2 in list) {
+                if (obj1 == obj2) continue
                 val bounds2 = obj2.bounds.orange
                 if (bounds2.isEmpty()) continue
                 bounds2.elements.forEach { element2 ->
