@@ -40,7 +40,10 @@ class RoomEditor(private val getter: ClassGetter<GameObject>, private vararg val
 
         data.select_layer = layers_vbox.select
 
-        data.select_group = objects_vbox.select
+        if(data.select_group!=objects_vbox.select){
+            data.select_group = objects_vbox.select
+            choose_objects_vbox.select = data.groupsSelect[data.select_group]
+        }
         data.chosen_entry = objects_vbox.chosenEntry()
         data.chosen_obj = data.getter.getEntry(data.chosen_entry)()
 
