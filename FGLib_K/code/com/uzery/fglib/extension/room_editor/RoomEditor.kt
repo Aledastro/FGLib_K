@@ -108,7 +108,7 @@ class RoomEditor(private val getter: ClassGetter<GameObject>, private vararg val
 
         Platform.whole_draw = true
         //todo
-        data.draw_pos = Platform.options().size/4-data.edit.size*PointN(0.5, 0.5)
+        data.draw_pos = Platform.options().size/4-data.edit.size*0.5
         UIBox.add(canvasX, play_button, objects_vbox, layers_vbox, info_box, choose_objects_vbox)
         canvasX.show()
         play_button.show()

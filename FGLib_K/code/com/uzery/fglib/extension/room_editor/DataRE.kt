@@ -37,14 +37,14 @@ class DataRE(val getter: ClassGetter<GameObject>, val filenames: Array<out Strin
     val GRID_P
         get() = PointN(GRID, GRID)
 
-
-    private val entries = LinkedList<StringN>()
     val names = LinkedList<StringN>()
     val ids = TreeMap<StringN, Int>()
     fun init() {
-        entries.addAll(Array(getter.entry_size()) { getter.getEntryName(it) })
+        val entries = LinkedList<StringN>()
 
+        for(i in 0 until getter.entry_size())entries.add(getter.getEntryName(i))
         for (id in entries.indices) ids[entries[id]] = id
+        entries.removeIf { !it.s.contains("#") }
 
         val groups_map = TreeMap<StringN, LinkedList<StringN>>()
 
@@ -55,28 +55,21 @@ class DataRE(val getter: ClassGetter<GameObject>, val filenames: Array<out Strin
         }
 
         fun getName(entry: StringN): StringN {
-            if (!entry.s.contains("#")) {
-                return entry
-            }
             return StringN(FGUtils.subBefore(entry.s, "#"), entry.n)
         }
 
         for (entry in entries) {
             val name = getName(entry)
             if (groups_map[name] == null) addNewEntry(name, entry)
-            else groups_map[name]?.add(entry)
-        }
-
-        for (i in groups_map.keys) {
-            groupsValues.add(LinkedList())
+            else groups_map[name]!!.add(entry)
         }
         for ((id, key) in groups_map.keys.withIndex()) {
+            groupsValues.add(LinkedList())
+
             val value = groups_map[key]!!
             groupsValues[id].addAll(value)
-            names.add(getName(key))
-        }
+            names.add(key)
 
-        for (i in groupsValues.indices) {
             groupsSelect.add(0)
         }
     }
