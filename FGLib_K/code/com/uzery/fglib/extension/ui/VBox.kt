@@ -48,8 +48,6 @@ abstract class VBox: UIElement() {
 
     override fun draw() {
         graphics.layer = DrawLayer.CAMERA_OFF
-        graphics.setStroke(4.0)
-
 
         for (id in 0 until full) {
             name.add(this.setNames(id))
@@ -61,6 +59,7 @@ abstract class VBox: UIElement() {
             graphics.fill.textC(ps+sizeOne*PointN(0.5, 1.25), name[id], Color.DARKBLUE)
             draw(ps+sizeOne/2, id)
 
+            graphics.setStroke(2.0)
             if (id == select) graphics.stroke.rect(ps, sizeOne, FGUtils.transparent(Color.DARKBLUE, 0.6))
         }
     }
