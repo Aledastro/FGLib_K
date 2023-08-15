@@ -42,7 +42,7 @@ class DataRE(val getter: ClassGetter<GameObject>, val filenames: Array<out Strin
     fun init() {
         val entries = LinkedList<StringN>()
 
-        for(i in 0 until getter.entry_size())entries.add(getter.getEntryName(i))
+        for (i in 0 until getter.entry_size()) entries.add(getter.getEntryName(i))
         for (id in entries.indices) ids[entries[id]] = id
         entries.removeIf { !it.s.contains("#") }
 

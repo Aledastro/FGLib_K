@@ -46,6 +46,8 @@ class CanvasRE(private val data: DataRE): UICanvas() {
 
     private var add_size = 0
 
+    private var draw_lines = true
+
     override fun draw() {
         fun drawEditRoom(alpha: Double = 1.0) {
             Platform.global_alpha = alpha
@@ -112,6 +114,7 @@ class CanvasRE(private val data: DataRE): UICanvas() {
         }
 
         fun drawLines() {
+            if (!draw_lines) return
             val c = FGUtils.transparent(Color.WHITE, 0.1)
             Platform.graphics.layer = DrawLayer.CAMERA_FOLLOW
             Platform.graphics.setStroke(1.0)
@@ -275,6 +278,7 @@ class CanvasRE(private val data: DataRE): UICanvas() {
     private var last_mouse_pos = PointN.ZERO
 
     override fun update() {
+        if (keyboard.inPressed(KeyCode.F3)) draw_lines = !draw_lines
         if (keyboard.pressed(KeyCode.CONTROL) && keyboard.inPressed(KeyCode.TAB)) data.draw_bounds =
             !data.draw_bounds
         if (keyboard.pressed(KeyCode.CONTROL) && keyboard.inPressed(KeyCode.M)) {
