@@ -12,8 +12,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="82970e50-af90-458e-a847-e0b07c98f932" name="Changes" comment="FGLib v.0.6.10.2 [K]">
-      <change beforePath="$PROJECT_DIR$/FGLib_K/code/com/uzery/fglib/extension/ui/VBox.kt" beforeDir="false" afterPath="$PROJECT_DIR$/FGLib_K/code/com/uzery/fglib/extension/ui/VBox.kt" afterDir="false" />
+    <list default="true" id="82970e50-af90-458e-a847-e0b07c98f932" name="Changes" comment="FGLib v.0.6.10.4 [K]">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FGLib_K/code/com/uzery/fglib/extension/room_editor/DataRE.kt" beforeDir="false" afterPath="$PROJECT_DIR$/FGLib_K/code/com/uzery/fglib/extension/room_editor/DataRE.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FGLib_K/code/com/uzery/fglib/extension/room_editor/RoomEditor.kt" beforeDir="false" afterPath="$PROJECT_DIR$/FGLib_K/code/com/uzery/fglib/extension/room_editor/RoomEditor.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FGLib_K/code/com/uzery/fglib/extension/room_editor/ui/CanvasRE.kt" beforeDir="false" afterPath="$PROJECT_DIR$/FGLib_K/code/com/uzery/fglib/extension/room_editor/ui/CanvasRE.kt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -122,20 +125,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1680386967444</updated>
-    </task>
-    <task id="LOCAL-00062" summary="FGLib v.0.5.11.0 [K]">
-      <created>1687990300850</created>
-      <option name="number" value="00062" />
-      <option name="presentableId" value="LOCAL-00062" />
-      <option name="project" value="LOCAL" />
-      <updated>1687990300850</updated>
-    </task>
-    <task id="LOCAL-00063" summary="FGLib v.0.5.12.0 [K]">
-      <created>1688063671605</created>
-      <option name="number" value="00063" />
-      <option name="presentableId" value="LOCAL-00063" />
-      <option name="project" value="LOCAL" />
-      <updated>1688063671605</updated>
     </task>
     <task id="LOCAL-00064" summary="FGLib v.0.5.12.1 [K]">
       <created>1688064847145</created>
@@ -466,7 +455,21 @@
       <option name="project" value="LOCAL" />
       <updated>1692069354834</updated>
     </task>
-    <option name="localTasksCounter" value="111" />
+    <task id="LOCAL-00111" summary="FGLib v.0.6.10.3 [K]">
+      <created>1692069534437</created>
+      <option name="number" value="00111" />
+      <option name="presentableId" value="LOCAL-00111" />
+      <option name="project" value="LOCAL" />
+      <updated>1692069534437</updated>
+    </task>
+    <task id="LOCAL-00112" summary="FGLib v.0.6.10.4 [K]">
+      <created>1692069678238</created>
+      <option name="number" value="00112" />
+      <option name="presentableId" value="LOCAL-00112" />
+      <option name="project" value="LOCAL" />
+      <updated>1692069678238</updated>
+    </task>
+    <option name="localTasksCounter" value="113" />
     <servers />
   </component>
   <component name="UnknownFeatures">
@@ -496,8 +499,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="FGLib v.0.6.4.4 [K]" />
-    <MESSAGE value="FGLib v.0.6.5.0 [K]" />
     <MESSAGE value="FGLib v.0.6.5.1 [K]" />
     <MESSAGE value="FGLib v.0.6.5.2 [K]" />
     <MESSAGE value="FGLib v.0.6.5.3 [K]" />
@@ -521,7 +522,9 @@
     <MESSAGE value="FGLib v.0.6.10.0 [K]" />
     <MESSAGE value="FGLib v.0.6.10.1 [K]" />
     <MESSAGE value="FGLib v.0.6.10.2 [K]" />
-    <option name="LAST_COMMIT_MESSAGE" value="FGLib v.0.6.10.2 [K]" />
+    <MESSAGE value="FGLib v.0.6.10.3 [K]" />
+    <MESSAGE value="FGLib v.0.6.10.4 [K]" />
+    <option name="LAST_COMMIT_MESSAGE" value="FGLib v.0.6.10.4 [K]" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

@@ -81,6 +81,8 @@ class RoomEditor(private val getter: ClassGetter<GameObject>, private vararg val
 
         Platform.update()
         checkForSave()
+
+        data.time++
     }
 
     private fun checkForSave() {

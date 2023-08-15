@@ -4,6 +4,7 @@ import com.uzery.fglib.core.obj.DrawLayer
 import com.uzery.fglib.core.obj.GameObject
 import com.uzery.fglib.core.obj.visual.Visualiser
 import com.uzery.fglib.core.program.Platform
+import com.uzery.fglib.core.program.Platform.Companion.graphics
 import com.uzery.fglib.core.program.Platform.Companion.keyboard
 import com.uzery.fglib.core.program.Platform.Companion.mouse
 import com.uzery.fglib.core.program.Platform.Companion.mouse_keys
@@ -85,17 +86,17 @@ class CanvasRE(private val data: DataRE): UICanvas() {
         }
 
         fun drawFields() {
-            Platform.graphics.setStroke(1.0)
+            /*graphics.setStroke(1.0)
             World.active_rooms.forEach { r ->
-                if (r != data.edit) Platform.graphics.stroke.rect(
+                if (r != data.edit) graphics.stroke.rect(
                     data.draw_pos-data.edit.pos+r.pos,
                     r.size,
                     FGUtils.transparent(Color.WHITE, 0.8)
                 )
-            }
+            }*/
 
-            Platform.graphics.setStroke(3.0)
-            Platform.graphics.stroke.rect(data.draw_pos-data.edit.pos+data.edit.pos, data.edit.size, Color.WHITE)
+            graphics.setStroke(3.0)
+            graphics.stroke.rect(data.draw_pos-data.edit.pos+data.edit.pos, data.edit.size, Color.WHITE)
         }
 
         fun drawSelectObj(alpha: Double = 1.0) {
@@ -115,21 +116,33 @@ class CanvasRE(private val data: DataRE): UICanvas() {
 
         fun drawLines() {
             if (!draw_lines) return
+
             val c = FGUtils.transparent(Color.WHITE, 0.1)
-            Platform.graphics.layer = DrawLayer.CAMERA_FOLLOW
-            Platform.graphics.setStroke(1.0)
+            graphics.layer = DrawLayer.CAMERA_FOLLOW
+            graphics.setStroke(1.0)
+            Program.gc.setLineDashes(5.0, 5.0)
+            Program.gc.lineDashOffset = 1.0
+
             for (i in 0..(window.S.Y/data.GRID+1).toInt()) {
-                Platform.graphics.stroke.line(
+                graphics.stroke.line(
                     -data.GRID_P+data.draw_pos.mod(data.GRID)
                             +PointN(0.0, i*data.GRID), PointN(window.S.X+data.GRID, 0.0), c
                 )
             }
             for (i in 0..(window.S.X/data.GRID+1).toInt()) {
-                Platform.graphics.stroke.line(
+                graphics.stroke.line(
                     -data.GRID_P+data.draw_pos.mod(data.GRID)
                             +PointN(i*data.GRID, 0.0), PointN(0.0, window.S.Y+data.GRID), c
                 )
             }
+            Program.gc.setLineDashes()
+            Program.gc.lineDashOffset = 0.0
+
+            graphics.setStroke(2.0)
+            for (room in World.rooms) {
+                graphics.stroke.draw(data.draw_pos, room.main, FGUtils.transparent(Color.WHITE, 0.7))
+            }
+
         }
 
         fun drawBounds(room: Room, pos: PointN = PointN.ZERO) {
