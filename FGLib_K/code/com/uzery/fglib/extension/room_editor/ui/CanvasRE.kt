@@ -48,6 +48,7 @@ class CanvasRE(private val data: DataRE): UICanvas() {
     private var add_size = 0
 
     private var draw_lines = true
+    private var draw_layers = true
 
     override fun draw() {
         fun drawEditRoom(alpha: Double = 1.0) {
@@ -80,6 +81,9 @@ class CanvasRE(private val data: DataRE): UICanvas() {
                 }
             }
             Room.drawVisuals(pos+data.draw_pos, visuals, pos_map)
+
+            if (!draw_layers) return
+
             Platform.global_alpha = 0.2
             Room.drawVisuals(pos+data.draw_pos, visuals_up, pos_map_up)
             Platform.global_alpha = 1.0
@@ -292,6 +296,7 @@ class CanvasRE(private val data: DataRE): UICanvas() {
 
     override fun update() {
         if (keyboard.inPressed(KeyCode.F3)) draw_lines = !draw_lines
+        if (keyboard.inPressed(KeyCode.F4)) draw_layers = !draw_layers
         if (keyboard.pressed(KeyCode.CONTROL) && keyboard.inPressed(KeyCode.TAB)) data.draw_bounds =
             !data.draw_bounds
         if (keyboard.pressed(KeyCode.CONTROL) && keyboard.inPressed(KeyCode.M)) {
