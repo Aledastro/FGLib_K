@@ -1,11 +1,10 @@
-package com.uzery.fglib.extension.room_editor
+package com.uzery.fglib.core.world
 
 import com.uzery.fglib.core.obj.GameObject
 import com.uzery.fglib.core.room.Room
-import com.uzery.fglib.core.world.WorldController
 import com.uzery.fglib.utils.math.geom.PointN
 
-class OneRoomController: WorldController {
+class OneRoomWC: WorldController {
     var room: Room? = null
     private val void = Room(PointN.ZERO, PointN.ZERO)
     override fun roomFor(o: GameObject): Room {

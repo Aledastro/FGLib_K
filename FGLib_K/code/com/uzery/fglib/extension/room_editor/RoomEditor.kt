@@ -8,6 +8,7 @@ import com.uzery.fglib.core.program.Platform.Companion.CANVAS
 import com.uzery.fglib.core.program.Platform.Companion.graphics
 import com.uzery.fglib.core.program.Platform.Companion.keyboard
 import com.uzery.fglib.core.program.Platform.Companion.scale
+import com.uzery.fglib.core.world.OneRoomWC
 import com.uzery.fglib.core.world.World
 import com.uzery.fglib.core.world.WorldUtils
 import com.uzery.fglib.extension.room_editor.ui.*
@@ -106,7 +107,7 @@ class RoomEditor(private val getter: ClassGetter<GameObject>, private vararg val
         World.getter = getter
 
         //todo
-        val c = OneRoomController()
+        val c = OneRoomWC()
         World.init(c, *filenames)
         data.edit = World.rooms[data.edit_n]
         c.room = data.edit
