@@ -10,11 +10,10 @@ import javafx.scene.paint.Color
 import javafx.scene.text.Font
 import javafx.scene.text.FontWeight
 
-class MovableWC(private val camera: Camera, goal_f: () -> GameObject): WorldController {
+class MovableWC(private val goal: GameObject): WorldController {
     private val void = Room(PointN.ZERO, PointN.ZERO)
-    private var goal_room = void
-
-    private var goal = goal_f()
+    var goal_room = void
+        private set
 
     override fun init() {}
 
@@ -44,7 +43,7 @@ class MovableWC(private val camera: Camera, goal_f: () -> GameObject): WorldCont
     private fun moveObjs() {
         val room = roomFor(goal)
         goal.stats.POS += goal_room.pos-room.pos
-        camera.move(goal_room.pos-room.pos)
+        World.camera?.move(goal_room.pos-room.pos)
 
         goal_room.objects.removeIf { o -> o.tagged("player") }
         goal_room = room
