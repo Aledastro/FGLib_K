@@ -4,10 +4,10 @@ import com.uzery.fglib.core.obj.DrawLayer
 import com.uzery.fglib.core.obj.GameObject
 import com.uzery.fglib.core.program.Extension
 import com.uzery.fglib.core.program.Platform
-import com.uzery.fglib.core.program.Platform.Companion.CANVAS
-import com.uzery.fglib.core.program.Platform.Companion.graphics
-import com.uzery.fglib.core.program.Platform.Companion.keyboard
-import com.uzery.fglib.core.program.Platform.Companion.scale
+import com.uzery.fglib.core.program.Platform.CANVAS
+import com.uzery.fglib.core.program.Platform.graphics
+import com.uzery.fglib.core.program.Platform.keyboard
+import com.uzery.fglib.core.program.Platform.scale
 import com.uzery.fglib.core.world.OneRoomWC
 import com.uzery.fglib.core.world.World
 import com.uzery.fglib.core.world.WorldUtils

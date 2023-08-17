@@ -4,10 +4,10 @@ import com.uzery.fglib.core.obj.DrawLayer
 import com.uzery.fglib.core.obj.GameObject
 import com.uzery.fglib.core.obj.visual.Visualiser
 import com.uzery.fglib.core.program.Platform
-import com.uzery.fglib.core.program.Platform.Companion.graphics
-import com.uzery.fglib.core.program.Platform.Companion.keyboard
-import com.uzery.fglib.core.program.Platform.Companion.mouse
-import com.uzery.fglib.core.program.Platform.Companion.mouse_keys
+import com.uzery.fglib.core.program.Platform.graphics
+import com.uzery.fglib.core.program.Platform.keyboard
+import com.uzery.fglib.core.program.Platform.mouse
+import com.uzery.fglib.core.program.Platform.mouse_keys
 import com.uzery.fglib.core.program.Program
 import com.uzery.fglib.core.room.Room
 import com.uzery.fglib.core.world.World

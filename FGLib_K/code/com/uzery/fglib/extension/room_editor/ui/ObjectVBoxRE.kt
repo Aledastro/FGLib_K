@@ -2,7 +2,7 @@ package com.uzery.fglib.extension.room_editor.ui
 
 import com.uzery.fglib.core.obj.bounds.BoundsBox
 import com.uzery.fglib.core.program.Platform
-import com.uzery.fglib.core.program.Platform.Companion.scale
+import com.uzery.fglib.core.program.Platform.scale
 import com.uzery.fglib.core.world.WorldUtils
 import com.uzery.fglib.extension.room_editor.DataRE
 import com.uzery.fglib.extension.ui.VBox

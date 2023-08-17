@@ -1,8 +1,8 @@
 package com.uzery.fglib.extension.ui
 
 import com.uzery.fglib.core.obj.DrawLayer
-import com.uzery.fglib.core.program.Platform.Companion.graphics
-import com.uzery.fglib.core.program.Platform.Companion.scale
+import com.uzery.fglib.core.program.Platform.graphics
+import com.uzery.fglib.core.program.Platform.scale
 import com.uzery.fglib.utils.math.geom.PointN
 import javafx.scene.paint.Color
 import javafx.scene.text.Font

@@ -1,8 +1,8 @@
 package com.uzery.fglib.extension.ui
 
 import com.uzery.fglib.core.program.Extension
-import com.uzery.fglib.core.program.Platform.Companion.develop_mode
-import com.uzery.fglib.core.program.Platform.Companion.graphics
+import com.uzery.fglib.core.program.Platform.develop_mode
+import com.uzery.fglib.core.program.Platform.graphics
 import com.uzery.fglib.utils.math.FGUtils
 import javafx.scene.paint.Color
 import java.util.*

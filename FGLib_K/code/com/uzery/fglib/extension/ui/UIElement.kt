@@ -1,8 +1,8 @@
 package com.uzery.fglib.extension.ui
 
-import com.uzery.fglib.core.program.Platform.Companion.mouse
-import com.uzery.fglib.core.program.Platform.Companion.mouse_keys
-import com.uzery.fglib.core.program.Platform.Companion.scale
+import com.uzery.fglib.core.program.Platform.mouse
+import com.uzery.fglib.core.program.Platform.mouse_keys
+import com.uzery.fglib.core.program.Platform.scale
 import com.uzery.fglib.utils.math.geom.PointN
 import com.uzery.fglib.utils.math.geom.RectN
 import javafx.scene.input.MouseButton

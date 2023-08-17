@@ -3,7 +3,7 @@ package com.uzery.fglib.core.world
 import com.uzery.fglib.core.obj.GameObject
 import com.uzery.fglib.core.program.Platform
 import com.uzery.fglib.core.room.Room
-import com.uzery.fglib.core.world.World.Companion.rooms
+import com.uzery.fglib.core.world.World.rooms
 import com.uzery.fglib.utils.math.geom.PointN
 import com.uzery.fglib.utils.math.geom.RectN
 import javafx.scene.paint.Color
