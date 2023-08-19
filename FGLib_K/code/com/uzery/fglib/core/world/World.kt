@@ -38,8 +38,6 @@ object World {
     var camera: Camera? = null
 
     fun next() {
-        active_rooms.forEach { it.next() }
-
         controller.update()
         active_rooms.clear()
         for (id in rooms.indices) {
@@ -52,6 +50,8 @@ object World {
                 last_active[id] = false
             }
         }
+        active_rooms.forEach { it.next() }
+
         camera?.next()
         graphics.drawPOS = controller.drawPOS()+(camera?.drawPOS() ?: PointN.ZERO)
 
@@ -106,7 +106,10 @@ object World {
         World.controller = controller
         World.controller.init()
         rooms.clear()
-        for (i in filename.indices) filenames.add(filename[i])
+        active_rooms.clear()
+        filenames.clear()
+        camera = null
+        for (name in filename) filenames.add(name)
         filenames.forEach { rooms.add(readInfo(it)) }
         for (i in rooms.indices) last_active.add(false)
     }
