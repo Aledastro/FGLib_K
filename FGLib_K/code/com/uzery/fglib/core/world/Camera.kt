@@ -6,7 +6,7 @@ import com.uzery.fglib.utils.math.geom.PointN
 
 abstract class Camera: GameObject() {
     init {
-        //tag("migrator")
+        tag("migrator")
     }
 
     open fun drawPOS() = stats.POS-Platform.CANVAS/2

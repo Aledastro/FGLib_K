@@ -52,7 +52,7 @@ object World {
                 last_active[id] = false
             }
         }
-        camera?.next()
+        //camera?.next()
         graphics.drawPOS = controller.drawPOS()+(camera?.drawPOS() ?: PointN.ZERO)
 
         WorldUtils.nextDebug()
@@ -62,7 +62,7 @@ object World {
     fun draw(pos: PointN = PointN.ZERO) {
         drawNotActiveRooms(pos)
         drawRooms(pos)
-        camera?.draw(camera!!.stats.POS+pos)
+        //camera?.draw(camera!!.stats.POS+pos)
         //if(develop_mode) drawRoomsDebug(pos)
     }
 

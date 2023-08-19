@@ -56,18 +56,8 @@ class MovableWC(private val goal: GameObject): WorldController {
                     val newRoom = roomFor(obj)
                     oldRoom.objects.remove(obj)
                     newRoom.objects.add(obj)
-
-                    obj.setValues()
-                    println(obj.name)
-                    println(obj.object_time)
-                    println(oldRoom.pos)
-                    println(newRoom.pos)
-                    println(oldRoom.pos == obj.stats.roomPOS)
-                    println(obj.stats.POS+obj.stats.roomPOS)
-                    println(obj.stats.POS)
                     obj.stats.POS += oldRoom.pos-newRoom.pos
                     obj.stats.roomPOS = newRoom.pos
-                    println(obj.stats.POS)
                     //obj.stats.POS=obj.stats.POS.round(1.0)
                 }
             }

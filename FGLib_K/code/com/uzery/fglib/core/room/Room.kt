@@ -73,8 +73,6 @@ class Room(val pos: PointN, val size: PointN) {
         }
     }
 
-
-    //todo remove from objects not new_objects
     fun add(vararg objs: GameObject) = new_objects.addAll(objs)
     fun remove(vararg objs: GameObject) = old_objects.addAll(objs)
 

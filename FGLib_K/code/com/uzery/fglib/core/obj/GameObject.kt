@@ -8,7 +8,6 @@ import com.uzery.fglib.core.obj.bounds.BoundsBox.Companion.CODE
 import com.uzery.fglib.core.obj.bounds.BoundsElement
 import com.uzery.fglib.core.obj.controller.Controller
 import com.uzery.fglib.core.obj.controller.TempAction
-import com.uzery.fglib.core.obj.modificator.Modificator
 import com.uzery.fglib.core.obj.property.GameProperty
 import com.uzery.fglib.core.obj.stats.Stats
 import com.uzery.fglib.core.obj.visual.Visualiser
@@ -25,7 +24,6 @@ abstract class GameObject {
     private var temp: TempAction? = null
 
     val visuals = LinkedList<Visualiser>()
-    private val modificators = LinkedList<Modificator>()
     internal val abilities = LinkedList<AbilityBox>()
     private val listeners = LinkedList<ActionListener>()
     private val properties = LinkedList<GameProperty>()
@@ -82,8 +80,6 @@ abstract class GameObject {
     fun addAbility(vararg ability: AbilityBox) = abilities.addAll(ability)
     fun addProperty(property: () -> Unit) = properties.add(GameProperty { property() })
     fun addProperty(vararg property: GameProperty) = properties.addAll(property)
-    fun addMod(mod: () -> Unit) = modificators.add(Modificator { mod() })
-    fun addMod(vararg mod: Modificator) = modificators.addAll(mod)
     fun addVisual(visual: Visualiser) = visuals.add(visual)
 
     fun next() {
@@ -94,7 +90,6 @@ abstract class GameObject {
 
         abilities.forEach { it.run() }
 
-        modificators.forEach { it.update() }
         properties.forEach { it.update() }
 
         effects.forEach { it.update() }
@@ -173,6 +168,8 @@ abstract class GameObject {
     }
 
     fun tag(vararg tag: String) = tags.addAll(tag)
+    fun untag(vararg tag: String) = tags.removeAll(tag.toSet())
+
     fun tagged(tag: String) = tags.contains(tag)
     fun addEffect(vararg effect: TagEffect) = effects.addAll(effect)
     fun effected(effect: String) = effects.any { a -> a.name == effect }
