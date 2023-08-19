@@ -52,20 +52,29 @@ class MovableWC(private val goal: GameObject): WorldController {
 
         fun migrate(oldRoom: Room) {
             oldRoom.objects.forEach { obj ->
-                if (obj.tagged("migrator")) {
+                if (obj.tagged("migrator") && !isInArea(oldRoom, obj)) {
                     val newRoom = roomFor(obj)
-                    if (newRoom != oldRoom) {
-                        oldRoom.remove(obj)
-                        newRoom.add(obj)
-                        //obj.stats.POS += oldRoom.pos-newRoom.pos
-                        //obj.stats.POS=obj.stats.POS.round(1.0)
-                    }
+                    oldRoom.objects.remove(obj)
+                    newRoom.objects.add(obj)
+
+                    obj.setValues()
+                    println(obj.name)
+                    println(obj.object_time)
+                    println(oldRoom.pos)
+                    println(newRoom.pos)
+                    println(oldRoom.pos == obj.stats.roomPOS)
+                    println(obj.stats.POS+obj.stats.roomPOS)
+                    println(obj.stats.POS)
+                    obj.stats.POS += oldRoom.pos-newRoom.pos
+                    obj.stats.roomPOS = newRoom.pos
+                    println(obj.stats.POS)
+                    //obj.stats.POS=obj.stats.POS.round(1.0)
                 }
             }
         }
 
         //migrate(void)
-        //World.active_rooms.forEach { migrate(it) }
+        World.active_rooms.forEach { migrate(it) }
 
         //goal_room.objects.removeIf { o->o.tagged("#immovable") }
 
@@ -76,11 +85,11 @@ class MovableWC(private val goal: GameObject): WorldController {
         }*///todo
     }
 
-    override fun roomFor(o: GameObject): Room {
-        fun isInArea(r: Room): Boolean {
-            return RectN(r.pos, r.size).into(o.stats.POS+goal_room.pos) //+o.stats.roomPOS
-        }
-        return rooms.firstOrNull { isInArea(it) } ?: void
+    private fun isInArea(r: Room, obj: GameObject): Boolean {
+        return r.main.into(obj.stats.POS+obj.stats.roomPOS) //+o.stats.roomPOS
+    }
+    override fun roomFor(obj: GameObject): Room {
+        return rooms.firstOrNull { isInArea(it, obj) } ?: void
     }
 
     override fun update() {

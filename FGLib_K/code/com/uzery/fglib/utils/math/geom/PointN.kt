@@ -122,7 +122,7 @@ data class PointN(private val xs: Array<Double>) {
     }
 
     override fun toString(): String {
-        return "PointN${Array(xs.size) { xs[it].toInt() }.toList()}}"
+        return "PointN${Array(xs.size) { xs[it].toInt() }.toList()}"
     }
 
     companion object {

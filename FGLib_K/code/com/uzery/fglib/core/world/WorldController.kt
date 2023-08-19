@@ -5,7 +5,7 @@ import com.uzery.fglib.core.room.Room
 import com.uzery.fglib.utils.math.geom.PointN
 
 interface WorldController {
-    fun roomFor(o: GameObject): Room
+    fun roomFor(obj: GameObject): Room
 
     fun isActive(r: Room): Boolean
 

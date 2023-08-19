@@ -34,6 +34,7 @@ class Room(val pos: PointN, val size: PointN) {
 
         objects.forEach { it.stats.roomPOS = pos }
         objects.forEach { it.next() }
+
         nextMoveOld()
         nextActivate()
 

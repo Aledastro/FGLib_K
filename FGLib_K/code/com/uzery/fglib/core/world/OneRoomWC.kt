@@ -7,7 +7,7 @@ import com.uzery.fglib.utils.math.geom.PointN
 class OneRoomWC: WorldController {
     var room: Room? = null
     private val void = Room(PointN.ZERO, PointN.ZERO)
-    override fun roomFor(o: GameObject): Room {
+    override fun roomFor(obj: GameObject): Room {
         return room ?: void
     }
 
