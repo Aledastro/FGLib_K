@@ -62,7 +62,7 @@ object World {
     fun draw(pos: PointN = PointN.ZERO) {
         drawNotActiveRooms(pos)
         drawRooms(pos)
-        camera?.draw(pos)
+        camera?.draw(camera!!.stats.POS+pos)
         //if(develop_mode) drawRoomsDebug(pos)
     }
 

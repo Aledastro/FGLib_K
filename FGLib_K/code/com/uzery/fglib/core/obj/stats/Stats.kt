@@ -6,6 +6,7 @@ class Stats {
 
     var fly = false
     var POS = PointN.ZERO
+    var roomPOS = PointN.ZERO
     var lPOS = PointN.ZERO
     var nPOS = PointN.ZERO
 }

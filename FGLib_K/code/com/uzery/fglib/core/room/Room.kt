@@ -32,12 +32,15 @@ class Room(val pos: PointN, val size: PointN) {
         objects.addAll(new_objects)
         new_objects.clear()
 
+        objects.forEach { it.stats.roomPOS = pos }
         objects.forEach { it.next() }
         nextMoveOld()
         nextActivate()
 
-        objects.forEach { new_objects.addAll(it.children) }
-        objects.forEach { it.children.clear() }
+        objects.forEach { obj ->
+            new_objects.addAll(obj.children)
+            obj.children.clear()
+        }
 
         objects.removeIf { it.dead || it.owner != null }
 

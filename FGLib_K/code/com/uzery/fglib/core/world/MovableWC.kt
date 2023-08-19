@@ -15,15 +15,12 @@ class MovableWC(private val goal: GameObject): WorldController {
     var goal_room = void
         private set
 
-    override fun init() {}
+    override fun init() {
+    }
 
     override fun isActive(r: Room): Boolean {
         val p = Platform.CANVAS-PointN(20, 20)
         return RectN(r.pos-p, r.size+p*2).into(goal.stats.POS+goal_room.pos)
-    }
-
-    private fun isInArea(r: Room): Boolean {
-        return RectN(r.pos, r.size).into(goal.stats.POS+goal_room.pos)
     }
 
     override fun onAppear(r: Room) {
@@ -41,14 +38,34 @@ class MovableWC(private val goal: GameObject): WorldController {
     }
 
     private fun moveObjs() {
-        val room = roomFor(goal)
-        goal.stats.POS += goal_room.pos-room.pos
-        World.camera?.move(goal_room.pos-room.pos)
+        fun moveGoal() {
+            val newRoom = roomFor(goal)
+            goal.stats.POS += goal_room.pos-newRoom.pos
+            World.camera?.move(goal_room.pos-newRoom.pos)
 
-        goal_room.objects.removeIf { o -> o.tagged("player") }
-        goal_room = room
-        goal_room.objects.removeIf { o -> o.tagged("player") }
-        goal_room.objects.add(goal)
+            goal_room.objects.remove(goal)
+            goal_room = newRoom
+            goal_room.objects.remove(goal)
+            goal_room.objects.add(goal)
+        }
+        moveGoal()
+
+        fun migrate(oldRoom: Room) {
+            oldRoom.objects.forEach { obj ->
+                if (obj.tagged("migrator")) {
+                    val newRoom = roomFor(obj)
+                    if (newRoom != oldRoom) {
+                        oldRoom.remove(obj)
+                        newRoom.add(obj)
+                        //obj.stats.POS += oldRoom.pos-newRoom.pos
+                        //obj.stats.POS=obj.stats.POS.round(1.0)
+                    }
+                }
+            }
+        }
+
+        //migrate(void)
+        //World.active_rooms.forEach { migrate(it) }
 
         //goal_room.objects.removeIf { o->o.tagged("#immovable") }
 
@@ -60,6 +77,9 @@ class MovableWC(private val goal: GameObject): WorldController {
     }
 
     override fun roomFor(o: GameObject): Room {
+        fun isInArea(r: Room): Boolean {
+            return RectN(r.pos, r.size).into(o.stats.POS+goal_room.pos) //+o.stats.roomPOS
+        }
         return rooms.firstOrNull { isInArea(it) } ?: void
     }
 
