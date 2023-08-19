@@ -63,7 +63,7 @@ class MovableWC(private val goal: GameObject): WorldController {
             }
         }
 
-        //migrate(void)
+        migrate(void)
         World.active_rooms.forEach { migrate(it) }
 
         //goal_room.objects.removeIf { o->o.tagged("#immovable") }
