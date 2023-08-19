@@ -11,7 +11,6 @@ import com.uzery.fglib.utils.math.FGUtils
 import com.uzery.fglib.utils.math.FGUtils.getPosFrom
 import com.uzery.fglib.utils.math.geom.PointN
 import javafx.scene.paint.Color
-import javafx.scene.text.Font
 import javafx.scene.text.FontWeight
 import java.util.*
 
@@ -122,7 +121,7 @@ object WorldUtils {
 
     fun drawDebug(draw_pos: PointN, room: Room) {
         graphics.layer = DrawLayer.CAMERA_FOLLOW
-        graphics.fill.font = Font.font("TimesNewRoman", FontWeight.BOLD, 12.0)
+        graphics.fill.font("TimesNewRoman", 12.0/2, FontWeight.BOLD)
 
         val p = draw_pos+room.size.XP+PointN(10, 0)
 

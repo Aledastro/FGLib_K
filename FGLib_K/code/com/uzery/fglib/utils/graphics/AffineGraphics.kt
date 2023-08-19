@@ -15,6 +15,13 @@ abstract class AffineGraphics {
         }
 
     abstract fun setStroke(size: Double)
+    fun setDefaults() {
+        alpha = 1.0
+        layer = DrawLayer.CAMERA_OFF
+        image.setDefaults()
+        fill.setDefaults()
+        stroke.setDefaults()
+    }
 
     abstract val image: ImageGraphics
 

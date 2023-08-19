@@ -2,12 +2,12 @@ package com.uzery.fglib.core.world
 
 import com.uzery.fglib.core.obj.GameObject
 import com.uzery.fglib.core.program.Platform
+import com.uzery.fglib.core.program.Platform.graphics
 import com.uzery.fglib.core.room.Room
 import com.uzery.fglib.core.world.World.rooms
 import com.uzery.fglib.utils.math.geom.PointN
 import com.uzery.fglib.utils.math.geom.RectN
 import javafx.scene.paint.Color
-import javafx.scene.text.Font
 import javafx.scene.text.FontWeight
 
 class MovableWC(private val goal: GameObject): WorldController {
@@ -47,6 +47,9 @@ class MovableWC(private val goal: GameObject): WorldController {
             goal_room = newRoom
             goal_room.objects.remove(goal)
             goal_room.objects.add(goal)
+
+
+            World.camera?.stats!!.roomPOS = goal.stats.roomPOS
         }
         moveGoal()
 
@@ -78,13 +81,14 @@ class MovableWC(private val goal: GameObject): WorldController {
     private fun isInArea(r: Room, obj: GameObject): Boolean {
         return r.main.into(obj.stats.POS+obj.stats.roomPOS) //+o.stats.roomPOS
     }
+
     override fun roomFor(obj: GameObject): Room {
         return rooms.firstOrNull { isInArea(it, obj) } ?: void
     }
 
     override fun update() {
-        Platform.graphics.fill.font = Font.font("TimesNewRoman", FontWeight.BOLD, 12.0)
-        Platform.graphics.fill.textL(PointN(20, 60), "pos: "+goal.stats.POS, Color.BLACK)
+        graphics.fill.font("TimesNewRoman", 12.0/2, FontWeight.BOLD)
+        graphics.fill.textL(PointN(20, 60), "pos: "+goal.stats.POS, Color.BLACK)
         /*if(Platform.keyboard.pressed(KeyCode.CONTROL) && Platform.keyboard.inPressed(KeyCode.R)) {
             active_rooms.forEach { room->room.objects.removeIf { it.tagged("player") } }
             World.add(goal)

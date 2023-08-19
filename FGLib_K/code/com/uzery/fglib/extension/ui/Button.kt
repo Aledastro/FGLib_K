@@ -5,7 +5,6 @@ import com.uzery.fglib.core.program.Platform.graphics
 import com.uzery.fglib.core.program.Platform.scale
 import com.uzery.fglib.utils.math.geom.PointN
 import javafx.scene.paint.Color
-import javafx.scene.text.Font
 import javafx.scene.text.FontWeight
 
 abstract class Button: UIElement() {
@@ -25,7 +24,7 @@ abstract class Button: UIElement() {
         if (value) graphics.stroke.oval(pos, size, Color.DARKBLUE)
         else graphics.stroke.rect(pos, size, Color.DARKBLUE)
 
-        graphics.fill.font = Font.font("TimesNewRoman", FontWeight.BOLD, 20.0)
+        graphics.fill.font("TimesNewRoman", 20.0/2, FontWeight.BOLD)
         graphics.fill.textC(pos+size*PointN(0.5, 1.6), name, Color.DARKBLUE)
     }
 

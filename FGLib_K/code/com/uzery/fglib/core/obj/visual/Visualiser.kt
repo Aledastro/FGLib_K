@@ -12,7 +12,7 @@ interface Visualiser {
     fun drawWithDefaults(draw_pos: PointN) {
         //if(!ShapeUtils.into(main.copy(draw_pos), Platform.CANVAS_R)) return
 
-        agc.alpha = 1.0
+        agc.setDefaults()
         agc.layer = drawLayer()
         draw(draw_pos)
     }

@@ -13,7 +13,7 @@ import java.util.*
 
 class InfoBoxRE(private val data: DataRE): InfoBox() {
     override val text_draw_offset: Double
-        get() = -0.2
+        get() = 0.1
 
     override fun draw() {
         Platform.graphics.alpha = 0.3

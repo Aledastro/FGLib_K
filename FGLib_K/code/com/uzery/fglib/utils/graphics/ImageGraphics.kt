@@ -5,6 +5,10 @@ import com.uzery.fglib.utils.math.geom.PointN
 import javafx.scene.image.Image
 
 abstract class ImageGraphics(private val transform: AffineTransform) {
+    fun setDefaults() {
+
+    }
+
     protected abstract fun draw0(filename: String, pos: PointN, size: PointN)
 
     protected abstract fun draw0(image: Image, pos: PointN, size: PointN)

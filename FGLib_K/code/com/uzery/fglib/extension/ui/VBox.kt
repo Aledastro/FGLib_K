@@ -7,7 +7,6 @@ import com.uzery.fglib.utils.math.FGUtils
 import com.uzery.fglib.utils.math.geom.PointN
 import javafx.scene.input.MouseButton
 import javafx.scene.paint.Color
-import javafx.scene.text.Font
 import javafx.scene.text.FontWeight
 import java.util.*
 
@@ -55,7 +54,8 @@ abstract class VBox: UIElement() {
             val ps = pos+fromID(id)
             graphics.fill.rect(ps, sizeOne, FGUtils.transparent(Color.DARKBLUE, 0.1))
 
-            graphics.fill.font = Font.font("TimesNewRoman", FontWeight.BOLD, 12.0)
+            graphics.fill.font("TimesNewRoman", 12.0/2, FontWeight.BOLD)
+
             graphics.fill.textC(ps+sizeOne*PointN(0.5, 1.25), name[id], Color.DARKBLUE)
             draw(ps+sizeOne/2, id)
 

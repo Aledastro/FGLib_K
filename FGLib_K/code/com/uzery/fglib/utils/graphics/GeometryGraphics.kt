@@ -4,11 +4,32 @@ import com.uzery.fglib.utils.math.geom.PointN
 import com.uzery.fglib.utils.math.geom.Shape
 import javafx.scene.paint.Color
 import javafx.scene.paint.Paint
-import javafx.scene.text.Font
+import javafx.scene.text.FontPosture
+import javafx.scene.text.FontWeight
 import javafx.scene.text.TextAlignment
 
 abstract class GeometryGraphics(private val transform: AffineTransform) {
-    var font = Font.font(10.0)
+    fun setDefaults() {
+        font()
+        text_align = TextAlignment.RIGHT
+        this.color = Color.BLACK
+    }
+
+    fun font(
+        family: String = "arial", size: Double = 10.0,
+        weight: FontWeight = FontWeight.NORMAL, posture: FontPosture = FontPosture.REGULAR
+    ) {
+        font_family = family
+        font_size = size
+        font_weight = weight
+        font_posture = posture
+    }
+
+    var font_family = "arial"
+    var font_size = 10.0
+    var font_weight = FontWeight.NORMAL
+    var font_posture = FontPosture.REGULAR
+
     protected var text_align = TextAlignment.RIGHT
     abstract var color: Paint
 

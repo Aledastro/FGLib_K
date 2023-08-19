@@ -14,6 +14,7 @@ import javafx.scene.input.KeyCode
 import javafx.scene.input.MouseButton
 import javafx.scene.paint.Color
 import javafx.scene.paint.Paint
+import javafx.scene.text.Font
 
 object Platform {
     fun options() = Program.options
@@ -64,6 +65,7 @@ object Platform {
                 if (whole_draw) x = x.round(1.0)
                 x
             }
+        private val transformSize = AffineTransform { it*scale }
 
         override fun setStroke(size: Double) {
             gc.lineWidth = size*scale
@@ -98,7 +100,8 @@ object Platform {
 
             override fun text0(pos: PointN, text: String) {
                 gc.textAlign = text_align
-                gc.font = font
+                gc.font =
+                    Font.font(font_family, font_weight, font_posture, transformSize.transform(PointN(font_size)).X)
                 gc.fillText(text, pos.X, pos.Y)
             }
         }
@@ -117,7 +120,8 @@ object Platform {
 
             override fun text0(pos: PointN, text: String) {
                 gc.textAlign = text_align
-                gc.font = font
+                gc.font =
+                    Font.font(font_family, font_weight, font_posture, transformSize.transform(PointN(font_size)).X)
                 gc.strokeText(text, pos.X, pos.Y)
             }
         }

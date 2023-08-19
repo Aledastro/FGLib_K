@@ -1,12 +1,12 @@
 package com.uzery.fglib.extension.room_editor.ui
 
 import com.uzery.fglib.core.program.Platform
+import com.uzery.fglib.core.program.Platform.graphics
 import com.uzery.fglib.extension.room_editor.DataRE
 import com.uzery.fglib.extension.ui.VBox
 import com.uzery.fglib.utils.math.geom.PointN
 import com.uzery.fglib.utils.math.geom.RectN
 import javafx.scene.paint.Color
-import javafx.scene.text.Font
 import javafx.scene.text.FontWeight
 
 class LayerVBoxRE(private val data: DataRE): VBox() {
@@ -17,9 +17,9 @@ class LayerVBoxRE(private val data: DataRE): VBox() {
         get() = data.layers.size+1
 
     override fun draw() {
-        Platform.graphics.alpha = 0.3
-        Platform.graphics.fill.rect(pos, size, Color.BEIGE)
-        Platform.graphics.alpha = 1.0
+        graphics.alpha = 0.3
+        graphics.fill.rect(pos, size, Color.BEIGE)
+        graphics.alpha = 1.0
         super.draw()
     }
 
@@ -35,11 +35,11 @@ class LayerVBoxRE(private val data: DataRE): VBox() {
     }
 
     override fun draw(pos: PointN, id: Int) {
-        Platform.graphics.fill.font = Font.font("TimesNewRoman", FontWeight.EXTRA_BOLD, 22.0)
+        graphics.fill.font("TimesNewRoman", 22.0/2, FontWeight.EXTRA_BOLD)
         val name = when (id) {
             0 -> "ALL"
             else -> data.layers[id-1].name
         }
-        Platform.graphics.fill.textC(pos+PointN(0, 4), name, Color.DARKBLUE)
+        graphics.fill.textC(pos+PointN(0, 4), name, Color.DARKBLUE)
     }
 }
