@@ -100,7 +100,7 @@ class CanvasRE(private val data: DataRE): UICanvas() {
             }*/
 
             graphics.setStroke(3.0)
-            graphics.stroke.rect(data.draw_pos-data.edit.pos+data.edit.pos, data.edit.size, Color.WHITE)
+            graphics.stroke.rect(data.draw_pos, data.edit.size, Color.WHITE)
         }
 
         fun drawSelectObj(alpha: Double = 1.0) {
@@ -144,7 +144,7 @@ class CanvasRE(private val data: DataRE): UICanvas() {
 
             graphics.setStroke(2.0)
             for (room in World.rooms) {
-                graphics.stroke.draw(data.draw_pos, room.main, FGUtils.transparent(Color.WHITE, 0.7))
+                graphics.stroke.draw(data.draw_pos-data.edit.pos, room.main, FGUtils.transparent(Color.WHITE, 0.7))
             }
 
         }
