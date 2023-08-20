@@ -41,15 +41,14 @@ class MovableWC(private val goal: GameObject): WorldController {
         fun moveGoal() {
             val newRoom = roomFor(goal)
             goal.stats.POS += goal_room.pos-newRoom.pos
+            goal.stats.roomPOS = newRoom.pos
+            World.camera?.stats!!.roomPOS = goal.stats.roomPOS
             World.camera?.move(goal_room.pos-newRoom.pos)
 
             goal_room.objects.remove(goal)
             goal_room = newRoom
             goal_room.objects.remove(goal)
             goal_room.objects.add(goal)
-
-
-            World.camera?.stats!!.roomPOS = goal.stats.roomPOS
         }
         moveGoal()
 
