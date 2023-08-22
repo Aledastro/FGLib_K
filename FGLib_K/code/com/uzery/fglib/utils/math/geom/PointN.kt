@@ -1,5 +1,6 @@
 package com.uzery.fglib.utils.math.geom
 
+import com.uzery.fglib.utils.data.debug.DebugData
 import com.uzery.fglib.utils.math.ArrayUtils
 import com.uzery.fglib.utils.math.MathUtils
 import com.uzery.fglib.utils.math.num.IntI
@@ -130,6 +131,19 @@ data class PointN(private val xs: Array<Double>) {
 
         fun transform(p1: PointN, p2: PointN, transform: (x: Double, y: Double) -> Double): PointN {
             return PointN(ArrayUtils.transformP(p1.xs, p2.xs, 0.0, transform))
+        }
+
+        fun isSameDirection(p1: PointN, p2: PointN): Boolean {
+            if(p1.dimension()!=p2.dimension())throw DebugData.error("WRONG DIM: $p1, $p2")
+            var k: Double? = null
+            for (i in 0 until p1.dimension()){
+                if(p1.xs[i]==0.0 && p2.xs[i]==0.0)continue
+                if(p1.xs[i]==0.0 || p2.xs[i]==0.0) return false
+                val now_k = p1.xs[i]/p2.xs[i]
+                if(k==null)k=now_k
+                if(now_k!=k)return false
+            }
+            return true
         }
     }
 }

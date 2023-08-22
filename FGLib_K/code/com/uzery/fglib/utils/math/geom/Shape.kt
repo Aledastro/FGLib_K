@@ -18,6 +18,6 @@ abstract class Shape {
     abstract val code: Code
 
     enum class Code {
-        RECT, OVAL
+        RECT, OVAL, LINE
     }
 }

@@ -1,10 +1,7 @@
 package com.uzery.fglib.utils.math
 
 import com.uzery.fglib.utils.data.debug.DebugData
-import com.uzery.fglib.utils.math.geom.OvalN
-import com.uzery.fglib.utils.math.geom.PointN
-import com.uzery.fglib.utils.math.geom.RectN
-import com.uzery.fglib.utils.math.geom.Shape
+import com.uzery.fglib.utils.math.geom.*
 import kotlin.math.pow
 
 object ShapeUtils {
@@ -50,6 +47,12 @@ object ShapeUtils {
                 intoOval(first as OvalN, second as OvalN)
             }
 
+            first.code == Shape.Code.LINE && second.code == Shape.Code.LINE -> {
+                PointN.isSameDirection(first.L-second.L,first.S-second.S)
+                //L1+S1*k1 = L2+S2*k2
+                //L1-L2 = (S2-S1)*k
+            }
+            ////////////////////////////////////////////////////////////////////
             first.code == Shape.Code.OVAL && second.code == Shape.Code.RECT -> {
                 intoRectOval(second as RectN, first as OvalN)
             }
@@ -57,6 +60,21 @@ object ShapeUtils {
             first.code == Shape.Code.RECT && second.code == Shape.Code.OVAL -> {
                 intoRectOval(first as RectN, second as OvalN)
             }
+            ////////////////////////////////////////////////////////////////////
+            first.code == Shape.Code.LINE && second.code == Shape.Code.RECT -> {
+                PointN.isSameDirection(first.L-second.L,first.S-second.S)
+            }
+            first.code == Shape.Code.RECT && second.code == Shape.Code.LINE -> {
+                PointN.isSameDirection(first.L-second.L,first.S-second.S)
+            }
+            ////////////////////////////////////////////////////////////////////
+            first.code == Shape.Code.LINE && second.code == Shape.Code.OVAL -> {
+                PointN.isSameDirection(first.L-second.L,first.S-second.S)
+            }
+            first.code == Shape.Code.OVAL && second.code == Shape.Code.LINE -> {
+                PointN.isSameDirection(first.L-second.L,first.S-second.S)
+            }
+            ////////////////////////////////////////////////////////////////////
 
             else -> throw DebugData.error("ERROR: illegal shape codes: ${first.code}, ${second.code}")
         }

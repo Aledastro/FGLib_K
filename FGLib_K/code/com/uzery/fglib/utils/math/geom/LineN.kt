@@ -12,7 +12,7 @@ data class LineN(private val pos: PointN, private val size: PointN): Shape() {
     override val L = pos-size/2
     override val R = pos+size/2
 
-    override val code = Code.OVAL
+    override val code = Code.LINE
 
     override fun toString(): String {
         return "line[$pos, $size]"

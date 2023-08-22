@@ -20,7 +20,9 @@ object CollisionUtils {
 
         if(maxMoveRect == 1.0)return maxMoveRect
 
-        return when{
+        return maxMoveRect
+
+        /*return when{
             stay.code == Shape.Code.RECT && start.code == Shape.Code.RECT -> {
                 maxMoveRect
             }
@@ -41,7 +43,7 @@ object CollisionUtils {
             }
 
             else -> throw DebugData.error("ERROR: illegal shape codes: ${stay.code}, ${start.code} -> ${finish.code}")
-        }
+        }*/
     }
 
     fun intoX(stay: Shape, start: Shape, finish: Shape): Boolean {

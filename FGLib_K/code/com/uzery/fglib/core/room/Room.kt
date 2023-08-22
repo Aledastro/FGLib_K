@@ -82,6 +82,8 @@ class Room(val pos: PointN, val size: PointN) {
     private fun nextMoveOld() {
         val red_bounds = LinkedList<Bounds>()
         val pos = LinkedList<PointN>()
+        val list = objects.stream().filter { !it.tagged("#immovable") && it.stats.nPOS != PointN.ZERO }.toList()
+
         objects.forEach {
             val bs = it.bounds.red
             if (!bs.isEmpty()) {
@@ -89,9 +91,8 @@ class Room(val pos: PointN, val size: PointN) {
                 pos.add(it.stats.POS)
             }
         }
-        for (obj in objects) {
+        for (obj in list) {
             obj.stats.lPOS = obj.stats.POS
-            if (obj.tagged("#immovable")) continue
             val move_bs = obj.bounds.orange
             if (move_bs.isEmpty()) continue
 
@@ -115,7 +116,7 @@ class Room(val pos: PointN, val size: PointN) {
 
             for (i in 0 until np.dimension()) move(np.separate(i))
         }
-        objects.forEach { it.stats.nPOS = PointN.ZERO }
+        list.forEach { it.stats.nPOS = PointN.ZERO }
     }
 
     private fun nextActivate() {
