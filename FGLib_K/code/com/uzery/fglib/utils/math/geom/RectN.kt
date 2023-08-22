@@ -1,9 +1,8 @@
 package com.uzery.fglib.utils.math.geom
 
 data class RectN(private val pos: PointN, private val size: PointN): Shape() {
-    override fun copy(move: PointN): Shape {
-        return RectN(pos+move, size)
-    }
+    constructor(size: PointN): this(PointN.ZERO, size)
+    override fun copy(move: PointN) = RectN(pos+move, size)
 
     override fun into(pos: PointN): Boolean {
         return L.less(pos) && pos.less(R)
@@ -19,6 +18,14 @@ data class RectN(private val pos: PointN, private val size: PointN): Shape() {
     }
 
     companion object {
-        fun rectLR(l: PointN, r: PointN) = RectN(l, r-l)
+        fun LR(l: PointN, r: PointN) = RectN(l, r-l)
+
+        fun L(l: PointN = PointN.ZERO, s: PointN) = RectN(l, s)
+        fun C(c: PointN = PointN.ZERO, s: PointN) = RectN(c-s/2, s)
+        fun R(r: PointN = PointN.ZERO, s: PointN) = RectN(r-s, s)
+
+        fun L(s: PointN) = L(PointN.ZERO, s)
+        fun C(s: PointN) = C(PointN.ZERO, s)
+        fun R(s: PointN) = R(PointN.ZERO, s)
     }
 }

@@ -1,7 +1,9 @@
 package com.uzery.fglib.utils.math
 
+import com.uzery.fglib.utils.data.debug.DebugData
 import com.uzery.fglib.utils.data.file.ConstL.Companion.LITTLE
 import com.uzery.fglib.utils.math.ShapeUtils.rect
+import com.uzery.fglib.utils.math.geom.OvalN
 import com.uzery.fglib.utils.math.geom.RectN
 import com.uzery.fglib.utils.math.geom.Shape
 import kotlin.math.abs
@@ -9,25 +11,52 @@ import kotlin.math.min
 
 object CollisionUtils {
     fun maxMove(stay: Shape, start: Shape, finish: Shape): Double {
+        if(start.code!=finish.code)
+            throw DebugData.error("ERROR: illegal shape codes: ${stay.code}, ${start.code} -> ${finish.code}")
+
         if (!intoX(stay, start, finish)) return 1.0
 
-        //todo when(shape)
-        return maxMoveRect(rect(stay), rect(start), rect(finish))
+        val maxMoveRect = maxMoveRect(rect(stay), rect(start), rect(finish))
+
+        if(maxMoveRect == 1.0)return maxMoveRect
+
+        return when{
+            stay.code == Shape.Code.RECT && start.code == Shape.Code.RECT -> {
+                maxMoveRect
+            }
+
+            stay.code == Shape.Code.OVAL && start.code == Shape.Code.OVAL -> {
+                //maxMoveOval(stay as OvalN, start as OvalN, finish as OvalN)
+                maxMoveRect
+            }
+
+            stay.code == Shape.Code.OVAL && start.code == Shape.Code.RECT -> {
+                //maxMoveOvalRect(stay as OvalN, start as RectN, finish as RectN)
+                maxMoveRect
+            }
+
+            stay.code == Shape.Code.RECT && start.code == Shape.Code.OVAL -> {
+                //maxMoveRectOval(stay as RectN, start as OvalN, finish as OvalN)
+                maxMoveRect
+            }
+
+            else -> throw DebugData.error("ERROR: illegal shape codes: ${stay.code}, ${start.code} -> ${finish.code}")
+        }
     }
+
+    fun intoX(stay: Shape, start: Shape, finish: Shape): Boolean {
+        return ShapeUtils.into(stay, ShapeUtils.rectX(start, finish))
+    }
+
+    /*private fun maxMoveOval(stay: OvalN, start: OvalN, finish: OvalN): Double {
+        return (0 until start.dimension()).minOf { level -> maxMoveOval(stay, start, finish, level) }
+    }*/
+
+
 
     private fun maxMoveRect(stay: RectN, start: RectN, finish: RectN): Double {
         return (0 until start.dimension()).minOf { level -> maxMoveRect(stay, start, finish, level) }
     }
-
-    fun intoX(stay: Shape, start: Shape, finish: Shape): Boolean {
-        //todo when(shape)
-        return intoX(rect(stay), rect(start), rect(finish))
-    }
-
-    private fun intoX(stay: RectN, start: RectN, finish: RectN): Boolean {
-        return ShapeUtils.into(stay, ShapeUtils.rectX(start, finish))
-    }
-
     private fun maxMoveRect(stay: RectN, start: RectN, finish: RectN, level: Int): Double {
         val L1 = start.L[level]
         val R1 = start.R[level]

@@ -35,7 +35,7 @@ class Bounds {
             min = PointN.transform(min, shape.L) { a, b -> min(a, b) }
             max = PointN.transform(max, shape.R) { a, b -> max(a, b) }
         }
-        return RectN.rectLR(min, max)
+        return RectN.LR(min, max)
     }
 
     fun isEmpty() = elements.isEmpty()
