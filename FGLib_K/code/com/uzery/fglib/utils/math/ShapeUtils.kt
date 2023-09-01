@@ -24,6 +24,7 @@ object ShapeUtils {
         println(first)
         println(second)
         println(first*second)
+        println((first*second).exists())
         println("***")
         return (first*second).exists()
     }

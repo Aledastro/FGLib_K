@@ -1,6 +1,7 @@
 package com.uzery.fglib.utils.math.matrix
 
 import com.uzery.fglib.utils.data.debug.DebugData
+import java.lang.StringBuilder
 
 open class Matrix(val data: Array2<Double>) {
 
@@ -37,5 +38,51 @@ open class Matrix(val data: Array2<Double>) {
 
     operator fun get(i: Int, j: Int): Double {
         return data[i, j]
+    }
+
+    fun copy(): Matrix {
+        return Matrix(data.copy())
+    }
+
+    fun swapRows(row1: Int,row2: Int){
+        if(row1==row2) return
+        val temp = copy()
+        for(i in 0 until height){
+            data[row1, i] = temp[row2, i]
+            data[row2, i] = temp[row1, i]
+        }
+    }
+    fun swapStrokes(stroke1: Int,stroke2: Int){
+        if(stroke1==stroke2) return
+        val temp = copy()
+        for(i in 0 until width){
+            data[i, stroke1] = temp[i, stroke2]
+            data[i, stroke2] = temp[i, stroke1]
+        }
+    }
+    fun multiplyStroke(stroke: Int, value: Double){
+        for(i in 0 until width){
+            data[i, stroke] = data[i, stroke]*value
+        }
+    }
+
+    fun minusStrokes(stroke1: Int, stroke2: Int) {
+        for(i in 0 until width){
+            data[i, stroke1] -= data[i, stroke2]
+        }
+    }
+
+    override fun toString(): String {
+        val res = StringBuilder()
+        res.append("\n")
+        for (stroke in 0 until height){
+            res.append("| ")
+            for (row in 0 until width){
+                res.append("${data[row, stroke]} ")
+            }
+            res.append("|\n")
+        }
+        res.append("\n")
+        return res.toString()
     }
 }

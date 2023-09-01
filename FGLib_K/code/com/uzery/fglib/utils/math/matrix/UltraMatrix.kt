@@ -17,24 +17,33 @@ class UltraMatrix(data: Array2<Double>): Matrix(data) {
     }
 
     fun level(j: Int) = (0 until width).sumOf { i -> data[i, j]*data[i, j] }
-    fun levelFor(pos: PointN, j: Int) = (0 until width).sumOf { i -> pos[i]*data[i, j] }
+    fun levelFor(pos: PointN, j: Int) = (0 until width).sumOf { i -> pos[j]*data[i, j] }
 
     fun move(pos: PointN) {
-        data.set { i, j -> data[i, j]*levelFor(pos, j)/level(j) }
+        for (stroke in 0 until height){
+            val lv = levelFor(pos, stroke)/level(stroke)
+            for (row in 0 until width){
+                data[row, stroke] = data[row, stroke]*lv
+            }
+        }
     }
 
-    fun copy(pos: PointN = PointN.ZERO): UltraMatrix {
+    fun copy(pos: PointN): UltraMatrix {
         val res = UltraMatrix(data.copy())
         if (pos != PointN.ZERO) res.move(pos)
         return res
     }
 
     fun into(pos: PointN): Boolean {
-        return (0 until height).all { j -> abs(levelFor(pos, j)) < LITTLE }
+        return (0 until height).all { j -> MathUtils.little(levelFor(pos, j)) }
     }
 
     fun exists(): Boolean{
         val matrix = copy()
+
+        println("!!! start")
+        println(matrix)
+
 
         fun findFirstInRow(row: Int): Int {
             for (j in row until height){
@@ -51,52 +60,29 @@ class UltraMatrix(data: Array2<Double>): Matrix(data) {
             return -1
         }
 
-        fun swapRows(row1: Int,row2: Int){
-            if(row1==row2) return
-            val temp = matrix.copy()
-            for(i in 0 until height){
-                matrix.data[row1, i] = temp[row2, i]
-                matrix.data[row2, i] = temp[row1, i]
-            }
-        }
-        fun swapStrokes(stroke1: Int,stroke2: Int){
-            if(stroke1==stroke2) return
-            val temp = matrix.copy()
-            for(i in 0 until width){
-                matrix.data[i, stroke1] = temp[i, stroke2]
-                matrix.data[i, stroke2] = temp[i, stroke1]
-            }
-        }
-        fun multiplyStroke(stroke: Int, value: Double){
-            for(i in 0 until width){
-                matrix.data[i, stroke] = matrix.data[i, stroke]*value
-            }
-        }
-
-        fun minusStrokes(stroke1: Int, stroke2: Int) {
-            for(i in 0 until width){
-                matrix.data[i, stroke1] -= matrix.data[i, stroke2]
-            }
-        }
-
         var lastStroke = 0
         for (row in 0 until width){
             val notZeroRow = findFirstRowAfter(row)
             if(notZeroRow==-1){
                 break
             }
-            swapRows(row, notZeroRow)
-            swapStrokes(row, findFirstInRow(row))
+            matrix.swapRows(row, notZeroRow)
+            matrix.swapStrokes(row, findFirstInRow(row))
 
             for (stroke in row+1 until height){
-                if(MathUtils.little(matrix.data[row, stroke])){
-                    multiplyStroke(stroke, matrix.data[row, row]/matrix.data[row, stroke])
-                    minusStrokes(stroke, row)
+                if(!MathUtils.little(matrix.data[row, stroke])){
+                    matrix.multiplyStroke(stroke, matrix.data[row, row]/matrix.data[row, stroke])
+                    matrix.minusStrokes(stroke, row)
                 }
             }
             lastStroke = row
         }
-        for(stroke in lastStroke until height){
+        println("!!! mid")
+        println(matrix)
+        println("last_stroke: $lastStroke")
+        println("height: $height")
+        println("!!! finish")
+        for(stroke in lastStroke+1 until height){
             if(!MathUtils.little(level(stroke))) return false
         }
 
