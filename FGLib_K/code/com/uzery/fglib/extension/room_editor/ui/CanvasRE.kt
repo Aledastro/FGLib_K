@@ -17,7 +17,7 @@ import com.uzery.fglib.extension.ui.UICanvas
 import com.uzery.fglib.utils.math.FGUtils
 import com.uzery.fglib.utils.math.MathUtils
 import com.uzery.fglib.utils.math.geom.PointN
-import com.uzery.fglib.utils.math.geom.RectN
+import com.uzery.fglib.utils.math.geom.shape.RectN
 import javafx.scene.Cursor
 import javafx.scene.input.KeyCode
 import javafx.scene.input.MouseButton

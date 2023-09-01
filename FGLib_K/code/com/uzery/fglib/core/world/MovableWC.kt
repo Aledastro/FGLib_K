@@ -6,7 +6,7 @@ import com.uzery.fglib.core.program.Platform.graphics
 import com.uzery.fglib.core.room.Room
 import com.uzery.fglib.core.world.World.rooms
 import com.uzery.fglib.utils.math.geom.PointN
-import com.uzery.fglib.utils.math.geom.RectN
+import com.uzery.fglib.utils.math.geom.shape.RectN
 import javafx.scene.paint.Color
 import javafx.scene.text.FontWeight
 

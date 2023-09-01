@@ -12,7 +12,7 @@ import com.uzery.fglib.utils.math.BoundsUtils
 import com.uzery.fglib.utils.math.FGUtils
 import com.uzery.fglib.utils.math.ShapeUtils
 import com.uzery.fglib.utils.math.geom.PointN
-import com.uzery.fglib.utils.math.geom.RectN
+import com.uzery.fglib.utils.math.geom.shape.RectN
 import java.util.*
 import kotlin.math.sign
 
@@ -114,7 +114,7 @@ class Room(val pos: PointN, val size: PointN) {
             obj.stats.fly = min_d == 1.0
             val np = obj.stats.nPOS*(1-min_d)
 
-            for (i in 0 until np.dimension()) move(np.separate(i))
+            for (i in 0 until np.dim) move(np.separate(i))
         }
         list.forEach { it.stats.nPOS = PointN.ZERO }
     }

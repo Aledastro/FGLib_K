@@ -10,14 +10,17 @@ import kotlin.math.sin
 import kotlin.math.sqrt
 
 data class PointN(private val xs: Array<Double>) {
+    val dim
+        get() = xs.size
+
     constructor(vararg xs: Double): this(Array<Double>(xs.size) { i -> xs[i] })
     constructor(vararg xs: Int): this(Array<Double>(xs.size) { i -> xs[i].toDouble() })
-    constructor(p: PointN): this(Array(p.dimension()) { i -> p.xs[i] })
+    constructor(p: PointN): this(Array(p.dim) { i -> p.xs[i] })
 
-    constructor(p: IntI): this(p.n, p.m)
+    constructor(p: IntI): this(p.width, p.height)
 
     operator fun get(n: Int): Double {
-        if (dimension() == 0) return 0.0;
+        if (dim == 0) return 0.0;
         return xs[n]
     }
 
@@ -69,7 +72,7 @@ data class PointN(private val xs: Array<Double>) {
     operator fun times(v: Int) = PointN(ArrayUtils.transform(xs) { x -> x*v })
 
     operator fun unaryMinus() = PointN(ArrayUtils.transform(xs) { x -> -x })
-    fun dimension() = xs.size
+
     fun less(other: PointN) = (this-other).isNegative()
     fun more(other: PointN) = (other-this).isNegative()
 
@@ -82,7 +85,7 @@ data class PointN(private val xs: Array<Double>) {
 
     fun lengthTo(pos: PointN) = (this-pos).length()
 
-    fun separate(level: Int) = PointN(Array(dimension()) { i -> if (level == i) xs[i] else 0.0 })
+    fun separate(level: Int) = PointN(Array(dim) { i -> if (level == i) xs[i] else 0.0 })
 
     fun transform(transform: (x: Double) -> Double) = PointN(ArrayUtils.transform(xs, transform))
     fun round(size: Double) = transform { x -> MathUtils.round(x, size) }
@@ -91,7 +94,7 @@ data class PointN(private val xs: Array<Double>) {
         return this+(pos-this)*k
     }
 
-    fun coerceIn(posL: PointN, posR: PointN) = PointN(Array(dimension()) { i ->
+    fun coerceIn(posL: PointN, posR: PointN) = PointN(Array(dim) { i ->
         xs[i].coerceIn(posL[i], max(posL[i], posR[i]))
     })
 
@@ -134,14 +137,14 @@ data class PointN(private val xs: Array<Double>) {
         }
 
         fun isSameDirection(p1: PointN, p2: PointN): Boolean {
-            if(p1.dimension()!=p2.dimension())throw DebugData.error("WRONG DIM: $p1, $p2")
+            if (p1.dim != p2.dim) throw DebugData.error("WRONG DIM: $p1, $p2")
             var k: Double? = null
-            for (i in 0 until p1.dimension()){
-                if(p1.xs[i]==0.0 && p2.xs[i]==0.0)continue
-                if(p1.xs[i]==0.0 || p2.xs[i]==0.0) return false
+            for (i in 0 until p1.dim) {
+                if (p1.xs[i] == 0.0 && p2.xs[i] == 0.0) continue
+                if (p1.xs[i] == 0.0 || p2.xs[i] == 0.0) return false
                 val now_k = p1.xs[i]/p2.xs[i]
-                if(k==null)k=now_k
-                if(now_k!=k)return false
+                if (k == null) k = now_k
+                if (now_k != k) return false
             }
             return true
         }

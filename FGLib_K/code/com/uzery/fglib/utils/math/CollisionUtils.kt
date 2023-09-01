@@ -3,8 +3,7 @@ package com.uzery.fglib.utils.math
 import com.uzery.fglib.utils.data.debug.DebugData
 import com.uzery.fglib.utils.data.file.ConstL.Companion.LITTLE
 import com.uzery.fglib.utils.math.ShapeUtils.rect
-import com.uzery.fglib.utils.math.geom.OvalN
-import com.uzery.fglib.utils.math.geom.RectN
+import com.uzery.fglib.utils.math.geom.shape.RectN
 import com.uzery.fglib.utils.math.geom.Shape
 import kotlin.math.abs
 import kotlin.math.min
@@ -51,13 +50,13 @@ object CollisionUtils {
     }
 
     /*private fun maxMoveOval(stay: OvalN, start: OvalN, finish: OvalN): Double {
-        return (0 until start.dimension()).minOf { level -> maxMoveOval(stay, start, finish, level) }
+        return (0 until start.dim).minOf { level -> maxMoveOval(stay, start, finish, level) }
     }*/
 
 
 
     private fun maxMoveRect(stay: RectN, start: RectN, finish: RectN): Double {
-        return (0 until start.dimension()).minOf { level -> maxMoveRect(stay, start, finish, level) }
+        return (0 until start.dim).minOf { level -> maxMoveRect(stay, start, finish, level) }
     }
     private fun maxMoveRect(stay: RectN, start: RectN, finish: RectN, level: Int): Double {
         val L1 = start.L[level]
@@ -66,7 +65,7 @@ object CollisionUtils {
         val R2 = finish.R[level]
         val SL = stay.L[level]
         val SR = stay.R[level]
-        val dim = stay.dimension()
+        val dim = stay.dim
 
         var path1 = if (abs(L1-L2) < LITTLE) 1.0 else (SR-L1)/(L2-L1)
         var path2 = if (abs(R1-R2) < LITTLE) 1.0 else (SL-R1)/(R2-R1)

@@ -2,6 +2,9 @@ package com.uzery.fglib.utils.math
 
 import com.uzery.fglib.utils.data.debug.DebugData
 import com.uzery.fglib.utils.math.geom.*
+import com.uzery.fglib.utils.math.geom.shape.FieldN
+import com.uzery.fglib.utils.math.geom.shape.OvalN
+import com.uzery.fglib.utils.math.geom.shape.RectN
 import kotlin.math.pow
 
 object ShapeUtils {
@@ -9,7 +12,7 @@ object ShapeUtils {
     fun oval(shape: Shape) = OvalN(shape.C, shape.S)
 
     fun intoRect(first: RectN, second: RectN): Boolean {
-        return (0 until first.dimension()).all { i -> first.L[i] < second.R[i] && second.L[i] < first.R[i] }
+        return (0 until first.dim).all { i -> first.L[i] < second.R[i] && second.L[i] < first.R[i] }
     }
 
     private fun intoOval(first: OvalN, second: OvalN): Boolean {
@@ -17,21 +20,36 @@ object ShapeUtils {
         return (first.C-second.C).length() < (first.S[0]+second.S[0])/2
     }
 
-    private fun intoRectOval(first: RectN, second: OvalN): Boolean {
-        if(intoOval(oval(first), second)) return true
+    private fun intoField(first: FieldN, second: FieldN): Boolean {
+        println(first)
+        println(second)
+        println(first*second)
+        println("***")
+        return (first*second).exists()
+    }
 
-        val dim = first.dimension()
+
+    private fun intoRectOval(rect: RectN, oval: OvalN): Boolean {
+        if(intoOval(oval(rect), oval)) return true
+
+        val dim = rect.dim
 
         for (id in 0 until 2.0.pow(dim).toInt()){
             var id_n=id
             val xs = Array(dim){ 0.0 }
             for (i in 0 until dim){
-                xs[i]=if(id_n%2==0) first.L[i] else first.R[i]
+                xs[i]=if(id_n%2==0) rect.L[i] else rect.R[i]
                 id_n/=2
             }
             val p = PointN(xs)
-            if(p.lengthTo(second.C)<second.S[0]) return true
+            if(p.lengthTo(oval.C)<oval.S[0]) return true
         }
+
+        return false
+    }
+
+    private fun intoRectField(rect: RectN, field: FieldN): Boolean {
+        //return intoField(toField(rect), field)
 
         return false
     }
@@ -43,36 +61,36 @@ object ShapeUtils {
                 true
             }
 
-            first.code == Shape.Code.OVAL && second.code == Shape.Code.OVAL -> {
+            /*first.code == Shape.Code.OVAL && second.code == Shape.Code.OVAL -> {
                 intoOval(first as OvalN, second as OvalN)
-            }
+            }*/
 
-            first.code == Shape.Code.LINE && second.code == Shape.Code.LINE -> {
-                PointN.isSameDirection(first.L-second.L,first.S-second.S)
-                //L1+S1*k1 = L2+S2*k2
-                //L1-L2 = (S2-S1)*k
+            first.code == Shape.Code.FIELD && second.code == Shape.Code.FIELD -> {
+                intoField(first as FieldN, second as FieldN)
             }
             ////////////////////////////////////////////////////////////////////
-            first.code == Shape.Code.OVAL && second.code == Shape.Code.RECT -> {
+            /*first.code == Shape.Code.OVAL && second.code == Shape.Code.RECT -> {
                 intoRectOval(second as RectN, first as OvalN)
             }
 
             first.code == Shape.Code.RECT && second.code == Shape.Code.OVAL -> {
                 intoRectOval(first as RectN, second as OvalN)
-            }
+            }*/
             ////////////////////////////////////////////////////////////////////
-            first.code == Shape.Code.LINE && second.code == Shape.Code.RECT -> {
-                PointN.isSameDirection(first.L-second.L,first.S-second.S)
+            /*first.code == Shape.Code.OVAL && second.code == Shape.Code.FIELD -> {
+                intoFieldOval(second as FieldN, first as OvalN)
             }
-            first.code == Shape.Code.RECT && second.code == Shape.Code.LINE -> {
-                PointN.isSameDirection(first.L-second.L,first.S-second.S)
-            }
+
+            first.code == Shape.Code.FIELD && second.code == Shape.Code.OVAL -> {
+                intoFieldOval(first as FieldN, second as OvalN)
+            }*/
             ////////////////////////////////////////////////////////////////////
-            first.code == Shape.Code.LINE && second.code == Shape.Code.OVAL -> {
-                PointN.isSameDirection(first.L-second.L,first.S-second.S)
+            first.code == Shape.Code.FIELD && second.code == Shape.Code.RECT -> {
+                intoRectField(second as RectN, first as FieldN)
             }
-            first.code == Shape.Code.OVAL && second.code == Shape.Code.LINE -> {
-                PointN.isSameDirection(first.L-second.L,first.S-second.S)
+
+            first.code == Shape.Code.RECT && second.code == Shape.Code.FIELD -> {
+                intoRectField(first as RectN, second as FieldN)
             }
             ////////////////////////////////////////////////////////////////////
 

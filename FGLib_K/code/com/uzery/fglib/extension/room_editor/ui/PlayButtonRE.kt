@@ -4,7 +4,7 @@ import com.uzery.fglib.core.program.Platform
 import com.uzery.fglib.extension.room_editor.DataRE
 import com.uzery.fglib.extension.ui.Button
 import com.uzery.fglib.utils.math.geom.PointN
-import com.uzery.fglib.utils.math.geom.RectN
+import com.uzery.fglib.utils.math.geom.shape.RectN
 import javafx.scene.input.KeyCode
 
 class PlayButtonRE(val data: DataRE): Button() {

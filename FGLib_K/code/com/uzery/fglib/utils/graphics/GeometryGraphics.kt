@@ -97,7 +97,7 @@ abstract class GeometryGraphics(private val transform: AffineTransform) {
         when (shape.code) {
             Shape.Code.RECT -> rect(pos+shape.L, shape.S, color)
             Shape.Code.OVAL -> oval(pos+shape.L, shape.S, color)
-            Shape.Code.LINE -> line(pos+shape.L, shape.S, color)
+            Shape.Code.FIELD -> line(pos+shape.L, shape.S, color)
         }
     }
 

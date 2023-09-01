@@ -8,7 +8,7 @@ import com.uzery.fglib.utils.graphics.ImageGraphics
 import com.uzery.fglib.utils.input.KeyActivator
 import com.uzery.fglib.utils.input.TouchActivator
 import com.uzery.fglib.utils.math.geom.PointN
-import com.uzery.fglib.utils.math.geom.RectN
+import com.uzery.fglib.utils.math.geom.shape.RectN
 import javafx.scene.image.Image
 import javafx.scene.input.KeyCode
 import javafx.scene.input.MouseButton

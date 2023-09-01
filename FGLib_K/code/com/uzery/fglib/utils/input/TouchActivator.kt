@@ -1,7 +1,7 @@
 package com.uzery.fglib.utils.input
 
 import com.uzery.fglib.utils.math.geom.PointN
-import com.uzery.fglib.utils.math.geom.RectN
+import com.uzery.fglib.utils.math.geom.shape.RectN
 
 abstract class TouchActivator(screen: RectN) {
     protected abstract fun pos0(): PointN

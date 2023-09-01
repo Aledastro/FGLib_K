@@ -1,4 +1,7 @@
-package com.uzery.fglib.utils.math.geom
+package com.uzery.fglib.utils.math.geom.shape
+
+import com.uzery.fglib.utils.math.geom.PointN
+import com.uzery.fglib.utils.math.geom.Shape
 
 data class RectN(private val pos: PointN, private val size: PointN): Shape() {
     constructor(size: PointN): this(PointN.ZERO, size)

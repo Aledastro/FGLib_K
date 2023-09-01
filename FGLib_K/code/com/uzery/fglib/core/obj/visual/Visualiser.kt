@@ -4,7 +4,7 @@ import com.uzery.fglib.core.obj.DrawLayer
 import com.uzery.fglib.core.program.Platform
 import com.uzery.fglib.utils.graphics.AffineGraphics
 import com.uzery.fglib.utils.math.geom.PointN
-import com.uzery.fglib.utils.math.geom.RectN
+import com.uzery.fglib.utils.math.geom.shape.RectN
 
 interface Visualiser {
     fun draw(draw_pos: PointN)

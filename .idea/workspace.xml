@@ -12,15 +12,42 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="82970e50-af90-458e-a847-e0b07c98f932" name="Changes" comment="FGLib v.0.7.2.0 [K]">
+    <list default="true" id="82970e50-af90-458e-a847-e0b07c98f932" name="Changes" comment="FGLib v.0.7.2.1 [K]">
+      <change afterPath="$PROJECT_DIR$/FGLib_K/code/com/uzery/fglib/utils/math/geom/shape/FieldN.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/FGLib_K/code/com/uzery/fglib/utils/math/matrix/Array2.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/FGLib_K/code/com/uzery/fglib/utils/math/matrix/Matrix.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/FGLib_K/code/com/uzery/fglib/utils/math/matrix/MatrixUtils.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/FGLib_K/code/com/uzery/fglib/utils/math/matrix/UltraMatrix.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FGLib_K/code/com/uzery/fglib/core/obj/bounds/Bounds.kt" beforeDir="false" afterPath="$PROJECT_DIR$/FGLib_K/code/com/uzery/fglib/core/obj/bounds/Bounds.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FGLib_K/code/com/uzery/fglib/core/obj/visual/LayerVisualiser.kt" beforeDir="false" afterPath="$PROJECT_DIR$/FGLib_K/code/com/uzery/fglib/core/obj/visual/LayerVisualiser.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FGLib_K/code/com/uzery/fglib/core/obj/visual/Visualiser.kt" beforeDir="false" afterPath="$PROJECT_DIR$/FGLib_K/code/com/uzery/fglib/core/obj/visual/Visualiser.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FGLib_K/code/com/uzery/fglib/core/program/Platform.kt" beforeDir="false" afterPath="$PROJECT_DIR$/FGLib_K/code/com/uzery/fglib/core/program/Platform.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/FGLib_K/code/com/uzery/fglib/core/room/Room.kt" beforeDir="false" afterPath="$PROJECT_DIR$/FGLib_K/code/com/uzery/fglib/core/room/Room.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FGLib_K/code/com/uzery/fglib/core/world/MovableWC.kt" beforeDir="false" afterPath="$PROJECT_DIR$/FGLib_K/code/com/uzery/fglib/core/world/MovableWC.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FGLib_K/code/com/uzery/fglib/extension/room_editor/ui/CanvasRE.kt" beforeDir="false" afterPath="$PROJECT_DIR$/FGLib_K/code/com/uzery/fglib/extension/room_editor/ui/CanvasRE.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FGLib_K/code/com/uzery/fglib/extension/room_editor/ui/ChooseObjectVBoxRE.kt" beforeDir="false" afterPath="$PROJECT_DIR$/FGLib_K/code/com/uzery/fglib/extension/room_editor/ui/ChooseObjectVBoxRE.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FGLib_K/code/com/uzery/fglib/extension/room_editor/ui/InfoBoxRE.kt" beforeDir="false" afterPath="$PROJECT_DIR$/FGLib_K/code/com/uzery/fglib/extension/room_editor/ui/InfoBoxRE.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FGLib_K/code/com/uzery/fglib/extension/room_editor/ui/LayerVBoxRE.kt" beforeDir="false" afterPath="$PROJECT_DIR$/FGLib_K/code/com/uzery/fglib/extension/room_editor/ui/LayerVBoxRE.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FGLib_K/code/com/uzery/fglib/extension/room_editor/ui/ObjectVBoxRE.kt" beforeDir="false" afterPath="$PROJECT_DIR$/FGLib_K/code/com/uzery/fglib/extension/room_editor/ui/ObjectVBoxRE.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FGLib_K/code/com/uzery/fglib/extension/room_editor/ui/PlayButtonRE.kt" beforeDir="false" afterPath="$PROJECT_DIR$/FGLib_K/code/com/uzery/fglib/extension/room_editor/ui/PlayButtonRE.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FGLib_K/code/com/uzery/fglib/extension/ui/UIElement.kt" beforeDir="false" afterPath="$PROJECT_DIR$/FGLib_K/code/com/uzery/fglib/extension/ui/UIElement.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FGLib_K/code/com/uzery/fglib/utils/data/getter/value/IntIValue.kt" beforeDir="false" afterPath="$PROJECT_DIR$/FGLib_K/code/com/uzery/fglib/utils/data/getter/value/IntIValue.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FGLib_K/code/com/uzery/fglib/utils/data/getter/value/PosValue.kt" beforeDir="false" afterPath="$PROJECT_DIR$/FGLib_K/code/com/uzery/fglib/utils/data/getter/value/PosValue.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FGLib_K/code/com/uzery/fglib/utils/data/getter/value/SizeValue.kt" beforeDir="false" afterPath="$PROJECT_DIR$/FGLib_K/code/com/uzery/fglib/utils/data/getter/value/SizeValue.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FGLib_K/code/com/uzery/fglib/utils/data/image/ImageUtils.kt" beforeDir="false" afterPath="$PROJECT_DIR$/FGLib_K/code/com/uzery/fglib/utils/data/image/ImageUtils.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/FGLib_K/code/com/uzery/fglib/utils/graphics/GeometryGraphics.kt" beforeDir="false" afterPath="$PROJECT_DIR$/FGLib_K/code/com/uzery/fglib/utils/graphics/GeometryGraphics.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FGLib_K/code/com/uzery/fglib/utils/input/TouchActivator.kt" beforeDir="false" afterPath="$PROJECT_DIR$/FGLib_K/code/com/uzery/fglib/utils/input/TouchActivator.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/FGLib_K/code/com/uzery/fglib/utils/math/CollisionUtils.kt" beforeDir="false" afterPath="$PROJECT_DIR$/FGLib_K/code/com/uzery/fglib/utils/math/CollisionUtils.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FGLib_K/code/com/uzery/fglib/utils/math/MathUtils.kt" beforeDir="false" afterPath="$PROJECT_DIR$/FGLib_K/code/com/uzery/fglib/utils/math/MathUtils.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/FGLib_K/code/com/uzery/fglib/utils/math/ShapeUtils.kt" beforeDir="false" afterPath="$PROJECT_DIR$/FGLib_K/code/com/uzery/fglib/utils/math/ShapeUtils.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FGLib_K/code/com/uzery/fglib/utils/math/geom/LineN.kt" beforeDir="false" afterPath="$PROJECT_DIR$/FGLib_K/code/com/uzery/fglib/utils/math/geom/LineN.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FGLib_K/code/com/uzery/fglib/utils/math/geom/LineN.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/FGLib_K/code/com/uzery/fglib/utils/math/geom/OvalN.kt" beforeDir="false" afterPath="$PROJECT_DIR$/FGLib_K/code/com/uzery/fglib/utils/math/geom/shape/OvalN.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/FGLib_K/code/com/uzery/fglib/utils/math/geom/PointN.kt" beforeDir="false" afterPath="$PROJECT_DIR$/FGLib_K/code/com/uzery/fglib/utils/math/geom/PointN.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FGLib_K/code/com/uzery/fglib/utils/math/geom/RectN.kt" beforeDir="false" afterPath="$PROJECT_DIR$/FGLib_K/code/com/uzery/fglib/utils/math/geom/shape/RectN.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/FGLib_K/code/com/uzery/fglib/utils/math/geom/Shape.kt" beforeDir="false" afterPath="$PROJECT_DIR$/FGLib_K/code/com/uzery/fglib/utils/math/geom/Shape.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FGLib_K/code/com/uzery/fglib/utils/math/num/IntI.kt" beforeDir="false" afterPath="$PROJECT_DIR$/FGLib_K/code/com/uzery/fglib/utils/math/num/IntI.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FGLib_K/code/module-info.java" beforeDir="false" afterPath="$PROJECT_DIR$/FGLib_K/code/module-info.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -34,6 +61,7 @@
         <option value="Kotlin Interface" />
         <option value="Class" />
         <option value="module-info" />
+        <option value="Kotlin Object" />
         <option value="Kotlin Class" />
       </list>
     </option>
@@ -107,18 +135,18 @@
       <recent name="com.uzery.fglib.utils.data.image" />
     </key>
     <key name="MoveKotlinTopLevelDeclarationsDialog.RECENTS_KEY">
+      <recent name="com.uzery.fglib.utils.math.geom.shape" />
+      <recent name="com.uzery.fglib.utils.math.geom" />
       <recent name="com.uzery.fglib.core.world" />
       <recent name="com.uzery.fglib.extension.room_editor.ui" />
       <recent name="game.objects.map" />
-      <recent name="com.uzery.fglib.utils.math.getter.value" />
-      <recent name="game" />
     </key>
     <key name="CopyKotlinDeclarationDialog.RECENTS_KEY">
+      <recent name="com.uzery.fglib.utils.math.matrix" />
       <recent name="com.uzery.fglib.utils.math.geom" />
       <recent name="com.uzery.fglib.core.world" />
       <recent name="com.uzery.fglib.extension.room_editor.ui" />
       <recent name="com.uzery.fglib.extension.event" />
-      <recent name="game.objects.enemy" />
     </key>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
@@ -129,13 +157,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1680386967444</updated>
-    </task>
-    <task id="LOCAL-00080" summary="FGLib v.0.6.3.1 [K]">
-      <created>1689169170530</created>
-      <option name="number" value="00080" />
-      <option name="presentableId" value="LOCAL-00080" />
-      <option name="project" value="LOCAL" />
-      <updated>1689169170530</updated>
     </task>
     <task id="LOCAL-00081" summary="FGLib v.0.6.4.0 [K]">
       <created>1689185417564</created>
@@ -473,7 +494,14 @@
       <option name="project" value="LOCAL" />
       <updated>1692671163456</updated>
     </task>
-    <option name="localTasksCounter" value="129" />
+    <task id="LOCAL-00129" summary="FGLib v.0.7.2.1 [K]">
+      <created>1692684930798</created>
+      <option name="number" value="00129" />
+      <option name="presentableId" value="LOCAL-00129" />
+      <option name="project" value="LOCAL" />
+      <updated>1692684930798</updated>
+    </task>
+    <option name="localTasksCounter" value="130" />
     <servers />
   </component>
   <component name="UnknownFeatures">
@@ -503,7 +531,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="FGLib v.0.6.8.3 [K]" />
     <MESSAGE value="FGLib v.0.6.8.4 [K]" />
     <MESSAGE value="FGLib v.0.6.9.1 [K]" />
     <MESSAGE value="FGLib v.0.6.9.2 [K]" />
@@ -528,7 +555,8 @@
     <MESSAGE value="FGLib v.0.7.1.1 [K]" />
     <MESSAGE value="FGLib v.0.7.1.2 [K]" />
     <MESSAGE value="FGLib v.0.7.2.0 [K]" />
-    <option name="LAST_COMMIT_MESSAGE" value="FGLib v.0.7.2.0 [K]" />
+    <MESSAGE value="FGLib v.0.7.2.1 [K]" />
+    <option name="LAST_COMMIT_MESSAGE" value="FGLib v.0.7.2.1 [K]" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

@@ -2,7 +2,7 @@ package com.uzery.fglib.core.obj.visual
 
 import com.uzery.fglib.core.obj.DrawLayer
 import com.uzery.fglib.utils.math.geom.PointN
-import com.uzery.fglib.utils.math.geom.RectN
+import com.uzery.fglib.utils.math.geom.shape.RectN
 
 abstract class LayerVisualiser(private val pos: PointN, private val size: PointN, private val layer: DrawLayer):
     Visualiser {

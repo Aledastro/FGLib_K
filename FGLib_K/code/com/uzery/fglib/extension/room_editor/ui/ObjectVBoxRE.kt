@@ -7,7 +7,7 @@ import com.uzery.fglib.core.world.WorldUtils
 import com.uzery.fglib.extension.room_editor.DataRE
 import com.uzery.fglib.extension.ui.VBox
 import com.uzery.fglib.utils.math.geom.PointN
-import com.uzery.fglib.utils.math.geom.RectN
+import com.uzery.fglib.utils.math.geom.shape.RectN
 import javafx.scene.paint.Color
 
 class ObjectVBoxRE(private val data: DataRE): VBox() {
