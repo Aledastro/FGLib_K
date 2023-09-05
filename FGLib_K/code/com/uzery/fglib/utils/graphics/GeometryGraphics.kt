@@ -102,10 +102,10 @@ abstract class GeometryGraphics(private val transform: AffineTransform) {
                 val fig = shape as FigureN
                 for (field in fig.fields){
                     val p = PointN(Array(field.dim){ field.mirage[it,0] })
-                    line(pos, p, color)
+                    line(pos + fig.pos, p, color)
                 }
                 for (p in fig.current_pos){
-                    oval(pos - PointN(1,1) + p, PointN(2,2), color)
+                    oval(pos + fig.pos - PointN(1,1) + p, PointN(2,2), color)
                 }
             }
         }

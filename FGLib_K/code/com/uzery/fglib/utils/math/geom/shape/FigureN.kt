@@ -31,7 +31,7 @@ open class FigureN(val pos: PointN, val fields: List<FieldN>): Shape() {
         for (d in 0 until dim-1){
             val list = LinkedList<FieldN>()
 
-            for (i in current_fields.indices){
+            for (i in 0 until current_fields.size){
                 for (j in i+1 until current_fields.size){
                     list.add(current_fields[i]*current_fields[j])
                 }
@@ -84,7 +84,7 @@ open class FigureN(val pos: PointN, val fields: List<FieldN>): Shape() {
     }
 
     fun exists(): Boolean {
-        if(S.less(PointN.ZERO)) return false
+        if(!S.more(PointN.ZERO)) return false
 
         if (fields.any { field -> !field.exists() }) return false
         return true

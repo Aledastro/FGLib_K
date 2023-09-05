@@ -41,7 +41,7 @@ class UltraMatrix(data: Array2<Double>): Matrix(data) {
     }
 
     private val strokes_values = Array(height) { level(it) }
-    val rows_panel = Array(width) { it }
+    private val rows_panel = Array(width) { it }
 
     private fun swapStrokesX(s1: Int, s2: Int) {
         swapStrokes(s1, s2)
@@ -58,6 +58,8 @@ class UltraMatrix(data: Array2<Double>): Matrix(data) {
         val sav_rows_panel2 = rows_panel[r2]
         rows_panel[r1] = sav_rows_panel2
         rows_panel[r2] = sav_rows_panel1
+
+        if(r1!=r2) println("swap")
     }
 
     private fun multiplyStrokeX(s1: Int, v: Double) {
@@ -97,7 +99,7 @@ class UltraMatrix(data: Array2<Double>): Matrix(data) {
             swapStrokesX(row, findFirstInRow(row))
 
             for (stroke in row+1 until height) {
-                if (!MathUtils.little(data[row, stroke])) {
+                if ((data[row, stroke])!=0.0) {
                     multiplyStrokeX(stroke, data[row, row]/data[row, stroke])
                     minusStrokesX(stroke, row)
                 }
@@ -121,7 +123,7 @@ class UltraMatrix(data: Array2<Double>): Matrix(data) {
             val actual_row = width-1-row
 
             for (stroke in 0 until actual_row) {
-                if (!MathUtils.little(data[actual_row, stroke])) {
+                if ((data[actual_row, stroke])!=0.0) {
                     multiplyStrokeX(stroke, data[actual_row, actual_row]/data[actual_row, stroke])
                     minusStrokesX(stroke, actual_row)
                 }
@@ -166,7 +168,7 @@ class UltraMatrix(data: Array2<Double>): Matrix(data) {
         val xs = Array(matrix.width) { 0.0 }
         for (i in 0 until matrix.width) {
             val id = matrix.rows_panel[i]
-            xs[i] = matrix.strokes_values[id]/matrix[id, id]
+            xs[id] = matrix.strokes_values[i]/matrix[i, i]
         }
 
         return xs

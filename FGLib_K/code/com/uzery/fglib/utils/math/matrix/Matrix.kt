@@ -50,10 +50,12 @@ open class Matrix(val data: Array2<Double>) {
     }
     fun swapStrokes(stroke1: Int,stroke2: Int){
         if(stroke1==stroke2) return
-        val temp = copy()
+
         for(i in 0 until width){
-            data[i, stroke1] = temp[i, stroke2]
-            data[i, stroke2] = temp[i, stroke1]
+            val temp1 = data[i, stroke1]
+            val temp2 = data[i, stroke2]
+            data[i, stroke1] = temp2
+            data[i, stroke2] = temp1
         }
     }
     fun multiplyStroke(stroke: Int, value: Double){

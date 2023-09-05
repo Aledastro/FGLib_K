@@ -70,15 +70,20 @@ object WorldUtils {
             Color.BLUE,
             Color.GREEN
         )
-
-        graphics.setStroke(1.0)
+        val colors_h = arrayOf(
+            Color.DARKRED,
+            Color.DARKORANGE,
+            Color.DARKBLUE,
+            Color.DARKGREEN
+        )
         val bs = o.bounds[color_id]
         if (bs.isEmpty()) return
+        graphics.setStroke(1.0)
         for (el in bs.elements) {
             val shape = el.shape() ?: continue
             graphics.fill.draw(pos+o.stats.POS, shape, FGUtils.transparent(colors[color_id], 0.1))
             graphics.stroke.draw(pos+o.stats.POS, shape, FGUtils.transparent(colors[color_id], 0.6))
-            graphics.stroke.line(pos+o.stats.POS+shape.L, shape.S, FGUtils.transparent(colors[color_id], 0.5))
+            graphics.stroke.line(pos+o.stats.POS+shape.L, shape.S, FGUtils.transparent(colors_h[color_id], 0.5))
         }
     }
 
