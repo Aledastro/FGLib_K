@@ -2,9 +2,7 @@ package com.uzery.fglib.utils.math
 
 import com.uzery.fglib.utils.data.debug.DebugData
 import com.uzery.fglib.utils.math.geom.*
-import com.uzery.fglib.utils.math.geom.shape.FieldN
-import com.uzery.fglib.utils.math.geom.shape.OvalN
-import com.uzery.fglib.utils.math.geom.shape.RectN
+import com.uzery.fglib.utils.math.geom.shape.*
 import kotlin.math.pow
 
 object ShapeUtils {
@@ -20,12 +18,7 @@ object ShapeUtils {
         return (first.C-second.C).length() < (first.S[0]+second.S[0])/2
     }
 
-    private fun intoField(first: FieldN, second: FieldN): Boolean {
-        println(first)
-        println(second)
-        println(first*second)
-        println((first*second).exists())
-        println("***")
+    private fun intoFigure(first: FigureN, second: FigureN): Boolean {
         return (first*second).exists()
     }
 
@@ -49,10 +42,8 @@ object ShapeUtils {
         return false
     }
 
-    private fun intoRectField(rect: RectN, field: FieldN): Boolean {
-        //return intoField(toField(rect), field)
-
-        return false
+    private fun intoRectFigure(rect: RectN, field: FigureN): Boolean {
+        return intoFigure(FigureRectN(rect), field)
     }
 
     fun into(first: Shape, second: Shape): Boolean {
@@ -66,8 +57,8 @@ object ShapeUtils {
                 intoOval(first as OvalN, second as OvalN)
             }*/
 
-            first.code == Shape.Code.FIELD && second.code == Shape.Code.FIELD -> {
-                intoField(first as FieldN, second as FieldN)
+            first.code == Shape.Code.FIGURE && second.code == Shape.Code.FIGURE -> {
+                intoFigure(first as FigureN, second as FigureN)
             }
             ////////////////////////////////////////////////////////////////////
             /*first.code == Shape.Code.OVAL && second.code == Shape.Code.RECT -> {
@@ -86,12 +77,12 @@ object ShapeUtils {
                 intoFieldOval(first as FieldN, second as OvalN)
             }*/
             ////////////////////////////////////////////////////////////////////
-            first.code == Shape.Code.FIELD && second.code == Shape.Code.RECT -> {
-                intoRectField(second as RectN, first as FieldN)
+            first.code == Shape.Code.FIGURE && second.code == Shape.Code.RECT -> {
+                intoRectFigure(second as RectN, first as FigureN)
             }
 
-            first.code == Shape.Code.RECT && second.code == Shape.Code.FIELD -> {
-                intoRectField(first as RectN, second as FieldN)
+            first.code == Shape.Code.RECT && second.code == Shape.Code.FIGURE -> {
+                intoRectFigure(first as RectN, second as FigureN)
             }
             ////////////////////////////////////////////////////////////////////
 

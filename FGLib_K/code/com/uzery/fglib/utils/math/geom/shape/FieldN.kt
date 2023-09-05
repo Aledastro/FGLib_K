@@ -1,25 +1,26 @@
 package com.uzery.fglib.utils.math.geom.shape
 
 import com.uzery.fglib.utils.math.geom.PointN
-import com.uzery.fglib.utils.math.geom.Shape
 import com.uzery.fglib.utils.math.matrix.UltraMatrix
 
-data class FieldN(private val pos: PointN, private val normal: UltraMatrix): Shape(){
+data class FieldN(private val pos: PointN, private val normal: UltraMatrix){
     constructor(normal: UltraMatrix): this(PointN.ZERO, normal)
+    constructor(pos: PointN, vararg normal: PointN): this(pos, UltraMatrix(*normal))
 
-    private val mirage
+
+    val dim
+        get() = normal.width
+    val mirage
         get()=normal.copy(pos)
 
-    override fun copy(move: PointN) = FieldN(pos+move, normal)
-    override fun into(pos: PointN): Boolean {
+    fun copy(move: PointN) = FieldN(pos+move, normal)
+    fun into(pos: PointN): Boolean {
         return mirage.into(pos)
     }
 
-    override val L
-        get() = PointN(-100,-100) //todo: KOSTYL it wouldn't work for N-dim!!!
-    override val R
-        get() = PointN(100,100) //todo: KOSTYL it wouldn't work for N-dim!!!
-    override val code = Code.FIELD
+    fun intoHalf(pos: PointN): Boolean {
+        return mirage.intoHalf(pos) //todo
+    }
 
     operator fun times(other: FieldN): FieldN {
         return FieldN(mirage.connect(other.mirage))
@@ -31,5 +32,15 @@ data class FieldN(private val pos: PointN, private val normal: UltraMatrix): Sha
 
     fun exists(): Boolean {
         return normal.exists()
+    }
+
+    operator fun unaryMinus(): FieldN {
+        return FieldN(-mirage)
+    }
+
+    fun solve(): PointN? {
+        mirage.solve()?.let { return PointN(it) }
+
+        return null
     }
 }

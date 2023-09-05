@@ -2,6 +2,7 @@ package com.uzery.fglib.utils.graphics
 
 import com.uzery.fglib.utils.math.geom.PointN
 import com.uzery.fglib.utils.math.geom.Shape
+import com.uzery.fglib.utils.math.geom.shape.FigureN
 import javafx.scene.paint.Color
 import javafx.scene.paint.Paint
 import javafx.scene.text.FontPosture
@@ -97,7 +98,16 @@ abstract class GeometryGraphics(private val transform: AffineTransform) {
         when (shape.code) {
             Shape.Code.RECT -> rect(pos+shape.L, shape.S, color)
             Shape.Code.OVAL -> oval(pos+shape.L, shape.S, color)
-            Shape.Code.FIELD -> line(pos+shape.L, shape.S, color)
+            Shape.Code.FIGURE ->{
+                val fig = shape as FigureN
+                for (field in fig.fields){
+                    val p = PointN(Array(field.dim){ field.mirage[it,0] })
+                    line(pos, p, color)
+                }
+                for (p in fig.current_pos){
+                    oval(pos - PointN(1,1) + p, PointN(2,2), color)
+                }
+            }
         }
     }
 

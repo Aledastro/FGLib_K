@@ -12,9 +12,14 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="82970e50-af90-458e-a847-e0b07c98f932" name="Changes" comment="FGLib v.0.7.3.0 [K]">
+    <list default="true" id="82970e50-af90-458e-a847-e0b07c98f932" name="Changes" comment="FGLib v.0.7.3.1 [K]">
+      <change afterPath="$PROJECT_DIR$/FGLib_K/code/com/uzery/fglib/utils/math/geom/shape/FigureN.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/FGLib_K/code/com/uzery/fglib/utils/math/geom/shape/FigureRectN.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FGLib_K/code/com/uzery/fglib/utils/graphics/GeometryGraphics.kt" beforeDir="false" afterPath="$PROJECT_DIR$/FGLib_K/code/com/uzery/fglib/utils/graphics/GeometryGraphics.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/FGLib_K/code/com/uzery/fglib/utils/math/ShapeUtils.kt" beforeDir="false" afterPath="$PROJECT_DIR$/FGLib_K/code/com/uzery/fglib/utils/math/ShapeUtils.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FGLib_K/code/com/uzery/fglib/utils/math/geom/Shape.kt" beforeDir="false" afterPath="$PROJECT_DIR$/FGLib_K/code/com/uzery/fglib/utils/math/geom/Shape.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FGLib_K/code/com/uzery/fglib/utils/math/geom/shape/FieldN.kt" beforeDir="false" afterPath="$PROJECT_DIR$/FGLib_K/code/com/uzery/fglib/utils/math/geom/shape/FieldN.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/FGLib_K/code/com/uzery/fglib/utils/math/matrix/Matrix.kt" beforeDir="false" afterPath="$PROJECT_DIR$/FGLib_K/code/com/uzery/fglib/utils/math/matrix/Matrix.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/FGLib_K/code/com/uzery/fglib/utils/math/matrix/UltraMatrix.kt" beforeDir="false" afterPath="$PROJECT_DIR$/FGLib_K/code/com/uzery/fglib/utils/math/matrix/UltraMatrix.kt" afterDir="false" />
     </list>
@@ -126,13 +131,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1680386967444</updated>
-    </task>
-    <task id="LOCAL-00082" summary="FGLib v.0.6.4.1 [K]">
-      <created>1689185610339</created>
-      <option name="number" value="00082" />
-      <option name="presentableId" value="LOCAL-00082" />
-      <option name="project" value="LOCAL" />
-      <updated>1689185610339</updated>
     </task>
     <task id="LOCAL-00083" summary="FGLib v.0.6.4.2 [K]">
       <created>1689191095197</created>
@@ -470,7 +468,14 @@
       <option name="project" value="LOCAL" />
       <updated>1693534035075</updated>
     </task>
-    <option name="localTasksCounter" value="131" />
+    <task id="LOCAL-00131" summary="FGLib v.0.7.3.1 [K]">
+      <created>1693542060403</created>
+      <option name="number" value="00131" />
+      <option name="presentableId" value="LOCAL-00131" />
+      <option name="project" value="LOCAL" />
+      <updated>1693542060403</updated>
+    </task>
+    <option name="localTasksCounter" value="132" />
     <servers />
   </component>
   <component name="UnknownFeatures">
@@ -500,7 +505,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="FGLib v.0.6.9.2 [K]" />
     <MESSAGE value="FGLib v.0.6.10.0 [K]" />
     <MESSAGE value="FGLib v.0.6.10.1 [K]" />
     <MESSAGE value="FGLib v.0.6.10.2 [K]" />
@@ -525,7 +529,8 @@
     <MESSAGE value="FGLib v.0.7.2.1 [K]" />
     <MESSAGE value="FGLib v.0.7.2.2 [K]" />
     <MESSAGE value="FGLib v.0.7.3.0 [K]" />
-    <option name="LAST_COMMIT_MESSAGE" value="FGLib v.0.7.3.0 [K]" />
+    <MESSAGE value="FGLib v.0.7.3.1 [K]" />
+    <option name="LAST_COMMIT_MESSAGE" value="FGLib v.0.7.3.1 [K]" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

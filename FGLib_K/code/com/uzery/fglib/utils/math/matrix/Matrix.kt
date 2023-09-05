@@ -28,11 +28,8 @@ open class Matrix(val data: Array2<Double>) {
         return Matrix(res)
     }
 
-    operator fun unaryMinus(): Matrix {
-        val res = Array2(size, 0.0)
-        res.set { i, j -> -this[i, j] }
-
-        return Matrix(res)
+    open operator fun unaryMinus(): Matrix {
+        return this*-1
     }
 
 
@@ -43,7 +40,6 @@ open class Matrix(val data: Array2<Double>) {
     fun copy(): Matrix {
         return Matrix(data.copy())
     }
-
     fun swapRows(row1: Int,row2: Int){
         if(row1==row2) return
         val temp = copy()
@@ -84,5 +80,16 @@ open class Matrix(val data: Array2<Double>) {
         }
         res.append("\n")
         return res.toString()
+    }
+
+    open operator fun times(c: Double): Matrix {
+        val res= copy()
+        res.data.set { i, j -> data[i, j]*c }
+        return res
+    }
+    open operator fun times(c: Int): Matrix {
+        val res= copy()
+        res.data.set { i, j -> data[i, j]*c }
+        return res
     }
 }
