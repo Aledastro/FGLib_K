@@ -10,14 +10,14 @@ import kotlin.math.min
 
 object CollisionUtils {
     fun maxMove(stay: Shape, start: Shape, finish: Shape): Double {
-        if(start.code!=finish.code)
+        if (start.code != finish.code)
             throw DebugData.error("ERROR: illegal shape codes: ${stay.code}, ${start.code} -> ${finish.code}")
 
         if (!intoX(stay, start, finish)) return 1.0
 
         val maxMoveRect = maxMoveRect(rect(stay), rect(start), rect(finish))
 
-        if(maxMoveRect == 1.0)return maxMoveRect
+        if (maxMoveRect == 1.0) return maxMoveRect
 
         return maxMoveRect
 
@@ -54,10 +54,10 @@ object CollisionUtils {
     }*/
 
 
-
     private fun maxMoveRect(stay: RectN, start: RectN, finish: RectN): Double {
         return (0 until start.dim).minOf { level -> maxMoveRect(stay, start, finish, level) }
     }
+
     private fun maxMoveRect(stay: RectN, start: RectN, finish: RectN, level: Int): Double {
         val L1 = start.L[level]
         val R1 = start.R[level]

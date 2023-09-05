@@ -19,6 +19,7 @@ open class Matrix(val data: Array2<Double>) {
 
         return Matrix(res)
     }
+
     operator fun minus(other: Matrix): Matrix {
         if (this.size != other.size) throw DebugData.error("WRONG PLUS OPERATION: \n$this\n\n$other")
 
@@ -40,32 +41,36 @@ open class Matrix(val data: Array2<Double>) {
     fun copy(): Matrix {
         return Matrix(data.copy())
     }
-    fun swapRows(row1: Int,row2: Int){
-        if(row1==row2) return
-        val temp = copy()
-        for(i in 0 until height){
-            data[row1, i] = temp[row2, i]
-            data[row2, i] = temp[row1, i]
+
+    fun swapRows(row1: Int, row2: Int) {
+        if (row1 == row2) return
+        for (i in 0 until height) {
+            val temp1 = data[row1, i]
+            val temp2 = data[row2, i]
+            data[row1, i] = temp2
+            data[row2, i] = temp1
         }
     }
-    fun swapStrokes(stroke1: Int,stroke2: Int){
-        if(stroke1==stroke2) return
 
-        for(i in 0 until width){
+    fun swapStrokes(stroke1: Int, stroke2: Int) {
+        if (stroke1 == stroke2) return
+
+        for (i in 0 until width) {
             val temp1 = data[i, stroke1]
             val temp2 = data[i, stroke2]
             data[i, stroke1] = temp2
             data[i, stroke2] = temp1
         }
     }
-    fun multiplyStroke(stroke: Int, value: Double){
-        for(i in 0 until width){
+
+    fun multiplyStroke(stroke: Int, value: Double) {
+        for (i in 0 until width) {
             data[i, stroke] = data[i, stroke]*value
         }
     }
 
     fun minusStrokes(stroke1: Int, stroke2: Int) {
-        for(i in 0 until width){
+        for (i in 0 until width) {
             data[i, stroke1] -= data[i, stroke2]
         }
     }
@@ -73,9 +78,9 @@ open class Matrix(val data: Array2<Double>) {
     override fun toString(): String {
         val res = StringBuilder()
         res.append("\n")
-        for (stroke in 0 until height){
+        for (stroke in 0 until height) {
             res.append("| ")
-            for (row in 0 until width){
+            for (row in 0 until width) {
                 res.append("${data[row, stroke]} ")
             }
             res.append("|\n")
@@ -85,12 +90,13 @@ open class Matrix(val data: Array2<Double>) {
     }
 
     open operator fun times(c: Double): Matrix {
-        val res= copy()
+        val res = copy()
         res.data.set { i, j -> data[i, j]*c }
         return res
     }
+
     open operator fun times(c: Int): Matrix {
-        val res= copy()
+        val res = copy()
         res.data.set { i, j -> data[i, j]*c }
         return res
     }

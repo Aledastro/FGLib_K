@@ -24,19 +24,19 @@ object ShapeUtils {
 
 
     private fun intoRectOval(rect: RectN, oval: OvalN): Boolean {
-        if(intoOval(oval(rect), oval)) return true
+        if (intoOval(oval(rect), oval)) return true
 
         val dim = rect.dim
 
-        for (id in 0 until 2.0.pow(dim).toInt()){
-            var id_n=id
-            val xs = Array(dim){ 0.0 }
-            for (i in 0 until dim){
-                xs[i]=if(id_n%2==0) rect.L[i] else rect.R[i]
-                id_n/=2
+        for (id in 0 until 2.0.pow(dim).toInt()) {
+            var id_n = id
+            val xs = Array(dim) { 0.0 }
+            for (i in 0 until dim) {
+                xs[i] = if (id_n%2 == 0) rect.L[i] else rect.R[i]
+                id_n /= 2
             }
             val p = PointN(xs)
-            if(p.lengthTo(oval.C)<oval.S[0]) return true
+            if (p.lengthTo(oval.C) < oval.S[0]) return true
         }
 
         return false

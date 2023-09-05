@@ -5,6 +5,7 @@ import com.uzery.fglib.utils.math.geom.Shape
 
 data class RectN(private val pos: PointN, private val size: PointN): Shape() {
     constructor(size: PointN): this(PointN.ZERO, size)
+
     override fun copy(move: PointN) = RectN(pos+move, size)
 
     override fun into(pos: PointN): Boolean {

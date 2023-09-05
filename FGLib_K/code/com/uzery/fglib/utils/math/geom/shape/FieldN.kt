@@ -3,7 +3,7 @@ package com.uzery.fglib.utils.math.geom.shape
 import com.uzery.fglib.utils.math.geom.PointN
 import com.uzery.fglib.utils.math.matrix.UltraMatrix
 
-data class FieldN(private val pos: PointN, private val normal: UltraMatrix){
+data class FieldN(private val pos: PointN, private val normal: UltraMatrix) {
     constructor(normal: UltraMatrix): this(PointN.ZERO, normal)
     constructor(pos: PointN, vararg normal: PointN): this(pos, UltraMatrix(*normal))
 
@@ -11,7 +11,7 @@ data class FieldN(private val pos: PointN, private val normal: UltraMatrix){
     val dim
         get() = normal.width
     val mirage
-        get()=normal.copy(pos)
+        get() = normal.copy(pos)
 
     fun copy(move: PointN) = FieldN(pos+move, normal)
     fun into(pos: PointN): Boolean {

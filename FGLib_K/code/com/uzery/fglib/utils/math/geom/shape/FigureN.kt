@@ -23,16 +23,16 @@ open class FigureN(val pos: PointN, val fields: List<FieldN>): Shape() {
     override val L = pos+getLP()
     override val R = pos+getRP()
 
-    private fun getFields(){
+    private fun getFields() {
         val dim = fields[0].dim
         val current_fields = LinkedList<FieldN>()
         current_fields.addAll(fields)
         //todo it don't work well for large dim>3
-        for (d in 0 until dim-1){
+        for (d in 0 until dim-1) {
             val list = LinkedList<FieldN>()
 
-            for (i in 0 until current_fields.size){
-                for (j in i+1 until current_fields.size){
+            for (i in 0 until current_fields.size) {
+                for (j in i+1 until current_fields.size) {
                     list.add(current_fields[i]*current_fields[j])
                 }
             }
@@ -40,23 +40,24 @@ open class FigureN(val pos: PointN, val fields: List<FieldN>): Shape() {
             current_fields.clear()
             current_fields.addAll(list)
         }
-        current_fields.forEach { f ->f.solve()?.let { p->current_pos.add(p) } }
+        current_fields.forEach { f -> f.solve()?.let { p -> current_pos.add(p) } }
         init_current_pos = true
     }
+
     private fun getLP(): PointN {
-        if(!init_current_pos) getFields()
+        if (!init_current_pos) getFields()
 
         val dim = fields[0].dim
-        if(current_pos.isEmpty()) return PointN.ZERO
+        if (current_pos.isEmpty()) return PointN.ZERO
 
         return PointN(Array(dim) { level -> current_pos.minOf { it[level] } })
     }
 
     private fun getRP(): PointN {
-        if(!init_current_pos) getFields()
+        if (!init_current_pos) getFields()
 
         val dim = fields[0].dim
-        if(current_pos.isEmpty()) return PointN.ZERO
+        if (current_pos.isEmpty()) return PointN.ZERO
 
         return PointN(Array(dim) { level -> current_pos.maxOf { it[level] } })
     }
@@ -84,7 +85,7 @@ open class FigureN(val pos: PointN, val fields: List<FieldN>): Shape() {
     }
 
     fun exists(): Boolean {
-        if(!S.more(PointN.ZERO)) return false
+        if (!S.more(PointN.ZERO)) return false
 
         if (fields.any { field -> !field.exists() }) return false
         return true
