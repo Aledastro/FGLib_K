@@ -1,9 +1,8 @@
-package com.uzery.fglib.utils.math.geom.shape
+package com.uzery.fglib.utils.math.geom
 
-import com.uzery.fglib.utils.math.geom.PointN
 import com.uzery.fglib.utils.math.matrix.UltraMatrix
 
-data class FieldN(private val pos: PointN, private val normal: UltraMatrix) {
+data class FieldN(private val pos: PointN, val normal: UltraMatrix) {
     constructor(normal: UltraMatrix): this(PointN.ZERO, normal)
     constructor(pos: PointN, vararg normal: PointN): this(pos, UltraMatrix(*normal))
 
@@ -13,13 +12,19 @@ data class FieldN(private val pos: PointN, private val normal: UltraMatrix) {
     val mirage
         get() = normal.copy(pos)
 
-    fun copy(move: PointN) = FieldN(pos+move, normal)
+    fun copy(move: PointN) = FieldN(pos+move, normal.copyU())
     fun into(pos: PointN): Boolean {
-        return mirage.into(pos)
+        return normal.into(pos-this.pos)
+    }
+    fun intoS(pos: PointN): Boolean {
+        return normal.intoS(pos-this.pos)
     }
 
     fun intoHalf(pos: PointN): Boolean {
-        return mirage.intoHalf(pos) //todo
+        return normal.intoHalf(pos-this.pos)
+    }
+    fun intoHalfS(pos: PointN): Boolean {
+        return normal.intoHalfS(pos-this.pos)
     }
 
     operator fun times(other: FieldN): FieldN {

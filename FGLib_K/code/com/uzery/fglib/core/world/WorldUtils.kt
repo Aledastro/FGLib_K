@@ -71,10 +71,10 @@ object WorldUtils {
             Color.GREEN
         )
         val colors_h = arrayOf(
-            Color.DARKRED,
-            Color.DARKORANGE,
-            Color.DARKBLUE,
-            Color.DARKGREEN
+            Color.RED.interpolate(Color.WHITE,0.5),
+            Color.ORANGERED.interpolate(Color.WHITE,0.5),
+            Color.BLUE.interpolate(Color.WHITE,0.5),
+            Color.GREEN.interpolate(Color.WHITE,0.5)
         )
         val bs = o.bounds[color_id]
         if (bs.isEmpty()) return
@@ -83,7 +83,7 @@ object WorldUtils {
             val shape = el.shape() ?: continue
             graphics.fill.draw(pos+o.stats.POS, shape, FGUtils.transparent(colors[color_id], 0.1))
             graphics.stroke.draw(pos+o.stats.POS, shape, FGUtils.transparent(colors[color_id], 0.6))
-            graphics.stroke.line(pos+o.stats.POS+shape.L, shape.S, FGUtils.transparent(colors_h[color_id], 0.5))
+            graphics.stroke.line(pos+o.stats.POS+shape.L, shape.S, FGUtils.transparent(colors_h[color_id], 0.8))
         }
     }
 

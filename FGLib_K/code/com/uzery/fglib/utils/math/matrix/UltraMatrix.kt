@@ -3,9 +3,12 @@ package com.uzery.fglib.utils.math.matrix
 import com.uzery.fglib.utils.data.debug.DebugData
 import com.uzery.fglib.utils.math.MathUtils
 import com.uzery.fglib.utils.math.geom.PointN
+import kotlin.math.abs
 
 class UltraMatrix(data: Array2<Double>): Matrix(data) {
     constructor(vararg normal: PointN): this(MatrixUtils.toArray(*normal))
+
+    private val strokes_values = Array(height) { level(it) }
 
     fun connect(other: UltraMatrix): UltraMatrix {
         if (this.width != other.width) throw DebugData.error("WRONG CONNECT OPERATION: \n$this\n\n$other")
@@ -14,33 +17,43 @@ class UltraMatrix(data: Array2<Double>): Matrix(data) {
         return UltraMatrix(res)
     }
 
-    fun level(j: Int) = (0 until width).sumOf { i -> data[i, j]*data[i, j] }
-    fun levelFor(pos: PointN, j: Int) = (0 until width).sumOf { i -> pos[j]*data[i, j] }
+    private fun level(j: Int) = (0 until width).sumOf { i -> data[i, j]*data[i, j] }
+    private fun levelFor(pos: PointN, j: Int) = (0 until width).sumOf { i -> pos[i]*data[i, j] }
 
     fun move(pos: PointN) {
         for (stroke in 0 until height) {
-            val lv = levelFor(pos, stroke)/level(stroke)
+            val xs = Array(width){ data[it, stroke] }
+            val c_pos = PointN(xs)
+            val lv = levelFor(c_pos+pos, stroke)/levelFor(c_pos, stroke)
             for (row in 0 until width) {
-                data[row, stroke] = data[row, stroke]*lv
+                //data[row, stroke] *= lv
             }
         }
     }
 
     fun copy(pos: PointN): UltraMatrix {
-        val res = UltraMatrix(data.copy())
+        val res = copyU()
         if (pos != PointN.ZERO) res.move(pos)
         return res
     }
+    fun copyU(): UltraMatrix {
+        return UltraMatrix(data.copy())
+    }
+
 
     fun into(pos: PointN): Boolean {
-        return (0 until height).all { j -> MathUtils.little(levelFor(pos, j)) }
+        return (0 until height).all { j -> MathUtils.little(levelFor(pos, j)-this.level(j)) }
+    }
+    fun intoS(pos: PointN): Boolean {
+        return (0 until height).all { j -> abs(levelFor(pos, j)-this.level(j))<10 }
     }
 
     fun intoHalf(pos: PointN): Boolean {
-        return (0 until height).all { j -> levelFor(pos, j) < 0 }
+        return (0 until height).all { j -> levelFor(pos, j) <= this.level(j) }
     }
-
-    private val strokes_values = Array(height) { level(it) }
+    fun intoHalfS(pos: PointN): Boolean {
+        return (0 until height).all { j -> levelFor(pos, j) <= this.level(j)+1 }
+    }
     private val rows_panel = Array(width) { it }
 
     private fun swapStrokesX(s1: Int, s2: Int) {
@@ -132,7 +145,7 @@ class UltraMatrix(data: Array2<Double>): Matrix(data) {
     }
 
     fun exists(): Boolean {
-        val lastStroke = copy(PointN.ZERO).toTriangle()
+        val lastStroke = copyU().toTriangle()
 
         for (stroke in lastStroke+1 until height) {
             if (!MathUtils.little(level(stroke))) return false
@@ -146,19 +159,19 @@ class UltraMatrix(data: Array2<Double>): Matrix(data) {
     }
 
     override operator fun times(c: Double): UltraMatrix {
-        val res = copy(PointN.ZERO)
+        val res = copyU()
         res.data.set { i, j -> data[i, j]*c }
         return res
     }
 
     override operator fun times(c: Int): UltraMatrix {
-        val res = copy(PointN.ZERO)
+        val res = copyU()
         res.data.set { i, j -> data[i, j]*c }
         return res
     }
 
     fun solve(): Array<Double>? {
-        val matrix = copy(PointN.ZERO)
+        val matrix = copyU()
 
         val successful = matrix.toDiagonal()
         if (!successful) return null
