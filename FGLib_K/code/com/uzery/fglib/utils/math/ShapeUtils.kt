@@ -24,26 +24,20 @@ object ShapeUtils {
 
 
     private fun intoRectOval(rect: RectN, oval: OvalN): Boolean {
-        if (intoOval(oval(rect), oval)) return true
-
-        val dim = rect.dim
-
-        for (id in 0 until 2.0.pow(dim).toInt()) {
-            var id_n = id
-            val xs = Array(dim) { 0.0 }
-            for (i in 0 until dim) {
-                xs[i] = if (id_n%2 == 0) rect.L[i] else rect.R[i]
-                id_n /= 2
-            }
-            val p = PointN(xs)
-            if (p.lengthTo(oval.C) < oval.S[0]) return true
-        }
-
-        return false
+        return intoFigureOval(oval, FigureRectN(rect))
     }
 
-    private fun intoRectFigure(rect: RectN, field: FigureN): Boolean {
-        return intoFigure(FigureRectN(rect), field)
+    private fun intoRectFigure(rect: RectN, figure: FigureN): Boolean {
+        return intoFigure(FigureRectN(rect), figure)
+    }
+    private fun intoFigureOval(oval: OvalN, figure: FigureN): Boolean {
+        for (p in figure.current_pos){
+            if(p.lengthTo(oval.C)< oval.S[0]/2) return true
+        }
+
+        //todo
+
+        return false
     }
 
     fun into(first: Shape, second: Shape): Boolean {
@@ -53,29 +47,29 @@ object ShapeUtils {
                 true
             }
 
-            /*first.code == Shape.Code.OVAL && second.code == Shape.Code.OVAL -> {
+            first.code == Shape.Code.OVAL && second.code == Shape.Code.OVAL -> {
                 intoOval(first as OvalN, second as OvalN)
-            }*/
+            }
 
             first.code == Shape.Code.FIGURE && second.code == Shape.Code.FIGURE -> {
                 intoFigure(first as FigureN, second as FigureN)
             }
             ////////////////////////////////////////////////////////////////////
-            /*first.code == Shape.Code.OVAL && second.code == Shape.Code.RECT -> {
+            first.code == Shape.Code.OVAL && second.code == Shape.Code.RECT -> {
                 intoRectOval(second as RectN, first as OvalN)
             }
 
             first.code == Shape.Code.RECT && second.code == Shape.Code.OVAL -> {
                 intoRectOval(first as RectN, second as OvalN)
-            }*/
+            }
             ////////////////////////////////////////////////////////////////////
-            /*first.code == Shape.Code.OVAL && second.code == Shape.Code.FIELD -> {
-                intoFieldOval(second as FieldN, first as OvalN)
+            first.code == Shape.Code.OVAL && second.code == Shape.Code.FIGURE -> {
+                intoFigureOval(first as OvalN, second as FigureN)
             }
 
-            first.code == Shape.Code.FIELD && second.code == Shape.Code.OVAL -> {
-                intoFieldOval(first as FieldN, second as OvalN)
-            }*/
+            first.code == Shape.Code.FIGURE && second.code == Shape.Code.OVAL -> {
+                intoFigureOval(second as OvalN, first as FigureN)
+            }
             ////////////////////////////////////////////////////////////////////
             first.code == Shape.Code.FIGURE && second.code == Shape.Code.RECT -> {
                 intoRectFigure(second as RectN, first as FigureN)
