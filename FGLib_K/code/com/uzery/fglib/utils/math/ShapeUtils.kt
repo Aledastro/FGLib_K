@@ -30,14 +30,13 @@ object ShapeUtils {
     private fun intoRectFigure(rect: RectN, figure: FigureN): Boolean {
         return intoFigure(FigureRectN(rect), figure)
     }
+
     private fun intoFigureOval(oval: OvalN, figure: FigureN): Boolean {
-        for (p in figure.current_pos){
-            if(p.lengthTo(oval.C)< oval.S[0]/2) return true
+        return figure.fields.all { f ->
+            false
+            //f.intoHalfS(oval.C, -oval.S[0]/2)
         }
-
         //todo
-
-        return false
     }
 
     fun into(first: Shape, second: Shape): Boolean {

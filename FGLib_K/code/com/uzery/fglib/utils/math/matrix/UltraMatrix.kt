@@ -24,10 +24,10 @@ class UltraMatrix(data: Array2<Double>): Matrix(data) {
 
     fun move(pos: PointN) {
         for (stroke in 0 until height) {
-            val xs = Array(width){ data[it, stroke] }
+            val xs = Array(width) { data[it, stroke] }
             val c_pos = PointN(xs)
             val lv = levelFor(c_pos+pos, stroke)/levelFor(c_pos, stroke)
-            if(lv<0) sign[stroke] *= -1
+            if (lv < 0) sign[stroke] *= -1
 
             for (row in 0 until width) {
                 data[row, stroke] *= lv
@@ -40,6 +40,7 @@ class UltraMatrix(data: Array2<Double>): Matrix(data) {
         if (pos != PointN.ZERO) res.move(pos)
         return res
     }
+
     fun copyU(): UltraMatrix {
         return UltraMatrix(data.copy())
     }
@@ -48,16 +49,19 @@ class UltraMatrix(data: Array2<Double>): Matrix(data) {
     fun into(pos: PointN): Boolean {
         return (0 until height).all { j -> MathUtils.little(levelFor(pos, j)-level(j)) }
     }
+
     fun intoS(pos: PointN): Boolean {
-        return (0 until height).all { j -> abs(levelFor(pos, j)-level(j))<10 }
+        return (0 until height).all { j -> abs(levelFor(pos, j)-level(j)) < 10 }
     }
 
     fun intoHalf(pos: PointN): Boolean {
         return (0 until height).all { j -> (levelFor(pos, j)-level(j))*sign[j] <= 0 }
     }
-    fun intoHalfS(pos: PointN): Boolean {
-        return (0 until height).all { j -> (levelFor(pos, j)-level(j))*sign[j] <= 1 }
+
+    fun intoHalfS(pos: PointN, value: Double = 1.0): Boolean {
+        return (0 until height).all { j -> (levelFor(pos, j)-level(j))*sign[j] <= value }
     }
+
     private val rows_panel = Array(width) { it }
 
     private fun swapStrokesX(s1: Int, s2: Int) {

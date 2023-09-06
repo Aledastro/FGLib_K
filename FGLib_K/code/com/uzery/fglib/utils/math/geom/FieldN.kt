@@ -5,6 +5,7 @@ import com.uzery.fglib.utils.math.matrix.UltraMatrix
 data class FieldN(private val pos: PointN, val normal: UltraMatrix) {
     constructor(normal: UltraMatrix): this(PointN.ZERO, normal)
     constructor(pos: PointN, vararg normal: PointN): this(pos, UltraMatrix(*normal))
+
     val dim
         get() = normal.width
 
@@ -14,6 +15,7 @@ data class FieldN(private val pos: PointN, val normal: UltraMatrix) {
     fun into(pos: PointN): Boolean {
         return normal.into(pos-this.pos)
     }
+
     fun intoS(pos: PointN): Boolean {
         return normal.intoS(pos-this.pos)
     }
@@ -21,8 +23,9 @@ data class FieldN(private val pos: PointN, val normal: UltraMatrix) {
     fun intoHalf(pos: PointN): Boolean {
         return normal.intoHalf(pos-this.pos)
     }
-    fun intoHalfS(pos: PointN): Boolean {
-        return normal.intoHalfS(pos-this.pos)
+
+    fun intoHalfS(pos: PointN, value: Double = 1.0): Boolean {
+        return normal.intoHalfS(pos-this.pos, value)
     }
 
     operator fun times(other: FieldN): FieldN {

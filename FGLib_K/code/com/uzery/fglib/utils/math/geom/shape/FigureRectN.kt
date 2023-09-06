@@ -7,7 +7,7 @@ import java.util.LinkedList
 class FigureRectN(pos: PointN, val size: PointN): FigureN(getFields(pos, size)) {
     constructor(rect: RectN): this(rect.L, rect.S)
 
-    companion object{
+    companion object {
         fun LR(l: PointN, r: PointN) = FigureRectN(l, r-l)
 
         fun L(l: PointN = PointN.ZERO, s: PointN) = FigureRectN(l+s/2, s)

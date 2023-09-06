@@ -25,6 +25,7 @@ open class FigureN(val fields: List<FieldN>): Shape() {
     override fun into(pos: PointN): Boolean {
         return fields.all { field -> field.intoHalf(pos) }
     }
+
     private fun intoS(pos: PointN): Boolean {
         return fields.all { field -> field.intoHalfS(pos) }
     }
@@ -61,7 +62,7 @@ open class FigureN(val fields: List<FieldN>): Shape() {
         if (!init_current_pos) getFields()
 
         val dim = fields[0].dim
-        if (current_pos.isEmpty()) return PointN(Array(dim){1.0})
+        if (current_pos.isEmpty()) return PointN(Array(dim) { 1.0 })
 
         return PointN(Array(dim) { level -> current_pos.minOf { it[level] } })
     }
@@ -70,7 +71,7 @@ open class FigureN(val fields: List<FieldN>): Shape() {
         if (!init_current_pos) getFields()
 
         val dim = fields[0].dim
-        if (current_pos.isEmpty()) return PointN(Array(dim){-1.0})
+        if (current_pos.isEmpty()) return PointN(Array(dim) { -1.0 })
 
         return PointN(Array(dim) { level -> current_pos.maxOf { it[level] } })
     }
