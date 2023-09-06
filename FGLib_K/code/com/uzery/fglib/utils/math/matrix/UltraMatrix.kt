@@ -10,6 +10,8 @@ class UltraMatrix(data: Array2<Double>): Matrix(data) {
 
     private val strokes_values = Array(height) { level(it) }
 
+    val sign = Array(height) { 1 }
+
     fun connect(other: UltraMatrix): UltraMatrix {
         if (this.width != other.width) throw DebugData.error("WRONG CONNECT OPERATION: \n$this\n\n$other")
         val res = Array2(width, height+other.height, 0.0)
@@ -25,8 +27,10 @@ class UltraMatrix(data: Array2<Double>): Matrix(data) {
             val xs = Array(width){ data[it, stroke] }
             val c_pos = PointN(xs)
             val lv = levelFor(c_pos+pos, stroke)/levelFor(c_pos, stroke)
+            if(lv<0) sign[stroke] *= -1
+
             for (row in 0 until width) {
-                //data[row, stroke] *= lv
+                data[row, stroke] *= lv
             }
         }
     }
@@ -42,17 +46,17 @@ class UltraMatrix(data: Array2<Double>): Matrix(data) {
 
 
     fun into(pos: PointN): Boolean {
-        return (0 until height).all { j -> MathUtils.little(levelFor(pos, j)-this.level(j)) }
+        return (0 until height).all { j -> MathUtils.little(levelFor(pos, j)-level(j)) }
     }
     fun intoS(pos: PointN): Boolean {
-        return (0 until height).all { j -> abs(levelFor(pos, j)-this.level(j))<10 }
+        return (0 until height).all { j -> abs(levelFor(pos, j)-level(j))<10 }
     }
 
     fun intoHalf(pos: PointN): Boolean {
-        return (0 until height).all { j -> levelFor(pos, j) <= this.level(j) }
+        return (0 until height).all { j -> (levelFor(pos, j)-level(j))*sign[j] <= 0 }
     }
     fun intoHalfS(pos: PointN): Boolean {
-        return (0 until height).all { j -> levelFor(pos, j) <= this.level(j)+1 }
+        return (0 until height).all { j -> (levelFor(pos, j)-level(j))*sign[j] <= 1 }
     }
     private val rows_panel = Array(width) { it }
 

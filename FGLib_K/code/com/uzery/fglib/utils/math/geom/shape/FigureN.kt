@@ -61,7 +61,7 @@ open class FigureN(val fields: List<FieldN>): Shape() {
         if (!init_current_pos) getFields()
 
         val dim = fields[0].dim
-        if (current_pos.isEmpty()) return PointN.ZERO
+        if (current_pos.isEmpty()) return PointN(Array(dim){1.0})
 
         return PointN(Array(dim) { level -> current_pos.minOf { it[level] } })
     }
@@ -70,7 +70,7 @@ open class FigureN(val fields: List<FieldN>): Shape() {
         if (!init_current_pos) getFields()
 
         val dim = fields[0].dim
-        if (current_pos.isEmpty()) return PointN.ZERO
+        if (current_pos.isEmpty()) return PointN(Array(dim){-1.0})
 
         return PointN(Array(dim) { level -> current_pos.maxOf { it[level] } })
     }

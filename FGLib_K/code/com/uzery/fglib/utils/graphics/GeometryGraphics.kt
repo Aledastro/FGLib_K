@@ -100,12 +100,14 @@ abstract class GeometryGraphics(private val transform: AffineTransform) {
             Shape.Code.OVAL -> oval(pos+shape.L, shape.S, color)
             Shape.Code.FIGURE -> {
                 val fig = shape as FigureN
-                for (field in fig.fields) {
-                    val p = PointN(Array(field.dim) { field.mirage[it, 0] })
-                    line(pos, p, color)
-                }
-                for (p in fig.current_pos) {
-                    oval(pos-PointN(1, 1)+p, PointN(2, 2), color)
+                if(shape.exists()){
+                    for (field in fig.fields) {
+                        val p = PointN(Array(field.dim) { field.mirage[it, 0] })
+                        line(pos, p, color)
+                    }
+                    for (p in fig.current_pos) {
+                        oval(pos-PointN(1, 1)+p, PointN(2, 2), color)
+                    }
                 }
             }
         }

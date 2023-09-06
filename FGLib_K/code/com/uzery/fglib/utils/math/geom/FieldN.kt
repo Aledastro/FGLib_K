@@ -5,12 +5,10 @@ import com.uzery.fglib.utils.math.matrix.UltraMatrix
 data class FieldN(private val pos: PointN, val normal: UltraMatrix) {
     constructor(normal: UltraMatrix): this(PointN.ZERO, normal)
     constructor(pos: PointN, vararg normal: PointN): this(pos, UltraMatrix(*normal))
-
-
     val dim
         get() = normal.width
-    val mirage
-        get() = normal.copy(pos)
+
+    val mirage = normal.copy(pos)
 
     fun copy(move: PointN) = FieldN(pos+move, normal.copyU())
     fun into(pos: PointN): Boolean {
@@ -32,7 +30,7 @@ data class FieldN(private val pos: PointN, val normal: UltraMatrix) {
     }
 
     override fun toString(): String {
-        return "field[$pos, $normal]"
+        return "field[$pos, $normal, ${mirage.sign.toList()}]"
     }
 
     fun exists(): Boolean {
