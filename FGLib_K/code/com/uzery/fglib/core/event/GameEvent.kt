@@ -1,4 +1,4 @@
-package com.uzery.fglib.extension.event
+package com.uzery.fglib.core.event
 
 import com.uzery.fglib.core.obj.GameObject
 import com.uzery.fglib.core.obj.ability.AbilityBox

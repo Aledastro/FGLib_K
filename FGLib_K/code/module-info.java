@@ -4,6 +4,8 @@ module FGLib_K {
 
     /////////////////////////////////////////////////////////
 
+    exports com.uzery.fglib.core.event;
+
     exports com.uzery.fglib.core.obj;
     exports com.uzery.fglib.core.obj.ability;
     exports com.uzery.fglib.core.obj.bounds;
@@ -38,8 +40,6 @@ module FGLib_K {
     exports com.uzery.fglib.utils.math.scale;
 
     /////////////////////////////////////////////////////////
-
-    exports com.uzery.fglib.extension.event;
 
     exports com.uzery.fglib.extension.room_editor;
 
