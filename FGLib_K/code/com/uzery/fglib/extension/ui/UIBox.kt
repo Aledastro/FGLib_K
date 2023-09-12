@@ -7,13 +7,11 @@ import com.uzery.fglib.utils.math.FGUtils
 import javafx.scene.paint.Color
 import java.util.*
 
-class UIBox: Extension {
+object UIBox: Extension {
     private var active: UIElement? = null
 
-    companion object {
-        private val list = LinkedList<UIElement>()
-        fun add(vararg element: UIElement) = list.addAll(element)
-    }
+    private val list = LinkedList<UIElement>()
+    fun add(vararg element: UIElement) = list.addAll(element)
 
     override fun init() {
 

@@ -21,7 +21,7 @@ import javafx.scene.paint.Color
 import java.util.*
 
 class RoomEditor(private val getter: ClassGetter<GameObject>, private vararg val filenames: String): Extension {
-    override fun children() = LinkedList<Extension>().apply { add(UIBox()) }
+    override fun children() = LinkedList<Extension>().apply { add(UIBox) }
 
     private lateinit var world_save: Array<String>
     private val data = DataRE(getter, filenames)
