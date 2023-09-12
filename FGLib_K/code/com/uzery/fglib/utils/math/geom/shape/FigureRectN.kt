@@ -5,7 +5,7 @@ import com.uzery.fglib.utils.math.geom.PointN
 import java.util.LinkedList
 
 class FigureRectN(pos: PointN, val size: PointN): FigureN(getFields(pos, size)) {
-    constructor(rect: RectN): this(rect.L, rect.S)
+    constructor(rect: RectN): this(rect.C, rect.S)
 
     companion object {
         fun LR(l: PointN, r: PointN) = FigureRectN(l, r-l)

@@ -42,7 +42,9 @@ class UltraMatrix(data: Array2<Double>): Matrix(data) {
     }
 
     fun copyU(): UltraMatrix {
-        return UltraMatrix(data.copy())
+        val res = UltraMatrix(data.copy())
+        for (i in sign.indices) res.sign[i] = sign[i]
+        return res
     }
 
 
