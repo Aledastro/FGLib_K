@@ -2,6 +2,7 @@ package com.uzery.fglib.core.world
 
 import com.uzery.fglib.core.obj.GameObject
 import com.uzery.fglib.core.program.Platform
+import com.uzery.fglib.core.program.Platform.CANVAS
 import com.uzery.fglib.core.program.Platform.graphics
 import com.uzery.fglib.core.room.Room
 import com.uzery.fglib.core.world.World.rooms
@@ -10,7 +11,7 @@ import com.uzery.fglib.utils.math.geom.shape.RectN
 import javafx.scene.paint.Color
 import javafx.scene.text.FontWeight
 
-class MovableWC(private val goal: GameObject): WorldController {
+class MovableWC(private val goal: GameObject, val room_p: PointN = CANVAS/2+PointN(20, 20)): WorldController {
     private val void = Room(PointN.ZERO, PointN.ZERO)
     var goal_room = void
         private set
@@ -19,8 +20,7 @@ class MovableWC(private val goal: GameObject): WorldController {
     }
 
     override fun isActive(r: Room): Boolean {
-        val p = Platform.CANVAS-PointN(20, 20)
-        return RectN(r.pos-p, r.size+p*2).into(goal.stats.POS+goal_room.pos)
+        return RectN(r.pos-room_p, r.size+room_p*2).into(goal.stats.POS+goal_room.pos)
     }
 
     override fun onAppear(r: Room) {
