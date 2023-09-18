@@ -184,4 +184,7 @@ abstract class GameObject {
         other.setValues()
         return this.name == other.name
     }
+
+    open fun answerYN() = false
+    open fun answer() = ""
 }
