@@ -185,6 +185,6 @@ abstract class GameObject {
         return this.name == other.name
     }
 
-    open fun answerYN() = false
-    open fun answer() = ""
+    open fun answerYN(question: String) = false
+    open fun answer(question: String) = ""
 }
