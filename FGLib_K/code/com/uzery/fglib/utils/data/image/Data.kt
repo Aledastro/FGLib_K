@@ -13,6 +13,15 @@ class Data {
         private val combinations = HashMap<String, CombinationImage>()
         var directory = ""
 
+        fun sprite_set(name: String): IntI{
+            val img = sprites[name]?: throw DebugData.error("no sprite from: $name")
+            return img.size
+        }
+        fun sprite_get(name: String): IntI{
+            val img = sprites[name]?: throw DebugData.error("no sprite from: $name")
+            return img.origin_size/img.size
+        }
+
         fun get(name: String) = origins[name] ?: throw DebugData.error("no origin from: $name")
 
         fun set(name: String) {

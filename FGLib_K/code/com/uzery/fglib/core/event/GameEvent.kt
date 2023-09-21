@@ -11,10 +11,10 @@ abstract class GameEvent: GameObject() {
         private set
 
     protected abstract fun ready(): Boolean
-    abstract fun start()
-    abstract fun update()
-    abstract fun finish()
-    abstract fun ends(): Boolean
+    protected open fun start(){}
+    protected open fun update(){}
+    protected open fun finish(){}
+    protected abstract fun ends(): Boolean
 
     private var init = false
 

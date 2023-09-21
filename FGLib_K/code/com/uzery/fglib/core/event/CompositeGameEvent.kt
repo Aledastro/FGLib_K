@@ -9,7 +9,11 @@ abstract class CompositeGameEvent: GameEvent() {
 
     init {
         addAbility {
-            if(current == null && events.isEmpty()) throw DebugData.error("ERROR: empty composite game event: $name")
+            if(current == null && events.isEmpty()){
+                setValues()
+                throw DebugData.error("ERROR: empty composite game event: $name")
+            }
+
 
             if (event_time > 0 && (current == null || current!!.wasReadyAndEnds() && events.isNotEmpty())) {
                 current = events.removeFirst()

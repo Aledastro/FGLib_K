@@ -11,12 +11,16 @@ class SpriteImage(image: Image, name: String, val size: IntI, scale: Int = -1): 
 
     private var SCALE = if (scale == -1) Platform.scale else scale
 
+    val origin_size: IntI
+
     init {
-        val origin_size = IntI(image.width.toInt(), image.height.toInt())
+        origin_size = IntI(image.width.toInt(), image.height.toInt())
         origin = image
 
         setData(name, origin_size/size)
     }
 
     override fun from(pos: IntI) = ImageUtils.split(origin, pos*size, size)
+
+
 }
