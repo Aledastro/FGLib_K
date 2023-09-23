@@ -54,41 +54,32 @@ internal object Program {
         stage.show()
 
         this.stage.scene.setOnMousePressed { e ->
-            run {
-                mouseP = PointN(e.x, e.y)
-                mouse_pressed[e.button.ordinal] = true
-            }
+            mouseP = PointN(e.x, e.y)
+            mouse_pressed[e.button.ordinal] = true
         }
         this.stage.scene.setOnMouseReleased { e ->
-            run {
-                mouseP = PointN(e.x, e.y)
-                mouse_pressed[e.button.ordinal] = false
-            }
+            mouseP = PointN(e.x, e.y)
+            mouse_pressed[e.button.ordinal] = false
         }
         this.stage.scene.setOnMouseMoved { e ->
-            run {
-                mouseP = PointN(e.x, e.y)
-                mouse_pressed[e.button.ordinal] = false
-            }
+            mouseP = PointN(e.x, e.y)
+            mouse_pressed[e.button.ordinal] = false
         }
         this.stage.scene.setOnMouseDragged { e ->
-            run {
-                mouseP = PointN(e.x, e.y)
-                mouse_pressed[e.button.ordinal] = true
-            }
+            mouseP = PointN(e.x, e.y)
+            mouse_pressed[e.button.ordinal] = true
         }
         this.stage.scene.setOnKeyPressed { key -> pressed[key.code.ordinal] = true }
         this.stage.scene.setOnKeyReleased { key -> pressed[key.code.ordinal] = false }
 
         extensions.forEach { it.init() }
 
-        class ProgramTimer: AnimationTimer() {
+        val timer = object: AnimationTimer() {
             override fun handle(t: Long) {
-                extensions.forEach { it.update() }
+                extensions.forEach { if(it.isRunning()) it.update() }
             }
         }
 
-        val p = ProgramTimer()
-        p.start()
+        timer.start()
     }
 }
