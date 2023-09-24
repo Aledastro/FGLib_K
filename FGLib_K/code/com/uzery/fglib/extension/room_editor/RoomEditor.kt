@@ -83,7 +83,25 @@ class RoomEditor(private val getter: ClassGetter<GameObject>, private vararg val
         Platform.update()
         checkForSave()
 
+        checkForLayers()
+
         data.time++
+    }
+
+    private fun checkForLayers() {
+        val map = HashMap<String, DrawLayer>()
+        World.active_rooms.forEach { r ->
+            r.objects.forEach { o ->
+                o.visuals.forEach {
+                    val layer = it.drawLayer()
+                    map[layer.name] = layer
+                }
+            }
+        }
+        val list = LinkedList<DrawLayer>()
+        list.addAll(map.values.toList())
+        list.sortBy { o -> o.sort }
+        setLayers(list)
     }
 
     private fun checkForSave() {
