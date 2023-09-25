@@ -11,7 +11,7 @@ import com.uzery.fglib.utils.math.geom.shape.RectN
 import javafx.scene.paint.Color
 import javafx.scene.text.FontWeight
 
-class MovableWC(private val goal: GameObject, val room_p: PointN = CANVAS/2+PointN(20, 20)): WorldController {
+class MovableWC(private val goal: GameObject, val room_p: PointN = PointN(20, 20)): WorldController {
     private val void = Room(PointN.ZERO, PointN.ZERO)
     var goal_room = void
         private set

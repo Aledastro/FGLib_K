@@ -52,7 +52,7 @@ object WorldUtils {
         for (o in room.objects) {
             val c = if (o.stats.fly) Color.color(1.0, 1.0, 0.2, 0.7) else Color.color(1.0, 0.2, 1.0, 0.7)
             graphics.fill.ovalC(pos+o.stats.POS, STEP*3, c)
-            if(o.stats.sortPOS.length()>1) graphics.fill.ovalC(pos+o.stats.POS+o.stats.sortPOS, STEP, c)
+            if (o.stats.sortPOS.length() > 1) graphics.fill.ovalC(pos+o.stats.POS+o.stats.sortPOS, STEP, c)
         }
 
         for (o in room.objects) drawBoundsFor(o, pos)
