@@ -11,7 +11,7 @@ import com.uzery.fglib.utils.math.geom.shape.RectN
 import javafx.scene.paint.Color
 import javafx.scene.text.FontWeight
 
-class MovableWC(private val goal: GameObject, val room_p: PointN = PointN(20, 20)): WorldController {
+class MovableWC(private val goal: GameObject, val room_p: PointN = PointN(10, 10)): WorldController {
     private val void = Room(PointN.ZERO, PointN.ZERO)
     var goal_room = void
         private set
@@ -20,7 +20,8 @@ class MovableWC(private val goal: GameObject, val room_p: PointN = PointN(20, 20
     }
 
     override fun isActive(r: Room): Boolean {
-        return RectN(r.pos-room_p, r.size+room_p*2).into(goal.stats.POS+goal_room.pos)
+        val rect = RectN(r.pos-room_p-CANVAS/2, r.size+room_p*2+CANVAS)
+        return rect.into(World.camera!!.stats.POS+World.camera!!.stats.roomPOS)
     }
 
     override fun onAppear(r: Room) {
@@ -42,21 +43,20 @@ class MovableWC(private val goal: GameObject, val room_p: PointN = PointN(20, 20
             val newRoom = roomFor(goal)
             goal.stats.POS += goal_room.pos-newRoom.pos
             goal.stats.roomPOS = newRoom.pos
-            World.camera?.stats!!.roomPOS = goal.stats.roomPOS
-            World.camera?.move(goal_room.pos-newRoom.pos)
+            World.camera!!.stats.roomPOS = goal.stats.roomPOS
+            World.camera!!.move(goal_room.pos-newRoom.pos)
 
             goal_room.objects.remove(goal)
             goal_room = newRoom
-            goal_room.objects.remove(goal)
             goal_room.objects.add(goal)
         }
         moveGoal()
 
         fun migrate(oldRoom: Room) {
-            oldRoom.objects.forEach { obj ->
-                if (obj.tagged("migrator") && !isInArea(oldRoom, obj)) {
+            oldRoom.objects.filter { it.tagged("migrator") }.forEach { obj ->
+                if (!isInArea(oldRoom, obj)) {
                     val newRoom = roomFor(obj)
-                    oldRoom.objects.remove(obj)
+                    oldRoom.remove(obj)
                     newRoom.objects.add(obj)
                     obj.stats.POS += oldRoom.pos-newRoom.pos
                     obj.stats.roomPOS = newRoom.pos
