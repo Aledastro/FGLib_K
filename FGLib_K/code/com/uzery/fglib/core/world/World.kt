@@ -69,15 +69,17 @@ object World {
     private fun drawRooms(pos: PointN) {
         val vis = ArrayList<Visualiser>()
         val pos_map = HashMap<Visualiser, PointN>()
+        val sort_map = HashMap<Visualiser, PointN>()
         active_rooms.forEach { room ->
             room.objects.forEach { obj ->
                 obj.visuals.forEach {
                     pos_map[it] = obj.stats.POS+room.pos
+                    sort_map[it] = pos_map[it]!!+obj.stats.sortPOS
                     vis.add(it)
                 }
             }
         }
-        Room.drawVisuals(pos, vis, pos_map)
+        Room.drawVisuals(pos, vis, pos_map, sort_map)
     }
 
     private fun drawRoomsOld(pos: PointN) {

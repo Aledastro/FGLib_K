@@ -20,15 +20,11 @@ import javafx.scene.input.KeyCode
 import javafx.scene.paint.Color
 import java.util.*
 
-class RoomEditor(private val getter: ClassGetter<GameObject>, private vararg val filenames: String): Extension {
+class RoomEditor(private val getter: (Int) -> Pair<ClassGetter<GameObject>, Array<String>>): Extension {
     override fun children() = LinkedList<Extension>().apply { add(UIBox) }
 
     private lateinit var world_save: Array<String>
-    private val data = DataRE(getter, filenames)
-
-    fun setLayers(list: LinkedList<DrawLayer>) {
-        data.layers = list
-    }
+    private var data = DataRE(getter(0))
 
     override fun update() {
         clear()
@@ -83,12 +79,24 @@ class RoomEditor(private val getter: ClassGetter<GameObject>, private vararg val
         Platform.update()
         checkForSave()
 
-        checkForLayers()
+        setCurrentLayers()
+        checkForInit()
 
         data.time++
     }
 
-    private fun checkForLayers() {
+    private fun checkForInit() {
+        /*if(keyboard.inPressed(KeyCode.F7)){
+            data = DataRE(getter(-1))
+            init()
+        }
+        if(keyboard.inPressed(KeyCode.F8)){
+            data = DataRE(getter(1))
+            init()
+        }*/
+    }
+
+    private fun setCurrentLayers() {
         val map = HashMap<String, DrawLayer>()
         World.active_rooms.forEach { r ->
             r.objects.forEach { o ->
@@ -101,13 +109,13 @@ class RoomEditor(private val getter: ClassGetter<GameObject>, private vararg val
         val list = LinkedList<DrawLayer>()
         list.addAll(map.values.toList())
         list.sortBy { o -> o.sort }
-        setLayers(list)
+        data.layers = list
     }
 
     private fun checkForSave() {
         if (keyboard.allPressed(KeyCode.CONTROL, KeyCode.SHIFT) && keyboard.inPressed(KeyCode.S)) {
             //edit.objects.forEach { it.stats.POS /= 2 }
-            filenames.indices.forEach { i -> WriteData.write(filenames[i], World.rooms[i].toString()) }
+            data.filenames.indices.forEach { i -> WriteData.write(data.filenames[i], World.rooms[i].toString()) }
             println("saved")
         }
     }
@@ -122,17 +130,26 @@ class RoomEditor(private val getter: ClassGetter<GameObject>, private vararg val
 
     override fun init() {
         scale = 2
-        World.getter = getter
+        World.getter = data.getter
 
         //todo
         val c = OneRoomWC()
-        World.init(c, *filenames)
+        World.init(c, *data.filenames)
         data.edit = World.rooms[data.edit_n]
         c.room = data.edit
 
         Platform.whole_draw = true
         //todo
         data.draw_pos = Platform.options().size/4-data.edit.size*0.5
+
+        play_button = PlayButtonRE(data)
+        objects_vbox = ObjectVBoxRE(data)
+        choose_objects_vbox = ChooseObjectVBoxRE(data)
+        canvasX = CanvasRE(data)
+        layers_vbox = LayerVBoxRE(data)
+        info_box = InfoBoxRE(data)
+
+        UIBox.clear()
         UIBox.add(canvasX, play_button, objects_vbox, layers_vbox, info_box, choose_objects_vbox)
         canvasX.show()
         play_button.show()

@@ -10,7 +10,7 @@ import com.uzery.fglib.utils.math.geom.PointN
 import com.uzery.fglib.utils.math.num.StringN
 import java.util.*
 
-class DataRE(val getter: ClassGetter<GameObject>, val filenames: Array<out String>) {
+class DataRE(val getter_pair: Pair<ClassGetter<GameObject>, Array<out String>>) {
     var time = 0.0
     var world_play = false
     var last_world_play = false
@@ -40,6 +40,9 @@ class DataRE(val getter: ClassGetter<GameObject>, val filenames: Array<out Strin
 
     val names = LinkedList<StringN>()
     val ids = TreeMap<StringN, Int>()
+
+    val getter = getter_pair.first
+    val filenames = getter_pair.second
     fun init() {
         val entries = LinkedList<StringN>()
 

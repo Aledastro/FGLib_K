@@ -66,26 +66,31 @@ class CanvasRE(private val data: DataRE): UICanvas() {
         fun drawSelectLayerVisuals(room: Room, pos: PointN = PointN.ZERO) {
             val visuals = ArrayList<Visualiser>()
             val pos_map = HashMap<Visualiser, PointN>()
+            val sort_map = HashMap<Visualiser, PointN>()
 
             val visuals_up = ArrayList<Visualiser>()
             val pos_map_up = HashMap<Visualiser, PointN>()
+            val sort_map_up = HashMap<Visualiser, PointN>()
+
             room.objects.forEach { obj ->
                 obj.visuals.forEach { vis ->
                     if (vis.drawLayer() == data.layers[data.select_layer-1]) {
                         pos_map[vis] = obj.stats.POS
+                        sort_map[vis] = pos_map[vis]!!+obj.stats.sortPOS
                         visuals.add(vis)
                     } else if (vis.drawLayer().sort > data.layers[data.select_layer-1].sort) {
                         pos_map_up[vis] = obj.stats.POS
+                        sort_map_up[vis] = pos_map_up[vis]!!+obj.stats.sortPOS
                         visuals_up.add(vis)
                     }
                 }
             }
-            Room.drawVisuals(pos+data.draw_pos, visuals, pos_map)
+            Room.drawVisuals(pos+data.draw_pos, visuals, pos_map, sort_map)
 
             if (!draw_layers) return
 
             Platform.global_alpha = 0.2
-            Room.drawVisuals(pos+data.draw_pos, visuals_up, pos_map_up)
+            Room.drawVisuals(pos+data.draw_pos, visuals_up, pos_map_up, sort_map_up)
             Platform.global_alpha = 1.0
         }
 

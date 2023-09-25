@@ -52,19 +52,26 @@ class Room(val pos: PointN, val size: PointN) {
     fun draw(draw_pos: PointN) {
         val vis = ArrayList<Visualiser>()
         val pos_map = HashMap<Visualiser, PointN>()
+        val sort_map = HashMap<Visualiser, PointN>()
         objects.forEach { obj ->
             vis.addAll(obj.visuals)
             obj.visuals.forEach { pos_map[it] = obj.stats.POS }
+            obj.visuals.forEach { sort_map[it] = pos_map[it]!!+obj.stats.sortPOS }
         }
-        drawVisuals(draw_pos, vis, pos_map)
+        drawVisuals(draw_pos, vis, pos_map, sort_map)
     }
 
     companion object {
-        fun drawVisuals(draw_pos: PointN, vis: ArrayList<Visualiser>, pos_map: HashMap<Visualiser, PointN>) {
+        fun drawVisuals(
+            draw_pos: PointN,
+            vis: ArrayList<Visualiser>,
+            pos_map: HashMap<Visualiser, PointN>,
+            sort_map: HashMap<Visualiser, PointN>
+        ) {
             vis.sortWith { v1, v2 ->
                 when {
                     v1.drawLayer().sort != v2.drawLayer().sort -> (v1.drawLayer().sort-v2.drawLayer().sort).toInt()
-                    else -> sign(pos_map[v1]!!.Y-pos_map[v2]!!.Y).toInt()
+                    else -> sign(sort_map[v1]!!.Y-sort_map[v2]!!.Y).toInt()
                 }
             }
             vis.forEach { visual ->

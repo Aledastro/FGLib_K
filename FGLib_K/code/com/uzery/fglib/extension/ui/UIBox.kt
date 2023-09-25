@@ -35,4 +35,8 @@ object UIBox: Extension {
 
         list.forEach { if (it.showing) it.draw() }
     }
+
+    fun clear() {
+        list.clear()
+    }
 }
