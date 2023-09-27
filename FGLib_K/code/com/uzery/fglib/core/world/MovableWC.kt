@@ -6,12 +6,13 @@ import com.uzery.fglib.core.program.Platform.CANVAS
 import com.uzery.fglib.core.program.Platform.graphics
 import com.uzery.fglib.core.room.Room
 import com.uzery.fglib.core.world.World.rooms
+import com.uzery.fglib.utils.math.ShapeUtils
 import com.uzery.fglib.utils.math.geom.PointN
 import com.uzery.fglib.utils.math.geom.shape.RectN
 import javafx.scene.paint.Color
 import javafx.scene.text.FontWeight
 
-class MovableWC(private val goal: GameObject, val room_p: PointN = PointN(10, 10)): WorldController {
+class MovableWC(private val goal: GameObject, val room_p: Double = 10.0): WorldController {
     private val void = Room(PointN.ZERO, PointN.ZERO)
     var goal_room = void
         private set
@@ -20,8 +21,11 @@ class MovableWC(private val goal: GameObject, val room_p: PointN = PointN(10, 10
     }
 
     override fun isActive(r: Room): Boolean {
-        val rect = RectN(r.pos-room_p-CANVAS/2, r.size+room_p*2+CANVAS)
-        return rect.into(World.camera!!.stats.POS+World.camera!!.stats.roomPOS)
+        val pos = PointN(room_p, -room_p)
+        val rect1 = RectN(r.pos-pos, r.size+pos*2)
+        val rect2 = RectN(r.pos+pos, r.size-pos*2)
+        val camera = RectN.C(World.camera!!.stats.POS+World.camera!!.stats.roomPOS, CANVAS)
+        return ShapeUtils.into(rect1,camera) || ShapeUtils.into(rect2,camera)
     }
 
     override fun onAppear(r: Room) {
