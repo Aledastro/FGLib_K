@@ -7,6 +7,7 @@ import javafx.scene.Group
 import javafx.scene.Scene
 import javafx.scene.canvas.Canvas
 import javafx.scene.canvas.GraphicsContext
+import javafx.scene.image.Image
 import javafx.scene.input.KeyCode
 import javafx.scene.input.KeyCombination
 import javafx.stage.Stage
@@ -51,6 +52,8 @@ internal object Program {
         stage.initStyle(options.style)
         stage.isFullScreen = options.fullscreen
         stage.fullScreenExitKeyCombination = KeyCombination.NO_MATCH
+        options.icons.forEach { stage.icons.add(Image(it)) }
+        stage.title = options.title
         stage.show()
 
         this.stage.scene.setOnMousePressed { e ->

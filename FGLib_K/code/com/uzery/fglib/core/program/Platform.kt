@@ -15,6 +15,7 @@ import javafx.scene.input.MouseButton
 import javafx.scene.paint.Color
 import javafx.scene.paint.Paint
 import javafx.scene.text.Font
+import java.util.LinkedList
 
 object Platform {
     fun options() = Program.options
