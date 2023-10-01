@@ -8,8 +8,8 @@ import java.util.*
 data class LaunchOptions(
     val size: PointN,
     val fullscreen: Boolean = false,
-    val style: StageStyle = StageStyle.UNDECORATED,
     var title: String = "",
+    val style: StageStyle = StageStyle.UNDECORATED,
     var icons: List<String> = LinkedList(),
 ) {
     companion object {
