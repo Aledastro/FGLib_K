@@ -11,7 +11,7 @@ class Data {
         private val origins = HashMap<String, Image>()
         private val sprites = HashMap<String, SpriteImage>()
         private val combinations = HashMap<String, CombinationImage>()
-        var directory = ""
+        var dir = ""
 
         fun sprite_set(name: String): IntI {
             val img = sprites[name] ?: throw DebugData.error("no sprite from: $name")
@@ -27,7 +27,12 @@ class Data {
 
         fun set(name: String) {
             if (origins[name] != null) return
-            origins[name] = Image(resolvePath(name))
+
+            try {
+                origins[name] = Image(resolvePath(name))
+            } catch (e: Exception) {
+                throw DebugData.error("Data set: in $name: ${resolvePath(name)}")
+            }
         }
 
         fun get(name: String, pos: IntI) =
@@ -57,16 +62,15 @@ class Data {
 
         val dictionary = HashMap<String, String>()
 
-        private fun resolvePath(name: String): String {
+        fun resolvePath(name: String): String {
             var local_path = ""
             var last = name
-            if (name.indexOf('|') != -1) {
+            if (name.contains('|')) {
                 local_path = dictionary[FGUtils.subBefore(name, "|")].orEmpty()
-                last = if (name.indexOf('|')+1 < 0) name
-                else FGUtils.subAfter(name, "|")
+                last = FGUtils.subAfter(name, "|")
             }
 
-            return "$directory$local_path$last".replace("/", File.separator)
+            return "$dir$local_path$last".replace("/", File.separator)
         }
     }
 }

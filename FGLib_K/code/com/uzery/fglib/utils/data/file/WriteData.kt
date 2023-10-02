@@ -3,19 +3,21 @@ package com.uzery.fglib.utils.data.file
 import com.uzery.fglib.utils.data.debug.DebugData
 import com.uzery.fglib.utils.data.file.ConstL.Companion.BUFFER_FORMAT
 import com.uzery.fglib.utils.data.file.ConstL.Companion.RUN_JAR
+import com.uzery.fglib.utils.data.image.Data
+import com.uzery.fglib.utils.math.FGUtils
 import java.io.*
 import java.util.stream.Collectors
 
 interface WriteData {
     companion object {
-        var directory = ""
+        var dir = ""
 
         operator fun get(filename: String): ArrayList<String> {
             return getReader(resolvePath(filename)).lines().collect(Collectors.toCollection { ArrayList() })
         }
 
         fun write(filename: String, write: String) {
-            val wr = getWriter("${directory}$filename")
+            val wr = getWriter("${dir}$filename")
             try {
                 wr.write(write)
                 wr.close()
@@ -90,9 +92,17 @@ interface WriteData {
             return PrintStream(outFileStream("C:/com.uzery.fglib.utils.data.image.Data/!errors.txt"))
         }
 
-        private fun resolvePath(name: String): String {
-            return "$directory$name".replace("/", File.separator)
-        }
+        val dictionary = HashMap<String, String>()
 
+        private fun resolvePath(name: String): String {
+            var local_path = ""
+            var last = name
+            if (name.contains('|')) {
+                local_path = Data.dictionary[FGUtils.subBefore(name, "|")].orEmpty()
+                last = FGUtils.subAfter(name, "|")
+            }
+
+            return "${Data.dir}$local_path$last".replace("/", File.separator)
+        }
     }
 }
