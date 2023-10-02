@@ -1,7 +1,6 @@
 package com.uzery.fglib.utils.math.matrix
 
 import com.uzery.fglib.utils.data.debug.DebugData
-import java.lang.StringBuilder
 
 open class Matrix(val data: Array2<Double>) {
 

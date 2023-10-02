@@ -3,8 +3,8 @@ package com.uzery.fglib.utils.math
 import com.uzery.fglib.utils.data.debug.DebugData
 import com.uzery.fglib.utils.data.file.ConstL.Companion.LITTLE
 import com.uzery.fglib.utils.math.ShapeUtils.rect
-import com.uzery.fglib.utils.math.geom.shape.RectN
 import com.uzery.fglib.utils.math.geom.Shape
+import com.uzery.fglib.utils.math.geom.shape.RectN
 import kotlin.math.abs
 import kotlin.math.min
 

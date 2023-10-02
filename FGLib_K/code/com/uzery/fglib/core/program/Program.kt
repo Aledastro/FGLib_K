@@ -53,7 +53,7 @@ internal object Program {
         stage.isFullScreen = options.fullscreen
         stage.fullScreenExitKeyCombination = KeyCombination.NO_MATCH
         options.icons.forEach { stage.icons.add(Image(it)) }
-        
+
         stage.title = options.title
         stage.show()
 

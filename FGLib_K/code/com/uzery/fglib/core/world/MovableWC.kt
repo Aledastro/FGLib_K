@@ -1,7 +1,6 @@
 package com.uzery.fglib.core.world
 
 import com.uzery.fglib.core.obj.GameObject
-import com.uzery.fglib.core.program.Platform
 import com.uzery.fglib.core.program.Platform.CANVAS
 import com.uzery.fglib.core.program.Platform.graphics
 import com.uzery.fglib.core.room.Room
@@ -25,7 +24,7 @@ class MovableWC(private val goal: GameObject, val room_p: Double = 10.0): WorldC
         val rect1 = RectN(r.pos-pos, r.size+pos*2)
         val rect2 = RectN(r.pos+pos, r.size-pos*2)
         val camera = RectN.C(World.camera!!.stats.POS+World.camera!!.stats.roomPOS, CANVAS)
-        return ShapeUtils.into(rect1,camera) || ShapeUtils.into(rect2,camera)
+        return ShapeUtils.into(rect1, camera) || ShapeUtils.into(rect2, camera)
     }
 
     override fun onAppear(r: Room) {

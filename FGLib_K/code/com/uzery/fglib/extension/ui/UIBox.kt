@@ -39,4 +39,17 @@ object UIBox: Extension {
     fun clear() {
         list.clear()
     }
+
+    var updating = true
+    fun show() {
+        updating = true
+    }
+
+    fun hide() {
+        updating = false
+    }
+
+    override fun isRunning(): Boolean {
+        return updating
+    }
 }

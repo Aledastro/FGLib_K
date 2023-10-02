@@ -1,9 +1,12 @@
 package com.uzery.fglib.utils.math
 
 import com.uzery.fglib.utils.data.debug.DebugData
-import com.uzery.fglib.utils.math.geom.*
-import com.uzery.fglib.utils.math.geom.shape.*
-import kotlin.math.pow
+import com.uzery.fglib.utils.math.geom.PointN
+import com.uzery.fglib.utils.math.geom.Shape
+import com.uzery.fglib.utils.math.geom.shape.FigureN
+import com.uzery.fglib.utils.math.geom.shape.FigureRectN
+import com.uzery.fglib.utils.math.geom.shape.OvalN
+import com.uzery.fglib.utils.math.geom.shape.RectN
 
 object ShapeUtils {
     fun rect(shape: Shape) = RectN(shape.L, shape.S)

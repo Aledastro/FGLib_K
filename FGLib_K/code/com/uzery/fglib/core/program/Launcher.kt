@@ -1,7 +1,6 @@
 package com.uzery.fglib.core.program
 
 import javafx.application.Application
-import javafx.stage.Stage
 
 object Launcher {
     fun startProcess(options: LaunchOptions, vararg ets: Extension) {
