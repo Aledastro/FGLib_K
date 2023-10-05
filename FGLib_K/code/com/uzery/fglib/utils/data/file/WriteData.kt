@@ -2,8 +2,8 @@ package com.uzery.fglib.utils.data.file
 
 import com.uzery.fglib.utils.data.CollectDataClass
 import com.uzery.fglib.utils.data.debug.DebugData
-import com.uzery.fglib.utils.data.file.ConstL.Companion.BUFFER_FORMAT
-import com.uzery.fglib.utils.data.file.ConstL.Companion.RUN_JAR
+import com.uzery.fglib.utils.data.file.ConstL.BUFFER_FORMAT
+import com.uzery.fglib.utils.data.file.ConstL.RUN_JAR
 import java.io.*
 import java.util.stream.Collectors
 

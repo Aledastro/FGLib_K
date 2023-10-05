@@ -1,6 +1,6 @@
 package com.uzery.fglib.utils.math
 
-import com.uzery.fglib.utils.data.file.ConstL.Companion.LITTLE
+import com.uzery.fglib.utils.data.file.ConstL.LITTLE
 import com.uzery.fglib.utils.math.geom.PointN
 import kotlin.math.PI
 import kotlin.math.abs
