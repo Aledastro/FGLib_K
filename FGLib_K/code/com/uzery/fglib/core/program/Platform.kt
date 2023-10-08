@@ -6,7 +6,7 @@ import com.uzery.fglib.utils.graphics.AffineTransform
 import com.uzery.fglib.utils.graphics.GeometryGraphics
 import com.uzery.fglib.utils.graphics.ImageGraphics
 import com.uzery.fglib.utils.input.KeyActivator
-import com.uzery.fglib.utils.input.TouchActivator
+import com.uzery.fglib.utils.input.MouseActivator
 import com.uzery.fglib.utils.math.geom.PointN
 import com.uzery.fglib.utils.math.geom.shape.RectN
 import javafx.scene.image.Image
@@ -21,7 +21,7 @@ object Platform {
 
     fun update() {
         keyboard.update()
-        mouse_keys.update()
+        mouse.keys.update()
     }
 
     var develop_mode = false
@@ -51,12 +51,13 @@ object Platform {
         override fun pressed0(code: Int): Boolean = Program.pressed[code]
         override fun from(key: KeyCode): Int = key.ordinal
     }
-    val mouse_keys = object: KeyActivator<MouseButton>(KeyCode.values().size) {
-        override fun pressed0(code: Int): Boolean = Program.mouse_pressed[code]
-        override fun from(key: MouseButton): Int = key.ordinal
-    }
-    val mouse = object: TouchActivator(RectN(PointN.ZERO, CANVAS)) {
+    val mouse = object: MouseActivator(RectN(PointN.ZERO, CANVAS)) {
         override fun pos0(): PointN = Program.mouseP
+        
+        override val keys = object: KeyActivator<MouseButton>(KeyCode.values().size) {
+            override fun pressed0(code: Int): Boolean = Program.mouse_pressed[code]
+            override fun from(key: MouseButton): Int = key.ordinal
+        }
     }
     val graphics = object: AffineGraphics() {
         private val transform =

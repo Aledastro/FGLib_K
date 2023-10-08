@@ -24,7 +24,7 @@ abstract class VBox: UIElement() {
     private var name = LinkedList<String>()
 
     override fun update() {
-        if (Platform.mouse_keys.anyInPressed(MouseButton.PRIMARY, MouseButton.SECONDARY) && isActive()) {
+        if (Platform.mouse.keys.anyInPressed(MouseButton.PRIMARY, MouseButton.SECONDARY) && isActive()) {
             mouse_input = true
         }
         if (!isActive()) {

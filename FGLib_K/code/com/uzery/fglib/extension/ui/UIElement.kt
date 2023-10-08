@@ -1,7 +1,6 @@
 package com.uzery.fglib.extension.ui
 
 import com.uzery.fglib.core.program.Platform.mouse
-import com.uzery.fglib.core.program.Platform.mouse_keys
 import com.uzery.fglib.core.program.Platform.scale
 import com.uzery.fglib.utils.math.geom.PointN
 import com.uzery.fglib.utils.math.geom.shape.RectN
@@ -34,15 +33,15 @@ abstract class UIElement {
     abstract fun update()
 
     protected fun pressed(pos: PointN, size: PointN, button: MouseButton = MouseButton.PRIMARY): Boolean {
-        return isAt(pos, size) && mouse_keys.pressed(button)
+        return isAt(pos, size) && mouse.keys.pressed(button)
     }
 
     protected fun inPressed(pos: PointN, size: PointN, button: MouseButton = MouseButton.PRIMARY): Boolean {
-        return isAt(pos, size) && mouse_keys.inPressed(button)
+        return isAt(pos, size) && mouse.keys.inPressed(button)
     }
 
     protected fun rePressed(pos: PointN, size: PointN, button: MouseButton = MouseButton.PRIMARY): Boolean {
-        return isAt(pos, size) && mouse_keys.rePressed(button)
+        return isAt(pos, size) && mouse.keys.rePressed(button)
     }
 
     protected fun isAt(pos: PointN, size: PointN): Boolean {

@@ -7,7 +7,6 @@ import com.uzery.fglib.core.program.Platform
 import com.uzery.fglib.core.program.Platform.graphics
 import com.uzery.fglib.core.program.Platform.keyboard
 import com.uzery.fglib.core.program.Platform.mouse
-import com.uzery.fglib.core.program.Platform.mouse_keys
 import com.uzery.fglib.core.program.Program
 import com.uzery.fglib.core.room.Room
 import com.uzery.fglib.core.world.World
@@ -222,7 +221,7 @@ class CanvasRE(private val data: DataRE): UICanvas() {
             add_size = add_size.coerceIn(0..10)
 
             fun add(pos: PointN) {
-                if (mouse_keys.pressed(MouseButton.PRIMARY)) {
+                if (mouse.keys.pressed(MouseButton.PRIMARY)) {
                     val o = data.getter.getEntry(data.chosen_entry)()
                     if (data.select_layer != 0 && !onSelectLayer(o)) return
                     val posWithOffset = pos+mouseRealPos.round(data.GRID)+grid_offset[grid_offset_id]
@@ -246,7 +245,7 @@ class CanvasRE(private val data: DataRE): UICanvas() {
         }
 
         fun checkForRemove() {
-            if (mouse_keys.pressed(MouseButton.SECONDARY)) {
+            if (mouse.keys.pressed(MouseButton.SECONDARY)) {
                 val sel = data.getter.getEntry(data.chosen_entry)()
                 val room = roomFrom(mouseRealPos) ?: return
 
@@ -313,7 +312,7 @@ class CanvasRE(private val data: DataRE): UICanvas() {
                 Program.cursor = Cursor.DEFAULT
                 return false
             }
-            if (mouse_keys.anyPressed(*MouseButton.values())) data.draw_pos += (mouse.pos()-last_mouse_pos)/Platform.scale
+            if (mouse.keys.anyPressed(*MouseButton.values())) data.draw_pos += (mouse.pos()-last_mouse_pos)/Platform.scale
             Program.cursor = Cursor.CLOSED_HAND
 
             return true
