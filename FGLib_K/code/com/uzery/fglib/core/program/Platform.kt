@@ -29,7 +29,7 @@ object Platform {
     var whole_draw = false
 
     //todo scale 3 spaces
-    var scale = 2
+    var scale = 1
 
     val WINDOW
         get() = PointN(options().size)
