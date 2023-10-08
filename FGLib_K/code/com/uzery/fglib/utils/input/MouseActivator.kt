@@ -6,9 +6,8 @@ import javafx.scene.input.MouseButton
 
 abstract class MouseActivator(screen: RectN) {
     protected abstract fun pos0(): PointN
-    fun pos(): PointN {
-        return pos0()
-    }
+    val pos: PointN
+        get() = pos0()
 
     abstract val keys: KeyActivator<MouseButton>
 }

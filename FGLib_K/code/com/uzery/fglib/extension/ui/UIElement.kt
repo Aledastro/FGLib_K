@@ -45,7 +45,7 @@ abstract class UIElement {
     }
 
     protected fun isAt(pos: PointN, size: PointN): Boolean {
-        return RectN(pos, size).into(mouse.pos()/scale)
+        return RectN(pos, size).into(mouse.pos/scale)
     }
 
     fun isActive() = isAt(pos, size)
