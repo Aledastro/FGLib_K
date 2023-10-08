@@ -76,7 +76,6 @@ class RoomEditor(private val getter: (Int) -> Pair<ClassGetter<GameObject>, Arra
         }//todo do more simple way
         data.last_world_play = data.world_play
 
-        Platform.update()
         checkForSave()
 
         setCurrentLayers()

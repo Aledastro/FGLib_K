@@ -81,6 +81,7 @@ internal object Program {
         val timer = object: AnimationTimer() {
             override fun handle(t: Long) {
                 extensions.forEach { if (it.isRunning()) it.update() }
+                Platform.update()
             }
         }
 
