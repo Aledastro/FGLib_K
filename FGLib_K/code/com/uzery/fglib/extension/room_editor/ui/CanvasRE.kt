@@ -110,7 +110,7 @@ class CanvasRE(private val data: DataRE): UICanvas() {
         fun drawSelectObj(alpha: Double = 1.0) {
             Platform.global_alpha = alpha
             val pp =
-                (mouse.pos/Platform.scale-data.draw_pos).round(data.GRID)+data.draw_pos+grid_offset[grid_offset_id]
+                (mouse.pos-data.draw_pos).round(data.GRID)+data.draw_pos+grid_offset[grid_offset_id]
             for (i in -add_size..add_size) {
                 for (j in -add_size..add_size) {
                     val obj = data.chosen_obj ?: continue
@@ -209,7 +209,7 @@ class CanvasRE(private val data: DataRE): UICanvas() {
             return data.select_layer == 0 || o.visuals.isEmpty() || o.visuals.any { vis -> vis.drawLayer() == data.layers[data.select_layer-1] }
         }
 
-        val mouseRealPos = mouse.pos/Platform.scale-data.draw_pos
+        val mouseRealPos = mouse.pos-data.draw_pos
 
         fun checkForAdd() {
             if (keyboard.inPressed(KeyCode.MINUS)) {
@@ -312,7 +312,7 @@ class CanvasRE(private val data: DataRE): UICanvas() {
                 Program.cursor = Cursor.DEFAULT
                 return false
             }
-            if (mouse.keys.anyPressed(*MouseButton.values())) data.draw_pos += (mouse.pos-last_mouse_pos)/Platform.scale
+            if (mouse.keys.anyPressed(*MouseButton.values())) data.draw_pos += mouse.pos-last_mouse_pos
             Program.cursor = Cursor.CLOSED_HAND
 
             return true

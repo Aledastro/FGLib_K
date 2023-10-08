@@ -52,7 +52,7 @@ object Platform {
         override fun from(key: KeyCode): Int = key.ordinal
     }
     val mouse = object: MouseActivator(RectN(PointN.ZERO, CANVAS)) {
-        override fun pos0(): PointN = Program.mouseP
+        override fun pos0(): PointN = Program.mouseP/scale
         
         override val keys = object: KeyActivator<MouseButton>(KeyCode.values().size) {
             override fun pressed0(code: Int): Boolean = Program.mouse_pressed[code]
