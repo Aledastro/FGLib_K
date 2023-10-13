@@ -3,10 +3,13 @@ package com.uzery.fglib.utils.math
 import com.uzery.fglib.utils.data.getter.ClassGetter
 import com.uzery.fglib.utils.math.geom.PointN
 import javafx.scene.paint.Color
+import java.io.File
 import java.time.LocalDate
 import java.time.LocalTime
 
 object FGUtils {
+    val project_dir = File("").absolutePath
+
     fun hours(): Int = LocalTime.now().hour
     fun minutes(): Int = LocalTime.now().minute
     fun seconds(): Int = LocalTime.now().second
