@@ -2,6 +2,7 @@ package com.uzery.fglib.core.obj.controller
 
 abstract class TimeTempAction: TempAction {
     protected var temp_time = 0
+        private set
     private var finished = false
 
     final override fun next() {
