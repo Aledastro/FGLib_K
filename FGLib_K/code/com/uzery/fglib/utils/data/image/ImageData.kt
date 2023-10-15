@@ -5,7 +5,7 @@ import com.uzery.fglib.utils.data.debug.DebugData
 import com.uzery.fglib.utils.math.num.IntI
 import javafx.scene.image.Image
 
-object Data: CollectDataClass() {
+object ImageData: CollectDataClass() {
     private val origins = HashMap<String, Image>()
     private val sprites = HashMap<String, SpriteImage>()
     private val combinations = HashMap<String, CombinationImage>()
