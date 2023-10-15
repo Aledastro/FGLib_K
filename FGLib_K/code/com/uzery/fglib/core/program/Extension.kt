@@ -12,7 +12,7 @@ abstract class Extension(vararg children: Extension) {
     abstract fun init()
     abstract fun update()
 
-    fun updateAfter(){
+    open fun updateAfter(){
 
     }
 
