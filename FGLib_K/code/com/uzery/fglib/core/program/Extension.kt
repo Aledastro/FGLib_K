@@ -12,17 +12,19 @@ abstract class Extension(vararg children: Extension) {
     abstract fun init()
     abstract fun update()
 
-    open fun updateAfter(){
+    open fun updateAfter() {
 
     }
 
-    internal fun initWithChildren(){
+    internal fun initWithChildren() {
         init()
         children.forEach { it.initWithChildren() }
     }
-    internal fun updateWithChildren(){
+
+    internal fun updateWithChildren() {
         update()
-        children.forEach { if(it.isRunning()) it.updateWithChildren() }
+        children.forEach { if (it.isRunning()) it.updateWithChildren() }
+        updateAfter()
     }
 
     open fun isRunning() = true
