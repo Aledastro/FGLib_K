@@ -44,17 +44,4 @@ open class UIBox(vararg elements: UIElement): Extension() {
     fun clear() {
         list.clear()
     }
-
-    var updating = true
-    fun show() {
-        updating = true
-    }
-
-    fun hide() {
-        updating = false
-    }
-
-    override fun running(): Boolean {
-        return updating
-    }
 }

@@ -4,6 +4,9 @@ import java.util.*
 
 abstract class Extension(vararg children: Extension) {
     val children = LinkedList<Extension>()
+    var visible = true
+        private set
+    private var next_visible = true
 
     init {
         this.children.addAll(children)
@@ -23,10 +26,24 @@ abstract class Extension(vararg children: Extension) {
 
     internal fun updateWithChildren() {
         update()
-        children.forEach { if (it.running()) it.updateWithChildren() }
+        children.forEach { if (it.visible()) it.updateWithChildren() }
         updateAfter()
     }
+    internal fun updateVisibilityWithChildren() {
+        visible = next_visible
+        children.forEach { it.updateVisibilityWithChildren() }
+    }
 
-    open fun running() = true
+    open fun visible() = visible
 
+    fun show(){
+        next_visible = true
+    }
+    fun hide(){
+        next_visible = false
+    }
+
+    fun switch(){
+        next_visible = !visible
+    }
 }

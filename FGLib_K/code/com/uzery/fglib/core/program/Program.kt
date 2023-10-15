@@ -83,7 +83,9 @@ internal object Program {
 
         val timer = object: AnimationTimer() {
             override fun handle(t: Long) {
+                core.updateVisibilityWithChildren()
                 core.updateWithChildren()
+
                 Platform.update()
             }
         }
