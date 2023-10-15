@@ -23,10 +23,10 @@ abstract class Extension(vararg children: Extension) {
 
     internal fun updateWithChildren() {
         update()
-        children.forEach { if (it.isRunning()) it.updateWithChildren() }
+        children.forEach { if (it.running()) it.updateWithChildren() }
         updateAfter()
     }
 
-    open fun isRunning() = true
+    open fun running() = true
 
 }

@@ -54,7 +54,7 @@ open class UIBox(vararg elements: UIElement): Extension() {
         updating = false
     }
 
-    override fun isRunning(): Boolean {
+    override fun running(): Boolean {
         return updating
     }
 }
