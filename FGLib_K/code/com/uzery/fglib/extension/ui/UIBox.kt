@@ -7,17 +7,22 @@ import com.uzery.fglib.utils.math.FGUtils
 import javafx.scene.paint.Color
 import java.util.*
 
-object UIBox: Extension {
+open class UIBox(vararg elements: UIElement): Extension() {
     private var active: UIElement? = null
 
     private val list = LinkedList<UIElement>()
-    fun add(vararg element: UIElement) = list.addAll(element)
+
+    init {
+        list.addAll(elements)
+    }
+
+    fun add(vararg elements: UIElement) = list.addAll(elements)
 
     override fun init() {
 
     }
 
-    override fun update() {
+    final override fun update() {
         active = list.stream().filter { el -> el.showing && el.isActive() }
             .sorted { o1, o2 -> -o1.priority.compareTo(o2.priority) }.findFirst().orElse(null)
         active?.ifActive()

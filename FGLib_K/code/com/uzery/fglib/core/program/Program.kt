@@ -29,16 +29,19 @@ internal object Program {
     internal var mouseP = PointN.ZERO
     internal var options = LaunchOptions.default
 
-    private var extensions = LinkedList<Extension>()
+    private val core = object: Extension(){
+        override fun update() {
+
+        }
+
+        override fun init() {
+
+        }
+
+    }
 
     internal fun initWith(options: LaunchOptions, vararg ets: Extension) {
-        val list = LinkedList<Extension>()
-        list.addAll(ets)
-        while (list.isNotEmpty()) {
-            val e = list.removeFirst()
-            extensions.add(e)
-            list.addAll(e.children())
-        }
+        core.children.addAll(ets)
 
         this.options = options
     }
@@ -76,11 +79,11 @@ internal object Program {
         this.stage.scene.setOnKeyPressed { key -> pressed[key.code.ordinal] = true }
         this.stage.scene.setOnKeyReleased { key -> pressed[key.code.ordinal] = false }
 
-        extensions.forEach { it.init() }
+        core.initWithChildren()
 
         val timer = object: AnimationTimer() {
             override fun handle(t: Long) {
-                extensions.forEach { if (it.isRunning()) it.update() }
+                core.updateWithChildren()
                 Platform.update()
             }
         }

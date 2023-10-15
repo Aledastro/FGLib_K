@@ -2,10 +2,29 @@ package com.uzery.fglib.core.program
 
 import java.util.*
 
-interface Extension {
-    fun update()
-    fun init()
+abstract class Extension(vararg children: Extension) {
+    val children = LinkedList<Extension>()
 
-    fun isRunning() = true
-    fun children(): List<Extension> = LinkedList<Extension>()
+    init {
+        this.children.addAll(children)
+    }
+
+    abstract fun init()
+    abstract fun update()
+
+    fun updateAfter(){
+
+    }
+
+    internal fun initWithChildren(){
+        init()
+        children.forEach { it.initWithChildren() }
+    }
+    internal fun updateWithChildren(){
+        update()
+        children.forEach { if(it.isRunning()) it.updateWithChildren() }
+    }
+
+    open fun isRunning() = true
+
 }

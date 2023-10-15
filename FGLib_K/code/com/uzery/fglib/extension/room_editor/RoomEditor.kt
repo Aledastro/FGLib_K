@@ -20,8 +20,7 @@ import javafx.scene.input.KeyCode
 import javafx.scene.paint.Color
 import java.util.*
 
-class RoomEditor(private val getter: (Int) -> Pair<ClassGetter<GameObject>, Array<String>>): Extension {
-    override fun children() = LinkedList<Extension>().apply { add(UIBox) }
+class RoomEditor(getter: (Int) -> Pair<ClassGetter<GameObject>, Array<String>>): Extension(RoomEditorUI) {
 
     private lateinit var world_save: Array<String>
     private var data = DataRE(getter(0))
@@ -148,8 +147,8 @@ class RoomEditor(private val getter: (Int) -> Pair<ClassGetter<GameObject>, Arra
         layers_vbox = LayerVBoxRE(data)
         info_box = InfoBoxRE(data)
 
-        UIBox.clear()
-        UIBox.add(canvasX, play_button, objects_vbox, layers_vbox, info_box, choose_objects_vbox)
+        RoomEditorUI.clear()
+        RoomEditorUI.add(canvasX, play_button, objects_vbox, layers_vbox, info_box, choose_objects_vbox)
         canvasX.show()
         play_button.show()
         objects_vbox.show()
