@@ -19,6 +19,14 @@ abstract class Extension(vararg children: Extension) {
 
     }
 
+    open fun onShow(){
+
+    }
+
+    open fun onHide(){
+
+    }
+
     internal fun initWithChildren() {
         init()
         children.forEach { it.initWithChildren() }
@@ -38,9 +46,11 @@ abstract class Extension(vararg children: Extension) {
 
     fun show(){
         next_visible = true
+        onShow()
     }
     fun hide(){
         next_visible = false
+        onHide()
     }
 
     fun switch(){
