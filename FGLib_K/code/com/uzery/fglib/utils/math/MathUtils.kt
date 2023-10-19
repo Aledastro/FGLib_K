@@ -7,9 +7,9 @@ import kotlin.math.abs
 import kotlin.math.atan
 
 object MathUtils {
-    fun mod(input: Double, mod: Double) = input%mod+(if (input < 0) mod else 0.0)
+    fun mod(input: Double, mod: Double) = input%mod+(if (input < 0 && input%mod != 0.0) mod else 0.0)
 
-    fun mod(input: Int, mod: Int) = input%mod+(if (input < 0) mod else 0)
+    fun mod(input: Int, mod: Int) = input%mod+(if (input < 0 && input%mod != 0) mod else 0)
 
     //todo it's roundL (round to less value)
     fun round(input: Double, mod: Double) = input-mod(input, mod)
