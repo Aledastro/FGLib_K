@@ -12,7 +12,7 @@ abstract class Extension(vararg children: Extension) {
         private set
     private var next_active = true
 
-    protected fun add(vararg children: Extension){
+    protected fun add(vararg children: Extension) {
         this.children.addAll(children)
     }
 

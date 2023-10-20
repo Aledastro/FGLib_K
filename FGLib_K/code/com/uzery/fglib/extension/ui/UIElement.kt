@@ -1,7 +1,6 @@
 package com.uzery.fglib.extension.ui
 
 import com.uzery.fglib.core.program.Platform.mouse
-import com.uzery.fglib.core.program.Platform.scale
 import com.uzery.fglib.utils.math.geom.PointN
 import com.uzery.fglib.utils.math.geom.shape.RectN
 import javafx.scene.input.MouseButton
