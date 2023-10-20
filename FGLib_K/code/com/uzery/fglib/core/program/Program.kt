@@ -73,7 +73,7 @@ internal object Program {
         val timer = object: AnimationTimer() {
             override fun handle(t: Long) {
                 core.updateTasksWithChildren()
-                core.nextWithChildren()
+                core.updateWithChildren()
                 core.drawWithChildren(core.draw_pos)
 
                 Platform.update()

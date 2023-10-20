@@ -23,8 +23,8 @@ abstract class Extension(vararg children: Extension) {
     open fun init() {}
     open fun initAfter() {}
 
-    open fun next() {}
-    open fun nextAfter() {}
+    open fun update() {}
+    open fun updateAfter() {}
 
     open fun draw(pos: PointN) {}
     open fun drawAfter(pos: PointN) {}
@@ -38,10 +38,10 @@ abstract class Extension(vararg children: Extension) {
         initAfter()
     }
 
-    internal fun nextWithChildren() {
-        next()
-        children.forEach { if (it.active()) it.nextWithChildren() }
-        nextAfter()
+    internal fun updateWithChildren() {
+        update()
+        children.forEach { if (it.active()) it.updateWithChildren() }
+        updateAfter()
     }
 
     internal fun drawWithChildren(pos: PointN) {

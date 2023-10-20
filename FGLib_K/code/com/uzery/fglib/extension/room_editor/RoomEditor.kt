@@ -65,7 +65,7 @@ class RoomEditor(getter: (Int) -> Pair<ClassGetter<GameObject>, Array<String>>):
         world_save = Array(World.rooms.size) { World.rooms[it].toString() }
     }
 
-    override fun next() {
+    override fun update() {
         data.edit = World.rooms[data.edit_n]
         data.last_edit_room = data.edit
 

@@ -18,7 +18,7 @@ open class UIBox(vararg elements: UIElement): Extension() {
 
     fun add(vararg elements: UIElement) = list.addAll(elements)
 
-    final override fun next() {
+    final override fun update() {
         active_el = list.stream().filter { el -> el.showing && el.isActive() }
             .sorted { o1, o2 -> -o1.priority.compareTo(o2.priority) }.findFirst().orElse(null)
         active_el?.ifActive()
