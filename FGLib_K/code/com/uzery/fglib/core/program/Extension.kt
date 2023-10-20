@@ -76,5 +76,6 @@ abstract class Extension(vararg children: Extension) {
 
     fun switch() {
         next_active = !active
+        if(next_active) onShow() else onHide()
     }
 }
