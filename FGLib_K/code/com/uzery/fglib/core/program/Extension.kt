@@ -54,12 +54,15 @@ abstract class Extension(vararg children: Extension) {
         drawAfter(pos)
     }
 
-    internal fun updateVisibilityWithChildren() {
+    internal fun updateTasksWithChildren() {
         active = next_active
-        children.forEach { it.updateVisibilityWithChildren() }
+        onBackGround()
+        children.forEach { it.updateTasksWithChildren() }
     }
 
     open fun active() = active
+
+    open fun onBackGround() {}
 
     fun show() {
         next_active = true
