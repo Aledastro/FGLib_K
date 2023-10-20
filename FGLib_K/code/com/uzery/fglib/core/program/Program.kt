@@ -11,10 +11,8 @@ import javafx.scene.image.Image
 import javafx.scene.input.KeyCode
 import javafx.scene.input.KeyCombination
 import javafx.stage.Stage
-import java.util.*
 
 internal object Program {
-    //todo
     var cursor: Cursor? = null
         set(value) {
             field = value
@@ -29,16 +27,7 @@ internal object Program {
     internal var mouseP = PointN.ZERO
     internal var options = LaunchOptions.default
 
-    private val core = object: Extension(){
-        override fun update() {
-
-        }
-
-        override fun init() {
-
-        }
-
-    }
+    private val core = object: Extension() {}
 
     internal fun initWith(options: LaunchOptions, vararg ets: Extension) {
         core.children.addAll(ets)
@@ -84,7 +73,8 @@ internal object Program {
         val timer = object: AnimationTimer() {
             override fun handle(t: Long) {
                 core.updateVisibilityWithChildren()
-                core.updateWithChildren()
+                core.nextWithChildren()
+                core.drawWithChildren(core.draw_pos)
 
                 Platform.update()
             }

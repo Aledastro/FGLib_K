@@ -1,59 +1,77 @@
 package com.uzery.fglib.core.program
 
+import com.uzery.fglib.core.program.Platform.graphics
+import com.uzery.fglib.utils.math.geom.PointN
 import java.util.*
 
 abstract class Extension(vararg children: Extension) {
     val children = LinkedList<Extension>()
-    var visible = true
-        private set
-    private var next_visible = true
+    var draw_pos = PointN.ZERO
 
-    init {
+    var active = true
+        private set
+    private var next_active = true
+
+    protected fun add(vararg children: Extension){
         this.children.addAll(children)
     }
 
-    abstract fun init()
-    abstract fun update()
-
-    open fun updateAfter() {
-
+    init {
+        add(*children)
     }
 
-    open fun onShow(){
+    open fun init() {}
+    open fun initAfter() {}
 
-    }
+    open fun next() {}
+    open fun nextAfter() {}
 
-    open fun onHide(){
+    open fun draw(pos: PointN) {}
+    open fun drawAfter(pos: PointN) {}
 
-    }
+    open fun onShow() {}
+    open fun onHide() {}
 
     internal fun initWithChildren() {
         init()
         children.forEach { it.initWithChildren() }
+        initAfter()
     }
 
-    internal fun updateWithChildren() {
-        update()
-        children.forEach { if (it.visible()) it.updateWithChildren() }
-        updateAfter()
+    internal fun nextWithChildren() {
+        next()
+        children.forEach { if (it.active()) it.nextWithChildren() }
+        nextAfter()
     }
+
+    internal fun drawWithChildren(pos: PointN) {
+        graphics.setDefaults()
+        draw(pos)
+
+        children.forEach { if (it.active()) it.drawWithChildren(pos+it.draw_pos) }
+
+        graphics.setDefaults()
+        drawAfter(pos)
+    }
+
     internal fun updateVisibilityWithChildren() {
-        visible = next_visible
+        active = next_active
         children.forEach { it.updateVisibilityWithChildren() }
     }
 
-    open fun visible() = visible
+    open fun active() = active
 
-    fun show(){
-        next_visible = true
+    fun show() {
+        next_active = true
         onShow()
     }
-    fun hide(){
-        next_visible = false
+
+    fun hide() {
+        next_active = false
         onHide()
     }
 
-    fun switch(){
-        next_visible = !visible
+    fun switch() {
+        next_active = !active
     }
 }

@@ -12,7 +12,6 @@ import com.uzery.fglib.core.world.OneRoomWC
 import com.uzery.fglib.core.world.World
 import com.uzery.fglib.core.world.WorldUtils
 import com.uzery.fglib.extension.room_editor.ui.*
-import com.uzery.fglib.extension.ui.UIBox
 import com.uzery.fglib.utils.data.file.WriteData
 import com.uzery.fglib.utils.data.getter.ClassGetter
 import com.uzery.fglib.utils.math.geom.PointN
@@ -21,16 +20,52 @@ import javafx.scene.paint.Color
 import java.util.*
 
 class RoomEditor(getter: (Int) -> Pair<ClassGetter<GameObject>, Array<String>>): Extension(RoomEditorUI) {
-
     private lateinit var world_save: Array<String>
     private var data = DataRE(getter(0))
 
-    override fun update() {
-        clear()
-        next()
+    private var play_button = PlayButtonRE(data)
+    private var objects_vbox = ObjectVBoxRE(data)
+    private var choose_objects_vbox = ChooseObjectVBoxRE(data)
+    private var canvasX = CanvasRE(data)
+    private var layers_vbox = LayerVBoxRE(data)
+    private var info_box = InfoBoxRE(data)
+
+    override fun init() {
+        scale = 2
+        World.getter = data.getter
+
+        //todo
+        val c = OneRoomWC()
+        World.init(c, *data.filenames)
+        data.edit = World.rooms[data.edit_n]
+        c.room = data.edit
+
+        Platform.whole_draw = true
+        //todo
+        data.draw_pos = Platform.options().size/4-data.edit.size*0.5
+
+        play_button = PlayButtonRE(data)
+        objects_vbox = ObjectVBoxRE(data)
+        choose_objects_vbox = ChooseObjectVBoxRE(data)
+        canvasX = CanvasRE(data)
+        layers_vbox = LayerVBoxRE(data)
+        info_box = InfoBoxRE(data)
+
+        RoomEditorUI.clear()
+        RoomEditorUI.add(canvasX, play_button, objects_vbox, layers_vbox, info_box, choose_objects_vbox)
+        canvasX.show()
+        play_button.show()
+        objects_vbox.show()
+        layers_vbox.show()
+        info_box.show()
+
+        World.next() //todo why it needed?
+        data.init()
+
+        world_save = Array(World.rooms.size) { World.rooms[it].toString() }
     }
 
-    private fun next() {
+    override fun next() {
         data.edit = World.rooms[data.edit_n]
         data.last_edit_room = data.edit
 
@@ -78,20 +113,8 @@ class RoomEditor(getter: (Int) -> Pair<ClassGetter<GameObject>, Array<String>>):
         checkForSave()
 
         setCurrentLayers()
-        checkForInit()
 
         data.time++
-    }
-
-    private fun checkForInit() {
-        /*if(keyboard.inPressed(KeyCode.F7)){
-            data = DataRE(getter(-1))
-            init()
-        }
-        if(keyboard.inPressed(KeyCode.F8)){
-            data = DataRE(getter(1))
-            init()
-        }*/
     }
 
     private fun setCurrentLayers() {
@@ -118,53 +141,14 @@ class RoomEditor(getter: (Int) -> Pair<ClassGetter<GameObject>, Array<String>>):
         }
     }
 
+    override fun draw(pos: PointN) {
+        clear()
+    }
+
     private fun clear() {
         graphics.layer = DrawLayer.CAMERA_OFF
         graphics.alpha = 1.0
         Platform.global_alpha = 1.0
         graphics.fill.rect(PointN.ZERO, CANVAS, Color(0.7, 0.6, 0.9, 1.0))
     }
-
-
-    override fun init() {
-        scale = 2
-        World.getter = data.getter
-
-        //todo
-        val c = OneRoomWC()
-        World.init(c, *data.filenames)
-        data.edit = World.rooms[data.edit_n]
-        c.room = data.edit
-
-        Platform.whole_draw = true
-        //todo
-        data.draw_pos = Platform.options().size/4-data.edit.size*0.5
-
-        play_button = PlayButtonRE(data)
-        objects_vbox = ObjectVBoxRE(data)
-        choose_objects_vbox = ChooseObjectVBoxRE(data)
-        canvasX = CanvasRE(data)
-        layers_vbox = LayerVBoxRE(data)
-        info_box = InfoBoxRE(data)
-
-        RoomEditorUI.clear()
-        RoomEditorUI.add(canvasX, play_button, objects_vbox, layers_vbox, info_box, choose_objects_vbox)
-        canvasX.show()
-        play_button.show()
-        objects_vbox.show()
-        layers_vbox.show()
-        info_box.show()
-
-        World.next() //todo why it needed?
-        data.init()
-
-        world_save = Array(World.rooms.size) { World.rooms[it].toString() }
-    }
-
-    private var play_button = PlayButtonRE(data)
-    private var objects_vbox = ObjectVBoxRE(data)
-    private var choose_objects_vbox = ChooseObjectVBoxRE(data)
-    private var canvasX = CanvasRE(data)
-    private var layers_vbox = LayerVBoxRE(data)
-    private var info_box = InfoBoxRE(data)
 }
