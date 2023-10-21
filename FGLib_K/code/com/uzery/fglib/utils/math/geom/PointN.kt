@@ -20,7 +20,7 @@ data class PointN(private val xs: Array<Double>) {
     constructor(p: IntI): this(p.width, p.height)
 
     operator fun get(n: Int): Double {
-        if (dim == 0) return 0.0;
+        if (dim == 0) return 0.0
         return xs[n]
     }
 

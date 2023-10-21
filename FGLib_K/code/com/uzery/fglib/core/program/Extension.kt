@@ -8,9 +8,20 @@ abstract class Extension(vararg children: Extension) {
     val children = LinkedList<Extension>()
     var draw_pos = PointN.ZERO
 
-    var active = true
+    enum class MODE(val draw: Boolean, val update: Boolean) {
+        SHOW(true, true),
+        HIDE(false, false),
+        ONLY_DRAW(true, false),
+        ONLY_UPDATE(false, true);
+
+        fun active() = draw || update
+    }
+
+    var mode = MODE.SHOW
         private set
-    private var next_active = true
+    private var next_mode = MODE.SHOW
+
+    open fun active() = true
 
     protected fun add(vararg children: Extension) {
         this.children.addAll(children)
@@ -32,6 +43,9 @@ abstract class Extension(vararg children: Extension) {
     open fun onShow() {}
     open fun onHide() {}
 
+    open fun onOnlyDraw() {}
+    open fun onOnlyUpdate() {}
+
     internal fun initWithChildren() {
         init()
         children.forEach { it.initWithChildren() }
@@ -40,7 +54,7 @@ abstract class Extension(vararg children: Extension) {
 
     internal fun updateWithChildren() {
         update()
-        children.forEach { if (it.active()) it.updateWithChildren() }
+        children.forEach { if (it.mode.update && it.active()) it.updateWithChildren() }
         updateAfter()
     }
 
@@ -48,34 +62,46 @@ abstract class Extension(vararg children: Extension) {
         graphics.setDefaults()
         draw(pos)
 
-        children.forEach { if (it.active()) it.drawWithChildren(pos+it.draw_pos) }
+        children.forEach { if (it.mode.draw && it.active()) it.drawWithChildren(pos+it.draw_pos) }
 
         graphics.setDefaults()
         drawAfter(pos)
     }
 
     internal fun updateTasksWithChildren() {
-        active = next_active
+        mode = next_mode
         onBackGround()
         children.forEach { it.updateTasksWithChildren() }
     }
 
-    open fun active() = active
-
     open fun onBackGround() {}
 
     fun show() {
-        next_active = true
+        next_mode = MODE.SHOW
         onShow()
     }
 
     fun hide() {
-        next_active = false
+        next_mode = MODE.HIDE
         onHide()
     }
 
+    fun only_draw() {
+        next_mode = MODE.SHOW
+        onOnlyDraw()
+    }
+
+    fun only_update() {
+        next_mode = MODE.HIDE
+        onOnlyDraw()
+    }
+
     fun switch() {
-        next_active = !active
-        if(next_active) onShow() else onHide()
+        when (mode) {
+            MODE.SHOW -> hide()
+            MODE.HIDE -> show()
+            MODE.ONLY_DRAW -> only_update()
+            MODE.ONLY_UPDATE -> only_draw()
+        }
     }
 }

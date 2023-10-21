@@ -10,7 +10,7 @@ import com.uzery.fglib.utils.math.geom.PointN
 import com.uzery.fglib.utils.math.num.StringN
 import java.util.*
 
-class DataRE(val getter_pair: Pair<ClassGetter<GameObject>, Array<out String>>) {
+class DataRE(getter_pair: Pair<ClassGetter<GameObject>, Array<out String>>) {
     var time = 0.0
     var world_play = false
     var last_world_play = false
