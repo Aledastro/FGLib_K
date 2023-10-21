@@ -6,6 +6,11 @@ open class ParallelGameEvent(vararg events: GameEvent): GameEvent() {
 
     private val events_list = LinkedList(events.toList())
 
+    final override fun collapseWithChildren(){
+        collapse()
+        events_list.forEach { it.collapseWithChildren() }
+    }
+
     final override fun ready() = true
 
     final override fun ends() = events_list.all { it.wasReadyAndEnds() }

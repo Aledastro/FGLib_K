@@ -24,6 +24,12 @@ open class CompositeGameEvent(vararg events: GameEvent): GameEvent() {
 
     fun add(event: GameEvent) = events_list.addLast(event)
 
+    final override fun collapseWithChildren(){
+        collapse()
+        events_list.forEach { it.collapseWithChildren() }
+        current?.collapseWithChildren()
+    }
+
     final override fun ready() = true
 
     final override fun ends() = events_list.isEmpty() && (current?.wasReadyAndEnds() ?: false)
