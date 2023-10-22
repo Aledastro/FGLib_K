@@ -21,7 +21,6 @@ abstract class AffineGraphics {
         image.setDefaults()
         fill.setDefaults()
         stroke.setDefaults()
-        drawPOS = PointN.ZERO
     }
 
     abstract val image: ImageGraphics

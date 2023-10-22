@@ -60,11 +60,13 @@ abstract class Extension(vararg children: Extension) {
 
     internal fun drawWithChildren(pos: PointN) {
         graphics.setDefaults()
+        graphics.drawPOS = PointN.ZERO
         draw(pos)
 
         children.forEach { if (it.mode.draw && it.active()) it.drawWithChildren(pos+it.draw_pos) }
 
         graphics.setDefaults()
+        graphics.drawPOS = PointN.ZERO
         drawAfter(pos)
     }
 
