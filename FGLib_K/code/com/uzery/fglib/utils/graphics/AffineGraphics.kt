@@ -4,6 +4,7 @@ import com.uzery.fglib.core.obj.DrawLayer
 import com.uzery.fglib.core.program.Platform
 import com.uzery.fglib.core.program.Program
 import com.uzery.fglib.utils.math.geom.PointN
+import javafx.scene.text.Font
 
 abstract class AffineGraphics {
     var drawPOS = PointN.ZERO

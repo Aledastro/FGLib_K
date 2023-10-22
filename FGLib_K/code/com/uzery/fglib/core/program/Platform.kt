@@ -86,7 +86,7 @@ object Platform {
 
         }
 
-        override val fill: GeometryGraphics = object: GeometryGraphics(transform) {
+        override val fill: GeometryGraphics = object: GeometryGraphics(transform, transformSize) {
             override var color: Paint = Color(0.0, 0.0, 0.0, 1.0)
                 set(value) {
                     field = value
@@ -106,7 +106,7 @@ object Platform {
                 gc.fillText(text, pos.X, pos.Y)
             }
         }
-        override val stroke: GeometryGraphics = object: GeometryGraphics(transform) {
+        override val stroke: GeometryGraphics = object: GeometryGraphics(transform, transformSize) {
             override var color: Paint = Color(0.0, 0.0, 0.0, 1.0)
                 set(value) {
                     field = value

@@ -1,21 +1,22 @@
 package com.uzery.fglib.utils.graphics
 
+import com.uzery.fglib.core.program.Platform
 import com.uzery.fglib.utils.math.geom.PointN
 import com.uzery.fglib.utils.math.geom.Shape
 import com.uzery.fglib.utils.math.geom.shape.FigureN
 import javafx.scene.paint.Color
 import javafx.scene.paint.Paint
-import javafx.scene.text.FontPosture
-import javafx.scene.text.FontWeight
-import javafx.scene.text.TextAlignment
+import javafx.scene.text.*
 
-abstract class GeometryGraphics(private val transform: AffineTransform) {
+abstract class GeometryGraphics(private val transform: AffineTransform, private val transformSize: AffineTransform) {
     fun setDefaults() {
         font()
         text_align = TextAlignment.RIGHT
         this.color = Color.BLACK
     }
 
+    val font
+        get()=Font.font(font_family, font_weight, font_posture, transformSize.transform(PointN(font_size)).X)
     fun font(
         family: String = "arial", size: Double = 10.0,
         weight: FontWeight = FontWeight.NORMAL, posture: FontPosture = FontPosture.REGULAR
@@ -24,6 +25,12 @@ abstract class GeometryGraphics(private val transform: AffineTransform) {
         font_size = size
         font_weight = weight
         font_posture = posture
+    }
+
+    fun text_size(text: String): PointN{
+        val t = Text(text)
+        t.font = Font.font(font_family, font_weight, font_posture, PointN(font_size).X)
+        return PointN(t.layoutBounds.width, t.layoutBounds.height)
     }
 
     var font_family = "arial"
