@@ -17,18 +17,14 @@ open class CompositeGameEvent(vararg events: GameEvent): GameEvent() {
 
             if (event_time > 0 && (current == null || current!!.wasReadyAndEnds() && events_list.isNotEmpty())) {
                 current = events_list.removeFirst()
-                produce(current!!)
+                grab(current!!)
             }
         }
     }
 
     fun add(event: GameEvent) = events_list.addLast(event)
 
-    final override fun collapseWithChildren(){
-        collapse()
-        events_list.forEach { it.collapseWithChildren() }
-        current?.collapseWithChildren()
-    }
+
 
     final override fun ready() = true
 

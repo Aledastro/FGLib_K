@@ -67,24 +67,32 @@ class CanvasRE(private val data: DataRE): UICanvas() {
             val pos_map = HashMap<Visualiser, PointN>()
             val sort_map = HashMap<Visualiser, PointN>()
 
+            val visuals_down = ArrayList<Visualiser>()
+            val pos_map_down = HashMap<Visualiser, PointN>()
+            val sort_map_down = HashMap<Visualiser, PointN>()
+
             val visuals_up = ArrayList<Visualiser>()
             val pos_map_up = HashMap<Visualiser, PointN>()
             val sort_map_up = HashMap<Visualiser, PointN>()
 
             room.objects.forEach { obj ->
                 obj.visuals.forEach { vis ->
-                    if (vis.drawLayer() == data.layers[data.select_layer-1]) {
-                        pos_map[vis] = obj.stats.POS
-                        sort_map[vis] = pos_map[vis]!!+obj.stats.sortPOS
-                        visuals.add(vis)
-                    } else if (vis.drawLayer().sort > data.layers[data.select_layer-1].sort) {
-                        pos_map_up[vis] = obj.stats.POS
-                        sort_map_up[vis] = pos_map_up[vis]!!+obj.stats.sortPOS
-                        visuals_up.add(vis)
-                    }
+                    Room.addObjVis(visuals, pos_map, sort_map, obj)
                 }
             }
-            Room.drawVisuals(pos+data.draw_pos, visuals, pos_map, sort_map)
+
+            visuals.forEach { vis->
+                if (vis.drawLayer() == data.layers[data.select_layer-1]) {
+                    visuals_down.add(vis)
+                    pos_map_down[vis] = pos_map[vis]!!
+                    sort_map_down[vis] = sort_map[vis]!!
+                } else if (vis.drawLayer().sort > data.layers[data.select_layer-1].sort) {
+                    visuals_up.add(vis)
+                    pos_map_up[vis] = pos_map[vis]!!
+                    sort_map_up[vis] = sort_map[vis]!!
+                }
+            }
+            Room.drawVisuals(pos+data.draw_pos, visuals_down, pos_map_down, sort_map_down)
 
             if (!draw_layers) return
 

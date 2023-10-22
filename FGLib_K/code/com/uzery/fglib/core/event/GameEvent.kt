@@ -26,10 +26,6 @@ abstract class GameEvent: GameObject() {
         return wasReady() && ends()
     }
 
-    open fun collapseWithChildren(){
-        collapse()
-    }
-
     var event_time = 0
         private set
 

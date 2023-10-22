@@ -72,11 +72,7 @@ object World {
         val sort_map = HashMap<Visualiser, PointN>()
         active_rooms.forEach { room ->
             room.objects.forEach { obj ->
-                obj.visuals.forEach {
-                    pos_map[it] = obj.stats.POS+room.pos
-                    sort_map[it] = pos_map[it]!!+obj.stats.sortPOS
-                    vis.add(it)
-                }
+                Room.addObjVis(vis, pos_map, sort_map, obj)
             }
         }
         Room.drawVisuals(pos, vis, pos_map, sort_map)

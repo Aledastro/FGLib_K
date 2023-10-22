@@ -33,7 +33,7 @@ class Room(val pos: PointN, val size: PointN) {
         new_objects.clear()
 
         objects.forEach { it.stats.roomPOS = pos }
-        objects.forEach { it.next() }
+        objects.forEach { it.nextWithFollowers() }
 
         nextMoveOld()
         nextActivate()
@@ -43,7 +43,7 @@ class Room(val pos: PointN, val size: PointN) {
             obj.children.clear()
         }
 
-        objects.removeIf { it.dead || it.owner != null }
+        objects.removeIf { it.dead || it.owner!=null }
 
         objects.removeAll(old_objects)
         old_objects.clear()
@@ -53,10 +53,9 @@ class Room(val pos: PointN, val size: PointN) {
         val vis = ArrayList<Visualiser>()
         val pos_map = HashMap<Visualiser, PointN>()
         val sort_map = HashMap<Visualiser, PointN>()
+
         objects.forEach { obj ->
-            vis.addAll(obj.visuals)
-            obj.visuals.forEach { pos_map[it] = obj.stats.POS }
-            obj.visuals.forEach { sort_map[it] = pos_map[it]!!+obj.stats.sortPOS }
+            addObjVis(vis, pos_map, sort_map, obj)
         }
         drawVisuals(draw_pos, vis, pos_map, sort_map)
     }
@@ -77,6 +76,19 @@ class Room(val pos: PointN, val size: PointN) {
             vis.forEach { visual ->
                 visual.drawWithDefaults(draw_pos+pos_map[visual]!!)
             }
+        }
+
+        fun addObjVis(
+            vis: ArrayList<Visualiser>,
+            pos_map: HashMap<Visualiser, PointN>,
+            sort_map: HashMap<Visualiser, PointN>,
+            obj: GameObject
+        ) {
+            vis.addAll(obj.visuals)
+            obj.visuals.forEach { pos_map[it] = obj.stats.POS+obj.stats.roomPOS }
+            obj.visuals.forEach { sort_map[it] = pos_map[it]!!+obj.stats.sortPOS }
+
+            obj.followers.forEach { addObjVis(vis, pos_map, sort_map, it) }
         }
     }
 
