@@ -53,13 +53,13 @@ object World {
         active_rooms.forEach { it.next() }
 
         camera?.next()
-        graphics.drawPOS = controller.drawPOS()+(camera?.drawPOS() ?: PointN.ZERO)
 
         WorldUtils.nextDebug()
         active_rooms.forEach { WorldUtils.nextDebugForRoom(it) }
     }
 
     fun draw(pos: PointN = PointN.ZERO) {
+        graphics.drawPOS = controller.drawPOS()+(camera?.drawPOS() ?: PointN.ZERO)
         drawNotActiveRooms(pos)
         drawRooms(pos)
         camera?.draw(camera!!.stats.POS+camera!!.stats.roomPOS+pos)
