@@ -21,7 +21,7 @@ abstract class Extension(vararg children: Extension) {
         private set
     private var next_mode = MODE.SHOW
 
-    open fun active() = true
+    open fun active() = MODE.SHOW
 
     protected fun add(vararg children: Extension) {
         this.children.addAll(children)
@@ -54,7 +54,7 @@ abstract class Extension(vararg children: Extension) {
 
     internal fun updateWithChildren() {
         update()
-        children.forEach { if (it.mode.update && it.active()) it.updateWithChildren() }
+        children.forEach { if (it.mode.update && it.active().update) it.updateWithChildren() }
         updateAfter()
     }
 
@@ -63,7 +63,7 @@ abstract class Extension(vararg children: Extension) {
         graphics.drawPOS = PointN.ZERO
         draw(pos)
 
-        children.forEach { if (it.mode.draw && it.active()) it.drawWithChildren(pos+it.draw_pos) }
+        children.forEach { if (it.mode.draw && it.active().draw) it.drawWithChildren(pos+it.draw_pos) }
 
         graphics.setDefaults()
         graphics.drawPOS = PointN.ZERO
