@@ -19,6 +19,10 @@ import javafx.scene.text.Font
 object Platform {
     fun options() = Program.options
 
+    fun exit(){
+        Program.close()
+    }
+
     internal fun update() {
         keyboard.update()
         mouse.keys.update()

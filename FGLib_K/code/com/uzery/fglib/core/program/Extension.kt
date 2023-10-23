@@ -15,6 +15,15 @@ abstract class Extension(vararg children: Extension) {
         ONLY_UPDATE(false, true);
 
         fun active() = draw || update
+
+        operator fun unaryMinus(): MODE{
+            return when (this) {
+                SHOW -> HIDE
+                HIDE -> SHOW
+                ONLY_DRAW -> ONLY_UPDATE
+                ONLY_UPDATE -> ONLY_DRAW
+            }
+        }
     }
 
     var mode = MODE.SHOW

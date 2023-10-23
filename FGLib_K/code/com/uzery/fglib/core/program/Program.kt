@@ -82,4 +82,8 @@ internal object Program {
 
         timer.start()
     }
+
+    fun close() {
+        stage.close()
+    }
 }
