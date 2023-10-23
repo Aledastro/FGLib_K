@@ -101,7 +101,13 @@ class Room(val pos: PointN, val size: PointN) {
     private fun nextMoveOld() {
         val red_bounds = LinkedList<Bounds>()
         val pos = LinkedList<PointN>()
-        val list = objects.stream().filter { !it.tagged("#immovable") && it.stats.nPOS != PointN.ZERO }.toList()
+
+        val list = LinkedList<GameObject>()
+        fun addInList(obj: GameObject) {
+            list.add(obj)
+            obj.followers.forEach { addInList(it) }
+        }
+        objects.stream().filter { !it.tagged("#immovable") }.forEach { addInList(it) }
 
         objects.forEach {
             val bs = it.bounds.red
@@ -140,7 +146,13 @@ class Room(val pos: PointN, val size: PointN) {
 
     private fun nextActivate() {
         //todo less code
-        val list = objects.stream().filter { !it.tagged("#inactive") }.toList()
+
+        val list = LinkedList<GameObject>()
+        fun addInList(obj: GameObject) {
+            list.add(obj)
+            obj.followers.forEach { addInList(it) }
+        }
+        objects.stream().filter { !it.tagged("#inactive") }.forEach { addInList(it) }
 
         fun setActivate(
             o1: GameObject,
