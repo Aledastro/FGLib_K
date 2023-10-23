@@ -49,13 +49,20 @@ object WorldUtils {
         val STEP = PointN(1.0, 1.0)
         graphics.layer = DrawLayer.CAMERA_FOLLOW
 
-        for (o in room.objects) {
+        val list = LinkedList<GameObject>()
+        fun addInList(obj: GameObject) {
+            list.add(obj)
+            obj.followers.forEach { addInList(it) }
+        }
+        room.objects.stream().forEach { addInList(it) }
+
+        for (o in list) {
             val c = if (o.stats.fly) Color.color(1.0, 1.0, 0.2, 0.7) else Color.color(1.0, 0.2, 1.0, 0.7)
             graphics.fill.ovalC(pos+o.stats.POS, STEP*3, c)
             if (o.stats.sortPOS.length() > 1) graphics.fill.ovalC(pos+o.stats.POS+o.stats.sortPOS, STEP, c)
         }
 
-        for (o in room.objects) drawBoundsFor(o, pos)
+        for (o in list) drawBoundsFor(o, pos)
     }
 
     fun drawBoundsFor(o: GameObject, pos: PointN) {
