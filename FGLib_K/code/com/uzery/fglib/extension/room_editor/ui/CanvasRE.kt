@@ -52,7 +52,7 @@ class CanvasRE(private val data: DataRE): UICanvas() {
     override fun draw() {
         fun drawEditRoom(alpha: Double = 1.0) {
             Platform.global_alpha = alpha
-            data.edit.draw(data.draw_pos)
+            data.edit.draw(data.draw_pos-data.edit.pos)
             Platform.global_alpha = 1.0
         }
 
@@ -75,23 +75,36 @@ class CanvasRE(private val data: DataRE): UICanvas() {
             val pos_map_up = HashMap<Visualiser, PointN>()
             val sort_map_up = HashMap<Visualiser, PointN>()
 
+            /*room.objects.forEach { obj ->
+                Room.addObjVis(visuals, pos_map, sort_map, obj)
+            }
+
+            visuals.forEach { vis ->
+                if (vis.drawLayer() == data.layers[data.select_layer-1]) {
+                    visuals_down.add(vis)
+                    pos_map_down[vis] = pos+pos_map[vis]!!
+                    sort_map_down[vis] = pos+sort_map[vis]!!
+                } else if (vis.drawLayer().sort > data.layers[data.select_layer-1].sort) {
+                    visuals_up.add(vis)
+                    pos_map_up[vis] = pos+pos_map[vis]!!
+                    sort_map_up[vis] = pos+sort_map[vis]!!
+                }
+            }*/
+
             room.objects.forEach { obj ->
                 obj.visuals.forEach { vis ->
-                    Room.addObjVis(visuals, pos_map, sort_map, obj)
+                    if (vis.drawLayer() == data.layers[data.select_layer-1]) {
+                        pos_map_down[vis] = obj.stats.POS
+                        sort_map_down[vis] = pos_map_down[vis]!!+obj.stats.sortPOS
+                        visuals_down.add(vis)
+                    } else if (vis.drawLayer().sort > data.layers[data.select_layer-1].sort) {
+                        pos_map_up[vis] = obj.stats.POS
+                        sort_map_up[vis] = pos_map_up[vis]!!+obj.stats.sortPOS
+                        visuals_up.add(vis)
+                    }
                 }
             }
 
-            visuals.forEach { vis->
-                if (vis.drawLayer() == data.layers[data.select_layer-1]) {
-                    visuals_down.add(vis)
-                    pos_map_down[vis] = pos_map[vis]!!
-                    sort_map_down[vis] = sort_map[vis]!!
-                } else if (vis.drawLayer().sort > data.layers[data.select_layer-1].sort) {
-                    visuals_up.add(vis)
-                    pos_map_up[vis] = pos_map[vis]!!
-                    sort_map_up[vis] = sort_map[vis]!!
-                }
-            }
             Room.drawVisuals(pos+data.draw_pos, visuals_down, pos_map_down, sort_map_down)
 
             if (!draw_layers) return
@@ -229,21 +242,21 @@ class CanvasRE(private val data: DataRE): UICanvas() {
             add_size = add_size.coerceIn(0..10)
 
             fun add(pos: PointN) {
-                if (mouse.keys.pressed(MouseButton.PRIMARY)) {
-                    val o = data.getter.getEntry(data.chosen_entry)()
-                    if (data.select_layer != 0 && !onSelectLayer(o)) return
-                    val posWithOffset = pos+mouseRealPos.round(data.GRID)+grid_offset[grid_offset_id]
+                if (!mouse.keys.pressed(MouseButton.PRIMARY)) return
 
-                    val room = roomFrom(posWithOffset) ?: return
+                val o = data.getter.getEntry(data.chosen_entry)()
+                if (data.select_layer != 0 && !onSelectLayer(o)) return
+                val posWithOffset = pos+mouseRealPos.round(data.GRID)+grid_offset[grid_offset_id]
 
-                    o.stats.POS = posWithOffset+data.edit.pos-room.pos
-                    if (room.objects.any { it.equalsS(o) }) return
+                val room = roomFrom(posWithOffset) ?: return
 
-                    room.objects.add(o)
-                    addLastInfo()
+                o.stats.POS = posWithOffset+data.edit.pos-room.pos
+                if (room.objects.any { it.equalsS(o) }) return
 
-                    data.select_obj = o
-                }
+                room.objects.add(o)
+                addLastInfo()
+
+                data.select_obj = o
             }
             for (i in -add_size..add_size) {
                 for (j in -add_size..add_size) {
@@ -326,6 +339,8 @@ class CanvasRE(private val data: DataRE): UICanvas() {
             return true
         }
         checkForMove()
+
+        World.rooms.forEach { room -> room.objects.forEach { it.stats.roomPOS = room.pos } }
 
         last_mouse_pos = mouse.pos
     }
