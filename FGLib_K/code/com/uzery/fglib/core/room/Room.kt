@@ -40,12 +40,10 @@ class Room(val pos: PointN, val size: PointN) {
 
         fun addFromObj(obj: GameObject){
             new_objects.addAll(obj.children)
+            obj.children.clear()
             obj.followers.forEach { addFromObj(it) }
         }
-        objects.forEach { obj ->
-            addFromObj(obj)
-            obj.children.clear()
-        }
+        objects.forEach { obj -> addFromObj(obj) }
 
         objects.removeIf { it.dead || it.owner!=null }
 
