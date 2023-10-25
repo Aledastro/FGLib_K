@@ -11,13 +11,16 @@ import com.uzery.fglib.utils.math.geom.shape.RectN
 import javafx.scene.paint.Color
 import javafx.scene.text.FontWeight
 
-class MovableWC(private val goal: GameObject, val room_p: Double = 10.0): WorldController {
+class MovableWC(private val goal: GameObject, private val room_p: Double = 10.0): WorldController {
+
+    private val SIZE = Int.MAX_VALUE/4
+
     private val void = Room(PointN.ZERO, PointN.ZERO)
+    //private val void = Room(PointN(-1,-1)*SIZE, PointN(2, 2)*SIZE)
     var goal_room = void
         private set
 
-    override fun init() {
-    }
+    override fun init() {}
 
     override fun isActive(r: Room): Boolean {
         val pos = PointN(room_p, -room_p)
