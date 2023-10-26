@@ -7,7 +7,6 @@ import javafx.scene.paint.Color
 import java.util.*
 
 abstract class ClassGetter<Type> {
-
     operator fun get(name: String, args: ArrayList<ArrayList<String>>): Type = getMark(name, args).invoke()
     operator fun get(input: String): Type = getMark(FGFormat[input].first, FGFormat[input].second).invoke()
     fun getEntryName(id: Int) = map.keys.elementAt(id)
@@ -17,7 +16,15 @@ abstract class ClassGetter<Type> {
         return map[getEntryName(id)] ?: throw DebugData.error("wrong id: $id")
     }
 
-    fun entry_size() = map.keys.size
+    fun entries_size() = map.keys.size
+
+    fun entries(): LinkedList<Pair<StringN, ()->Type>>{
+        val entries = LinkedList<Pair<StringN, ()->Type>>()
+        for (i in 0 until entries_size()){
+            entries.add(Pair( getEntryName(i), getEntry(i)))
+        }
+        return entries
+    }
 
     fun getMark(name: String, args: ArrayList<ArrayList<String>>): () -> Type {
         input = args

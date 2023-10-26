@@ -46,7 +46,7 @@ class DataRE(getter_pair: Pair<ClassGetter<GameObject>, Array<out String>>) {
     fun init() {
         val entries = LinkedList<StringN>()
 
-        for (i in 0 until getter.entry_size()) entries.add(getter.getEntryName(i))
+        for (i in 0 until getter.entries_size()) entries.add(getter.getEntryName(i))
         for (id in entries.indices) ids[entries[id]] = id
         entries.removeIf { !it.s.contains("#") }
 
