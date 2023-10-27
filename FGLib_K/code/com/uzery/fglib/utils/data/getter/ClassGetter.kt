@@ -6,37 +6,27 @@ import com.uzery.fglib.utils.math.num.StringN
 import javafx.scene.paint.Color
 import java.util.*
 
-abstract class ClassGetter<Type> {
-    operator fun get(name: String, args: ArrayList<ArrayList<String>>): Type = getMark(name, args).invoke()
-    operator fun get(input: String): Type = getMark(FGFormat[input].first, FGFormat[input].second).invoke()
-    fun getEntryName(id: Int) = map.keys.elementAt(id)
+abstract class ClassGetter<Type>: AbstractClassGetter<Type>() {
+    protected var no_info = false
+    private val map: TreeMap<StringN, () -> Type> = TreeMap<StringN, () -> Type>()
 
-    fun getEntry(id: Int): () -> Type {
+    final override fun entries_size(): Int {
+        return map.keys.size
+    }
+
+    final override fun getEntry(id: Int): () -> Type {
         no_info = true
         return map[getEntryName(id)] ?: throw DebugData.error("wrong id: $id")
     }
 
-    fun entries_size() = map.keys.size
-
-    fun entries(): LinkedList<Pair<StringN, ()->Type>>{
-        val entries = LinkedList<Pair<StringN, ()->Type>>()
-        for (i in 0 until entries_size()){
-            entries.add(Pair( getEntryName(i), getEntry(i)))
-        }
-        return entries
+    final override fun getEntryName(id: Int): StringN {
+        return map.keys.elementAt(id)
     }
 
-    fun getMark(name: String, args: ArrayList<ArrayList<String>>): () -> Type {
-        input = args
-        in_id = 0
-        no_info = false
-        return map[StringN(name, args.size)] ?: throw DebugData.error("ERROR getMark(): $name | $args")
+    fun contains(input: StringN): Boolean {
+        return map.contains(input)
     }
 
-
-    ////////////////////////////////////////////////////////////////////////////////
-    protected var no_info = false
-    private val map: TreeMap<StringN, () -> Type> = TreeMap<StringN, () -> Type>()
 
     init {
         this.addAll()
@@ -56,6 +46,14 @@ abstract class ClassGetter<Type> {
     protected fun add(s: String, mark: () -> Type) {
         map[StringN(s)] = mark
     }
+
+    override fun getMark(name: String, args: ArrayList<ArrayList<String>>): () -> Type {
+        input = args
+        in_id = 0
+        no_info = false
+        return map[StringN(name, args.size)] ?: throw DebugData.error("ERROR getMark(): $name | $args")
+    }
+
 
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 

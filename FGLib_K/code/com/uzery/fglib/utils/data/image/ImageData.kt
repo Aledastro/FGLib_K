@@ -41,7 +41,12 @@ object ImageData: CollectDataClass() {
                 throw DebugData.error("duplicate sprite set: $name old: [${sprites[name]!!.size}] | new: [$size]")
             return
         }
-        sprites[name] = SpriteImage(resolvePath(name), size, scale)
+        try {
+            sprites[name] = SpriteImage(resolvePath(name), size, scale)
+        }catch (e: Exception){
+            throw DebugData.error("from: ${resolvePath(name)} with error: $e")
+        }
+
     }
 
     fun setCombination(name: String, size: IntI, rule: ImageCombinationRule, scale: Int = -1) {

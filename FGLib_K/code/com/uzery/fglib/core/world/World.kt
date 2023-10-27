@@ -7,6 +7,7 @@ import com.uzery.fglib.core.program.Platform.develop_mode
 import com.uzery.fglib.core.program.Platform.graphics
 import com.uzery.fglib.core.room.Room
 import com.uzery.fglib.core.world.WorldUtils.readInfo
+import com.uzery.fglib.utils.data.getter.AbstractClassGetter
 import com.uzery.fglib.utils.data.getter.ClassGetter
 import com.uzery.fglib.utils.math.FGUtils
 import com.uzery.fglib.utils.math.geom.PointN
@@ -98,7 +99,7 @@ object World {
         }
     }
 
-    var getter: ClassGetter<GameObject>? = null
+    var getter: AbstractClassGetter<GameObject>? = null
 
     fun init(controller: WorldController, vararg filename: String) {
         World.controller = controller

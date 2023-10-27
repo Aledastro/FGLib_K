@@ -4,13 +4,13 @@ import com.uzery.fglib.core.obj.DrawLayer
 import com.uzery.fglib.core.obj.GameObject
 import com.uzery.fglib.core.program.Platform
 import com.uzery.fglib.core.room.Room
-import com.uzery.fglib.utils.data.getter.ClassGetter
+import com.uzery.fglib.utils.data.getter.AbstractClassGetter
 import com.uzery.fglib.utils.math.FGUtils
 import com.uzery.fglib.utils.math.geom.PointN
 import com.uzery.fglib.utils.math.num.StringN
 import java.util.*
 
-class DataRE(getter_pair: Pair<ClassGetter<GameObject>, Array<out String>>) {
+class DataRE(getter_pair: Pair<AbstractClassGetter<GameObject>, Array<out String>>) {
     var time = 0.0
     var world_play = false
     var last_world_play = false

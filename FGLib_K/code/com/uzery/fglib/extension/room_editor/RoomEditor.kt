@@ -13,24 +13,33 @@ import com.uzery.fglib.core.world.World
 import com.uzery.fglib.core.world.WorldUtils
 import com.uzery.fglib.extension.room_editor.ui.*
 import com.uzery.fglib.utils.data.file.WriteData
-import com.uzery.fglib.utils.data.getter.ClassGetter
+import com.uzery.fglib.utils.data.getter.AbstractClassGetter
 import com.uzery.fglib.utils.math.geom.PointN
 import javafx.scene.input.KeyCode
 import javafx.scene.paint.Color
 import java.util.*
 
-class RoomEditor(getter: (Int) -> Pair<ClassGetter<GameObject>, Array<String>>): Extension(RoomEditorUI) {
+class RoomEditor(private var getter: (Int) -> Pair<AbstractClassGetter<GameObject>, Array<String>>): Extension(RoomEditorUI) {
     private lateinit var world_save: Array<String>
-    private var data = DataRE(getter(0))
+    private lateinit var data: DataRE
 
-    private var play_button = PlayButtonRE(data)
-    private var objects_vbox = ObjectVBoxRE(data)
-    private var choose_objects_vbox = ChooseObjectVBoxRE(data)
-    private var canvasX = CanvasRE(data)
-    private var layers_vbox = LayerVBoxRE(data)
-    private var info_box = InfoBoxRE(data)
+    private lateinit var play_button: PlayButtonRE
+    private lateinit var objects_vbox: ObjectVBoxRE
+    private lateinit var choose_objects_vbox: ChooseObjectVBoxRE
+    private lateinit var canvasX: CanvasRE
+    private lateinit var layers_vbox: LayerVBoxRE
+    private lateinit var info_box: InfoBoxRE
 
     override fun init() {
+        data = DataRE(getter(0))
+
+        play_button = PlayButtonRE(data)
+        objects_vbox = ObjectVBoxRE(data)
+        choose_objects_vbox = ChooseObjectVBoxRE(data)
+        canvasX = CanvasRE(data)
+        layers_vbox = LayerVBoxRE(data)
+        info_box = InfoBoxRE(data)
+
         scale = 2
         World.getter = data.getter
 
