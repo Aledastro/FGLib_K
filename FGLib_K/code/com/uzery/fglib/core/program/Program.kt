@@ -69,7 +69,6 @@ internal object Program {
         this.stage.scene.setOnKeyReleased { key -> pressed[key.code.ordinal] = false }
 
         core.initWithChildren()
-        println("init complete")
 
         val timer = object: AnimationTimer() {
             override fun handle(t: Long) {

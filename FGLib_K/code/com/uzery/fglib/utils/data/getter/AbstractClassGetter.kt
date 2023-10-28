@@ -19,19 +19,4 @@ abstract class AbstractClassGetter<Type> {
     abstract fun getEntry(id: Int): () -> Type
 
     abstract fun entries_size(): Int
-
-
-
-    /*fun entries(): LinkedList<Pair<StringN, () -> Type>> {
-        val entries = LinkedList<Pair<StringN, () -> Type>>()
-        for (i in map.keys.indices) {
-            entries.add(Pair(getEntryName(i), getEntry(i)))
-        }
-        return entries
-    }*/
-
-    ////////////////////////////////////////////////////////////////////////////////
-
-
-
 }

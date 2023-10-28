@@ -19,7 +19,7 @@ abstract class ParentClassGetter<Type>(private vararg val getters: ClassGetter<T
     }
 
     final override fun getMark(name: String, args: ArrayList<ArrayList<String>>): () -> Type{
-        return getters.firstOrNull() { it.contains(StringN(name, args.size)) }?.getMark(name, args)
+        return getters.firstOrNull { it.contains(StringN(name, args.size)) }?.getMark(name, args)
             ?: throw DebugData.error("ERROR parent getMark(): $name | $args")
     }
 
