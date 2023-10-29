@@ -43,7 +43,7 @@ class Bounds {
     @Deprecated("it doesn't copy original manually")
     fun copy(pos: PointN): Bounds {
         val els = LinkedList<BoundsElement>()
-        elements.indices.forEach { i -> els.add(elements[i].copy(pos)) }
+        elements.forEach { els.add(it.copy(pos)) }
         return Bounds().also { it.add(els) }
     }
 }

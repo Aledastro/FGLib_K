@@ -35,15 +35,15 @@ object ImageData: CollectDataClass() {
     fun get(name: String, pos: IntI) =
         sprites[name]?.get(pos) ?: throw DebugData.error("no sprite from: $name $pos")
 
-    fun set(name: String, size: IntI, scale: Int = -1) {
+    fun set(name: String, size: IntI, scale: Int = -1, vararg effects: String) {
         if (sprites[name] != null) {
             if (sprites[name]!!.size != size)
                 throw DebugData.error("duplicate sprite set: $name old: [${sprites[name]!!.size}] | new: [$size]")
             return
         }
         try {
-            sprites[name] = SpriteImage(resolvePath(name), size, scale)
-        }catch (e: Exception){
+            sprites[name] = SpriteImage(ImageUtils.from(resolvePath(name), *effects), name, size, scale)
+        } catch (e: Exception) {
             throw DebugData.error("from: ${resolvePath(name)} with error: $e")
         }
 

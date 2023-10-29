@@ -17,7 +17,7 @@ data class PointN(private val xs: Array<Double>) {
     constructor(vararg xs: Int): this(Array<Double>(xs.size) { i -> xs[i].toDouble() })
     constructor(p: PointN): this(Array(p.dim) { i -> p.xs[i] })
 
-    constructor(p: IntI): this(p.width, p.height)
+    constructor(p: IntI): this(p.x, p.y)
 
     operator fun get(n: Int): Double {
         if (dim == 0) return 0.0

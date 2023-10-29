@@ -19,7 +19,8 @@ import javafx.scene.input.KeyCode
 import javafx.scene.paint.Color
 import java.util.*
 
-class RoomEditor(private var getter: (Int) -> Pair<AbstractClassGetter<GameObject>, Array<String>>): Extension(RoomEditorUI) {
+class RoomEditor(private var getter: (Int) -> Pair<AbstractClassGetter<GameObject>, Array<String>>):
+    Extension(RoomEditorUI) {
     private lateinit var world_save: Array<String>
     private lateinit var data: DataRE
 

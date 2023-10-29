@@ -16,7 +16,8 @@ abstract class GeometryGraphics(private val transform: AffineTransform, private 
     }
 
     val font
-        get()=Font.font(font_family, font_weight, font_posture, transformSize.transform(PointN(font_size)).X)
+        get() = Font.font(font_family, font_weight, font_posture, transformSize.transform(PointN(font_size)).X)
+
     fun font(
         family: String = "arial", size: Double = 10.0,
         weight: FontWeight = FontWeight.NORMAL, posture: FontPosture = FontPosture.REGULAR
@@ -27,7 +28,7 @@ abstract class GeometryGraphics(private val transform: AffineTransform, private 
         font_posture = posture
     }
 
-    fun text_size(text: String): PointN{
+    fun text_size(text: String): PointN {
         val t = Text(text)
         t.font = Font.font(font_family, font_weight, font_posture, PointN(font_size).X)
         return PointN(t.layoutBounds.width, t.layoutBounds.height)

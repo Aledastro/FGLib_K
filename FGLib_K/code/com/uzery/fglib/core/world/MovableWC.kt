@@ -16,6 +16,7 @@ class MovableWC(private val goal: GameObject, private val room_p: Double = 10.0)
     private val SIZE = Int.MAX_VALUE/4
 
     private val void = Room(PointN.ZERO, PointN.ZERO)
+
     //private val void = Room(PointN(-1,-1)*SIZE, PointN(2, 2)*SIZE)
     var goal_room = void
         private set

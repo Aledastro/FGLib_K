@@ -16,7 +16,7 @@ abstract class Extension(vararg children: Extension) {
 
         fun active() = draw || update
 
-        operator fun unaryMinus(): MODE{
+        operator fun unaryMinus(): MODE {
             return when (this) {
                 SHOW -> HIDE
                 HIDE -> SHOW

@@ -12,20 +12,20 @@ abstract class ParentClassGetter<Type>(private vararg val getters: ClassGetter<T
 
     init {
         sums.add(0)
-        for (get in getters){
+        for (get in getters) {
             sums.addLast(get.entries_size()+sums.last)
         }
         sums.removeFirst()
     }
 
-    final override fun getMark(name: String, args: ArrayList<ArrayList<String>>): () -> Type{
+    final override fun getMark(name: String, args: ArrayList<ArrayList<String>>): () -> Type {
         return getters.firstOrNull { it.contains(StringN(name, args.size)) }?.getMark(name, args)
             ?: throw DebugData.error("ERROR parent getMark(): $name | $args")
     }
 
     final override fun getEntry(id: Int): () -> Type {
         val dest = getDest(id)
-        return getters[dest.width].getEntry(dest.height)
+        return getters[dest.x].getEntry(dest.y)
     }
 
     final override fun entries_size(): Int {
@@ -34,15 +34,15 @@ abstract class ParentClassGetter<Type>(private vararg val getters: ClassGetter<T
 
     final override fun getEntryName(id: Int): StringN {
         val dest = getDest(id)
-        return getters[dest.width].getEntryName(dest.height)
+        return getters[dest.x].getEntryName(dest.y)
     }
 
-    private fun getDest(id: Int): IntI{
+    private fun getDest(id: Int): IntI {
         var getterID = 0
-        for (i in getters.indices){
-            getterID = i
-            if(id<sums[i])break
+        for (pos in getters.indices) {
+            getterID = pos
+            if (id < sums[pos]) break
         }
-        return IntI(getterID, id - if(getterID>0) sums[getterID-1] else 0)
+        return IntI(getterID, id-if (getterID > 0) sums[getterID-1] else 0)
     }
 }

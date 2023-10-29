@@ -19,7 +19,7 @@ import javafx.scene.text.Font
 object Platform {
     fun options() = Program.options
 
-    fun exit(){
+    fun exit() {
         Program.close()
     }
 

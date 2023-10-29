@@ -98,7 +98,7 @@ abstract class GameObject {
         object_time++
     }
 
-    fun nextWithFollowers(){
+    fun nextWithFollowers() {
         next()
         followers.removeIf { it.dead }
 
