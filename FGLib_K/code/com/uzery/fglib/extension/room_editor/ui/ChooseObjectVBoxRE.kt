@@ -25,7 +25,7 @@ class ChooseObjectVBoxRE(private val data: DataRE): VBox() {
         get() = PointN(60, 60)/Platform.scale
 
     override fun setNames(id: Int): String {
-        return "$id"
+        return data.titles[data.select_group][id]
     }
 
     override fun draw() {

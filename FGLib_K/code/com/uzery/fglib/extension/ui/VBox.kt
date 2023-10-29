@@ -21,7 +21,6 @@ abstract class VBox: UIElement() {
         get() = sizeOne/5
     final override val size: PointN
         get() = PointN(sizeOne.X*rows, sizeOne.Y*((full-1)/rows+1))*pp+offset
-    private var name = LinkedList<String>()
 
     override fun update() {
         if (Platform.mouse.keys.anyInPressed(MouseButton.PRIMARY, MouseButton.SECONDARY) && isActive()) {
@@ -48,8 +47,9 @@ abstract class VBox: UIElement() {
     override fun draw() {
         graphics.layer = DrawLayer.CAMERA_OFF
 
+        val name = LinkedList<String>()
         for (id in 0 until full) {
-            name.add(this.setNames(id))
+            name.add(setNames(id))
 
             val ps = pos+fromID(id)
             graphics.fill.rect(ps, sizeOne, FGUtils.transparent(Color.DARKBLUE, 0.1))

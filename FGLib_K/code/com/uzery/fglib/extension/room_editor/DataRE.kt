@@ -18,6 +18,7 @@ class DataRE(getter_pair: Pair<AbstractClassGetter<GameObject>, Array<out String
     var chosen_entry = 0
     lateinit var edit: Room
     var groupsValues: LinkedList<LinkedList<StringN>> = LinkedList<LinkedList<StringN>>()
+    var titles: LinkedList<LinkedList<String>> = LinkedList<LinkedList<String>>()
     var groupsSelect: LinkedList<Int> = LinkedList<Int>()
     var draw_bounds = false
     var select_obj: GameObject? = null
@@ -52,27 +53,22 @@ class DataRE(getter_pair: Pair<AbstractClassGetter<GameObject>, Array<out String
 
         val groups_map = TreeMap<StringN, LinkedList<StringN>>()
 
-        fun addNewEntry(name: StringN, entry: StringN) {
-            val list = LinkedList<StringN>()
-            list.add(entry)
-            groups_map[name] = list
-        }
-
-        fun getName(entry: StringN): StringN {
-            return StringN(FGUtils.subBefore(entry.s, "#"), entry.n)
-        }
-
         for (entry in entries) {
-            val name = getName(entry)
-            if (groups_map[name] == null) addNewEntry(name, entry)
-            else groups_map[name]!!.add(entry)
+            val name = StringN(FGUtils.subBefore(entry.s, "#"), entry.n)
+            if (groups_map[name] == null) groups_map[name] = LinkedList<StringN>()
+            groups_map[name]!!.add(entry)
         }
         for ((id, key) in groups_map.keys.withIndex()) {
             groupsValues.add(LinkedList())
+            titles.add(LinkedList())
 
-            val value = groups_map[key]!!
-            groupsValues[id].addAll(value)
+            groups_map[key]!!.forEach { value ->
+                groupsValues[id].add(value)
+                titles[id].add(FGUtils.subAfter(value.s, "#"))
+            }
+
             names.add(key)
+
 
             groupsSelect.add(0)
         }
