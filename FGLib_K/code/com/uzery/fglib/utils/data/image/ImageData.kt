@@ -35,6 +35,7 @@ object ImageData: CollectDataClass() {
         try {
             origins[decode] = ImageUtils.from(name, *effects)
         } catch (e: Exception) {
+            e.printStackTrace()
             throw DebugData.error("Data set: in $name: ${resolvePath(name)} ($decode) with error: $e")
         }
     }
@@ -50,8 +51,9 @@ object ImageData: CollectDataClass() {
             return
         }
         try {
-            sprites[decode] = SpriteImage(ImageUtils.from(name, *effects), "${resolvePath(name)} ($decode)", size)
+            sprites[decode] = SpriteImage(ImageUtils.from(name), "${resolvePath(name)} ($decode)", size, *effects)
         } catch (e: Exception) {
+            e.printStackTrace()
             throw DebugData.error("from: ${resolvePath(name)} ($decode) with error: $e")
         }
     }

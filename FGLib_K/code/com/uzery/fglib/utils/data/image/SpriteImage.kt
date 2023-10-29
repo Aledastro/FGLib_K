@@ -4,8 +4,8 @@ import com.uzery.fglib.core.program.Platform
 import com.uzery.fglib.utils.math.num.IntI
 import javafx.scene.image.Image
 
-class SpriteImage(image: Image, name: String, val size: IntI): FGLImage() {
-    constructor(filename: String, size: IntI): this(Image(filename), filename, size)
+class SpriteImage(image: Image, name: String, val size: IntI, private vararg val effects: String): FGLImage() {
+    constructor(filename: String, size: IntI, vararg effects: String): this(Image(filename), filename, size, *effects)
 
     private val origin: Image
 
@@ -18,7 +18,5 @@ class SpriteImage(image: Image, name: String, val size: IntI): FGLImage() {
         setData(name, origin_size/size)
     }
 
-    override fun from(pos: IntI) = ImageUtils.split(origin, pos*size, size)
-
-
+    override fun from(pos: IntI) = ImageUtils.from(ImageUtils.split(origin, pos*size, size), *effects)
 }

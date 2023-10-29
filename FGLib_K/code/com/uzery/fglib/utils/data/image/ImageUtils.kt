@@ -54,7 +54,10 @@ object ImageUtils {
 
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////
     fun from(path: String, vararg effects: String): Image {
-        var res = Image(ImageData.resolvePath(path))
+        return from(Image(ImageData.resolvePath(path)), *effects)
+    }
+    fun from(image: Image, vararg effects: String): Image {
+        var res = image
         for (effect in effects) {
             res = applyEffect(res, effect)
         }
@@ -70,7 +73,7 @@ object ImageUtils {
 
         val res = WritableImage(origin_size.width, origin_size.height)
         for (pos in origin_size.indices) {
-            res.pixelWriter.setArgb(pos.x, pos.y, img.pixelReader.getArgb(origin_size.x-pos.x, pos.y))
+            res.pixelWriter.setArgb(pos.x, pos.y, img.pixelReader.getArgb(origin_size.width-1-pos.x, pos.y))
         }
         return res
     }
@@ -83,7 +86,7 @@ object ImageUtils {
 
         val res = WritableImage(origin_size.width, origin_size.height)
         for (pos in origin_size.indices) {
-            res.pixelWriter.setArgb(pos.x, pos.y, img.pixelReader.getArgb(pos.x, origin_size.y-pos.y))
+            res.pixelWriter.setArgb(pos.x, pos.y, img.pixelReader.getArgb(pos.x, origin_size.height-1-pos.y))
         }
         return res
     }
