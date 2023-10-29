@@ -2,6 +2,7 @@ package com.uzery.fglib.utils.data.image
 
 import com.uzery.fglib.utils.data.debug.DebugData
 import com.uzery.fglib.utils.data.file.WriteData.resolvePath
+import com.uzery.fglib.utils.data.getter.FGFormat
 import com.uzery.fglib.utils.math.num.IntI
 import javafx.scene.image.Image
 import javafx.scene.image.WritableImage
@@ -65,6 +66,18 @@ object ImageUtils {
         return res
     }
 
+    private fun applyEffect(img: Image, effect: String): Image {
+        val effect_name = FGFormat[effect].first
+        val effect_args = FGFormat[effect].second
+        return when (effect_name) {
+            "reverseX" -> reverseX(img)
+            "reverseY" -> reverseY(img)
+            "uni_color" -> uniColor(img, Color.web(effect_args[0][0]))
+
+            else -> throw DebugData.error("unknown image effect: $effect")
+        }
+    }
+
     fun reverseX(origin: Image): Image {
         val origin_size = IntI(origin.width.toInt(), origin.height.toInt())
 
@@ -91,12 +104,17 @@ object ImageUtils {
         return res
     }
 
-    private fun applyEffect(img: Image, effect: String): Image {
-        return when (effect) {
-            "reverseX" -> reverseX(img)
-            "reverseY" -> reverseY(img)
+    fun uniColor(origin: Image, color: Color): Image {
+        val origin_size = IntI(origin.width.toInt(), origin.height.toInt())
 
-            else -> throw DebugData.error("unknown image effect: $effect")
+        val img = WritableImage(origin_size.width, origin_size.height)
+        img.pixelWriter.setPixels(0, 0, origin_size.width, origin_size.height, origin.pixelReader, 0, 0)
+
+        val res = WritableImage(origin_size.width, origin_size.height)
+        for (pos in origin_size.indices) {
+            val rgb = img.pixelReader.getColor(pos.x, pos.y)
+            res.pixelWriter.setColor(pos.x, pos.y, if(rgb == Color.TRANSPARENT) rgb else color)
         }
+        return res
     }
 }
