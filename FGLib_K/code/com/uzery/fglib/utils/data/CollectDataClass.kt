@@ -7,7 +7,7 @@ abstract class CollectDataClass {
     val paths = HashMap<String, String>()
     var dir = ""
 
-    fun resolvePath(name: String): String {
+    internal fun resolvePath(name: String): String {
         var local_path = ""
         var last = name
         if (name.contains('|')) {

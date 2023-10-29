@@ -4,10 +4,8 @@ import com.uzery.fglib.core.program.Platform
 import com.uzery.fglib.utils.math.num.IntI
 import javafx.scene.image.Image
 
-class CombinationImage(name: String, val size: IntI, private val rule: ImageCombinationRule, scale: Int = -1):
-    FGLImage() {
+class CombinationImage(name: String, val size: IntI, private val rule: ImageCombinationRule): FGLImage() {
 
-    private var SCALE = if (scale == -1) Platform.scale else scale
     private val origin: Image
 
     init {

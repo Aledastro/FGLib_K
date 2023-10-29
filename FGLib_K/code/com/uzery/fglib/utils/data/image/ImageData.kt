@@ -10,55 +10,67 @@ object ImageData: CollectDataClass() {
     private val sprites = HashMap<String, SpriteImage>()
     private val combinations = HashMap<String, CombinationImage>()
 
-    fun sprite_set(name: String): IntI {
-        val img = sprites[name] ?: throw DebugData.error("no sprite from: $name")
+    private fun decode(name: String, vararg effects: String): String {
+        var entry = name
+        effects.forEach { entry+="#$it" }
+        return entry
+    }
+
+    fun sprite_set(name: String, vararg effects: String): IntI {
+        val img = sprites[decode(name, *effects)]
+            ?: throw DebugData.error("no sprite from: ${decode(name, *effects)}")
         return img.size
     }
 
-    fun sprite_get(name: String): IntI {
-        val img = sprites[name] ?: throw DebugData.error("no sprite from: $name")
+    fun sprite_get(name: String, vararg effects: String): IntI {
+        val img = sprites[decode(name, *effects)]
+            ?: throw DebugData.error("no sprite from: ${decode(name, *effects)}")
         return img.origin_size/img.size
     }
 
-    fun get(name: String) = origins[name] ?: throw DebugData.error("no origin from: $name")
-
-    fun set(name: String) {
-        if (origins[name] != null) return
+    fun set(name: String, vararg effects: String) {
+        val decode = decode(name, *effects)
+        if (origins[decode] != null) return
 
         try {
-            origins[name] = Image(resolvePath(name))
+            origins[decode] = ImageUtils.from(name, *effects)
         } catch (e: Exception) {
-            throw DebugData.error("Data set: in $name: ${resolvePath(name)}")
+            throw DebugData.error("Data set: in $name: ${resolvePath(name)} ($decode) with error: $e")
         }
     }
+    fun get(name: String, vararg effects: String): Image{
+        return origins[decode(name, *effects)] ?: throw DebugData.error("no origin from: $name")
+    }
 
-    fun get(name: String, pos: IntI) =
-        sprites[name]?.get(pos) ?: throw DebugData.error("no sprite from: $name $pos")
-
-    fun set(name: String, size: IntI, scale: Int = -1, vararg effects: String) {
-        if (sprites[name] != null) {
-            if (sprites[name]!!.size != size)
-                throw DebugData.error("duplicate sprite set: $name old: [${sprites[name]!!.size}] | new: [$size]")
+    fun set(name: String, size: IntI, vararg effects: String) {
+        val decode = decode(name, *effects)
+        if (sprites[decode] != null) {
+            if (sprites[decode]!!.size != size)
+                throw DebugData.error("duplicate sprite set: $decode old: [${sprites[decode]!!.size}] | new: [$size]")
             return
         }
         try {
-            sprites[name] = SpriteImage(ImageUtils.from(resolvePath(name), *effects), name, size, scale)
+            sprites[decode] = SpriteImage(ImageUtils.from(name, *effects), "${resolvePath(name)} ($decode)", size)
         } catch (e: Exception) {
-            throw DebugData.error("from: ${resolvePath(name)} with error: $e")
+            throw DebugData.error("from: ${resolvePath(name)} ($decode) with error: $e")
         }
-
+    }
+    fun get(name: String, pos: IntI, vararg effects: String): Image{
+        return sprites[decode(name, *effects)]?.get(pos) ?: throw DebugData.error("no sprite from: $name $pos")
     }
 
-    fun setCombination(name: String, size: IntI, rule: ImageCombinationRule, scale: Int = -1) {
+    fun setCombination(name: String, size: IntI, rule: ImageCombinationRule) {
         if (combinations[name] != null) {
             if (combinations[name]!!.size != size)
                 throw DebugData.error("duplicate combination set: $name old: [${combinations[name]!!.size}] | new: [$size]")
             return
         }
-        combinations[name] = CombinationImage(resolvePath(name), size, rule, scale)
+        //todo
+        combinations[name] = CombinationImage(resolvePath(name), size, rule)
     }
 
     fun combination(name: String, pos: IntI): Image {
+        //todo
         return combinations[name]?.get(pos) ?: throw DebugData.error("no combination from: $name $pos")
     }
 }

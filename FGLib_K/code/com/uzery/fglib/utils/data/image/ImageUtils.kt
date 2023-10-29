@@ -1,6 +1,7 @@
 package com.uzery.fglib.utils.data.image
 
 import com.uzery.fglib.utils.data.debug.DebugData
+import com.uzery.fglib.utils.data.file.WriteData.resolvePath
 import com.uzery.fglib.utils.math.num.IntI
 import javafx.scene.image.Image
 import javafx.scene.image.WritableImage
@@ -53,12 +54,12 @@ object ImageUtils {
 
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////
     fun from(path: String, vararg effects: String): Image {
-        var res = Image(path)
+        var res = Image(ImageData.resolvePath(path))
         for (effect in effects) {
             res = applyEffect(res, effect)
         }
 
-        return Image(path)
+        return res
     }
 
     fun reverseX(origin: Image): Image {
@@ -88,8 +89,9 @@ object ImageUtils {
     }
 
     private fun applyEffect(img: Image, effect: String): Image {
-        when (effect) {
-            "reverseX" -> return reverseX(img)
+        return when (effect) {
+            "reverseX" -> reverseX(img)
+            "reverseY" -> reverseY(img)
 
             else -> throw DebugData.error("unknown image effect: $effect")
         }

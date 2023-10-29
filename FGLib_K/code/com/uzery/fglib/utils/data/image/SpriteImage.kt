@@ -4,12 +4,10 @@ import com.uzery.fglib.core.program.Platform
 import com.uzery.fglib.utils.math.num.IntI
 import javafx.scene.image.Image
 
-class SpriteImage(image: Image, name: String, val size: IntI, scale: Int = -1): FGLImage() {
-    constructor(filename: String, size: IntI, scale: Int = -1): this(Image(filename), filename, size, scale)
+class SpriteImage(image: Image, name: String, val size: IntI): FGLImage() {
+    constructor(filename: String, size: IntI): this(Image(filename), filename, size)
 
     private val origin: Image
-
-    private var SCALE = if (scale == -1) Platform.scale else scale
 
     val origin_size: IntI
 
