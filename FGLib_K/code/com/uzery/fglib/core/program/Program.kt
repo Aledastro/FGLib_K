@@ -1,5 +1,6 @@
 package com.uzery.fglib.core.program
 
+import com.uzery.fglib.utils.data.image.ImageUtils
 import com.uzery.fglib.utils.math.geom.PointN
 import javafx.animation.AnimationTimer
 import javafx.scene.Cursor
@@ -44,7 +45,7 @@ internal object Program {
         stage.initStyle(options.style)
         stage.isFullScreen = options.fullscreen
         stage.fullScreenExitKeyCombination = KeyCombination.NO_MATCH
-        options.icons.forEach { stage.icons.add(Image(it)) }
+        options.icons.forEach { stage.icons.add(ImageUtils.from(it)) }
 
         stage.title = options.title
         stage.show()

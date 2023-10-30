@@ -55,8 +55,9 @@ object ImageUtils {
 
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////
     fun from(path: String, vararg effects: String): Image {
-        return from(Image(ImageData.resolvePath(path)), *effects)
+        return from(Image("file:"+ImageData.resolvePath(path)), *effects)
     }
+
     fun from(image: Image, vararg effects: String): Image {
         var res = image
         for (effect in effects) {

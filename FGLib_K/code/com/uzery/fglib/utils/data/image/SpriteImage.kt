@@ -5,7 +5,7 @@ import com.uzery.fglib.utils.math.num.IntI
 import javafx.scene.image.Image
 
 class SpriteImage(image: Image, name: String, val size: IntI, private vararg val effects: String): FGLImage() {
-    constructor(filename: String, size: IntI, vararg effects: String): this(Image(filename), filename, size, *effects)
+    constructor(filename: String, size: IntI, vararg effects: String): this(ImageUtils.from(filename), filename, size, *effects)
 
     private val origin: Image
 
