@@ -141,16 +141,16 @@ abstract class GameObject {
     override fun toString(): String {
         values.clear()
         setValues()
-        val s = StringBuilder(name)
+        val res = StringBuilder(name)
         if (values.isNotEmpty()) {
-            s.append(":")
+            res.append(":")
             values.forEach { value ->
-                val ss = value.toString()
-                if (ss == "") throw DebugData.error("NULLABLE VALUE: $name: $values")
-                s.append(if (ss[ss.lastIndex] == ']') " $ss" else " [$ss]")
+                val s = value.toString()
+                if (s == "") throw DebugData.error("NULLABLE VALUE: $name: $values")
+                res.append(if (s[s.lastIndex] == ']') " $s" else " [$s]")
             }
         }
-        return s.toString()
+        return res.toString()
     }
 
     fun activate(action: InputAction) {
