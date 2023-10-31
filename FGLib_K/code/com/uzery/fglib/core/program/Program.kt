@@ -11,7 +11,9 @@ import javafx.scene.canvas.GraphicsContext
 import javafx.scene.image.Image
 import javafx.scene.input.KeyCode
 import javafx.scene.input.KeyCombination
+import javafx.stage.Screen
 import javafx.stage.Stage
+import kotlin.math.max
 
 internal object Program {
     var cursor: Cursor? = null
@@ -28,6 +30,8 @@ internal object Program {
     internal var mouseP = PointN.ZERO
     internal var options = LaunchOptions.default
 
+    lateinit var WINDOW_SIZE: PointN
+
     private val core = object: Extension() {}
 
     internal fun initWith(options: LaunchOptions, vararg ets: Extension) {
@@ -38,7 +42,15 @@ internal object Program {
 
     internal fun startWith(stage: Stage) {
         this.stage = stage
-        val canvas = Canvas(options.size.X, options.size.Y)
+
+        WINDOW_SIZE = PointN(Screen.getPrimary().bounds.width, Screen.getPrimary().bounds.height)
+
+        val size = options.size*Platform.scale
+        val canvas = Canvas(size.X, size.Y)
+        val offset = (WINDOW_SIZE - size)/2
+        canvas.layoutX = max(0.0, offset.X)
+        canvas.layoutY = max(0.0, offset.Y)
+
         gc = canvas.graphicsContext2D
         gc.isImageSmoothing = false
         stage.scene = Scene(Group(canvas))
@@ -46,6 +58,8 @@ internal object Program {
         stage.isFullScreen = options.fullscreen
         stage.fullScreenExitKeyCombination = KeyCombination.NO_MATCH
         options.icons.forEach { stage.icons.add(ImageUtils.from(it)) }
+
+        stage.scene.fill = options.fill
 
         stage.title = options.title
         stage.show()

@@ -5,13 +5,13 @@ import javafx.stage.Stage
 
 class LauncherOld: Application() {
     fun startProcess(options: LaunchOptions, vararg ets: Extension) {
+        System.setProperty("quantum.multithreaded", "false")
         Program.initWith(options, *ets)
         launch()
     }
 
     fun startProcess(vararg ets: Extension) {
-        Program.initWith(LaunchOptions.default, *ets)
-        launch()
+        startProcess(LaunchOptions.default, *ets)
     }
 
     override fun start(stage: Stage) {

@@ -1,5 +1,6 @@
 package com.uzery.fglib.core.program
 
+import com.uzery.fglib.core.program.Program.WINDOW_SIZE
 import com.uzery.fglib.core.program.Program.gc
 import com.uzery.fglib.utils.graphics.AffineGraphics
 import com.uzery.fglib.utils.graphics.AffineTransform
@@ -15,6 +16,7 @@ import javafx.scene.input.MouseButton
 import javafx.scene.paint.Color
 import javafx.scene.paint.Paint
 import javafx.scene.text.Font
+import kotlin.math.min
 
 object Platform {
     fun options() = Program.options
@@ -34,22 +36,32 @@ object Platform {
 
     //todo scale 3 spaces
     var scale = 1
+        get(){
+            return if (field == -1) {
+                val size = WINDOW/CANVAS
+                min(size.X.toInt(), size.Y.toInt())
+            } else field
+        }
 
     val WINDOW
-        get() = PointN(options().size)
+        get() = PointN(WINDOW_SIZE)
     val CANVAS
-        get() = WINDOW/scale
+        get() = PointN(options().size)
+    val CANVAS_REAL
+        get() = CANVAS*scale
+
+    val WINDOW_R
+        get() = RectN(PointN.ZERO, WINDOW)
+    val CANVAS_R
+        get() = RectN(PointN.ZERO, CANVAS)
+    val CANVAS_REAL_R
+        get() = RectN(PointN.ZERO, CANVAS_REAL)
 
     var global_alpha = 1.0
         set(input) {
             gc.globalAlpha = input*graphics.alpha
             field = input
         }
-
-    val CANVAS_R
-        get() = RectN(PointN.ZERO, CANVAS)
-    val WINDOW_R
-        get() = RectN(PointN.ZERO, WINDOW)
 
     val keyboard = object: KeyActivator<KeyCode>(KeyCode.values().size) {
         override fun pressed0(code: Int): Boolean = Program.pressed[code]
