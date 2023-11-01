@@ -47,9 +47,6 @@ internal object Program {
 
         val size = options.size*Platform.scale
         val canvas = Canvas(size.X, size.Y)
-        val offset = (WINDOW_SIZE - size)/2
-        canvas.layoutX = max(0.0, offset.X)
-        canvas.layoutY = max(0.0, offset.Y)
 
         gc = canvas.graphicsContext2D
         gc.isImageSmoothing = false
@@ -58,6 +55,12 @@ internal object Program {
         stage.isFullScreen = options.fullscreen
         stage.fullScreenExitKeyCombination = KeyCombination.NO_MATCH
         options.icons.forEach { stage.icons.add(ImageUtils.from(it)) }
+
+        if(stage.isFullScreen){
+            val offset = (WINDOW_SIZE - size)/2
+            canvas.layoutX = max(0.0, offset.X)
+            canvas.layoutY = max(0.0, offset.Y)
+        }
 
         stage.scene.fill = options.fill
 
