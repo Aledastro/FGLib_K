@@ -9,7 +9,7 @@ object TurnCW90: ImageTransformEffect("turnCW90") {
 
         val res = WritableImage(origin_size.height, origin_size.width)
         for (pos in origin_size.indices) {
-            res.pixelWriter.setArgb(pos.x, pos.y, origin.pixelReader.getArgb(origin_size.height-1-pos.y, pos.x))
+            res.pixelWriter.setArgb(pos.x, pos.y, origin.pixelReader.getArgb(pos.y, origin_size.width-1-pos.x))
         }
         return res
     }
