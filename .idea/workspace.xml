@@ -12,21 +12,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="82970e50-af90-458e-a847-e0b07c98f932" name="Changes" comment="FGLib v.0.9.6.2 [K]">
-      <change afterPath="$PROJECT_DIR$/FGLib_K/code/com/uzery/fglib/utils/data/image/ImageTransformUtils.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/FGLib_K/code/com/uzery/fglib/utils/data/image/effects/ImageTransformEffect.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/FGLib_K/code/com/uzery/fglib/utils/data/image/effects/ReverseX.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/FGLib_K/code/com/uzery/fglib/utils/data/image/effects/ReverseXY.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/FGLib_K/code/com/uzery/fglib/utils/data/image/effects/ReverseY.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/FGLib_K/code/com/uzery/fglib/utils/data/image/effects/TurnCCW.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/FGLib_K/code/com/uzery/fglib/utils/data/image/effects/TurnCCW90.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/FGLib_K/code/com/uzery/fglib/utils/data/image/effects/TurnCW.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/FGLib_K/code/com/uzery/fglib/utils/data/image/effects/TurnCW90.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/FGLib_K/code/com/uzery/fglib/utils/data/image/effects/UniColor.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FGLib_K/code/com/uzery/fglib/utils/data/image/ImageUtils.kt" beforeDir="false" afterPath="$PROJECT_DIR$/FGLib_K/code/com/uzery/fglib/utils/data/image/ImageUtils.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FGLib_K/code/module-info.java" beforeDir="false" afterPath="$PROJECT_DIR$/FGLib_K/code/module-info.java" afterDir="false" />
-    </list>
+    <list default="true" id="82970e50-af90-458e-a847-e0b07c98f932" name="Changes" comment="FGLib v.0.9.7.0 [K]" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -46,7 +32,7 @@
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
-    <option name="RESET_MODE" value="HARD" />
+    <option name="RESET_MODE" value="SOFT" />
     <option name="WARN_ABOUT_DETACHED_HEAD" value="false" />
   </component>
   <component name="GitHubPullRequestSearchHistory">{
@@ -135,20 +121,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1680386967444</updated>
-    </task>
-    <task id="LOCAL-00166" summary="FGLib v.0.8.9.4 [K]">
-      <created>1696793228056</created>
-      <option name="number" value="00166" />
-      <option name="presentableId" value="LOCAL-00166" />
-      <option name="project" value="LOCAL" />
-      <updated>1696793228056</updated>
-    </task>
-    <task id="LOCAL-00167" summary="FGLib v.0.8.9.5 [K]">
-      <created>1696793744592</created>
-      <option name="number" value="00167" />
-      <option name="presentableId" value="LOCAL-00167" />
-      <option name="project" value="LOCAL" />
-      <updated>1696793744592</updated>
     </task>
     <task id="LOCAL-00168" summary="FGLib v.0.8.9.6 [K]">
       <created>1696794575760</created>
@@ -479,7 +451,21 @@
       <option name="project" value="LOCAL" />
       <updated>1698871976753</updated>
     </task>
-    <option name="localTasksCounter" value="215" />
+    <task id="LOCAL-00215" summary="FGLib v.0.9.6.2 [K]">
+      <created>1698878378226</created>
+      <option name="number" value="00215" />
+      <option name="presentableId" value="LOCAL-00215" />
+      <option name="project" value="LOCAL" />
+      <updated>1698878378226</updated>
+    </task>
+    <task id="LOCAL-00216" summary="FGLib v.0.9.7.0 [K]">
+      <created>1698878430392</created>
+      <option name="number" value="00216" />
+      <option name="presentableId" value="LOCAL-00216" />
+      <option name="project" value="LOCAL" />
+      <updated>1698878430392</updated>
+    </task>
+    <option name="localTasksCounter" value="217" />
     <servers />
   </component>
   <component name="UnknownFeatures">
@@ -509,7 +495,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="FGLib v.0.9.0.4 [K]" />
     <MESSAGE value="FGLib v.0.9.0.5 [K]" />
     <MESSAGE value="FGLib v.0.9.0.6 [K]" />
     <MESSAGE value="FGLib v.0.9.1.0 [K]" />
@@ -534,7 +519,8 @@
     <MESSAGE value="FGLib v.0.9.6.0 [K]" />
     <MESSAGE value="FGLib v.0.9.6.1 [K]" />
     <MESSAGE value="FGLib v.0.9.6.2 [K]" />
-    <option name="LAST_COMMIT_MESSAGE" value="FGLib v.0.9.6.2 [K]" />
+    <MESSAGE value="FGLib v.0.9.7.0 [K]" />
+    <option name="LAST_COMMIT_MESSAGE" value="FGLib v.0.9.7.0 [K]" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
