@@ -35,7 +35,8 @@ object ImageData: CollectDataClass() {
     }
 
     fun get(name: String, vararg effects: String): Image {
-        return origins[decode(name, *effects)] ?: throw DebugData.error("no origin from: $name")
+        val decode = decode(name, *effects)
+        return origins[decode] ?: throw DebugData.error("no origin from: $decode")
     }
 
     fun get(name: String, effects: List<String>): Image {
@@ -78,7 +79,8 @@ object ImageData: CollectDataClass() {
     }
 
     fun get(name: String, pos: IntI, vararg effects: String): Image {
-        return sprites[decode(name, *effects)]?.get(pos) ?: throw DebugData.error("no sprite from: $name $pos")
+        val decode = decode(name, *effects)
+        return sprites[decode]?.get(pos) ?: throw DebugData.error("no sprite from: $decode $pos")
     }
 
     fun get(name: String, pos: IntI, effects: List<String>): Image {
