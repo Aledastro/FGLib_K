@@ -8,7 +8,6 @@ import javafx.scene.Group
 import javafx.scene.Scene
 import javafx.scene.canvas.Canvas
 import javafx.scene.canvas.GraphicsContext
-import javafx.scene.image.Image
 import javafx.scene.input.KeyCode
 import javafx.scene.input.KeyCombination
 import javafx.stage.Screen
@@ -56,8 +55,8 @@ internal object Program {
         stage.fullScreenExitKeyCombination = KeyCombination.NO_MATCH
         options.icons.forEach { stage.icons.add(ImageUtils.from(it)) }
 
-        if(stage.isFullScreen){
-            val offset = (WINDOW_SIZE - size)/2
+        if (stage.isFullScreen) {
+            val offset = (WINDOW_SIZE-size)/2
             canvas.layoutX = max(0.0, offset.X)
             canvas.layoutY = max(0.0, offset.Y)
         }

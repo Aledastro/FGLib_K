@@ -14,7 +14,7 @@ object ImageTransformUtils {
 
     fun addEffect(vararg effects: ImageTransformEffect) {
         effects.forEach { effect ->
-            if(map.containsKey(effect.name)) throw DebugData.error("duplicate image effect: ${effect.name}")
+            if (map.containsKey(effect.name)) throw DebugData.error("duplicate image effect: ${effect.name}")
             map[effect.name] = effect
         }
     }

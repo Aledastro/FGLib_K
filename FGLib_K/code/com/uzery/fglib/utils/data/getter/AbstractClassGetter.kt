@@ -1,10 +1,6 @@
 package com.uzery.fglib.utils.data.getter
 
-import com.uzery.fglib.utils.data.debug.DebugData
-import com.uzery.fglib.utils.math.geom.PointN
 import com.uzery.fglib.utils.math.num.StringN
-import javafx.scene.paint.Color
-import java.util.*
 
 abstract class AbstractClassGetter<Type> {
     operator fun get(name: String, args: ArrayList<ArrayList<String>>): Type = getMark(name, args).invoke()

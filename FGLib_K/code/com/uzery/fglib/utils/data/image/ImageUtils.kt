@@ -67,7 +67,7 @@ object ImageUtils {
         return res
     }
 
-    fun writableFrom(origin: Image): WritableImage{
+    fun writableFrom(origin: Image): WritableImage {
         val origin_size = IntI(origin.width.toInt(), origin.height.toInt())
 
         val img = WritableImage(origin_size.width, origin_size.height)

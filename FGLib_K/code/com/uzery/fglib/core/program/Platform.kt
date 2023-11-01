@@ -36,7 +36,7 @@ object Platform {
 
     //todo scale 3 spaces
     var scale = 1
-        get(){
+        get() {
             return if (field == -1) {
                 val size = WINDOW/CANVAS
                 min(size.X.toInt(), size.Y.toInt())

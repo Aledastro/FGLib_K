@@ -3,8 +3,7 @@ package com.uzery.fglib.utils.data.getter
 import com.uzery.fglib.utils.data.debug.DebugData
 import com.uzery.fglib.utils.math.num.IntI
 import com.uzery.fglib.utils.math.num.StringN
-import java.util.ArrayList
-import java.util.LinkedList
+import java.util.*
 
 abstract class ParentClassGetter<Type>(private vararg val getters: ClassGetter<Type>): AbstractClassGetter<Type>() {
 

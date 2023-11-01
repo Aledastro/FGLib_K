@@ -12,7 +12,7 @@ object UniColor: ImageTransformEffect("uni_color") {
         val res = WritableImage(origin_size.width, origin_size.height)
         for (pos in origin_size.indices) {
             val rgb = origin.pixelReader.getColor(pos.x, pos.y)
-            res.pixelWriter.setColor(pos.x, pos.y, if(rgb == Color.TRANSPARENT) rgb else color)
+            res.pixelWriter.setColor(pos.x, pos.y, if (rgb == Color.TRANSPARENT) rgb else color)
         }
         return res
     }

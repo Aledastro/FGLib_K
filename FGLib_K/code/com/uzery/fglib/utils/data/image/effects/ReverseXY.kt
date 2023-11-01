@@ -9,8 +9,10 @@ object ReverseXY: ImageTransformEffect("reverseXY") {
 
         val res = WritableImage(origin_size.width, origin_size.height)
         for (pos in origin_size.indices) {
-            res.pixelWriter.setArgb(pos.x, pos.y,
-                origin.pixelReader.getArgb(origin_size.width-1-pos.x, origin_size.height-1-pos.y))
+            res.pixelWriter.setArgb(
+                pos.x, pos.y,
+                origin.pixelReader.getArgb(origin_size.width-1-pos.x, origin_size.height-1-pos.y)
+            )
         }
         return res
     }

@@ -8,7 +8,6 @@ import com.uzery.fglib.core.program.Platform.graphics
 import com.uzery.fglib.core.room.Room
 import com.uzery.fglib.core.world.WorldUtils.readInfo
 import com.uzery.fglib.utils.data.getter.AbstractClassGetter
-import com.uzery.fglib.utils.data.getter.ClassGetter
 import com.uzery.fglib.utils.math.FGUtils
 import com.uzery.fglib.utils.math.geom.PointN
 import javafx.scene.paint.Color
