@@ -27,6 +27,7 @@ module FGLib_K {
     exports com.uzery.fglib.utils.data.getter;
     exports com.uzery.fglib.utils.data.getter.value;
     exports com.uzery.fglib.utils.data.image;
+    exports com.uzery.fglib.utils.data.image.effects;
 
     exports com.uzery.fglib.utils.graphics;
 
