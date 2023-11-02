@@ -28,6 +28,9 @@ abstract class GameObject {
     private val listeners = LinkedList<ActionListener>()
     private val properties = LinkedList<GameProperty>()
 
+    private val onDeath = LinkedList<()->Unit>()
+    private val onGrab = LinkedList<()->Unit>()
+
     internal val children = LinkedList<GameObject>()
     internal val followers = LinkedList<GameObject>()
     var owner: GameObject? = null
@@ -125,13 +128,13 @@ abstract class GameObject {
     fun grab(vararg os: GameObject) {
         followers.addAll(os)
         os.forEach { it.owner = this }
-        os.forEach { it.onGrab() }
+        os.forEach { o-> o.onGrab.forEach { it() } }
     }
 
     fun grab(os: List<GameObject>) {
         followers.addAll(os)
-        os.forEach { o -> o.owner = this }
-        os.forEach { o -> o.onGrab() }
+        os.forEach { it.owner = this }
+        os.forEach { o-> o.onGrab.forEach { it() } }
     }
 
     open fun setValues() {
@@ -162,17 +165,17 @@ abstract class GameObject {
 
     open fun collapse() {
         if (dead) return
-        onDeath()
+        onDeath.forEach { it() }
         dead = true
         followers.forEach { it.collapse() }
     }
 
-    open fun onDeath() {
-        /* ignore */
+    fun onDeath(f: ()->Unit) {
+        onDeath.add(f)
     }
 
-    open fun onGrab() {
-        /* ignore */
+    fun onGrab(f: ()->Unit) {
+        onGrab.add(f)
     }
 
     fun tag(vararg tag: String) = tags.addAll(tag)
