@@ -98,12 +98,12 @@ abstract class Extension(vararg children: Extension) {
     }
 
     fun only_draw() {
-        next_mode = MODE.SHOW
+        next_mode = MODE.ONLY_DRAW
         onOnlyDraw()
     }
 
     fun only_update() {
-        next_mode = MODE.HIDE
+        next_mode = MODE.ONLY_UPDATE
         onOnlyDraw()
     }
 
