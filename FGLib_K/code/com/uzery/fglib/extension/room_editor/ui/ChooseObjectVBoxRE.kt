@@ -2,6 +2,8 @@ package com.uzery.fglib.extension.room_editor.ui
 
 import com.uzery.fglib.core.obj.bounds.BoundsBox
 import com.uzery.fglib.core.program.Platform
+import com.uzery.fglib.core.program.Platform.CANVAS
+import com.uzery.fglib.core.program.Platform.CANVAS_R
 import com.uzery.fglib.core.world.WorldUtils
 import com.uzery.fglib.extension.room_editor.DataRE
 import com.uzery.fglib.extension.ui.VBox
@@ -18,9 +20,9 @@ class ChooseObjectVBoxRE(private val data: DataRE): VBox() {
         get() = min(10, data.groupsValues[data.select_group].size)
 
     override val pos
-        get() = (Platform.CANVAS-size)/2
+        get() = (CANVAS-size)/2
     override val window: RectN
-        get() = Platform.CANVAS_R
+        get() = CANVAS_R
     override val sizeOne: PointN
         get() = PointN(60, 60)/Platform.scale
 

@@ -1,6 +1,8 @@
 package com.uzery.fglib.extension.room_editor.ui
 
 import com.uzery.fglib.core.program.Platform
+import com.uzery.fglib.core.program.Platform.CANVAS
+import com.uzery.fglib.core.program.Platform.CANVAS_R
 import com.uzery.fglib.core.program.Platform.graphics
 import com.uzery.fglib.extension.room_editor.DataRE
 import com.uzery.fglib.extension.ui.VBox
@@ -24,9 +26,9 @@ class LayerVBoxRE(private val data: DataRE): VBox() {
     }
 
     override val pos
-        get() = (Platform.CANVAS-size)*PointN(0.5, 1.0)+PointN(0.0, -data.OFFSET/2)
+        get() = (CANVAS-size)*PointN(0.5, 1.0)+PointN(0.0, -data.OFFSET/2)
     override val window: RectN
-        get() = Platform.CANVAS_R
+        get() = CANVAS_R
     override val sizeOne: PointN
         get() = PointN(78, 56)/Platform.scale
 

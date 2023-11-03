@@ -2,6 +2,7 @@ package com.uzery.fglib.extension.room_editor.ui
 
 import com.uzery.fglib.core.obj.bounds.BoundsBox
 import com.uzery.fglib.core.program.Platform
+import com.uzery.fglib.core.program.Platform.CANVAS_R
 import com.uzery.fglib.core.program.Platform.scale
 import com.uzery.fglib.core.world.WorldUtils
 import com.uzery.fglib.extension.room_editor.DataRE
@@ -36,7 +37,7 @@ class ObjectVBoxRE(private val data: DataRE): VBox() {
     override val pos
         get() = PointN(data.OFFSET, 70.0)
     override val window: RectN
-        get() = Platform.CANVAS_R
+        get() = CANVAS_R
     override val sizeOne: PointN
         get() = PointN(60, 60)/scale
 

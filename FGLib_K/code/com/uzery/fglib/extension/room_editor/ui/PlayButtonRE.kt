@@ -1,6 +1,9 @@
 package com.uzery.fglib.extension.room_editor.ui
 
 import com.uzery.fglib.core.program.Platform
+import com.uzery.fglib.core.program.Platform.CANVAS
+import com.uzery.fglib.core.program.Platform.CANVAS_R
+import com.uzery.fglib.core.program.Platform.keyboard
 import com.uzery.fglib.extension.room_editor.DataRE
 import com.uzery.fglib.extension.ui.Button
 import com.uzery.fglib.utils.math.geom.PointN
@@ -9,15 +12,15 @@ import javafx.scene.input.KeyCode
 
 class PlayButtonRE(val data: DataRE): Button() {
     override val pos: PointN
-        get() = Platform.CANVAS-PointN(110, 110)/Platform.scale
+        get() = CANVAS-PointN(110, 110)/Platform.scale
 
     override val size
         get() = PointN(52, 52)/Platform.scale
     override val window: RectN
-        get() = Platform.CANVAS_R
+        get() = CANVAS_R
 
     override val pressed: Boolean
-        get() = Platform.keyboard.pressed(KeyCode.CONTROL) && Platform.keyboard.inPressed(KeyCode.SPACE)
+        get() = keyboard.pressed(KeyCode.CONTROL) && keyboard.inPressed(KeyCode.SPACE)
 
     override fun whenPressed(): String {
         data.world_play = true

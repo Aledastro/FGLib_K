@@ -5,6 +5,7 @@ import com.uzery.fglib.core.obj.GameObject
 import com.uzery.fglib.core.program.Extension
 import com.uzery.fglib.core.program.Platform
 import com.uzery.fglib.core.program.Platform.CANVAS
+import com.uzery.fglib.core.program.Platform.CANVAS_R
 import com.uzery.fglib.core.program.Platform.graphics
 import com.uzery.fglib.core.program.Platform.keyboard
 import com.uzery.fglib.core.program.Platform.scale
@@ -52,7 +53,7 @@ class RoomEditor(private var getter: (Int) -> Pair<AbstractClassGetter<GameObjec
 
         Platform.whole_draw = true
         //todo
-        data.draw_pos = Platform.options().size/4-data.edit.size*0.5
+        data.draw_pos = (Platform.options().size-data.edit.size)/2
 
         play_button = PlayButtonRE(data)
         objects_vbox = ObjectVBoxRE(data)
@@ -159,6 +160,6 @@ class RoomEditor(private var getter: (Int) -> Pair<AbstractClassGetter<GameObjec
         graphics.layer = DrawLayer.CAMERA_OFF
         graphics.alpha = 1.0
         Platform.global_alpha = 1.0
-        graphics.fill.rect(PointN.ZERO, CANVAS, Color(0.7, 0.6, 0.9, 1.0))
+        graphics.fill.draw(CANVAS_R, Color(0.7, 0.6, 0.9, 1.0))
     }
 }
