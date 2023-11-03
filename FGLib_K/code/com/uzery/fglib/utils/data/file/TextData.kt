@@ -7,7 +7,7 @@ import com.uzery.fglib.utils.data.file.ConstL.RUN_JAR
 import java.io.*
 import java.util.stream.Collectors
 
-object WriteData: CollectDataClass() {
+object TextData: CollectDataClass() {
     operator fun get(filename: String): ArrayList<String> {
         return getReader(resolvePath(filename)).lines().collect(Collectors.toCollection { ArrayList() })
     }
@@ -49,7 +49,7 @@ object WriteData: CollectDataClass() {
 
     private fun inFileStream(filename: String): InputStream {
         return if (RUN_JAR) {
-            return WriteData::class.java.getResourceAsStream("/$filename")
+            return TextData::class.java.getResourceAsStream("/$filename")
                 ?: throw DebugData.error("Can't run stream from: $filename")
         } else {
             try {
@@ -82,9 +82,5 @@ object WriteData: CollectDataClass() {
                 throw DebugData.error("Can't run stream from: $filename")
             }
         }
-    }
-
-    fun errorStream(): PrintStream {
-        return PrintStream(outFileStream("C:/com.uzery.fglib.utils.data.image.Data/!errors.txt"))
     }
 }

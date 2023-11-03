@@ -4,7 +4,6 @@ import com.uzery.fglib.core.obj.DrawLayer
 import com.uzery.fglib.core.obj.GameObject
 import com.uzery.fglib.core.program.Extension
 import com.uzery.fglib.core.program.Platform
-import com.uzery.fglib.core.program.Platform.CANVAS
 import com.uzery.fglib.core.program.Platform.CANVAS_R
 import com.uzery.fglib.core.program.Platform.graphics
 import com.uzery.fglib.core.program.Platform.keyboard
@@ -13,7 +12,7 @@ import com.uzery.fglib.core.world.OneRoomWC
 import com.uzery.fglib.core.world.World
 import com.uzery.fglib.core.world.WorldUtils
 import com.uzery.fglib.extension.room_editor.ui.*
-import com.uzery.fglib.utils.data.file.WriteData
+import com.uzery.fglib.utils.data.file.TextData
 import com.uzery.fglib.utils.data.getter.AbstractClassGetter
 import com.uzery.fglib.utils.math.geom.PointN
 import javafx.scene.input.KeyCode
@@ -147,7 +146,7 @@ class RoomEditor(private var getter: (Int) -> Pair<AbstractClassGetter<GameObjec
     private fun checkForSave() {
         if (keyboard.allPressed(KeyCode.CONTROL, KeyCode.SHIFT) && keyboard.inPressed(KeyCode.S)) {
             //edit.objects.forEach { it.stats.POS /= 2 }
-            data.filenames.indices.forEach { i -> WriteData.write(data.filenames[i], World.rooms[i].toString()) }
+            data.filenames.indices.forEach { i -> TextData.write(data.filenames[i], World.rooms[i].toString()) }
             println("saved")
         }
     }

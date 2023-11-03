@@ -6,7 +6,7 @@ import com.uzery.fglib.core.obj.bounds.BoundsBox
 import com.uzery.fglib.core.program.Platform.graphics
 import com.uzery.fglib.core.room.Room
 import com.uzery.fglib.utils.data.debug.DebugData
-import com.uzery.fglib.utils.data.file.WriteData
+import com.uzery.fglib.utils.data.file.TextData
 import com.uzery.fglib.utils.math.FGUtils
 import com.uzery.fglib.utils.math.FGUtils.getPosFrom
 import com.uzery.fglib.utils.math.geom.PointN
@@ -16,7 +16,7 @@ import java.util.*
 
 object WorldUtils {
     fun readInfo(filename: String): Room {
-        return readInfo(WriteData[filename])
+        return readInfo(TextData[filename])
     }
 
     fun readInfo(input: List<String>): Room {

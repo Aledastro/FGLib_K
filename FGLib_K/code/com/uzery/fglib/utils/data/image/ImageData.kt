@@ -34,12 +34,12 @@ object ImageData: CollectDataClass() {
         set(name, *effects.toTypedArray())
     }
 
-    fun get(name: String, vararg effects: String): Image {
+    operator fun get(name: String, vararg effects: String): Image {
         val decode = decode(name, *effects)
         return origins[decode] ?: throw DebugData.error("no origin from: $decode")
     }
 
-    fun get(name: String, effects: List<String>): Image {
+    operator fun get(name: String, effects: List<String>): Image {
         return get(name, *effects.toTypedArray())
     }
 
@@ -78,12 +78,12 @@ object ImageData: CollectDataClass() {
         set(name, size, *effects.toTypedArray())
     }
 
-    fun get(name: String, pos: IntI, vararg effects: String): Image {
+    operator fun get(name: String, pos: IntI, vararg effects: String): Image {
         val decode = decode(name, *effects)
         return sprites[decode]?.get(pos) ?: throw DebugData.error("no sprite from: $decode $pos")
     }
 
-    fun get(name: String, pos: IntI, effects: List<String>): Image {
+    operator fun get(name: String, pos: IntI, effects: List<String>): Image {
         return get(name, pos, *effects.toTypedArray())
     }
 
