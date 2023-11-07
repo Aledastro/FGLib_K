@@ -139,7 +139,7 @@ class CanvasRE(private val data: DataRE): UICanvas() {
         fun drawSelectObj(alpha: Double = 1.0) {
             Platform.global_alpha = alpha
             val pp =
-                (mouse.pos/view_scale-data.draw_pos).round(data.GRID)+data.draw_pos+grid_offset[grid_offset_id]
+                (mouse.pos/view_scale-data.draw_pos).roundL(data.GRID)+data.draw_pos+grid_offset[grid_offset_id]
             for (i in -add_size/2..(add_size+1)/2) {
                 for (j in -add_size/2..(add_size+1)/2) {
                     val obj = data.chosen_obj ?: continue
@@ -259,7 +259,7 @@ class CanvasRE(private val data: DataRE): UICanvas() {
 
                 val o = data.getter.getEntry(data.chosen_entry)()
                 if (data.select_layer != 0 && !onSelectLayer(o)) return
-                val posWithOffset = pos+mouseRealPos.round(data.GRID)+grid_offset[grid_offset_id]
+                val posWithOffset = pos+mouseRealPos.roundL(data.GRID)+grid_offset[grid_offset_id]
 
                 val room = roomFrom(posWithOffset) ?: return
 
@@ -284,9 +284,9 @@ class CanvasRE(private val data: DataRE): UICanvas() {
                 val room = roomFrom(mouseRealPos) ?: return
 
                 room.objects.removeIf { o ->
-                    val pos1 = (o.stats.POS-data.edit.pos+room.pos).round(data.GRID)
+                    val pos1 = (o.stats.POS-data.edit.pos+room.pos).roundL(data.GRID)
                     val added = if (add_size%2 == 0) PointN.ZERO else data.GRID_P/2
-                    val pos2 = (mouseRealPos.round(data.GRID)+data.GRID_P/2).round(data.GRID)+added
+                    val pos2 = (mouseRealPos.roundL(data.GRID)+data.GRID_P/2).roundL(data.GRID)+added
                     val len = max(pos1.XP.lengthTo(pos2.XP), pos1.YP.lengthTo(pos2.YP))
 
                     len <= data.GRID/2*(add_size+1) && sel.equalsName(o) && onSelectLayer(o)

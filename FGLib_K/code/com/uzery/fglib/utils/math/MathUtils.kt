@@ -11,9 +11,16 @@ object MathUtils {
 
     fun mod(input: Int, mod: Int) = input%mod+(if (input < 0 && input%mod != 0) mod else 0)
 
-    //todo it's roundL (round to less value)
-    fun round(input: Double, mod: Double) = input-mod(input, mod)
-    fun round(input: Int, mod: Int) = input-mod(input, mod)
+    fun roundL(input: Double, mod: Double) = input-mod(input, mod)
+    fun roundL(input: Int, mod: Int) = input-mod(input, mod)
+
+    fun roundC(input: Double, mod: Double) = roundL(input+mod/2, mod)
+
+    fun roundC(input: Int, mod: Int) = roundL(input+mod/2, mod)
+
+    fun roundR(input: Double, mod: Double) = if (mod(input, mod) == 0.0) roundL(input, mod)+1 else input
+
+    fun roundR(input: Int, mod: Int) = if (mod(input, mod) == 0) roundL(input, mod)+1 else input
 
 
     fun min(vararg xs: Double) = xs.min()

@@ -81,8 +81,9 @@ object Platform {
     val graphics = object: AffineGraphics() {
         private val transform =
             AffineTransform {
-                var x = (it-drawPOS*layer.z)*scale*view_scale*global_view_scale
-                if (whole_draw) x = x.round(1.0)
+                var x = (it-drawPOS*layer.z)*scale
+                if (whole_draw) x = x.roundC(1.0)
+                x *= view_scale*global_view_scale
                 x
             }
         private val transformSize = AffineTransform { it*scale*view_scale*global_view_scale }

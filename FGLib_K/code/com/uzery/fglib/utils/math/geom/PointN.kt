@@ -88,7 +88,9 @@ data class PointN(private val xs: Array<Double>) {
     fun separate(level: Int) = PointN(Array(dim) { i -> if (level == i) xs[i] else 0.0 })
 
     fun transform(transform: (x: Double) -> Double) = PointN(ArrayUtils.transform(xs, transform))
-    fun round(size: Double) = transform { x -> MathUtils.round(x, size) }
+    fun roundL(size: Double) = transform { x -> MathUtils.roundL(x, size) }
+    fun roundC(size: Double) = transform { x -> MathUtils.roundC(x, size) }
+    fun roundR(size: Double) = transform { x -> MathUtils.roundR(x, size) }
     fun mod(size: Double) = transform { x -> MathUtils.mod(x, size) }
     fun interpolate(pos: PointN, k: Double): PointN {
         return this+(pos-this)*k
