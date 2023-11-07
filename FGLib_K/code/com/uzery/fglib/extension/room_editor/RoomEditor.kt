@@ -18,6 +18,7 @@ import com.uzery.fglib.utils.math.geom.PointN
 import javafx.scene.input.KeyCode
 import javafx.scene.paint.Color
 import java.util.*
+import kotlin.collections.HashMap
 
 class RoomEditor(private var getter: (Int) -> Pair<AbstractClassGetter<GameObject>, Array<String>>):
     Extension(RoomEditorUI) {

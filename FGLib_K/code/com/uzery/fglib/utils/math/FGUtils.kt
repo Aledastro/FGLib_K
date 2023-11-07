@@ -34,8 +34,16 @@ object FGUtils {
         return input.substring(0 until input.indexOf(index)+delta)
     }
 
+    fun subBeforeLast(input: String, index: String, delta: Int = 0): String {
+        return input.substring(0 until input.lastIndexOf(index)+delta)
+    }
+
     fun subAfter(input: String, index: String, delta: Int = 0): String {
         return input.substring(input.indexOf(index)+1+delta)
+    }
+
+    fun subAfterLast(input: String, index: String, delta: Int = 0): String {
+        return input.substring(input.lastIndexOf(index)+1+delta)
     }
 
     fun getPosFrom(s: String): PointN {

@@ -7,9 +7,11 @@ import com.uzery.fglib.core.program.Platform.CANVAS_R
 import com.uzery.fglib.core.world.WorldUtils
 import com.uzery.fglib.extension.room_editor.DataRE
 import com.uzery.fglib.extension.ui.VBox
+import com.uzery.fglib.utils.math.FGUtils
 import com.uzery.fglib.utils.math.geom.PointN
 import com.uzery.fglib.utils.math.geom.shape.RectN
 import javafx.scene.paint.Color
+import java.util.StringTokenizer
 import kotlin.math.min
 
 class ChooseObjectVBoxRE(private val data: DataRE): VBox() {
@@ -17,7 +19,15 @@ class ChooseObjectVBoxRE(private val data: DataRE): VBox() {
         get() = data.groupsValues[data.select_group].size
 
     override val rows: Int
-        get() = min(10, data.groupsValues[data.select_group].size)
+        get(){
+            if(!data.titles[data.select_group].all { it.startsWith("size:") })
+                return min(10, data.groupsValues[data.select_group].size)
+
+            return data.titles[data.select_group].maxOf {
+                val sub = FGUtils.subBefore(it, "#")
+                sub.substring(5).toInt()
+            }
+        }
 
     override val pos
         get() = (CANVAS-size)/2
@@ -27,7 +37,8 @@ class ChooseObjectVBoxRE(private val data: DataRE): VBox() {
         get() = PointN(60, 60)/Platform.scale
 
     override fun setNames(id: Int): String {
-        return data.titles[data.select_group][id]
+        val name = data.titles[data.select_group][id]
+        return if(name.contains("#")) FGUtils.subAfterLast(name, "#") else name
     }
 
     override fun draw() {

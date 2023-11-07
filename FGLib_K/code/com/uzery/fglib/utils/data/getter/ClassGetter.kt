@@ -8,23 +8,23 @@ import java.util.*
 
 abstract class ClassGetter<Type>: AbstractClassGetter<Type>() {
     protected var no_info = false
-    private val map: TreeMap<StringN, () -> Type> = TreeMap<StringN, () -> Type>()
+    private val map: LinkedList<Pair<StringN, () -> Type>> = LinkedList()
 
     final override fun entries_size(): Int {
-        return map.keys.size
+        return map.size
     }
 
     final override fun getEntry(id: Int): () -> Type {
         no_info = true
-        return map[getEntryName(id)] ?: throw DebugData.error("wrong id: $id")
+        return map[id].second
     }
 
     final override fun getEntryName(id: Int): StringN {
-        return map.keys.elementAt(id)
+        return map[id].first
     }
 
     fun contains(input: StringN): Boolean {
-        return map.contains(input)
+        return map.any { it.first == input }
     }
 
 
@@ -36,22 +36,24 @@ abstract class ClassGetter<Type>: AbstractClassGetter<Type>() {
 
 
     protected fun add(sn: StringN, mark: () -> Type) {
-        map[sn] = mark
+        if(contains(sn)) return
+
+        map.add(Pair(sn, mark))
     }
 
     protected fun add(s: String, n: Int, mark: () -> Type) {
-        map[StringN(s, n)] = mark
+        add(StringN(s, n), mark)
     }
 
     protected fun add(s: String, mark: () -> Type) {
-        map[StringN(s)] = mark
+        add(StringN(s), mark)
     }
 
     override fun getMark(name: String, args: ArrayList<ArrayList<String>>): () -> Type {
         input = args
         in_id = 0
         no_info = false
-        return map[StringN(name, args.size)] ?: throw DebugData.error("ERROR getMark(): $name | $args")
+        return map.first { it.first == StringN(name, args.size) }.second
     }
 
 
