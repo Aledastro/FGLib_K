@@ -27,6 +27,9 @@ internal object Program {
     internal val pressed = Array(KeyCode.values().size) { false }
     internal val mouse_pressed = Array(KeyCode.values().size) { false }
     internal var mouseP = PointN.ZERO
+    var scrollP = PointN.ZERO
+        get() = if(last_scroll_time == program_time) field else PointN.ZERO
+    private var last_scroll_time = 0
     internal var options = LaunchOptions.default
 
     lateinit var WINDOW_SIZE: PointN
@@ -39,6 +42,7 @@ internal object Program {
         this.options = options
     }
 
+    private var program_time = 0
     internal fun startWith(stage: Stage) {
         this.stage = stage
 
@@ -82,6 +86,11 @@ internal object Program {
             mouseP = PointN(e.x, e.y)
             mouse_pressed[e.button.ordinal] = true
         }
+        this.stage.scene.setOnScroll { e ->
+            scrollP = PointN(e.deltaX, e.deltaY)
+            last_scroll_time = program_time
+        }
+
         this.stage.scene.setOnKeyPressed { key -> pressed[key.code.ordinal] = true }
         this.stage.scene.setOnKeyReleased { key -> pressed[key.code.ordinal] = false }
 
@@ -94,6 +103,7 @@ internal object Program {
                 core.drawWithChildren(core.draw_pos)
 
                 Platform.update()
+                program_time++
             }
         }
 
