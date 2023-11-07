@@ -2,6 +2,7 @@ package com.uzery.fglib.core.program
 
 import com.uzery.fglib.core.program.Program.WINDOW_SIZE
 import com.uzery.fglib.core.program.Program.gc
+import com.uzery.fglib.utils.data.image.ImageUtils
 import com.uzery.fglib.utils.graphics.AffineGraphics
 import com.uzery.fglib.utils.graphics.AffineTransform
 import com.uzery.fglib.utils.graphics.GeometryGraphics
@@ -33,6 +34,8 @@ object Platform {
     var develop_mode = false
 
     var whole_draw = false
+
+    var global_view_scale = 1.0
 
     //todo scale 3 spaces
     var scale = 1
@@ -79,28 +82,19 @@ object Platform {
     val graphics = object: AffineGraphics() {
         private val transform =
             AffineTransform {
-                var x = (it-drawPOS*layer.z)*scale
+                var x = (it-drawPOS*layer.z)*scale*view_scale*global_view_scale
                 if (whole_draw) x = x.round(1.0)
                 x
             }
-        private val transformSize = AffineTransform { it*scale }
+        private val transformSize = AffineTransform { it*scale*view_scale*global_view_scale }
 
         override fun setStroke(size: Double) {
-            gc.lineWidth = size*scale
+            gc.lineWidth = transformSize.transform(PointN(size)).X
         }
 
         override val image: ImageGraphics = object: ImageGraphics(transform) {
-            override fun draw0(filename: String, pos: PointN, size: PointN) =
-                gc.drawImage(Image(filename), pos.X, pos.Y, size.X, size.Y)
-
             override fun draw0(image: Image, pos: PointN, size: PointN) =
                 gc.drawImage(image, pos.X, pos.Y, size.X, size.Y)
-
-            override fun draw0(filename: String, pos: PointN) = gc.drawImage(Image(filename), pos.X, pos.Y)
-
-            override fun draw0(image: Image, pos: PointN) =
-                gc.drawImage(image, pos.X, pos.Y, image.width*scale, image.height*scale)
-
         }
 
         override val fill: GeometryGraphics = object: GeometryGraphics(transform, transformSize) {
