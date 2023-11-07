@@ -2,7 +2,6 @@ package com.uzery.fglib.core.program
 
 import com.uzery.fglib.core.program.Program.WINDOW_SIZE
 import com.uzery.fglib.core.program.Program.gc
-import com.uzery.fglib.utils.data.image.ImageUtils
 import com.uzery.fglib.utils.graphics.AffineGraphics
 import com.uzery.fglib.utils.graphics.AffineTransform
 import com.uzery.fglib.utils.graphics.GeometryGraphics

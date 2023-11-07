@@ -28,7 +28,7 @@ internal object Program {
     internal val mouse_pressed = Array(KeyCode.values().size) { false }
     internal var mouseP = PointN.ZERO
     var scrollP = PointN.ZERO
-        get() = if(last_scroll_time == program_time) field else PointN.ZERO
+        get() = if (last_scroll_time == program_time) field else PointN.ZERO
     private var last_scroll_time = 0
     internal var options = LaunchOptions.default
 
