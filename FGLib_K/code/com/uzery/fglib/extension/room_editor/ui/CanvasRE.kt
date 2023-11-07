@@ -33,6 +33,7 @@ class CanvasRE(private val data: DataRE): UICanvas() {
 
     private var draw_mode = DRAW_MODE.FOCUSED
 
+    private var view_scale = 1.0
 
     override val pos: PointN
         get() = PointN.ZERO
@@ -177,6 +178,9 @@ class CanvasRE(private val data: DataRE): UICanvas() {
         fun drawBounds(room: Room, pos: PointN = PointN.ZERO) {
             if (data.draw_bounds) WorldUtils.drawBounds(room, pos+data.draw_pos)
         }
+
+        Platform.global_alpha = view_scale
+        graphics.fill.rect(PointN.ZERO, PointN(view_scale, view_scale)*10, Color.DARKGRAY)
         when (draw_mode) {
             DRAW_MODE.FOCUSED -> {
                 drawWorld(0.2)
@@ -309,6 +313,10 @@ class CanvasRE(private val data: DataRE): UICanvas() {
             addLastInfo()
         }
 
+        when(mouse.scrollID){
+            -1 -> view_scale*=0.95
+            1 -> view_scale*=1.05
+        }
         checkForEditN()
         if (keyboard.pressed(KeyCode.SPACE)) return
 
