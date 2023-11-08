@@ -326,7 +326,7 @@ class CanvasRE(private val data: DataRE): UICanvas() {
         }
 
         val old_view_scaleID = view_scaleID
-        when (mouse.scrollID) {
+        when (mouse.scroll) {
             -1 -> view_scaleID--
             1 -> view_scaleID++
         }

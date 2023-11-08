@@ -11,11 +11,8 @@ abstract class MouseActivator(screen: RectN) {
     val pos: PointN
         get() = pos0()
 
-    val scroll: PointN
-        get() = scroll0()
-
-    val scrollID: Int
-        get() = sign(scroll.Y).toInt()
+    val scroll: Int
+        get() = sign(scroll0().Y).toInt()
 
 
     abstract val keys: KeyActivator<MouseButton>
