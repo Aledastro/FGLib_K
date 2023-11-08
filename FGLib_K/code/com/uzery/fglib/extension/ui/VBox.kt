@@ -3,6 +3,7 @@ package com.uzery.fglib.extension.ui
 import com.uzery.fglib.core.obj.DrawLayer
 import com.uzery.fglib.core.program.Platform
 import com.uzery.fglib.core.program.Platform.graphics
+import com.uzery.fglib.core.program.Platform.mouse
 import com.uzery.fglib.utils.math.FGUtils
 import com.uzery.fglib.utils.math.geom.PointN
 import javafx.scene.input.MouseButton
@@ -23,12 +24,7 @@ abstract class VBox: UIElement() {
         get() = PointN(sizeOne.X*rows, sizeOne.Y*((full-1)/rows+1))*pp+offset
 
     override fun update() {
-        if (Platform.mouse.keys.anyInPressed(MouseButton.PRIMARY, MouseButton.SECONDARY) && isActive()) {
-            mouse_input = true
-        }
-        if (!isActive()) {
-            mouse_input = false
-        }
+
     }
 
     open fun ifActiveUpdate() {
@@ -64,10 +60,10 @@ abstract class VBox: UIElement() {
         }
     }
 
-    private var mouse_input = false
     final override fun ifActive() {
         for (id in 0 until full) {
-            if (mouse_input && pressed(pos+fromID(id), sizeOne)) select = id
+            val mouse_input = mouse.keys.anyInPressed(MouseButton.PRIMARY, MouseButton.SECONDARY) && isActive()
+            if (mouse_input && isAt(pos+fromID(id), sizeOne)) select = id
         }
         ifActiveUpdate()
     }
