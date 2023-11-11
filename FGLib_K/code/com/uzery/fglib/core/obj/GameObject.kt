@@ -16,7 +16,7 @@ import com.uzery.fglib.utils.math.geom.PointN
 import com.uzery.fglib.utils.math.geom.Shape
 import java.util.*
 
-abstract class GameObject {
+abstract class GameObject(var name: String = "temp") {
     val stats = Stats()
     var bounds = BoundsBox()
 
@@ -38,7 +38,6 @@ abstract class GameObject {
     private val tags = LinkedList<String>()
     private val effects = LinkedList<TagEffect>()
 
-    var name = "temp"
     val values = LinkedList<Any>()
 
     var dead = false
@@ -137,9 +136,7 @@ abstract class GameObject {
         os.forEach { o -> o.onGrab.forEach { it() } }
     }
 
-    open fun setValues() {
-        name = "temp"
-    }
+    protected open fun setValues() {}
 
     override fun toString(): String {
         values.clear()
@@ -191,8 +188,6 @@ abstract class GameObject {
     }
 
     fun equalsName(other: GameObject): Boolean {
-        this.setValues()
-        other.setValues()
         return this.name == other.name
     }
 

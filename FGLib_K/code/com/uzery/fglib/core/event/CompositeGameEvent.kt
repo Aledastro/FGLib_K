@@ -11,7 +11,6 @@ open class CompositeGameEvent(vararg events: GameEvent): GameEvent() {
     init {
         addAbility {
             if (current == null && events_list.isEmpty()) {
-                setValues()
                 throw DebugData.error("ERROR: empty composite game event: $name")
             }
 
