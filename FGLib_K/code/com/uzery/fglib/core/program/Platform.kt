@@ -10,6 +10,7 @@ import com.uzery.fglib.utils.input.KeyActivator
 import com.uzery.fglib.utils.input.MouseActivator
 import com.uzery.fglib.utils.math.geom.PointN
 import com.uzery.fglib.utils.math.geom.shape.RectN
+import javafx.scene.Cursor
 import javafx.scene.image.Image
 import javafx.scene.input.KeyCode
 import javafx.scene.input.MouseButton
@@ -35,6 +36,12 @@ object Platform {
     var whole_draw = false
 
     var global_view_scale = 1.0
+
+    var cursor: Cursor? = null
+        set(value) {
+            field = value
+            Program.cursor = value
+        }
 
     //todo scale 3 spaces
     var scale = 1
