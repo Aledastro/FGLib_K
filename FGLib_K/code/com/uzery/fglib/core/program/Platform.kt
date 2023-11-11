@@ -40,7 +40,7 @@ object Platform {
     var cursor: Cursor? = null
         set(value) {
             field = value
-            Program.cursor = value
+            if(Program.inited) Program.setCursor()
         }
 
     //todo scale 3 spaces

@@ -360,11 +360,11 @@ class CanvasRE(private val data: DataRE): UICanvas() {
         }
         fun checkForMove(): Boolean {
             if (!keyboard.pressed(KeyCode.SPACE)) {
-                Program.cursor = Cursor.DEFAULT
+                Platform.cursor = Cursor.DEFAULT
                 return false
             }
             if (mouse.keys.anyPressed(*MouseButton.values())) data.draw_pos += (mouse.pos-last_mouse_pos)/view_scale
-            Program.cursor = Cursor.CLOSED_HAND
+            Platform.cursor = Cursor.CLOSED_HAND
 
             return true
         }

@@ -15,11 +15,6 @@ import javafx.stage.Stage
 import kotlin.math.max
 
 internal object Program {
-    var cursor: Cursor? = null
-        set(value) {
-            field = value
-            stage.scene.cursor = value
-        }
     private lateinit var stage: Stage
 
     internal lateinit var gc: GraphicsContext
@@ -65,6 +60,8 @@ internal object Program {
             canvas.layoutY = max(0.0, offset.Y)
         }
 
+        setCursor()
+
         stage.scene.fill = options.fill
 
         stage.title = options.title
@@ -108,9 +105,18 @@ internal object Program {
         }
 
         timer.start()
+
+        inited = true
     }
 
     fun close() {
         stage.close()
     }
+
+    fun setCursor() {
+        stage.scene.cursor = Platform.cursor?: Cursor.DEFAULT
+    }
+
+    var inited = false
+        private set
 }
