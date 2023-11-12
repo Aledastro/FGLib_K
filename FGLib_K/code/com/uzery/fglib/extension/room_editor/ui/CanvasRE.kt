@@ -256,6 +256,7 @@ class CanvasRE(private val data: DataRE): UICanvas() {
 
             fun add(pos: PointN) {
                 if (!mouse.keys.pressed(MouseButton.PRIMARY)) return
+                if (keyboard.pressed(KeyCode.ALT)) return
 
                 val o = data.getter.getEntry(data.chosen_entry)()
                 if (data.select_layer != 0 && !onSelectLayer(o)) return
@@ -279,22 +280,41 @@ class CanvasRE(private val data: DataRE): UICanvas() {
         }
 
         fun checkForRemove() {
-            if (mouse.keys.pressed(MouseButton.SECONDARY)) {
-                val sel = data.getter.getEntry(data.chosen_entry)()
-                val room = roomFrom(mouseRealPos) ?: return
+            if (!mouse.keys.pressed(MouseButton.SECONDARY)) return
+            if (keyboard.pressed(KeyCode.ALT)) return
 
-                room.objects.removeIf { o ->
-                    val pos1 = (o.stats.POS-data.edit.pos+room.pos).roundL(data.GRID)
-                    val added = if (add_size%2 == 0) PointN.ZERO else data.GRID_P/2
-                    val pos2 = (mouseRealPos.roundL(data.GRID)+data.GRID_P/2).roundL(data.GRID)+added
-                    val len = max(pos1.XP.lengthTo(pos2.XP), pos1.YP.lengthTo(pos2.YP))
+            val sel = data.getter.getEntry(data.chosen_entry)()
+            val room = roomFrom(mouseRealPos) ?: return
 
-                    len <= data.GRID/2*(add_size+1) && sel.equalsName(o) && onSelectLayer(o)
-                }
-                addLastInfo()
+            room.objects.removeIf { o ->
+                val pos1 = (o.stats.POS-data.edit.pos+room.pos).roundL(data.GRID)
+                val added = if (add_size%2 == 0) PointN.ZERO else data.GRID_P/2
+                val pos2 = (mouseRealPos.roundL(data.GRID)+data.GRID_P/2).roundL(data.GRID)+added
+                val len = max(pos1.XP.lengthTo(pos2.XP), pos1.YP.lengthTo(pos2.YP))
 
-                if (!room.objects.contains(data.select_obj)) data.select_obj = null
+                len <= data.GRID/2*(add_size+1) && sel.equalsName(o) && onSelectLayer(o)
             }
+            addLastInfo()
+
+            if (!room.objects.contains(data.select_obj)) data.select_obj = null
+        }
+
+        fun checkForSelect() {
+            if (!mouse.keys.pressed(MouseButton.PRIMARY)) return
+            if (!keyboard.pressed(KeyCode.ALT)) return
+
+            val room = roomFrom(mouseRealPos) ?: return
+
+            data.select_obj = room.objects.firstOrNull { o ->
+                val pos1 = (o.stats.POS-data.edit.pos+room.pos).roundL(data.GRID)
+                val pos2 = (mouseRealPos.roundL(data.GRID)+data.GRID_P/2).roundL(data.GRID)
+                val len = max(pos1.XP.lengthTo(pos2.XP), pos1.YP.lengthTo(pos2.YP))
+
+                len <= data.GRID/2 && onSelectLayer(o)
+            }
+            addLastInfo()
+
+            if (!room.objects.contains(data.select_obj)) data.select_obj = null
         }
 
         fun checkForEditN() {
@@ -344,12 +364,15 @@ class CanvasRE(private val data: DataRE): UICanvas() {
 
         checkForAdd()
         checkForRemove()
+        checkForSelect()
         if (keyboard.inPressed(KeyCode.P)) grid_offset_id = MathUtils.mod(grid_offset_id+1, grid_offset.size)
     }
 
     private var last_mouse_pos = PointN.ZERO
 
     override fun update() {
+        Platform.cursor = Cursor.DEFAULT
+
         if (keyboard.inPressed(KeyCode.F3)) draw_lines = !draw_lines
         if (keyboard.inPressed(KeyCode.F4)) draw_layers = !draw_layers
         if (keyboard.pressed(KeyCode.CONTROL) && keyboard.inPressed(KeyCode.TAB)) data.draw_bounds =
@@ -359,15 +382,17 @@ class CanvasRE(private val data: DataRE): UICanvas() {
             data.hide_ui = draw_mode == DRAW_MODE.OVERVIEW
         }
         fun checkForMove(): Boolean {
-            if (!keyboard.pressed(KeyCode.SPACE)) {
-                Platform.cursor = Cursor.DEFAULT
-                return false
-            }
+            if (!keyboard.pressed(KeyCode.SPACE)) return false
+
+            Platform.cursor = Cursor.OPEN_HAND
             if (mouse.keys.anyPressed(*MouseButton.values())) data.draw_pos += (mouse.pos-last_mouse_pos)/view_scale
             Platform.cursor = Cursor.CLOSED_HAND
 
             return true
         }
+
+        if (keyboard.pressed(KeyCode.ALT)) Platform.cursor = Cursor.CROSSHAIR
+
         checkForMove()
 
         World.rooms.forEach { room -> room.objects.forEach { it.stats.roomPOS = room.pos } }
