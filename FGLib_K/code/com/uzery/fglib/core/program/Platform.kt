@@ -16,7 +16,6 @@ import javafx.scene.input.KeyCode
 import javafx.scene.input.MouseButton
 import javafx.scene.paint.Color
 import javafx.scene.paint.Paint
-import javafx.scene.text.Font
 import kotlin.math.min
 
 object Platform {
@@ -40,7 +39,7 @@ object Platform {
     var cursor: Cursor? = null
         set(value) {
             field = value
-            if(Program.inited) Program.setCursor()
+            if (Program.inited) Program.setCursor()
         }
 
     //todo scale 3 spaces
@@ -90,7 +89,7 @@ object Platform {
     val graphics = object: AffineGraphics() {
         private fun isOutOfBounds(pos: PointN, size: PointN): Boolean {
             val b = pos.more(CANVAS_REAL) || (pos+size).less(PointN.ZERO)
-            if(b) oob++
+            if (b) oob++
             return b
         }
 
@@ -108,8 +107,8 @@ object Platform {
         }
 
         override val image: ImageGraphics = object: ImageGraphics(transform) {
-            override fun draw0(image: Image, pos: PointN, size: PointN){
-                if(isOutOfBounds(pos, size)) return
+            override fun draw0(image: Image, pos: PointN, size: PointN) {
+                if (isOutOfBounds(pos, size)) return
                 gc.drawImage(image, pos.X, pos.Y, size.X, size.Y)
             }
         }
@@ -121,23 +120,23 @@ object Platform {
                     gc.fill = value
                 }
 
-            override fun rect0(pos: PointN, size: PointN){
-                if(isOutOfBounds(pos, size)) return
+            override fun rect0(pos: PointN, size: PointN) {
+                if (isOutOfBounds(pos, size)) return
                 gc.fillRect(pos.X, pos.Y, size.X, size.Y)
             }
 
-            override fun oval0(pos: PointN, size: PointN){
-                if(isOutOfBounds(pos, size)) return
+            override fun oval0(pos: PointN, size: PointN) {
+                if (isOutOfBounds(pos, size)) return
                 gc.fillOval(pos.X, pos.Y, size.X, size.Y)
             }
 
-            override fun line0(pos1: PointN, pos2: PointN){
-                if(isOutOfBounds(pos1, pos2-pos1)) return
+            override fun line0(pos1: PointN, pos2: PointN) {
+                if (isOutOfBounds(pos1, pos2-pos1)) return
                 gc.strokeLine(pos1.X, pos1.Y, pos2.X, pos2.Y)
             }
 
             override fun text0(pos: PointN, text: String) {
-                if(isOutOfBounds(pos, text_size(text))) return
+                if (isOutOfBounds(pos, text_size(text))) return
 
                 gc.font = font
                 gc.fillText(text, pos.X, pos.Y)
@@ -150,23 +149,23 @@ object Platform {
                     gc.stroke = value
                 }
 
-            override fun rect0(pos: PointN, size: PointN){
-                if(isOutOfBounds(pos, size)) return
+            override fun rect0(pos: PointN, size: PointN) {
+                if (isOutOfBounds(pos, size)) return
                 gc.strokeRect(pos.X, pos.Y, size.X, size.Y)
             }
 
-            override fun oval0(pos: PointN, size: PointN){
-                if(isOutOfBounds(pos, size)) return
+            override fun oval0(pos: PointN, size: PointN) {
+                if (isOutOfBounds(pos, size)) return
                 gc.strokeOval(pos.X, pos.Y, size.X, size.Y)
             }
 
-            override fun line0(pos1: PointN, pos2: PointN){
-                if(isOutOfBounds(pos1, pos2-pos1)) return
+            override fun line0(pos1: PointN, pos2: PointN) {
+                if (isOutOfBounds(pos1, pos2-pos1)) return
                 gc.strokeLine(pos1.X, pos1.Y, pos2.X, pos2.Y)
             }
 
             override fun text0(pos: PointN, text: String) {
-                if(isOutOfBounds(pos, text_size(text))) return
+                if (isOutOfBounds(pos, text_size(text))) return
 
                 gc.font = font
                 gc.strokeText(text, pos.X, pos.Y)

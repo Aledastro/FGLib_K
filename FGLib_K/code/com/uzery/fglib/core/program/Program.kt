@@ -114,7 +114,7 @@ internal object Program {
     }
 
     fun setCursor() {
-        stage.scene.cursor = Platform.cursor?: Cursor.DEFAULT
+        stage.scene.cursor = Platform.cursor ?: Cursor.DEFAULT
     }
 
     var inited = false

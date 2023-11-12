@@ -264,7 +264,7 @@ class CanvasRE(private val data: DataRE): UICanvas() {
                 val room = roomFrom(posWithOffset) ?: return
 
                 o.stats.POS = posWithOffset+data.edit.pos-room.pos
-                if (room.objects.any { it.equalsS(o) && (it.name!="temp" || it.stats.POS == o.stats.POS) }) return
+                if (room.objects.any { it.equalsS(o) && (it.name != "temp" || it.stats.POS == o.stats.POS) }) return
 
                 room.objects.add(o)
                 addLastInfo()

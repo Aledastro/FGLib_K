@@ -1,6 +1,5 @@
 package com.uzery.fglib.utils.data.getter
 
-import com.uzery.fglib.utils.data.debug.DebugData
 import com.uzery.fglib.utils.math.geom.PointN
 import com.uzery.fglib.utils.math.num.StringN
 import javafx.scene.paint.Color
@@ -36,7 +35,7 @@ abstract class ClassGetter<Type>: AbstractClassGetter<Type>() {
 
 
     protected fun add(sn: StringN, mark: () -> Type) {
-        if(contains(sn)) return
+        if (contains(sn)) return
 
         map.add(Pair(sn, mark))
     }

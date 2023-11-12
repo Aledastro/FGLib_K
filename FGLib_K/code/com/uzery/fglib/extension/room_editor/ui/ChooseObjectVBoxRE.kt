@@ -11,7 +11,6 @@ import com.uzery.fglib.utils.math.FGUtils
 import com.uzery.fglib.utils.math.geom.PointN
 import com.uzery.fglib.utils.math.geom.shape.RectN
 import javafx.scene.paint.Color
-import java.util.StringTokenizer
 import kotlin.math.min
 
 class ChooseObjectVBoxRE(private val data: DataRE): VBox() {
@@ -19,8 +18,8 @@ class ChooseObjectVBoxRE(private val data: DataRE): VBox() {
         get() = data.groupsValues[data.select_group].size
 
     override val rows: Int
-        get(){
-            if(!data.titles[data.select_group].all { it.startsWith("size:") })
+        get() {
+            if (!data.titles[data.select_group].all { it.startsWith("size:") })
                 return min(10, data.groupsValues[data.select_group].size)
 
             return data.titles[data.select_group].maxOf {
@@ -38,7 +37,7 @@ class ChooseObjectVBoxRE(private val data: DataRE): VBox() {
 
     override fun setNames(id: Int): String {
         val name = data.titles[data.select_group][id]
-        return if(name.contains("#")) FGUtils.subAfterLast(name, "#") else name
+        return if (name.contains("#")) FGUtils.subAfterLast(name, "#") else name
     }
 
     override fun draw() {

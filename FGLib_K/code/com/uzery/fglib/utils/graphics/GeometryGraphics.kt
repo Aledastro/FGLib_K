@@ -5,7 +5,10 @@ import com.uzery.fglib.utils.math.geom.Shape
 import com.uzery.fglib.utils.math.geom.shape.FigureN
 import javafx.scene.paint.Color
 import javafx.scene.paint.Paint
-import javafx.scene.text.*
+import javafx.scene.text.Font
+import javafx.scene.text.FontPosture
+import javafx.scene.text.FontWeight
+import javafx.scene.text.Text
 
 abstract class GeometryGraphics(private val transform: AffineTransform, private val transformSize: AffineTransform) {
     fun setDefaults() {
@@ -13,7 +16,7 @@ abstract class GeometryGraphics(private val transform: AffineTransform, private 
         this.color = Color.BLACK
     }
 
-    val font
+    val font: Font
         get() = Font.font(font_family, font_weight, font_posture, transformSize.transform(PointN(font_size)).X)
 
     fun font(
