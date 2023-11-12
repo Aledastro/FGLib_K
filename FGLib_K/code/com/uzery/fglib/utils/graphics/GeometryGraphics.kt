@@ -10,7 +10,6 @@ import javafx.scene.text.*
 abstract class GeometryGraphics(private val transform: AffineTransform, private val transformSize: AffineTransform) {
     fun setDefaults() {
         font()
-        text_align = TextAlignment.RIGHT
         this.color = Color.BLACK
     }
 
@@ -38,7 +37,6 @@ abstract class GeometryGraphics(private val transform: AffineTransform, private 
     var font_weight = FontWeight.NORMAL
     var font_posture = FontPosture.REGULAR
 
-    protected var text_align = TextAlignment.RIGHT
     abstract var color: Paint
 
     protected abstract fun rect0(pos: PointN, size: PointN)
@@ -77,27 +75,14 @@ abstract class GeometryGraphics(private val transform: AffineTransform, private 
 
     fun text(pos: PointN, text: String, color: Color) {
         this.color = color
-        this.text_align = TextAlignment.LEFT
         text0(transform.pos(pos), text)
     }
 
-    fun textL(pos: PointN, text: String, color: Color) {
-        this.color = color
-        this.text_align = TextAlignment.LEFT
-        text0(transform.pos(pos), text)
-    }
+    fun textL(pos: PointN, text: String, color: Color) = text(pos, text, color)
 
-    fun textC(pos: PointN, text: String, color: Color) {
-        this.color = color
-        this.text_align = TextAlignment.CENTER
-        text0(transform.pos(pos), text)
-    }
+    fun textC(pos: PointN, text: String, color: Color) = text(pos-text_size(text).XP/2, text, color)
 
-    fun textR(pos: PointN, text: String, color: Color) {
-        this.color = color
-        this.text_align = TextAlignment.RIGHT
-        text0(transform.pos(pos), text)
-    }
+    fun textR(pos: PointN, text: String, color: Color) = text(pos-text_size(text).XP, text, color)
 
     ///////////////////////////////////////////////////////////////////////////
 

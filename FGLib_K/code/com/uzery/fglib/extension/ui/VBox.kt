@@ -1,7 +1,6 @@
 package com.uzery.fglib.extension.ui
 
 import com.uzery.fglib.core.obj.DrawLayer
-import com.uzery.fglib.core.program.Platform
 import com.uzery.fglib.core.program.Platform.graphics
 import com.uzery.fglib.core.program.Platform.mouse
 import com.uzery.fglib.utils.math.FGUtils
