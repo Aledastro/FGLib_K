@@ -139,7 +139,7 @@ object Platform {
             override fun text0(pos: PointN, text: String) {
                 if(isOutOfBounds(pos, text_size(text))) return
 
-                gc.font = Font.font(font_family, font_weight, font_posture, transformSize.transform(PointN(font_size)).X)
+                gc.font = font
                 gc.fillText(text, pos.X, pos.Y)
             }
         }
@@ -168,8 +168,7 @@ object Platform {
             override fun text0(pos: PointN, text: String) {
                 if(isOutOfBounds(pos, text_size(text))) return
 
-                gc.font =
-                    Font.font(font_family, font_weight, font_posture, transformSize.transform(PointN(font_size)).X)
+                gc.font = font
                 gc.strokeText(text, pos.X, pos.Y)
             }
         }
