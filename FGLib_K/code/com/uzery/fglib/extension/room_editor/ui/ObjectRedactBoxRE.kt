@@ -5,14 +5,18 @@ import com.uzery.fglib.core.program.Platform
 import com.uzery.fglib.core.program.Platform.char_keyboard
 import com.uzery.fglib.core.program.Platform.graphics
 import com.uzery.fglib.core.program.Platform.keyboard
+import com.uzery.fglib.core.program.Platform.mouse
 import com.uzery.fglib.core.room.Room
 import com.uzery.fglib.extension.room_editor.DataRE
 import com.uzery.fglib.extension.ui.UIElement
 import com.uzery.fglib.utils.math.geom.PointN
 import com.uzery.fglib.utils.math.geom.shape.RectN
 import javafx.scene.input.KeyCode
+import javafx.scene.input.MouseButton
 import javafx.scene.paint.Color
 import javafx.scene.text.FontWeight
+import kotlin.math.abs
+import kotlin.math.min
 
 class ObjectRedactBoxRE(val data: DataRE): UIElement() {
     var new_obj: String = ""
@@ -70,6 +74,27 @@ class ObjectRedactBoxRE(val data: DataRE): UIElement() {
             return keyboard.inPressed(code) ||
                     keyboard.timePressed(code) > 40 && keyboard.pressed(code) && keyboard.timePressed(code)%2 == 0L
         }
+
+        if(mouse.keys.pressed(MouseButton.PRIMARY)){
+            var min = 0.0
+            var minID = -1
+
+            graphics.fill.font("TimesNewRoman", 10.0, FontWeight.BOLD)
+            val text_sizes = Array(new_obj.length+1){ i ->
+                if (i == 0) PointN.ZERO
+                else graphics.fill.text_size(new_obj.substring(0, i))
+            }
+            for(i in 0..new_obj.length){
+                val pos1 = pos+text_sizes[i].XP+PointN(40, 22)
+                val delta = abs(mouse.pos.X-pos1.X)
+                if(delta<min || i==0){
+                    min = delta
+                    minID = i
+                }
+            }
+            caret = minID
+        }
+
 
         if (superPressed(KeyCode.RIGHT)) {
             caret++

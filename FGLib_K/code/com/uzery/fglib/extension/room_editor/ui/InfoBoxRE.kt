@@ -11,6 +11,7 @@ import com.uzery.fglib.core.world.WorldUtils
 import com.uzery.fglib.extension.room_editor.DataRE
 import com.uzery.fglib.extension.room_editor.RoomEditorUI
 import com.uzery.fglib.extension.ui.InfoBox
+import com.uzery.fglib.utils.math.FGUtils
 import com.uzery.fglib.utils.math.geom.PointN
 import com.uzery.fglib.utils.math.geom.shape.RectN
 import javafx.scene.paint.Color
@@ -22,9 +23,7 @@ class InfoBoxRE(private val data: DataRE): InfoBox() {
         get() = 0.1
 
     override fun draw() {
-        graphics.alpha = 0.3
-        graphics.fill.rect(pos, size, Color.BEIGE)
-        graphics.alpha = 1.0
+        graphics.fill.rect(pos, size, FGUtils.transparent(Color.BEIGE,0.5))
         super.draw()
     }
 
@@ -89,8 +88,8 @@ class InfoBoxRE(private val data: DataRE): InfoBox() {
 
     override fun color(id: Int): Color {
         return when (id) {
-            0 -> Color.PURPLE
-            else -> Color.PURPLE
+            0 -> Color.gray(0.2, 0.9)
+            else -> Color.gray(0.2, 0.9)
         }
     }
 

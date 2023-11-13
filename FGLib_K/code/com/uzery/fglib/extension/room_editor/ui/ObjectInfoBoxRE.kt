@@ -45,7 +45,7 @@ class ObjectInfoBoxRE(val data: DataRE, private val pair: Pair<GameObject, Room>
         get() = 0.1
 
     override fun color(id: Int): Color {
-        return Color.PURPLE
+        return Color.gray(0.2, 0.9)
     }
 
     override fun text(id: Int): String {
@@ -63,7 +63,7 @@ class ObjectInfoBoxRE(val data: DataRE, private val pair: Pair<GameObject, Room>
     }
 
     override fun draw() {
-        graphics.fill.rect(pos, size, FGUtils.transparent(Color.DARKBLUE, 0.07))
+        graphics.fill.rect(pos, size, FGUtils.transparent(Color.DARKBLUE, 0.2))
         super.draw()
 
         graphics.setStroke(2.0)
