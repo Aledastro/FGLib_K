@@ -158,7 +158,7 @@ class CanvasRE(private val data: DataRE): UICanvas() {
             if (!draw_lines) return
             if (view_scale < 0.5) return
 
-            val c = FGUtils.transparent(Color.WHITE, 0.1)
+            val c = Color(0.0, 0.0, 0.0, 0.1)
             graphics.layer = DrawLayer.CAMERA_FOLLOW
             graphics.setStroke(0.8)
             Program.gc.setLineDashes(5.0*view_scale, 5.0*view_scale) //todo into graphics
@@ -187,7 +187,7 @@ class CanvasRE(private val data: DataRE): UICanvas() {
 
         }
 
-        fun drawCell(){
+        fun drawCell() {
             if (!keyboard.pressed(KeyCode.ALT) && !draw_lines) return
             graphics.setStroke(1.2)
             Program.gc.setLineDashes(5.0*view_scale, 5.0*view_scale) //todo into graphics
@@ -195,19 +195,19 @@ class CanvasRE(private val data: DataRE): UICanvas() {
 
             val col = if (keyboard.pressed(KeyCode.ALT)) {
                 FGUtils.transparent(Color.GOLD, 0.9)
-            }else{
+            } else {
                 FGUtils.transparent(Color.CYAN.interpolate(Color.WHITE, 0.5), 0.8)
             }
             val cell_size = if (keyboard.pressed(KeyCode.ALT)) {
                 0
-            }else{
+            } else {
                 add_size
             }
 
             val cell_off = PointN(-cell_size/2, -cell_size/2)*data.GRID
 
-            val pos = ((mouse.pos)/view_scale -
-                    (data.draw_pos).mod(data.GRID)).roundL(data.GRID) + (data.draw_pos).mod(data.GRID) + cell_off
+            val pos = ((mouse.pos)/view_scale-
+                    (data.draw_pos).mod(data.GRID)).roundL(data.GRID)+(data.draw_pos).mod(data.GRID)+cell_off
 
             graphics.stroke.line(pos, PointN(cell_size+1, 0)*data.GRID, col)
             graphics.stroke.line(pos, PointN(0, cell_size+1)*data.GRID, col)
@@ -332,7 +332,7 @@ class CanvasRE(private val data: DataRE): UICanvas() {
                 val pos2 = (mouseRealPos.roundL(data.GRID)+data.GRID_P/2).roundL(data.GRID)+added
                 val len = max(pos1.XP.lengthTo(pos2.XP), pos1.YP.lengthTo(pos2.YP))
 
-                if(len <= data.GRID/2*(add_size+1) && sel.equalsName(o) && onSelectLayer(o)){
+                if (len <= data.GRID/2*(add_size+1) && sel.equalsName(o) && onSelectLayer(o)) {
                     list.add(o)
                 }
             }
@@ -354,7 +354,7 @@ class CanvasRE(private val data: DataRE): UICanvas() {
                 val pos2 = (mouseRealPos.roundL(data.GRID)+data.GRID_P/2).roundL(data.GRID)
                 val len = max(pos1.XP.lengthTo(pos2.XP), pos1.YP.lengthTo(pos2.YP))
 
-                if(len <= data.GRID/2 && onSelectLayer(o)) data.select_objs.add(o)
+                if (len <= data.GRID/2 && onSelectLayer(o)) data.select_objs.add(o)
             }
             addLastInfo()
         }

@@ -40,7 +40,7 @@ class InfoBoxRE(private val data: DataRE): InfoBox() {
         res.add("-----------------------------------------")
         res.add("")
 
-        data.select_objs.forEach {o->
+        data.select_objs.forEach { o ->
             val s = o.toString()
             if (s.indexOf(':') == -1) {
                 res.add("object: $s")
