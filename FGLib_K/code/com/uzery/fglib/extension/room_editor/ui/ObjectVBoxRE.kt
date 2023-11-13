@@ -1,12 +1,13 @@
 package com.uzery.fglib.extension.room_editor.ui
 
 import com.uzery.fglib.core.obj.bounds.BoundsBox
-import com.uzery.fglib.core.program.Platform
 import com.uzery.fglib.core.program.Platform.CANVAS_R
+import com.uzery.fglib.core.program.Platform.graphics
 import com.uzery.fglib.core.program.Platform.scale
 import com.uzery.fglib.core.world.WorldUtils
 import com.uzery.fglib.extension.room_editor.DataRE
 import com.uzery.fglib.extension.ui.VBox
+import com.uzery.fglib.utils.math.FGUtils
 import com.uzery.fglib.utils.math.geom.PointN
 import com.uzery.fglib.utils.math.geom.shape.RectN
 import javafx.scene.paint.Color
@@ -46,9 +47,7 @@ class ObjectVBoxRE(private val data: DataRE): VBox() {
     }
 
     override fun draw() {
-        Platform.graphics.alpha = 0.3
-        Platform.graphics.fill.rect(pos, size, Color.BEIGE)
-        Platform.graphics.alpha = 1.0
+        graphics.fill.rect(pos, size, FGUtils.transparent(Color.BEIGE, 0.3))
         super.draw()
     }
 

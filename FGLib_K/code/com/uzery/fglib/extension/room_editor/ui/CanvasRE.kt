@@ -21,7 +21,7 @@ import javafx.scene.Cursor
 import javafx.scene.input.KeyCode
 import javafx.scene.input.MouseButton
 import javafx.scene.paint.Color
-import java.util.LinkedList
+import java.util.*
 import kotlin.math.max
 
 class CanvasRE(private val data: DataRE): UICanvas() {
@@ -182,7 +182,7 @@ class CanvasRE(private val data: DataRE): UICanvas() {
 
             graphics.setStroke(2.0)
             for (room in World.rooms) {
-                graphics.stroke.draw(data.draw_pos-data.edit.pos, room.main, FGUtils.transparent(Color.WHITE, 0.7))
+                graphics.stroke.draw(data.draw_pos-data.edit.pos, room.main, FGUtils.transparent(Color.WHITE, 0.4))
             }
 
         }

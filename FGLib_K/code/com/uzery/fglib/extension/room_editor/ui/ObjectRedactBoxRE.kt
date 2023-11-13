@@ -16,7 +16,6 @@ import javafx.scene.input.MouseButton
 import javafx.scene.paint.Color
 import javafx.scene.text.FontWeight
 import kotlin.math.abs
-import kotlin.math.min
 
 class ObjectRedactBoxRE(val data: DataRE): UIElement() {
     var new_obj: String = ""
@@ -32,7 +31,7 @@ class ObjectRedactBoxRE(val data: DataRE): UIElement() {
     private var caret = 1
 
     override fun draw() {
-        if(data.redact_pair == null) return
+        if (data.redact_pair == null) return
 
         graphics.alpha = 0.5
         graphics.fill.rect(pos, size, Color.BEIGE)
@@ -62,7 +61,7 @@ class ObjectRedactBoxRE(val data: DataRE): UIElement() {
         graphics.fill.rect(pos+size.XP+PointN(-sp2.X-size1.X, sp2.Y), size1, Color.gray(0.2, 0.9))
 
         graphics.fill.font("TimesNewRoman", 14.0, FontWeight.BOLD)
-        if(possibleToAdd()){
+        if (possibleToAdd()) {
             graphics.alpha = 0.5
             graphics.fill.textR(pos+size-PointN(10.5, 13.5)-sp, "OK", Color.WHITE)
             graphics.alpha = 1.0
@@ -75,19 +74,19 @@ class ObjectRedactBoxRE(val data: DataRE): UIElement() {
                     keyboard.timePressed(code) > 40 && keyboard.pressed(code) && keyboard.timePressed(code)%2 == 0L
         }
 
-        if(mouse.keys.pressed(MouseButton.PRIMARY)){
+        if (mouse.keys.pressed(MouseButton.PRIMARY)) {
             var min = 0.0
             var minID = -1
 
             graphics.fill.font("TimesNewRoman", 10.0, FontWeight.BOLD)
-            val text_sizes = Array(new_obj.length+1){ i ->
+            val text_sizes = Array(new_obj.length+1) { i ->
                 if (i == 0) PointN.ZERO
                 else graphics.fill.text_size(new_obj.substring(0, i))
             }
-            for(i in 0..new_obj.length){
+            for (i in 0..new_obj.length) {
                 val pos1 = pos+text_sizes[i].XP+PointN(40, 22)
                 val delta = abs(mouse.pos.X-pos1.X)
-                if(delta<min || i==0){
+                if (delta < min || i == 0) {
                     min = delta
                     minID = i
                 }
@@ -107,7 +106,7 @@ class ObjectRedactBoxRE(val data: DataRE): UIElement() {
             caret--
         }
 
-        if(keyboard.inPressed(KeyCode.ENTER) && possibleToAdd()){
+        if (keyboard.inPressed(KeyCode.ENTER) && possibleToAdd()) {
             val room = data.redact_pair!!.second
             room.objects.remove(data.redact_pair!!.first)
 
@@ -130,10 +129,10 @@ class ObjectRedactBoxRE(val data: DataRE): UIElement() {
     }
 
     private fun possibleToAdd(): Boolean {
-        return try{
+        return try {
             data.getter[new_obj]
             true
-        }catch (e: Exception){
+        } catch (e: Exception) {
             false
         }
     }

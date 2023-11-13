@@ -16,14 +16,13 @@ import com.uzery.fglib.utils.math.geom.PointN
 import com.uzery.fglib.utils.math.geom.shape.RectN
 import javafx.scene.paint.Color
 import java.util.*
-import kotlin.collections.HashMap
 
 class InfoBoxRE(private val data: DataRE): InfoBox() {
     override val text_draw_offset: Double
         get() = 0.1
 
     override fun draw() {
-        graphics.fill.rect(pos, size, FGUtils.transparent(Color.BEIGE,0.5))
+        graphics.fill.rect(pos, size, FGUtils.transparent(Color.BEIGE, 0.5))
         super.draw()
     }
 
