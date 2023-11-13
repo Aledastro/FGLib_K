@@ -39,7 +39,10 @@ class ObjectInfoBox(val data: DataRE, private val info: LinkedList<String>): Inf
     override fun draw() {
         graphics.alpha = 0.3
         graphics.fill.rect(pos, size, Color.BEIGE)
+        graphics.alpha = 1.0
+
         super.draw()
+
         graphics.setStroke(2.0)
         val s = 4
         val col = if(isActive()) Color.color(0.4,0.0,0.0,1.0) else Color.color(0.3,0.3,0.3,0.8)
@@ -50,7 +53,7 @@ class ObjectInfoBox(val data: DataRE, private val info: LinkedList<String>): Inf
 
     override val pos = (Platform.CANVAS-size).XP+PointN(-data.OFFSET, 70.0)
     override val size
-        get() = PointN(350.0/Platform.scale, y_size*(text_data_size+1.5))
+        get() = PointN(350.0/Platform.scale - 10, y_size*(text_data_size+1.5))
     override val window: RectN
         get() = Platform.CANVAS_R
 }
