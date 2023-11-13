@@ -102,8 +102,8 @@ internal object Program {
         stage.scene.setOnKeyReleased { key -> pressed[key.code.ordinal] = false }
 
         stage.scene.setOnKeyTyped { key ->
-            key.character.forEach { ch->
-                if(char_pressedID[ch] == null) throw DebugData.error("type key: $key, char: ${key.character}")
+            key.character.forEach { ch ->
+                if (char_pressedID[ch] == null) throw DebugData.error("type key: $key, char: ${key.character}")
                 char_pressed[char_pressedID[ch]!!] = program_time
             }
         }

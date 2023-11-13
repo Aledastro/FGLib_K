@@ -86,7 +86,7 @@ class RoomEditor(private var getter: (Int) -> Pair<AbstractClassGetter<GameObjec
         data.chosen_obj = data.getter.getEntry(data.chosen_entry)()
 
 
-        if (keyboard.pressed(KeyCode.SHIFT)) {
+        if (keyboard.pressed(KeyCode.SHIFT) && !object_redact.showing) {
             choose_objects_vbox.show()
         } else {
             choose_objects_vbox.hide()
@@ -104,7 +104,7 @@ class RoomEditor(private var getter: (Int) -> Pair<AbstractClassGetter<GameObjec
             info_box.show()
         }
 
-        if(data.redact_obj != null) object_redact.show()
+        if (data.redact_obj != null) object_redact.show()
         else object_redact.hide()
 
         play_button.action()

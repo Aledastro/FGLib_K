@@ -54,29 +54,29 @@ class InfoBoxRE(private val data: DataRE): InfoBox() {
     override fun update() {
         WorldUtils.nextDebugForRoom(data.edit)
 
-        fun setBoxesY(){
+        fun setBoxesY() {
             var ss = 0.0
             obj_boxes.values.forEach { box ->
-                box.pos.Y = pos.Y + origin_size.Y + ss
-                ss += box.size.Y + 10
+                box.pos.Y = pos.Y+origin_size.Y+ss
+                ss += box.size.Y+10
             }
         }
         setBoxesY()
 
-        fun addNew(o: GameObject){
+        fun addNew(o: GameObject) {
             obj_boxes[o] = ObjectInfoBoxRE(data, o)
             obj_boxes[o]!!.show()
         }
 
         data.select_objs.forEach { o ->
-            if(o !in obj_boxes){
+            if (o !in obj_boxes) {
                 addNew(o)
                 RoomEditorUI.add(obj_boxes[o]!!)
             }
         }
         val listToRemove = LinkedList<GameObject>()
         obj_boxes.forEach { (key, value) ->
-            if(key !in  data.select_objs || value.dead) listToRemove.add(key)
+            if (key !in data.select_objs || value.dead) listToRemove.add(key)
         }
         listToRemove.forEach { RoomEditorUI.remove(obj_boxes[it]!!) }
         data.select_objs.removeAll(listToRemove)
@@ -99,7 +99,7 @@ class InfoBoxRE(private val data: DataRE): InfoBox() {
 
     val origin_size = PointN(350, 240)/Platform.scale
     override val size: PointN
-        get() = origin_size + PointN(0.0, obj_boxes.values.sumOf { box -> box.size.Y + 10 })
+        get() = origin_size+PointN(0.0, obj_boxes.values.sumOf { box -> box.size.Y+10 })
 
 
     override val window: RectN

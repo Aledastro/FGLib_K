@@ -70,9 +70,6 @@ class ObjectRedactBoxRE(val data: DataRE): UIElement() {
                     keyboard.timePressed(code) > 40 && keyboard.pressed(code) && keyboard.timePressed(code)%2 == 0L
         }
 
-        if (keyboard.inPressed(KeyCode.ESCAPE)) {
-            data.redact_obj = null
-        }
         if (superPressed(KeyCode.RIGHT)) {
             caret++
         }
@@ -84,28 +81,14 @@ class ObjectRedactBoxRE(val data: DataRE): UIElement() {
             caret--
         }
 
-        if(!keyboard.anyPressed(KeyCode.BACK_SPACE, KeyCode.LEFT, KeyCode.RIGHT)){
+        if (!keyboard.anyPressed(KeyCode.BACK_SPACE, KeyCode.LEFT, KeyCode.RIGHT, KeyCode.ESCAPE)) {
             Platform.charArray.forEach { char ->
-                fun solve() {
-                    /*if(code.isArrowKey) return
-                    if(code.isFunctionKey) return
-                    if(code == KeyCode.BACK_SPACE) return
-                    if(code != KeyCode.SPACE && code.isWhitespaceKey) return
-                    if(code.isModifierKey) return
-
-                    val char = code.char[0]
-                    if(char !in Platform.charArray) return*/
-
-                    if (char_keyboard.pressed(char)) {
-                        new_obj = new_obj.substring(0, caret)+char+new_obj.substring(caret, new_obj.length)
-                        caret++
-                    }
+                if (char_keyboard.pressed(char)) {
+                    new_obj = new_obj.substring(0, caret)+char+new_obj.substring(caret, new_obj.length)
+                    caret++
                 }
-                solve()
             }
         }
-
-
 
         caret = caret.coerceIn(0..new_obj.length)
     }
@@ -113,6 +96,10 @@ class ObjectRedactBoxRE(val data: DataRE): UIElement() {
     private var old_redact_obj: GameObject? = null
     private var time = 0
     override fun update() {
+        if (keyboard.inPressed(KeyCode.ESCAPE)) {
+            data.redact_obj = null
+        }
+
         if (data.redact_obj != old_redact_obj) {
             new_obj = data.redact_obj.toString()
             caret = new_obj.length
