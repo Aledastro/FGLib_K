@@ -38,7 +38,7 @@ class ObjectRedactBoxRE(val data: DataRE): UIElement() {
         graphics.fill.rect(pos+PointN(40,23)-sp, PointN(416, 12)+sp*2, Color.gray(0.2, 0.9))
 
         graphics.fill.textR(pos+PointN(35, 33), "new:", Color.gray(0.2, 0.9))
-        graphics.fill.text(pos+PointN(40, 33), new_obj, Color.gray(1.0, 0.7))
+        graphics.fill.text(pos+PointN(40, 33), new_obj, Color.gray(0.9, 0.8))
 
 
         val sp2 = PointN(5, 5)
