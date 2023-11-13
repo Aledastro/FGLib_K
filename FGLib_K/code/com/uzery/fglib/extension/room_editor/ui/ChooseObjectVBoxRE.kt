@@ -37,7 +37,7 @@ class ChooseObjectVBoxRE(private val data: DataRE): VBox() {
 
     override fun setNames(id: Int): String {
         val name = data.titles[data.select_group][id]
-        return if (name.contains("#")) FGUtils.subAfterLast(name, "#") else name
+        return if ("#" in name) FGUtils.subAfterLast(name, "#") else name
     }
 
     override fun draw() {

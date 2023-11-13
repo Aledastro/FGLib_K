@@ -15,7 +15,7 @@ data class InputAction(val code: String, val prime: GameObject, private val full
     }
 
     private fun resolve(info: String): String {
-        if (!info.contains(" | ")) return info
+        if (" | " !in info) return info
         val tokenizer = StringTokenizer(FGUtils.subAfter(info, "|"))
         while (tokenizer.hasMoreTokens()) {
             options.add(tokenizer.nextToken())

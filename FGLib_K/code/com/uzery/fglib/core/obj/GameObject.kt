@@ -178,7 +178,7 @@ abstract class GameObject(var name: String = "temp") {
     fun tag(vararg tag: String) = tags.addAll(tag)
     fun untag(vararg tag: String) = tags.removeAll(tag.toSet())
 
-    fun tagged(tag: String) = tags.contains(tag)
+    fun tagged(tag: String) = tag in tags
     fun addEffect(vararg effect: TagEffect) = effects.addAll(effect)
     fun effected(effect: String) = effects.any { a -> a.name == effect }
     fun effectedAny(vararg effect: String) = effect.any { eff -> effected(eff) }

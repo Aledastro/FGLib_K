@@ -10,7 +10,7 @@ abstract class CollectDataClass {
     internal fun resolvePath(name: String): String {
         var local_path = ""
         var last = name
-        if (name.contains('|')) {
+        if ('|' in name) {
             local_path = paths[FGUtils.subBefore(name, "|")].orEmpty()
             last = FGUtils.subAfter(name, "|")
         }

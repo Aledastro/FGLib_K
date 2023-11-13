@@ -34,13 +34,6 @@ class RoomEditor(private var getter: (Int) -> Pair<AbstractClassGetter<GameObjec
     override fun init() {
         data = DataRE(getter(0))
 
-        play_button = PlayButtonRE(data)
-        objects_vbox = ObjectVBoxRE(data)
-        choose_objects_vbox = ChooseObjectVBoxRE(data)
-        canvasX = CanvasRE(data)
-        layers_vbox = LayerVBoxRE(data)
-        info_box = InfoBoxRE(data)
-
         scale = 2
         World.getter = data.getter
 

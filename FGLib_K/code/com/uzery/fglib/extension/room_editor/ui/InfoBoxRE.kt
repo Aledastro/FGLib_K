@@ -1,17 +1,21 @@
 package com.uzery.fglib.extension.room_editor.ui
 
+import com.uzery.fglib.core.obj.GameObject
 import com.uzery.fglib.core.obj.bounds.BoundsBox
 import com.uzery.fglib.core.program.Platform
 import com.uzery.fglib.core.program.Platform.CANVAS
 import com.uzery.fglib.core.program.Platform.CANVAS_R
 import com.uzery.fglib.core.world.WorldUtils
 import com.uzery.fglib.extension.room_editor.DataRE
+import com.uzery.fglib.extension.room_editor.RoomEditorUI
 import com.uzery.fglib.extension.ui.InfoBox
 import com.uzery.fglib.utils.math.FGUtils
 import com.uzery.fglib.utils.math.geom.PointN
 import com.uzery.fglib.utils.math.geom.shape.RectN
 import javafx.scene.paint.Color
+import java.lang.StringBuilder
 import java.util.*
+import kotlin.collections.HashMap
 
 class InfoBoxRE(private val data: DataRE): InfoBox() {
     override val text_draw_offset: Double
@@ -24,9 +28,13 @@ class InfoBoxRE(private val data: DataRE): InfoBox() {
         super.draw()
     }
 
+    private val obj_boxes = HashMap<GameObject, ObjectInfoBox>()
+
     private fun getL(): List<String> {
         val res = LinkedList<String>()
 
+        res.add("-----------------------------------------")
+        res.add("")
         res.add("room: ${data.filenames[data.last_edit_n]}")
         res.add("")
         res.add("pos: ${data.last_edit_room.pos}")
@@ -40,29 +48,52 @@ class InfoBoxRE(private val data: DataRE): InfoBox() {
         res.add("-----------------------------------------")
         res.add("")
 
-        data.select_objs.forEach { o ->
-            val s = o.toString()
-            if (s.indexOf(':') == -1) {
-                res.add("object: $s")
-                return res
-            }
-
-            val name = FGUtils.subBefore(s, ":")
-            val args = FGUtils.subAfter(s, ":")
-            val t = StringTokenizer(args, "]")
-
-            res.add("object: $name")
-            while (t.hasMoreTokens()) {
-                res.add((t.nextToken()+"]\n").substring(1))
-            }
-            res.add("")
-        }
-
         return res
     }
 
     override fun update() {
         WorldUtils.nextDebugForRoom(data.edit)
+
+        fun setBoxesY(){
+            var ss = 0.0
+            obj_boxes.values.forEach { box ->
+                box.pos.Y = pos.Y + size.Y + 10 + ss
+                ss += box.size.Y + 10
+            }
+        }
+        setBoxesY()
+
+        fun addNew(o: GameObject){
+            val res = LinkedList<String>()
+            val s = o.toString()
+            if (':' !in s) {
+                res.add("object: $s")
+            }else{
+                val name = FGUtils.subBefore(s, ":")
+                val args = FGUtils.subAfter(s, ":")
+                val t = StringTokenizer(args, "]")
+
+                res.add("object: $name")
+                while (t.hasMoreTokens()) {
+                    res.add((t.nextToken()+"]\n").substring(1))
+                }
+            }
+
+            obj_boxes[o] = ObjectInfoBox(data, res)
+            obj_boxes[o]!!.show()
+        }
+
+        data.select_objs.forEach { o ->
+            if(o !in obj_boxes){
+                addNew(o)
+                RoomEditorUI.add(obj_boxes[o]!!)
+            }
+        }
+        val listToRemove = LinkedList<GameObject>()
+        obj_boxes.keys.forEach { key -> if(key !in  data.select_objs) listToRemove.add(key) }
+        listToRemove.forEach { obj_boxes[it]!!.hide() }
+        listToRemove.forEach { RoomEditorUI.remove(obj_boxes[it]!!) }
+        listToRemove.forEach { obj_boxes.remove(it) }
     }
 
     override fun text(id: Int) = getL()[id]
@@ -79,7 +110,7 @@ class InfoBoxRE(private val data: DataRE): InfoBox() {
     override val pos
         get() = (CANVAS-size).XP+PointN(-data.OFFSET, 70.0)
     override val size
-        get() = PointN(350, 550)/Platform.scale
+        get() = PointN(350, 240)/Platform.scale
     override val window: RectN
         get() = CANVAS_R
 }

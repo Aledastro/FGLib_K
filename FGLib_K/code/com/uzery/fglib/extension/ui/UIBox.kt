@@ -8,22 +8,29 @@ import com.uzery.fglib.utils.math.geom.PointN
 import javafx.scene.paint.Color
 import java.util.*
 
+@Deprecated("Use <Extension> instead")
 open class UIBox(vararg elements: UIElement): Extension() {
     private var active_el: UIElement? = null
 
     private val list = LinkedList<UIElement>()
+    private val old_list = LinkedList<UIElement>()
+    private val new_list = LinkedList<UIElement>()
 
     init {
         list.addAll(elements)
     }
 
-    fun add(vararg elements: UIElement) = list.addAll(elements)
-
     final override fun update() {
+        list.addAll(new_list)
+        new_list.clear()
+
         active_el = list.stream().filter { el -> el.showing && el.isActive() }
             .sorted { o1, o2 -> -o1.priority.compareTo(o2.priority) }.findFirst().orElse(null)
         active_el?.ifActive()
         list.forEach { it.update() }
+
+        list.removeAll(old_list)
+        old_list.clear()
     }
 
     final override fun draw(pos: PointN) {
@@ -43,4 +50,14 @@ open class UIBox(vararg elements: UIElement): Extension() {
     fun clear() {
         list.clear()
     }
+
+    fun remove(element: UIElement) {
+        old_list.add(element)
+    }
+
+    fun add(element: UIElement) {
+        new_list.add(element)
+    }
+
+    fun add(vararg elements: UIElement) = new_list.addAll(elements)
 }

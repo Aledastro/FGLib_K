@@ -49,7 +49,7 @@ class DataRE(getter_pair: Pair<AbstractClassGetter<GameObject>, Array<out String
 
         for (i in 0 until getter.entries_size()) entries.add(getter.getEntryName(i))
         for (id in entries.indices) ids[entries[id]] = id
-        entries.removeIf { !it.s.contains("#") }
+        entries.removeIf { "#" !in it.s }
 
         val groups_map = TreeMap<StringN, LinkedList<StringN>>()
 

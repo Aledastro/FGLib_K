@@ -198,11 +198,7 @@ class CanvasRE(private val data: DataRE): UICanvas() {
             } else {
                 FGUtils.transparent(Color.CYAN.interpolate(Color.WHITE, 0.5), 0.8)
             }
-            val cell_size = if (keyboard.pressed(KeyCode.ALT)) {
-                0
-            } else {
-                add_size
-            }
+            val cell_size = if (keyboard.pressed(KeyCode.ALT)) 0 else add_size
 
             val cell_off = PointN(-cell_size/2, -cell_size/2)*data.GRID
 

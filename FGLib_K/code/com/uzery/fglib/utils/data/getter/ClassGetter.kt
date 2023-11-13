@@ -22,7 +22,7 @@ abstract class ClassGetter<Type>: AbstractClassGetter<Type>() {
         return map[id].first
     }
 
-    fun contains(input: StringN): Boolean {
+    operator fun contains(input: StringN): Boolean {
         return map.any { it.first == input }
     }
 
@@ -35,7 +35,7 @@ abstract class ClassGetter<Type>: AbstractClassGetter<Type>() {
 
 
     protected fun add(sn: StringN, mark: () -> Type) {
-        if (contains(sn)) return
+        if (sn in this) return
 
         map.add(Pair(sn, mark))
     }
