@@ -138,6 +138,8 @@ class CanvasRE(private val data: DataRE): UICanvas() {
         }
 
         fun drawSelectObj(alpha: Double = 1.0) {
+            if (keyboard.pressed(KeyCode.ALT)) return
+
             Platform.global_alpha = alpha
             val pp =
                 (mouse.pos/view_scale-data.draw_pos).roundL(data.GRID)+data.draw_pos+grid_offset[grid_offset_id]
@@ -158,7 +160,7 @@ class CanvasRE(private val data: DataRE): UICanvas() {
 
             val c = FGUtils.transparent(Color.WHITE, 0.1)
             graphics.layer = DrawLayer.CAMERA_FOLLOW
-            graphics.setStroke(1.0)
+            graphics.setStroke(0.8)
             Program.gc.setLineDashes(5.0*view_scale, 5.0*view_scale) //todo into graphics
             Program.gc.lineDashOffset = 1.0
 
@@ -174,6 +176,25 @@ class CanvasRE(private val data: DataRE): UICanvas() {
                             +PointN(i*data.GRID, 0.0), PointN(0.0, window.S.Y/view_scale+data.GRID), c
                 )
             }
+
+            fun drawCell(){
+                graphics.setStroke(1.2)
+                val col = if (keyboard.pressed(KeyCode.ALT)) {
+                    FGUtils.transparent(Color.GOLD, 0.87)
+                }else{
+                    FGUtils.transparent(Color.CYAN, 0.87)
+                }
+                val pos = ((mouse.pos)/view_scale - (data.draw_pos).mod(data.GRID)).roundL(data.GRID) + (data.draw_pos).mod(data.GRID)
+                graphics.stroke.line(pos, PointN(data.GRID, 0.0), col)
+                graphics.stroke.line(pos, PointN(0.0, data.GRID), col)
+                graphics.stroke.line(pos+PointN(data.GRID, 0.0), PointN(0.0, data.GRID), col)
+                graphics.stroke.line(pos+PointN(0.0, data.GRID), PointN(data.GRID, 0.0), col)
+
+            }
+
+            drawCell()
+
+
             Program.gc.setLineDashes()
             Program.gc.lineDashOffset = 0.0
 
@@ -226,6 +247,9 @@ class CanvasRE(private val data: DataRE): UICanvas() {
         Platform.global_view_scale = 1.0
     }
 
+    private val mouseRealPos
+        get() = mouse.pos/view_scale-data.draw_pos
+
     override fun ifActive() {
         fun addLastInfo() {
             data.last_edit_room = data.edit
@@ -243,8 +267,6 @@ class CanvasRE(private val data: DataRE): UICanvas() {
         fun onSelectLayer(o: GameObject): Boolean {
             return data.select_layer == 0 || o.visuals.isEmpty() || o.visuals.any { vis -> vis.drawLayer() == data.layers[data.select_layer-1] }
         }
-
-        val mouseRealPos = mouse.pos/view_scale-data.draw_pos
 
         fun checkForAdd() {
             if (keyboard.inPressed(KeyCode.MINUS) || keyboard.timePressed(KeyCode.MINUS)%10 == 9L) {
