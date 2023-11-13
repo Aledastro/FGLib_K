@@ -25,6 +25,8 @@ object Platform {
         Program.close()
     }
 
+    val charArray = Array(Char.MAX_VALUE.code) { i -> Char(i) }
+
     internal fun update() {
         keyboard.update()
         mouse.keys.update()
@@ -75,6 +77,11 @@ object Platform {
         override fun pressed0(code: Int): Boolean = Program.pressed[code]
         override fun from(key: KeyCode): Int = key.ordinal
     }
+    val char_keyboard = object: KeyActivator<Char>(charArray.size) {
+        override fun pressed0(code: Int): Boolean = Program.char_pressed(code)
+        override fun from(key: Char): Int = Program.char_pressedID[key]!!
+    }
+
     val mouse = object: MouseActivator(RectN(PointN.ZERO, CANVAS)) {
         override fun pos0(): PointN = Program.mouseP/scale
         override fun scroll0() = Program.scrollP
