@@ -74,6 +74,8 @@ class InfoBoxRE(private val data: DataRE): InfoBox() {
                 val t = StringTokenizer(args, "]")
 
                 res.add("object: $name")
+                res.add("")
+
                 while (t.hasMoreTokens()) {
                     res.add((t.nextToken()+"]\n").substring(1))
                 }
@@ -90,9 +92,11 @@ class InfoBoxRE(private val data: DataRE): InfoBox() {
             }
         }
         val listToRemove = LinkedList<GameObject>()
-        obj_boxes.keys.forEach { key -> if(key !in  data.select_objs) listToRemove.add(key) }
-        listToRemove.forEach { obj_boxes[it]!!.hide() }
+        obj_boxes.forEach { (key, value) ->
+            if(key !in  data.select_objs || value.dead) listToRemove.add(key)
+        }
         listToRemove.forEach { RoomEditorUI.remove(obj_boxes[it]!!) }
+        data.select_objs.removeAll(listToRemove)
         listToRemove.forEach { obj_boxes.remove(it) }
     }
 
