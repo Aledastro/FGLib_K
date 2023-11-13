@@ -177,24 +177,6 @@ class CanvasRE(private val data: DataRE): UICanvas() {
                 )
             }
 
-            fun drawCell(){
-                graphics.setStroke(1.2)
-                val col = if (keyboard.pressed(KeyCode.ALT)) {
-                    FGUtils.transparent(Color.GOLD, 0.87)
-                }else{
-                    FGUtils.transparent(Color.CYAN, 0.87)
-                }
-                val pos = ((mouse.pos)/view_scale - (data.draw_pos).mod(data.GRID)).roundL(data.GRID) + (data.draw_pos).mod(data.GRID)
-                graphics.stroke.line(pos, PointN(data.GRID, 0.0), col)
-                graphics.stroke.line(pos, PointN(0.0, data.GRID), col)
-                graphics.stroke.line(pos+PointN(data.GRID, 0.0), PointN(0.0, data.GRID), col)
-                graphics.stroke.line(pos+PointN(0.0, data.GRID), PointN(data.GRID, 0.0), col)
-
-            }
-
-            drawCell()
-
-
             Program.gc.setLineDashes()
             Program.gc.lineDashOffset = 0.0
 
@@ -203,6 +185,37 @@ class CanvasRE(private val data: DataRE): UICanvas() {
                 graphics.stroke.draw(data.draw_pos-data.edit.pos, room.main, FGUtils.transparent(Color.WHITE, 0.7))
             }
 
+        }
+
+        fun drawCell(){
+            if (!keyboard.pressed(KeyCode.ALT) && !draw_lines) return
+            graphics.setStroke(1.2)
+            Program.gc.setLineDashes(5.0*view_scale, 5.0*view_scale) //todo into graphics
+            Program.gc.lineDashOffset = 1.0
+
+            val col = if (keyboard.pressed(KeyCode.ALT)) {
+                FGUtils.transparent(Color.GOLD, 0.9)
+            }else{
+                FGUtils.transparent(Color.CYAN.interpolate(Color.WHITE, 0.5), 0.8)
+            }
+            val cell_size = if (keyboard.pressed(KeyCode.ALT)) {
+                0
+            }else{
+                add_size
+            }
+
+            val cell_off = PointN(-cell_size/2, -cell_size/2)*data.GRID
+
+            val pos = ((mouse.pos)/view_scale -
+                    (data.draw_pos).mod(data.GRID)).roundL(data.GRID) + (data.draw_pos).mod(data.GRID) + cell_off
+
+            graphics.stroke.line(pos, PointN(cell_size+1, 0)*data.GRID, col)
+            graphics.stroke.line(pos, PointN(0, cell_size+1)*data.GRID, col)
+            graphics.stroke.line(pos+PointN(cell_size+1, 0)*data.GRID, PointN(0, cell_size+1)*data.GRID, col)
+            graphics.stroke.line(pos+PointN(0, cell_size+1)*data.GRID, PointN(cell_size+1, 0)*data.GRID, col)
+
+            Program.gc.setLineDashes()
+            Program.gc.lineDashOffset = 0.0
         }
 
         fun drawBounds(room: Room, pos: PointN = PointN.ZERO) {
@@ -222,6 +235,7 @@ class CanvasRE(private val data: DataRE): UICanvas() {
                     drawSelectLayerVisuals(data.edit)
                 }
                 drawLines()
+                drawCell()
                 drawFields()
                 drawSelectObj(0.3)
                 drawBounds(data.edit)
@@ -235,6 +249,7 @@ class CanvasRE(private val data: DataRE): UICanvas() {
                     World.rooms.forEach { drawSelectLayerVisuals(it, it.pos-data.edit.pos) } //todo
                 }
                 drawLines()
+                drawCell()
                 drawSelectObj(0.3)
                 World.rooms.forEach { drawBounds(it, it.pos-data.edit.pos) }
             }
