@@ -37,10 +37,12 @@ class ObjectInfoBox(val data: DataRE, private val info: LinkedList<String>): Inf
     }
 
     override fun draw() {
+        graphics.alpha = 0.3
+        graphics.fill.rect(pos, size, Color.BEIGE)
         super.draw()
         graphics.setStroke(2.0)
         val s = 4
-        val col = Color.color(0.4,0.0,0.0,0.8)
+        val col = if(isActive()) Color.color(0.4,0.0,0.0,1.0) else Color.color(0.3,0.3,0.3,0.8)
         val posS = pos + size*PointN(1.0, 0.5) - PointN(10+s/2,s/2)
         graphics.stroke.line(posS, PointN(s,s), col)
         graphics.stroke.line(posS + PointN(s,0), PointN(-s,s), col)

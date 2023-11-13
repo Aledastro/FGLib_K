@@ -5,6 +5,7 @@ import com.uzery.fglib.core.obj.bounds.BoundsBox
 import com.uzery.fglib.core.program.Platform
 import com.uzery.fglib.core.program.Platform.CANVAS
 import com.uzery.fglib.core.program.Platform.CANVAS_R
+import com.uzery.fglib.core.program.Platform.graphics
 import com.uzery.fglib.core.world.WorldUtils
 import com.uzery.fglib.extension.room_editor.DataRE
 import com.uzery.fglib.extension.room_editor.RoomEditorUI
@@ -22,9 +23,9 @@ class InfoBoxRE(private val data: DataRE): InfoBox() {
         get() = 0.1
 
     override fun draw() {
-        Platform.graphics.alpha = 0.3
-        Platform.graphics.fill.rect(pos, size, Color.BEIGE)
-        Platform.graphics.alpha = 1.0
+        graphics.alpha = 0.3
+        graphics.fill.rect(pos, size, Color.BEIGE)
+        graphics.alpha = 1.0
         super.draw()
     }
 

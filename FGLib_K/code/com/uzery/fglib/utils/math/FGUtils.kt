@@ -29,7 +29,10 @@ object FGUtils {
         return if (s.length > rev) s.substring(s.length-rev) else "0".repeat(rev-s.length)+s
     }
 
-    fun transparent(color: Color, k: Double): Color = Color.TRANSPARENT.interpolate(color, k)
+    fun changeAlpha(color: Color, k: Double): Color{
+        return Color(color.red, color.green, color.blue, k)
+    }
+    fun transparent(color: Color, k: Double): Color = changeAlpha(color, 0.0).interpolate(color, k)
     fun subBefore(input: String, index: String, delta: Int = 0): String {
         return input.substring(0 until input.indexOf(index)+delta)
     }
