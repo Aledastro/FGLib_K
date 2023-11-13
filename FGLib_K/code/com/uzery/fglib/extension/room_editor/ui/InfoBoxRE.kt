@@ -6,11 +6,11 @@ import com.uzery.fglib.core.program.Platform
 import com.uzery.fglib.core.program.Platform.CANVAS
 import com.uzery.fglib.core.program.Platform.CANVAS_R
 import com.uzery.fglib.core.program.Platform.graphics
+import com.uzery.fglib.core.room.Room
 import com.uzery.fglib.core.world.WorldUtils
 import com.uzery.fglib.extension.room_editor.DataRE
 import com.uzery.fglib.extension.room_editor.RoomEditorUI
 import com.uzery.fglib.extension.ui.InfoBox
-import com.uzery.fglib.utils.math.FGUtils
 import com.uzery.fglib.utils.math.geom.PointN
 import com.uzery.fglib.utils.math.geom.shape.RectN
 import javafx.scene.paint.Color
@@ -28,7 +28,7 @@ class InfoBoxRE(private val data: DataRE): InfoBox() {
         super.draw()
     }
 
-    private val obj_boxes = HashMap<GameObject, ObjectInfoBoxRE>()
+    private val obj_boxes = HashMap<Pair<GameObject, Room>, ObjectInfoBoxRE>()
 
     private fun getL(): List<String> {
         val res = LinkedList<String>()
@@ -63,18 +63,18 @@ class InfoBoxRE(private val data: DataRE): InfoBox() {
         }
         setBoxesY()
 
-        fun addNew(o: GameObject) {
-            obj_boxes[o] = ObjectInfoBoxRE(data, o)
-            obj_boxes[o]!!.show()
+        fun addNew(pair: Pair<GameObject, Room>) {
+            obj_boxes[pair] = ObjectInfoBoxRE(data, pair)
+            obj_boxes[pair]!!.show()
         }
 
-        data.select_objs.forEach { o ->
-            if (o !in obj_boxes) {
-                addNew(o)
-                RoomEditorUI.add(obj_boxes[o]!!)
+        data.select_objs.forEach { pair ->
+            if (pair !in obj_boxes) {
+                addNew(pair)
+                RoomEditorUI.add(obj_boxes[pair]!!)
             }
         }
-        val listToRemove = LinkedList<GameObject>()
+        val listToRemove = LinkedList<Pair<GameObject, Room>>()
         obj_boxes.forEach { (key, value) ->
             if (key !in data.select_objs || value.dead) listToRemove.add(key)
         }

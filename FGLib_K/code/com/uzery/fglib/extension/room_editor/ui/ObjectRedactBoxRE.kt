@@ -5,17 +5,14 @@ import com.uzery.fglib.core.program.Platform
 import com.uzery.fglib.core.program.Platform.char_keyboard
 import com.uzery.fglib.core.program.Platform.graphics
 import com.uzery.fglib.core.program.Platform.keyboard
-import com.uzery.fglib.core.program.Program
+import com.uzery.fglib.core.room.Room
 import com.uzery.fglib.extension.room_editor.DataRE
 import com.uzery.fglib.extension.ui.UIElement
-import com.uzery.fglib.utils.data.debug.DebugData
-import com.uzery.fglib.utils.math.FGUtils
 import com.uzery.fglib.utils.math.geom.PointN
 import com.uzery.fglib.utils.math.geom.shape.RectN
 import javafx.scene.input.KeyCode
 import javafx.scene.paint.Color
 import javafx.scene.text.FontWeight
-import java.lang.Exception
 
 class ObjectRedactBoxRE(val data: DataRE): UIElement() {
     var new_obj: String = ""
@@ -31,6 +28,8 @@ class ObjectRedactBoxRE(val data: DataRE): UIElement() {
     private var caret = 1
 
     override fun draw() {
+        if(data.redact_pair == null) return
+
         graphics.alpha = 0.5
         graphics.fill.rect(pos, size, Color.BEIGE)
         graphics.alpha = 1.0
@@ -38,7 +37,7 @@ class ObjectRedactBoxRE(val data: DataRE): UIElement() {
         graphics.fill.font("TimesNewRoman", 10.0, FontWeight.BOLD)
 
         graphics.fill.textR(pos+PointN(35, 14), "old:", Color.gray(0.2, 0.9))
-        graphics.fill.text(pos+PointN(40, 14), "${data.redact_obj}", Color.gray(0.2, 0.9))
+        graphics.fill.text(pos+PointN(40, 14), "${data.redact_pair!!.first}", Color.gray(0.2, 0.9))
 
         val sp = PointN(2, 2)
         graphics.fill.rect(pos+PointN(40, 23)-sp, PointN(416, 12)+sp*2, Color.gray(0.2, 0.9))
@@ -59,9 +58,11 @@ class ObjectRedactBoxRE(val data: DataRE): UIElement() {
         graphics.fill.rect(pos+size.XP+PointN(-sp2.X-size1.X, sp2.Y), size1, Color.gray(0.2, 0.9))
 
         graphics.fill.font("TimesNewRoman", 14.0, FontWeight.BOLD)
-        graphics.alpha = 0.5
-        graphics.fill.textR(pos+size-PointN(10.5, 13.5)-sp, "OK", Color.WHITE)
-        graphics.alpha = 1.0
+        if(possibleToAdd()){
+            graphics.alpha = 0.5
+            graphics.fill.textR(pos+size-PointN(10.5, 13.5)-sp, "OK", Color.WHITE)
+            graphics.alpha = 1.0
+        }
     }
 
     override fun ifActive() {
@@ -81,7 +82,17 @@ class ObjectRedactBoxRE(val data: DataRE): UIElement() {
             caret--
         }
 
-        if (!keyboard.anyPressed(KeyCode.BACK_SPACE, KeyCode.LEFT, KeyCode.RIGHT, KeyCode.ESCAPE)) {
+        if(keyboard.inPressed(KeyCode.ENTER) && possibleToAdd()){
+            val room = data.redact_pair!!.second
+            room.objects.remove(data.redact_pair!!.first)
+
+            val obj = data.getter[new_obj]
+            room.objects.add(obj)
+            data.redact_pair = Pair(obj, room)
+            old_redact_pair = data.redact_pair
+        }
+
+        if (!keyboard.anyPressed(KeyCode.BACK_SPACE, KeyCode.LEFT, KeyCode.RIGHT, KeyCode.ESCAPE, KeyCode.ENTER)) {
             Platform.charArray.forEach { char ->
                 if (char_keyboard.pressed(char)) {
                     new_obj = new_obj.substring(0, caret)+char+new_obj.substring(caret, new_obj.length)
@@ -93,18 +104,27 @@ class ObjectRedactBoxRE(val data: DataRE): UIElement() {
         caret = caret.coerceIn(0..new_obj.length)
     }
 
-    private var old_redact_obj: GameObject? = null
+    private fun possibleToAdd(): Boolean {
+        return try{
+            data.getter[new_obj]
+            true
+        }catch (e: Exception){
+            false
+        }
+    }
+
+    private var old_redact_pair: Pair<GameObject, Room>? = null
     private var time = 0
     override fun update() {
         if (keyboard.inPressed(KeyCode.ESCAPE)) {
-            data.redact_obj = null
+            data.redact_pair = null
         }
 
-        if (data.redact_obj != old_redact_obj) {
-            new_obj = data.redact_obj.toString()
+        if (data.redact_pair != old_redact_pair && data.redact_pair != null) {
+            new_obj = data.redact_pair!!.first.toString()
             caret = new_obj.length
         }
-        old_redact_obj = data.redact_obj
+        old_redact_pair = data.redact_pair
         time++
     }
 }

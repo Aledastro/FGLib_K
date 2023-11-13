@@ -11,7 +11,7 @@ import com.uzery.fglib.utils.math.num.StringN
 import java.util.*
 
 class DataRE(getter_pair: Pair<AbstractClassGetter<GameObject>, Array<out String>>) {
-    var redact_obj: GameObject? = null
+    var redact_pair: Pair<GameObject, Room>? = null
     var time = 0.0
     var world_play = false
     var last_world_play = false
@@ -22,7 +22,7 @@ class DataRE(getter_pair: Pair<AbstractClassGetter<GameObject>, Array<out String
     var titles: LinkedList<LinkedList<String>> = LinkedList<LinkedList<String>>()
     var groupsSelect: LinkedList<Int> = LinkedList<Int>()
     var draw_bounds = false
-    var select_objs = LinkedList<GameObject>()
+    var select_objs = LinkedList<Pair<GameObject, Room>>()
     var chosen_obj: GameObject? = null
     var draw_pos = PointN.ZERO
 

@@ -305,7 +305,7 @@ class CanvasRE(private val data: DataRE): UICanvas() {
                 addLastInfo()
 
                 data.select_objs.clear()
-                data.select_objs.add(o)
+                data.select_objs.add(Pair(o, room))
             }
             for (i in -add_size/2..(add_size+1)/2) {
                 for (j in -add_size/2..(add_size+1)/2) {
@@ -332,7 +332,7 @@ class CanvasRE(private val data: DataRE): UICanvas() {
                     list.add(o)
                 }
             }
-            data.select_objs.removeAll(list)
+            data.select_objs.removeIf { it.first in list }
             room.objects.removeAll(list)
 
             addLastInfo()
@@ -350,7 +350,7 @@ class CanvasRE(private val data: DataRE): UICanvas() {
                 val pos2 = (mouseRealPos.roundL(data.GRID)+data.GRID_P/2).roundL(data.GRID)
                 val len = max(pos1.XP.lengthTo(pos2.XP), pos1.YP.lengthTo(pos2.YP))
 
-                if (len <= data.GRID/2 && onSelectLayer(o)) data.select_objs.add(o)
+                if (len <= data.GRID/2 && onSelectLayer(o)) data.select_objs.add(Pair(o, room))
             }
             addLastInfo()
         }

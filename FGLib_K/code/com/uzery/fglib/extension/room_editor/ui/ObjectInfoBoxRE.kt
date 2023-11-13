@@ -4,6 +4,7 @@ import com.uzery.fglib.core.obj.GameObject
 import com.uzery.fglib.core.program.Platform
 import com.uzery.fglib.core.program.Platform.graphics
 import com.uzery.fglib.core.program.Platform.mouse
+import com.uzery.fglib.core.room.Room
 import com.uzery.fglib.extension.room_editor.DataRE
 import com.uzery.fglib.extension.ui.InfoBox
 import com.uzery.fglib.utils.math.FGUtils
@@ -13,11 +14,11 @@ import javafx.scene.input.MouseButton
 import javafx.scene.paint.Color
 import java.util.*
 
-class ObjectInfoBoxRE(val data: DataRE, private val obj: GameObject): InfoBox() {
+class ObjectInfoBoxRE(val data: DataRE, private val pair: Pair<GameObject, Room>): InfoBox() {
     private val info: LinkedList<String>
         get() {
             val res = LinkedList<String>()
-            val s = obj.toString()
+            val s = pair.first.toString()
             if (':' !in s) {
                 res.add("object: $s")
                 return res
@@ -57,7 +58,7 @@ class ObjectInfoBoxRE(val data: DataRE, private val obj: GameObject): InfoBox() 
             dead = true
         }
         if (mouse.keys.inPressed(MouseButton.PRIMARY)) {
-            data.redact_obj = obj
+            data.redact_pair = pair
         }
     }
 

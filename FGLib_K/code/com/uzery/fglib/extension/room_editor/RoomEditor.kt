@@ -104,7 +104,7 @@ class RoomEditor(private var getter: (Int) -> Pair<AbstractClassGetter<GameObjec
             info_box.show()
         }
 
-        if (data.redact_obj != null) object_redact.show()
+        if (data.redact_pair != null) object_redact.show()
         else object_redact.hide()
 
         play_button.action()
