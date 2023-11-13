@@ -21,7 +21,7 @@ class DataRE(getter_pair: Pair<AbstractClassGetter<GameObject>, Array<out String
     var titles: LinkedList<LinkedList<String>> = LinkedList<LinkedList<String>>()
     var groupsSelect: LinkedList<Int> = LinkedList<Int>()
     var draw_bounds = false
-    var select_obj: GameObject? = null
+    var select_objs = LinkedList<GameObject>()
     var chosen_obj: GameObject? = null
     var draw_pos = PointN.ZERO
 

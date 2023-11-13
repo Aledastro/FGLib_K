@@ -21,6 +21,7 @@ import javafx.scene.Cursor
 import javafx.scene.input.KeyCode
 import javafx.scene.input.MouseButton
 import javafx.scene.paint.Color
+import java.util.LinkedList
 import kotlin.math.max
 
 class CanvasRE(private val data: DataRE): UICanvas() {
@@ -270,7 +271,8 @@ class CanvasRE(private val data: DataRE): UICanvas() {
                 room.objects.add(o)
                 addLastInfo()
 
-                data.select_obj = o
+                data.select_objs.clear()
+                data.select_objs.add(o)
             }
             for (i in -add_size/2..(add_size+1)/2) {
                 for (j in -add_size/2..(add_size+1)/2) {
@@ -286,17 +288,21 @@ class CanvasRE(private val data: DataRE): UICanvas() {
             val sel = data.getter.getEntry(data.chosen_entry)()
             val room = roomFrom(mouseRealPos) ?: return
 
-            room.objects.removeIf { o ->
+            val list = LinkedList<GameObject>()
+            room.objects.forEach { o ->
                 val pos1 = (o.stats.POS-data.edit.pos+room.pos).roundL(data.GRID)
                 val added = if (add_size%2 == 0) PointN.ZERO else data.GRID_P/2
                 val pos2 = (mouseRealPos.roundL(data.GRID)+data.GRID_P/2).roundL(data.GRID)+added
                 val len = max(pos1.XP.lengthTo(pos2.XP), pos1.YP.lengthTo(pos2.YP))
 
-                len <= data.GRID/2*(add_size+1) && sel.equalsName(o) && onSelectLayer(o)
+                if(len <= data.GRID/2*(add_size+1) && sel.equalsName(o) && onSelectLayer(o)){
+                    list.add(o)
+                }
             }
-            addLastInfo()
+            data.select_objs.removeAll(list)
+            room.objects.removeAll(list)
 
-            if (!room.objects.contains(data.select_obj)) data.select_obj = null
+            addLastInfo()
         }
 
         fun checkForSelect() {
@@ -305,16 +311,15 @@ class CanvasRE(private val data: DataRE): UICanvas() {
 
             val room = roomFrom(mouseRealPos) ?: return
 
-            data.select_obj = room.objects.firstOrNull { o ->
+            data.select_objs.clear()
+            room.objects.forEach { o ->
                 val pos1 = (o.stats.POS-data.edit.pos+room.pos).roundL(data.GRID)
                 val pos2 = (mouseRealPos.roundL(data.GRID)+data.GRID_P/2).roundL(data.GRID)
                 val len = max(pos1.XP.lengthTo(pos2.XP), pos1.YP.lengthTo(pos2.YP))
 
-                len <= data.GRID/2 && onSelectLayer(o)
+                if(len <= data.GRID/2 && onSelectLayer(o)) data.select_objs.add(o)
             }
             addLastInfo()
-
-            if (!room.objects.contains(data.select_obj)) data.select_obj = null
         }
 
         fun checkForEditN() {

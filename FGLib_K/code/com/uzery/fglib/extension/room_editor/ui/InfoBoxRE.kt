@@ -37,23 +37,27 @@ class InfoBoxRE(private val data: DataRE): InfoBox() {
         }
 
         res.add("")
+        res.add("-----------------------------------------")
         res.add("")
 
+        data.select_objs.forEach {o->
+            val s = o.toString()
+            if (s.indexOf(':') == -1) {
+                res.add("object: $s")
+                return res
+            }
 
-        val s = data.select_obj.toString()
-        if (s.indexOf(':') == -1) {
-            res.add("object: $s")
-            return res
+            val name = FGUtils.subBefore(s, ":")
+            val args = FGUtils.subAfter(s, ":")
+            val t = StringTokenizer(args, "]")
+
+            res.add("object: $name")
+            while (t.hasMoreTokens()) {
+                res.add((t.nextToken()+"]\n").substring(1))
+            }
+            res.add("")
         }
 
-        val name = FGUtils.subBefore(s, ":")
-        val args = FGUtils.subAfter(s, ":")
-        val t = StringTokenizer(args, "]")
-
-        res.add("object: $name")
-        while (t.hasMoreTokens()) {
-            res.add((t.nextToken()+"]\n").substring(1))
-        }
         return res
     }
 
@@ -75,7 +79,7 @@ class InfoBoxRE(private val data: DataRE): InfoBox() {
     override val pos
         get() = (CANVAS-size).XP+PointN(-data.OFFSET, 70.0)
     override val size
-        get() = PointN(350, 450)/Platform.scale
+        get() = PointN(350, 550)/Platform.scale
     override val window: RectN
         get() = CANVAS_R
 }
