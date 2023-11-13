@@ -14,7 +14,6 @@ import com.uzery.fglib.utils.math.FGUtils
 import com.uzery.fglib.utils.math.geom.PointN
 import com.uzery.fglib.utils.math.geom.shape.RectN
 import javafx.scene.paint.Color
-import java.lang.StringBuilder
 import java.util.*
 import kotlin.collections.HashMap
 
@@ -29,7 +28,7 @@ class InfoBoxRE(private val data: DataRE): InfoBox() {
         super.draw()
     }
 
-    private val obj_boxes = HashMap<GameObject, ObjectInfoBox>()
+    private val obj_boxes = HashMap<GameObject, ObjectInfoBoxRE>()
 
     private fun getL(): List<String> {
         val res = LinkedList<String>()
@@ -58,31 +57,14 @@ class InfoBoxRE(private val data: DataRE): InfoBox() {
         fun setBoxesY(){
             var ss = 0.0
             obj_boxes.values.forEach { box ->
-                box.pos.Y = pos.Y + size.Y + 10 + ss
+                box.pos.Y = pos.Y + origin_size.Y + ss
                 ss += box.size.Y + 10
             }
         }
         setBoxesY()
 
         fun addNew(o: GameObject){
-            val res = LinkedList<String>()
-            val s = o.toString()
-            if (':' !in s) {
-                res.add("object: $s")
-            }else{
-                val name = FGUtils.subBefore(s, ":")
-                val args = FGUtils.subAfter(s, ":")
-                val t = StringTokenizer(args, "]")
-
-                res.add("object: $name")
-                res.add("")
-
-                while (t.hasMoreTokens()) {
-                    res.add((t.nextToken()+"]\n").substring(1))
-                }
-            }
-
-            obj_boxes[o] = ObjectInfoBox(data, res)
+            obj_boxes[o] = ObjectInfoBoxRE(data, o)
             obj_boxes[o]!!.show()
         }
 
@@ -113,9 +95,13 @@ class InfoBoxRE(private val data: DataRE): InfoBox() {
     }
 
     override val pos
-        get() = (CANVAS-size).XP+PointN(-data.OFFSET, 70.0)
-    override val size
-        get() = PointN(350, 240)/Platform.scale
+        get() = (CANVAS-origin_size).XP+PointN(-data.OFFSET, 70.0)
+
+    val origin_size = PointN(350, 240)/Platform.scale
+    override val size: PointN
+        get() = origin_size + PointN(0.0, obj_boxes.values.sumOf { box -> box.size.Y + 10 })
+
+
     override val window: RectN
         get() = CANVAS_R
 }

@@ -12,9 +12,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="82970e50-af90-458e-a847-e0b07c98f932" name="Changes" comment="FGLib v.0.9.14.7 [K]">
+    <list default="true" id="82970e50-af90-458e-a847-e0b07c98f932" name="Changes" comment="FGLib v.0.9.14.8 [K]">
+      <change afterPath="$PROJECT_DIR$/FGLib_K/code/com/uzery/fglib/extension/room_editor/ui/ObjectRedactBoxRE.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FGLib_K/code/com/uzery/fglib/extension/room_editor/ui/ObjectInfoBox.kt" beforeDir="false" afterPath="$PROJECT_DIR$/FGLib_K/code/com/uzery/fglib/extension/room_editor/ui/ObjectInfoBox.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FGLib_K/code/com/uzery/fglib/extension/room_editor/DataRE.kt" beforeDir="false" afterPath="$PROJECT_DIR$/FGLib_K/code/com/uzery/fglib/extension/room_editor/DataRE.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FGLib_K/code/com/uzery/fglib/extension/room_editor/RoomEditor.kt" beforeDir="false" afterPath="$PROJECT_DIR$/FGLib_K/code/com/uzery/fglib/extension/room_editor/RoomEditor.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FGLib_K/code/com/uzery/fglib/extension/room_editor/ui/InfoBoxRE.kt" beforeDir="false" afterPath="$PROJECT_DIR$/FGLib_K/code/com/uzery/fglib/extension/room_editor/ui/InfoBoxRE.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FGLib_K/code/com/uzery/fglib/extension/room_editor/ui/ObjectInfoBox.kt" beforeDir="false" afterPath="$PROJECT_DIR$/FGLib_K/code/com/uzery/fglib/extension/room_editor/ui/ObjectInfoBoxRE.kt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -109,11 +113,11 @@
       <recent name="com.uzery.fglib.core.world" />
     </key>
     <key name="CopyKotlinDeclarationDialog.RECENTS_KEY">
+      <recent name="com.uzery.fglib.extension.room_editor.ui" />
       <recent name="com.uzery.fglib.utils.data.image.effects" />
       <recent name="com.uzery.fglib.utils.data.getter" />
       <recent name="com.uzery.fglib.core.program" />
       <recent name="com.uzery.fglib.utils.math.matrix" />
-      <recent name="com.uzery.fglib.utils.math.geom" />
     </key>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
@@ -124,13 +128,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1680386967444</updated>
-    </task>
-    <task id="LOCAL-00201" summary="FGLib v.0.9.2.4 [K]">
-      <created>1698263003003</created>
-      <option name="number" value="00201" />
-      <option name="presentableId" value="LOCAL-00201" />
-      <option name="project" value="LOCAL" />
-      <updated>1698263003003</updated>
     </task>
     <task id="LOCAL-00202" summary="FGLib v.0.9.2.6 [K] u">
       <created>1698444670450</created>
@@ -468,7 +465,14 @@
       <option name="project" value="LOCAL" />
       <updated>1699869052608</updated>
     </task>
-    <option name="localTasksCounter" value="250" />
+    <task id="LOCAL-00250" summary="FGLib v.0.9.14.8 [K]">
+      <created>1699869944543</created>
+      <option name="number" value="00250" />
+      <option name="presentableId" value="LOCAL-00250" />
+      <option name="project" value="LOCAL" />
+      <updated>1699869944543</updated>
+    </task>
+    <option name="localTasksCounter" value="251" />
     <servers />
   </component>
   <component name="UnknownFeatures">
@@ -498,7 +502,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="FGLib v.0.9.8.1 [K]" />
     <MESSAGE value="FGLib v.0.9.8.2 [K]" />
     <MESSAGE value="FGLib v.0.9.9.0 [K]" />
     <MESSAGE value="FGLib v.0.9.9.1 [K]" />
@@ -523,7 +526,8 @@
     <MESSAGE value="FGLib v.0.9.14.5 [K]" />
     <MESSAGE value="FGLib v.0.9.14.6 [K]" />
     <MESSAGE value="FGLib v.0.9.14.7 [K]" />
-    <option name="LAST_COMMIT_MESSAGE" value="FGLib v.0.9.14.7 [K]" />
+    <MESSAGE value="FGLib v.0.9.14.8 [K]" />
+    <option name="LAST_COMMIT_MESSAGE" value="FGLib v.0.9.14.8 [K]" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

@@ -30,6 +30,7 @@ class RoomEditor(private var getter: (Int) -> Pair<AbstractClassGetter<GameObjec
     private lateinit var canvasX: CanvasRE
     private lateinit var layers_vbox: LayerVBoxRE
     private lateinit var info_box: InfoBoxRE
+    private lateinit var object_redact: ObjectRedactBoxRE
 
     override fun init() {
         data = DataRE(getter(0))
@@ -53,14 +54,17 @@ class RoomEditor(private var getter: (Int) -> Pair<AbstractClassGetter<GameObjec
         canvasX = CanvasRE(data)
         layers_vbox = LayerVBoxRE(data)
         info_box = InfoBoxRE(data)
+        object_redact = ObjectRedactBoxRE(data)
 
         RoomEditorUI.clear()
-        RoomEditorUI.add(canvasX, play_button, objects_vbox, layers_vbox, info_box, choose_objects_vbox)
+        RoomEditorUI.add(canvasX, play_button, objects_vbox, layers_vbox, info_box, choose_objects_vbox, object_redact)
         canvasX.show()
         play_button.show()
         objects_vbox.show()
         layers_vbox.show()
         info_box.show()
+
+        object_redact.hide()
 
         World.next() //todo why it needed?
         data.init()
@@ -99,6 +103,9 @@ class RoomEditor(private var getter: (Int) -> Pair<AbstractClassGetter<GameObjec
             layers_vbox.show()
             info_box.show()
         }
+
+        if(data.redact_obj != null) object_redact.show()
+        else object_redact.hide()
 
         play_button.action()
         if (data.world_play) {

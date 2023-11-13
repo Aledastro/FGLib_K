@@ -11,6 +11,7 @@ import com.uzery.fglib.utils.math.num.StringN
 import java.util.*
 
 class DataRE(getter_pair: Pair<AbstractClassGetter<GameObject>, Array<out String>>) {
+    var redact_obj: GameObject? = null
     var time = 0.0
     var world_play = false
     var last_world_play = false
