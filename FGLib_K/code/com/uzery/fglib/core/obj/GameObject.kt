@@ -40,7 +40,7 @@ abstract class GameObject(var name: String = "temp") {
     private val tags = LinkedList<String>()
     private val effects = LinkedList<TagEffect>()
 
-    private val values = LinkedList<Any>()
+    val values = LinkedList<Any>()
 
     var dead = false
         private set
