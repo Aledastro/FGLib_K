@@ -95,7 +95,7 @@ class InfoBoxRE(private val data: DataRE): InfoBox() {
     override val pos
         get() = (CANVAS-origin_size).XP+PointN(-data.OFFSET, 70.0)
 
-    val origin_size = PointN(350, 240)/Platform.scale
+    val origin_size = PointN(186, 240/Platform.scale)
     override val size: PointN
         get() = origin_size+PointN(0.0, obj_boxes.values.sumOf { box -> box.size.Y+10 })
 

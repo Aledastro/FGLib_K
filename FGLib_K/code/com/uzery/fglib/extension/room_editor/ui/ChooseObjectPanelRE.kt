@@ -13,7 +13,7 @@ import com.uzery.fglib.utils.math.geom.shape.RectN
 import javafx.scene.paint.Color
 import kotlin.math.min
 
-class ChooseObjectVBoxRE(private val data: DataRE): VBox() {
+class ChooseObjectPanelRE(private val data: DataRE): VBox() {
     override val full: Int
         get() = data.groupsValues[data.select_group].size
 

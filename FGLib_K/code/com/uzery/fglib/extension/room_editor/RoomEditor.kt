@@ -25,12 +25,12 @@ class RoomEditor(private var getter: (Int) -> Pair<AbstractClassGetter<GameObjec
     private lateinit var data: DataRE
 
     private lateinit var play_button: PlayButtonRE
-    private lateinit var objects_vbox: ObjectVBoxRE
-    private lateinit var choose_objects_vbox: ChooseObjectVBoxRE
-    private lateinit var canvasX: CanvasRE
-    private lateinit var layers_vbox: LayerVBoxRE
+    private lateinit var choose_group_panel: ChooseGroupPanelRE
+    private lateinit var choose_objects_panel: ChooseObjectPanelRE
+    private lateinit var edit_canvas: CanvasRE
+    private lateinit var layers_panel: LayerPanelRE
     private lateinit var info_box: InfoBoxRE
-    private lateinit var object_redact: ObjectRedactBoxRE
+    private lateinit var redact_field: RedactTextFieldRE
 
     override fun init() {
         data = DataRE(getter(0))
@@ -49,22 +49,22 @@ class RoomEditor(private var getter: (Int) -> Pair<AbstractClassGetter<GameObjec
         data.draw_pos = (Platform.options().size-data.edit.size)/2
 
         play_button = PlayButtonRE(data)
-        objects_vbox = ObjectVBoxRE(data)
-        choose_objects_vbox = ChooseObjectVBoxRE(data)
-        canvasX = CanvasRE(data)
-        layers_vbox = LayerVBoxRE(data)
+        choose_group_panel = ChooseGroupPanelRE(data)
+        choose_objects_panel = ChooseObjectPanelRE(data)
+        edit_canvas = CanvasRE(data)
+        layers_panel = LayerPanelRE(data)
         info_box = InfoBoxRE(data)
-        object_redact = ObjectRedactBoxRE(data)
+        redact_field = RedactTextFieldRE(data)
 
         RoomEditorUI.clear()
-        RoomEditorUI.add(canvasX, play_button, objects_vbox, layers_vbox, info_box, choose_objects_vbox, object_redact)
-        canvasX.show()
+        RoomEditorUI.add(edit_canvas, play_button, choose_group_panel, layers_panel, info_box, choose_objects_panel, redact_field)
+        edit_canvas.show()
         play_button.show()
-        objects_vbox.show()
-        layers_vbox.show()
+        choose_group_panel.show()
+        layers_panel.show()
         info_box.show()
 
-        object_redact.hide()
+        redact_field.hide()
 
         World.next() //todo why it needed?
         data.init()
@@ -76,36 +76,36 @@ class RoomEditor(private var getter: (Int) -> Pair<AbstractClassGetter<GameObjec
         data.edit = World.rooms[data.edit_n]
         data.last_edit_room = data.edit
 
-        data.select_layer = layers_vbox.select
+        data.select_layer = layers_panel.select
 
-        if (data.select_group != objects_vbox.select) {
-            data.select_group = objects_vbox.select
-            choose_objects_vbox.select = data.groupsSelect[data.select_group]
+        if (data.select_group != choose_group_panel.select) {
+            data.select_group = choose_group_panel.select
+            choose_objects_panel.select = data.groupsSelect[data.select_group]
         }
-        data.chosen_entry = objects_vbox.chosenEntry()
+        data.chosen_entry = choose_group_panel.chosenEntry()
         data.chosen_obj = data.getter.getEntry(data.chosen_entry)()
 
 
-        if (keyboard.pressed(KeyCode.SHIFT) && !object_redact.showing) {
-            choose_objects_vbox.show()
+        if (keyboard.pressed(KeyCode.SHIFT) && !redact_field.showing) {
+            choose_objects_panel.show()
         } else {
-            choose_objects_vbox.hide()
+            choose_objects_panel.hide()
         }
-        data.groupsSelect[data.select_group] = choose_objects_vbox.select
+        data.groupsSelect[data.select_group] = choose_objects_panel.select
 
         if (data.hide_ui) {
-            objects_vbox.hide()
-            layers_vbox.hide()
+            choose_group_panel.hide()
+            layers_panel.hide()
             info_box.hide()
-            choose_objects_vbox.hide()
+            choose_objects_panel.hide()
         } else {
-            objects_vbox.show()
-            layers_vbox.show()
+            choose_group_panel.show()
+            layers_panel.show()
             info_box.show()
         }
 
-        if (data.redact_pair != null) object_redact.show()
-        else object_redact.hide()
+        if (data.redact_pair != null) redact_field.show()
+        else redact_field.hide()
 
         play_button.action()
         if (data.world_play) {

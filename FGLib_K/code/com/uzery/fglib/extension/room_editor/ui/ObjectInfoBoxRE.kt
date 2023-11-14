@@ -76,7 +76,7 @@ class ObjectInfoBoxRE(val data: DataRE, private val pair: Pair<GameObject, Room>
 
     override val pos = (Platform.CANVAS-size).XP+PointN(-data.OFFSET-5, 70.0)
     override val size
-        get() = PointN(350.0/Platform.scale-10, y_size*(text_data_size+1.5))
+        get() = PointN(186.0-10, y_size*(text_data_size+1.5))
     override val window: RectN
         get() = Platform.CANVAS_R
 

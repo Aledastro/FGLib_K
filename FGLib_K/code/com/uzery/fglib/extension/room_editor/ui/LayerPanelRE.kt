@@ -11,7 +11,7 @@ import com.uzery.fglib.utils.math.geom.shape.RectN
 import javafx.scene.paint.Color
 import javafx.scene.text.FontWeight
 
-class LayerVBoxRE(private val data: DataRE): VBox() {
+class LayerPanelRE(private val data: DataRE): VBox() {
     override val full: Int
         get() = data.layers.size+1
 

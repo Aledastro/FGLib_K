@@ -17,7 +17,7 @@ import javafx.scene.paint.Color
 import javafx.scene.text.FontWeight
 import kotlin.math.abs
 
-class ObjectRedactBoxRE(val data: DataRE): UIElement() {
+class RedactTextFieldRE(val data: DataRE): UIElement() {
     var new_obj: String = ""
 
     override val pos = (Platform.CANVAS-size)/2

@@ -12,7 +12,7 @@ import com.uzery.fglib.utils.math.geom.PointN
 import com.uzery.fglib.utils.math.geom.shape.RectN
 import javafx.scene.paint.Color
 
-class ObjectVBoxRE(private val data: DataRE): VBox() {
+class ChooseGroupPanelRE(private val data: DataRE): VBox() {
 
     override val rows = 5
 
