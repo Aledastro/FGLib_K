@@ -10,8 +10,10 @@ import com.uzery.fglib.core.obj.controller.Controller
 import com.uzery.fglib.core.obj.controller.TempAction
 import com.uzery.fglib.core.obj.property.GameProperty
 import com.uzery.fglib.core.obj.stats.Stats
+import com.uzery.fglib.core.obj.visual.LayerVisualiser
 import com.uzery.fglib.core.obj.visual.Visualiser
 import com.uzery.fglib.utils.data.debug.DebugData
+import com.uzery.fglib.utils.graphics.AffineGraphics
 import com.uzery.fglib.utils.math.geom.PointN
 import com.uzery.fglib.utils.math.geom.Shape
 import java.util.*
@@ -24,7 +26,7 @@ abstract class GameObject(var name: String = "temp") {
     private var temp: TempAction? = null
 
     val visuals = LinkedList<Visualiser>()
-    internal val abilities = LinkedList<AbilityBox>()
+    private val abilities = LinkedList<AbilityBox>()
     private val listeners = LinkedList<ActionListener>()
     private val properties = LinkedList<GameProperty>()
 
@@ -38,7 +40,7 @@ abstract class GameObject(var name: String = "temp") {
     private val tags = LinkedList<String>()
     private val effects = LinkedList<TagEffect>()
 
-    val values = LinkedList<Any>()
+    private val values = LinkedList<Any>()
 
     var dead = false
         private set
@@ -69,20 +71,28 @@ abstract class GameObject(var name: String = "temp") {
 
 
     fun setController(controller: () -> () -> TempAction) {
-        this.controller = Controller { controller() }
+        setController(Controller { controller() })
     }
 
     fun setController(controller: Controller) {
         this.controller = controller
     }
 
-    fun addListener(listener: (InputAction) -> Unit) = listeners.add(ActionListener { listener(it) })
+    fun addListener(listener: (InputAction) -> Unit) = addListener(ActionListener { listener(it) })
     fun addListener(vararg listener: ActionListener) = listeners.addAll(listener)
-    fun addAbility(ability: () -> Unit) = abilities.add(AbilityBox { ability() })
+    fun addAbility(ability: () -> Unit) = addAbility(AbilityBox { ability() })
     fun addAbility(vararg ability: AbilityBox) = abilities.addAll(ability)
-    fun addProperty(property: () -> Unit) = properties.add(GameProperty { property() })
+    fun addProperty(property: () -> Unit) = addProperty(GameProperty { property() })
     fun addProperty(vararg property: GameProperty) = properties.addAll(property)
-    fun addVisual(visual: Visualiser) = visuals.add(visual)
+    fun addVisual(vis: Visualiser) = visuals.add(vis)
+
+    fun addLayerVisual(layer: DrawLayer, vis: (agc: AffineGraphics, draw_pos: PointN) -> Unit){
+        visuals.add(
+            object: LayerVisualiser(layer) {
+                override fun draw(draw_pos: PointN) { vis(agc, draw_pos) }
+            }
+        )
+    }
 
     fun next() {
         if (object_time == 0) afterInit()

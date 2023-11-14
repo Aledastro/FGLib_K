@@ -1,7 +1,6 @@
 package com.uzery.fglib.core.event
 
 import com.uzery.fglib.core.obj.GameObject
-import com.uzery.fglib.core.obj.ability.AbilityBox
 
 abstract class GameEvent: GameObject() {
     var repeatable = false
@@ -30,26 +29,24 @@ abstract class GameEvent: GameObject() {
         private set
 
     init {
-        abilities.add(object: AbilityBox {
-            override fun run() {
-                if (!init) {
-                    if (ready()) {
-                        start()
-                        init = true
-                    } else return
-                }
-                update()
-                if (ends()) {
-                    finish()
-                    if (repeatable) {
-                        init = false
-                    } else {
-                        finished = true
-                        collapse()
-                    }
-                }
-                event_time++
+        addAbility {
+            if (!init) {
+                if (ready()) {
+                    start()
+                    init = true
+                } else return@addAbility
             }
-        })
+            update()
+            if (ends()) {
+                finish()
+                if (repeatable) {
+                    init = false
+                } else {
+                    finished = true
+                    collapse()
+                }
+            }
+            event_time++
+        }
     }
 }
