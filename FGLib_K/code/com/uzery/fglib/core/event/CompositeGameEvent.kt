@@ -14,7 +14,7 @@ open class CompositeGameEvent(vararg events: GameEvent): GameEvent() {
                 throw DebugData.error("ERROR: empty composite game event: $name")
             }
 
-            if (event_time > 0 && (current == null || current!!.wasReadyAndEnds() && events_list.isNotEmpty())) {
+            if (event_time > 0 && (current == null || current!!.wasReadyAndFinished() && events_list.isNotEmpty())) {
                 current = events_list.removeFirst()
                 grab(current!!)
             }
@@ -26,5 +26,5 @@ open class CompositeGameEvent(vararg events: GameEvent): GameEvent() {
 
     final override fun ready() = true
 
-    final override fun ends() = events_list.isEmpty() && (current?.wasReadyAndEnds() ?: false)
+    final override fun ends() = events_list.isEmpty() && (current?.wasReadyAndFinished() ?: false)
 }

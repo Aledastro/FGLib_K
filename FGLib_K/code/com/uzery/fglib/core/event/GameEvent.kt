@@ -21,8 +21,8 @@ abstract class GameEvent: GameObject() {
         return init || ready()
     }
 
-    fun wasReadyAndEnds(): Boolean {
-        return wasReady() && ends()
+    fun wasReadyAndFinished(): Boolean {
+        return wasReady() && finished
     }
 
     var event_time = 0
