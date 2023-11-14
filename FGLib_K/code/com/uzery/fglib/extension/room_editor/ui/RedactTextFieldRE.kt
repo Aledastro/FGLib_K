@@ -48,7 +48,7 @@ class RedactTextFieldRE(val data: DataRE): UIElement() {
         graphics.fill.textR(pos+PointN(35, 33), "new:", Color.gray(0.2, 0.9))
         graphics.fill.text(pos+PointN(40, 33), new_obj, Color.gray(0.9, 0.8))
 
-        if (caret in 0..new_obj.length && time/20%3 > 0) {
+        if (caret in 0..new_obj.length && time/20%3 > 0 && update_text) {
             val text_size = if (caret == 0) PointN.ZERO
             else graphics.fill.text_size(new_obj.substring(0, caret))
 
@@ -69,6 +69,42 @@ class RedactTextFieldRE(val data: DataRE): UIElement() {
     }
 
     override fun ifActive() {
+        caret = caret.coerceIn(0..new_obj.length)
+    }
+
+    private fun possibleToAdd(): Boolean {
+        return try {
+            data.getter[new_obj]
+            true
+        } catch (e: Exception) {
+            false
+        }
+    }
+
+    private var old_redact_pair: Pair<GameObject, Room>? = null
+    private var time = 0
+    private var update_text = false
+    override fun update() {
+        if (keyboard.inPressed(KeyCode.ESCAPE)) {
+            data.redact_pair = null
+        }
+
+        if(mouse.keys.inPressed(MouseButton.PRIMARY)){
+            update_text = isAt(pos, size)
+        }
+
+        if(update_text) updateText()
+
+        if (data.redact_pair != old_redact_pair && data.redact_pair != null) {
+            new_obj = data.redact_pair!!.first.toString()
+            caret = new_obj.length
+            update_text = true
+        }
+        old_redact_pair = data.redact_pair
+        time++
+    }
+
+    private fun updateText(){
         fun superPressed(code: KeyCode): Boolean {
             return keyboard.inPressed(code) ||
                     keyboard.timePressed(code) > 40 && keyboard.pressed(code) && keyboard.timePressed(code)%2 == 0L
@@ -124,31 +160,5 @@ class RedactTextFieldRE(val data: DataRE): UIElement() {
                 }
             }
         }
-
-        caret = caret.coerceIn(0..new_obj.length)
-    }
-
-    private fun possibleToAdd(): Boolean {
-        return try {
-            data.getter[new_obj]
-            true
-        } catch (e: Exception) {
-            false
-        }
-    }
-
-    private var old_redact_pair: Pair<GameObject, Room>? = null
-    private var time = 0
-    override fun update() {
-        if (keyboard.inPressed(KeyCode.ESCAPE)) {
-            data.redact_pair = null
-        }
-
-        if (data.redact_pair != old_redact_pair && data.redact_pair != null) {
-            new_obj = data.redact_pair!!.first.toString()
-            caret = new_obj.length
-        }
-        old_redact_pair = data.redact_pair
-        time++
     }
 }
