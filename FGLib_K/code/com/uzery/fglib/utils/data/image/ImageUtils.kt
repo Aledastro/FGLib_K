@@ -22,8 +22,10 @@ object ImageUtils {
     private fun draw(origin: WritableImage, image: Image, pos: IntI) {
         /*origin.pixelWriter.setPixels(pos.n, pos.m, min(origin.width-pos.n, image.width).toInt(),
             min(origin.height-pos.m, image.height).toInt(), image.pixelReader, 0, 0)*/
-        for (i in 0 until min(origin.width-pos.x, image.width).toInt()) {
-            for (j in 0 until min(origin.height-pos.y, image.height).toInt()) {
+
+        val size = IntI(min(origin.width-pos.x, image.width).toInt(), min(origin.height-pos.y, image.height).toInt())
+        for (i in pos.x until size.width) {
+            for (j in pos.y until size.height) {
                 if (image.pixelReader.getColor(i, j) == Color.TRANSPARENT) continue
                 origin.pixelWriter.setArgb(pos.x+i, pos.y+j, image.pixelReader.getArgb(i, j))
             }

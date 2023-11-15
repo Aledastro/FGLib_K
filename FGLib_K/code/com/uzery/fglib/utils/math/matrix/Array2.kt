@@ -17,24 +17,29 @@ class Array2<Type>(val size: IntI, private val default_value: Type) {
 
     private fun from(i: Int, j: Int) = i*height+j
     operator fun get(i: Int, j: Int): Type {
-        return data[from(i, j)] ?: default_value
+        return get(IntI(i, j))
+    }
+    operator fun get(i: IntI): Type {
+        return data[from(i.x, i.y)] ?: default_value
     }
 
     operator fun set(i: Int, j: Int, value: Type) {
-        data[from(i, j)] = value
+        set(IntI(i, j), value)
+    }
+
+    operator fun set(i: IntI, value: Type) {
+        data[from(i.x, i.y)] = value
     }
 
     fun set(f: (i: Int, j: Int) -> Type) {
-        for (i in 0 until width) {
-            for (j in 0 until height) {
-                set(i, j, f(i, j))
-            }
+        for (id in size.indices) {
+            set(id, f(id.x, id.y))
         }
     }
 
     fun copy(): Array2<Type> {
-        val res = Array2(size, default_value)
-        res.set { i, j -> get(i, j) }
-        return res
+        return Array2(size, default_value).also {
+            it.set { i, j -> get(i, j) }
+        }
     }
 }

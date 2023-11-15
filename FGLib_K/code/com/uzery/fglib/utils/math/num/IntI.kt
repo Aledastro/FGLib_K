@@ -11,6 +11,10 @@ data class IntI(val x: Int, val y: Int) {
 
     val indices
         get() = Array(width*height) { i -> IntI(i%width, i/width) }
+    val xs
+        get() = Array(width) { i -> i }
+    val ys
+        get() = Array(height) { j -> j }
 
     operator fun times(other: IntI) = IntI(x*other.x, y*other.y)
 
