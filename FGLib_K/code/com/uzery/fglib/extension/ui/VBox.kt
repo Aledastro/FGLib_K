@@ -61,7 +61,7 @@ abstract class VBox: UIElement() {
 
     final override fun ifActive() {
         for (id in 0 until full) {
-            val mouse_input = mouse.keys.anyInPressed(MouseButton.PRIMARY, MouseButton.SECONDARY) && isActive()
+            val mouse_input = mouse.keys.anyInPressed(MouseButton.PRIMARY, MouseButton.SECONDARY) && isAt()
             if (mouse_input && isAt(pos+fromID(id), sizeOne)) select = id
         }
         ifActiveUpdate()

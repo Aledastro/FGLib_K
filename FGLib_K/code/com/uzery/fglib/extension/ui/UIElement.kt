@@ -47,5 +47,8 @@ abstract class UIElement {
         return RectN(pos, size).into(mouse.pos)
     }
 
-    fun isActive() = isAt(pos, size)
+    fun isAt() = isAt(pos, size)
+
+    var active = false
+    fun isActive() = active
 }

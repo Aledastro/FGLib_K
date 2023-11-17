@@ -68,7 +68,7 @@ class ObjectInfoBoxRE(val data: DataRE, private val pair: Pair<GameObject, Room>
 
         graphics.setStroke(2.0)
         val s = 4
-        val col = if (isActive()) Color.color(0.6, 0.1, 0.1, 1.0) else Color.color(0.9, 0.9, 0.9, 0.0)
+        val col = if (isAt()) Color.color(0.6, 0.1, 0.1, 1.0) else Color.color(0.9, 0.9, 0.9, 0.0)
         val posS = pos+size*PointN(1.0, 0.5)-PointN(10+s/2, s/2)
         graphics.stroke.line(posS, PointN(s, s), col)
         graphics.stroke.line(posS+PointN(s, 0), PointN(-s, s), col)

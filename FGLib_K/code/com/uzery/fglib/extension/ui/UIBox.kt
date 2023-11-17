@@ -24,9 +24,12 @@ open class UIBox(vararg elements: UIElement): Extension() {
         list.addAll(new_list)
         new_list.clear()
 
-        active_el = list.stream().filter { el -> el.showing && el.isActive() }
+        list.forEach { it.active = false }
+        active_el = list.stream().filter { el -> el.showing && el.isAt() }
             .sorted { o1, o2 -> -o1.priority.compareTo(o2.priority) }.findFirst().orElse(null)
         active_el?.ifActive()
+        active_el?.active = true
+
         list.forEach { it.update() }
 
         list.removeAll(old_list)
