@@ -8,8 +8,9 @@ enum class Direct(private val x: Int, private val y: Int) {
     UP(0, -1), RIGHT(1, 0), DOWN(0, 1), LEFT(-1, 0),
     UP_RIGHT(1, -1), UP_LEFT(-1, -1), DOWN_RIGHT(1, 1), DOWN_LEFT(-1, 1), CENTER(0, 0);
 
-    val value = PointN(x.toDouble(), y.toDouble())
-    val p = if (value.length() == 0.0) PointN.ZERO else value/value.length()
+    val value = IntI(x, y)
+    val valueP = PointN(value)
+    val p = if (value == IntI()) PointN.ZERO else valueP/valueP.length()
 
     operator fun plus(dir: Direct) = from(x+dir.x, y+dir.y)
 
