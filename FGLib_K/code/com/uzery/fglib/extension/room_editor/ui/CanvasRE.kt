@@ -139,6 +139,7 @@ class CanvasRE(private val data: DataRE): UICanvas() {
 
         fun drawSelectObj(alpha: Double = 1.0) {
             if (keyboard.pressed(KeyCode.ALT)) return
+            if (!isActive()) return
 
             Platform.global_alpha = alpha
             val pp =
