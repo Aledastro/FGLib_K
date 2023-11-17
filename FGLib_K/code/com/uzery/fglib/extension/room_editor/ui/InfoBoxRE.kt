@@ -2,11 +2,12 @@ package com.uzery.fglib.extension.room_editor.ui
 
 import com.uzery.fglib.core.obj.GameObject
 import com.uzery.fglib.core.obj.bounds.BoundsBox
-import com.uzery.fglib.core.program.Platform
 import com.uzery.fglib.core.program.Platform.CANVAS
 import com.uzery.fglib.core.program.Platform.CANVAS_R
 import com.uzery.fglib.core.program.Platform.graphics
+import com.uzery.fglib.core.program.Platform.keyboard
 import com.uzery.fglib.core.room.Room
+import com.uzery.fglib.core.world.World
 import com.uzery.fglib.core.world.WorldUtils
 import com.uzery.fglib.extension.room_editor.DataRE
 import com.uzery.fglib.extension.room_editor.RoomEditorUI
@@ -14,6 +15,7 @@ import com.uzery.fglib.extension.ui.InfoBox
 import com.uzery.fglib.utils.math.FGUtils
 import com.uzery.fglib.utils.math.geom.PointN
 import com.uzery.fglib.utils.math.geom.shape.RectN
+import javafx.scene.input.KeyCode
 import javafx.scene.paint.Color
 import java.util.*
 
@@ -33,24 +35,55 @@ class InfoBoxRE(private val data: DataRE): InfoBox() {
 
         res.add("-----------------------------------------")
         res.add("")
-        res.add("room: ${data.filenames[data.last_edit_n]}")
-        res.add("")
-        res.add("pos: ${data.last_edit_room.pos}")
-        res.add("size: ${data.last_edit_room.size}")
-        res.add("objects size: ${data.last_edit_room.objects.size}")
-        for (index in 0 until BoundsBox.SIZE) {
-            res.add("bounds[${BoundsBox.name(index)}]: ${WorldUtils.bs_n[data.last_edit_room]!![index]}")
+
+        if (world_info) {
+            res.add("world")
+            res.add("")
+            res.add("rooms size: ${data.filenames.size}")
+            res.add("objects size: ${World.rooms.sumOf { it.objects.size }}")
+            res.add("* active: ${World.rooms.sumOf { r -> r.objects.count { !it.tagged("#inactive") } }}")
+            res.add("* movable: ${World.rooms.sumOf { r -> r.objects.count { !it.tagged("#immovable") } }}")
+            for (index in 0 until BoundsBox.SIZE) {
+                res.add("bounds[${BoundsBox.name(index)}]: ${World.rooms.sumOf { WorldUtils.bs_n[it]!![index] }}")
+            }
+        }
+
+        if(world_info && room_info){
+            res.add("")
+            res.add("-----------------------------------------")
+            res.add("")
+        }
+
+        if (room_info) {
+            res.add("room: ${data.filenames[data.last_edit_n]}")
+            res.add("")
+            res.add("pos: ${data.last_edit_room.pos}")
+            res.add("size: ${data.last_edit_room.size}")
+            res.add("objects size: ${data.last_edit_room.objects.size}")
+            res.add("* active: ${data.last_edit_room.objects.count { !it.tagged("#inactive") }}")
+            res.add("* movable: ${data.last_edit_room.objects.count { !it.tagged("#immovable") }}")
+            for (index in 0 until BoundsBox.SIZE) {
+                res.add("bounds[${BoundsBox.name(index)}]: ${WorldUtils.bs_n[data.last_edit_room]!![index]}")
+            }
         }
 
         res.add("")
         res.add("-----------------------------------------")
-        res.add("")
 
         return res
     }
 
+    private var world_info = true
+    private var room_info = false
     override fun update() {
         WorldUtils.nextDebugForRoom(data.edit)
+
+        if (keyboard.inPressed(KeyCode.F5)) {
+            world_info = !world_info
+        }
+        if (keyboard.inPressed(KeyCode.F6)) {
+            room_info = !room_info
+        }
 
         fun setBoxesY() {
             var ss = 0.0
@@ -95,7 +128,8 @@ class InfoBoxRE(private val data: DataRE): InfoBox() {
     override val pos
         get() = (CANVAS-origin_size).XP+PointN(-data.OFFSET, 70.0)
 
-    val origin_size = PointN(186, 240/Platform.scale)
+    val origin_size
+        get() = PointN(186.0, y_size*(text_data_size+1.5))
     override val size: PointN
         get() = origin_size+PointN(0.0, obj_boxes.values.sumOf { box -> box.size.Y+10 })
 
