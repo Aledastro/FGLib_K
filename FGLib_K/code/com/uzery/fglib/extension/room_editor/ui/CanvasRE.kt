@@ -189,6 +189,8 @@ class CanvasRE(private val data: DataRE): UICanvas() {
 
         fun drawCell() {
             if (!keyboard.pressed(KeyCode.ALT) && !draw_lines) return
+            if (!isActive()) return
+
             graphics.setStroke(1.2)
             Program.gc.setLineDashes(5.0*view_scale, 5.0*view_scale) //todo into graphics
             Program.gc.lineDashOffset = 1.0
