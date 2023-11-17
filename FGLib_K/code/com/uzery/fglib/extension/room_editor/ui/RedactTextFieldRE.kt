@@ -69,7 +69,7 @@ class RedactTextFieldRE(val data: DataRE): UIElement() {
     }
 
     override fun ifActive() {
-        caret = caret.coerceIn(0..new_obj.length)
+
     }
 
     private fun possibleToAdd(): Boolean {
@@ -141,6 +141,7 @@ class RedactTextFieldRE(val data: DataRE): UIElement() {
             new_obj = new_obj.substring(0, caret-1)+new_obj.substring(caret, new_obj.length)
             caret--
         }
+        caret = caret.coerceIn(0..new_obj.length)
 
         if (keyboard.inPressed(KeyCode.ENTER) && possibleToAdd()) {
             val room = data.redact_pair!!.second
