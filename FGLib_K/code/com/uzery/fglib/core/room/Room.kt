@@ -28,6 +28,10 @@ class Room(val pos: PointN, val size: PointN) {
         objects.addAll(objs)
     }
 
+    fun init(){
+        objects.forEach { it.init() }
+    }
+
     fun next() {
         objects.addAll(new_objects)
         new_objects.clear()

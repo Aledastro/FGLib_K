@@ -110,6 +110,8 @@ object World {
         for (name in filename) filenames.add(name)
         filenames.forEach { rooms.add(readInfo(it)) }
         for (i in rooms.indices) last_active.add(false)
+
+        rooms.forEach { it.init() }
     }
 
     fun add(o: GameObject) {

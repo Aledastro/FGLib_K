@@ -30,6 +30,7 @@ abstract class GameObject(var name: String = "temp") {
     private val listeners = LinkedList<ActionListener>()
     private val properties = LinkedList<GameProperty>()
 
+    private val onBirth = LinkedList<() -> Unit>()
     private val onDeath = LinkedList<() -> Unit>()
     private val onGrab = LinkedList<() -> Unit>()
 
@@ -92,6 +93,10 @@ abstract class GameObject(var name: String = "temp") {
                 override fun draw(draw_pos: PointN) { vis(agc, draw_pos) }
             }
         )
+    }
+
+    fun init(){
+        onBirth.forEach { it() }
     }
 
     fun next() {
@@ -175,6 +180,10 @@ abstract class GameObject(var name: String = "temp") {
         onDeath.forEach { it() }
         dead = true
         followers.forEach { it.collapse() }
+    }
+
+    fun onBirth(f: () -> Unit) {
+        onBirth.add(f)
     }
 
     fun onDeath(f: () -> Unit) {
