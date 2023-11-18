@@ -57,8 +57,8 @@ class RoomEditor(private var getter: (Int) -> Pair<AbstractClassGetter<GameObjec
         redact_field = RedactTextFieldRE(data)
 
         RoomEditorUI.clear()
-        RoomEditorUI.add(edit_canvas, info_box)
-        //, play_button, choose_group_panel, layers_panel, info_box, choose_objects_panel, redact_field
+        RoomEditorUI.add(edit_canvas, play_button, choose_group_panel, layers_panel, info_box, choose_objects_panel, redact_field)
+
         edit_canvas.show()
         play_button.show()
         choose_group_panel.show()
