@@ -100,8 +100,6 @@ abstract class GameObject(var name: String = "temp") {
     }
 
     fun next() {
-        if (object_time == 0) afterInit()
-
         if (temp == null || temp!!.ends) temp = controller?.get()?.invoke()
         temp?.next()
 
@@ -120,10 +118,6 @@ abstract class GameObject(var name: String = "temp") {
         followers.removeIf { it.dead }
 
         followers.forEach { it.nextWithFollowers() }
-    }
-
-    open fun afterInit() {
-        /* ignore */
     }
 
     fun draw(draw_pos: PointN) {

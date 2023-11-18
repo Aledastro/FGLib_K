@@ -6,7 +6,7 @@ import java.util.*
 open class CompositeGameEvent(vararg events: GameEvent): GameEvent() {
     private var current: GameEvent? = null
 
-    private val events_list = ArrayList(events.toList())
+    private val events_list = LinkedList(events.toList())
 
     init {
         addAbility {

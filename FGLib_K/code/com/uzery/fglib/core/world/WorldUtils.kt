@@ -22,7 +22,7 @@ object WorldUtils {
     fun readInfo(input: List<String>): Room {
         if (World.getter == null) throw DebugData.error("getter not loaded")
 
-        val list = ArrayList<String>()
+        val list = LinkedList<String>()
         list.addAll(input)
 
         val objects = ArrayList<GameObject>()

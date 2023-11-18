@@ -13,8 +13,8 @@ open class ParallelGameEvent(vararg events: GameEvent): GameEvent() {
     fun add(event: GameEvent) = events_list.add(event)
 
     init {
-        addAbility {
-            if (object_time == 0) events_list.forEach { grab(it) }
+        onBirth {
+            events_list.forEach { grab(it) }
         }
     }
 }
