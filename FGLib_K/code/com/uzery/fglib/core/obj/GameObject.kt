@@ -17,7 +17,6 @@ import com.uzery.fglib.utils.graphics.AffineGraphics
 import com.uzery.fglib.utils.math.geom.PointN
 import com.uzery.fglib.utils.math.geom.Shape
 import java.util.*
-import kotlin.collections.HashMap
 import kotlin.collections.HashSet
 
 abstract class GameObject(var name: String = "temp") {
@@ -32,7 +31,7 @@ abstract class GameObject(var name: String = "temp") {
     private val listeners = ArrayList<ActionListener>()
     private val properties = ArrayList<GameProperty>()
 
-    private val onBirth = ArrayList<() -> Unit>()
+    private val onInit = ArrayList<() -> Unit>()
     private val onDeath = ArrayList<() -> Unit>()
     private val onGrab = ArrayList<() -> Unit>()
 
@@ -98,7 +97,7 @@ abstract class GameObject(var name: String = "temp") {
     }
 
     fun init(){
-        onBirth.forEach { it() }
+        onInit.forEach { it() }
     }
 
     fun next() {
@@ -178,8 +177,8 @@ abstract class GameObject(var name: String = "temp") {
         followers.forEach { it.collapse() }
     }
 
-    fun onBirth(f: () -> Unit) {
-        onBirth.add(f)
+    fun onInit(f: () -> Unit) {
+        onInit.add(f)
     }
 
     fun onDeath(f: () -> Unit) {
