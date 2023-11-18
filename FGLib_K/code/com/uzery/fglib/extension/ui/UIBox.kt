@@ -26,7 +26,7 @@ open class UIBox(vararg elements: UIElement): Extension() {
 
         list.forEach { it.active = false }
         
-        active_el = list.filter { it.showing && it.isAt() }.minByOrNull { it.priority }
+        active_el = list.filter { it.showing && it.isAt() }.maxByOrNull { it.priority }
         
         active_el?.ifActive()
         active_el?.active = true
