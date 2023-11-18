@@ -102,7 +102,7 @@ abstract class GameObject(var name: String = "temp") {
     }
 
     fun next() {
-        if(object_time == 0) onInit.forEach { it() }
+        if(object_time == 0) onBirth.forEach { it() }
 
         if (temp == null || temp!!.ends) temp = controller?.get()?.invoke()
         temp?.next()
