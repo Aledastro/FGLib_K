@@ -32,6 +32,7 @@ abstract class GameObject(var name: String = "temp") {
     private val properties = ArrayList<GameProperty>()
 
     private val onInit = ArrayList<() -> Unit>()
+    private val onBirth = ArrayList<() -> Unit>()
     private val onDeath = ArrayList<() -> Unit>()
     private val onGrab = ArrayList<() -> Unit>()
 
@@ -101,6 +102,8 @@ abstract class GameObject(var name: String = "temp") {
     }
 
     fun next() {
+        if(object_time == 0) onInit.forEach { it() }
+
         if (temp == null || temp!!.ends) temp = controller?.get()?.invoke()
         temp?.next()
 
@@ -179,6 +182,10 @@ abstract class GameObject(var name: String = "temp") {
 
     fun onInit(f: () -> Unit) {
         onInit.add(f)
+    }
+
+    fun onBirth(f: () -> Unit) {
+        onBirth.add(f)
     }
 
     fun onDeath(f: () -> Unit) {
