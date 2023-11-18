@@ -17,6 +17,8 @@ import com.uzery.fglib.utils.graphics.AffineGraphics
 import com.uzery.fglib.utils.math.geom.PointN
 import com.uzery.fglib.utils.math.geom.Shape
 import java.util.*
+import kotlin.collections.HashMap
+import kotlin.collections.HashSet
 
 abstract class GameObject(var name: String = "temp") {
     val stats = Stats()
@@ -38,8 +40,8 @@ abstract class GameObject(var name: String = "temp") {
     internal val followers = ArrayList<GameObject>()
     var owner: GameObject? = null
 
-    private val tags = ArrayList<String>()
-    private val effects = ArrayList<TagEffect>()
+    private val tags = HashSet<String>()
+    private val effects = HashSet<TagEffect>()
 
     val values = ArrayList<Any>()
 
@@ -193,9 +195,9 @@ abstract class GameObject(var name: String = "temp") {
 
     fun tagged(tag: String) = tag in tags
     fun addEffect(vararg effect: TagEffect) = effects.addAll(effect)
-    fun effected(effect: String) = effects.any { a -> a.name == effect }
-    fun effectedAny(vararg effect: String) = effect.any { eff -> effected(eff) }
-    fun effectedAll(vararg effect: String) = effect.all { eff -> effected(eff) }
+    fun effected(effect: String) = effects.any { it.name == effect }
+    fun effectedAny(vararg effect: String) = effect.any { effected(it) }
+    fun effectedAll(vararg effect: String) = effect.all { effected(it) }
     fun equalsS(other: GameObject): Boolean {
         return this.toString() == other.toString()
     }

@@ -18,6 +18,7 @@ import com.uzery.fglib.utils.math.geom.shape.RectN
 import javafx.scene.input.KeyCode
 import javafx.scene.paint.Color
 import java.util.*
+import kotlin.collections.ArrayList
 
 class InfoBoxRE(private val data: DataRE): InfoBox() {
     override val text_draw_offset: Double
@@ -30,7 +31,7 @@ class InfoBoxRE(private val data: DataRE): InfoBox() {
 
     private val obj_boxes = HashMap<Pair<GameObject, Room>, ObjectInfoBoxRE>()
 
-    private fun getL(): List<String> {
+    override fun getL(): ArrayList<String> {
         val res = ArrayList<String>()
 
         res.add("-----------------------------------------")
@@ -75,7 +76,9 @@ class InfoBoxRE(private val data: DataRE): InfoBox() {
 
     private var world_info = true
     private var room_info = false
+
     override fun update() {
+        super.update()
         WorldUtils.nextDebugForRoom(data.edit)
 
         if (keyboard.inPressed(KeyCode.F5)) {
@@ -110,13 +113,9 @@ class InfoBoxRE(private val data: DataRE): InfoBox() {
             if (key !in data.select_objs || value.dead) listToRemove.add(key)
         }
         listToRemove.forEach { RoomEditorUI.remove(obj_boxes[it]!!) }
-        data.select_objs.removeAll(listToRemove)
+        data.select_objs.removeAll(listToRemove.toSet())
         listToRemove.forEach { obj_boxes.remove(it) }
     }
-
-    override fun text(id: Int) = getL()[id]
-    override val text_data_size: Int
-        get() = getL().size
 
     override fun color(id: Int): Color {
         return when (id) {

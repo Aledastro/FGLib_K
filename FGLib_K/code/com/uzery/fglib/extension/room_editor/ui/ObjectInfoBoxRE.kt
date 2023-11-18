@@ -15,28 +15,25 @@ import javafx.scene.paint.Color
 import java.util.*
 
 class ObjectInfoBoxRE(val data: DataRE, private val pair: Pair<GameObject, Room>): InfoBox() {
-    private val info: ArrayList<String>
-        get() {
-            val res = ArrayList<String>()
-            val s = pair.first.toString()
-            if (':' !in s) {
-                res.add("object: $s")
-                return res
-            }
-            val name = FGUtils.subBefore(s, ":")
-            val args = FGUtils.subAfter(s, ":")
-            val t = StringTokenizer(args, "]")
-
-            res.add("object: $name")
-            res.add("")
-
-            while (t.hasMoreTokens()) {
-                res.add((t.nextToken()+"]\n").substring(1))
-            }
+    override fun getL(): ArrayList<String> {
+        val res = ArrayList<String>()
+        val s = pair.first.toString()
+        if (':' !in s) {
+            res.add("object: $s")
             return res
         }
+        val name = FGUtils.subBefore(s, ":")
+        val args = FGUtils.subAfter(s, ":")
+        val t = StringTokenizer(args, "]")
 
-    override val text_data_size = info.size
+        res.add("object: $name")
+        res.add("")
+
+        while (t.hasMoreTokens()) {
+            res.add((t.nextToken()+"]\n").substring(1))
+        }
+        return res
+    }
 
     var dead = false
         private set
@@ -46,10 +43,6 @@ class ObjectInfoBoxRE(val data: DataRE, private val pair: Pair<GameObject, Room>
 
     override fun color(id: Int): Color {
         return Color.gray(0.2, 0.9)
-    }
-
-    override fun text(id: Int): String {
-        return info[id]
     }
 
     override fun ifActive() {

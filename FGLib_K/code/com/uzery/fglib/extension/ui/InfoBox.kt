@@ -6,7 +6,8 @@ import javafx.scene.paint.Color
 import javafx.scene.text.FontWeight
 
 abstract class InfoBox: UIElement() {
-    abstract val text_data_size: Int
+    var text = ArrayList<String>()
+
     val y_size: Double
         get() = text_draw_size*(1+text_draw_offset)
 
@@ -27,9 +28,16 @@ abstract class InfoBox: UIElement() {
     }
 
     override fun update() {
-
+        text = getL()
     }
 
+    abstract fun getL(): ArrayList<String>
+
     abstract fun color(id: Int): Color
-    abstract fun text(id: Int): String
+    fun text(id: Int): String{
+        return text[id]
+    }
+
+    val text_data_size: Int
+        get() = text.size
 }
