@@ -7,7 +7,7 @@ import java.util.*
 
 abstract class ClassGetter<Type>: AbstractClassGetter<Type>() {
     protected var no_info = false
-    private val map: LinkedList<Pair<StringN, () -> Type>> = LinkedList()
+    private val map: ArrayList<Pair<StringN, () -> Type>> = ArrayList()
 
     final override fun entries_size(): Int {
         return map.size

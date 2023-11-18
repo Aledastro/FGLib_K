@@ -7,7 +7,7 @@ import java.util.*
 data class InputAction(val code: String, val prime: GameObject, private val full_info: String = "no_info") {
 
     val stats = prime.stats
-    val options = LinkedList<String>()
+    val options = ArrayList<String>()
     val info: String
 
     init {

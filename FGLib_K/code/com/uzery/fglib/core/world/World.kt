@@ -14,18 +14,18 @@ import javafx.scene.paint.Color
 import java.util.*
 
 object World {
-    val rooms = LinkedList<Room>()
-    val active_rooms = LinkedList<Room>()
-    private val last_active = LinkedList<Boolean>()
+    val rooms = ArrayList<Room>()
+    val active_rooms = ArrayList<Room>()
+    private val last_active = ArrayList<Boolean>()
 
-    private val filenames = LinkedList<String>()
+    private val filenames = ArrayList<String>()
 
     private lateinit var controller: WorldController
 
     fun allTagged(tag: String): List<GameObject> {
-        val res = LinkedList<GameObject>()
+        val res = ArrayList<GameObject>()
         for (room in active_rooms) {
-            res.addAll(room.objects.stream().filter { it.tagged(tag) }.toList())
+            res.addAll(room.objects.filter { it.tagged(tag) })
         }
         return res
     }

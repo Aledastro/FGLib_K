@@ -18,7 +18,7 @@ import kotlin.math.sign
 
 class Room(val pos: PointN, val size: PointN) {
     //todo private
-    val objects = LinkedList<GameObject>()
+    val objects = ArrayList<GameObject>()
     private val new_objects = ArrayList<GameObject>()
     private val old_objects = HashSet<GameObject>()
 
@@ -105,19 +105,19 @@ class Room(val pos: PointN, val size: PointN) {
     fun remove(objs: List<GameObject>) = old_objects.addAll(objs)
 
     private fun nextMoveOld() {
-        val red_bounds = LinkedList<Bounds>()
-        val pos = LinkedList<PointN>()
+        val red_bounds = ArrayList<Bounds>()
+        val pos = ArrayList<PointN>()
 
-        val list = LinkedList<GameObject>()
+        val list = ArrayList<GameObject>()
         fun addInList(obj: GameObject) {
             list.add(obj)
             obj.followers.forEach { addInList(it) }
         }
-        objects.stream().filter { !it.tagged("#immovable") }.forEach { addInList(it) }
+        objects.forEach { if(!it.tagged("#immovable")) addInList(it) }
 
         objects.forEach {
             val bs = it.bounds.red
-            if (!bs.isEmpty()) {
+            if (!bs.empty) {
                 red_bounds.add(bs)
                 pos.add(it.stats.POS)
             }
@@ -125,7 +125,7 @@ class Room(val pos: PointN, val size: PointN) {
         for (obj in list) {
             obj.stats.lPOS = obj.stats.POS
             val move_bs = obj.bounds.orange
-            if (move_bs.isEmpty()) continue
+            if (move_bs.empty) continue
 
             fun maxMove(move_p: PointN): Double {
                 if (red_bounds.isEmpty()) return 1.0
@@ -153,12 +153,12 @@ class Room(val pos: PointN, val size: PointN) {
     private fun nextActivate() {
         //todo less code
 
-        val list = LinkedList<GameObject>()
+        val list = ArrayList<GameObject>()
         fun addInList(obj: GameObject) {
             list.add(obj)
             obj.followers.forEach { addInList(it) }
         }
-        objects.stream().filter { !it.tagged("#inactive") }.forEach { addInList(it) }
+        objects.forEach { if(!it.tagged("#inactive")) addInList(it) }
 
         fun setActivate(
             o1: GameObject,
@@ -178,10 +178,10 @@ class Room(val pos: PointN, val size: PointN) {
             val blueObj = list[blueObjID]
 
             val blueBounds = blueObj.bounds.blue
-            if (blueBounds.isEmpty()) continue
-            for (mainObj in objects) {
+            if (blueBounds.empty) continue
+            for (mainObj in list) {
                 val mainBounds = mainObj.bounds.main
-                if (mainBounds.isEmpty()) continue
+                if (mainBounds.empty) continue
                 blueBounds.elements.forEach { blueElement ->
                     mainBounds.elements.forEach { mainElement ->
                         setActivate(
@@ -206,10 +206,10 @@ class Room(val pos: PointN, val size: PointN) {
         for (mainObj in list) {
             if (!mainObj.interact()) continue
             val mainBounds = mainObj.bounds.main
-            if (mainBounds.isEmpty()) continue
+            if (mainBounds.empty) continue
             for (greenObj in list) {
                 val greenBounds = greenObj.bounds.green
-                if (greenBounds.isEmpty()) continue
+                if (greenBounds.empty) continue
                 greenBounds.elements.forEach { greenElement ->
                     mainBounds.elements.forEach { mainElement ->
                         setActivate(
@@ -232,11 +232,11 @@ class Room(val pos: PointN, val size: PointN) {
         }
         for (obj1 in list) {
             val bounds1 = obj1.bounds.orange
-            if (bounds1.isEmpty()) continue
+            if (bounds1.empty) continue
             for (obj2 in list) {
                 if (obj1 == obj2) continue
                 val bounds2 = obj2.bounds.orange
-                if (bounds2.isEmpty()) continue
+                if (bounds2.empty) continue
                 bounds2.elements.forEach { element2 ->
                     bounds1.elements.forEach { element1 ->
                         setActivate(obj1, element1, obj2, element2, "#IMPACT")

@@ -15,9 +15,9 @@ import javafx.scene.paint.Color
 import java.util.*
 
 class ObjectInfoBoxRE(val data: DataRE, private val pair: Pair<GameObject, Room>): InfoBox() {
-    private val info: LinkedList<String>
+    private val info: ArrayList<String>
         get() {
-            val res = LinkedList<String>()
+            val res = ArrayList<String>()
             val s = pair.first.toString()
             if (':' !in s) {
                 res.add("object: $s")

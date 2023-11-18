@@ -4,13 +4,13 @@ import java.util.*
 
 open class ParallelGameEvent(vararg events: GameEvent): GameEvent() {
 
-    private val events_list = LinkedList(events.toList())
+    private val events_list = ArrayList(events.toList())
 
     final override fun ready() = true
 
     final override fun ends() = events_list.all { it.wasReadyAndFinished() }
 
-    fun add(event: GameEvent) = events_list.addLast(event)
+    fun add(event: GameEvent) = events_list.add(event)
 
     init {
         addAbility {

@@ -324,7 +324,7 @@ class CanvasRE(private val data: DataRE): UICanvas() {
             val sel = data.getter.getEntry(data.chosen_entry)()
             val room = roomFrom(mouseRealPos) ?: return
 
-            val list = LinkedList<GameObject>()
+            val list = ArrayList<GameObject>()
             room.objects.forEach { o ->
                 val pos1 = (o.stats.POS-data.edit.pos+room.pos).roundL(data.GRID)
                 val added = if (add_size%2 == 0) PointN.ZERO else data.GRID_P/2

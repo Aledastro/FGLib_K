@@ -10,14 +10,14 @@ open class FigureN(val fields: List<FieldN>): Shape() {
 
 
     /*val mirage_fields
-        get(): LinkedList<FieldN>{
-            val list = LinkedList<FieldN>()
+        get(): ArrayList<FieldN>{
+            val list = ArrayList<FieldN>()
             fields.forEach { f -> list.add(f.copy(pos)) }
             return list
         }*/
 
     override fun copy(move: PointN): Shape {
-        val list = LinkedList<FieldN>()
+        val list = ArrayList<FieldN>()
         fields.forEach { field -> list.add(field.copy(move)) }
         return FigureN(list)
     }
@@ -30,7 +30,7 @@ open class FigureN(val fields: List<FieldN>): Shape() {
         return fields.all { field -> field.intoHalfS(pos) }
     }
 
-    val current_pos = LinkedList<PointN>()
+    val current_pos = ArrayList<PointN>()
     private var init_current_pos = false
 
     override val L = getLP()
@@ -38,11 +38,11 @@ open class FigureN(val fields: List<FieldN>): Shape() {
 
     private fun getFields() {
         val dim = fields[0].dim
-        val current_fields = LinkedList<FieldN>()
+        val current_fields = ArrayList<FieldN>()
         current_fields.addAll(fields)
         //todo it don't work well for large dim>3
         for (d in 0 until dim-1) {
-            val list = LinkedList<FieldN>()
+            val list = ArrayList<FieldN>()
 
             for (i in 0 until current_fields.size) {
                 for (j in i+1 until current_fields.size) {
@@ -79,7 +79,7 @@ open class FigureN(val fields: List<FieldN>): Shape() {
     override val code = Code.FIGURE
 
     operator fun times(other: FigureN): FigureN {
-        val res = LinkedList<FieldN>()
+        val res = ArrayList<FieldN>()
 
         this.fields.forEach { f -> res.add(f.copy(PointN.ZERO)) }
         other.fields.forEach { f -> res.add(f.copy(PointN.ZERO)) }

@@ -9,8 +9,8 @@ class Drop<T>() {
     }
 
     private var full = -1.0
-    private val list = LinkedList<() -> T>()
-    private val priorities = LinkedList<Double>()
+    private val list = ArrayList<() -> T>()
+    private val priorities = ArrayList<Double>()
     fun add(priority: Double, f: () -> T) {
         list.add(f)
         priorities.add(priority)

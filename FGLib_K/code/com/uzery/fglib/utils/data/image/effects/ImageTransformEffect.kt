@@ -4,5 +4,5 @@ import javafx.scene.image.WritableImage
 import java.util.*
 
 abstract class ImageTransformEffect(val name: String) {
-    abstract operator fun get(origin: WritableImage, args: List<List<String>> = LinkedList()): WritableImage
+    abstract operator fun get(origin: WritableImage, args: List<List<String>> = ArrayList()): WritableImage
 }

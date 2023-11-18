@@ -13,7 +13,7 @@ class BoundsBox {
     val green: Bounds
         get() = bounds[GREEN]
     val main: Bounds
-        get() = if (red.isEmpty()) orange else red
+        get() = if (red.empty) orange else red
 
 
     companion object {

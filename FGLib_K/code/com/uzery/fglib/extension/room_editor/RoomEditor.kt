@@ -137,7 +137,7 @@ class RoomEditor(private var getter: (Int) -> Pair<AbstractClassGetter<GameObjec
                 }
             }
         }
-        val list = LinkedList<DrawLayer>()
+        val list = ArrayList<DrawLayer>()
         list.addAll(map.values.toList())
         list.sortBy { o -> o.sort }
         data.layers = list

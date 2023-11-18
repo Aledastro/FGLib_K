@@ -5,7 +5,7 @@ import com.uzery.fglib.utils.math.geom.PointN
 import java.util.*
 
 abstract class Extension(vararg children: Extension) {
-    val children = LinkedList<Extension>()
+    val children = ArrayList<Extension>()
     var draw_pos = PointN.ZERO
 
     enum class MODE(val draw: Boolean, val update: Boolean) {

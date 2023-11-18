@@ -18,11 +18,11 @@ class DataRE(getter_pair: Pair<AbstractClassGetter<GameObject>, Array<out String
     var hide_ui = false
     var chosen_entry = 0
     lateinit var edit: Room
-    var groupsValues: LinkedList<LinkedList<StringN>> = LinkedList<LinkedList<StringN>>()
-    var titles: LinkedList<LinkedList<String>> = LinkedList<LinkedList<String>>()
-    var groupsSelect: LinkedList<Int> = LinkedList<Int>()
+    var groupsValues: ArrayList<ArrayList<StringN>> = ArrayList<ArrayList<StringN>>()
+    var titles: ArrayList<ArrayList<String>> = ArrayList<ArrayList<String>>()
+    var groupsSelect: ArrayList<Int> = ArrayList<Int>()
     var draw_bounds = false
-    var select_objs = LinkedList<Pair<GameObject, Room>>()
+    var select_objs = ArrayList<Pair<GameObject, Room>>()
     var chosen_obj: GameObject? = null
     var draw_pos = PointN.ZERO
 
@@ -30,7 +30,7 @@ class DataRE(getter_pair: Pair<AbstractClassGetter<GameObject>, Array<out String
     lateinit var last_edit_room: Room
     var last_edit_n: Int = 0
 
-    var layers = LinkedList<DrawLayer>()
+    var layers = ArrayList<DrawLayer>()
     var select_layer = 0
     var select_group = 0
 
@@ -40,28 +40,28 @@ class DataRE(getter_pair: Pair<AbstractClassGetter<GameObject>, Array<out String
     val GRID_P
         get() = PointN(GRID, GRID)
 
-    val names = LinkedList<StringN>()
+    val names = ArrayList<StringN>()
     val ids = TreeMap<StringN, Int>()
 
     val getter = getter_pair.first
     val filenames = getter_pair.second
     fun init() {
-        val entries = LinkedList<StringN>()
+        val entries = ArrayList<StringN>()
 
         for (i in 0 until getter.entries_size()) entries.add(getter.getEntryName(i))
         for (id in entries.indices) ids[entries[id]] = id
         entries.removeIf { "#" !in it.s }
 
-        val groups_map = TreeMap<StringN, LinkedList<StringN>>()
+        val groups_map = TreeMap<StringN, ArrayList<StringN>>()
 
         for (entry in entries) {
             val name = StringN(FGUtils.subBefore(entry.s, "#"), entry.n)
-            if (groups_map[name] == null) groups_map[name] = LinkedList<StringN>()
+            if (groups_map[name] == null) groups_map[name] = ArrayList<StringN>()
             groups_map[name]!!.add(entry)
         }
         for ((id, key) in groups_map.keys.withIndex()) {
-            groupsValues.add(LinkedList())
-            titles.add(LinkedList())
+            groupsValues.add(ArrayList())
+            titles.add(ArrayList())
 
             groups_map[key]!!.forEach { value ->
                 groupsValues[id].add(value)

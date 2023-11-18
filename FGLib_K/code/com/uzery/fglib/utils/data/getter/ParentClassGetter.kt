@@ -7,12 +7,12 @@ import java.util.*
 
 abstract class ParentClassGetter<Type>(private vararg val getters: ClassGetter<Type>): AbstractClassGetter<Type>() {
 
-    private val sums = LinkedList<Int>()
+    private val sums = ArrayList<Int>()
 
     init {
         sums.add(0)
         for (get in getters) {
-            sums.addLast(get.entries_size()+sums.last)
+            sums.add(get.entries_size()+sums.last())
         }
         sums.removeFirst()
     }
@@ -28,7 +28,7 @@ abstract class ParentClassGetter<Type>(private vararg val getters: ClassGetter<T
     }
 
     final override fun entries_size(): Int {
-        return sums.last
+        return sums.last()
     }
 
     final override fun getEntryName(id: Int): StringN {

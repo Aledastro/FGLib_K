@@ -21,7 +21,7 @@ class FigureRectN(pos: PointN, val size: PointN): FigureN(getFields(pos, size)) 
 }
 
 fun getFields(pos: PointN, size: PointN): List<FieldN> {
-    val fields = LinkedList<FieldN>()
+    val fields = ArrayList<FieldN>()
     val dim = size.dim
 
     for (level in 0 until dim) {

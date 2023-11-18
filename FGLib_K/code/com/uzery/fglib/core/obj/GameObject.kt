@@ -25,23 +25,23 @@ abstract class GameObject(var name: String = "temp") {
     private var controller: Controller? = null
     private var temp: TempAction? = null
 
-    val visuals = LinkedList<Visualiser>()
-    private val abilities = LinkedList<AbilityBox>()
-    private val listeners = LinkedList<ActionListener>()
-    private val properties = LinkedList<GameProperty>()
+    val visuals = ArrayList<Visualiser>()
+    private val abilities = ArrayList<AbilityBox>()
+    private val listeners = ArrayList<ActionListener>()
+    private val properties = ArrayList<GameProperty>()
 
-    private val onBirth = LinkedList<() -> Unit>()
-    private val onDeath = LinkedList<() -> Unit>()
-    private val onGrab = LinkedList<() -> Unit>()
+    private val onBirth = ArrayList<() -> Unit>()
+    private val onDeath = ArrayList<() -> Unit>()
+    private val onGrab = ArrayList<() -> Unit>()
 
-    internal val children = LinkedList<GameObject>()
-    internal val followers = LinkedList<GameObject>()
+    internal val children = ArrayList<GameObject>()
+    internal val followers = ArrayList<GameObject>()
     var owner: GameObject? = null
 
-    private val tags = LinkedList<String>()
-    private val effects = LinkedList<TagEffect>()
+    private val tags = ArrayList<String>()
+    private val effects = ArrayList<TagEffect>()
 
-    val values = LinkedList<Any>()
+    val values = ArrayList<Any>()
 
     var dead = false
         private set

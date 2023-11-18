@@ -6,7 +6,7 @@ import java.util.*
 open class CompositeGameEvent(vararg events: GameEvent): GameEvent() {
     private var current: GameEvent? = null
 
-    private val events_list = LinkedList(events.toList())
+    private val events_list = ArrayList(events.toList())
 
     init {
         addAbility {
@@ -21,7 +21,7 @@ open class CompositeGameEvent(vararg events: GameEvent): GameEvent() {
         }
     }
 
-    fun add(event: GameEvent) = events_list.addLast(event)
+    fun add(event: GameEvent) = events_list.add(event)
 
 
     final override fun ready() = true

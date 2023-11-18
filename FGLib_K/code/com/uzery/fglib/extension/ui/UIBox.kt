@@ -12,9 +12,9 @@ import java.util.*
 open class UIBox(vararg elements: UIElement): Extension() {
     private var active_el: UIElement? = null
 
-    private val list = LinkedList<UIElement>()
-    private val old_list = LinkedList<UIElement>()
-    private val new_list = LinkedList<UIElement>()
+    private val list = ArrayList<UIElement>()
+    private val old_list = ArrayList<UIElement>()
+    private val new_list = ArrayList<UIElement>()
 
     init {
         list.addAll(elements)
@@ -25,8 +25,9 @@ open class UIBox(vararg elements: UIElement): Extension() {
         new_list.clear()
 
         list.forEach { it.active = false }
-        active_el = list.stream().filter { el -> el.showing && el.isAt() }
-            .sorted { o1, o2 -> -o1.priority.compareTo(o2.priority) }.findFirst().orElse(null)
+        
+        active_el = list.filter { it.showing && it.isAt() }.minByOrNull { it.priority }
+        
         active_el?.ifActive()
         active_el?.active = true
 

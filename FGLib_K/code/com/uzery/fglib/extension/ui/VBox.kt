@@ -42,7 +42,7 @@ abstract class VBox: UIElement() {
     override fun draw() {
         graphics.layer = DrawLayer.CAMERA_OFF
 
-        val name = LinkedList<String>()
+        val name = ArrayList<String>()
         for (id in 0 until full) {
             name.add(setNames(id))
 

@@ -11,7 +11,7 @@ data class LaunchOptions(
     val fullscreen: Boolean = false,
     val fill: Paint = Color.WHITE,
     var title: String = "",
-    var icons: List<String> = LinkedList(),
+    var icons: List<String> = ArrayList(),
     val style: StageStyle = StageStyle.UNDECORATED
 ) {
     companion object {

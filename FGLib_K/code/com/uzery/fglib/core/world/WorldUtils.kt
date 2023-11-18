@@ -25,7 +25,7 @@ object WorldUtils {
         val list = ArrayList<String>()
         list.addAll(input)
 
-        val objects = LinkedList<GameObject>()
+        val objects = ArrayList<GameObject>()
         var next = ""
 
         while (next.startsWith("//") || next.isEmpty()) {
@@ -49,12 +49,12 @@ object WorldUtils {
         val STEP = PointN(1.0, 1.0)
         graphics.layer = DrawLayer.CAMERA_FOLLOW
 
-        val list = LinkedList<GameObject>()
+        val list = ArrayList<GameObject>()
         fun addInList(obj: GameObject) {
             list.add(obj)
             obj.followers.forEach { addInList(it) }
         }
-        room.objects.stream().forEach { addInList(it) }
+        room.objects.forEach { addInList(it) }
 
         for (o in list) {
             val c = if (o.stats.fly) Color.color(1.0, 1.0, 0.2, 0.7) else Color.color(1.0, 0.2, 1.0, 0.7)
@@ -85,7 +85,7 @@ object WorldUtils {
             Color.GREEN.interpolate(Color.WHITE, 0.5)
         )
         val bs = o.bounds[color_id]
-        if (bs.isEmpty()) return
+        if (bs.empty) return
         graphics.setStroke(1.0)
         for (el in bs.elements) {
             val shape = el.shape() ?: continue
@@ -131,7 +131,7 @@ object WorldUtils {
     fun nextDebugForRoom(room: Room) {
         if (bs_n[room] == null) bs_n[room] = Array(BoundsBox.SIZE) { 0 }
         for (index in 0 until BoundsBox.SIZE) {
-            bs_n[room]!![index] = room.objects.count { !it.bounds[index].isEmpty() }
+            bs_n[room]!![index] = room.objects.count { !it.bounds[index].empty }
         }
     }
 

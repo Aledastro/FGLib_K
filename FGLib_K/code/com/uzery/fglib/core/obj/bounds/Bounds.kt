@@ -8,7 +8,7 @@ import kotlin.math.max
 import kotlin.math.min
 
 class Bounds {
-    val elements = LinkedList<BoundsElement>()
+    val elements = ArrayList<BoundsElement>()
 
     fun add(vararg els: BoundsElement) = els.forEach { element -> elements.add(element) }
 
@@ -19,7 +19,7 @@ class Bounds {
     fun add(name: String, shape: () -> Shape?) = elements.add(BoundsElement(name, shape))
 
     fun main(): RectN? {
-        if (isEmpty()) return null
+        if (empty) return null
 
         var min = PointN.ZERO
         var max = PointN.ZERO
@@ -38,11 +38,12 @@ class Bounds {
         return RectN.LR(min, max)
     }
 
-    fun isEmpty() = elements.isEmpty()
+    val empty
+        get() = elements.isEmpty()
 
     @Deprecated("it doesn't copy original manually")
     fun copy(pos: PointN): Bounds {
-        val els = LinkedList<BoundsElement>()
+        val els = ArrayList<BoundsElement>()
         elements.forEach { els.add(it.copy(pos)) }
         return Bounds().also { it.add(els) }
     }

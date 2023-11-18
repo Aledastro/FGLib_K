@@ -31,7 +31,7 @@ class InfoBoxRE(private val data: DataRE): InfoBox() {
     private val obj_boxes = HashMap<Pair<GameObject, Room>, ObjectInfoBoxRE>()
 
     private fun getL(): List<String> {
-        val res = LinkedList<String>()
+        val res = ArrayList<String>()
 
         res.add("-----------------------------------------")
         res.add("")
@@ -105,7 +105,7 @@ class InfoBoxRE(private val data: DataRE): InfoBox() {
                 RoomEditorUI.add(obj_boxes[pair]!!)
             }
         }
-        val listToRemove = LinkedList<Pair<GameObject, Room>>()
+        val listToRemove = ArrayList<Pair<GameObject, Room>>()
         obj_boxes.forEach { (key, value) ->
             if (key !in data.select_objs || value.dead) listToRemove.add(key)
         }
