@@ -79,7 +79,7 @@ class InfoBoxRE(private val data: DataRE): InfoBox() {
 
     override fun update() {
         super.update()
-        WorldUtils.nextDebugForRoom(data.edit)
+        World.rooms.forEach { WorldUtils.nextDebugForRoom(it) }
 
         if (keyboard.inPressed(KeyCode.F5)) {
             world_info = !world_info
