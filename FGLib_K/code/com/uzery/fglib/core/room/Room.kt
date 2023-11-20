@@ -91,7 +91,9 @@ class Room(val pos: PointN, val size: PointN) {
             obj: GameObject
         ) {
             vis.addAll(obj.visuals)
-            obj.visuals.forEach { pos_map[it] = obj.stats.POS+obj.stats.roomPOS }
+
+            val roomPOS = if(obj.owner==null) obj.stats.roomPOS else obj.owner!!.stats.roomPOS
+            obj.visuals.forEach { pos_map[it] = obj.stats.POS+roomPOS }
             obj.visuals.forEach { sort_map[it] = pos_map[it]!!+obj.stats.sortPOS }
 
             obj.followers.forEach { addObjVis(vis, pos_map, sort_map, it) }
