@@ -40,6 +40,9 @@ abstract class GameObject(var name: String = "temp") {
     internal val followers = ArrayList<GameObject>()
     var owner: GameObject? = null
 
+    val main_owner: GameObject
+        get() = owner?.main_owner ?: this
+
     private val tags = HashSet<String>()
     private val effects = HashSet<TagEffect>()
 
