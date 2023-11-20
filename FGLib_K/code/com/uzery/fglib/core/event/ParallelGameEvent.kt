@@ -13,7 +13,7 @@ open class ParallelGameEvent(vararg events: GameEvent): GameEvent() {
     fun add(event: GameEvent) = events_list.add(event)
 
     init {
-        onInit {
+        onBirth {
             events_list.forEach { grab(it) }
         }
     }

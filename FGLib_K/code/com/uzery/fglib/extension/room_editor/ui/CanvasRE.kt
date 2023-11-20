@@ -21,7 +21,6 @@ import javafx.scene.Cursor
 import javafx.scene.input.KeyCode
 import javafx.scene.input.MouseButton
 import javafx.scene.paint.Color
-import java.util.*
 import kotlin.math.max
 
 class CanvasRE(private val data: DataRE): UICanvas() {
@@ -359,26 +358,38 @@ class CanvasRE(private val data: DataRE): UICanvas() {
         }
 
         fun checkForEditN() {
-            if (keyboard.pressed(KeyCode.CONTROL)) {
-                var rp = PointN.ZERO
-                if (keyboard.inPressed(KeyCode.UP)) rp -= data.edit.size.YP/2+PointN(0, 10)
-                if (keyboard.inPressed(KeyCode.DOWN)) rp += data.edit.size.YP/2+PointN(0, 10)
-                if (keyboard.inPressed(KeyCode.LEFT)) rp -= data.edit.size.XP/2+PointN(10, 0)
-                if (keyboard.inPressed(KeyCode.RIGHT)) rp += data.edit.size.XP/2+PointN(10, 0)
+            val arrows_pos = PointN(0, 0)
+            if (keyboard.inPressed(KeyCode.UP)) arrows_pos.Y--
+            if (keyboard.inPressed(KeyCode.DOWN)) arrows_pos.Y++
+            if (keyboard.inPressed(KeyCode.LEFT)) arrows_pos.X--
+            if (keyboard.inPressed(KeyCode.RIGHT)) arrows_pos.X++
 
-                if (rp != PointN.ZERO) {
-                    for (index in data.filenames.indices) {
-                        val r = World.rooms[index]
-                        if (r.main.into(data.edit.pos+data.edit.size/2+rp)) {
-                            data.edit_n = index
+            if(arrows_pos.length() < 0.1) return
+
+            when{
+                keyboard.allPressed(KeyCode.CONTROL, KeyCode.SHIFT) -> {
+                    World.rooms.forEach { r -> r.objects.forEach { it.stats.POS += arrows_pos*data.GRID } }
+                }
+                keyboard.pressed(KeyCode.SHIFT) ->{
+                    data.edit.objects.forEach { it.stats.POS += arrows_pos*data.GRID }
+                }
+                keyboard.pressed(KeyCode.CONTROL) -> {
+                    val rp = (data.edit.size/2 + PointN(10, 10))*arrows_pos
+
+                    if (rp != PointN.ZERO) {
+                        for ((index, room) in World.rooms.withIndex()) {
+                            if (room.main.into(data.edit.pos+data.edit.size/2+rp)) {
+                                data.edit_n = index
+                            }
                         }
                     }
                 }
-            } else if (keyboard.pressed(KeyCode.ALT)) {
-                if (keyboard.inPressed(KeyCode.UP)) data.edit_n -= 5
-                if (keyboard.inPressed(KeyCode.DOWN)) data.edit_n += 5
-                if (keyboard.inPressed(KeyCode.LEFT)) data.edit_n--
-                if (keyboard.inPressed(KeyCode.RIGHT)) data.edit_n++
+                keyboard.pressed(KeyCode.ALT) -> {
+                    if (keyboard.inPressed(KeyCode.UP)) data.edit_n -= 5
+                    if (keyboard.inPressed(KeyCode.DOWN)) data.edit_n += 5
+                    if (keyboard.inPressed(KeyCode.LEFT)) data.edit_n--
+                    if (keyboard.inPressed(KeyCode.RIGHT)) data.edit_n++
+                }
             }
 
             data.edit_n = data.edit_n.coerceIn(data.filenames.indices)
