@@ -43,6 +43,17 @@ abstract class GameObject(var name: String = "temp") {
     val main_owner: GameObject
         get() = owner?.main_owner ?: this
 
+    val pos_with_owners: PointN
+        get(){
+            var pos = stats.POS
+            var current = owner
+            while (current != null){
+                pos += current.stats.POS
+                current = current.owner
+            }
+            return pos
+        }
+
     private val tags = HashSet<String>()
     private val effects = HashSet<TagEffect>()
 

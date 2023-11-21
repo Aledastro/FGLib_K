@@ -58,8 +58,8 @@ object WorldUtils {
 
         for (o in list) {
             val c = if (o.stats.fly) Color.color(1.0, 1.0, 0.2, 0.7) else Color.color(1.0, 0.2, 1.0, 0.7)
-            graphics.fill.ovalC(pos+o.stats.POS, STEP*3, c)
-            if (o.stats.sortPOS.length() > 1) graphics.fill.ovalC(pos+o.stats.POS+o.stats.sortPOS, STEP, c)
+            graphics.fill.ovalC(pos+o.pos_with_owners, STEP*3, c)
+            if (o.stats.sortPOS.length() > 1) graphics.fill.ovalC(pos+o.pos_with_owners+o.stats.sortPOS, STEP, c)
         }
 
         for (o in list) drawBoundsFor(o, pos)
@@ -91,10 +91,10 @@ object WorldUtils {
             val shape = el.shape() ?: continue
 
             if (shape.S.more(PointN.ZERO))
-                graphics.stroke.line(pos+o.stats.POS+shape.L, shape.S, FGUtils.transparent(colors_h[color_id], 0.8))
+                graphics.stroke.line(pos+o.pos_with_owners+shape.L, shape.S, FGUtils.transparent(colors_h[color_id], 0.8))
 
-            graphics.fill.draw(pos+o.stats.POS, shape, FGUtils.transparent(colors[color_id], 0.1))
-            graphics.stroke.draw(pos+o.stats.POS, shape, FGUtils.transparent(colors[color_id], 0.6))
+            graphics.fill.draw(pos+o.pos_with_owners, shape, FGUtils.transparent(colors[color_id], 0.1))
+            graphics.stroke.draw(pos+o.pos_with_owners, shape, FGUtils.transparent(colors[color_id], 0.6))
         }
     }
 

@@ -92,14 +92,7 @@ class Room(val pos: PointN, val size: PointN) {
         ) {
             vis.addAll(obj.visuals)
 
-            var pos = PointN.ZERO
-            var current = obj.owner
-            while (current != null){
-                pos += current.stats.POS
-                current = obj.owner
-            }
-
-            obj.visuals.forEach { pos_map[it] = pos+obj.main_owner.stats.roomPOS }
+            obj.visuals.forEach { pos_map[it] = obj.pos_with_owners + obj.main_owner.stats.roomPOS }
             obj.visuals.forEach { sort_map[it] = pos_map[it]!!+obj.stats.sortPOS }
 
             obj.followers.forEach { addObjVis(vis, pos_map, sort_map, it) }
@@ -127,7 +120,7 @@ class Room(val pos: PointN, val size: PointN) {
             val bs = it.bounds.red
             if (!bs.empty) {
                 red_bounds.add(bs)
-                pos.add(it.stats.POS)
+                pos.add(it.pos_with_owners)
             }
         }
         for (obj in list) {
@@ -139,7 +132,7 @@ class Room(val pos: PointN, val size: PointN) {
                 if (red_bounds.isEmpty()) return 1.0
 
                 return red_bounds.indices.minOf {
-                    BoundsUtils.maxMoveOld(red_bounds[it], move_bs, pos[it], obj.stats.POS, move_p)
+                    BoundsUtils.maxMoveOld(red_bounds[it], move_bs, pos[it], obj.pos_with_owners, move_p)
                 }
             }
 
@@ -177,7 +170,7 @@ class Room(val pos: PointN, val size: PointN) {
         ) {
             val shape1 = sh1.shape() ?: return
             val shape2 = sh2.shape() ?: return
-            if (ShapeUtils.into(shape1.copy(o1.stats.POS), shape2.copy(o2.stats.POS))) {
+            if (ShapeUtils.into(shape1.copy(o1.pos_with_owners), shape2.copy(o2.pos_with_owners))) {
                 o1.activate(InputAction(code, o2, "elements | ${sh1.name} ${sh2.name}"))
             }
         }
