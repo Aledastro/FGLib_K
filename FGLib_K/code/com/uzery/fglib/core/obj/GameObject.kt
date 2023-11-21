@@ -92,7 +92,7 @@ abstract class GameObject(var name: String = "temp") {
     fun addProperty(vararg property: GameProperty) = properties.addAll(property)
     fun addVisual(vis: Visualiser) = visuals.add(vis)
 
-    fun addLayerVisual(layer: DrawLayer, vis: (agc: AffineGraphics, draw_pos: PointN) -> Unit){
+    fun addVisual(layer: DrawLayer, vis: (agc: AffineGraphics, draw_pos: PointN) -> Unit){
         visuals.add(
             object: LayerVisualiser(layer) {
                 override fun draw(draw_pos: PointN) { vis(agc, draw_pos) }
