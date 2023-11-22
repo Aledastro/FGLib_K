@@ -60,9 +60,9 @@ abstract class ClassGetter<Type>: AbstractClassGetter<Type>() {
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     protected fun stringX(i: Int) = if (no_info) "" else input[in_id-1][i]
-    protected fun intX(i: Int) = if (no_info) 0 else input[in_id-1][i].toInt()
-    protected fun doubleX(i: Int) = if (no_info) 0.0 else input[in_id-1][i].toDouble()
-    protected fun longX(i: Int) = if (no_info) 0L else input[in_id-1][i].toLong()
+    protected fun intX(i: Int) = if (no_info) 0 else MathSolveUtils.solveInt(input[in_id-1][i])
+    protected fun doubleX(i: Int) = if (no_info) 0.0 else MathSolveUtils.solveDouble(input[in_id-1][i])
+    protected fun longX(i: Int) = if (no_info) 0L else MathSolveUtils.solveLong(input[in_id-1][i])
     protected fun boolX(i: Int) = if (no_info) false else input[in_id-1][i].toBoolean()
 
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////

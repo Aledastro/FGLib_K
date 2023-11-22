@@ -19,15 +19,18 @@ class SolveBlock(
         return solved().expression
     }
 
-    private var next_operator = ""
+    private lateinit var next_operator: String
 
     private fun solved(): SolveBlock {
-        for (ops in operators.reversed()) {
+        if(operators.all { list->list.all { it !in expression } }) return this
+
+        for (ops in operators) {
             val blocks = getBlocks(ops)
 
-            if (blocks.size == 1) continue
+            if (blocks.size == 1 || blocks.size == 2 && blocks[0] in ops) continue
 
             var result = defaultValue
+            next_operator = "+"
             for (block in blocks) {
                 val solvedBlock = SolveBlock(defaultValue, block, resolve).solved()
                 val exp = solvedBlock.expression
@@ -56,17 +59,22 @@ class SolveBlock(
     }
 
     private fun getBlocks(operators: ArrayList<String>): ArrayList<String> {
-        val breaks = ArrayList<Int>()
-        breaks.add(0)
+        val breaks = HashSet<Int>()
+        breaks += 0
         operators.forEach { op->
             for (i in expression.indices){
-                if(expression.substring(0, i).startsWith(op)) breaks.add(i+op.length)
+                if(expression.substring(i).startsWith(op)){
+                    breaks += i
+                    breaks += i+op.length
+                }
             }
         }
-        breaks.add(expression.length)
+        breaks += expression.length
+
+        val list = breaks.toList().sorted()
         val res = ArrayList<String>()
-        for (i in 0 until breaks.size-1){
-            res.add(expression.substring(breaks[i], breaks[i+1]))
+        for (i in 0 until list.size-1){
+            res.add(expression.substring(list[i], list[i+1]))
         }
         return res
     }
