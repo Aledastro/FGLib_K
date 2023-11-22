@@ -39,6 +39,7 @@ module FGLib_K {
     exports com.uzery.fglib.utils.math.matrix;
     exports com.uzery.fglib.utils.math.num;
     exports com.uzery.fglib.utils.math.scale;
+    exports com.uzery.fglib.utils.math.solve;
 
     /////////////////////////////////////////////////////////
 

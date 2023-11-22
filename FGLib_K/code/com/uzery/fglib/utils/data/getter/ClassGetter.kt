@@ -1,9 +1,10 @@
 package com.uzery.fglib.utils.data.getter
 
+import com.uzery.fglib.utils.math.solve.MathSolveUtils
+import com.uzery.fglib.utils.math.geom.Direct
 import com.uzery.fglib.utils.math.geom.PointN
 import com.uzery.fglib.utils.math.num.StringN
 import javafx.scene.paint.Color
-import java.util.*
 
 abstract class ClassGetter<Type>: AbstractClassGetter<Type>() {
     protected var no_info = false
@@ -71,21 +72,26 @@ abstract class ClassGetter<Type>: AbstractClassGetter<Type>() {
     protected val string: String
         get() = if (no_info) "" else input[in_id++][0]
     protected val int: Int
-        get() = if (no_info) 0 else input[in_id++][0].toInt()
+        get() = if (no_info) 0 else MathSolveUtils.solveInt(input[in_id++][0])
     protected val double: Double
-        get() = if (no_info) 0.0 else input[in_id++][0].toDouble()
+        get() = if (no_info) 0.0 else MathSolveUtils.solveDouble(input[in_id++][0])
     protected val long: Long
-        get() = if (no_info) 0L else input[in_id++][0].toLong()
+        get() = if (no_info) 0L else MathSolveUtils.solveLong(input[in_id++][0])
     protected val boolean: Boolean
         get() = if (no_info) false else input[in_id++][0].toBoolean()
 
     protected val color: Color
         get() = if (no_info) Color.BLACK else Color.color(double, doubleX(1), doubleX(2), doubleX(3))
     protected val pos: PointN
-        get() {
-            return if (no_info || input[in_id][0] == "ZERO") PointN.ZERO
-            else PointN(Array(input[in_id++].size) { i -> doubleX(i) })
+        get() = when {
+            no_info || input[in_id][0] == "ZERO" -> PointN.ZERO
+            else -> PointN(Array(input[in_id++].size) { i -> doubleX(i) })
         }
+
     protected val size: PointN
         get() = pos
+    protected val direct: Direct
+        get() = if (no_info) Direct.CENTER else Direct.valueOf(string)
+
+
 }

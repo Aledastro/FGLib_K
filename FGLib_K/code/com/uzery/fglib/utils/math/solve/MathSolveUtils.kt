@@ -1,0 +1,15 @@
+package com.uzery.fglib.utils.math.solve
+
+object MathSolveUtils {
+    fun solveInt(expression: String): Int {
+        return SolveBlock(SolveInt(0), expression) { SolveInt(it.toInt()) }.solve().toInt()
+    }
+
+    fun solveDouble(expression: String): Double {
+        return SolveBlock(SolveDouble(0.0), expression) { SolveDouble(it.toDouble()) }.solve().toDouble()
+    }
+
+    fun solveLong(expression: String): Long {
+        return SolveBlock(SolveLong(0), expression) { SolveLong(it.toLong()) }.solve().toLong()
+    }
+}
