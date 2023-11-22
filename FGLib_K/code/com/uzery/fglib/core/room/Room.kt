@@ -114,16 +114,18 @@ class Room(val pos: PointN, val size: PointN) {
             list.add(obj)
             obj.followers.forEach { addInList(it) }
         }
-        objects.forEach { if(!it.tagged("#immovable")) addInList(it) }
+        objects.forEach { addInList(it) }
 
-        objects.forEach {
+        list.forEach {
             val bs = it.bounds.red
             if (!bs.empty) {
                 red_bounds.add(bs)
                 pos.add(it.pos_with_owners)
             }
         }
+
         for (obj in list) {
+            if(obj.tagged("#immovable")) continue
             obj.stats.lPOS = obj.stats.POS
             val move_bs = obj.bounds.orange
             if (move_bs.empty) continue
