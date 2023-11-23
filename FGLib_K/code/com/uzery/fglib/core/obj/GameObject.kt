@@ -99,7 +99,6 @@ abstract class GameObject(var name: String = "temp") {
     fun addListener(vararg listener: ActionListener) = listeners.addAll(listener)
     fun addAbility(ability: () -> Unit) = addAbility(AbilityBox { ability() })
     fun addAbility(vararg ability: AbilityBox) = abilities.addAll(ability)
-    fun addProperty(property: () -> Unit) = addProperty(GameProperty { property() })
     fun addProperty(vararg property: GameProperty) = properties.addAll(property)
     fun addVisual(vis: Visualiser) = visuals.add(vis)
 

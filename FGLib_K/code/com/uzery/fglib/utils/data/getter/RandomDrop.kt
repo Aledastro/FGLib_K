@@ -3,7 +3,7 @@ package com.uzery.fglib.utils.data.getter
 import com.uzery.fglib.utils.data.debug.DebugData
 import java.util.*
 
-class Drop<T>() {
+class RandomDrop<T>() {
     constructor(f: () -> T): this() {
         add(f)
     }
@@ -32,7 +32,7 @@ class Drop<T>() {
         return getWithSize(size)
     }
 
-    fun get2(): T {
+    fun getOrThrow(): T {
         return getWithSize(priorities.sum()) ?: throw DebugData.error("wrong: $priorities")
     }
 

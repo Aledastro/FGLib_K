@@ -13,6 +13,10 @@ import com.uzery.fglib.utils.math.geom.PointN
 import javafx.scene.paint.Color
 import javafx.scene.text.FontWeight
 import java.util.*
+import kotlin.collections.HashMap
+import kotlin.math.PI
+import kotlin.math.cos
+import kotlin.math.sin
 
 object WorldUtils {
     fun readInfo(filename: String): Room {
@@ -56,13 +60,39 @@ object WorldUtils {
         }
         room.objects.forEach { addInList(it) }
 
-        for (o in list) {
-            val c = if (o.stats.fly) Color.color(1.0, 1.0, 0.2, 0.7) else Color.color(1.0, 0.2, 1.0, 0.7)
-            graphics.fill.ovalC(pos+o.pos_with_owners, STEP*3, c)
-            if (o.stats.sortPOS.length() > 1) graphics.fill.ovalC(pos+o.pos_with_owners+o.stats.sortPOS, STEP, c)
+        val map = HashMap<PointN, Int>()
+        val mapID = HashMap<GameObject, Int>()
+
+        fun posFrom(o: GameObject): PointN{
+            return pos+o.pos_with_owners
+        }
+
+        for (o in list){
+            val draw_pos = posFrom(o)
+            if(map[draw_pos] == null) map[draw_pos] = 0
+            map[draw_pos] = map[draw_pos]!!+1
+
+            if(mapID[o] == null) mapID[o] = map[draw_pos]!!
         }
 
         for (o in list) drawBoundsFor(o, pos)
+
+        for (o in list) {
+            val draw_pos = posFrom(o)
+
+            val c = if (o.stats.fly) Color.color(1.0, 1.0, 0.2, 0.7) else Color.color(1.0, 0.2, 1.0, 0.7)
+            val n = map[draw_pos]!!
+            val id = mapID[o]!!
+
+            if(n == 1){
+                graphics.fill.ovalC(draw_pos, STEP*3, c)
+            }else{
+                val alpha = PI*2/n*id
+                graphics.fill.ovalC(draw_pos+PointN(cos(alpha), sin(alpha))*2.5, STEP*2, c)
+            }
+
+            if (o.stats.sortPOS.length() > 1) graphics.fill.ovalC(draw_pos+o.stats.sortPOS, STEP, c)
+        }
     }
 
     fun drawBoundsFor(o: GameObject, pos: PointN) {
@@ -115,10 +145,11 @@ object WorldUtils {
     val bs_n = HashMap<Room, Array<Int>>()
 
     fun nextDebug() {
-        val b = (ids_time%20 == 0)
-        if (b) maxRam = Runtime.getRuntime().totalMemory()
-        if (b) freeRam = Runtime.getRuntime().freeMemory()
-        if (b) ram = maxRam-freeRam
+        if (ids_time%20 == 0){
+            maxRam = Runtime.getRuntime().totalMemory()
+            freeRam = Runtime.getRuntime().freeMemory()
+            ram = maxRam-freeRam
+        }
 
         time = System.currentTimeMillis()-last
         last = System.currentTimeMillis()

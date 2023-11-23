@@ -23,15 +23,12 @@ open class Matrix(val data: Array2<Double>) {
         if (this.size != other.size) throw DebugData.error("WRONG PLUS OPERATION: \n$this\n\n$other")
 
         val res = Array2(size, 0.0)
-        res.set { i, j -> this[i, j]+other[i, j] }
+        res.set { i, j -> this[i, j]-other[i, j] }
 
         return Matrix(res)
     }
 
-    open operator fun unaryMinus(): Matrix {
-        return this*-1
-    }
-
+    open operator fun unaryMinus() = this*-1
 
     operator fun get(i: Int, j: Int): Double {
         return data[i, j]
