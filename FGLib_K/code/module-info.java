@@ -1,6 +1,7 @@
 module FGLib_K {
     requires kotlin.stdlib;
     requires javafx.graphics;
+    requires javafx.media;
 
     /////////////////////////////////////////////////////////
 
@@ -22,6 +23,7 @@ module FGLib_K {
 
     /////////////////////////////////////////////////////////
 
+    exports com.uzery.fglib.utils.data.audio;
     exports com.uzery.fglib.utils.data.debug;
     exports com.uzery.fglib.utils.data.file;
     exports com.uzery.fglib.utils.data.getter;
