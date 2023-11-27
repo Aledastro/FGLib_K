@@ -108,7 +108,7 @@ class CanvasRE(private val data: DataRE): UICanvas() {
             graphics.stroke.rect(data.draw_pos, data.edit.size, Color.WHITE)
         }
 
-        fun drawSelectObj(alpha: Double = 1.0) {
+        fun drawChosenObj(alpha: Double = 1.0) {
             if (keyboard.pressed(KeyCode.ALT)) return
             if (!isActive()) return
 
@@ -150,13 +150,6 @@ class CanvasRE(private val data: DataRE): UICanvas() {
                 )
             }
 
-            val col = Color(0.1, 0.2, 0.5, 0.1)
-            for (pair in data.select_objs) {
-                if (!onSelectLayer(pair.first)) continue
-                val obj_p = pair.first.stats.POS.roundL(data.GRID)
-                graphics.fill.rect(data.draw_pos+obj_p, data.GRID_P, col)
-            }
-
             Program.gc.setLineDashes()
             Program.gc.lineDashOffset = 0.0
 
@@ -165,6 +158,19 @@ class CanvasRE(private val data: DataRE): UICanvas() {
                 graphics.stroke.draw(data.draw_pos-data.edit.pos, room.main, FGUtils.transparent(Color.WHITE, 0.4))
             }
 
+        }
+
+        fun drawSelectCells() {
+            val col = Color(0.1, 0.2, 0.5, 0.4)
+            val set = HashSet<PointN>()
+            for (pair in data.select_objs) {
+                if (!onSelectLayer(pair.first)) continue
+                val obj_p = pair.first.stats.POS.roundL(data.GRID)
+                set += obj_p
+            }
+            for (obj_p in set) {
+                graphics.fill.rect(data.draw_pos+obj_p, data.GRID_P, col)
+            }
         }
 
         fun drawCell() {
@@ -221,9 +227,10 @@ class CanvasRE(private val data: DataRE): UICanvas() {
                     drawSelectLayerVisuals(data.edit)
                 }
                 drawLines()
+                drawSelectCells()
                 drawCell()
                 drawFields()
-                drawSelectObj(0.3)
+                drawChosenObj(0.3)
                 drawBounds(data.edit)
             }
 
@@ -235,8 +242,9 @@ class CanvasRE(private val data: DataRE): UICanvas() {
                     World.rooms.forEach { drawSelectLayerVisuals(it, it.pos-data.edit.pos) } //todo
                 }
                 drawLines()
+                drawSelectCells()
                 drawCell()
-                drawSelectObj(0.3)
+                drawChosenObj(0.3)
                 World.rooms.forEach { drawBounds(it, it.pos-data.edit.pos) }
             }
 
@@ -354,7 +362,9 @@ class CanvasRE(private val data: DataRE): UICanvas() {
             room.objects.forEach { o ->
                 val o_pos = (o.stats.POS-data.edit.pos+room.pos).roundL(data.GRID)+data.GRID_P/2
 
-                if (rect.into(o_pos) && onSelectLayer(o)) data.select_objs.add(Pair(o, room))
+                if (rect.into(o_pos) && onSelectLayer(o) && (o.visuals.isNotEmpty() || data.select_layerID == 0)) {
+                    data.select_objs.add(Pair(o, room))
+                }
             }
             addLastInfo()
         }
