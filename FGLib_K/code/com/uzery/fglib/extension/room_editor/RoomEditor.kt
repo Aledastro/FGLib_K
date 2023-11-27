@@ -38,7 +38,6 @@ class RoomEditor(private var getter: (Int) -> Pair<AbstractClassGetter<GameObjec
         scale = 2
         World.getter = data.getter
 
-        //todo
         val c = OneRoomWC()
         World.init(c, *data.filenames)
         data.edit = World.rooms[data.edit_n]
@@ -74,6 +73,8 @@ class RoomEditor(private var getter: (Int) -> Pair<AbstractClassGetter<GameObjec
     }
 
     override fun update() {
+        data.redact_field_active = redact_field.active
+
         data.edit = World.rooms[data.edit_n]
         data.last_edit_room = data.edit
 
@@ -99,10 +100,12 @@ class RoomEditor(private var getter: (Int) -> Pair<AbstractClassGetter<GameObjec
             layers_panel.hide()
             info_box.hide()
             choose_objects_panel.hide()
+            info_box.obj_boxes.values.forEach { it.hide() }
         } else {
             choose_group_panel.show()
             layers_panel.show()
             info_box.show()
+            info_box.obj_boxes.values.forEach { it.show() }
         }
 
         if (data.redact_pair != null) redact_field.show()

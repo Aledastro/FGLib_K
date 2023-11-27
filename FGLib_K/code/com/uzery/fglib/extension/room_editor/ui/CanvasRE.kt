@@ -282,11 +282,13 @@ class CanvasRE(private val data: DataRE): UICanvas() {
         }
 
         fun checkForAdd() {
-            if (keyboard.inPressed(KeyCode.MINUS) || keyboard.timePressed(KeyCode.MINUS)%10 == 9L) {
-                add_size--
-            }
-            if (keyboard.inPressed(KeyCode.EQUALS) || keyboard.timePressed(KeyCode.EQUALS)%10 == 9L) {
-                add_size++
+            if(!data.redact_field_active){
+                if (keyboard.inPressed(KeyCode.MINUS) || keyboard.timePressed(KeyCode.MINUS)%10 == 9L) {
+                    add_size--
+                }
+                if (keyboard.inPressed(KeyCode.EQUALS) || keyboard.timePressed(KeyCode.EQUALS)%10 == 9L) {
+                    add_size++
+                }
             }
             add_size = add_size.coerceIn(0..23)
 

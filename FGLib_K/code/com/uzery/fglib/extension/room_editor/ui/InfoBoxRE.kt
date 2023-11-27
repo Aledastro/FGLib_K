@@ -29,7 +29,7 @@ class InfoBoxRE(private val data: DataRE): InfoBox() {
         super.draw()
     }
 
-    private val obj_boxes = HashMap<Pair<GameObject, Room>, ObjectInfoBoxRE>()
+    val obj_boxes = HashMap<Pair<GameObject, Room>, ObjectInfoBoxRE>()
 
     override fun getL(): ArrayList<String> {
         val res = ArrayList<String>()
