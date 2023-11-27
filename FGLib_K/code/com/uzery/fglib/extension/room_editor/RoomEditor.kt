@@ -81,7 +81,7 @@ class RoomEditor(private var getter: (Int) -> Pair<AbstractClassGetter<GameObjec
         data.edit = World.rooms[data.edit_n]
         data.last_edit_room = data.edit
 
-        data.select_layer = layers_panel.select
+        data.select_layerID = layers_panel.select
 
         if (data.select_group != choose_group_panel.select) {
             data.select_group = choose_group_panel.select

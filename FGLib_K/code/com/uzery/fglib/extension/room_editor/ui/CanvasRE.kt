@@ -82,11 +82,11 @@ class CanvasRE(private val data: DataRE): UICanvas() {
 
             room.objects.forEach { obj ->
                 obj.visuals.forEach { vis ->
-                    if (vis.drawLayer() == data.layers[data.select_layer-1]) {
+                    if (vis.drawLayer() == data.select_layer) {
                         pos_map_down[vis] = obj.stats.POS
                         sort_map_down[vis] = pos_map_down[vis]!!+obj.stats.sortPOS
                         visuals_down.add(vis)
-                    } else if (vis.drawLayer().sort > data.layers[data.select_layer-1].sort) {
+                    } else if (vis.drawLayer().sort > data.select_layer.sort) {
                         pos_map_up[vis] = obj.stats.POS
                         sort_map_up[vis] = pos_map_up[vis]!!+obj.stats.sortPOS
                         visuals_up.add(vis)
@@ -135,17 +135,26 @@ class CanvasRE(private val data: DataRE): UICanvas() {
             Program.gc.setLineDashes(5.0*view_scale, 5.0*view_scale) //todo into graphics
             Program.gc.lineDashOffset = 1.0
 
-            for (i in 0..(window.S.Y/view_scale/data.GRID+1).toInt()) {
+            val sizeY = (window.S.Y/view_scale/data.GRID+1).toInt()
+            val sizeX = (window.S.X/view_scale/data.GRID+1).toInt()
+            for (i in 0..sizeY) {
                 graphics.stroke.line(
                     -data.GRID_P+data.draw_pos.mod(data.GRID)
                             +PointN(0.0, i*data.GRID), PointN(window.S.X/view_scale+data.GRID, 0.0), c
                 )
             }
-            for (i in 0..(window.S.X/view_scale/data.GRID+1).toInt()) {
+            for (i in 0..sizeX) {
                 graphics.stroke.line(
                     -data.GRID_P+data.draw_pos.mod(data.GRID)
                             +PointN(i*data.GRID, 0.0), PointN(0.0, window.S.Y/view_scale+data.GRID), c
                 )
+            }
+
+            val col = Color(0.1, 0.2, 0.5, 0.1)
+            for (pair in data.select_objs){
+                if(!onSelectLayer(pair.first)) continue
+                val obj_p = pair.first.stats.POS.roundL(data.GRID)
+                graphics.fill.rect(data.draw_pos+obj_p, data.GRID_P, col)
             }
 
             Program.gc.setLineDashes()
@@ -205,7 +214,7 @@ class CanvasRE(private val data: DataRE): UICanvas() {
             DRAW_MODE.FOCUSED -> {
                 drawWorld(0.2)
 
-                if (data.select_layer == 0) {
+                if (data.select_layerID == 0) {
                     drawEditRoom()
                 } else {
                     drawEditRoom(0.5)
@@ -219,7 +228,7 @@ class CanvasRE(private val data: DataRE): UICanvas() {
             }
 
             DRAW_MODE.ALL_ROOMS -> {
-                if (data.select_layer == 0) {
+                if (data.select_layerID == 0) {
                     drawWorld()
                 } else {
                     drawWorld(0.2)
@@ -243,6 +252,12 @@ class CanvasRE(private val data: DataRE): UICanvas() {
         get() = mouse.pos/view_scale-data.draw_pos
 
     private var start_alt_pos = PointN.ZERO
+
+    private fun onSelectLayer(o: GameObject): Boolean {
+        return data.select_layerID == 0 || o.visuals.isEmpty() || o.visuals.any { vis ->
+            vis.drawLayer() == data.select_layer
+        }
+    }
     override fun ifActive() {
         fun addLastInfo() {
             data.last_edit_room = data.edit
@@ -255,10 +270,6 @@ class CanvasRE(private val data: DataRE): UICanvas() {
                 DRAW_MODE.ALL_ROOMS -> World.rooms.find { it.main.into(pos+data.edit.pos) }
                 DRAW_MODE.OVERVIEW -> null
             }
-        }
-
-        fun onSelectLayer(o: GameObject): Boolean {
-            return data.select_layer == 0 || o.visuals.isEmpty() || o.visuals.any { vis -> vis.drawLayer() == data.layers[data.select_layer-1] }
         }
 
         fun checkForAdd() {
@@ -277,7 +288,7 @@ class CanvasRE(private val data: DataRE): UICanvas() {
                 if (keyboard.pressed(KeyCode.ALT)) return
 
                 val o = data.getter.getEntry(data.chosen_entry)()
-                if (data.select_layer != 0 && !onSelectLayer(o)) return
+                if (data.select_layerID != 0 && !onSelectLayer(o)) return
                 val posWithOffset = pos+mouseRealPos.roundL(data.GRID)+grid_offset[grid_offset_id]
 
                 val room = roomFrom(posWithOffset) ?: return
@@ -358,11 +369,7 @@ class CanvasRE(private val data: DataRE): UICanvas() {
             if (arrows_pos.length() < 0.1) return
 
             fun moveObjs(objs: List<GameObject>) {
-                objs.filter { o ->
-                    data.select_layer == 0 || o.visuals.any { v ->
-                        v.drawLayer() == data.layers[data.select_layer-1]
-                    }
-                }.forEach { it.stats.POS += arrows_pos }
+                objs.filter { o -> onSelectLayer(o) }.forEach { it.stats.POS += arrows_pos }
             }
 
             when {

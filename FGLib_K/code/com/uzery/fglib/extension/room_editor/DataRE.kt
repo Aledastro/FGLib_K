@@ -32,7 +32,10 @@ class DataRE(getter_pair: Pair<AbstractClassGetter<GameObject>, Array<out String
     var last_edit_n: Int = 0
 
     var layers = ArrayList<DrawLayer>()
-    var select_layer = 0
+    val select_layer
+        get() = layers[select_layerID-1]
+
+    var select_layerID = 0
     var select_group = 0
 
     val OFFSET = 40.0
