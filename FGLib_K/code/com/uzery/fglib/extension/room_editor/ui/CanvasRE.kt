@@ -22,6 +22,7 @@ import javafx.scene.input.KeyCode
 import javafx.scene.input.MouseButton
 import javafx.scene.paint.Color
 import kotlin.math.max
+import kotlin.math.min
 
 class CanvasRE(private val data: DataRE): UICanvas() {
     private enum class DRAW_MODE {
@@ -71,10 +72,6 @@ class CanvasRE(private val data: DataRE): UICanvas() {
         }
 
         fun drawSelectLayerVisuals(room: Room, pos: PointN = PointN.ZERO) {
-            val visuals = ArrayList<Visualiser>()
-            val pos_map = HashMap<Visualiser, PointN>()
-            val sort_map = HashMap<Visualiser, PointN>()
-
             val visuals_down = ArrayList<Visualiser>()
             val pos_map_down = HashMap<Visualiser, PointN>()
             val sort_map_down = HashMap<Visualiser, PointN>()
@@ -82,22 +79,6 @@ class CanvasRE(private val data: DataRE): UICanvas() {
             val visuals_up = ArrayList<Visualiser>()
             val pos_map_up = HashMap<Visualiser, PointN>()
             val sort_map_up = HashMap<Visualiser, PointN>()
-
-            /*room.objects.forEach { obj ->
-                Room.addObjVis(visuals, pos_map, sort_map, obj)
-            }
-
-            visuals.forEach { vis ->
-                if (vis.drawLayer() == data.layers[data.select_layer-1]) {
-                    visuals_down.add(vis)
-                    pos_map_down[vis] = pos+pos_map[vis]!!
-                    sort_map_down[vis] = pos+sort_map[vis]!!
-                } else if (vis.drawLayer().sort > data.layers[data.select_layer-1].sort) {
-                    visuals_up.add(vis)
-                    pos_map_up[vis] = pos+pos_map[vis]!!
-                    sort_map_up[vis] = pos+sort_map[vis]!!
-                }
-            }*/
 
             room.objects.forEach { obj ->
                 obj.visuals.forEach { vis ->
@@ -123,15 +104,6 @@ class CanvasRE(private val data: DataRE): UICanvas() {
         }
 
         fun drawFields() {
-            /*graphics.setStroke(1.0)
-            World.active_rooms.forEach { r ->
-                if (r != data.edit) graphics.stroke.rect(
-                    data.draw_pos-data.edit.pos+r.pos,
-                    r.size,
-                    FGUtils.transparent(Color.WHITE, 0.8)
-                )
-            }*/
-
             graphics.setStroke(3.0)
             graphics.stroke.rect(data.draw_pos, data.edit.size, Color.WHITE)
         }
@@ -141,8 +113,7 @@ class CanvasRE(private val data: DataRE): UICanvas() {
             if (!isActive()) return
 
             Platform.global_alpha = alpha
-            val pp =
-                (mouse.pos/view_scale-data.draw_pos).roundL(data.GRID)+data.draw_pos+grid_offset[grid_offset_id]
+            val pp = mouseRealPos.roundL(data.GRID)+data.draw_pos+grid_offset[grid_offset_id]
             for (i in -add_size/2..(add_size+1)/2) {
                 for (j in -add_size/2..(add_size+1)/2) {
                     val obj = data.chosen_obj ?: continue
@@ -200,17 +171,25 @@ class CanvasRE(private val data: DataRE): UICanvas() {
             } else {
                 FGUtils.transparent(Color.CYAN.interpolate(Color.WHITE, 0.5), 0.8)
             }
-            val cell_size = if (keyboard.pressed(KeyCode.ALT)) 0 else add_size
 
-            val cell_off = PointN(-cell_size/2, -cell_size/2)*data.GRID
+            val m_pos = mouseRealPos.roundL(data.GRID)
 
-            val pos = ((mouse.pos)/view_scale-
-                    (data.draw_pos).mod(data.GRID)).roundL(data.GRID)+(data.draw_pos).mod(data.GRID)+cell_off
+            val minP = data.draw_pos+
+                    if (keyboard.pressed(KeyCode.ALT))
+                        PointN.transform(m_pos, start_alt_pos) { o1, o2 -> min(o1, o2) }
+                    else m_pos+PointN(1, 1)*(-add_size/2)*data.GRID
 
-            graphics.stroke.line(pos, PointN(cell_size+1, 0)*data.GRID, col)
-            graphics.stroke.line(pos, PointN(0, cell_size+1)*data.GRID, col)
-            graphics.stroke.line(pos+PointN(cell_size+1, 0)*data.GRID, PointN(0, cell_size+1)*data.GRID, col)
-            graphics.stroke.line(pos+PointN(0, cell_size+1)*data.GRID, PointN(cell_size+1, 0)*data.GRID, col)
+            val maxP = data.draw_pos+data.GRID_P+
+                    if (keyboard.pressed(KeyCode.ALT))
+                        PointN.transform(m_pos, start_alt_pos) { o1, o2 -> max(o1, o2) }
+                    else m_pos+PointN(1, 1)*(-add_size/2+add_size)*data.GRID
+
+            val sizeP = maxP-minP
+
+            graphics.stroke.line(minP, sizeP.XP, col)
+            graphics.stroke.line(minP, sizeP.YP, col)
+            graphics.stroke.line(minP+sizeP.YP, sizeP.XP, col)
+            graphics.stroke.line(minP+sizeP.XP, sizeP.YP, col)
 
             Program.gc.setLineDashes()
             Program.gc.lineDashOffset = 0.0
@@ -263,6 +242,7 @@ class CanvasRE(private val data: DataRE): UICanvas() {
     private val mouseRealPos
         get() = mouse.pos/view_scale-data.draw_pos
 
+    private var start_alt_pos = PointN.ZERO
     override fun ifActive() {
         fun addLastInfo() {
             data.last_edit_room = data.edit
@@ -329,7 +309,7 @@ class CanvasRE(private val data: DataRE): UICanvas() {
             room.objects.forEach { o ->
                 val pos1 = (o.stats.POS-data.edit.pos+room.pos).roundL(data.GRID)
                 val added = if (add_size%2 == 0) PointN.ZERO else data.GRID_P/2
-                val pos2 = (mouseRealPos.roundL(data.GRID)+data.GRID_P/2).roundL(data.GRID)+added
+                val pos2 = mouseRealPos.roundL(data.GRID)+added
                 val len = max(pos1.XP.lengthTo(pos2.XP), pos1.YP.lengthTo(pos2.YP))
 
                 if (len <= data.GRID/2*(add_size+1) && sel.equalsName(o) && onSelectLayer(o)) {
@@ -337,24 +317,32 @@ class CanvasRE(private val data: DataRE): UICanvas() {
                 }
             }
             data.select_objs.removeIf { it.first in list }
-            room.objects.removeAll(list)
+            room.objects.removeAll(list.toSet())
 
             addLastInfo()
         }
 
         fun checkForSelect() {
+            val m_pos = mouseRealPos.roundL(data.GRID)
+            if(keyboard.pressed(KeyCode.ALT) && !mouse.keys.pressed(MouseButton.PRIMARY)){
+                start_alt_pos = m_pos
+            }
+
             if (!mouse.keys.pressed(MouseButton.PRIMARY)) return
             if (!keyboard.pressed(KeyCode.ALT)) return
 
             val room = roomFrom(mouseRealPos) ?: return
 
+            val minP = PointN.transform(m_pos, start_alt_pos) { o1, o2 -> min(o1, o2) }
+            val maxP = PointN.transform(m_pos, start_alt_pos) { o1, o2 -> max(o1, o2) }
+
+            val rect = RectN.LR(minP, data.GRID_P+maxP)
+
             data.select_objs.clear()
             room.objects.forEach { o ->
-                val pos1 = (o.stats.POS-data.edit.pos+room.pos).roundL(data.GRID)
-                val pos2 = (mouseRealPos.roundL(data.GRID)+data.GRID_P/2).roundL(data.GRID)
-                val len = max(pos1.XP.lengthTo(pos2.XP), pos1.YP.lengthTo(pos2.YP))
+                val o_pos = (o.stats.POS-data.edit.pos+room.pos).roundL(data.GRID)+data.GRID_P/2
 
-                if (len <= data.GRID/2 && onSelectLayer(o)) data.select_objs.add(Pair(o, room))
+                if (rect.into(o_pos) && onSelectLayer(o)) data.select_objs.add(Pair(o, room))
             }
             addLastInfo()
         }
@@ -369,9 +357,9 @@ class CanvasRE(private val data: DataRE): UICanvas() {
 
             if (arrows_pos.length() < 0.1) return
 
-            fun moveObjs(objs: List<GameObject>){
-                objs.filter { o->
-                    data.select_layer == 0 || o.visuals.any { v->
+            fun moveObjs(objs: List<GameObject>) {
+                objs.filter { o ->
+                    data.select_layer == 0 || o.visuals.any { v ->
                         v.drawLayer() == data.layers[data.select_layer-1]
                     }
                 }.forEach { it.stats.POS += arrows_pos }
@@ -395,7 +383,7 @@ class CanvasRE(private val data: DataRE): UICanvas() {
                 }
 
                 !keyboard.anyPressed(KeyCode.ALT, KeyCode.SHIFT, KeyCode.CONTROL) -> {
-                    moveObjs(ArrayList<GameObject>().also { data.select_objs.forEach { o->it.add(o.first) } })
+                    moveObjs(ArrayList<GameObject>().also { data.select_objs.forEach { o -> it.add(o.first) } })
                 }
             }
         }
