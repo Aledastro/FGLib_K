@@ -16,7 +16,7 @@ import com.uzery.fglib.utils.math.geom.shape.RectN
 import java.util.*
 import kotlin.math.sign
 
-class Room(val pos: PointN, val size: PointN) {
+class Room(var pos: PointN, var size: PointN) {
     //todo private
     val objects = ArrayList<GameObject>()
     private val new_objects = ArrayList<GameObject>()

@@ -31,6 +31,7 @@ class RoomEditor(private var getter: (Int) -> Pair<AbstractClassGetter<GameObjec
     private lateinit var layers_panel: LayerPanelRE
     private lateinit var info_box: InfoBoxRE
     private lateinit var redact_field: RedactTextFieldRE
+    private lateinit var help_box: HelpBoxRE
 
     override fun init() {
         data = DataRE(getter(0))
@@ -54,9 +55,11 @@ class RoomEditor(private var getter: (Int) -> Pair<AbstractClassGetter<GameObjec
         layers_panel = LayerPanelRE(data)
         info_box = InfoBoxRE(data)
         redact_field = RedactTextFieldRE(data)
+        help_box = HelpBoxRE(data)
 
         RoomEditorUI.clear()
-        RoomEditorUI.add(edit_canvas, play_button, choose_group_panel, layers_panel, info_box, choose_objects_panel, redact_field)
+        RoomEditorUI.add(edit_canvas, play_button, choose_group_panel,
+            layers_panel, info_box, choose_objects_panel, redact_field, help_box)
 
         edit_canvas.show()
         play_button.show()
@@ -87,29 +90,35 @@ class RoomEditor(private var getter: (Int) -> Pair<AbstractClassGetter<GameObjec
         data.chosen_entry = choose_group_panel.chosenEntry()
         data.chosen_obj = data.getter.getEntry(data.chosen_entry)()
 
+        fun setVisibility(){
+            if (keyboard.pressed(KeyCode.SHIFT) && !redact_field.showing) {
+                choose_objects_panel.show()
+            } else {
+                choose_objects_panel.hide()
+            }
 
-        if (keyboard.pressed(KeyCode.SHIFT) && !redact_field.showing) {
-            choose_objects_panel.show()
-        } else {
-            choose_objects_panel.hide()
+            if (data.hide_ui) {
+                choose_group_panel.hide()
+                layers_panel.hide()
+                info_box.hide()
+                choose_objects_panel.hide()
+                info_box.obj_boxes.values.forEach { it.hide() }
+            } else {
+                choose_group_panel.show()
+                layers_panel.show()
+                info_box.show()
+                info_box.obj_boxes.values.forEach { it.show() }
+            }
+
+            if (data.redact_pair != null) redact_field.show()
+            else redact_field.hide()
+
+            if(keyboard.pressed(KeyCode.F1)) help_box.show()
+            else help_box.hide()
         }
+        setVisibility()
+
         data.groupsSelect[data.select_group] = choose_objects_panel.select
-
-        if (data.hide_ui) {
-            choose_group_panel.hide()
-            layers_panel.hide()
-            info_box.hide()
-            choose_objects_panel.hide()
-            info_box.obj_boxes.values.forEach { it.hide() }
-        } else {
-            choose_group_panel.show()
-            layers_panel.show()
-            info_box.show()
-            info_box.obj_boxes.values.forEach { it.show() }
-        }
-
-        if (data.redact_pair != null) redact_field.show()
-        else redact_field.hide()
 
         play_button.action()
         if (data.world_play) {
