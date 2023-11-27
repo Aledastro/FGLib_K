@@ -165,7 +165,7 @@ class CanvasRE(private val data: DataRE): UICanvas() {
             val set = HashSet<PointN>()
             for (pair in data.select_objs) {
                 if (!onSelectLayer(pair.first)) continue
-                val obj_p = pair.first.stats.POS.roundL(data.GRID)
+                val obj_p = pair.first.stats.POS.roundL(data.GRID) + pair.first.stats.roomPOS
                 set += obj_p
             }
             for (obj_p in set) {
