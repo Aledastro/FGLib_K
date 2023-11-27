@@ -12,10 +12,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="82970e50-af90-458e-a847-e0b07c98f932" name="Changes" comment="FGLib v.0.10.2.0 [K]">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FGLib_K/code/com/uzery/fglib/extension/room_editor/DataRE.kt" beforeDir="false" afterPath="$PROJECT_DIR$/FGLib_K/code/com/uzery/fglib/extension/room_editor/DataRE.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FGLib_K/code/com/uzery/fglib/extension/room_editor/RoomEditor.kt" beforeDir="false" afterPath="$PROJECT_DIR$/FGLib_K/code/com/uzery/fglib/extension/room_editor/RoomEditor.kt" afterDir="false" />
+    <list default="true" id="82970e50-af90-458e-a847-e0b07c98f932" name="Changes" comment="FGLib v.0.10.2.2 [K]">
       <change beforePath="$PROJECT_DIR$/FGLib_K/code/com/uzery/fglib/extension/room_editor/ui/CanvasRE.kt" beforeDir="false" afterPath="$PROJECT_DIR$/FGLib_K/code/com/uzery/fglib/extension/room_editor/ui/CanvasRE.kt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -126,20 +123,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1680386967444</updated>
-    </task>
-    <task id="LOCAL-00251" summary="FGLib v.0.9.15.0 [K]">
-      <created>1699876421255</created>
-      <option name="number" value="00251" />
-      <option name="presentableId" value="LOCAL-00251" />
-      <option name="project" value="LOCAL" />
-      <updated>1699876421255</updated>
-    </task>
-    <task id="LOCAL-00252" summary="FGLib v.0.9.15.1 [K]">
-      <created>1699876777803</created>
-      <option name="number" value="00252" />
-      <option name="presentableId" value="LOCAL-00252" />
-      <option name="project" value="LOCAL" />
-      <updated>1699876777803</updated>
     </task>
     <task id="LOCAL-00253" summary="FGLib v.0.9.16.0 [K]">
       <created>1699885292242</created>
@@ -470,7 +453,21 @@
       <option name="project" value="LOCAL" />
       <updated>1701124615259</updated>
     </task>
-    <option name="localTasksCounter" value="300" />
+    <task id="LOCAL-00300" summary="FGLib v.0.10.2.1 [K]">
+      <created>1701125711006</created>
+      <option name="number" value="00300" />
+      <option name="presentableId" value="LOCAL-00300" />
+      <option name="project" value="LOCAL" />
+      <updated>1701125711006</updated>
+    </task>
+    <task id="LOCAL-00301" summary="FGLib v.0.10.2.2 [K]">
+      <created>1701125752686</created>
+      <option name="number" value="00301" />
+      <option name="presentableId" value="LOCAL-00301" />
+      <option name="project" value="LOCAL" />
+      <updated>1701125752686</updated>
+    </task>
+    <option name="localTasksCounter" value="302" />
     <servers />
   </component>
   <component name="UnknownFeatures">
@@ -500,8 +497,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="FGLib v.0.9.20.1 [K]" />
-    <MESSAGE value="FGLib v.0.9.20.2 [K]" />
     <MESSAGE value="FGLib v.0.9.20.3 [K]" />
     <MESSAGE value="FGLib v.0.9.20.4 [K]" />
     <MESSAGE value="FGLib v.0.9.20.5 [K]" />
@@ -525,7 +520,9 @@
     <MESSAGE value="FGLib v.0.10.1.0 [K]" />
     <MESSAGE value="FGLib v.0.10.1.1 [K]" />
     <MESSAGE value="FGLib v.0.10.2.0 [K]" />
-    <option name="LAST_COMMIT_MESSAGE" value="FGLib v.0.10.2.0 [K]" />
+    <MESSAGE value="FGLib v.0.10.2.1 [K]" />
+    <MESSAGE value="FGLib v.0.10.2.2 [K]" />
+    <option name="LAST_COMMIT_MESSAGE" value="FGLib v.0.10.2.2 [K]" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

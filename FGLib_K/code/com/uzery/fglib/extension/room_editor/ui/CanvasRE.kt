@@ -350,7 +350,7 @@ class CanvasRE(private val data: DataRE): UICanvas() {
 
             val rect = RectN.LR(minP, data.GRID_P+maxP)
 
-            data.select_objs.clear()
+            if (!keyboard.pressed(KeyCode.CONTROL)) data.select_objs.clear()
             room.objects.forEach { o ->
                 val o_pos = (o.stats.POS-data.edit.pos+room.pos).roundL(data.GRID)+data.GRID_P/2
 

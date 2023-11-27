@@ -23,7 +23,7 @@ class DataRE(getter_pair: Pair<AbstractClassGetter<GameObject>, Array<out String
     var titles: ArrayList<ArrayList<String>> = ArrayList<ArrayList<String>>()
     var groupsSelect: ArrayList<Int> = ArrayList<Int>()
     var draw_bounds = false
-    var select_objs = ArrayList<Pair<GameObject, Room>>()
+    var select_objs = HashSet<Pair<GameObject, Room>>()
     var chosen_obj: GameObject? = null
     var draw_pos = PointN.ZERO
 
