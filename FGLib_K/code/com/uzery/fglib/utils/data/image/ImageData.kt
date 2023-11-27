@@ -16,14 +16,20 @@ object ImageData: CollectDataClass() {
         return entry
     }
 
+    fun keyFrom(name: String, vararg effects: String): String{
+        return resolvePath(name)+" - "+decode(name, *effects)
+    }
+
     //////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     fun set(name: String, vararg effects: String) {
         val decode = decode(name, *effects)
-        if (origins[decode] != null) return
+        val key = keyFrom(name, *effects)
+
+        if (origins[key] != null) return
 
         try {
-            origins[decode] = ImageUtils.from(name, *effects)
+            origins[key] = ImageUtils.from(name, *effects)
         } catch (e: Exception) {
             e.printStackTrace()
             throw DebugData.error("Data set: ${resolvePath(name)} ($decode) with error: $e")
@@ -36,7 +42,9 @@ object ImageData: CollectDataClass() {
 
     operator fun get(name: String, vararg effects: String): Image {
         val decode = decode(name, *effects)
-        return origins[decode] ?: throw DebugData.error("no origin from: $decode")
+        val key = keyFrom(name, *effects)
+
+        return origins[key] ?: throw DebugData.error("no origin from: $decode (${resolvePath(name)})")
     }
 
     operator fun get(name: String, effects: List<String>): Image {
@@ -46,14 +54,20 @@ object ImageData: CollectDataClass() {
     //////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     fun sprite_set(name: String, vararg effects: String): IntI {
-        val img = sprites[decode(name, *effects)]
-            ?: throw DebugData.error("no sprite from: ${decode(name, *effects)}")
+        val decode = decode(name, *effects)
+        val key = keyFrom(name, *effects)
+        
+        val img = sprites[key]
+            ?: throw DebugData.error("no sprite from: $decode")
         return img.size
     }
 
     fun sprite_get(name: String, vararg effects: String): IntI {
-        val img = sprites[decode(name, *effects)]
-            ?: throw DebugData.error("no sprite from: ${decode(name, *effects)}")
+        val decode = decode(name, *effects)
+        val key = keyFrom(name, *effects)
+        
+        val img = sprites[key]
+            ?: throw DebugData.error("no sprite from: $decode")
         return img.origin_size/img.size
     }
 
@@ -61,13 +75,15 @@ object ImageData: CollectDataClass() {
 
     fun set(name: String, size: IntI, vararg effects: String) {
         val decode = decode(name, *effects)
-        if (sprites[decode] != null) {
-            if (sprites[decode]!!.size != size)
-                throw DebugData.error("duplicate sprite set: $decode old: [${sprites[decode]!!.size}] | new: [$size]")
+        val key = keyFrom(name, *effects)
+        
+        if (sprites[key] != null) {
+            if (sprites[key]!!.size != size)
+                throw DebugData.error("duplicate sprite set: $decode old: [${sprites[key]!!.size}] | new: [$size]")
             return
         }
         try {
-            sprites[decode] = SpriteImage(ImageUtils.from(name), "${resolvePath(name)} ($decode)", size, *effects)
+            sprites[key] = SpriteImage(ImageUtils.from(name), "${resolvePath(name)} ($decode)", size, *effects)
         } catch (e: Exception) {
             e.printStackTrace()
             throw DebugData.error("Data set: ${resolvePath(name)} ($decode) with size: $size and error: $e")
@@ -80,7 +96,9 @@ object ImageData: CollectDataClass() {
 
     operator fun get(name: String, pos: IntI, vararg effects: String): Image {
         val decode = decode(name, *effects)
-        return sprites[decode]?.get(pos) ?: throw DebugData.error("no sprite from: $decode $pos")
+        val key = keyFrom(name, *effects)
+
+        return sprites[key]?.get(pos) ?: throw DebugData.error("no sprite from: $decode (${resolvePath(name)}) $pos")
     }
 
     operator fun get(name: String, pos: IntI, effects: List<String>): Image {
