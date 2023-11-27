@@ -73,7 +73,7 @@ class RoomEditor(private var getter: (Int) -> Pair<AbstractClassGetter<GameObjec
     }
 
     override fun update() {
-        data.redact_field_active = redact_field.active
+        data.redact_field_active = redact_field.showing
 
         data.edit = World.rooms[data.edit_n]
         data.last_edit_room = data.edit
