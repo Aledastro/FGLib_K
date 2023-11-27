@@ -4,7 +4,8 @@ import com.uzery.fglib.core.obj.DrawLayer
 import com.uzery.fglib.utils.math.geom.PointN
 import com.uzery.fglib.utils.math.geom.shape.RectN
 
-abstract class LayerVisualiser(private val pos: PointN, private val size: PointN, private val layer: DrawLayer): Visualiser {
+abstract class LayerVisualiser(private val pos: PointN, private val size: PointN, private val layer: DrawLayer):
+    Visualiser {
     override val main: RectN
         get() = RectN(pos, size)
 

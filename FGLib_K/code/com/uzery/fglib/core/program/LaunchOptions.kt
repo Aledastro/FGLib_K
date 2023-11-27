@@ -4,7 +4,6 @@ import com.uzery.fglib.utils.math.geom.PointN
 import javafx.scene.paint.Color
 import javafx.scene.paint.Paint
 import javafx.stage.StageStyle
-import java.util.*
 
 data class LaunchOptions(
     val size: PointN,

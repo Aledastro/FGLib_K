@@ -151,8 +151,8 @@ class CanvasRE(private val data: DataRE): UICanvas() {
             }
 
             val col = Color(0.1, 0.2, 0.5, 0.1)
-            for (pair in data.select_objs){
-                if(!onSelectLayer(pair.first)) continue
+            for (pair in data.select_objs) {
+                if (!onSelectLayer(pair.first)) continue
                 val obj_p = pair.first.stats.POS.roundL(data.GRID)
                 graphics.fill.rect(data.draw_pos+obj_p, data.GRID_P, col)
             }
@@ -258,6 +258,7 @@ class CanvasRE(private val data: DataRE): UICanvas() {
             vis.drawLayer() == data.select_layer
         }
     }
+
     override fun ifActive() {
         fun addLastInfo() {
             data.last_edit_room = data.edit
@@ -335,7 +336,7 @@ class CanvasRE(private val data: DataRE): UICanvas() {
 
         fun checkForSelect() {
             val m_pos = mouseRealPos.roundL(data.GRID)
-            if(keyboard.pressed(KeyCode.ALT) && !mouse.keys.pressed(MouseButton.PRIMARY)){
+            if (keyboard.pressed(KeyCode.ALT) && !mouse.keys.pressed(MouseButton.PRIMARY)) {
                 start_alt_pos = m_pos
             }
 

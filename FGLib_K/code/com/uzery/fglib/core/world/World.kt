@@ -11,7 +11,6 @@ import com.uzery.fglib.utils.data.getter.AbstractClassGetter
 import com.uzery.fglib.utils.math.FGUtils
 import com.uzery.fglib.utils.math.geom.PointN
 import javafx.scene.paint.Color
-import java.util.*
 
 object World {
     val rooms = ArrayList<Room>()

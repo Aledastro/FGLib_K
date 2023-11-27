@@ -22,7 +22,7 @@ class SolveBlock(
     private lateinit var next_operator: String
 
     private fun solved(): SolveBlock {
-        if(operators.all { list->list.all { it !in expression } }) return this
+        if (operators.all { list -> list.all { it !in expression } }) return this
 
         for (ops in operators) {
             val blocks = getBlocks(ops)
@@ -61,9 +61,9 @@ class SolveBlock(
     private fun getBlocks(operators: ArrayList<String>): ArrayList<String> {
         val breaks = HashSet<Int>()
         breaks += 0
-        operators.forEach { op->
-            for (i in expression.indices){
-                if(expression.substring(i).startsWith(op)){
+        operators.forEach { op ->
+            for (i in expression.indices) {
+                if (expression.substring(i).startsWith(op)) {
                     breaks += i
                     breaks += i+op.length
                 }
@@ -73,7 +73,7 @@ class SolveBlock(
 
         val list = breaks.toList().sorted()
         val res = ArrayList<String>()
-        for (i in 0 until list.size-1){
+        for (i in 0 until list.size-1) {
             res.add(expression.substring(list[i], list[i+1]))
         }
         return res

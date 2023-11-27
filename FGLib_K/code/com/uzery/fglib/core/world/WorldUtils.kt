@@ -13,7 +13,6 @@ import com.uzery.fglib.utils.math.geom.PointN
 import javafx.scene.paint.Color
 import javafx.scene.text.FontWeight
 import java.util.*
-import kotlin.collections.HashMap
 import kotlin.math.PI
 import kotlin.math.cos
 import kotlin.math.sin
@@ -63,16 +62,16 @@ object WorldUtils {
         val map = HashMap<PointN, Int>()
         val mapID = HashMap<GameObject, Int>()
 
-        fun posFrom(o: GameObject): PointN{
+        fun posFrom(o: GameObject): PointN {
             return pos+o.pos_with_owners
         }
 
-        for (o in list){
+        for (o in list) {
             val draw_pos = posFrom(o)
-            if(map[draw_pos] == null) map[draw_pos] = 0
+            if (map[draw_pos] == null) map[draw_pos] = 0
             map[draw_pos] = map[draw_pos]!!+1
 
-            if(mapID[o] == null) mapID[o] = map[draw_pos]!!
+            if (mapID[o] == null) mapID[o] = map[draw_pos]!!
         }
 
         for (o in list) drawBoundsFor(o, pos)
@@ -84,9 +83,9 @@ object WorldUtils {
             val n = map[draw_pos]!!
             val id = mapID[o]!!
 
-            if(n == 1){
+            if (n == 1) {
                 graphics.fill.ovalC(draw_pos, STEP*3, c)
-            }else{
+            } else {
                 val alpha = PI*2/n*id
                 graphics.fill.ovalC(draw_pos+PointN(cos(alpha), sin(alpha))*2.5, STEP*2, c)
             }
@@ -121,7 +120,11 @@ object WorldUtils {
             val shape = el.shape() ?: continue
 
             if (shape.S.more(PointN.ZERO))
-                graphics.stroke.line(pos+o.pos_with_owners+shape.L, shape.S, FGUtils.transparent(colors_h[color_id], 0.8))
+                graphics.stroke.line(
+                    pos+o.pos_with_owners+shape.L,
+                    shape.S,
+                    FGUtils.transparent(colors_h[color_id], 0.8)
+                )
 
             graphics.fill.draw(pos+o.pos_with_owners, shape, FGUtils.transparent(colors[color_id], 0.1))
             graphics.stroke.draw(pos+o.pos_with_owners, shape, FGUtils.transparent(colors[color_id], 0.6))
@@ -145,7 +148,7 @@ object WorldUtils {
     val bs_n = HashMap<Room, Array<Int>>()
 
     fun nextDebug() {
-        if (ids_time%20 == 0){
+        if (ids_time%20 == 0) {
             maxRam = Runtime.getRuntime().totalMemory()
             freeRam = Runtime.getRuntime().freeMemory()
             ram = maxRam-freeRam

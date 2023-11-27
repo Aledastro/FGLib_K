@@ -1,7 +1,6 @@
 package com.uzery.fglib.utils.data.getter
 
 import com.uzery.fglib.utils.data.debug.DebugData
-import java.util.*
 
 class RandomDrop<T>() {
     constructor(f: () -> T): this() {

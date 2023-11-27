@@ -4,7 +4,7 @@ import javafx.scene.media.MediaPlayer
 
 object AudioBox {
     private val players = ArrayList<AudioClipControl>()
-    fun addSFX(name: String, volume: Double = 1.0){
+    fun addSFX(name: String, volume: Double = 1.0) {
 
         AudioData.set(name)
         val player = MediaPlayer(AudioData[name])
@@ -18,7 +18,7 @@ object AudioBox {
         player.play()
     }
 
-    fun update(){
+    fun update() {
         players.removeIf { it.dead }
     }
 }

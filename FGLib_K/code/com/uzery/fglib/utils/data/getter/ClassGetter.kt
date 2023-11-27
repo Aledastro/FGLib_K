@@ -1,9 +1,9 @@
 package com.uzery.fglib.utils.data.getter
 
-import com.uzery.fglib.utils.math.solve.MathSolveUtils
 import com.uzery.fglib.utils.math.geom.Direct
 import com.uzery.fglib.utils.math.geom.PointN
 import com.uzery.fglib.utils.math.num.StringN
+import com.uzery.fglib.utils.math.solve.MathSolveUtils
 import javafx.scene.paint.Color
 
 abstract class ClassGetter<Type>: AbstractClassGetter<Type>() {

@@ -2,7 +2,6 @@ package com.uzery.fglib.utils.math.geom.shape
 
 import com.uzery.fglib.utils.math.geom.FieldN
 import com.uzery.fglib.utils.math.geom.PointN
-import java.util.*
 
 class FigureRectN(pos: PointN, val size: PointN): FigureN(getFields(pos, size)) {
     constructor(rect: RectN): this(rect.C, rect.S)

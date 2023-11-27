@@ -17,8 +17,6 @@ import com.uzery.fglib.utils.math.geom.PointN
 import com.uzery.fglib.utils.math.geom.shape.RectN
 import javafx.scene.input.KeyCode
 import javafx.scene.paint.Color
-import java.util.*
-import kotlin.collections.ArrayList
 
 class InfoBoxRE(private val data: DataRE): InfoBox() {
     override val text_draw_offset: Double
@@ -49,7 +47,7 @@ class InfoBoxRE(private val data: DataRE): InfoBox() {
             }
         }
 
-        if(world_info && room_info){
+        if (world_info && room_info) {
             res.add("")
             res.add("-----------------------------------------")
             res.add("")

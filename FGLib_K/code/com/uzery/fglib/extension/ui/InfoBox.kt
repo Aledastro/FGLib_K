@@ -34,7 +34,7 @@ abstract class InfoBox: UIElement() {
     abstract fun getL(): ArrayList<String>
 
     abstract fun color(id: Int): Color
-    fun text(id: Int): String{
+    fun text(id: Int): String {
         return text[id]
     }
 

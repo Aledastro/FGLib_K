@@ -16,8 +16,6 @@ import com.uzery.fglib.utils.data.debug.DebugData
 import com.uzery.fglib.utils.graphics.AffineGraphics
 import com.uzery.fglib.utils.math.geom.PointN
 import com.uzery.fglib.utils.math.geom.Shape
-import java.util.*
-import kotlin.collections.HashSet
 
 abstract class GameObject(var name: String = "temp") {
     val stats = Stats()
@@ -44,10 +42,10 @@ abstract class GameObject(var name: String = "temp") {
         get() = owner?.main_owner ?: this
 
     val pos_with_owners: PointN
-        get(){
+        get() {
             var pos = stats.POS
             var current = owner
-            while (current != null){
+            while (current != null) {
                 pos += current.stats.POS
                 current = current.owner
             }
@@ -102,20 +100,22 @@ abstract class GameObject(var name: String = "temp") {
     fun addProperty(vararg property: GameProperty) = properties.addAll(property)
     fun addVisual(vis: Visualiser) = visuals.add(vis)
 
-    fun addVisual(layer: DrawLayer, vis: (agc: AffineGraphics, draw_pos: PointN) -> Unit){
+    fun addVisual(layer: DrawLayer, vis: (agc: AffineGraphics, draw_pos: PointN) -> Unit) {
         visuals.add(
             object: LayerVisualiser(layer) {
-                override fun draw(draw_pos: PointN) { vis(agc, draw_pos) }
+                override fun draw(draw_pos: PointN) {
+                    vis(agc, draw_pos)
+                }
             }
         )
     }
 
-    fun init(){
+    fun init() {
         onInit.forEach { it() }
     }
 
     fun next() {
-        if(object_time == 0) onBirth.forEach { it() }
+        if (object_time == 0) onBirth.forEach { it() }
 
         if (temp == null || temp!!.ends) temp = controller?.get()?.invoke()
         temp?.next()

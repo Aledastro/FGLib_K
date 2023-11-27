@@ -8,7 +8,6 @@ import com.uzery.fglib.utils.math.geom.PointN
 import javafx.scene.input.MouseButton
 import javafx.scene.paint.Color
 import javafx.scene.text.FontWeight
-import java.util.*
 
 abstract class VBox: UIElement() {
     protected abstract val full: Int

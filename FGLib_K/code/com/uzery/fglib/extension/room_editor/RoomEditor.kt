@@ -17,7 +17,6 @@ import com.uzery.fglib.utils.data.getter.AbstractClassGetter
 import com.uzery.fglib.utils.math.geom.PointN
 import javafx.scene.input.KeyCode
 import javafx.scene.paint.Color
-import java.util.*
 
 class RoomEditor(private var getter: (Int) -> Pair<AbstractClassGetter<GameObject>, Array<String>>):
     Extension(RoomEditorUI) {
@@ -58,8 +57,10 @@ class RoomEditor(private var getter: (Int) -> Pair<AbstractClassGetter<GameObjec
         help_box = HelpBoxRE(data)
 
         RoomEditorUI.clear()
-        RoomEditorUI.add(edit_canvas, play_button, choose_group_panel,
-            layers_panel, info_box, choose_objects_panel, redact_field, help_box)
+        RoomEditorUI.add(
+            edit_canvas, play_button, choose_group_panel,
+            layers_panel, info_box, choose_objects_panel, redact_field, help_box
+        )
 
         edit_canvas.show()
         play_button.show()
@@ -90,7 +91,7 @@ class RoomEditor(private var getter: (Int) -> Pair<AbstractClassGetter<GameObjec
         data.chosen_entry = choose_group_panel.chosenEntry()
         data.chosen_obj = data.getter.getEntry(data.chosen_entry)()
 
-        fun setVisibility(){
+        fun setVisibility() {
             if (keyboard.pressed(KeyCode.SHIFT) && !keyboard.pressed(KeyCode.CONTROL) && !redact_field.showing) {
                 choose_objects_panel.show()
             } else {
@@ -113,7 +114,7 @@ class RoomEditor(private var getter: (Int) -> Pair<AbstractClassGetter<GameObjec
             if (data.redact_pair != null) redact_field.show()
             else redact_field.hide()
 
-            if(keyboard.pressed(KeyCode.F1)) help_box.show()
+            if (keyboard.pressed(KeyCode.F1)) help_box.show()
             else help_box.hide()
         }
         setVisibility()

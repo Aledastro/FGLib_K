@@ -16,7 +16,7 @@ object ImageData: CollectDataClass() {
         return entry
     }
 
-    fun keyFrom(name: String, vararg effects: String): String{
+    fun keyFrom(name: String, vararg effects: String): String {
         return resolvePath(name)+" - "+decode(name, *effects)
     }
 
@@ -56,7 +56,7 @@ object ImageData: CollectDataClass() {
     fun sprite_set(name: String, vararg effects: String): IntI {
         val decode = decode(name, *effects)
         val key = keyFrom(name, *effects)
-        
+
         val img = sprites[key]
             ?: throw DebugData.error("no sprite from: $decode")
         return img.size
@@ -65,7 +65,7 @@ object ImageData: CollectDataClass() {
     fun sprite_get(name: String, vararg effects: String): IntI {
         val decode = decode(name, *effects)
         val key = keyFrom(name, *effects)
-        
+
         val img = sprites[key]
             ?: throw DebugData.error("no sprite from: $decode")
         return img.origin_size/img.size
@@ -76,7 +76,7 @@ object ImageData: CollectDataClass() {
     fun set(name: String, size: IntI, vararg effects: String) {
         val decode = decode(name, *effects)
         val key = keyFrom(name, *effects)
-        
+
         if (sprites[key] != null) {
             if (sprites[key]!!.size != size)
                 throw DebugData.error("duplicate sprite set: $decode old: [${sprites[key]!!.size}] | new: [$size]")

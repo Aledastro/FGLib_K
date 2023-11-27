@@ -89,11 +89,11 @@ class RedactTextFieldRE(val data: DataRE): UIElement() {
             data.redact_pair = null
         }
 
-        if(mouse.keys.inPressed(MouseButton.PRIMARY)){
+        if (mouse.keys.inPressed(MouseButton.PRIMARY)) {
             update_text = isAt(pos, size)
         }
 
-        if(update_text) updateText()
+        if (update_text) updateText()
 
         if (data.redact_pair != old_redact_pair && data.redact_pair != null) {
             new_obj = data.redact_pair!!.first.toString()
@@ -104,7 +104,7 @@ class RedactTextFieldRE(val data: DataRE): UIElement() {
         time++
     }
 
-    private fun updateText(){
+    private fun updateText() {
         fun superPressed(code: KeyCode): Boolean {
             return keyboard.inPressed(code) ||
                     keyboard.timePressed(code) > 40 && keyboard.pressed(code) && keyboard.timePressed(code)%2 == 0L

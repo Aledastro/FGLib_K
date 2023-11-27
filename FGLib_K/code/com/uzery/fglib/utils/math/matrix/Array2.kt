@@ -1,7 +1,6 @@
 package com.uzery.fglib.utils.math.matrix
 
 import com.uzery.fglib.utils.math.num.IntI
-import java.util.*
 
 class Array2<Type>(val size: IntI, private val default_value: Type) {
     constructor(width: Int, height: Int, default_value: Type): this(IntI(width, height), default_value)
@@ -19,6 +18,7 @@ class Array2<Type>(val size: IntI, private val default_value: Type) {
     operator fun get(i: Int, j: Int): Type {
         return get(IntI(i, j))
     }
+
     operator fun get(i: IntI): Type {
         return data[from(i.x, i.y)] ?: default_value
     }

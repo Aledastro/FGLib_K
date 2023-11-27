@@ -3,7 +3,6 @@ package com.uzery.fglib.utils.math.geom.shape
 import com.uzery.fglib.utils.math.geom.FieldN
 import com.uzery.fglib.utils.math.geom.PointN
 import com.uzery.fglib.utils.math.geom.Shape
-import java.util.*
 
 open class FigureN(val fields: List<FieldN>): Shape() {
     constructor(pos: PointN, vararg fieldN: FieldN): this(fieldN.toList())

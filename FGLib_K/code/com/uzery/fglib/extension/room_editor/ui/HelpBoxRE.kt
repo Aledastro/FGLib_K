@@ -1,24 +1,15 @@
 package com.uzery.fglib.extension.room_editor.ui
 
-import com.uzery.fglib.core.obj.GameObject
-import com.uzery.fglib.core.obj.bounds.BoundsBox
 import com.uzery.fglib.core.program.Platform.CANVAS
 import com.uzery.fglib.core.program.Platform.CANVAS_R
 import com.uzery.fglib.core.program.Platform.graphics
-import com.uzery.fglib.core.program.Platform.keyboard
-import com.uzery.fglib.core.room.Room
-import com.uzery.fglib.core.world.World
-import com.uzery.fglib.core.world.WorldUtils
 import com.uzery.fglib.extension.room_editor.DataRE
-import com.uzery.fglib.extension.room_editor.RoomEditorUI
 import com.uzery.fglib.extension.ui.InfoBox
 import com.uzery.fglib.utils.math.FGUtils
 import com.uzery.fglib.utils.math.geom.PointN
 import com.uzery.fglib.utils.math.geom.shape.RectN
-import javafx.scene.input.KeyCode
 import javafx.scene.paint.Color
 import java.util.*
-import kotlin.collections.ArrayList
 
 class HelpBoxRE(private val data: DataRE): InfoBox() {
     override val text_draw_offset: Double

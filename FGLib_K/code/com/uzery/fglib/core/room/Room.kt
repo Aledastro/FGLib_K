@@ -13,7 +13,6 @@ import com.uzery.fglib.utils.math.FGUtils
 import com.uzery.fglib.utils.math.ShapeUtils
 import com.uzery.fglib.utils.math.geom.PointN
 import com.uzery.fglib.utils.math.geom.shape.RectN
-import java.util.*
 import kotlin.math.sign
 
 class Room(var pos: PointN, var size: PointN) {
@@ -28,7 +27,7 @@ class Room(var pos: PointN, var size: PointN) {
         objects.addAll(objs)
     }
 
-    fun init(){
+    fun init() {
         objects.forEach { it.init() }
     }
 
@@ -92,7 +91,7 @@ class Room(var pos: PointN, var size: PointN) {
         ) {
             vis.addAll(obj.visuals)
 
-            obj.visuals.forEach { pos_map[it] = obj.pos_with_owners + obj.main_owner.stats.roomPOS }
+            obj.visuals.forEach { pos_map[it] = obj.pos_with_owners+obj.main_owner.stats.roomPOS }
             obj.visuals.forEach { sort_map[it] = pos_map[it]!!+obj.stats.sortPOS }
 
             obj.followers.forEach { addObjVis(vis, pos_map, sort_map, it) }
@@ -125,7 +124,7 @@ class Room(var pos: PointN, var size: PointN) {
         }
 
         for (obj in list) {
-            if(obj.tagged("#immovable")) continue
+            if (obj.tagged("#immovable")) continue
             obj.stats.lPOS = obj.stats.POS
             val move_bs = obj.bounds.orange
             if (move_bs.empty) continue
@@ -161,7 +160,7 @@ class Room(var pos: PointN, var size: PointN) {
             list.add(obj)
             obj.followers.forEach { addInList(it) }
         }
-        objects.forEach { if(!it.tagged("#inactive")) addInList(it) }
+        objects.forEach { if (!it.tagged("#inactive")) addInList(it) }
 
         fun setActivate(
             o1: GameObject,

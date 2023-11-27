@@ -2,7 +2,6 @@ package com.uzery.fglib.core.program
 
 import com.uzery.fglib.core.program.Platform.graphics
 import com.uzery.fglib.utils.math.geom.PointN
-import java.util.*
 
 abstract class Extension(vararg children: Extension) {
     val children = ArrayList<Extension>()
