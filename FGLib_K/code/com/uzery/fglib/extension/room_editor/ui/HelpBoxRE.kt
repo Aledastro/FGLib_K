@@ -40,10 +40,16 @@ class HelpBoxRE(private val data: DataRE): InfoBox() {
         res.add("[LMB] = add chosen obj")
         res.add("[RMB] = remove objs in cell")
         res.add("[MOUSE WHEEL] = scale canvas")
-        res.add("[ALT] = select objs")
+        res.add("")
+        res.add("[DELETE] = remove select objs")
+        res.add("[ALT] + dragging [LMB] = select objs")
+        res.add("[CONTROL] + [ALT] + dragging [LMB] = add to selected objs")
+        res.add("[CONTROL] + [ALT] + dragging [RMB] = remove from selected objs")
+        res.add("")
         res.add("[MINUS] = minus add size")
         res.add("[PLUS/EQUALS] = plus add size")
         res.add("[P] = change GRID offset")
+        res.add("")
         res.add("[CONTROL] + [TAB] = show/hide bounds")
         res.add("[CONTROL] + [M] = change edit mode: FOCUSED, ALL_ROOMS, OVERVIEW")
         res.add("[CONTROL] + [SPACE] = run simulation (bugged now)")
@@ -67,7 +73,7 @@ class HelpBoxRE(private val data: DataRE): InfoBox() {
         res.add("")
         res.add("-----------------------------------------")
 
-        for (i in 1..12) res.addFirst("")
+        for (i in 1..9) res.addFirst("")
         res.replaceAll { " ".repeat(150)+it }
 
         return ArrayList<String>().also { it.addAll(res) }

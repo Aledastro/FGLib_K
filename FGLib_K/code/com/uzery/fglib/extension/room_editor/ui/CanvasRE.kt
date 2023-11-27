@@ -165,7 +165,7 @@ class CanvasRE(private val data: DataRE): UICanvas() {
             val set = HashSet<PointN>()
             for (pair in data.select_objs) {
                 if (!onSelectLayer(pair.first)) continue
-                val obj_p = pair.first.stats.POS.roundL(data.GRID) + pair.first.stats.roomPOS
+                val obj_p = pair.first.stats.POS.roundL(data.GRID) + pair.first.stats.roomPOS - data.edit.pos
                 set += obj_p
             }
             for (obj_p in set) {
@@ -282,6 +282,8 @@ class CanvasRE(private val data: DataRE): UICanvas() {
         }
 
         fun checkForAdd() {
+            if (keyboard.pressed(KeyCode.ALT)) return
+
             if (!data.redact_field_active) {
                 if (keyboard.inPressed(KeyCode.MINUS) || keyboard.timePressed(KeyCode.MINUS)%10 == 9L) {
                     add_size--
@@ -294,7 +296,6 @@ class CanvasRE(private val data: DataRE): UICanvas() {
 
             fun add(pos: PointN) {
                 if (!mouse.keys.pressed(MouseButton.PRIMARY)) return
-                if (keyboard.pressed(KeyCode.ALT)) return
 
                 val o = data.getter.getEntry(data.chosen_entry)()
                 if (data.select_layerID != 0 && !onSelectLayer(o)) return
@@ -319,6 +320,11 @@ class CanvasRE(private val data: DataRE): UICanvas() {
         }
 
         fun checkForRemove() {
+            if(keyboard.inPressed(KeyCode.DELETE)){
+                data.select_objs.forEach { it.second.objects.remove(it.first) }
+                data.select_objs.clear()
+            }
+
             if (!mouse.keys.pressed(MouseButton.SECONDARY)) return
             if (keyboard.pressed(KeyCode.ALT)) return
 
@@ -344,11 +350,12 @@ class CanvasRE(private val data: DataRE): UICanvas() {
 
         fun checkForSelect() {
             val m_pos = mouseRealPos.roundL(data.GRID)
-            if (keyboard.pressed(KeyCode.ALT) && !mouse.keys.pressed(MouseButton.PRIMARY)) {
+            val noMBPressed = !mouse.keys.anyPressed(MouseButton.PRIMARY, MouseButton.SECONDARY)
+            if (keyboard.pressed(KeyCode.ALT) && noMBPressed) {
                 start_alt_pos = m_pos
             }
 
-            if (!mouse.keys.pressed(MouseButton.PRIMARY)) return
+            if (noMBPressed) return
             if (!keyboard.pressed(KeyCode.ALT)) return
 
             val room = roomFrom(mouseRealPos) ?: return
@@ -363,7 +370,12 @@ class CanvasRE(private val data: DataRE): UICanvas() {
                 val o_pos = (o.stats.POS-data.edit.pos+room.pos).roundL(data.GRID)+data.GRID_P/2
 
                 if (rect.into(o_pos) && onSelectLayer(o) && (o.visuals.isNotEmpty() || data.select_layerID == 0)) {
-                    data.select_objs.add(Pair(o, room))
+                    val pair = Pair(o, room)
+                    if(mouse.keys.pressed(MouseButton.PRIMARY)){
+                        data.select_objs.add(pair)
+                    }else{
+                        data.select_objs.remove(pair)
+                    }
                 }
             }
             addLastInfo()
