@@ -369,16 +369,24 @@ class CanvasRE(private val data: DataRE): UICanvas() {
 
             if (arrows_pos.length() < 0.1) return
 
+            fun moveObjs(objs: List<GameObject>){
+                objs.filter { o->
+                    data.select_layer == 0 || o.visuals.any { v->
+                        v.drawLayer() == data.layers[data.select_layer-1]
+                    }
+                }.forEach { it.stats.POS += arrows_pos }
+            }
+
             when {
                 keyboard.allPressed(KeyCode.CONTROL, KeyCode.SHIFT) -> {
-                    World.rooms.forEach { r -> r.objects.forEach { it.stats.POS += arrows_pos } }
-                }
-
-                keyboard.pressed(KeyCode.SHIFT) -> {
-                    data.edit.objects.forEach { it.stats.POS += arrows_pos }
+                    World.rooms.forEach { moveObjs(it.objects) }
                 }
 
                 keyboard.pressed(KeyCode.CONTROL) -> {
+                    moveObjs(data.edit.objects)
+                }
+
+                keyboard.pressed(KeyCode.SHIFT) -> {
                     data.edit.pos += arrows_pos
                 }
 
@@ -387,7 +395,7 @@ class CanvasRE(private val data: DataRE): UICanvas() {
                 }
 
                 !keyboard.anyPressed(KeyCode.ALT, KeyCode.SHIFT, KeyCode.CONTROL) -> {
-                    data.select_objs.forEach { it.first.stats.POS += arrows_pos }
+                    moveObjs(ArrayList<GameObject>().also { data.select_objs.forEach { o->it.add(o.first) } })
                 }
             }
         }

@@ -91,7 +91,7 @@ class RoomEditor(private var getter: (Int) -> Pair<AbstractClassGetter<GameObjec
         data.chosen_obj = data.getter.getEntry(data.chosen_entry)()
 
         fun setVisibility(){
-            if (keyboard.pressed(KeyCode.SHIFT) && !redact_field.showing) {
+            if (keyboard.pressed(KeyCode.SHIFT) && !keyboard.pressed(KeyCode.CONTROL) && !redact_field.showing) {
                 choose_objects_panel.show()
             } else {
                 choose_objects_panel.hide()
