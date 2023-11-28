@@ -26,15 +26,13 @@ class RoomEditor(private var getter: (Int) -> Pair<AbstractClassGetter<GameObjec
     }
 
     override fun update() {
-        if(keyboard.pressed(KeyCode.TAB)){
-            if(keyboard.inPressed(KeyCode.LEFT)){
-                id--
-                start()
-            }
-            if(keyboard.inPressed(KeyCode.RIGHT)){
-                id++
-                start()
-            }
+        if (keyboard.inPressed(KeyCode.PAGE_UP)) {
+            id--
+            start()
+        }
+        if (keyboard.inPressed(KeyCode.PAGE_DOWN)) {
+            id++
+            start()
         }
     }
 }

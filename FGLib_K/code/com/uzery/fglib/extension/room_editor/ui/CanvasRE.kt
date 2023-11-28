@@ -260,6 +260,9 @@ class CanvasRE(private val data: DataRE): UICanvas() {
         get() = mouse.pos/view_scale-data.draw_pos
 
     private var start_alt_pos = PointN.ZERO
+    private var start_move_pos = PointN.ZERO
+    private var already_copy = false
+    private var last_selected = HashSet<Pair<GameObject, Room>>()
 
     private fun onSelectLayer(o: GameObject): Boolean {
         return data.select_layerID == 0 || o.visuals.isEmpty() || o.visuals.any { vis ->
@@ -269,10 +272,10 @@ class CanvasRE(private val data: DataRE): UICanvas() {
 
     override fun ifActive() {
         val arrow_pos = PointN(0, 0)
-        if (keyboard.inPressed(KeyCode.UP)) arrow_pos.Y --
-        if (keyboard.inPressed(KeyCode.DOWN)) arrow_pos.Y ++
-        if (keyboard.inPressed(KeyCode.LEFT)) arrow_pos.X --
-        if (keyboard.inPressed(KeyCode.RIGHT)) arrow_pos.X ++
+        if (keyboard.inPressed(KeyCode.UP)) arrow_pos.Y--
+        if (keyboard.inPressed(KeyCode.DOWN)) arrow_pos.Y++
+        if (keyboard.inPressed(KeyCode.LEFT)) arrow_pos.X--
+        if (keyboard.inPressed(KeyCode.RIGHT)) arrow_pos.X++
         val grid_pos = arrow_pos*data.GRID
 
         fun addLastInfo() {
@@ -289,7 +292,7 @@ class CanvasRE(private val data: DataRE): UICanvas() {
         }
 
         fun checkForAdd() {
-            if (keyboard.pressed(KeyCode.ALT)) return
+            if (keyboard.anyPressed(KeyCode.ALT, KeyCode.CONTROL)) return
 
             if (!data.redact_field_active) {
                 if (keyboard.inPressed(KeyCode.MINUS) || keyboard.timePressed(KeyCode.MINUS)%10 == 9L) {
@@ -311,7 +314,7 @@ class CanvasRE(private val data: DataRE): UICanvas() {
                 val room = roomFrom(posWithOffset) ?: return
 
                 o.stats.POS = posWithOffset+data.edit.pos-room.pos
-                if (room.objects.any { it.equalsS(o) && (it.name != "temp" || it.stats.POS == o.stats.POS) }) return
+                if (hasEqualObjIn(room, o)) return
 
                 room.objects.add(o)
                 addLastInfo()
@@ -333,7 +336,7 @@ class CanvasRE(private val data: DataRE): UICanvas() {
             }
 
             if (!mouse.keys.pressed(MouseButton.SECONDARY)) return
-            if (keyboard.pressed(KeyCode.ALT)) return
+            if (keyboard.anyPressed(KeyCode.ALT, KeyCode.CONTROL)) return
 
             val sel = data.getter.getEntry(data.chosen_entry)()
             val room = roomFrom(mouseRealPos) ?: return
@@ -395,6 +398,38 @@ class CanvasRE(private val data: DataRE): UICanvas() {
         fun checkForMove() {
             if (keyboard.pressed(KeyCode.R)) return
             if (keyboard.pressed(KeyCode.SPACE)) return
+
+            val list = ArrayList<GameObject>().also {
+                data.select_objs.forEach { o -> it.add(o.first) }
+            }
+
+            if (keyboard.pressed(KeyCode.CONTROL) && !mouse.keys.anyPressed(
+                    MouseButton.PRIMARY,
+                    MouseButton.SECONDARY
+                )
+            ) {
+                start_move_pos = mouseRealPos.roundL(data.GRID)
+                already_copy = false
+            }
+
+            if (keyboard.pressed(KeyCode.CONTROL) && mouse.keys.pressed(MouseButton.PRIMARY) && !already_copy) {
+                data.select_objs.forEach { pair ->
+                    if (pair.first.name != "temp") {
+                        pair.second.objects.add(data.getter[pair.first.toString()])
+                    }
+                }
+                already_copy = true
+            }
+
+            if (keyboard.pressed(KeyCode.CONTROL) && mouse.keys.anyPressed(
+                    MouseButton.PRIMARY,
+                    MouseButton.SECONDARY
+                )
+            ) {
+                moveObjs(list, mouseRealPos.roundL(data.GRID)-start_move_pos)
+                start_move_pos = mouseRealPos.roundL(data.GRID)
+            }
+
             if (grid_pos.length() < 0.1) return
 
             when {
@@ -407,11 +442,7 @@ class CanvasRE(private val data: DataRE): UICanvas() {
                 }
 
                 !keyboard.anyPressed(KeyCode.ALT, KeyCode.SHIFT, KeyCode.CONTROL) -> {
-                    moveObjs(
-                        ArrayList<GameObject>().also {
-                            data.select_objs.forEach { o -> it.add(o.first) }
-                        }, grid_pos
-                    )
+                    moveObjs(list, grid_pos)
                 }
             }
         }
@@ -433,10 +464,10 @@ class CanvasRE(private val data: DataRE): UICanvas() {
 
         fun checkForEditN() {
             val wasd_pos = PointN(0, 0)
-            if (keyboard.inPressed(KeyCode.W)) wasd_pos.Y --
-            if (keyboard.inPressed(KeyCode.S)) wasd_pos.Y ++
-            if (keyboard.inPressed(KeyCode.A)) wasd_pos.X --
-            if (keyboard.inPressed(KeyCode.D)) wasd_pos.X ++
+            if (keyboard.inPressed(KeyCode.W)) wasd_pos.Y--
+            if (keyboard.inPressed(KeyCode.S)) wasd_pos.Y++
+            if (keyboard.inPressed(KeyCode.A)) wasd_pos.X--
+            if (keyboard.inPressed(KeyCode.D)) wasd_pos.X++
 
             if (wasd_pos.length() < 0.1 && !keyboard.pressed(KeyCode.X)) return
 
@@ -467,6 +498,19 @@ class CanvasRE(private val data: DataRE): UICanvas() {
             addLastInfo()
         }
 
+        fun removeUnselectCopies() {
+            last_selected.forEach { pair ->
+                if (pair !in data.select_objs) {
+                    if (hasEqualObjIn(pair.second, pair.first)) {
+                        pair.second.objects.remove(pair.first)
+                    }
+                }
+            }
+
+            last_selected = HashSet()
+            data.select_objs.forEach { pair -> last_selected += pair }
+        }
+
         val old_view_scaleID = view_scaleID
         when (mouse.scroll) {
             -1 -> view_scaleID--
@@ -489,7 +533,14 @@ class CanvasRE(private val data: DataRE): UICanvas() {
         checkForAdd()
         checkForRemove()
         checkForSelect()
+        removeUnselectCopies()
         if (keyboard.inPressed(KeyCode.P)) grid_offset_id = MathUtils.mod(grid_offset_id+1, grid_offset.size)
+    }
+
+    private fun hasEqualObjIn(room: Room, obj: GameObject): Boolean {
+        return room.objects.any {
+            it!=obj && it.equalsS(obj) && (it.name != "temp" || it.stats.POS == obj.stats.POS)
+        }
     }
 
     private var last_mouse_pos = PointN.ZERO
