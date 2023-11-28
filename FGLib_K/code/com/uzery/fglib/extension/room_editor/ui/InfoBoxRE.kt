@@ -76,8 +76,8 @@ class InfoBoxRE(private val data: DataRE): InfoBox() {
     private var room_info = false
 
     override fun update() {
-        super.update()
         World.rooms.forEach { WorldUtils.nextDebugForRoom(it) }
+        super.update()
 
         if (keyboard.inPressed(KeyCode.F5)) {
             world_info = !world_info
