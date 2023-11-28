@@ -214,7 +214,13 @@ class CanvasRE(private val data: DataRE): UICanvas() {
         }
 
         fun drawBounds(room: Room, pos: PointN = PointN.ZERO) {
-            if (data.draw_bounds) WorldUtils.drawBounds(room, pos+data.draw_pos)
+            if (data.draw_bounds){
+                val objs =
+                    if(data.select_layerID == 0) room.objects
+                    else room.objects.filter { onSelectLayer(it) }
+
+                WorldUtils.drawBounds(objs, pos+data.draw_pos)
+            }
         }
 
 

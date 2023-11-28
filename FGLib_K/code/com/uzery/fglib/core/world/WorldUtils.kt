@@ -48,7 +48,7 @@ object WorldUtils {
         return Room(pos, size, objects)
     }
 
-    fun drawBounds(room: Room, pos: PointN = PointN.ZERO) {
+    fun drawBounds(objects: List<GameObject>, pos: PointN = PointN.ZERO) {
         val STEP = PointN(1.0, 1.0)
         graphics.layer = DrawLayer.CAMERA_FOLLOW
 
@@ -57,7 +57,7 @@ object WorldUtils {
             list.add(obj)
             obj.followers.forEach { addInList(it) }
         }
-        room.objects.forEach { addInList(it) }
+        objects.forEach { addInList(it) }
 
         val map = HashMap<PointN, Int>()
         val mapID = HashMap<GameObject, Int>()

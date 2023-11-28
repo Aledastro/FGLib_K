@@ -55,6 +55,7 @@ class HelpBoxRE(private val data: DataRE): InfoBox() {
         res.add("[RMB] = remove objs in cell")
         res.add("[MOUSE WHEEL] = scale canvas")
         res.add("[SPACE] + [LMB/RMB] = move canvas")
+        res.add("[CONTROL] + [Z] = undo action")
         res.add("")
         res.add("[CONTROL] + [TAB] = show/hide bounds")
         res.add("[CONTROL] + [M] = change redact mode")
