@@ -31,6 +31,7 @@ class RoomEditorInstance(private var getter: Pair<AbstractClassGetter<GameObject
     private lateinit var info_box: InfoBoxRE
     private lateinit var redact_field: RedactTextFieldRE
     private lateinit var help_box: HelpBoxRE
+    private lateinit var status_box: StatusBoxRE
 
     private var ui = RoomEditorUI()
 
@@ -62,10 +63,11 @@ class RoomEditorInstance(private var getter: Pair<AbstractClassGetter<GameObject
         info_box = InfoBoxRE(data)
         redact_field = RedactTextFieldRE(data)
         help_box = HelpBoxRE(data)
+        status_box = StatusBoxRE(data)
 
         ui.add(
-            edit_canvas, play_button, choose_group_panel,
-            layers_panel, info_box, choose_objects_panel, redact_field, help_box
+            edit_canvas, play_button, choose_group_panel, layers_panel,
+            info_box, choose_objects_panel, redact_field, help_box, status_box
         )
 
         edit_canvas.show()
@@ -73,6 +75,7 @@ class RoomEditorInstance(private var getter: Pair<AbstractClassGetter<GameObject
         choose_group_panel.show()
         layers_panel.show()
         info_box.show()
+        status_box.show()
 
         redact_field.hide()
 
@@ -116,6 +119,9 @@ class RoomEditorInstance(private var getter: Pair<AbstractClassGetter<GameObject
                 info_box.show()
                 info_box.obj_boxes.values.forEach { it.show() }
             }
+
+            if(data.time-data.save_time<status_box.DELAY) status_box.show()
+            else status_box.hide()
 
             if (data.redact_pair != null) redact_field.show()
             else redact_field.hide()
@@ -167,7 +173,7 @@ class RoomEditorInstance(private var getter: Pair<AbstractClassGetter<GameObject
         if (keyboard.allPressed(KeyCode.CONTROL, KeyCode.SHIFT) && keyboard.inPressed(KeyCode.S)) {
             //edit.objects.forEach { it.stats.POS /= 2 }
             data.filenames.indices.forEach { i -> TextData.write(data.filenames[i], World.rooms[i].toString()) }
-            println("saved")
+            data.save_time = data.time
         }
     }
 
