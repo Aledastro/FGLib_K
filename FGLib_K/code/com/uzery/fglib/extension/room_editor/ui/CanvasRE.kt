@@ -12,7 +12,10 @@ import com.uzery.fglib.core.room.Room
 import com.uzery.fglib.core.world.World
 import com.uzery.fglib.core.world.WorldUtils
 import com.uzery.fglib.extension.room_editor.DataRE
+import com.uzery.fglib.extension.room_editor.EditAction
+import com.uzery.fglib.extension.room_editor.EditActionCode
 import com.uzery.fglib.extension.ui.UICanvas
+import com.uzery.fglib.utils.data.file.ConstL
 import com.uzery.fglib.utils.math.FGUtils
 import com.uzery.fglib.utils.math.MathUtils
 import com.uzery.fglib.utils.math.geom.PointN
@@ -304,6 +307,8 @@ class CanvasRE(private val data: DataRE): UICanvas() {
             }
             add_size = add_size.coerceIn(0..23)
 
+            val listToAdd = ArrayList<Pair<GameObject, Room>>()
+
             fun add(pos: PointN) {
                 if (!mouse.keys.pressed(MouseButton.PRIMARY)) return
 
@@ -316,22 +321,24 @@ class CanvasRE(private val data: DataRE): UICanvas() {
                 o.stats.POS = posWithOffset+data.edit.pos-room.pos
                 if (hasEqualObjIn(room, o)) return
 
-                room.objects.add(o)
+                listToAdd.add(Pair(o, room))
                 addLastInfo()
 
                 data.select_objs.clear()
                 data.select_objs.add(Pair(o, room))
             }
+
             for (i in -add_size/2..(add_size+1)/2) {
                 for (j in -add_size/2..(add_size+1)/2) {
                     add(PointN(i, j)*data.GRID)
                 }
             }
+            addObjs(listToAdd, true)
         }
 
         fun checkForRemove() {
             if (keyboard.inPressed(KeyCode.DELETE)) {
-                data.select_objs.forEach { it.second.objects.remove(it.first) }
+                removeObjs(data.select_objs.toList(), true)
                 data.select_objs.clear()
             }
 
@@ -341,7 +348,7 @@ class CanvasRE(private val data: DataRE): UICanvas() {
             val sel = data.getter.getEntry(data.chosen_entry)()
             val room = roomFrom(mouseRealPos) ?: return
 
-            val list = ArrayList<GameObject>()
+            val listToRemove = ArrayList<GameObject>()
             room.objects.forEach { o ->
                 val pos1 = (o.stats.POS-data.edit.pos+room.pos).roundL(data.GRID)
                 val added = if (add_size%2 == 0) PointN.ZERO else data.GRID_P/2
@@ -349,23 +356,23 @@ class CanvasRE(private val data: DataRE): UICanvas() {
                 val len = max(pos1.XP.lengthTo(pos2.XP), pos1.YP.lengthTo(pos2.YP))
 
                 if (len <= data.GRID/2*(add_size+1) && sel.equalsName(o) && onSelectLayer(o)) {
-                    list.add(o)
+                    listToRemove.add(o)
                 }
             }
-            data.select_objs.removeIf { it.first in list }
-            room.objects.removeAll(list.toSet())
+            removeObjs(listToRemove, room, true)
 
             addLastInfo()
         }
 
+        val anyMBPressed = mouse.keys.anyPressed(MouseButton.PRIMARY, MouseButton.SECONDARY)
         fun checkForSelect() {
             val m_pos = mouseRealPos.roundL(data.GRID)
-            val noMBPressed = !mouse.keys.anyPressed(MouseButton.PRIMARY, MouseButton.SECONDARY)
-            if (keyboard.pressed(KeyCode.ALT) && noMBPressed) {
+
+            if (keyboard.pressed(KeyCode.ALT) && !anyMBPressed) {
                 start_alt_pos = m_pos
             }
 
-            if (noMBPressed) return
+            if (!anyMBPressed) return
             if (!keyboard.pressed(KeyCode.ALT)) return
 
             val room = roomFrom(mouseRealPos) ?: return
@@ -391,17 +398,9 @@ class CanvasRE(private val data: DataRE): UICanvas() {
             addLastInfo()
         }
 
-        fun moveObjs(objs: List<GameObject>, moveP: PointN) {
-            objs.filter { o -> onSelectLayer(o) }.forEach { it.stats.POS += moveP }
-        }
-
         fun checkForMove() {
             if (keyboard.pressed(KeyCode.R)) return
             if (keyboard.pressed(KeyCode.SPACE)) return
-
-            val list = ArrayList<GameObject>().also {
-                data.select_objs.forEach { o -> it.add(o.first) }
-            }
 
             if (keyboard.pressed(KeyCode.CONTROL) && !mouse.keys.anyPressed(
                     MouseButton.PRIMARY,
@@ -413,20 +412,18 @@ class CanvasRE(private val data: DataRE): UICanvas() {
             }
 
             if (keyboard.pressed(KeyCode.CONTROL) && mouse.keys.pressed(MouseButton.PRIMARY) && !already_copy) {
-                data.select_objs.forEach { pair ->
-                    if (pair.first.name != "temp") {
-                        pair.second.objects.add(data.getter[pair.first.toString()])
-                    }
+                val listToAdd = ArrayList<Pair<GameObject, Room>>()
+                data.select_objs.filter { it.first.name != "temp" }.forEach { pair ->
+                    listToAdd.add(Pair(data.getter[pair.first.toString()], pair.second))
                 }
+                addObjs(listToAdd, true)
                 already_copy = true
             }
 
-            if (keyboard.pressed(KeyCode.CONTROL) && mouse.keys.anyPressed(
-                    MouseButton.PRIMARY,
-                    MouseButton.SECONDARY
-                )
-            ) {
-                moveObjs(list, mouseRealPos.roundL(data.GRID)-start_move_pos)
+
+
+            if (keyboard.pressed(KeyCode.CONTROL) && anyMBPressed) {
+                moveObjs(data.select_objs.toList(), mouseRealPos.roundL(data.GRID)-start_move_pos, true)
                 start_move_pos = mouseRealPos.roundL(data.GRID)
             }
 
@@ -434,15 +431,17 @@ class CanvasRE(private val data: DataRE): UICanvas() {
 
             when {
                 keyboard.allPressed(KeyCode.CONTROL, KeyCode.SHIFT) -> {
-                    World.rooms.forEach { moveObjs(it.objects, grid_pos) }
+                    World.rooms.forEach {
+                        moveObjs(it.objects, it, grid_pos, true)
+                    }
                 }
 
                 keyboard.pressed(KeyCode.CONTROL) -> {
-                    moveObjs(data.edit.objects, grid_pos)
+                    moveObjs(data.edit.objects, data.edit, grid_pos, true)
                 }
 
                 !keyboard.anyPressed(KeyCode.ALT, KeyCode.SHIFT, KeyCode.CONTROL) -> {
-                    moveObjs(list, grid_pos)
+                    moveObjs(data.select_objs.toList(), grid_pos, true)
                 }
             }
         }
@@ -499,13 +498,15 @@ class CanvasRE(private val data: DataRE): UICanvas() {
         }
 
         fun removeUnselectCopies() {
+            val listToRemove = ArrayList<Pair<GameObject, Room>>()
             last_selected.forEach { pair ->
                 if (pair !in data.select_objs) {
                     if (hasEqualObjIn(pair.second, pair.first)) {
-                        pair.second.objects.remove(pair.first)
+                        listToRemove.add(pair)
                     }
                 }
             }
+            removeObjs(listToRemove, true)
 
             last_selected = HashSet()
             data.select_objs.forEach { pair -> last_selected += pair }
@@ -534,13 +535,72 @@ class CanvasRE(private val data: DataRE): UICanvas() {
         checkForRemove()
         checkForSelect()
         removeUnselectCopies()
+        if (keyboard.pressed(KeyCode.CONTROL) && keyboard.inPressed(KeyCode.Z)) undo()
+
         if (keyboard.inPressed(KeyCode.P)) grid_offset_id = MathUtils.mod(grid_offset_id+1, grid_offset.size)
     }
 
     private fun hasEqualObjIn(room: Room, obj: GameObject): Boolean {
         return room.objects.any {
-            it!=obj && it.equalsS(obj) && (it.name != "temp" || it.stats.POS == obj.stats.POS)
+            it != obj && it.equalsS(obj) && (it.name != "temp" || it.stats.POS == obj.stats.POS)
         }
+    }
+
+    private val history = ArrayList<EditAction>()
+
+    private fun undo() {
+        if (history.isEmpty()) return
+        val action = history.removeLast()
+        when (action.code) {
+            EditActionCode.ADD -> removeObjs(action.list, false)
+            EditActionCode.REMOVE -> addObjs(action.list, false)
+            EditActionCode.MOVE -> moveObjs(action.list, -action.pos, false)
+        }
+        data.select_objs.clear()
+        println(history)
+    }
+
+    private fun addObjs(list: List<Pair<GameObject, Room>>, assign: Boolean) {
+        if (list.isEmpty()) return
+        list.forEach { it.second.objects.add(it.first) }
+        if (!assign) return
+        history.add(EditAction(EditActionCode.ADD, list))
+        println(history.last())
+    }
+
+    private fun removeObjs(list: List<Pair<GameObject, Room>>, assign: Boolean) {
+        if (list.isEmpty()) return
+        list.forEach { it.second.objects.remove(it.first) }
+        data.select_objs.removeIf { obj -> list.any { it.first == obj } }
+        if (!assign) return
+        history.add(EditAction(EditActionCode.REMOVE, list))
+        println(history.last())
+    }
+
+    private fun moveObjs(list: List<Pair<GameObject, Room>>, move_pos: PointN, assign: Boolean) {
+        if (list.isEmpty()) return
+        if (move_pos.length() < ConstL.LITTLE) return
+
+        list.forEach { it.first.stats.POS += move_pos }
+        if (!assign) return
+        history.add(EditAction(EditActionCode.MOVE, list, move_pos))
+        println(history.last())
+    }
+
+    private fun removeObjs(list: List<GameObject>, room: Room, assign: Boolean) {
+        removeObjs(toPairList(list, room), assign)
+    }
+
+    private fun moveObjs(list: List<GameObject>, room: Room, move_pos: PointN, assign: Boolean) {
+        moveObjs(toPairList(list, room), move_pos, assign)
+    }
+
+    private fun toPairList(list: List<GameObject>, room: Room): ArrayList<Pair<GameObject, Room>> {
+        val res = ArrayList<Pair<GameObject, Room>>()
+        list.forEach {
+            res.add(Pair(it, room))
+        }
+        return res
     }
 
     private var last_mouse_pos = PointN.ZERO
