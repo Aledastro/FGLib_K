@@ -583,6 +583,15 @@ class CanvasRE(private val data: DataRE): UICanvas() {
 
         list.forEach { it.first.stats.POS += move_pos }
         if (!assign) return
+        if(history.isNotEmpty()){
+            val last = history.last()
+            if(last.code == EditActionCode.MOVE && last.list == list){
+                val mp = last.pos + move_pos
+                history.removeLast()
+                history.add(EditAction(EditActionCode.MOVE, list, mp))
+                return
+            }
+        }
         history.add(EditAction(EditActionCode.MOVE, list, move_pos))
     }
 
