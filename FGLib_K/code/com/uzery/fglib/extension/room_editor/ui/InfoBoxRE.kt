@@ -86,18 +86,22 @@ class InfoBoxRE(private val data: DataRE): InfoBox() {
             room_info = !room_info
         }
 
+        fun addNew(pair: Pair<GameObject, Room>) {
+            obj_boxes[pair] = ObjectInfoBoxRE(data, pair)
+            obj_boxes[pair]!!.update()
+            obj_boxes[pair]!!.show()
+        }
+
         fun setBoxesY() {
             var ss = 0.0
             obj_boxes.values.forEach { box ->
                 box.pos.Y = pos.Y+origin_size.Y+ss
+
+                if(box.pos.Y < CANVAS.Y) box.show()
+                else box.hide()
+
                 ss += box.size.Y+10
             }
-        }
-        setBoxesY()
-
-        fun addNew(pair: Pair<GameObject, Room>) {
-            obj_boxes[pair] = ObjectInfoBoxRE(data, pair)
-            obj_boxes[pair]!!.show()
         }
 
         data.select_objs.forEach { pair ->
@@ -113,6 +117,8 @@ class InfoBoxRE(private val data: DataRE): InfoBox() {
         listToRemove.forEach { RoomEditorUI.remove(obj_boxes[it]!!) }
         data.select_objs.removeAll(listToRemove.toSet())
         listToRemove.forEach { obj_boxes.remove(it) }
+
+        setBoxesY()
     }
 
     override fun color(id: Int): Color {
