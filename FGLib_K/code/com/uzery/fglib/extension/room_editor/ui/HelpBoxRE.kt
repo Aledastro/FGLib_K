@@ -36,7 +36,7 @@ class HelpBoxRE(private val data: DataRE): InfoBox() {
     override fun getL(): ArrayList<String> {
         val res = LinkedList<String>()
 
-        res.add("------------------------o-o-o------------------------")
+        res.add("------------------------------o-o-o------------------------------")
         res.add("")
 
         res.add("pressing [F1] = Help window")
@@ -48,6 +48,7 @@ class HelpBoxRE(private val data: DataRE): InfoBox() {
         res.add("")
         res.add("pressing [SHIFT] = show choose object window")
         res.add("[CONTROL] + [SHIFT] + [S] = save rooms")
+        res.add("[TAB] + [ARROWS] = change world")
         res.add("")
         res.add("=in CANVAS:")
         res.add("[LMB] = add chosen obj")
@@ -59,10 +60,10 @@ class HelpBoxRE(private val data: DataRE): InfoBox() {
         res.add("[CONTROL] + [M] = change redact mode")
         res.add("[CONTROL] + [SPACE] = run simulation (bugged now)")
         res.add("")
-        res.add("[DELETE] = remove select objs")
         res.add("[ALT] + dragging [LMB] = select objs")
         res.add("[CONTROL] + [ALT] + dragging [LMB] = add to selected objs")
         res.add("[CONTROL] + [ALT] + dragging [RMB] = remove from selected objs")
+        res.add("[DELETE] = remove select objs")
         res.add("")
         res.add("[MINUS] = minus add size")
         res.add("[PLUS/EQUALS] = plus add size")
@@ -75,7 +76,7 @@ class HelpBoxRE(private val data: DataRE): InfoBox() {
         res.add("[R] + [ARROWS] = change edit room pos")
         res.add("[CONTROL] + [R] + [ARROWS] = change edit room size")
         res.add("")
-        res.add("[C] + [ARROWS] = change edit room by neighbours")
+        res.add("[WASD] = change edit room by neighbours")
         res.add("[X] + [ARROWS] = change edit room by index")
         res.add("")
         res.add("=in REDACT FIELD:")
@@ -85,7 +86,7 @@ class HelpBoxRE(private val data: DataRE): InfoBox() {
         res.add("[BACKSPACE] = delete char before caret")
 
         res.add("")
-        res.add("------------------------o-o-o------------------------")
+        res.add("------------------------------o-o-o------------------------------")
 
         return ArrayList<String>().also { it.addAll(res) }
     }

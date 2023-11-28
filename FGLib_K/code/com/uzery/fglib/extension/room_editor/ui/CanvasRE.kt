@@ -432,7 +432,13 @@ class CanvasRE(private val data: DataRE): UICanvas() {
         }
 
         fun checkForEditN() {
-            if (grid_pos.length() < 0.1) return
+            val wasd_pos = PointN(0, 0)
+            if (keyboard.inPressed(KeyCode.W)) wasd_pos.Y --
+            if (keyboard.inPressed(KeyCode.S)) wasd_pos.Y ++
+            if (keyboard.inPressed(KeyCode.A)) wasd_pos.X --
+            if (keyboard.inPressed(KeyCode.D)) wasd_pos.X ++
+
+            if (wasd_pos.length() < 0.1 && !keyboard.pressed(KeyCode.X)) return
 
             when {
                 keyboard.pressed(KeyCode.X) -> {
@@ -442,8 +448,8 @@ class CanvasRE(private val data: DataRE): UICanvas() {
                     if (keyboard.inPressed(KeyCode.RIGHT)) data.edit_n++
                 }
 
-                keyboard.pressed(KeyCode.C) -> {
-                    val rp = (data.edit.size/2+PointN(10, 10))*arrow_pos
+                else -> {
+                    val rp = (data.edit.size/2+PointN(10, 10))*wasd_pos
 
                     if (rp != PointN.ZERO) {
                         for ((index, room) in World.rooms.withIndex()) {

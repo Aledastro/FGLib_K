@@ -11,6 +11,7 @@ import com.uzery.fglib.utils.math.num.StringN
 import java.util.*
 
 class DataRE(getter_pair: Pair<AbstractClassGetter<GameObject>, Array<out String>>) {
+    lateinit var ui: RoomEditorUI
     var redact_field_active = false
     var redact_pair: Pair<GameObject, Room>? = null
     var time = 0.0

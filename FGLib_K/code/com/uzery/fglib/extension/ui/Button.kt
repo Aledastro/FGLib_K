@@ -8,7 +8,7 @@ import javafx.scene.paint.Color
 import javafx.scene.text.FontWeight
 
 abstract class Button: UIElement() {
-    private lateinit var name: String
+    private var name = ""
     abstract val pressed: Boolean
 
 

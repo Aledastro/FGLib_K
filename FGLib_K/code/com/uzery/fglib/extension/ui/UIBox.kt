@@ -33,7 +33,7 @@ open class UIBox(vararg elements: UIElement): Extension() {
 
         list.forEach { it.update() }
 
-        list.removeAll(old_list)
+        list.removeAll(old_list.toSet())
         old_list.clear()
     }
 

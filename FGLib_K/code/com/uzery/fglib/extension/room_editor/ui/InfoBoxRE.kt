@@ -107,14 +107,14 @@ class InfoBoxRE(private val data: DataRE): InfoBox() {
         data.select_objs.forEach { pair ->
             if (pair !in obj_boxes) {
                 addNew(pair)
-                RoomEditorUI.add(obj_boxes[pair]!!)
+                data.ui.add(obj_boxes[pair]!!)
             }
         }
         val listToRemove = ArrayList<Pair<GameObject, Room>>()
         obj_boxes.forEach { (key, value) ->
             if (key !in data.select_objs || value.dead) listToRemove.add(key)
         }
-        listToRemove.forEach { RoomEditorUI.remove(obj_boxes[it]!!) }
+        listToRemove.forEach { data.ui.remove(obj_boxes[it]!!) }
         data.select_objs.removeAll(listToRemove.toSet())
         listToRemove.forEach { obj_boxes.remove(it) }
 
