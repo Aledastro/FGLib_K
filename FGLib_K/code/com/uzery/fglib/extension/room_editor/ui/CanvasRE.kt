@@ -542,8 +542,11 @@ class CanvasRE(private val data: DataRE): UICanvas() {
 
     private fun hasEqualObjIn(room: Room, obj: GameObject): Boolean {
         return room.objects.any {
-            it != obj && it.equalsS(obj) && (it.name != "temp" || it.stats.POS == obj.stats.POS)
+            areEqualButNotSame(it, obj)
         }
+    }
+    private fun areEqualButNotSame(obj1: GameObject, obj2: GameObject): Boolean {
+        return obj1 != obj2 && obj1.equalsS(obj2) && (obj1.name != "temp" || obj1.stats.POS == obj2.stats.POS)
     }
 
     private val history = ArrayList<EditAction>()
@@ -557,7 +560,6 @@ class CanvasRE(private val data: DataRE): UICanvas() {
             EditActionCode.MOVE -> moveObjs(action.list, -action.pos, false)
         }
         data.select_objs.clear()
-        println(history)
     }
 
     private fun addObjs(list: List<Pair<GameObject, Room>>, assign: Boolean) {
@@ -565,16 +567,14 @@ class CanvasRE(private val data: DataRE): UICanvas() {
         list.forEach { it.second.objects.add(it.first) }
         if (!assign) return
         history.add(EditAction(EditActionCode.ADD, list))
-        println(history.last())
     }
 
     private fun removeObjs(list: List<Pair<GameObject, Room>>, assign: Boolean) {
         if (list.isEmpty()) return
         list.forEach { it.second.objects.remove(it.first) }
-        data.select_objs.removeIf { obj -> list.any { it.first == obj } }
+        data.select_objs.removeIf { obj -> list.any { it.first == obj.first } }
         if (!assign) return
         history.add(EditAction(EditActionCode.REMOVE, list))
-        println(history.last())
     }
 
     private fun moveObjs(list: List<Pair<GameObject, Room>>, move_pos: PointN, assign: Boolean) {
@@ -584,7 +584,6 @@ class CanvasRE(private val data: DataRE): UICanvas() {
         list.forEach { it.first.stats.POS += move_pos }
         if (!assign) return
         history.add(EditAction(EditActionCode.MOVE, list, move_pos))
-        println(history.last())
     }
 
     private fun removeObjs(list: List<GameObject>, room: Room, assign: Boolean) {
