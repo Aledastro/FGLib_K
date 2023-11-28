@@ -9,6 +9,7 @@ import com.uzery.fglib.utils.math.FGUtils
 import com.uzery.fglib.utils.math.geom.PointN
 import com.uzery.fglib.utils.math.geom.shape.RectN
 import javafx.scene.paint.Color
+import javafx.scene.text.FontWeight
 import java.util.*
 
 class HelpBoxRE(private val data: DataRE): InfoBox() {
@@ -17,13 +18,25 @@ class HelpBoxRE(private val data: DataRE): InfoBox() {
 
     override fun draw() {
         graphics.fill.rect(pos, size, FGUtils.transparent(Color.BEIGE, 0.7))
-        super.draw()
+        graphics.fill.font("TimesNewRoman", text_draw_size, FontWeight.BOLD)
+
+
+        for (id in 0 until text_data_size){
+            val offset_x = PointN(320, 60)+PointN(text_draw_size, y_size*(id+1.5))
+            if(id <= 1 || id >= text_data_size-2){
+                graphics.fill.textC(pos+size.XP/2+offset_x.YP, text(id), color(id))
+                continue
+            }
+
+            graphics.fill.textL(pos+offset_x, "| "+text(id).substringAfter("="), color(id))
+            graphics.fill.textR(pos+size.XP+offset_x*PointN(-1,1), text(id).substringBefore("=")+" |", color(id))
+        }
     }
 
     override fun getL(): ArrayList<String> {
         val res = LinkedList<String>()
 
-        res.add("-----------------------------------------")
+        res.add("------------------------o-o-o------------------------")
         res.add("")
 
         res.add("pressing [F1] = Help window")
@@ -36,10 +49,15 @@ class HelpBoxRE(private val data: DataRE): InfoBox() {
         res.add("pressing [SHIFT] = show choose object window")
         res.add("[CONTROL] + [SHIFT] + [S] = save rooms")
         res.add("")
-        res.add("in CANVAS:")
+        res.add("=in CANVAS:")
         res.add("[LMB] = add chosen obj")
         res.add("[RMB] = remove objs in cell")
         res.add("[MOUSE WHEEL] = scale canvas")
+        res.add("[SPACE] + [LMB/RMB] = move canvas")
+        res.add("")
+        res.add("[CONTROL] + [TAB] = show/hide bounds")
+        res.add("[CONTROL] + [M] = change redact mode")
+        res.add("[CONTROL] + [SPACE] = run simulation (bugged now)")
         res.add("")
         res.add("[DELETE] = remove select objs")
         res.add("[ALT] + dragging [LMB] = select objs")
@@ -50,31 +68,24 @@ class HelpBoxRE(private val data: DataRE): InfoBox() {
         res.add("[PLUS/EQUALS] = plus add size")
         res.add("[P] = change GRID offset")
         res.add("")
-        res.add("[CONTROL] + [TAB] = show/hide bounds")
-        res.add("[CONTROL] + [M] = change edit mode: FOCUSED, ALL_ROOMS, OVERVIEW")
-        res.add("[CONTROL] + [SPACE] = run simulation (bugged now)")
-        res.add("")
         res.add("[ARROWS] = move select objs")
         res.add("[CONTROL] + [ARROWS] = move edit room")
         res.add("[CONTROL] + [SHIFT] + [ARROWS] = move all rooms")
         res.add("")
-        res.add("[SHIFT] + [ARROWS] = change room pos")
-        res.add("[ALT] + [ARROWS] = change room size")
+        res.add("[R] + [ARROWS] = change edit room pos")
+        res.add("[CONTROL] + [R] + [ARROWS] = change edit room size")
         res.add("")
-        res.add("[CONTROL] + [IJKL] = change edit room by neighbours")
-        res.add("[ALT] + [IJKL] = change edit room by index")
+        res.add("[C] + [ARROWS] = change edit room by neighbours")
+        res.add("[X] + [ARROWS] = change edit room by index")
         res.add("")
-        res.add("in REDACT FIELD:")
-        res.add("[ARROWS] = change caret pos")
+        res.add("=in REDACT FIELD:")
+        res.add("[ARROWS/MOUSE POS] = change caret pos")
         res.add("[ESCAPE] = reset changes")
         res.add("[ENTER] = save changes")
         res.add("[BACKSPACE] = delete char before caret")
 
         res.add("")
-        res.add("-----------------------------------------")
-
-        for (i in 1..9) res.addFirst("")
-        res.replaceAll { " ".repeat(150)+it }
+        res.add("------------------------o-o-o------------------------")
 
         return ArrayList<String>().also { it.addAll(res) }
     }

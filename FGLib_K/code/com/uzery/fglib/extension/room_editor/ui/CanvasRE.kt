@@ -165,7 +165,7 @@ class CanvasRE(private val data: DataRE): UICanvas() {
             val set = HashSet<PointN>()
             for (pair in data.select_objs) {
                 if (!onSelectLayer(pair.first)) continue
-                val obj_p = pair.first.stats.POS.roundL(data.GRID) + pair.first.stats.roomPOS - data.edit.pos
+                val obj_p = pair.first.stats.POS.roundL(data.GRID)+pair.first.stats.roomPOS-data.edit.pos
                 set += obj_p
             }
             for (obj_p in set) {
@@ -268,6 +268,13 @@ class CanvasRE(private val data: DataRE): UICanvas() {
     }
 
     override fun ifActive() {
+        val arrow_pos = PointN(0, 0)
+        if (keyboard.inPressed(KeyCode.UP)) arrow_pos.Y --
+        if (keyboard.inPressed(KeyCode.DOWN)) arrow_pos.Y ++
+        if (keyboard.inPressed(KeyCode.LEFT)) arrow_pos.X --
+        if (keyboard.inPressed(KeyCode.RIGHT)) arrow_pos.X ++
+        val grid_pos = arrow_pos*data.GRID
+
         fun addLastInfo() {
             data.last_edit_room = data.edit
             data.last_edit_n = data.edit_n
@@ -320,7 +327,7 @@ class CanvasRE(private val data: DataRE): UICanvas() {
         }
 
         fun checkForRemove() {
-            if(keyboard.inPressed(KeyCode.DELETE)){
+            if (keyboard.inPressed(KeyCode.DELETE)) {
                 data.select_objs.forEach { it.second.objects.remove(it.first) }
                 data.select_objs.clear()
             }
@@ -371,9 +378,9 @@ class CanvasRE(private val data: DataRE): UICanvas() {
 
                 if (rect.into(o_pos) && onSelectLayer(o) && (o.visuals.isNotEmpty() || data.select_layerID == 0)) {
                     val pair = Pair(o, room)
-                    if(mouse.keys.pressed(MouseButton.PRIMARY)){
+                    if (mouse.keys.pressed(MouseButton.PRIMARY)) {
                         data.select_objs.add(pair)
-                    }else{
+                    } else {
                         data.select_objs.remove(pair)
                     }
                 }
@@ -381,54 +388,62 @@ class CanvasRE(private val data: DataRE): UICanvas() {
             addLastInfo()
         }
 
+        fun moveObjs(objs: List<GameObject>, moveP: PointN) {
+            objs.filter { o -> onSelectLayer(o) }.forEach { it.stats.POS += moveP }
+        }
+
         fun checkForMove() {
-            var arrows_pos = PointN(0, 0)
-            if (keyboard.inPressed(KeyCode.UP)) arrows_pos.Y--
-            if (keyboard.inPressed(KeyCode.DOWN)) arrows_pos.Y++
-            if (keyboard.inPressed(KeyCode.LEFT)) arrows_pos.X--
-            if (keyboard.inPressed(KeyCode.RIGHT)) arrows_pos.X++
-            arrows_pos *= data.GRID
-
-            if (arrows_pos.length() < 0.1) return
-
-            fun moveObjs(objs: List<GameObject>) {
-                objs.filter { o -> onSelectLayer(o) }.forEach { it.stats.POS += arrows_pos }
-            }
+            if (keyboard.pressed(KeyCode.R)) return
+            if (keyboard.pressed(KeyCode.SPACE)) return
+            if (grid_pos.length() < 0.1) return
 
             when {
                 keyboard.allPressed(KeyCode.CONTROL, KeyCode.SHIFT) -> {
-                    World.rooms.forEach { moveObjs(it.objects) }
+                    World.rooms.forEach { moveObjs(it.objects, grid_pos) }
                 }
 
                 keyboard.pressed(KeyCode.CONTROL) -> {
-                    moveObjs(data.edit.objects)
-                }
-
-                keyboard.pressed(KeyCode.SHIFT) -> {
-                    data.edit.pos += arrows_pos
-                }
-
-                keyboard.pressed(KeyCode.ALT) -> {
-                    data.edit.size += arrows_pos
+                    moveObjs(data.edit.objects, grid_pos)
                 }
 
                 !keyboard.anyPressed(KeyCode.ALT, KeyCode.SHIFT, KeyCode.CONTROL) -> {
-                    moveObjs(ArrayList<GameObject>().also { data.select_objs.forEach { o -> it.add(o.first) } })
+                    moveObjs(
+                        ArrayList<GameObject>().also {
+                            data.select_objs.forEach { o -> it.add(o.first) }
+                        }, grid_pos
+                    )
+                }
+            }
+        }
+
+        fun changeEditRoom() {
+            if (!keyboard.pressed(KeyCode.R)) return
+            if (grid_pos.length() < 0.1) return
+
+            when {
+                keyboard.pressed(KeyCode.CONTROL) -> {
+                    data.edit.size += grid_pos
+                }
+
+                else -> {
+                    data.edit.pos += grid_pos
                 }
             }
         }
 
         fun checkForEditN() {
-            val arrows_pos = PointN(0, 0)
-            if (keyboard.inPressed(KeyCode.I)) arrows_pos.Y--
-            if (keyboard.inPressed(KeyCode.K)) arrows_pos.Y++
-            if (keyboard.inPressed(KeyCode.J)) arrows_pos.X--
-            if (keyboard.inPressed(KeyCode.L)) arrows_pos.X++
+            if (grid_pos.length() < 0.1) return
 
-            if (arrows_pos.length() < 0.1) return
             when {
-                keyboard.pressed(KeyCode.CONTROL) -> {
-                    val rp = (data.edit.size/2+PointN(10, 10))*arrows_pos
+                keyboard.pressed(KeyCode.X) -> {
+                    if (keyboard.inPressed(KeyCode.UP)) data.edit_n -= 5
+                    if (keyboard.inPressed(KeyCode.DOWN)) data.edit_n += 5
+                    if (keyboard.inPressed(KeyCode.LEFT)) data.edit_n--
+                    if (keyboard.inPressed(KeyCode.RIGHT)) data.edit_n++
+                }
+
+                keyboard.pressed(KeyCode.C) -> {
+                    val rp = (data.edit.size/2+PointN(10, 10))*arrow_pos
 
                     if (rp != PointN.ZERO) {
                         for ((index, room) in World.rooms.withIndex()) {
@@ -437,13 +452,6 @@ class CanvasRE(private val data: DataRE): UICanvas() {
                             }
                         }
                     }
-                }
-
-                keyboard.pressed(KeyCode.ALT) -> {
-                    if (keyboard.inPressed(KeyCode.I)) data.edit_n -= 5
-                    if (keyboard.inPressed(KeyCode.K)) data.edit_n += 5
-                    if (keyboard.inPressed(KeyCode.J)) data.edit_n--
-                    if (keyboard.inPressed(KeyCode.L)) data.edit_n++
                 }
             }
 
@@ -470,6 +478,7 @@ class CanvasRE(private val data: DataRE): UICanvas() {
         if (keyboard.pressed(KeyCode.SPACE)) return
 
         checkForMove()
+        changeEditRoom()
         checkForEditN()
         checkForAdd()
         checkForRemove()
