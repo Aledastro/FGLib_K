@@ -2,6 +2,7 @@ package com.uzery.fglib.core.program
 
 import com.uzery.fglib.core.program.Program.WINDOW_SIZE
 import com.uzery.fglib.core.program.Program.gc
+import com.uzery.fglib.utils.data.debug.DebugData
 import com.uzery.fglib.utils.graphics.AffineGraphics
 import com.uzery.fglib.utils.graphics.AffineTransform
 import com.uzery.fglib.utils.graphics.GeometryGraphics
@@ -10,6 +11,7 @@ import com.uzery.fglib.utils.input.KeyActivator
 import com.uzery.fglib.utils.input.MouseActivator
 import com.uzery.fglib.utils.math.geom.PointN
 import com.uzery.fglib.utils.math.geom.shape.RectN
+import com.uzery.fglib.utils.math.num.IntI
 import javafx.scene.Cursor
 import javafx.scene.image.Image
 import javafx.scene.input.KeyCode
@@ -43,6 +45,23 @@ object Platform {
             field = value
             if (Program.inited) Program.setCursor()
         }
+    fun resizeCursorFrom(pos: IntI): Cursor{
+        return when(pos){
+            IntI(-1, -1) -> Cursor.NW_RESIZE
+            IntI(0, -1) -> Cursor.N_RESIZE
+            IntI(1, -1) -> Cursor.NE_RESIZE
+
+            IntI(-1, 0) -> Cursor.W_RESIZE
+            IntI(0, 0) -> Cursor.DEFAULT
+            IntI(1, 0) -> Cursor.E_RESIZE
+
+            IntI(-1, 1) -> Cursor.SW_RESIZE
+            IntI(0, 1) -> Cursor.S_RESIZE
+            IntI(1, 1) -> Cursor.SE_RESIZE
+
+            else -> throw DebugData.error("wrong: $pos")
+        }
+    }
 
     //todo scale 3 spaces
     var scale = 1
