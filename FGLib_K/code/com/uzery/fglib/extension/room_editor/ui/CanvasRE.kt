@@ -7,7 +7,6 @@ import com.uzery.fglib.core.program.Platform
 import com.uzery.fglib.core.program.Platform.graphics
 import com.uzery.fglib.core.program.Platform.keyboard
 import com.uzery.fglib.core.program.Platform.mouse
-import com.uzery.fglib.core.program.Platform.scale
 import com.uzery.fglib.core.program.Program
 import com.uzery.fglib.core.room.Room
 import com.uzery.fglib.core.world.World
@@ -55,8 +54,10 @@ class CanvasRE(private val data: DataRE): UICanvas() {
     override val window: RectN
         get() = Platform.CANVAS_R
 
-    private val grid_offset = arrayOf(data.GRID_P/2, PointN.ZERO, data.GRID_P.XP/2, data.GRID_P.YP/2)
+    private val grid_offset_values = arrayOf(data.GRID_P/2, PointN.ZERO, data.GRID_P.XP/2, data.GRID_P.YP/2)
     private var grid_offset_id = 0
+    private val grid_offset: PointN
+        get() = grid_offset_values[grid_offset_id]
 
     private var add_size = 0
 
@@ -123,12 +124,13 @@ class CanvasRE(private val data: DataRE): UICanvas() {
             if (!isActive()) return
 
             Platform.global_alpha = alpha
-            val pp = mouseRealPos.roundL(data.GRID)+data.draw_pos+grid_offset[grid_offset_id]
+
             for (i in -add_size/2..(add_size+1)/2) {
                 for (j in -add_size/2..(add_size+1)/2) {
                     val obj = data.chosen_obj ?: continue
-                    obj.draw(PointN(i, j)*data.GRID+pp)
-                    if (data.draw_bounds) WorldUtils.drawBoundsFor(obj, PointN(i, j)*data.GRID+pp)
+                    val p = data.draw_pos+mouseRealPosGrid+grid_offset
+                    obj.draw(PointN(i, j)*data.GRID+p)
+                    if (data.draw_bounds) WorldUtils.drawBoundsFor(obj, PointN(i, j)*data.GRID+p)
                 }
             }
 
@@ -149,14 +151,14 @@ class CanvasRE(private val data: DataRE): UICanvas() {
             val sizeX = (window.S.X/view_scale/data.GRID+1).toInt()
             for (i in 0..sizeY) {
                 graphics.stroke.line(
-                    -data.GRID_P+data.draw_pos.mod(data.GRID)
-                            +PointN(0.0, i*data.GRID), PointN(window.S.X/view_scale+data.GRID, 0.0), c
+                    -data.GRID_P*3/2+grid_offset.YP+data.draw_pos.mod(data.GRID)
+                            +PointN(0, i*data.GRID), PointN(window.S.X/view_scale+data.GRID, 0.0), c
                 )
             }
             for (i in 0..sizeX) {
                 graphics.stroke.line(
-                    -data.GRID_P+data.draw_pos.mod(data.GRID)
-                            +PointN(i*data.GRID, 0.0), PointN(0.0, window.S.Y/view_scale+data.GRID), c
+                    -data.GRID_P*3/2+grid_offset.XP+data.draw_pos.mod(data.GRID)
+                            +PointN(i*data.GRID, 0), PointN(0.0, window.S.Y/view_scale+data.GRID), c
                 )
             }
 
@@ -175,7 +177,8 @@ class CanvasRE(private val data: DataRE): UICanvas() {
             val set = HashSet<PointN>()
             for (pair in data.select_objs) {
                 if (!onSelectLayer(pair.first)) continue
-                val obj_p = pair.first.stats.POS.roundL(data.GRID)+pair.first.stats.roomPOS-data.edit.pos
+                val op = (pair.first.stats.POS-grid_offset+data.GRID_P/2).roundL(data.GRID)
+                val obj_p = op+grid_offset-data.GRID_P/2+pair.first.stats.roomPOS-data.edit.pos
                 set += obj_p
             }
             for (obj_p in set) {
@@ -197,17 +200,20 @@ class CanvasRE(private val data: DataRE): UICanvas() {
                 FGUtils.transparent(Color.CYAN.interpolate(Color.WHITE, 0.5), 0.8)
             }
 
-            val m_pos = mouseRealPos.roundL(data.GRID)
+            val m_pos = mouseRealPosGrid
 
-            val minP = data.draw_pos+
+            var minP = data.draw_pos+
                     if (keyboard.pressed(KeyCode.ALT))
                         PointN.transform(m_pos, start_alt_pos) { o1, o2 -> min(o1, o2) }
                     else m_pos+PointN(1, 1)*(-add_size/2)*data.GRID
 
-            val maxP = data.draw_pos+data.GRID_P+
+            var maxP = data.draw_pos+data.GRID_P+
                     if (keyboard.pressed(KeyCode.ALT))
                         PointN.transform(m_pos, start_alt_pos) { o1, o2 -> max(o1, o2) }
                     else m_pos+PointN(1, 1)*(-add_size/2+add_size)*data.GRID
+
+            minP+=grid_offset-data.GRID_P/2
+            maxP+=grid_offset-data.GRID_P/2
 
             val sizeP = maxP-minP
 
@@ -274,6 +280,8 @@ class CanvasRE(private val data: DataRE): UICanvas() {
 
     private val mouseRealPos
         get() = mouse.pos/view_scale-data.draw_pos
+    private val mouseRealPosGrid
+        get() = (mouseRealPos-grid_offset+data.GRID_P/2).roundL(data.GRID)
 
     private var start_alt_pos = PointN.ZERO
     private var start_move_pos = PointN.ZERO
@@ -332,7 +340,7 @@ class CanvasRE(private val data: DataRE): UICanvas() {
 
                 val o = data.getter.getEntry(data.chosen_entry)()
                 if (data.select_layerID != 0 && !onSelectLayer(o)) return
-                val posWithOffset = pos+mouseRealPos.roundL(data.GRID)+grid_offset[grid_offset_id]
+                val posWithOffset = pos+mouseRealPosGrid+grid_offset
 
                 val room = roomFrom(posWithOffset) ?: return
 
@@ -366,13 +374,13 @@ class CanvasRE(private val data: DataRE): UICanvas() {
             if (keyboard.anyPressed(KeyCode.ALT, KeyCode.CONTROL)) return
 
             val sel = data.getter.getEntry(data.chosen_entry)()
-            val room = roomFrom(mouseRealPos) ?: return
+            val room = roomFrom(mouseRealPosGrid) ?: return
 
             val listToRemove = ArrayList<GameObject>()
             room.objects.forEach { o ->
                 val pos1 = (o.stats.POS-data.edit.pos+room.pos).roundL(data.GRID)
                 val added = if (add_size%2 == 0) PointN.ZERO else data.GRID_P/2
-                val pos2 = mouseRealPos.roundL(data.GRID)+added
+                val pos2 = mouseRealPosGrid+added
                 val len = max(pos1.XP.lengthTo(pos2.XP), pos1.YP.lengthTo(pos2.YP))
 
                 if (len <= data.GRID/2*(add_size+1) && sel.equalsName(o) && onSelectLayer(o)) {
@@ -388,7 +396,7 @@ class CanvasRE(private val data: DataRE): UICanvas() {
         fun checkForSelect() {
             if (keyboard.pressed(KeyCode.R)) return
 
-            val m_pos = mouseRealPos.roundL(data.GRID)
+            val m_pos = mouseRealPosGrid
 
             if (keyboard.pressed(KeyCode.ALT) && !anyMBPressed) {
                 start_alt_pos = m_pos
@@ -397,7 +405,7 @@ class CanvasRE(private val data: DataRE): UICanvas() {
             if (!anyMBPressed) return
             if (!keyboard.pressed(KeyCode.ALT)) return
 
-            val room = roomFrom(mouseRealPos) ?: return
+            val room = roomFrom(mouseRealPosGrid) ?: return
 
             val minP = PointN.transform(m_pos, start_alt_pos) { o1, o2 -> min(o1, o2) }
             val maxP = PointN.transform(m_pos, start_alt_pos) { o1, o2 -> max(o1, o2) }
@@ -406,7 +414,8 @@ class CanvasRE(private val data: DataRE): UICanvas() {
 
             if (!keyboard.pressed(KeyCode.CONTROL)) data.select_objs.clear()
             room.objects.forEach { o ->
-                val o_pos = (o.stats.POS-data.edit.pos+room.pos).roundL(data.GRID)+data.GRID_P/2
+                val o_pos = (o.stats.POS-data.edit.pos+room.pos-grid_offset+data.GRID_P/2).roundL(data.GRID)+
+                        data.GRID_P/2
 
                 if (rect.into(o_pos) && onSelectLayer(o) && (o.visuals.isNotEmpty() || data.select_layerID == 0)) {
                     val pair = Pair(o, room)
@@ -429,7 +438,7 @@ class CanvasRE(private val data: DataRE): UICanvas() {
                     MouseButton.SECONDARY
                 )
             ) {
-                start_move_pos = mouseRealPos.roundL(data.GRID)
+                start_move_pos = mouseRealPosGrid
                 already_copy = false
             }
 
@@ -442,11 +451,10 @@ class CanvasRE(private val data: DataRE): UICanvas() {
                 already_copy = true
             }
 
-
-
             if (keyboard.pressed(KeyCode.CONTROL) && anyMBPressed) {
-                moveObjs(data.select_objs.toList(), mouseRealPos.roundL(data.GRID)-start_move_pos, true)
-                start_move_pos = mouseRealPos.roundL(data.GRID)
+                val mpg = mouseRealPosGrid
+                moveObjs(data.select_objs.toList(), mpg-start_move_pos, true)
+                start_move_pos = mpg
             }
 
             if (grid_pos.length() < 0.1) return
@@ -454,16 +462,16 @@ class CanvasRE(private val data: DataRE): UICanvas() {
             when {
                 keyboard.allPressed(KeyCode.CONTROL, KeyCode.SHIFT) -> {
                     World.rooms.forEach {
-                        moveObjs(it.objects, it, grid_pos, true)
+                        moveObjs(it.objects, it, grid_pos/2, true)
                     }
                 }
 
                 keyboard.pressed(KeyCode.CONTROL) -> {
-                    moveObjs(data.edit.objects, data.edit, grid_pos, true)
+                    moveObjs(data.edit.objects, data.edit, grid_pos/2, true)
                 }
 
                 !keyboard.anyPressed(KeyCode.ALT, KeyCode.SHIFT, KeyCode.CONTROL) -> {
-                    moveObjs(data.select_objs.toList(), grid_pos, true)
+                    moveObjs(data.select_objs.toList(), grid_pos/2, true)
                 }
             }
         }
@@ -594,7 +602,7 @@ class CanvasRE(private val data: DataRE): UICanvas() {
         removeUnselectCopies()
         if (keyboard.pressed(KeyCode.CONTROL) && keyboard.inPressed(KeyCode.Z)) undo()
 
-        if (keyboard.inPressed(KeyCode.P)) grid_offset_id = MathUtils.mod(grid_offset_id+1, grid_offset.size)
+        if (keyboard.inPressed(KeyCode.P)) grid_offset_id = MathUtils.mod(grid_offset_id+1, grid_offset_values.size)
     }
 
     private fun hasEqualObjIn(room: Room, obj: GameObject): Boolean {

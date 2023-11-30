@@ -89,6 +89,10 @@ data class PointN(private val xs: Array<Double>) {
     fun roundC(size: Double) = transform { x -> MathUtils.roundC(x, size) }
     fun roundR(size: Double) = transform { x -> MathUtils.roundR(x, size) }
     fun mod(size: Double) = transform { x -> MathUtils.mod(x, size) }
+    fun roundL(size: Int) = roundL(size.toDouble())
+    fun roundC(size: Int) = roundC(size.toDouble())
+    fun roundR(size: Int) = roundR(size.toDouble())
+    fun mod(size: Int) = mod(size.toDouble())
     fun interpolate(pos: PointN, k: Double): PointN {
         return this+(pos-this)*k
     }

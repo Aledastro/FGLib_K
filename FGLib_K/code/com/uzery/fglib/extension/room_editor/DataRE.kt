@@ -10,7 +10,7 @@ import com.uzery.fglib.utils.math.geom.PointN
 import com.uzery.fglib.utils.math.num.StringN
 import java.util.*
 
-class DataRE(getter_pair: Pair<AbstractClassGetter<GameObject>, Array<out String>>) {
+class DataRE(val GRID: Int, getter_pair: Pair<AbstractClassGetter<GameObject>, Array<out String>>) {
     lateinit var ui: RoomEditorUI
     var redact_field_active = false
     var redact_pair: Pair<GameObject, Room>? = null
@@ -41,8 +41,7 @@ class DataRE(getter_pair: Pair<AbstractClassGetter<GameObject>, Array<out String
     var select_group = 0
 
     val OFFSET = 40.0
-    val GRID
-        get() = 32.0/Platform.scale
+
     val GRID_P
         get() = PointN(GRID, GRID)
 

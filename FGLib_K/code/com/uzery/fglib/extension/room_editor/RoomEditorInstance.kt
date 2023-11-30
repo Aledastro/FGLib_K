@@ -18,7 +18,7 @@ import com.uzery.fglib.utils.math.geom.PointN
 import javafx.scene.input.KeyCode
 import javafx.scene.paint.Color
 
-class RoomEditorInstance(private var getter: Pair<AbstractClassGetter<GameObject>, Array<String>>):
+class RoomEditorInstance(private val GRID: Int, private var getter: Pair<AbstractClassGetter<GameObject>, Array<String>>):
     Extension() {
     private lateinit var world_save: Array<String>
     private lateinit var data: DataRE
@@ -40,7 +40,7 @@ class RoomEditorInstance(private var getter: Pair<AbstractClassGetter<GameObject
     }
 
     override fun init() {
-        data = DataRE(getter)
+        data = DataRE(GRID, getter)
         data.ui = ui
 
         scale = 2
