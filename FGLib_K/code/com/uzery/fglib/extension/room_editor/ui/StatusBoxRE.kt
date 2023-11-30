@@ -16,10 +16,11 @@ class StatusBoxRE(private val data: DataRE): InfoBox() {
     override val text_draw_offset: Double
         get() = 0.1
 
-    val DELAY = 40.0
+    val DELAY = 100.0
+    val FADE_DELAY = 40.0
 
     override fun draw() {
-        graphics.alpha = 1.0-(data.time-data.save_time).toDouble().coerceIn(0.0, DELAY)/DELAY
+        graphics.alpha = 1.0-(data.time-data.save_time-DELAY).coerceIn(0.0, FADE_DELAY)/FADE_DELAY
         graphics.fill.rect(pos, size, FGUtils.transparent(Color.BEIGE, 0.7))
         graphics.fill.font("TimesNewRoman", text_draw_size, FontWeight.BOLD)
         val pos2 = pos+PointN(-8, 5)

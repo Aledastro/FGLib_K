@@ -120,7 +120,7 @@ class RoomEditorInstance(private var getter: Pair<AbstractClassGetter<GameObject
                 info_box.obj_boxes.values.forEach { it.show() }
             }
 
-            if(data.time-data.save_time<status_box.DELAY) status_box.show()
+            if(data.time-data.save_time<status_box.DELAY+status_box.FADE_DELAY) status_box.show()
             else status_box.hide()
 
             if (data.redact_pair != null) redact_field.show()

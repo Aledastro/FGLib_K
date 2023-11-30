@@ -15,7 +15,7 @@ class DataRE(getter_pair: Pair<AbstractClassGetter<GameObject>, Array<out String
     var redact_field_active = false
     var redact_pair: Pair<GameObject, Room>? = null
     var time = 0
-    var save_time = -100
+    var save_time = -150
     var world_play = false
     var last_world_play = false
     var hide_ui = false
