@@ -4,10 +4,7 @@ import com.uzery.fglib.utils.data.debug.DebugData
 import com.uzery.fglib.utils.math.ArrayUtils
 import com.uzery.fglib.utils.math.MathUtils
 import com.uzery.fglib.utils.math.num.IntI
-import kotlin.math.cos
-import kotlin.math.max
-import kotlin.math.sin
-import kotlin.math.sqrt
+import kotlin.math.*
 
 data class PointN(private val xs: Array<Double>) {
     val dim
@@ -97,7 +94,7 @@ data class PointN(private val xs: Array<Double>) {
     }
 
     fun coerceIn(posL: PointN, posR: PointN) = PointN(Array(dim) { i ->
-        xs[i].coerceIn(posL[i], max(posL[i], posR[i]))
+        xs[i].coerceIn(min(posL[i], posR[i]) , max(posL[i], posR[i]))
     })
     fun coerceL(posL: PointN) = PointN(Array(dim) { i ->
         xs[i].coerceAtLeast(posL[i])

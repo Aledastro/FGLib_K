@@ -110,7 +110,12 @@ class CanvasRE(private val data: DataRE): UICanvas() {
 
         fun drawFields() {
             graphics.setStroke(3.0)
-            graphics.stroke.rect(data.draw_pos, data.edit.size, Color.WHITE)
+            if(data.edit.size.length() > ConstL.LITTLE){
+                graphics.stroke.rect(data.draw_pos, data.edit.size, Color.WHITE)
+            }else{
+                val mini = PointN(1, 1)
+                graphics.stroke.rect(data.draw_pos-mini/2, mini, Color.WHITE)
+            }
         }
 
         fun drawChosenObj(alpha: Double = 1.0) {
@@ -282,6 +287,9 @@ class CanvasRE(private val data: DataRE): UICanvas() {
         }
     }
 
+    private var temp_edit_pos = PointN.ZERO
+    private var temp_edit_start_pos = PointN.ZERO
+    private var temp_edit_size = PointN.ZERO
     override fun ifActive() {
         val arrow_pos = PointN(0, 0)
         if (keyboard.inPressed(KeyCode.UP)) arrow_pos.Y--
@@ -461,38 +469,49 @@ class CanvasRE(private val data: DataRE): UICanvas() {
         }
 
         fun changeEditRoom() {
+            val r = getResizeType()
+
+            if(r == IntI()){
+                temp_edit_pos = data.edit.pos
+                temp_edit_start_pos = temp_edit_pos
+                temp_edit_size = data.edit.size
+            }
+
             if (!keyboard.pressed(KeyCode.R)) return
 
-            val r = getResizeType()
+
             if (r != IntI()) {
-                val mrg = (mouse.pos/view_scale).roundL(data.GRID)
+                val mrg = (mouse.pos/view_scale).roundC(data.GRID)
                 val move_p = mrg-start_edit_room_pos
 
                 if (mouse.keys.pressed(MouseButton.PRIMARY)) {
                     when (r.x) {
-                        1 -> {
-                            data.edit.size += move_p.XP
-                        }
                         -1 -> {
-                            data.edit.pos += move_p.XP
-                            data.draw_pos += move_p.XP
-                            data.edit.size -= move_p.XP
-                            moveObjs(data.edit.objects, data.edit, -move_p.XP, false)
+                            temp_edit_pos += move_p.XP
+                            temp_edit_size -= move_p.XP
+                        }
+                        1 -> {
+                            temp_edit_size += move_p.XP
                         }
                     }
                     when (r.y) {
-                        1 -> {
-                            data.edit.size += move_p.YP
-                        }
                         -1 -> {
-                            data.edit.pos += move_p.YP
-                            data.draw_pos += move_p.YP
-                            data.edit.size -= move_p.YP
-                            moveObjs(data.edit.objects, data.edit, -move_p.YP, false)
+                            temp_edit_pos += move_p.YP
+                            temp_edit_size -= move_p.YP
+                        }
+                        1 -> {
+                            temp_edit_size += move_p.YP
                         }
                     }
                 }
-                data.edit.size = data.edit.size.coerceL(PointN.ZERO)
+                data.edit.size = temp_edit_size.coerceL(PointN.ZERO)
+                val temp_start = temp_edit_pos.coerceR(temp_edit_start_pos)
+                val temp_full = temp_edit_pos+temp_edit_size
+                val move_ep = temp_edit_pos.coerceIn(temp_start, temp_full) - data.edit.pos
+                data.edit.pos += move_ep
+                data.draw_pos += move_ep
+                moveObjs(data.edit.objects, data.edit, -move_ep, false)
+
                 start_edit_room_pos = mrg
             }
         }
@@ -696,21 +715,21 @@ class CanvasRE(private val data: DataRE): UICanvas() {
         val ep = PointN.ZERO
         val eps = PointN.ZERO+data.edit.size
         when {
-            mp.XP.lengthTo(ep.XP) < data.GRID/2 -> {
-                resize_type = IntI(-1, 0)
-            }
-
             mp.XP.lengthTo(eps.XP) < data.GRID/2 -> {
                 resize_type = IntI(1, 0)
             }
+
+            mp.XP.lengthTo(ep.XP) < data.GRID/2 -> {
+                resize_type = IntI(-1, 0)
+            }
         }
         when {
-            mp.YP.lengthTo(ep.YP) < data.GRID/2 -> {
-                resize_type = IntI(resize_type.x, -1)
-            }
-
             mp.YP.lengthTo(eps.YP) < data.GRID/2 -> {
                 resize_type = IntI(resize_type.x, 1)
+            }
+
+            mp.YP.lengthTo(ep.YP) < data.GRID/2 -> {
+                resize_type = IntI(resize_type.x, -1)
             }
         }
         return resize_type
