@@ -10,7 +10,6 @@ import com.uzery.fglib.core.room.Room
 import com.uzery.fglib.core.world.World
 import com.uzery.fglib.core.world.WorldUtils
 import com.uzery.fglib.extension.room_editor.DataRE
-import com.uzery.fglib.extension.room_editor.RoomEditorUI
 import com.uzery.fglib.extension.ui.InfoBox
 import com.uzery.fglib.utils.math.FGUtils
 import com.uzery.fglib.utils.math.geom.PointN
@@ -111,8 +110,15 @@ class InfoBoxRE(private val data: DataRE): InfoBox() {
             }
         }
         val listToRemove = ArrayList<Pair<GameObject, Room>>()
-        obj_boxes.forEach { (key, value) ->
-            if (key !in data.select_objs || value.dead) listToRemove.add(key)
+        var alone_box: ObjectInfoBoxRE? = null
+        obj_boxes.values.forEach { box ->
+            if(box.all_dead) {
+                alone_box = box
+                box.all_dead = false
+            }
+        }
+        obj_boxes.forEach { (key, box) ->
+            if (key !in data.select_objs || box.dead || (alone_box!=null && box != alone_box)) listToRemove.add(key)
         }
         listToRemove.forEach { data.ui.remove(obj_boxes[it]!!) }
         data.select_objs.removeAll(listToRemove.toSet())

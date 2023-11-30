@@ -17,19 +17,19 @@ class HelpBoxRE(private val data: DataRE): InfoBox() {
         get() = 0.1
 
     override fun draw() {
-        graphics.fill.rect(pos, size, FGUtils.transparent(Color.BEIGE, 0.7))
+        graphics.fill.rect(pos, size, FGUtils.transparent(Color.BEIGE, 0.85))
         graphics.fill.font("TimesNewRoman", text_draw_size, FontWeight.BOLD)
 
 
         for (id in 0 until text_data_size){
-            val offset_x = PointN(320, 60)+PointN(text_draw_size, y_size*(id+1.5))
+            val offset = PointN(320, 30)+PointN(text_draw_size, y_size*(id+1.5))
             if(id <= 1 || id >= text_data_size-2){
-                graphics.fill.textC(pos+size.XP/2+offset_x.YP, text(id), color(id))
+                graphics.fill.textC(pos+size.XP/2+offset.YP, text(id), color(id))
                 continue
             }
 
-            graphics.fill.textL(pos+offset_x, "| "+text(id).substringAfter("="), color(id))
-            graphics.fill.textR(pos+size.XP+offset_x*PointN(-1,1), text(id).substringBefore("=")+" |", color(id))
+            graphics.fill.textL(pos+offset, "| "+text(id).substringAfter("="), color(id))
+            graphics.fill.textR(pos+size.XP+offset*PointN(-1,1), text(id).substringBefore("=")+" |", color(id))
         }
     }
 
@@ -46,7 +46,7 @@ class HelpBoxRE(private val data: DataRE): InfoBox() {
         res.add("[F5] = show/hide world info")
         res.add("[F6] = show/hide room info")
         res.add("")
-        res.add("=in CANVAS:")
+        res.add("= in CANVAS:")
         res.add("= -- main:")
         res.add("[CONTROL] + [M] = change redact mode")
         res.add("[CONTROL] + [TAB] = show/hide bounds")
@@ -83,7 +83,12 @@ class HelpBoxRE(private val data: DataRE): InfoBox() {
         res.add("[ARROWS] = change edit room by neighbours")
         res.add("[X] + [ARROWS] = change edit room by index")
         res.add("")
-        res.add("=in REDACT FIELD:")
+        res.add("= in INFO BOX:")
+        res.add("[LMB] = edit in redact field")
+        res.add("[RMB] = remove from select")
+        res.add("[MMB] = remove from select all except this")
+        res.add("")
+        res.add("= in REDACT FIELD:")
         res.add("[ARROWS/MOUSE POS] = change caret pos")
         res.add("[ESCAPE] = reset changes")
         res.add("[ENTER] = save changes")

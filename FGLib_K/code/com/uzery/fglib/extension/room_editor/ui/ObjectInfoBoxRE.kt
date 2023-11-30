@@ -3,6 +3,7 @@ package com.uzery.fglib.extension.room_editor.ui
 import com.uzery.fglib.core.obj.GameObject
 import com.uzery.fglib.core.program.Platform
 import com.uzery.fglib.core.program.Platform.graphics
+import com.uzery.fglib.core.program.Platform.keyboard
 import com.uzery.fglib.core.program.Platform.mouse
 import com.uzery.fglib.core.room.Room
 import com.uzery.fglib.extension.room_editor.DataRE
@@ -10,6 +11,7 @@ import com.uzery.fglib.extension.ui.InfoBox
 import com.uzery.fglib.utils.math.FGUtils
 import com.uzery.fglib.utils.math.geom.PointN
 import com.uzery.fglib.utils.math.geom.shape.RectN
+import javafx.scene.input.KeyCode
 import javafx.scene.input.MouseButton
 import javafx.scene.paint.Color
 import java.util.*
@@ -38,6 +40,8 @@ class ObjectInfoBoxRE(val data: DataRE, private val pair: Pair<GameObject, Room>
     var dead = false
         private set
 
+    var all_dead = false
+
     override val text_draw_offset: Double
         get() = 0.1
 
@@ -50,6 +54,9 @@ class ObjectInfoBoxRE(val data: DataRE, private val pair: Pair<GameObject, Room>
         if (mouse.keys.inPressed(MouseButton.SECONDARY)) {
             dead = true
         }
+        if(mouse.keys.inPressed(MouseButton.MIDDLE)){
+            all_dead = true //todo
+        }
         if (mouse.keys.inPressed(MouseButton.PRIMARY)) {
             data.redact_pair = pair
         }
@@ -59,6 +66,10 @@ class ObjectInfoBoxRE(val data: DataRE, private val pair: Pair<GameObject, Room>
         graphics.fill.rect(pos, size, FGUtils.transparent(Color.DARKBLUE, 0.2))
         super.draw()
 
+        if(keyboard.pressed(KeyCode.CONTROL)) drawCross()
+    }
+
+    private fun drawCross(){
         graphics.setStroke(2.0)
         val s = 4
         val col = if (isAt()) Color.color(0.6, 0.1, 0.1, 1.0) else Color.color(0.9, 0.9, 0.9, 0.0)
