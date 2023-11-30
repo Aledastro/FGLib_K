@@ -171,8 +171,22 @@ class RoomEditorInstance(private var getter: Pair<AbstractClassGetter<GameObject
 
     private fun checkForSave() {
         if (keyboard.allPressed(KeyCode.CONTROL, KeyCode.SHIFT) && keyboard.inPressed(KeyCode.S)) {
-            //edit.objects.forEach { it.stats.POS /= 2 }
-            data.filenames.indices.forEach { i -> TextData.write(data.filenames[i], World.rooms[i].toString()) }
+            data.filenames.indices.forEach { i ->
+                fun isChanged(): Boolean {
+                    val old_room = TextData[data.filenames[i]]
+                    val new_room = ArrayList<String>()
+                    new_room.addAll(World.rooms[i].toString().split("\n"))
+
+                    old_room.removeIf { it.isEmpty() || it.startsWith("//") }
+                    new_room.removeIf { it.isEmpty() || it.startsWith("//") }
+                    if(old_room.size != new_room.size) return true
+
+                    return old_room.toString() != new_room.toString()
+                }
+                if(isChanged()){
+                    TextData.write(data.filenames[i], World.rooms[i].toString())
+                }
+            }
             data.save_time = data.time
         }
     }
