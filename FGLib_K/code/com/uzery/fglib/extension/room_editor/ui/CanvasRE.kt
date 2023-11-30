@@ -425,7 +425,7 @@ class CanvasRE(private val data: DataRE): UICanvas() {
                 already_copy = false
             }
 
-            if (keyboard.pressed(KeyCode.CONTROL) && mouse.keys.pressed(MouseButton.PRIMARY) && !already_copy) {
+            if (keyboard.pressed(KeyCode.CONTROL) && mouse.keys.pressed(MouseButton.SECONDARY) && !already_copy) {
                 val listToAdd = ArrayList<Pair<GameObject, Room>>()
                 data.select_objs.filter { it.first.name != "temp" }.forEach { pair ->
                     listToAdd.add(Pair(data.getter[pair.first.toString()], pair.second))
