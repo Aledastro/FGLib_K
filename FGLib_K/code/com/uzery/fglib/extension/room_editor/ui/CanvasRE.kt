@@ -470,28 +470,29 @@ class CanvasRE(private val data: DataRE): UICanvas() {
 
                 if (mouse.keys.pressed(MouseButton.PRIMARY)) {
                     when (r.x) {
+                        1 -> {
+                            data.edit.size += move_p.XP
+                        }
                         -1 -> {
                             data.edit.pos += move_p.XP
                             data.draw_pos += move_p.XP
                             data.edit.size -= move_p.XP
                             moveObjs(data.edit.objects, data.edit, -move_p.XP, false)
                         }
-                        1 -> {
-                            data.edit.size += move_p.XP
-                        }
                     }
                     when (r.y) {
+                        1 -> {
+                            data.edit.size += move_p.YP
+                        }
                         -1 -> {
                             data.edit.pos += move_p.YP
                             data.draw_pos += move_p.YP
                             data.edit.size -= move_p.YP
                             moveObjs(data.edit.objects, data.edit, -move_p.YP, false)
                         }
-                        1 -> {
-                            data.edit.size += move_p.YP
-                        }
                     }
                 }
+                data.edit.size = data.edit.size.coerceL(PointN.ZERO)
                 start_edit_room_pos = mrg
             }
         }

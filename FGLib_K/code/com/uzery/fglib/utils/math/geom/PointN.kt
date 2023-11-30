@@ -99,6 +99,12 @@ data class PointN(private val xs: Array<Double>) {
     fun coerceIn(posL: PointN, posR: PointN) = PointN(Array(dim) { i ->
         xs[i].coerceIn(posL[i], max(posL[i], posR[i]))
     })
+    fun coerceL(posL: PointN) = PointN(Array(dim) { i ->
+        xs[i].coerceAtLeast(posL[i])
+    })
+    fun coerceR(posL: PointN) = PointN(Array(dim) { i ->
+        xs[i].coerceAtMost(posL[i])
+    })
 
     fun rotateXY(d: Double): PointN {
         val p = PointN(this)

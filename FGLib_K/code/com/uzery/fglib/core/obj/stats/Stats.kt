@@ -10,4 +10,6 @@ class Stats {
 
     var roomPOS = PointN.ZERO
     var sortPOS = PointN.ZERO
+
+    var SIZE = PointN.ZERO
 }
