@@ -126,8 +126,7 @@ class RoomEditorInstance(private val GRID: Int, private var getter: Pair<Abstrac
             if (data.redact_pair != null) redact_field.show()
             else redact_field.hide()
 
-            if (keyboard.pressed(KeyCode.F1)) help_box.show()
-            else help_box.hide()
+            if (keyboard.inPressed(KeyCode.F1)) help_box.switch()
         }
         setVisibility()
 

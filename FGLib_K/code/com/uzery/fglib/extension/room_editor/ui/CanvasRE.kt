@@ -396,6 +396,19 @@ class CanvasRE(private val data: DataRE): UICanvas() {
         fun checkForSelect() {
             if (keyboard.pressed(KeyCode.R)) return
 
+            fun addAll(room: Room){
+                room.objects.forEach { data.select_objs += Pair(it, room) }
+            }
+            if(keyboard.pressed(KeyCode.CONTROL) && keyboard.inPressed(KeyCode.A)){
+                addAll(data.edit)
+            }
+            if(keyboard.allPressed(KeyCode.CONTROL, KeyCode.SHIFT) && keyboard.inPressed(KeyCode.A)){
+                World.rooms.forEach { addAll(it) }
+            }
+            if(keyboard.pressed(KeyCode.CONTROL) && keyboard.inPressed(KeyCode.D)){
+                data.select_objs.clear()
+            }
+
             val m_pos = mouseRealPosGrid
 
             if (keyboard.pressed(KeyCode.ALT) && !anyMBPressed) {
@@ -461,13 +474,11 @@ class CanvasRE(private val data: DataRE): UICanvas() {
 
             when {
                 keyboard.allPressed(KeyCode.CONTROL, KeyCode.SHIFT) -> {
-                    World.rooms.forEach {
-                        moveObjs(it.objects, it, grid_pos/2, true)
-                    }
+                    //future feature?
                 }
 
                 keyboard.pressed(KeyCode.CONTROL) -> {
-                    moveObjs(data.edit.objects, data.edit, grid_pos/2, true)
+                    //future feature?
                 }
 
                 !keyboard.anyPressed(KeyCode.ALT, KeyCode.SHIFT, KeyCode.CONTROL) -> {
@@ -525,13 +536,14 @@ class CanvasRE(private val data: DataRE): UICanvas() {
         }
 
         fun checkForEditN() {
-            if (keyboard.pressed(KeyCode.R)) return
+            if (keyboard.anyPressed(KeyCode.CONTROL, KeyCode.SHIFT, KeyCode.R)) return
+            if (data.select_objs.isNotEmpty()) return
 
             val wasd_pos = PointN(0, 0)
-            if (keyboard.inPressed(KeyCode.W)) wasd_pos.Y--
-            if (keyboard.inPressed(KeyCode.S)) wasd_pos.Y++
-            if (keyboard.inPressed(KeyCode.A)) wasd_pos.X--
-            if (keyboard.inPressed(KeyCode.D)) wasd_pos.X++
+            if (keyboard.inPressed(KeyCode.UP)) wasd_pos.Y--
+            if (keyboard.inPressed(KeyCode.DOWN)) wasd_pos.Y++
+            if (keyboard.inPressed(KeyCode.LEFT)) wasd_pos.X--
+            if (keyboard.inPressed(KeyCode.RIGHT)) wasd_pos.X++
 
             if (wasd_pos.length() < 0.1 && !keyboard.pressed(KeyCode.X)) return
 
@@ -566,7 +578,7 @@ class CanvasRE(private val data: DataRE): UICanvas() {
             val listToRemove = ArrayList<Pair<GameObject, Room>>()
             last_selected.forEach { pair ->
                 if (pair !in data.select_objs) {
-                    if (hasEqualObjIn(pair.second, pair.first)) {
+                    if (hasEqualObjIn(pair.second, pair.first, listToRemove)) {
                         listToRemove.add(pair)
                     }
                 }
@@ -605,9 +617,9 @@ class CanvasRE(private val data: DataRE): UICanvas() {
         if (keyboard.inPressed(KeyCode.P)) grid_offset_id = MathUtils.mod(grid_offset_id+1, grid_offset_values.size)
     }
 
-    private fun hasEqualObjIn(room: Room, obj: GameObject): Boolean {
-        return room.objects.any {
-            areEqualButNotSame(it, obj)
+    private fun hasEqualObjIn(room: Room, obj: GameObject, list: List<Pair<GameObject, Room>> = ArrayList()): Boolean {
+        return room.objects.any { current ->
+            areEqualButNotSame(current, obj) && !list.any { it.first == current }
         }
     }
 

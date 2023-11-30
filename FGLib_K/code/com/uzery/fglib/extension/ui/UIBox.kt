@@ -42,13 +42,17 @@ open class UIBox(vararg elements: UIElement): Extension() {
             list.forEach {
                 if (it.showing) graphics.fill.rect(it.pos, it.size, FGUtils.transparent(Color.DARKBLUE, 0.1))
             }
-            if (active_el != null) {
-                graphics.setStroke(1.5)
-                graphics.stroke.rect(active_el!!.pos, active_el!!.size, FGUtils.transparent(Color.WHITE, 0.9))
-            }
         }
 
         list.forEach { if (it.showing) it.draw() }
+
+        if (develop_mode) {
+            if (active_el != null) {
+                val p_size = PointN(1, 1)*1
+                graphics.setStroke(1.5)
+                graphics.stroke.rect(active_el!!.pos-p_size, active_el!!.size+p_size*2, FGUtils.transparent(Color.WHITE, 0.9))
+            }
+        }
     }
 
     fun clear() {
