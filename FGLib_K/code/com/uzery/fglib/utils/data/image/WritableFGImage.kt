@@ -1,15 +1,15 @@
 package com.uzery.fglib.utils.data.image
 
-import com.uzery.fglib.core.program.Platform
 import com.uzery.fglib.core.program.Platform.packager
 import com.uzery.fglib.utils.graphics.data.FGColor
 import com.uzery.fglib.utils.math.num.IntI
 import javafx.scene.image.WritableImage
+import javafx.scene.paint.Color
 
 open class WritableFGImage(val size: IntI) {
 
     fun setColor(pos: IntI, fgColor: FGColor) {
-        source.pixelWriter.setColor(pos.x, pos.y, packager.fromFGColor(fgColor))
+        source.pixelWriter.setColor(pos.x, pos.y, packager.fromFGColor(fgColor) as Color)
     }
 
     fun getColor(i: Int, j: Int): FGColor {

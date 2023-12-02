@@ -1,24 +1,32 @@
 package com.uzery.fglib.core.program
 
-import com.uzery.fglib.javafx_rl.JavaFXRealisation
+import com.uzery.fglib.core.program.RealisationUt.realisation
 import com.uzery.fglib.utils.data.debug.DebugData
+import com.uzery.fglib.utils.graphics.data.FGFont
 import com.uzery.fglib.utils.math.geom.PointN
 import com.uzery.fglib.utils.math.geom.shape.RectN
 import com.uzery.fglib.utils.math.num.IntI
 import com.uzery.fglib.utils.program.FGCursor
 
 object Platform {
-    internal val realisation = JavaFXRealisation
-    private val program = realisation.program
-    private val gc = realisation.graphics
+    private val program
+        get() = realisation.program
+    private val gc
+        get() = realisation.graphics
 
-    val graphics_ut = realisation.graphics
-    val graphics = realisation.graphics.graphics
-    val packager = realisation.packager
+    val graphics_ut
+        get() = gc
+    val graphics
+        get() = gc.graphics
+    val packager
+        get() = realisation.packager
 
-    val keyboard = realisation.listener.keyboard
-    val char_keyboard = realisation.listener.char_keyboard
-    val mouse = realisation.listener.mouse
+    val keyboard
+        get() = realisation.listener.keyboard
+    val char_keyboard
+        get() = realisation.listener.char_keyboard
+    val mouse
+        get() = realisation.listener.mouse
 
     var scale: Int = 1
         get() = gc.scale
@@ -37,6 +45,8 @@ object Platform {
             if(field == null) return LaunchOptions.default
             return field
         }
+    lateinit var ets: Array<out Extension>
+
     fun exit() {
         program.exit()
     }
@@ -70,8 +80,9 @@ object Platform {
         }
     }
 
-    fun init() {
-
+    fun initWith(options: LaunchOptions, vararg ets: Extension) {
+        Platform.options = options
+        this.ets = ets
     }
 
     val WINDOW

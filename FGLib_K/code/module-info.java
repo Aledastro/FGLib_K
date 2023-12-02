@@ -25,10 +25,6 @@ module FGLib_K {
 
     /////////////////////////////////////////////////////////
 
-    exports com.uzery.fglib.javafx_rl;
-
-    /////////////////////////////////////////////////////////
-
     exports com.uzery.fglib.utils.data.audio;
     exports com.uzery.fglib.utils.data.debug;
     exports com.uzery.fglib.utils.data.file;

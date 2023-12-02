@@ -1,9 +1,7 @@
 package com.uzery.fglib.core.program
 
-import com.uzery.fglib.utils.graphics.data.FGColor
-import com.uzery.fglib.utils.math.geom.PointN
 
-internal object Program {
+object Program {
     private val core = object: Extension() {}
 
     fun init(vararg ets: Extension) {

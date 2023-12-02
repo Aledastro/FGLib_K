@@ -12,37 +12,26 @@ import com.uzery.fglib.utils.math.geom.shape.FigureN
 abstract class GeometryGraphics(private val transform: AffineTransform, private val transformSize: AffineTransform) {
     var alpha = 1.0
     fun setDefaults() {
-        font()
         alpha = 1.0
     }
 
-    val font: FGFont
-        get() = FGFont(font_family, font_size, font_weight, font_posture).resize(
-            transformSize.transform(
-                PointN(
-                    font_size
-                )
-            ).X
-        )
-
+    val default_font = FGFont("arial", 10.0, FGFontWeight.BOLD, FGFontPosture.REGULAR)
+    var font = default_font
     fun font(
-        family: String = "arial", size: Double = 10.0,
-        weight: FGFontWeight = FGFontWeight.NORMAL, posture: FGFontPosture = FGFontPosture.REGULAR
+        family: String = default_font.family,
+        size: Double = default_font.size,
+        weight: FGFontWeight = default_font.weight,
+        posture: FGFontPosture = default_font.posture
     ) {
-        font_family = family
-        font_size = size
-        font_weight = weight
-        font_posture = posture
+        font = FGFont(family, size, weight, posture)
     }
 
+    fun text_size(text: String, font: FGFont): PointN {
+        return Platform.graphics.text_size(text, font)
+    }
     fun text_size(text: String): PointN {
-        return Platform.realisation.text_size(text, font)
+        return Platform.graphics.text_size(text, font)
     }
-
-    var font_family = "arial"
-    var font_size = 10.0
-    var font_weight = FGFontWeight.NORMAL
-    var font_posture = FGFontPosture.REGULAR
 
     protected abstract fun rect0(pos: PointN, size: PointN, color: FGColor)
 
@@ -50,7 +39,7 @@ abstract class GeometryGraphics(private val transform: AffineTransform, private 
 
     protected abstract fun line0(pos1: PointN, pos2: PointN, color: FGColor)
 
-    protected abstract fun text0(pos: PointN, text: String, color: FGColor)
+    protected abstract fun text0(pos: PointN, text: String, font: FGFont, color: FGColor)
 
     ///////////////////////////////////////////////////////////////////////////
 
@@ -76,15 +65,39 @@ abstract class GeometryGraphics(private val transform: AffineTransform, private 
 
     ///////////////////////////////////////////////////////////////////////////
 
-    fun text(pos: PointN, text: String, color: FGColor) {
-        text0(transform.pos(pos), text, color)
+    fun text(pos: PointN, text: String, font: FGFont, color: FGColor) {
+        text0(transform.pos(pos), text, font.resize(transformSize.transform(PointN(font.size)).X), color)
     }
 
-    fun textL(pos: PointN, text: String, color: FGColor) = text(pos, text, color)
+    fun textL(pos: PointN, text: String, font: FGFont, color: FGColor){
+        text(pos, text, font, color)
+    }
 
-    fun textC(pos: PointN, text: String, color: FGColor) = text(pos-text_size(text).XP/2, text, color)
+    fun textC(pos: PointN, text: String, font: FGFont, color: FGColor){
+        text(pos-text_size(text, font).XP/2, text, font, color)
+    }
 
-    fun textR(pos: PointN, text: String, color: FGColor) = text(pos-text_size(text).XP, text, color)
+    fun textR(pos: PointN, text: String, font: FGFont, color: FGColor){
+        text(pos-text_size(text, font).XP, text, font, color)
+    }
+
+    ///////////////////////////////////////////////////////////////////////////
+
+    fun text(pos: PointN, text: String, color: FGColor) {
+        text(pos, text, font, color)
+    }
+
+    fun textL(pos: PointN, text: String, color: FGColor){
+        textL(pos, text, font, color)
+    }
+
+    fun textC(pos: PointN, text: String, color: FGColor){
+        textC(pos, text, font, color)
+    }
+
+    fun textR(pos: PointN, text: String, color: FGColor){
+        textR(pos, text, font, color)
+    }
 
     ///////////////////////////////////////////////////////////////////////////
 

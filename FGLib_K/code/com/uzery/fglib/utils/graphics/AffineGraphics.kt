@@ -1,6 +1,7 @@
 package com.uzery.fglib.utils.graphics
 
 import com.uzery.fglib.core.obj.DrawLayer
+import com.uzery.fglib.utils.graphics.data.FGFont
 import com.uzery.fglib.utils.math.geom.PointN
 
 abstract class AffineGraphics {
@@ -18,6 +19,8 @@ abstract class AffineGraphics {
         fill.setDefaults()
         stroke.setDefaults()
     }
+
+    abstract fun text_size(text: String, font: FGFont): PointN
 
     abstract val image: ImageGraphics
 
