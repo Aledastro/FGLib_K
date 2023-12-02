@@ -35,6 +35,7 @@ module FGLib_K {
     exports com.uzery.fglib.utils.graphics.data;
 
     exports com.uzery.fglib.utils.input;
+    exports com.uzery.fglib.utils.input.data;
 
     exports com.uzery.fglib.utils.math;
     exports com.uzery.fglib.utils.math.geom;

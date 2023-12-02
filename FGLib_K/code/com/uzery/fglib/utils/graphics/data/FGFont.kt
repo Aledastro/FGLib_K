@@ -11,8 +11,10 @@ data class FGFont(val family: String, val size: Double, val weight: FGFontWeight
 
     companion object {
         fun fromFGFont(font: FGFont): Font {
-            return Font.font(font.family, FontWeight.valueOf(font.weight.name),
-                FontPosture.valueOf(font.posture.name), font.size)
+            return Font.font(
+                font.family, FontWeight.valueOf(font.weight.name),
+                FontPosture.valueOf(font.posture.name), font.size
+            )
         }
     }
 }

@@ -11,13 +11,14 @@ import com.uzery.fglib.utils.graphics.data.FGColor
 import com.uzery.fglib.utils.graphics.data.FGFont
 import com.uzery.fglib.utils.input.KeyActivator
 import com.uzery.fglib.utils.input.MouseActivator
+import com.uzery.fglib.utils.input.data.FGKey
+import com.uzery.fglib.utils.input.data.FGMouseKey
 import com.uzery.fglib.utils.math.geom.PointN
 import com.uzery.fglib.utils.math.geom.shape.RectN
 import com.uzery.fglib.utils.math.num.IntI
 import javafx.scene.Cursor
 import javafx.scene.image.Image
 import javafx.scene.input.KeyCode
-import javafx.scene.input.MouseButton
 import kotlin.math.min
 
 object Platform {
@@ -103,9 +104,9 @@ object Platform {
             field = input
         }
 
-    val keyboard = object: KeyActivator<KeyCode>(KeyCode.values().size) {
+    val keyboard = object: KeyActivator<FGKey>(KeyCode.values().size) {
         override fun pressed0(code: Int): Boolean = Program.pressed[code]
-        override fun from(key: KeyCode): Int = key.ordinal
+        override fun from(key: FGKey): Int = key.id
     }
     val char_keyboard = object: KeyActivator<Char>(charArray.size) {
         override fun pressed0(code: Int): Boolean = Program.char_pressed(code)
@@ -116,9 +117,9 @@ object Platform {
         override fun pos0(): PointN = Program.mouseP/scale
         override fun scroll0() = Program.scrollP
 
-        override val keys = object: KeyActivator<MouseButton>(KeyCode.values().size) {
+        override val keys = object: KeyActivator<FGMouseKey>(KeyCode.values().size) {
             override fun pressed0(code: Int): Boolean = Program.mouse_pressed[code]
-            override fun from(key: MouseButton): Int = key.ordinal
+            override fun from(key: FGMouseKey): Int = key.id
         }
     }
 

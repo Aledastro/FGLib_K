@@ -10,7 +10,6 @@ import com.uzery.fglib.utils.graphics.data.FGFontWeight
 import com.uzery.fglib.utils.math.ShapeUtils
 import com.uzery.fglib.utils.math.geom.PointN
 import com.uzery.fglib.utils.math.geom.shape.RectN
-import javafx.scene.text.FontWeight
 
 class MovableWC(private val goal: GameObject, private val room_p: Double = 10.0): WorldController {
 

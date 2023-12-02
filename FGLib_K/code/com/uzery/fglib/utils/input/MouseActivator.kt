@@ -1,8 +1,8 @@
 package com.uzery.fglib.utils.input
 
+import com.uzery.fglib.utils.input.data.FGMouseKey
 import com.uzery.fglib.utils.math.geom.PointN
 import com.uzery.fglib.utils.math.geom.shape.RectN
-import javafx.scene.input.MouseButton
 import kotlin.math.sign
 
 abstract class MouseActivator(screen: RectN) {
@@ -15,5 +15,5 @@ abstract class MouseActivator(screen: RectN) {
         get() = sign(scroll0().Y).toInt()
 
 
-    abstract val keys: KeyActivator<MouseButton>
+    abstract val keys: KeyActivator<FGMouseKey>
 }

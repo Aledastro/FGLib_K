@@ -11,7 +11,6 @@ import com.uzery.fglib.utils.graphics.data.FGColor
 import com.uzery.fglib.utils.graphics.data.FGFontWeight
 import com.uzery.fglib.utils.math.FGUtils.getPosFrom
 import com.uzery.fglib.utils.math.geom.PointN
-import javafx.scene.text.FontWeight
 import java.util.*
 import kotlin.math.PI
 import kotlin.math.cos

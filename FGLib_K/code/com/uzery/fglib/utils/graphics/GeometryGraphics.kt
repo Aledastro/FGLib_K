@@ -7,9 +7,6 @@ import com.uzery.fglib.utils.graphics.data.FGFontWeight
 import com.uzery.fglib.utils.math.geom.PointN
 import com.uzery.fglib.utils.math.geom.Shape
 import com.uzery.fglib.utils.math.geom.shape.FigureN
-import javafx.scene.text.Font
-import javafx.scene.text.FontPosture
-import javafx.scene.text.FontWeight
 import javafx.scene.text.Text
 
 abstract class GeometryGraphics(private val transform: AffineTransform, private val transformSize: AffineTransform) {
@@ -18,7 +15,13 @@ abstract class GeometryGraphics(private val transform: AffineTransform, private 
     }
 
     val font: FGFont
-        get() = FGFont(font_family, font_size, font_weight, font_posture).resize(transformSize.transform(PointN(font_size)).X)
+        get() = FGFont(font_family, font_size, font_weight, font_posture).resize(
+            transformSize.transform(
+                PointN(
+                    font_size
+                )
+            ).X
+        )
 
     fun font(
         family: String = "arial", size: Double = 10.0,
