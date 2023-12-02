@@ -3,6 +3,7 @@ package com.uzery.fglib.core.program
 import com.uzery.fglib.core.program.Program.WINDOW_SIZE
 import com.uzery.fglib.core.program.Program.gc
 import com.uzery.fglib.utils.data.debug.DebugData
+import com.uzery.fglib.utils.data.image.FGImage
 import com.uzery.fglib.utils.graphics.AffineGraphics
 import com.uzery.fglib.utils.graphics.AffineTransform
 import com.uzery.fglib.utils.graphics.GeometryGraphics
@@ -150,10 +151,10 @@ object Platform {
         }
 
         override val image: ImageGraphics = object: ImageGraphics(transform) {
-            override fun draw0(image: Image, pos: PointN, size: PointN) {
+            override fun draw0(image: FGImage, pos: PointN, size: PointN) {
                 if (isOutOfBounds(pos, size)) return
 
-                gc.drawImage(image, pos.X, pos.Y, size.X, size.Y)
+                gc.drawImage(image.source, pos.X, pos.Y, size.X, size.Y)
             }
         }
 

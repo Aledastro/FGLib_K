@@ -19,7 +19,7 @@ object ImageTransformUtils {
         }
     }
 
-    fun applyEffect(origin: WritableImage, effect: String): WritableImage {
+    fun applyEffect(origin: WritableFGImage, effect: String): WritableFGImage {
         val effect_name = FGFormat[effect].first
         val effect_args = FGFormat[effect].second
 

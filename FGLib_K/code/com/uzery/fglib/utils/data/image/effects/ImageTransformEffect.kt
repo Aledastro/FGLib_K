@@ -1,7 +1,7 @@
 package com.uzery.fglib.utils.data.image.effects
 
-import javafx.scene.image.WritableImage
+import com.uzery.fglib.utils.data.image.WritableFGImage
 
 abstract class ImageTransformEffect(val name: String) {
-    abstract operator fun get(origin: WritableImage, args: List<List<String>> = ArrayList()): WritableImage
+    abstract operator fun get(origin: WritableFGImage, args: List<List<String>> = ArrayList()): WritableFGImage
 }

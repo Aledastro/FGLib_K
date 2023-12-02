@@ -1,81 +1,67 @@
 package com.uzery.fglib.utils.data.image
 
+import com.uzery.fglib.utils.graphics.data.FGColor
 import com.uzery.fglib.utils.math.num.IntI
 import javafx.scene.image.Image
-import javafx.scene.image.WritableImage
-import javafx.scene.paint.Color
 import kotlin.math.min
 
 object ImageUtils {
     fun combination(
         size: IntI,
-        images: Array<Image>,
+        images: Array<FGImage>,
         positions: Array<IntI> = Array(images.size) { IntI() },
-    ): Image {
-        val image = WritableImage(size.width, size.height)
+    ): FGImage {
+        val res = WritableFGImage(size)
         for (i in images.indices) {
-            draw(image, images[i], positions[i])
+            draw(res, images[i], positions[i])
         }
-        return image
+        return res.toFGImage()
     }
 
-    private fun draw(origin: WritableImage, image: Image, pos: IntI) {
+    fun draw(origin: WritableFGImage, image: FGImage, pos: IntI) {
         /*origin.pixelWriter.setPixels(pos.n, pos.m, min(origin.width-pos.n, image.width).toInt(),
             min(origin.height-pos.m, image.height).toInt(), image.pixelReader, 0, 0)*/
 
-        val size = IntI(min(origin.width-pos.x, image.width).toInt(), min(origin.height-pos.y, image.height).toInt())
-        for (i in pos.x until size.width) {
-            for (j in pos.y until size.height) {
-                if (image.pixelReader.getColor(i, j) == Color.TRANSPARENT) continue
-                origin.pixelWriter.setArgb(pos.x+i, pos.y+j, image.pixelReader.getArgb(i, j))
-            }
+        val size = IntI(
+            min(origin.size.width-pos.x, origin.size.width),
+            min(origin.size.height-pos.y, origin.size.height)
+        )
+        for (id in size.indices) {
+            if (image.getColor(id) == FGColor.TRANSPARENT) continue
+            origin.setArgb(pos+id, image.getArgb(id))
         }
     }
 
-    fun split(origin: Image, pos: IntI, size: IntI): Image {
-        val res = WritableImage(size.width, size.height)
-        res.pixelWriter.setPixels(0, 0, size.width, size.height, origin.pixelReader, pos.x, pos.y)
-        return res
+    fun split(origin: FGImage, pos: IntI, size: IntI): FGImage {
+        val res = WritableFGImage(size)
+        res.setPixels(IntI(), size, origin, pos)
+        return res.toFGImage()
     }
 
-    fun scale(origin: Image, scale: IntI): Image {
-        val img = writableFrom(origin)
-
-        val res_size = scale*IntI(origin.width.toInt(), origin.height.toInt())
-        val res = WritableImage(res_size.width, res_size.height)
-        for (pos in res_size.indices) {
-            res.pixelWriter.setArgb(pos.x, pos.y, img.pixelReader.getArgb(pos.x/scale.x, pos.y/scale.y))
+    fun scale(origin: FGImage, scale: IntI): FGImage {
+        val res = WritableFGImage(scale*origin.size)
+        for (pos in res.size.indices) {
+            res.setArgb(pos, origin.getArgb(pos/scale))
         }
-        return res
+        return res.toFGImage()
     }
 
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    fun from(path: String): Image {
-        return Image("file:"+ImageData.resolvePath(path))
+    fun from(path: String): FGImage {
+        return FGImage(Image("file:"+ImageData.resolvePath(path)))
     }
 
-    fun from(path: String, vararg effects: String): Image {
+    fun from(path: String, vararg effects: String): FGImage {
         return from(from(path), *effects)
     }
 
-    fun from(origin: Image, vararg effects: String): Image {
-        var res = writableFrom(origin)
+    fun from(origin: FGImage, vararg effects: String): FGImage {
+        var res = WritableFGImage(origin.size)
+        res.draw(origin)
+        effects.forEach { res = ImageTransformUtils.applyEffect(res, it) }
 
-        for (effect in effects) {
-            res = ImageTransformUtils.applyEffect(res, effect)
-        }
-
-        return res
-    }
-
-    fun writableFrom(origin: Image): WritableImage {
-        val origin_size = IntI(origin.width.toInt(), origin.height.toInt())
-
-        val img = WritableImage(origin_size.width, origin_size.height)
-        img.pixelWriter.setPixels(0, 0, origin_size.width, origin_size.height, origin.pixelReader, 0, 0)
-
-        return img
+        return res.toFGImage()
     }
 
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////

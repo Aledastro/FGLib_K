@@ -1,5 +1,6 @@
 package com.uzery.fglib.utils.graphics
 
+import com.uzery.fglib.utils.data.image.FGImage
 import com.uzery.fglib.utils.data.image.ImageUtils
 import com.uzery.fglib.utils.math.geom.PointN
 import javafx.scene.image.Image
@@ -9,7 +10,7 @@ abstract class ImageGraphics(private val transform: AffineTransform) {
 
     }
 
-    protected abstract fun draw0(image: Image, pos: PointN, size: PointN)
+    protected abstract fun draw0(image: FGImage, pos: PointN, size: PointN)
 
     ///////////////////////////////////////////////////////////////////////////
 
@@ -22,23 +23,23 @@ abstract class ImageGraphics(private val transform: AffineTransform) {
 
     ///////////////////////////////////////////////////////////////////////////
 
-    fun draw(image: Image, pos: PointN, size: PointN) = draw0(image, transform.pos(pos), transform.size(pos, size))
+    fun draw(image: FGImage, pos: PointN, size: PointN) = draw0(image, transform.pos(pos), transform.size(pos, size))
 
-    fun drawL(image: Image, pos: PointN, size: PointN) = draw(image, pos, size)
-    fun drawC(image: Image, pos: PointN, size: PointN) = draw(image, pos-size/2, size)
-    fun drawR(image: Image, pos: PointN, size: PointN) = draw(image, pos-size, size)
+    fun drawL(image: FGImage, pos: PointN, size: PointN) = draw(image, pos, size)
+    fun drawC(image: FGImage, pos: PointN, size: PointN) = draw(image, pos-size/2, size)
+    fun drawR(image: FGImage, pos: PointN, size: PointN) = draw(image, pos-size, size)
 
     ///////////////////////////////////////////////////////////////////////////
 
-    fun draw(image: Image, pos: PointN) =
+    fun draw(image: FGImage, pos: PointN) =
         draw0(image, transform.pos(pos), transform.size(pos, sizeOf(image)))
 
-    fun drawL(image: Image, pos: PointN) = draw(image, pos)
-    fun drawC(image: Image, pos: PointN) =
+    fun drawL(image: FGImage, pos: PointN) = draw(image, pos)
+    fun drawC(image: FGImage, pos: PointN) =
         draw0(image, transform.pos(pos-sizeOf(image)/2), transform.size(pos, sizeOf(image)))
 
-    fun drawR(image: Image, pos: PointN) =
+    fun drawR(image: FGImage, pos: PointN) =
         draw0(image, transform.pos(pos-sizeOf(image)), transform.size(pos, sizeOf(image)))
 
-    private fun sizeOf(image: Image) = PointN(image.width, image.height)
+    private fun sizeOf(image: FGImage) = PointN(image.size)
 }

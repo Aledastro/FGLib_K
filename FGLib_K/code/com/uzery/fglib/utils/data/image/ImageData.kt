@@ -6,9 +6,8 @@ import com.uzery.fglib.utils.math.num.IntI
 import javafx.scene.image.Image
 
 object ImageData: CollectDataClass() {
-    private val origins = HashMap<String, Image>()
+    private val origins = HashMap<String, FGImage>()
     private val sprites = HashMap<String, SpriteImage>()
-    private val combinations = HashMap<String, CombinationImage>()
 
     private fun decode(name: String, vararg effects: String): String {
         var entry = name
@@ -40,14 +39,14 @@ object ImageData: CollectDataClass() {
         set(name, *effects.toTypedArray())
     }
 
-    operator fun get(name: String, vararg effects: String): Image {
+    operator fun get(name: String, vararg effects: String): FGImage {
         val decode = decode(name, *effects)
         val key = keyFrom(name, *effects)
 
         return origins[key] ?: throw DebugData.error("no origin from: $decode (${resolvePath(name)})")
     }
 
-    operator fun get(name: String, effects: List<String>): Image {
+    operator fun get(name: String, effects: List<String>): FGImage {
         return get(name, *effects.toTypedArray())
     }
 
@@ -59,7 +58,7 @@ object ImageData: CollectDataClass() {
 
         val img = sprites[key]
             ?: throw DebugData.error("no sprite from: $decode")
-        return img.size
+        return img.sprite_size
     }
 
     fun sprite_get(name: String, vararg effects: String): IntI {
@@ -68,7 +67,7 @@ object ImageData: CollectDataClass() {
 
         val img = sprites[key]
             ?: throw DebugData.error("no sprite from: $decode")
-        return img.origin_size/img.size
+        return img.origin.size/img.sprite_size
     }
 
     //////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -78,12 +77,12 @@ object ImageData: CollectDataClass() {
         val key = keyFrom(name, *effects)
 
         if (sprites[key] != null) {
-            if (sprites[key]!!.size != size)
-                throw DebugData.error("duplicate sprite set: $decode old: [${sprites[key]!!.size}] | new: [$size]")
+            if (sprites[key]!!.sprite_size != size)
+                throw DebugData.error("duplicate sprite set: $decode old: [${sprites[key]!!.sprite_size}] | new: [$size]")
             return
         }
         try {
-            sprites[key] = SpriteImage(ImageUtils.from(name), "${resolvePath(name)} ($decode)", size, *effects)
+            sprites[key] = SpriteImage(FGImage(Image(name)), "${resolvePath(name)} ($decode)", size, *effects)
         } catch (e: Exception) {
             e.printStackTrace()
             throw DebugData.error("Data set: ${resolvePath(name)} ($decode) with size: $size and error: $e")
@@ -94,31 +93,14 @@ object ImageData: CollectDataClass() {
         set(name, size, *effects.toTypedArray())
     }
 
-    operator fun get(name: String, pos: IntI, vararg effects: String): Image {
+    operator fun get(name: String, pos: IntI, vararg effects: String): FGImage {
         val decode = decode(name, *effects)
         val key = keyFrom(name, *effects)
 
         return sprites[key]?.get(pos) ?: throw DebugData.error("no sprite from: $decode (${resolvePath(name)}) $pos")
     }
 
-    operator fun get(name: String, pos: IntI, effects: List<String>): Image {
+    operator fun get(name: String, pos: IntI, effects: List<String>): FGImage {
         return get(name, pos, *effects.toTypedArray())
-    }
-
-    //////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-    fun setCombination(name: String, size: IntI, rule: ImageCombinationRule) {
-        if (combinations[name] != null) {
-            if (combinations[name]!!.size != size)
-                throw DebugData.error("duplicate combination set: $name old: [${combinations[name]!!.size}] | new: [$size]")
-            return
-        }
-        //todo
-        combinations[name] = CombinationImage(resolvePath(name), size, rule)
-    }
-
-    fun combination(name: String, pos: IntI): Image {
-        //todo
-        return combinations[name]?.get(pos) ?: throw DebugData.error("no combination from: $name $pos")
     }
 }

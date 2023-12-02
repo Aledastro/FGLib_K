@@ -64,7 +64,7 @@ internal object Program {
         stage.initStyle(StageStyle.valueOf(options.style.name))
         stage.isFullScreen = options.fullscreen
         stage.fullScreenExitKeyCombination = KeyCombination.NO_MATCH
-        options.icons.forEach { stage.icons.add(ImageUtils.from(it)) }
+        options.icons.forEach { stage.icons.add(ImageUtils.from(it).source) }
 
         if (stage.isFullScreen) {
             val offset = (WINDOW_SIZE-size)/2
