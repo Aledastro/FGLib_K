@@ -16,8 +16,12 @@ data class FGMouseKey(val value: String, val id: Int) {
         val RIGHT
             get() = SECONDARY
 
-        private fun from(key: MouseButton): FGMouseKey {
+        fun from(key: MouseButton): FGMouseKey {
             return FGMouseKey(key.name, key.ordinal)
+        }
+
+        fun values(): Array<FGMouseKey> {
+            return Array(MouseButton.values().size) { from(MouseButton.values()[it]) }
         }
     }
 }

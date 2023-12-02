@@ -1,6 +1,7 @@
 package com.uzery.fglib.utils.input.data
 
 import javafx.scene.input.KeyCode
+import javafx.scene.input.MouseButton
 
 data class FGKey(val value: String, val id: Int) {
     companion object {
@@ -229,8 +230,12 @@ data class FGKey(val value: String, val id: Int) {
         var COMMAND = from(KeyCode.COMMAND)
         var SHORTCUT = from(KeyCode.SHORTCUT)
 
-        private fun from(key: KeyCode): FGKey {
+        fun from(key: KeyCode): FGKey {
             return FGKey(key.name, key.ordinal)
+        }
+
+        fun values(): Array<FGKey> {
+            return Array(KeyCode.values().size) { from(KeyCode.values()[it]) }
         }
     }
 }

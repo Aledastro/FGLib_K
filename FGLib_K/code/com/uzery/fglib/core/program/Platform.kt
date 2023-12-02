@@ -19,6 +19,7 @@ import com.uzery.fglib.utils.math.num.IntI
 import javafx.scene.Cursor
 import javafx.scene.image.Image
 import javafx.scene.input.KeyCode
+import javafx.scene.input.MouseButton
 import kotlin.math.min
 
 object Platform {
@@ -105,12 +106,14 @@ object Platform {
         }
 
     val keyboard = object: KeyActivator<FGKey>(KeyCode.values().size) {
+        override val values = FGKey.values()
         override fun pressed0(code: Int): Boolean = Program.pressed[code]
-        override fun from(key: FGKey): Int = key.id
+        override fun fromKey(key: FGKey): Int = key.id
     }
     val char_keyboard = object: KeyActivator<Char>(charArray.size) {
+        override val values = charArray
         override fun pressed0(code: Int): Boolean = Program.char_pressed(code)
-        override fun from(key: Char): Int = Program.char_pressedID[key]!!
+        override fun fromKey(key: Char): Int = Program.char_pressedID[key]!!
     }
 
     val mouse = object: MouseActivator(RectN(PointN.ZERO, CANVAS)) {
@@ -118,8 +121,9 @@ object Platform {
         override fun scroll0() = Program.scrollP
 
         override val keys = object: KeyActivator<FGMouseKey>(KeyCode.values().size) {
+            override val values = FGMouseKey.values()
             override fun pressed0(code: Int): Boolean = Program.mouse_pressed[code]
-            override fun from(key: FGMouseKey): Int = key.id
+            override fun fromKey(key: FGMouseKey): Int = key.id
         }
     }
 
