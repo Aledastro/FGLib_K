@@ -45,8 +45,9 @@ object Platform {
             field = value
             if (Program.inited) Program.setCursor()
         }
-    fun resizeCursorFrom(pos: IntI): Cursor{
-        return when(pos){
+
+    fun resizeCursorFrom(pos: IntI): Cursor {
+        return when (pos) {
             IntI(-1, -1) -> Cursor.NW_RESIZE
             IntI(0, -1) -> Cursor.N_RESIZE
             IntI(1, -1) -> Cursor.NE_RESIZE
