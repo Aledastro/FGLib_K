@@ -56,7 +56,7 @@ internal object ProgramFX: FGProgram() {
 
         setCursor(Platform.cursor)
 
-        stage.scene.fill = FGColor.fromFGColor(Platform.options.fill)
+        stage.scene.fill = Platform.packager.fromFGColor(Platform.options.fill)
 
         stage.title = Platform.options.title
         stage.show()

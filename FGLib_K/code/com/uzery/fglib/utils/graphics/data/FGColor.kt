@@ -1,5 +1,6 @@
 package com.uzery.fglib.utils.graphics.data
 
+import com.uzery.fglib.core.program.Platform.packager
 import javafx.scene.paint.Color
 
 data class FGColor(val red: Double, val green: Double, val blue: Double, val alpha: Double = 1.0) {
@@ -23,40 +24,36 @@ data class FGColor(val red: Double, val green: Double, val blue: Double, val alp
     }
 
     companion object {
-        val WHITE = from(Color.WHITE)
-        val BLACK = from(Color.BLACK)
-        val TRANSPARENT = from(Color.TRANSPARENT)
+        val WHITE = from("WHITE")
+        val BLACK = from("BLACK")
+        val TRANSPARENT = from("TRANSPARENT")
 
-        val RED = from(Color.RED)
-        val ORANGE = from(Color.ORANGE)
-        val ORANGERED = from(Color.ORANGERED)
-        val BLUE = from(Color.BLUE)
-        val GREEN = from(Color.GREEN)
-        val BEIGE = from(Color.BEIGE)
-        val GOLD = from(Color.GOLD)
-        val CYAN = from(Color.CYAN)
-        val GRAY = from(Color.GRAY)
-        val DARKGRAY = from(Color.DARKGRAY)
-        val DARKBLUE = from(Color.DARKBLUE)
-        val LIGHTGRAY = from(Color.LIGHTGRAY)
-        val PURPLE = from(Color.PURPLE)
-        val DEEPSKYBLUE = from(Color.DEEPSKYBLUE)
+        val RED = from("RED")
+        val ORANGE = from("ORANGE")
+        val ORANGERED = from("ORANGERED")
+        val BLUE = from("BLUE")
+        val GREEN = from("GREEN")
+        val BEIGE = from("BEIGE")
+        val GOLD = from("GOLD")
+        val CYAN = from("CYAN")
+        val GRAY = from("GRAY")
+        val DARKGRAY = from("DARKGRAY")
+        val DARKBLUE = from("DARKBLUE")
+        val LIGHTGRAY = from("LIGHTGRAY")
+        val PURPLE = from("PURPLE")
+        val DEEPSKYBLUE = from("DEEPSKYBLUE")
+
+        fun from(c: String): FGColor {
+            return packager.fromColor(c)
+        }
 
 
         fun web(web: String): FGColor {
-            return from(Color.web(web)) //todo
+            return from(Color.web(web).toString()) //todo
         }
 
         fun gray(c: Double, a: Double = 1.0): FGColor {
             return FGColor(c, c, c, a)
-        }
-
-        fun from(c: Color): FGColor {
-            return FGColor(c.red, c.green, c.blue, c.opacity)
-        }
-
-        fun fromFGColor(c: FGColor): Color {
-            return Color.color(c.red, c.green, c.blue, c.alpha)
         }
     }
 }

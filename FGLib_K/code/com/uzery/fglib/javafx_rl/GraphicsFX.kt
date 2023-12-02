@@ -4,6 +4,7 @@ import com.uzery.fglib.core.realisation.FGGraphics
 import com.uzery.fglib.core.program.Platform
 import com.uzery.fglib.core.program.Platform.CANVAS
 import com.uzery.fglib.core.program.Platform.WINDOW
+import com.uzery.fglib.core.program.Platform.packager
 import com.uzery.fglib.javafx_rl.ProgramFX.gc
 import com.uzery.fglib.utils.data.image.FGImage
 import com.uzery.fglib.utils.graphics.AffineGraphics
@@ -75,7 +76,7 @@ internal object GraphicsFX: FGGraphics() {
             override fun rect0(pos: PointN, size: PointN, color: FGColor) {
                 if (isOutOfBounds(pos, size)) return
 
-                gc.fill = FGColor.fromFGColor(color)
+                gc.fill = packager.fromFGColor(color)
                 gc.globalAlpha = gl_alpha*this.alpha
                 gc.fillRect(pos.X, pos.Y, size.X, size.Y)
             }
@@ -83,7 +84,7 @@ internal object GraphicsFX: FGGraphics() {
             override fun oval0(pos: PointN, size: PointN, color: FGColor) {
                 if (isOutOfBounds(pos, size)) return
 
-                gc.fill = FGColor.fromFGColor(color)
+                gc.fill = packager.fromFGColor(color)
                 gc.globalAlpha = gl_alpha*this.alpha
                 gc.fillOval(pos.X, pos.Y, size.X, size.Y)
             }
@@ -91,7 +92,7 @@ internal object GraphicsFX: FGGraphics() {
             override fun line0(pos1: PointN, pos2: PointN, color: FGColor) {
                 if (isOutOfBounds(pos1, pos2-pos1)) return
 
-                gc.fill = FGColor.fromFGColor(color)
+                gc.fill = packager.fromFGColor(color)
                 gc.globalAlpha = gl_alpha*this.alpha
                 gc.strokeLine(pos1.X, pos1.Y, pos2.X, pos2.Y)
             }
@@ -99,8 +100,8 @@ internal object GraphicsFX: FGGraphics() {
             override fun text0(pos: PointN, text: String, color: FGColor) {
                 if (isOutOfBounds(pos, text_size(text))) return
 
-                gc.fill = FGColor.fromFGColor(color)
-                gc.font = FGFont.fromFGFont(font)
+                gc.fill = packager.fromFGColor(color)
+                gc.font = packager.fromFGFont(font)
                 gc.globalAlpha = gl_alpha*this.alpha
                 gc.fillText(text, pos.X, pos.Y)
             }
@@ -109,7 +110,7 @@ internal object GraphicsFX: FGGraphics() {
             override fun rect0(pos: PointN, size: PointN, color: FGColor) {
                 if (isOutOfBounds(pos, size)) return
 
-                gc.stroke = FGColor.fromFGColor(color)
+                gc.stroke = packager.fromFGColor(color)
                 gc.globalAlpha = gl_alpha*this.alpha
                 gc.strokeRect(pos.X, pos.Y, size.X, size.Y)
             }
@@ -117,7 +118,7 @@ internal object GraphicsFX: FGGraphics() {
             override fun oval0(pos: PointN, size: PointN, color: FGColor) {
                 if (isOutOfBounds(pos, size)) return
 
-                gc.stroke = FGColor.fromFGColor(color)
+                gc.stroke = packager.fromFGColor(color)
                 gc.globalAlpha = gl_alpha*this.alpha
                 gc.strokeOval(pos.X, pos.Y, size.X, size.Y)
             }
@@ -125,7 +126,7 @@ internal object GraphicsFX: FGGraphics() {
             override fun line0(pos1: PointN, pos2: PointN, color: FGColor) {
                 if (isOutOfBounds(pos1, pos2-pos1)) return
 
-                gc.stroke = FGColor.fromFGColor(color)
+                gc.stroke = packager.fromFGColor(color)
                 gc.globalAlpha = gl_alpha*this.alpha
                 gc.strokeLine(pos1.X, pos1.Y, pos2.X, pos2.Y)
             }
@@ -133,8 +134,8 @@ internal object GraphicsFX: FGGraphics() {
             override fun text0(pos: PointN, text: String, color: FGColor) {
                 if (isOutOfBounds(pos, text_size(text))) return
 
-                gc.stroke = FGColor.fromFGColor(color)
-                gc.font = FGFont.fromFGFont(font)
+                gc.stroke = packager.fromFGColor(color)
+                gc.font = packager.fromFGFont(font)
                 gc.globalAlpha = gl_alpha*this.alpha
                 gc.strokeText(text, pos.X, pos.Y)
             }

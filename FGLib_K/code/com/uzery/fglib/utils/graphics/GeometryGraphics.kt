@@ -1,5 +1,6 @@
 package com.uzery.fglib.utils.graphics
 
+import com.uzery.fglib.core.program.Platform
 import com.uzery.fglib.utils.graphics.data.FGColor
 import com.uzery.fglib.utils.graphics.data.FGFont
 import com.uzery.fglib.utils.graphics.data.FGFontPosture
@@ -7,7 +8,6 @@ import com.uzery.fglib.utils.graphics.data.FGFontWeight
 import com.uzery.fglib.utils.math.geom.PointN
 import com.uzery.fglib.utils.math.geom.Shape
 import com.uzery.fglib.utils.math.geom.shape.FigureN
-import javafx.scene.text.Text
 
 abstract class GeometryGraphics(private val transform: AffineTransform, private val transformSize: AffineTransform) {
     var alpha = 1.0
@@ -36,9 +36,7 @@ abstract class GeometryGraphics(private val transform: AffineTransform, private 
     }
 
     fun text_size(text: String): PointN {
-        val t = Text(text)
-        t.font = FGFont.fromFGFont(font.resize(PointN(font_size).X))
-        return PointN(t.layoutBounds.width, t.layoutBounds.height)
+        return Platform.realisation.text_size(text, font)
     }
 
     var font_family = "arial"

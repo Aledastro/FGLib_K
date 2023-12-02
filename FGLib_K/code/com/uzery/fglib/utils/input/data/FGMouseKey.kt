@@ -1,27 +1,30 @@
 package com.uzery.fglib.utils.input.data
 
-import javafx.scene.input.MouseButton
+import com.uzery.fglib.core.program.Platform.packager
 
 data class FGMouseKey(val value: String, val id: Int) {
     companion object {
-        val PRIMARY = from(MouseButton.PRIMARY)
-        val SECONDARY = from(MouseButton.SECONDARY)
-        val MIDDLE = from(MouseButton.MIDDLE)
-        val BACK = from(MouseButton.BACK)
-        val FORWARD = from(MouseButton.FORWARD)
-        val NONE = from(MouseButton.NONE)
+        val values = arrayOf("PRIMARY", "SECONDARY", "MIDDLE", "BACK", "FORWARD", "NONE")
+        val key_values = Array(values.size) { from(values[it]) }
+
+        val PRIMARY = from("PRIMARY")
+        val SECONDARY = from("SECONDARY")
+        val MIDDLE = from("MIDDLE")
+        val BACK = from("BACK")
+        val FORWARD = from("FORWARD")
+        val NONE = from("NONE")
+
+        fun from(key: String): FGMouseKey {
+            return packager.fromMouseKey(key)
+        }
 
         val LEFT
             get() = PRIMARY
         val RIGHT
             get() = SECONDARY
 
-        fun from(key: MouseButton): FGMouseKey {
-            return FGMouseKey(key.name, key.ordinal)
-        }
-
         fun values(): Array<FGMouseKey> {
-            return Array(MouseButton.values().size) { from(MouseButton.values()[it]) }
+            return key_values
         }
     }
 }

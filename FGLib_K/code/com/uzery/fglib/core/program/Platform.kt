@@ -1,25 +1,20 @@
 package com.uzery.fglib.core.program
 
-import com.uzery.fglib.javafx_rl.GraphicsFX
 import com.uzery.fglib.javafx_rl.JavaFXRealisation
 import com.uzery.fglib.utils.data.debug.DebugData
-import com.uzery.fglib.utils.input.KeyActivator
-import com.uzery.fglib.utils.input.MouseActivator
-import com.uzery.fglib.utils.input.data.FGKey
-import com.uzery.fglib.utils.input.data.FGMouseKey
 import com.uzery.fglib.utils.math.geom.PointN
 import com.uzery.fglib.utils.math.geom.shape.RectN
 import com.uzery.fglib.utils.math.num.IntI
 import com.uzery.fglib.utils.program.FGCursor
-import kotlin.math.min
 
 object Platform {
-    private val realisation = JavaFXRealisation
+    internal val realisation = JavaFXRealisation
     private val program = realisation.program
     private val gc = realisation.graphics
 
     val graphics_ut = realisation.graphics
-    val graphics = GraphicsFX.graphics
+    val graphics = realisation.graphics.graphics
+    val packager = realisation.packager
 
     val keyboard = realisation.listener.keyboard
     val char_keyboard = realisation.listener.char_keyboard
@@ -39,6 +34,7 @@ object Platform {
     
     var options: LaunchOptions = LaunchOptions.default
         get(){
+            if(field == null) return LaunchOptions.default
             return field
         }
     fun exit() {
