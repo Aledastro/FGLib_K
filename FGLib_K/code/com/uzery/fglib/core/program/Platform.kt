@@ -87,6 +87,15 @@ object Platform {
     val CANVAS_REAL_R
         get() = RectN(PointN.ZERO, CANVAS_REAL)
 
+    fun lineDashes(vararg dashes: Double){
+        gc.setLineDashes(*dashes)
+    }
+    var line_dash_offset = 0.0
+        set(value) {
+            gc.lineDashOffset = value
+            field = value
+        }
+
     var global_alpha = 1.0
         set(input) {
             gc.globalAlpha = input*graphics.alpha
