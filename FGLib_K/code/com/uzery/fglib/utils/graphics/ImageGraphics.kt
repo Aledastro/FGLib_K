@@ -3,7 +3,6 @@ package com.uzery.fglib.utils.graphics
 import com.uzery.fglib.utils.data.image.FGImage
 import com.uzery.fglib.utils.data.image.ImageUtils
 import com.uzery.fglib.utils.math.geom.PointN
-import javafx.scene.image.Image
 
 abstract class ImageGraphics(private val transform: AffineTransform) {
     fun setDefaults() {

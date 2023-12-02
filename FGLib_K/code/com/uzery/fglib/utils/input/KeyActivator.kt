@@ -60,12 +60,12 @@ abstract class KeyActivator<Key>(private val size: Int) {
     ///////////////////////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////////////////////////////////
-    fun anyPressed(vararg keys: Key): Boolean{
+    fun anyPressed(vararg keys: Key): Boolean {
         return from(keys).any { key -> pressed(key) }
     }
 
-    private fun from(keys: Array<out Key>): Array<out Key>{
-        return if(keys.isEmpty()) values else keys
+    private fun from(keys: Array<out Key>): Array<out Key> {
+        return if (keys.isEmpty()) values else keys
     }
 
     fun allPressed(vararg keys: Key) = from(keys).all { key -> pressed(key) }

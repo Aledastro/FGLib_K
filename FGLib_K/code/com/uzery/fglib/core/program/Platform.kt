@@ -18,10 +18,7 @@ import com.uzery.fglib.utils.math.geom.PointN
 import com.uzery.fglib.utils.math.geom.shape.RectN
 import com.uzery.fglib.utils.math.num.IntI
 import com.uzery.fglib.utils.program.FGCursor
-import javafx.scene.Cursor
-import javafx.scene.image.Image
 import javafx.scene.input.KeyCode
-import javafx.scene.input.MouseButton
 import kotlin.math.min
 
 object Platform {

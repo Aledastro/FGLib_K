@@ -1,4 +1,5 @@
 package com.uzery.fglib.utils.program
+
 enum class FGCursor {
     DEFAULT,
     CROSSHAIR,

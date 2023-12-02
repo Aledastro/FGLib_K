@@ -3,7 +3,6 @@ package com.uzery.fglib.utils.data.image
 import com.uzery.fglib.utils.data.debug.DebugData
 import com.uzery.fglib.utils.data.getter.FGFormat
 import com.uzery.fglib.utils.data.image.effects.*
-import javafx.scene.image.WritableImage
 
 object ImageTransformUtils {
     private val map = HashMap<String, ImageTransformEffect>()

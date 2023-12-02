@@ -3,7 +3,6 @@ package com.uzery.fglib.utils.data.image
 import com.uzery.fglib.utils.data.CollectDataClass
 import com.uzery.fglib.utils.data.debug.DebugData
 import com.uzery.fglib.utils.math.num.IntI
-import javafx.scene.image.Image
 
 object ImageData: CollectDataClass() {
     private val origins = HashMap<String, FGImage>()
@@ -82,7 +81,7 @@ object ImageData: CollectDataClass() {
             return
         }
         try {
-            sprites[key] = SpriteImage(FGImage(Image(name)), "${resolvePath(name)} ($decode)", size, *effects)
+            sprites[key] = SpriteImage(ImageUtils.from(name), "${resolvePath(name)} ($decode)", size, *effects)
         } catch (e: Exception) {
             e.printStackTrace()
             throw DebugData.error("Data set: ${resolvePath(name)} ($decode) with size: $size and error: $e")

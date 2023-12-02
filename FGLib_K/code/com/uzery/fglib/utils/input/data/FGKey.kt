@@ -1,10 +1,10 @@
 package com.uzery.fglib.utils.input.data
 
 import javafx.scene.input.KeyCode
-import javafx.scene.input.MouseButton
 
 data class FGKey(val value: String, val id: Int) {
     constructor(value: String): this(value, KeyCode.valueOf(value).ordinal) //todo?
+
     companion object {
         var ENTER = from(KeyCode.ENTER)
         var BACK_SPACE = from(KeyCode.BACK_SPACE)

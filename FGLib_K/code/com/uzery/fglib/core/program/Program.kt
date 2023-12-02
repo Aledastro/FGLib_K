@@ -4,7 +4,6 @@ import com.uzery.fglib.utils.data.debug.DebugData
 import com.uzery.fglib.utils.data.image.ImageUtils
 import com.uzery.fglib.utils.graphics.data.FGColor
 import com.uzery.fglib.utils.math.geom.PointN
-import com.uzery.fglib.utils.program.FGCursor
 import javafx.animation.AnimationTimer
 import javafx.scene.Cursor
 import javafx.scene.Group

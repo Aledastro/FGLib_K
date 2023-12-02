@@ -3,7 +3,6 @@ package com.uzery.fglib.utils.data.image.effects
 import com.uzery.fglib.utils.data.debug.DebugData
 import com.uzery.fglib.utils.data.image.WritableFGImage
 import com.uzery.fglib.utils.math.MathUtils
-import javafx.scene.image.WritableImage
 
 object TurnCW: ImageTransformEffect("turnCW") {
     override operator fun get(origin: WritableFGImage, args: List<List<String>>): WritableFGImage {
