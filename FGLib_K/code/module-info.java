@@ -44,8 +44,4 @@ module FGLib_K {
     exports com.uzery.fglib.utils.math.solve;
 
     /////////////////////////////////////////////////////////
-
-    exports com.uzery.fglib.extension.room_editor;
-
-    exports com.uzery.fglib.extension.ui;
 }
