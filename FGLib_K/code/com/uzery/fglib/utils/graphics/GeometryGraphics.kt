@@ -32,8 +32,7 @@ abstract class GeometryGraphics(private val transform: AffineTransform, private 
 
     fun text_size(text: String): PointN {
         val t = Text(text)
-        t.font = Font.font(font_family, FontWeight.valueOf(font_weight.name),
-            FontPosture.valueOf(font_posture.name), PointN(font_size).X)
+        t.font = FGFont.fromFGFont(font.resize(PointN(font_size).X))
         return PointN(t.layoutBounds.width, t.layoutBounds.height)
     }
 
