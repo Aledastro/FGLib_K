@@ -1,6 +1,10 @@
 package com.uzery.fglib.javafx_rl
 
 import com.uzery.fglib.core.program.*
+import com.uzery.fglib.core.realisation.FGGraphics
+import com.uzery.fglib.core.realisation.FGListener
+import com.uzery.fglib.core.realisation.FGProgram
+import com.uzery.fglib.core.realisation.FGRealisation
 import javafx.animation.AnimationTimer
 import javafx.stage.Stage
 

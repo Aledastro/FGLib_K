@@ -1,4 +1,4 @@
-package com.uzery.fglib.core.program
+package com.uzery.fglib.core.realisation
 
 import com.uzery.fglib.utils.input.KeyActivator
 import com.uzery.fglib.utils.input.MouseActivator

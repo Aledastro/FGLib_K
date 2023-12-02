@@ -1,6 +1,7 @@
 package com.uzery.fglib.javafx_rl
 
 import com.uzery.fglib.core.program.*
+import com.uzery.fglib.core.realisation.FGProgram
 import com.uzery.fglib.utils.data.image.ImageUtils
 import com.uzery.fglib.utils.graphics.data.FGColor
 import com.uzery.fglib.utils.math.geom.PointN

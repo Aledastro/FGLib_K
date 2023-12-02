@@ -17,9 +17,15 @@ module FGLib_K {
 
     exports com.uzery.fglib.core.program;
 
+    exports com.uzery.fglib.core.realisation;
+
     exports com.uzery.fglib.core.room;
 
     exports com.uzery.fglib.core.world;
+
+    /////////////////////////////////////////////////////////
+
+    exports com.uzery.fglib.javafx_rl;
 
     /////////////////////////////////////////////////////////
 

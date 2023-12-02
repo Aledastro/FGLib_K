@@ -12,25 +12,20 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="82970e50-af90-458e-a847-e0b07c98f932" name="Changes" comment="FGLib v.0.11.5.3 [K]">
-      <change afterPath="$PROJECT_DIR$/FGLib_K/code/com/uzery/fglib/core/program/FGGraphics.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/FGLib_K/code/com/uzery/fglib/core/program/FGListener.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/FGLib_K/code/com/uzery/fglib/core/program/FGProgram.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/FGLib_K/code/com/uzery/fglib/core/program/FGRealisation.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/FGLib_K/code/com/uzery/fglib/javafx_rl/GraphicsFX.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/FGLib_K/code/com/uzery/fglib/javafx_rl/JavaFXRealisation.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/FGLib_K/code/com/uzery/fglib/javafx_rl/ListenerFX.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/FGLib_K/code/com/uzery/fglib/javafx_rl/ProgramFX.kt" afterDir="false" />
+    <list default="true" id="82970e50-af90-458e-a847-e0b07c98f932" name="Changes" comment="FGLib v.0.11.6.0 [K]">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FGLib_K/code/com/uzery/fglib/core/program/LaunchOptions.kt" beforeDir="false" afterPath="$PROJECT_DIR$/FGLib_K/code/com/uzery/fglib/core/program/LaunchOptions.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FGLib_K/code/com/uzery/fglib/core/program/Launcher.kt" beforeDir="false" afterPath="$PROJECT_DIR$/FGLib_K/code/com/uzery/fglib/core/program/Launcher.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FGLib_K/code/com/uzery/fglib/core/program/LauncherApp.kt" beforeDir="false" afterPath="$PROJECT_DIR$/FGLib_K/code/com/uzery/fglib/core/program/LauncherApp.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FGLib_K/code/com/uzery/fglib/core/program/FGGraphics.kt" beforeDir="false" afterPath="$PROJECT_DIR$/FGLib_K/code/com/uzery/fglib/core/realisation/FGGraphics.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FGLib_K/code/com/uzery/fglib/core/program/FGListener.kt" beforeDir="false" afterPath="$PROJECT_DIR$/FGLib_K/code/com/uzery/fglib/core/realisation/FGListener.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FGLib_K/code/com/uzery/fglib/core/program/FGProgram.kt" beforeDir="false" afterPath="$PROJECT_DIR$/FGLib_K/code/com/uzery/fglib/core/realisation/FGProgram.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FGLib_K/code/com/uzery/fglib/core/program/FGRealisation.kt" beforeDir="false" afterPath="$PROJECT_DIR$/FGLib_K/code/com/uzery/fglib/core/realisation/FGRealisation.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FGLib_K/code/com/uzery/fglib/core/program/Launcher.kt" beforeDir="false" afterPath="$PROJECT_DIR$/FGLib_K/code/com/uzery/fglib/javafx_rl/Launcher.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FGLib_K/code/com/uzery/fglib/core/program/LauncherApp.kt" beforeDir="false" afterPath="$PROJECT_DIR$/FGLib_K/code/com/uzery/fglib/javafx_rl/LauncherApp.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/FGLib_K/code/com/uzery/fglib/core/program/Platform.kt" beforeDir="false" afterPath="$PROJECT_DIR$/FGLib_K/code/com/uzery/fglib/core/program/Platform.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FGLib_K/code/com/uzery/fglib/core/program/Program.kt" beforeDir="false" afterPath="$PROJECT_DIR$/FGLib_K/code/com/uzery/fglib/core/program/Program.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FGLib_K/code/com/uzery/fglib/utils/graphics/AffineGraphics.kt" beforeDir="false" afterPath="$PROJECT_DIR$/FGLib_K/code/com/uzery/fglib/utils/graphics/AffineGraphics.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FGLib_K/code/com/uzery/fglib/utils/graphics/GeometryGraphics.kt" beforeDir="false" afterPath="$PROJECT_DIR$/FGLib_K/code/com/uzery/fglib/utils/graphics/GeometryGraphics.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FGLib_K/code/com/uzery/fglib/utils/graphics/ImageGraphics.kt" beforeDir="false" afterPath="$PROJECT_DIR$/FGLib_K/code/com/uzery/fglib/utils/graphics/ImageGraphics.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FGLib_K/code/com/uzery/fglib/utils/input/KeyActivator.kt" beforeDir="false" afterPath="$PROJECT_DIR$/FGLib_K/code/com/uzery/fglib/utils/input/KeyActivator.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FGLib_K/code/com/uzery/fglib/javafx_rl/GraphicsFX.kt" beforeDir="false" afterPath="$PROJECT_DIR$/FGLib_K/code/com/uzery/fglib/javafx_rl/GraphicsFX.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FGLib_K/code/com/uzery/fglib/javafx_rl/JavaFXRealisation.kt" beforeDir="false" afterPath="$PROJECT_DIR$/FGLib_K/code/com/uzery/fglib/javafx_rl/JavaFXRealisation.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FGLib_K/code/com/uzery/fglib/javafx_rl/ListenerFX.kt" beforeDir="false" afterPath="$PROJECT_DIR$/FGLib_K/code/com/uzery/fglib/javafx_rl/ListenerFX.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FGLib_K/code/com/uzery/fglib/javafx_rl/ProgramFX.kt" beforeDir="false" afterPath="$PROJECT_DIR$/FGLib_K/code/com/uzery/fglib/javafx_rl/ProgramFX.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FGLib_K/code/module-info.java" beforeDir="false" afterPath="$PROJECT_DIR$/FGLib_K/code/module-info.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -119,10 +114,10 @@
     </key>
     <key name="MoveKotlinTopLevelDeclarationsDialog.RECENTS_KEY">
       <recent name="com.uzery.fglib.javafx_rl" />
+      <recent name="com.uzery.fglib.realisation" />
       <recent name="com.uzery.fglib.utils.math.solve" />
       <recent name="com.uzery.fglib.utils.data.image" />
       <recent name="com.uzery.fglib.utils.data.image.effects" />
-      <recent name="com.uzery.fglib.utils.math.geom" />
     </key>
     <key name="CopyKotlinDeclarationDialog.RECENTS_KEY">
       <recent name="com.uzery.fglib.core.program" />
@@ -140,13 +135,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1680386967444</updated>
-    </task>
-    <task id="LOCAL-00293" summary="FGLib v.0.10.0.1 [K]">
-      <created>1700868137179</created>
-      <option name="number" value="00293" />
-      <option name="presentableId" value="LOCAL-00293" />
-      <option name="project" value="LOCAL" />
-      <updated>1700868137179</updated>
     </task>
     <task id="LOCAL-00294" summary="FGLib v.0.10.0.2 [K]">
       <created>1701076354679</created>
@@ -484,7 +472,14 @@
       <option name="project" value="LOCAL" />
       <updated>1701514081287</updated>
     </task>
-    <option name="localTasksCounter" value="342" />
+    <task id="LOCAL-00342" summary="FGLib v.0.11.6.0 [K]">
+      <created>1701524706587</created>
+      <option name="number" value="00342" />
+      <option name="presentableId" value="LOCAL-00342" />
+      <option name="project" value="LOCAL" />
+      <updated>1701524706587</updated>
+    </task>
+    <option name="localTasksCounter" value="343" />
     <servers />
   </component>
   <component name="UnknownFeatures">
@@ -514,7 +509,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="FGLib v.0.10.6.6 [K]" />
     <MESSAGE value="FGLib v.0.10.6.7 [K]" />
     <MESSAGE value="FGLib v.0.10.6.8 [K]" />
     <MESSAGE value="FGLib v.0.10.6.9 [K]" />
@@ -539,7 +533,8 @@
     <MESSAGE value="FGLib v.0.11.5.1 [K]" />
     <MESSAGE value="FGLib v.0.11.5.2 [K]" />
     <MESSAGE value="FGLib v.0.11.5.3 [K]" />
-    <option name="LAST_COMMIT_MESSAGE" value="FGLib v.0.11.5.3 [K]" />
+    <MESSAGE value="FGLib v.0.11.6.0 [K]" />
+    <option name="LAST_COMMIT_MESSAGE" value="FGLib v.0.11.6.0 [K]" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

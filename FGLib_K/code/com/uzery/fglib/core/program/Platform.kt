@@ -38,8 +38,9 @@ object Platform {
         }
     
     var options: LaunchOptions = LaunchOptions.default
-        get() = LaunchOptions.default2 //todo
-
+        get(){
+            return field
+        }
     fun exit() {
         program.exit()
     }

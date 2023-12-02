@@ -1,7 +1,8 @@
-package com.uzery.fglib.core.program
+package com.uzery.fglib.javafx_rl
 
-import com.uzery.fglib.javafx_rl.JavaFXRealisation
-import com.uzery.fglib.javafx_rl.ProgramFX
+import com.uzery.fglib.core.program.Extension
+import com.uzery.fglib.core.program.LaunchOptions
+import com.uzery.fglib.core.program.Platform
 import javafx.application.Application
 
 object Launcher {

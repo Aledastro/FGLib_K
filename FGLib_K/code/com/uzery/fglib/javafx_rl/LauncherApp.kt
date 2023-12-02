@@ -1,7 +1,6 @@
-package com.uzery.fglib.core.program
+package com.uzery.fglib.javafx_rl
 
-import com.uzery.fglib.javafx_rl.JavaFXRealisation
-import com.uzery.fglib.javafx_rl.ProgramFX
+
 import javafx.application.Application
 import javafx.stage.Stage
 

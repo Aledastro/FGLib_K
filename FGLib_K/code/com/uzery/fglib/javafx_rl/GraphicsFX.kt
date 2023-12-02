@@ -1,6 +1,6 @@
 package com.uzery.fglib.javafx_rl
 
-import com.uzery.fglib.core.program.FGGraphics
+import com.uzery.fglib.core.realisation.FGGraphics
 import com.uzery.fglib.core.program.Platform
 import com.uzery.fglib.core.program.Platform.CANVAS
 import com.uzery.fglib.core.program.Platform.WINDOW

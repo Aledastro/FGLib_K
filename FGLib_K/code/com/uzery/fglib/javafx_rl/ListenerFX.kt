@@ -1,6 +1,6 @@
 package com.uzery.fglib.javafx_rl
 
-import com.uzery.fglib.core.program.FGListener
+import com.uzery.fglib.core.realisation.FGListener
 import com.uzery.fglib.core.program.Platform
 import com.uzery.fglib.core.program.Program
 import com.uzery.fglib.utils.data.debug.DebugData
@@ -74,7 +74,7 @@ internal object ListenerFX: FGListener() {
     }
 
     override val mouse = object: MouseActivator(RectN(PointN.ZERO, Platform.CANVAS)) {
-        override fun pos0(): PointN = mouseP/GraphicsFX.scale
+        override fun pos0(): PointN = mouseP/Platform.graphics_ut.scale
         override fun scroll0() = scrollP
 
         override val keys = object: KeyActivator<FGMouseKey>(FGMouseKey.values()) {
