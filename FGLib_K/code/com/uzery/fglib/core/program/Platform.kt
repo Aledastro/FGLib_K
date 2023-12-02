@@ -16,6 +16,7 @@ import com.uzery.fglib.utils.input.data.FGMouseKey
 import com.uzery.fglib.utils.math.geom.PointN
 import com.uzery.fglib.utils.math.geom.shape.RectN
 import com.uzery.fglib.utils.math.num.IntI
+import com.uzery.fglib.utils.program.FGCursor
 import javafx.scene.Cursor
 import javafx.scene.image.Image
 import javafx.scene.input.KeyCode
@@ -42,25 +43,25 @@ object Platform {
 
     var global_view_scale = 1.0
 
-    var cursor: Cursor? = null
+    var cursor = FGCursor.DEFAULT
         set(value) {
             field = value
             if (Program.inited) Program.setCursor()
         }
 
-    fun resizeCursorFrom(pos: IntI): Cursor {
+    fun resizeCursorFrom(pos: IntI): FGCursor {
         return when (pos) {
-            IntI(-1, -1) -> Cursor.NW_RESIZE
-            IntI(0, -1) -> Cursor.N_RESIZE
-            IntI(1, -1) -> Cursor.NE_RESIZE
+            IntI(-1, -1) -> FGCursor.NW_RESIZE
+            IntI(0, -1) -> FGCursor.N_RESIZE
+            IntI(1, -1) -> FGCursor.NE_RESIZE
 
-            IntI(-1, 0) -> Cursor.W_RESIZE
-            IntI(0, 0) -> Cursor.DEFAULT
-            IntI(1, 0) -> Cursor.E_RESIZE
+            IntI(-1, 0) -> FGCursor.W_RESIZE
+            IntI(0, 0) -> FGCursor.DEFAULT
+            IntI(1, 0) -> FGCursor.E_RESIZE
 
-            IntI(-1, 1) -> Cursor.SW_RESIZE
-            IntI(0, 1) -> Cursor.S_RESIZE
-            IntI(1, 1) -> Cursor.SE_RESIZE
+            IntI(-1, 1) -> FGCursor.SW_RESIZE
+            IntI(0, 1) -> FGCursor.S_RESIZE
+            IntI(1, 1) -> FGCursor.SE_RESIZE
 
             else -> throw DebugData.error("wrong: $pos")
         }

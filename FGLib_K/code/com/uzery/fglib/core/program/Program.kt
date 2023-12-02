@@ -4,6 +4,7 @@ import com.uzery.fglib.utils.data.debug.DebugData
 import com.uzery.fglib.utils.data.image.ImageUtils
 import com.uzery.fglib.utils.graphics.data.FGColor
 import com.uzery.fglib.utils.math.geom.PointN
+import com.uzery.fglib.utils.program.FGCursor
 import javafx.animation.AnimationTimer
 import javafx.scene.Cursor
 import javafx.scene.Group
@@ -14,6 +15,7 @@ import javafx.scene.input.KeyCode
 import javafx.scene.input.KeyCombination
 import javafx.stage.Screen
 import javafx.stage.Stage
+import javafx.stage.StageStyle
 import kotlin.math.max
 
 internal object Program {
@@ -59,7 +61,7 @@ internal object Program {
         gc = canvas.graphicsContext2D
         gc.isImageSmoothing = false
         stage.scene = Scene(Group(canvas))
-        stage.initStyle(options.style)
+        stage.initStyle(StageStyle.valueOf(options.style.name))
         stage.isFullScreen = options.fullscreen
         stage.fullScreenExitKeyCombination = KeyCombination.NO_MATCH
         options.icons.forEach { stage.icons.add(ImageUtils.from(it)) }
@@ -132,7 +134,7 @@ internal object Program {
     }
 
     fun setCursor() {
-        stage.scene.cursor = Platform.cursor ?: Cursor.DEFAULT
+        stage.scene.cursor = Cursor.cursor(Platform.cursor.name)
     }
 
     var inited = false
