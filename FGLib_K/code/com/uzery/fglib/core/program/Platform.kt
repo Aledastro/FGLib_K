@@ -185,28 +185,28 @@ object Platform {
             override fun rect0(pos: PointN, size: PointN, color: FGColor) {
                 if (isOutOfBounds(pos, size)) return
 
-                gc.fill = FGColor.fromFGColor(color)
+                gc.stroke = FGColor.fromFGColor(color)
                 gc.strokeRect(pos.X, pos.Y, size.X, size.Y)
             }
 
             override fun oval0(pos: PointN, size: PointN, color: FGColor) {
                 if (isOutOfBounds(pos, size)) return
 
-                gc.fill = FGColor.fromFGColor(color)
+                gc.stroke = FGColor.fromFGColor(color)
                 gc.strokeOval(pos.X, pos.Y, size.X, size.Y)
             }
 
             override fun line0(pos1: PointN, pos2: PointN, color: FGColor) {
                 if (isOutOfBounds(pos1, pos2-pos1)) return
 
-                gc.fill = FGColor.fromFGColor(color)
+                gc.stroke = FGColor.fromFGColor(color)
                 gc.strokeLine(pos1.X, pos1.Y, pos2.X, pos2.Y)
             }
 
             override fun text0(pos: PointN, text: String, color: FGColor) {
                 if (isOutOfBounds(pos, text_size(text))) return
 
-                gc.fill = FGColor.fromFGColor(color)
+                gc.stroke = FGColor.fromFGColor(color)
                 gc.font = FGFont.fromFGFont(font)
                 gc.strokeText(text, pos.X, pos.Y)
             }
