@@ -50,12 +50,11 @@ data class FGColor(val red: Double, val green: Double, val blue: Double, val alp
         }
 
         fun from(c: Color): FGColor {
-            return FGColor(c.red, c.green, c.blue)
+            return FGColor(c.red, c.green, c.blue, c.opacity)
         }
 
         fun fromFGColor(c: FGColor): Color {
-            return Color.color(c.red, c.green, c.blue)
+            return Color.color(c.red, c.green, c.blue, c.alpha)
         }
     }
-
 }

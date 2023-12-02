@@ -8,6 +8,7 @@ import com.uzery.fglib.utils.graphics.AffineTransform
 import com.uzery.fglib.utils.graphics.GeometryGraphics
 import com.uzery.fglib.utils.graphics.ImageGraphics
 import com.uzery.fglib.utils.graphics.data.FGColor
+import com.uzery.fglib.utils.graphics.data.FGFont
 import com.uzery.fglib.utils.input.KeyActivator
 import com.uzery.fglib.utils.input.MouseActivator
 import com.uzery.fglib.utils.math.geom.PointN
@@ -176,7 +177,7 @@ object Platform {
                 if (isOutOfBounds(pos, text_size(text))) return
 
                 gc.fill = FGColor.fromFGColor(color)
-                gc.font = font
+                gc.font = FGFont.fromFGFont(font)
                 gc.fillText(text, pos.X, pos.Y)
             }
         }
@@ -206,7 +207,7 @@ object Platform {
                 if (isOutOfBounds(pos, text_size(text))) return
 
                 gc.fill = FGColor.fromFGColor(color)
-                gc.font = font
+                gc.font = FGFont.fromFGFont(font)
                 gc.strokeText(text, pos.X, pos.Y)
             }
         }

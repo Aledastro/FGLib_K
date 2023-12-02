@@ -1,6 +1,9 @@
 package com.uzery.fglib.utils.graphics
 
 import com.uzery.fglib.utils.graphics.data.FGColor
+import com.uzery.fglib.utils.graphics.data.FGFont
+import com.uzery.fglib.utils.graphics.data.FGFontPosture
+import com.uzery.fglib.utils.graphics.data.FGFontWeight
 import com.uzery.fglib.utils.math.geom.PointN
 import com.uzery.fglib.utils.math.geom.Shape
 import com.uzery.fglib.utils.math.geom.shape.FigureN
@@ -14,12 +17,12 @@ abstract class GeometryGraphics(private val transform: AffineTransform, private 
         font()
     }
 
-    val font: Font
-        get() = Font.font(font_family, font_weight, font_posture, transformSize.transform(PointN(font_size)).X)
+    val font: FGFont
+        get() = FGFont(font_family, transformSize.transform(PointN(font_size)).X, font_weight, font_posture)
 
     fun font(
         family: String = "arial", size: Double = 10.0,
-        weight: FontWeight = FontWeight.NORMAL, posture: FontPosture = FontPosture.REGULAR
+        weight: FGFontWeight = FGFontWeight.NORMAL, posture: FGFontPosture = FGFontPosture.REGULAR
     ) {
         font_family = family
         font_size = size
@@ -29,14 +32,15 @@ abstract class GeometryGraphics(private val transform: AffineTransform, private 
 
     fun text_size(text: String): PointN {
         val t = Text(text)
-        t.font = Font.font(font_family, font_weight, font_posture, PointN(font_size).X)
+        t.font = Font.font(font_family, FontWeight.valueOf(font_weight.name),
+            FontPosture.valueOf(font_posture.name), PointN(font_size).X)
         return PointN(t.layoutBounds.width, t.layoutBounds.height)
     }
 
     var font_family = "arial"
     var font_size = 10.0
-    var font_weight = FontWeight.NORMAL
-    var font_posture = FontPosture.REGULAR
+    var font_weight = FGFontWeight.NORMAL
+    var font_posture = FGFontPosture.REGULAR
 
     protected abstract fun rect0(pos: PointN, size: PointN, color: FGColor)
 
