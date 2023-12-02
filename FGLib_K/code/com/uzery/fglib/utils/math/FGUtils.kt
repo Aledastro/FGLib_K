@@ -2,7 +2,6 @@ package com.uzery.fglib.utils.math
 
 import com.uzery.fglib.utils.data.getter.ClassGetter
 import com.uzery.fglib.utils.math.geom.PointN
-import javafx.scene.paint.Color
 import java.io.File
 import java.time.LocalDate
 import java.time.LocalTime
@@ -28,12 +27,6 @@ object FGUtils {
         if (s.length == rev) return s
         return if (s.length > rev) s.substring(s.length-rev) else "0".repeat(rev-s.length)+s
     }
-
-    fun changeAlpha(color: Color, k: Double): Color {
-        return Color(color.red, color.green, color.blue, k)
-    }
-
-    fun transparent(color: Color, k: Double): Color = changeAlpha(color, 0.0).interpolate(color, k)
     fun subBefore(input: String, index: String, delta: Int = 0): String {
         return input.substring(0 until input.indexOf(index)+delta)
     }
