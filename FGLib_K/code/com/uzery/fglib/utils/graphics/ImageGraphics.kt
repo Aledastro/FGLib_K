@@ -5,8 +5,9 @@ import com.uzery.fglib.utils.data.image.ImageUtils
 import com.uzery.fglib.utils.math.geom.PointN
 
 abstract class ImageGraphics(private val transform: AffineTransform) {
+    var alpha = 1.0
     fun setDefaults() {
-
+        alpha = 1.0
     }
 
     protected abstract fun draw0(image: FGImage, pos: PointN, size: PointN)

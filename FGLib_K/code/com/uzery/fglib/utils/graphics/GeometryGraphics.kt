@@ -10,8 +10,10 @@ import com.uzery.fglib.utils.math.geom.shape.FigureN
 import javafx.scene.text.Text
 
 abstract class GeometryGraphics(private val transform: AffineTransform, private val transformSize: AffineTransform) {
+    var alpha = 1.0
     fun setDefaults() {
         font()
+        alpha = 1.0
     }
 
     val font: FGFont

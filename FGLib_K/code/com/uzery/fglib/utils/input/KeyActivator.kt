@@ -1,13 +1,13 @@
 package com.uzery.fglib.utils.input
 
-abstract class KeyActivator<Key>(private val size: Int) {
+abstract class KeyActivator<Key>(private val values: Array<Key>) {
+    private val size = values.size
+
     private var timePressed = Array(size) { 0L }
     private var timeReleased = Array(size) { 0L }
     private var lastTimePressed = Array(size) { 0L }
     private var lastTimeReleased = Array(size) { 0L }
     private var block = Array(size) { false }
-
-    protected abstract val values: Array<Key>
 
     protected abstract fun pressed0(code: Int): Boolean
 

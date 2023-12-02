@@ -14,5 +14,13 @@ data class LaunchOptions(
 ) {
     companion object {
         val default = LaunchOptions(PointN(700, 700))
+        val default2 = LaunchOptions(
+            PointN(1920, 1080)/2,
+            fullscreen = true,
+            FGColor.WHITE,
+            "Room Editor",
+            listOf("sys|fglib_icon.png"),
+            FGWindowStyle.UNDECORATED
+        )
     }
 }
