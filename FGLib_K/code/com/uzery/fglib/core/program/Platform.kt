@@ -7,6 +7,7 @@ import com.uzery.fglib.utils.graphics.AffineGraphics
 import com.uzery.fglib.utils.graphics.AffineTransform
 import com.uzery.fglib.utils.graphics.GeometryGraphics
 import com.uzery.fglib.utils.graphics.ImageGraphics
+import com.uzery.fglib.utils.graphics.data.FGColor
 import com.uzery.fglib.utils.input.KeyActivator
 import com.uzery.fglib.utils.input.MouseActivator
 import com.uzery.fglib.utils.math.geom.PointN
@@ -16,8 +17,6 @@ import javafx.scene.Cursor
 import javafx.scene.image.Image
 import javafx.scene.input.KeyCode
 import javafx.scene.input.MouseButton
-import javafx.scene.paint.Color
-import javafx.scene.paint.Paint
 import kotlin.math.min
 
 object Platform {
@@ -87,9 +86,10 @@ object Platform {
     val CANVAS_REAL_R
         get() = RectN(PointN.ZERO, CANVAS_REAL)
 
-    fun lineDashes(vararg dashes: Double){
+    fun lineDashes(vararg dashes: Double) {
         gc.setLineDashes(*dashes)
     }
+
     var line_dash_offset = 0.0
         set(value) {
             gc.lineDashOffset = value
@@ -145,64 +145,67 @@ object Platform {
         override val image: ImageGraphics = object: ImageGraphics(transform) {
             override fun draw0(image: Image, pos: PointN, size: PointN) {
                 if (isOutOfBounds(pos, size)) return
+
                 gc.drawImage(image, pos.X, pos.Y, size.X, size.Y)
             }
         }
 
         override val fill: GeometryGraphics = object: GeometryGraphics(transform, transformSize) {
-            override var color: Paint = Color(0.0, 0.0, 0.0, 1.0)
-                set(value) {
-                    field = value
-                    gc.fill = value
-                }
-
-            override fun rect0(pos: PointN, size: PointN) {
+            override fun rect0(pos: PointN, size: PointN, color: FGColor) {
                 if (isOutOfBounds(pos, size)) return
+
+                gc.fill = FGColor.fromFGColor(color)
                 gc.fillRect(pos.X, pos.Y, size.X, size.Y)
             }
 
-            override fun oval0(pos: PointN, size: PointN) {
+            override fun oval0(pos: PointN, size: PointN, color: FGColor) {
                 if (isOutOfBounds(pos, size)) return
+
+                gc.fill = FGColor.fromFGColor(color)
                 gc.fillOval(pos.X, pos.Y, size.X, size.Y)
             }
 
-            override fun line0(pos1: PointN, pos2: PointN) {
+            override fun line0(pos1: PointN, pos2: PointN, color: FGColor) {
                 if (isOutOfBounds(pos1, pos2-pos1)) return
+
+                gc.fill = FGColor.fromFGColor(color)
                 gc.strokeLine(pos1.X, pos1.Y, pos2.X, pos2.Y)
             }
 
-            override fun text0(pos: PointN, text: String) {
+            override fun text0(pos: PointN, text: String, color: FGColor) {
                 if (isOutOfBounds(pos, text_size(text))) return
 
+                gc.fill = FGColor.fromFGColor(color)
                 gc.font = font
                 gc.fillText(text, pos.X, pos.Y)
             }
         }
         override val stroke: GeometryGraphics = object: GeometryGraphics(transform, transformSize) {
-            override var color: Paint = Color(0.0, 0.0, 0.0, 1.0)
-                set(value) {
-                    field = value
-                    gc.stroke = value
-                }
-
-            override fun rect0(pos: PointN, size: PointN) {
+            override fun rect0(pos: PointN, size: PointN, color: FGColor) {
                 if (isOutOfBounds(pos, size)) return
+
+                gc.fill = FGColor.fromFGColor(color)
                 gc.strokeRect(pos.X, pos.Y, size.X, size.Y)
             }
 
-            override fun oval0(pos: PointN, size: PointN) {
+            override fun oval0(pos: PointN, size: PointN, color: FGColor) {
                 if (isOutOfBounds(pos, size)) return
+
+                gc.fill = FGColor.fromFGColor(color)
                 gc.strokeOval(pos.X, pos.Y, size.X, size.Y)
             }
 
-            override fun line0(pos1: PointN, pos2: PointN) {
+            override fun line0(pos1: PointN, pos2: PointN, color: FGColor) {
                 if (isOutOfBounds(pos1, pos2-pos1)) return
+
+                gc.fill = FGColor.fromFGColor(color)
                 gc.strokeLine(pos1.X, pos1.Y, pos2.X, pos2.Y)
             }
 
-            override fun text0(pos: PointN, text: String) {
+            override fun text0(pos: PointN, text: String, color: FGColor) {
                 if (isOutOfBounds(pos, text_size(text))) return
 
+                gc.fill = FGColor.fromFGColor(color)
                 gc.font = font
                 gc.strokeText(text, pos.X, pos.Y)
             }

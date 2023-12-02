@@ -8,9 +8,8 @@ import com.uzery.fglib.core.program.Platform.graphics
 import com.uzery.fglib.core.room.Room
 import com.uzery.fglib.core.world.WorldUtils.readInfo
 import com.uzery.fglib.utils.data.getter.AbstractClassGetter
-import com.uzery.fglib.utils.math.FGUtils
+import com.uzery.fglib.utils.graphics.data.FGColor
 import com.uzery.fglib.utils.math.geom.PointN
-import javafx.scene.paint.Color
 
 object World {
     val rooms = ArrayList<Room>()
@@ -83,7 +82,7 @@ object World {
 
     private fun drawRoomsDebug(pos: PointN) {
         graphics.layer = DrawLayer.CAMERA_FOLLOW
-        active_rooms.forEach { graphics.stroke.rect(pos+it.pos, it.size, Color.DARKBLUE) }
+        active_rooms.forEach { graphics.stroke.rect(pos+it.pos, it.size, FGColor.DARKBLUE) }
 
         active_rooms.forEach { WorldUtils.drawDebug(pos+it.pos, it) }
     }
@@ -93,7 +92,7 @@ object World {
 
         graphics.layer = DrawLayer.CAMERA_FOLLOW
         rooms.forEach { room ->
-            graphics.stroke.rect(room.pos+pos, room.size, FGUtils.transparent(Color.LIGHTGRAY, 0.5))
+            graphics.stroke.rect(room.pos+pos, room.size, FGColor.LIGHTGRAY.transparent(0.5))
         }
     }
 

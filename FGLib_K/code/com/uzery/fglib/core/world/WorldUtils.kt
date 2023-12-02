@@ -7,10 +7,9 @@ import com.uzery.fglib.core.program.Platform.graphics
 import com.uzery.fglib.core.room.Room
 import com.uzery.fglib.utils.data.debug.DebugData
 import com.uzery.fglib.utils.data.file.TextData
-import com.uzery.fglib.utils.math.FGUtils
+import com.uzery.fglib.utils.graphics.data.FGColor
 import com.uzery.fglib.utils.math.FGUtils.getPosFrom
 import com.uzery.fglib.utils.math.geom.PointN
-import javafx.scene.paint.Color
 import javafx.scene.text.FontWeight
 import java.util.*
 import kotlin.math.PI
@@ -79,7 +78,7 @@ object WorldUtils {
         for (o in list) {
             val draw_pos = posFrom(o)
 
-            val c = if (o.stats.fly) Color.color(1.0, 1.0, 0.2, 0.7) else Color.color(1.0, 0.2, 1.0, 0.7)
+            val c = if (o.stats.fly) FGColor(1.0, 1.0, 0.2, 0.7) else FGColor(1.0, 0.2, 1.0, 0.7)
             val n = map[draw_pos]!!
             val id = mapID[o]!!
 
@@ -102,16 +101,16 @@ object WorldUtils {
 
     fun drawBoundsFor(o: GameObject, pos: PointN, color_id: Int) {
         val colors = arrayOf(
-            Color.RED,
-            Color.ORANGERED,
-            Color.BLUE,
-            Color.GREEN
+            FGColor.RED,
+            FGColor.ORANGERED,
+            FGColor.BLUE,
+            FGColor.GREEN
         )
         val colors_h = arrayOf(
-            Color.RED.interpolate(Color.WHITE, 0.5),
-            Color.ORANGERED.interpolate(Color.WHITE, 0.5),
-            Color.BLUE.interpolate(Color.WHITE, 0.5),
-            Color.GREEN.interpolate(Color.WHITE, 0.5)
+            FGColor.RED.interpolate(FGColor.WHITE, 0.5),
+            FGColor.ORANGERED.interpolate(FGColor.WHITE, 0.5),
+            FGColor.BLUE.interpolate(FGColor.WHITE, 0.5),
+            FGColor.GREEN.interpolate(FGColor.WHITE, 0.5)
         )
         val bs = o.bounds[color_id]
         if (bs.empty) return
@@ -123,11 +122,11 @@ object WorldUtils {
                 graphics.stroke.line(
                     pos+o.pos_with_owners+shape.L,
                     shape.S,
-                    FGUtils.transparent(colors_h[color_id], 0.8)
+                    colors_h[color_id].transparent(0.8)
                 )
 
-            graphics.fill.draw(pos+o.pos_with_owners, shape, FGUtils.transparent(colors[color_id], 0.1))
-            graphics.stroke.draw(pos+o.pos_with_owners, shape, FGUtils.transparent(colors[color_id], 0.6))
+            graphics.fill.draw(pos+o.pos_with_owners, shape, colors[color_id].transparent(0.1))
+            graphics.stroke.draw(pos+o.pos_with_owners, shape, colors[color_id].transparent(0.6))
         }
     }
 
@@ -175,27 +174,27 @@ object WorldUtils {
 
         val p = draw_pos+room.size.XP+PointN(10, 0)
 
-        graphics.fill.text(p+PointN(0, 10), "pos: ${room.pos}", Color.DARKBLUE)
-        graphics.fill.text(p+PointN(0, 20), "size: ${room.size}", Color.DARKBLUE)
-        graphics.fill.text(p+PointN(0, 30), "objects: ${room.objects.size}", Color.DARKBLUE)
+        graphics.fill.text(p+PointN(0, 10), "pos: ${room.pos}", FGColor.DARKBLUE)
+        graphics.fill.text(p+PointN(0, 20), "size: ${room.size}", FGColor.DARKBLUE)
+        graphics.fill.text(p+PointN(0, 30), "objects: ${room.objects.size}", FGColor.DARKBLUE)
         graphics.fill.text(
             p+PointN(0, 40),
             "ram (MB): ${ram/1000_000}/${maxRam/1000_000}",
-            Color.DARKBLUE
+            FGColor.DARKBLUE
         )
         graphics.fill.text(
             p+PointN(0, 50),
             "ram (KB) per obj: ${if (room.objects.size != 0) (ram/1000/room.objects.size).toInt() else 0}",
-            Color.DARKBLUE
+            FGColor.DARKBLUE
         )
 
-        graphics.fill.text(p+PointN(0, 60), "FPS: ${(fps/100).toInt()}", Color.DARKBLUE)
+        graphics.fill.text(p+PointN(0, 60), "FPS: ${(fps/100).toInt()}", FGColor.DARKBLUE)
 
         for (index in 0 until BoundsBox.SIZE) {
             graphics.fill.text(
                 p+PointN(0, 70+index*10),
                 "bounds[${BoundsBox.name(index)}]: ${bs_n[room]!![index]}",
-                Color.DARKBLUE
+                FGColor.DARKBLUE
             )
         }
     }

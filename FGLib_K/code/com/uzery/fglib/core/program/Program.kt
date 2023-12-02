@@ -2,6 +2,7 @@ package com.uzery.fglib.core.program
 
 import com.uzery.fglib.utils.data.debug.DebugData
 import com.uzery.fglib.utils.data.image.ImageUtils
+import com.uzery.fglib.utils.graphics.data.FGColor
 import com.uzery.fglib.utils.math.geom.PointN
 import javafx.animation.AnimationTimer
 import javafx.scene.Cursor
@@ -71,7 +72,7 @@ internal object Program {
 
         setCursor()
 
-        stage.scene.fill = options.fill
+        stage.scene.fill = FGColor.fromFGColor(options.fill)
 
         stage.title = options.title
         stage.show()

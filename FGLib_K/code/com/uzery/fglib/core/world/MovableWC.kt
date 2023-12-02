@@ -5,10 +5,10 @@ import com.uzery.fglib.core.program.Platform.CANVAS
 import com.uzery.fglib.core.program.Platform.graphics
 import com.uzery.fglib.core.room.Room
 import com.uzery.fglib.core.world.World.rooms
+import com.uzery.fglib.utils.graphics.data.FGColor
 import com.uzery.fglib.utils.math.ShapeUtils
 import com.uzery.fglib.utils.math.geom.PointN
 import com.uzery.fglib.utils.math.geom.shape.RectN
-import javafx.scene.paint.Color
 import javafx.scene.text.FontWeight
 
 class MovableWC(private val goal: GameObject, private val room_p: Double = 10.0): WorldController {
@@ -94,7 +94,7 @@ class MovableWC(private val goal: GameObject, private val room_p: Double = 10.0)
 
     override fun update() {
         graphics.fill.font("TimesNewRoman", 12.0/2, FontWeight.BOLD)
-        graphics.fill.textL(PointN(20, 60), "pos: "+goal.stats.POS, Color.BLACK)
+        graphics.fill.textL(PointN(20, 60), "pos: "+goal.stats.POS, FGColor.BLACK)
         /*if(Platform.keyboard.pressed(KeyCode.CONTROL) && Platform.keyboard.inPressed(KeyCode.R)) {
             active_rooms.forEach { room->room.objects.removeIf { it.tagged("player") } }
             World.add(goal)

@@ -1,10 +1,10 @@
 package com.uzery.fglib.utils.data.getter
 
+import com.uzery.fglib.utils.graphics.data.FGColor
 import com.uzery.fglib.utils.math.geom.Direct
 import com.uzery.fglib.utils.math.geom.PointN
 import com.uzery.fglib.utils.math.num.StringN
 import com.uzery.fglib.utils.math.solve.MathSolveUtils
-import javafx.scene.paint.Color
 
 abstract class ClassGetter<Type>: AbstractClassGetter<Type>() {
     protected var no_info = false
@@ -80,8 +80,8 @@ abstract class ClassGetter<Type>: AbstractClassGetter<Type>() {
     protected val boolean: Boolean
         get() = if (no_info) false else input[in_id++][0].toBoolean()
 
-    protected val color: Color
-        get() = if (no_info) Color.BLACK else Color.color(double, doubleX(1), doubleX(2), doubleX(3))
+    protected val color: FGColor
+        get() = if (no_info) FGColor.BLACK else FGColor(double, doubleX(1), doubleX(2), doubleX(3))
     protected val pos: PointN
         get() = when {
             no_info || input[in_id][0] == "ZERO" -> PointN.ZERO
