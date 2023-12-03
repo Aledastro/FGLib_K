@@ -5,6 +5,7 @@ import com.uzery.fglib.utils.graphics.data.FGFont
 import com.uzery.fglib.utils.math.geom.PointN
 
 abstract class AffineGraphics {
+    var global_alpha = 1.0
     var alpha = 1.0
     var view_scale = 1.0
     var drawPOS = PointN.ZERO
@@ -20,6 +21,7 @@ abstract class AffineGraphics {
 
     abstract fun setStroke(size: Double)
     fun setDefaults() {
+        alpha = 1.0
         view_scale = 1.0
         layer = DrawLayer.CAMERA_OFF
         image.setDefaults()
