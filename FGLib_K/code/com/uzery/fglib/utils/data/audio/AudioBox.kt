@@ -3,17 +3,15 @@ package com.uzery.fglib.utils.data.audio
 import javafx.scene.media.MediaPlayer
 
 object AudioBox {
-    private val players = ArrayList<AudioClipControl>()
+    private val players = ArrayList<FGMediaPlayer>()
     fun addSFX(name: String, volume: Double = 1.0) {
 
         AudioData.set(name)
-        val player = MediaPlayer(AudioData[name])
+        val player = FGMediaPlayer(AudioData[name], volume)
 
-        player.volume = volume
-        val audio = AudioClipControl(player, volume)
-        players.add(audio)
+        players.add(player)
         player.onEndOfMedia = Runnable {
-            audio.dead = true
+            player.dead = true
         }
         player.play()
     }
