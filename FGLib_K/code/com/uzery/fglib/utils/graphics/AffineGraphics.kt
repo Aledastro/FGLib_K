@@ -10,6 +10,14 @@ abstract class AffineGraphics {
     var drawPOS = PointN.ZERO
     var layer = DrawLayer.CAMERA_OFF
 
+    abstract var scale: Int
+    abstract var lineWidth: Double
+    abstract var lineDashOffset: Double
+    abstract fun setLineDashes(vararg dashes: Double)
+
+    abstract var global_view_scale: Double
+    abstract var whole_draw: Boolean
+
     abstract fun setStroke(size: Double)
     fun setDefaults() {
         alpha = 1.0

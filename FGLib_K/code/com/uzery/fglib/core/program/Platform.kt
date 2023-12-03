@@ -1,8 +1,7 @@
 package com.uzery.fglib.core.program
 
-import com.uzery.fglib.core.program.RealisationUt.realisation
+import com.uzery.fglib.core.program.PlatformSetup.realisation
 import com.uzery.fglib.utils.data.debug.DebugData
-import com.uzery.fglib.utils.graphics.data.FGFont
 import com.uzery.fglib.utils.math.geom.PointN
 import com.uzery.fglib.utils.math.geom.shape.RectN
 import com.uzery.fglib.utils.math.num.IntI
@@ -11,13 +10,8 @@ import com.uzery.fglib.utils.program.FGCursor
 object Platform {
     private val program
         get() = realisation.program
-    private val gc
-        get() = realisation.graphics
-
-    val graphics_ut
-        get() = gc
     val graphics
-        get() = gc.graphics
+        get() = realisation.graphics
     val packager
         get() = realisation.packager
 
@@ -29,9 +23,9 @@ object Platform {
         get() = realisation.listener.mouse
 
     var scale: Int = 1
-        get() = gc.scale
+        get() = graphics.scale
         set(value) {
-            gc.scale = value
+            graphics.scale = value
             field = value
         }
     var cursor = FGCursor.DEFAULT
@@ -90,7 +84,7 @@ object Platform {
     val CANVAS
         get() = PointN(options.size)
     val CANVAS_REAL
-        get() = CANVAS*gc.scale
+        get() = CANVAS*graphics.scale
 
     val WINDOW_R
         get() = RectN(PointN.ZERO, WINDOW)
