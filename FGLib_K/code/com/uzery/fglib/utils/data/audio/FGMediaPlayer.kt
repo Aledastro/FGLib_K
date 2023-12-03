@@ -6,7 +6,7 @@ import javafx.scene.media.MediaPlayer
 
 //todo into JavaFX Realisation
 class FGMediaPlayer(val media: FGMedia, val volume: Double) {
-    val player = MediaPlayer(Platform.packager.fromFGMedia(media) as Media)
+    val player = MediaPlayer(media.source)
 
     init {
         player.volume = volume

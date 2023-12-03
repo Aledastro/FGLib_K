@@ -1,7 +1,6 @@
 package com.uzery.fglib.utils.graphics.data
 
 import com.uzery.fglib.core.program.Platform.packager
-import javafx.scene.paint.Color
 
 data class FGColor(val red: Double, val green: Double, val blue: Double, val alpha: Double = 1.0) {
     fun changeAlpha(a: Double): FGColor {
@@ -49,7 +48,7 @@ data class FGColor(val red: Double, val green: Double, val blue: Double, val alp
 
 
         fun web(web: String): FGColor {
-            return from(Color.web(web).toString()) //todo
+            return from(web) //todo
         }
 
         fun gray(c: Double, a: Double = 1.0): FGColor {

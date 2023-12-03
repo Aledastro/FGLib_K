@@ -16,7 +16,4 @@ abstract class FGPackager {
     abstract fun fromFGFont(f: FGFont): Any
     abstract fun fromFGKey(key: FGKey): Any
     abstract fun fromFGMouseKey(key: FGMouseKey): Any
-    abstract fun fromFGMedia(media: FGMedia): Any
-
-    abstract fun fromFGMediaPlayer(media: FGMediaPlayer): Any
 }
