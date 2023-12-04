@@ -9,6 +9,7 @@ object Program {
 
         core.initWithChildren()
     }
+
     fun loop() {
         core.updateTasksWithChildren()
         core.updateWithChildren()

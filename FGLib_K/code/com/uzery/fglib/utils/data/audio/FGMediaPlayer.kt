@@ -11,7 +11,8 @@ class FGMediaPlayer(val media: FGMedia, val volume: Double) {
     init {
         player.volume = volume
     }
-    var onEndOfMedia = Runnable{}
+
+    var onEndOfMedia = Runnable {}
         set(value) {
             player.onEndOfMedia = value
             field = value

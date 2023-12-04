@@ -29,6 +29,7 @@ abstract class GeometryGraphics(private val transform: AffineTransform, private 
     fun text_size(text: String, font: FGFont): PointN {
         return Platform.graphics.text_size(text, font)
     }
+
     fun text_size(text: String): PointN {
         return Platform.graphics.text_size(text, font)
     }
@@ -69,15 +70,15 @@ abstract class GeometryGraphics(private val transform: AffineTransform, private 
         text0(transform.pos(pos), text, font.resize(transformSize.transform(PointN(font.size)).X), color)
     }
 
-    fun textL(pos: PointN, text: String, font: FGFont, color: FGColor){
+    fun textL(pos: PointN, text: String, font: FGFont, color: FGColor) {
         text(pos, text, font, color)
     }
 
-    fun textC(pos: PointN, text: String, font: FGFont, color: FGColor){
+    fun textC(pos: PointN, text: String, font: FGFont, color: FGColor) {
         text(pos-text_size(text, font).XP/2, text, font, color)
     }
 
-    fun textR(pos: PointN, text: String, font: FGFont, color: FGColor){
+    fun textR(pos: PointN, text: String, font: FGFont, color: FGColor) {
         text(pos-text_size(text, font).XP, text, font, color)
     }
 
@@ -87,15 +88,15 @@ abstract class GeometryGraphics(private val transform: AffineTransform, private 
         text(pos, text, font, color)
     }
 
-    fun textL(pos: PointN, text: String, color: FGColor){
+    fun textL(pos: PointN, text: String, color: FGColor) {
         textL(pos, text, font, color)
     }
 
-    fun textC(pos: PointN, text: String, color: FGColor){
+    fun textC(pos: PointN, text: String, color: FGColor) {
         textC(pos, text, font, color)
     }
 
-    fun textR(pos: PointN, text: String, color: FGColor){
+    fun textR(pos: PointN, text: String, color: FGColor) {
         textR(pos, text, font, color)
     }
 

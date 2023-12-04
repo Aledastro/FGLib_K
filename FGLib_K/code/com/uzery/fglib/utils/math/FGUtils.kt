@@ -27,6 +27,7 @@ object FGUtils {
         if (s.length == rev) return s
         return if (s.length > rev) s.substring(s.length-rev) else "0".repeat(rev-s.length)+s
     }
+
     fun subBefore(input: String, index: String, delta: Int = 0): String {
         return input.substring(0 until input.indexOf(index)+delta)
     }

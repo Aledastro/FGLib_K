@@ -33,10 +33,10 @@ object Platform {
             field = value
             program.setCursor(cursor)
         }
-    
+
     var options: LaunchOptions = LaunchOptions.default
-        get(){
-            if(field == null) return LaunchOptions.default
+        get() {
+            if (field == null) return LaunchOptions.default
             return field
         }
     lateinit var ets: Array<out Extension>
