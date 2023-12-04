@@ -12,14 +12,10 @@ abstract class AffineGraphics {
     var layer = DrawLayer.CAMERA_OFF
 
     abstract var scale: Int
-    abstract var lineWidth: Double
-    abstract var lineDashOffset: Double
-    abstract fun setLineDashes(vararg dashes: Double)
 
     abstract var global_view_scale: Double
     abstract var whole_draw: Boolean
 
-    abstract fun setStroke(size: Double)
     fun setDefaults() {
         alpha = 1.0
         view_scale = 1.0
@@ -34,5 +30,5 @@ abstract class AffineGraphics {
     abstract val image: ImageGraphics
 
     abstract val fill: GeometryGraphics
-    abstract val stroke: GeometryGraphics
+    abstract val stroke: StrokeGraphics
 }

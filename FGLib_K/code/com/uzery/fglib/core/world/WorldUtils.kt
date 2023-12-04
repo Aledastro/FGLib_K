@@ -87,7 +87,7 @@ object WorldUtils {
             } else {
                 val alpha = PI*2/n*id
                 val dPOS = PointN(cos(alpha), sin(alpha))*2.5
-                graphics.setStroke(0.75)
+                graphics.stroke.width=0.75
                 graphics.stroke.line(draw_pos, dPOS, c.transparent(0.5))
                 graphics.fill.ovalC(draw_pos+dPOS, STEP*2, c)
             }
@@ -117,7 +117,7 @@ object WorldUtils {
         )
         val bs = o.bounds[color_id]
         if (bs.empty) return
-        graphics.setStroke(1.0)
+        graphics.stroke.width = 1.0
         for (el in bs.elements) {
             val shape = el.shape() ?: continue
 
