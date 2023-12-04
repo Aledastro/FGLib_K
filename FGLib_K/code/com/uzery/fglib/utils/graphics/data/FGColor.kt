@@ -8,8 +8,7 @@ data class FGColor(val red: Double, val green: Double, val blue: Double, val alp
     }
 
     fun transparent(k: Double): FGColor {
-        val real_k = k.coerceIn(0.0, 1.0)
-        return changeAlpha(alpha*real_k)
+        return changeAlpha(alpha*k.coerceIn(0.0, 1.0))
     }
 
     fun interpolate(other: FGColor, k: Double): FGColor {

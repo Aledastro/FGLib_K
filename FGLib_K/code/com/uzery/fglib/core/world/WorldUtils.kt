@@ -86,7 +86,10 @@ object WorldUtils {
                 graphics.fill.ovalC(draw_pos, STEP*3, c)
             } else {
                 val alpha = PI*2/n*id
-                graphics.fill.ovalC(draw_pos+PointN(cos(alpha), sin(alpha))*2.5, STEP*2, c)
+                val dPOS = PointN(cos(alpha), sin(alpha))*2.5
+                graphics.setStroke(0.75)
+                graphics.stroke.line(draw_pos, dPOS, c.transparent(0.5))
+                graphics.fill.ovalC(draw_pos+dPOS, STEP*2, c)
             }
 
             if (o.stats.sortPOS.length() > 1) graphics.fill.ovalC(draw_pos+o.stats.sortPOS, STEP, c)
