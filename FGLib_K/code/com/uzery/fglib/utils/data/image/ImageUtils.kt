@@ -2,7 +2,6 @@ package com.uzery.fglib.utils.data.image
 
 import com.uzery.fglib.utils.graphics.data.FGColor
 import com.uzery.fglib.utils.math.num.IntI
-import javafx.scene.image.Image
 import kotlin.math.min
 
 object ImageUtils {
@@ -19,9 +18,6 @@ object ImageUtils {
     }
 
     fun draw(origin: WritableFGImage, image: FGImage, pos: IntI) {
-        /*origin.pixelWriter.setPixels(pos.n, pos.m, min(origin.width-pos.n, image.width).toInt(),
-            min(origin.height-pos.m, image.height).toInt(), image.pixelReader, 0, 0)*/
-
         val size = IntI(
             min(origin.size.width-pos.x, origin.size.width),
             min(origin.size.height-pos.y, origin.size.height)
@@ -49,7 +45,7 @@ object ImageUtils {
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     fun from(path: String): FGImage {
-        return FGImage(Image("file:"+ImageData.resolvePath(path)))
+        return FGImage("file:"+ImageData.resolvePath(path))
     }
 
     fun from(path: String, vararg effects: String): FGImage {

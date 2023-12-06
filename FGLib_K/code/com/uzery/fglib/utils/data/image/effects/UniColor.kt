@@ -9,7 +9,7 @@ object UniColor: ImageTransformEffect("uni_color") {
 
         val res = WritableFGImage(origin.size)
         for (pos in res.size.indices) {
-            val rgb = origin.getColor(pos.x, pos.y)
+            val rgb = origin.getColor(pos)
             res.setColor(pos, if (rgb == FGColor.TRANSPARENT) rgb else color)
         }
         return res

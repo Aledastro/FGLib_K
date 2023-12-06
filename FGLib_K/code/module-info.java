@@ -1,6 +1,5 @@
 module FGLib_K {
     requires transitive kotlin.stdlib;
-    requires transitive javafx.graphics;
     requires javafx.media;
 
     /////////////////////////////////////////////////////////

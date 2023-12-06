@@ -1,20 +1,21 @@
 package com.uzery.fglib.utils.data.image
 
-import com.uzery.fglib.core.program.Platform
+import com.uzery.fglib.core.program.Platform.packager
 import com.uzery.fglib.utils.graphics.data.FGColor
 import com.uzery.fglib.utils.math.num.IntI
-import javafx.scene.image.Image
 
-open class FGImage(val source: Image) {
+open class FGImage(val source: Any) {
+    constructor(filename: String): this(packager.image.createImage(filename))
+
     fun getColor(pos: IntI): FGColor {
-        return Platform.packager.fromColor(source.pixelReader.getColor(pos.x, pos.y).toString())
+        return packager.image.colorFrom(source, pos)
     }
 
     fun getArgb(pos: IntI): Int {
-        return source.pixelReader.getArgb(pos.x, pos.y)
+        return packager.image.argbFrom(source, pos)
     }
 
     val name: String = "temp"
     val size: IntI
-        get() = IntI(source.width.toInt(), source.height.toInt())
+        get() = packager.image.size(source)
 }
