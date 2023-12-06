@@ -20,7 +20,7 @@ open class WritableFGImage(val size: IntI) {
     }
 
     fun setArgb(pos: IntI, argb: Int) {
-        packager.image.setArgb(pos, argb)
+        packager.image.setArgb(source, pos, argb)
     }
 
     fun getArgb(pos: IntI): Int {
