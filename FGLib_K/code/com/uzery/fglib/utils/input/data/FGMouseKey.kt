@@ -4,9 +4,6 @@ import com.uzery.fglib.core.program.Platform.packager
 
 data class FGMouseKey(val value: String, val id: Int) {
     companion object {
-        val values = arrayOf("PRIMARY", "SECONDARY", "MIDDLE", "BACK", "FORWARD", "NONE")
-        val key_values = Array(values.size) { from(values[it]) }
-
         val PRIMARY = from("PRIMARY")
         val SECONDARY = from("SECONDARY")
         val MIDDLE = from("MIDDLE")
@@ -22,9 +19,5 @@ data class FGMouseKey(val value: String, val id: Int) {
             get() = PRIMARY
         val RIGHT
             get() = SECONDARY
-
-        fun values(): Array<FGMouseKey> {
-            return key_values
-        }
     }
 }

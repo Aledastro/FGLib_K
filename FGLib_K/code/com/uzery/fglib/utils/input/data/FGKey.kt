@@ -1,15 +1,11 @@
 package com.uzery.fglib.utils.input.data
 
-import com.uzery.fglib.core.program.Platform
-import javafx.scene.input.KeyCode
+import com.uzery.fglib.core.program.Platform.packager
 
 data class FGKey(val value: String, val id: Int) {
-    constructor(value: String): this(value, from(value).id) //todo?
+    constructor(value: String): this(value, from(value).id)
 
     companion object {
-        val values = Array(KeyCode.values().size) { KeyCode.values()[it].name }
-        val key_values = Array(values.size) { from(values[it]) }
-
         var ENTER = from("ENTER")
         var BACK_SPACE = from("BACK_SPACE")
         var TAB = from("TAB")
@@ -236,11 +232,7 @@ data class FGKey(val value: String, val id: Int) {
         var SHORTCUT = from("SHORTCUT")
 
         fun from(key: String): FGKey {
-            return Platform.packager.fromKey(key)
-        }
-
-        fun values(): Array<FGKey> {
-            return key_values
+            return packager.fromKey(key)
         }
     }
 }
