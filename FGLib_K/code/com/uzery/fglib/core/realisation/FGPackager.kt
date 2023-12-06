@@ -6,6 +6,8 @@ import com.uzery.fglib.utils.input.data.FGKey
 import com.uzery.fglib.utils.input.data.FGMouseKey
 
 abstract class FGPackager {
+    abstract val image: FGImagePackager
+    abstract val audio: FGAudioPackager
     abstract fun fromColor(c: String): FGColor
     abstract fun fromMouseKey(key: String): FGMouseKey
     abstract fun fromKey(key: String): FGKey
@@ -14,6 +16,4 @@ abstract class FGPackager {
     abstract fun fromFGFont(f: FGFont): Any
     abstract fun fromFGKey(key: FGKey): Any
     abstract fun fromFGMouseKey(key: FGMouseKey): Any
-
-    abstract val image: FGImagePackager
 }

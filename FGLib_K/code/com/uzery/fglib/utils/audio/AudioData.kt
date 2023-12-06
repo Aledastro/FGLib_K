@@ -1,11 +1,10 @@
 package com.uzery.fglib.utils.audio
 
 import com.uzery.fglib.utils.data.CollectDataClass
-import java.io.File
 
 object AudioData: CollectDataClass() {
-    private val origins = HashMap<String, FGMedia>()
-    operator fun get(name: String): FGMedia {
+    private val origins = HashMap<String, FGAudio>()
+    operator fun get(name: String): FGAudio {
         return origins[resolvePath(name)]!!
     }
 
@@ -14,10 +13,6 @@ object AudioData: CollectDataClass() {
 
         if (origins[decode] != null) return
 
-        origins[decode] = from(decode)
-    }
-
-    fun from(name: String): FGMedia {
-        return FGMedia(File(name).toURI().toString())
+        origins[decode] = FGAudio(decode)
     }
 }
