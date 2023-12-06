@@ -1,7 +1,5 @@
-package com.uzery.fglib.utils.data.audio
+package com.uzery.fglib.utils.audio
 
-import com.uzery.fglib.core.program.Platform
-import javafx.scene.media.Media
 import javafx.scene.media.MediaPlayer
 
 //todo into JavaFX Realisation

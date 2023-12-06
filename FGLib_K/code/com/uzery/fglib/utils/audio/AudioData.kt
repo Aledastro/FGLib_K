@@ -1,7 +1,6 @@
-package com.uzery.fglib.utils.data.audio
+package com.uzery.fglib.utils.audio
 
 import com.uzery.fglib.utils.data.CollectDataClass
-import javafx.scene.media.Media
 import java.io.File
 
 object AudioData: CollectDataClass() {

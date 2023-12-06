@@ -5,7 +5,6 @@ import com.uzery.fglib.utils.data.debug.DebugData
 import com.uzery.fglib.utils.math.geom.PointN
 import com.uzery.fglib.utils.math.geom.shape.RectN
 import com.uzery.fglib.utils.math.num.IntI
-import com.uzery.fglib.utils.program.FGCursor
 
 object Platform {
     private val program

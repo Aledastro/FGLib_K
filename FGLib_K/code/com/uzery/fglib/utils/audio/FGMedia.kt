@@ -1,4 +1,4 @@
-package com.uzery.fglib.utils.data.audio
+package com.uzery.fglib.utils.audio
 
 import javafx.scene.media.Media
 

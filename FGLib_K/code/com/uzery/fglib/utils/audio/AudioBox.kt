@@ -1,6 +1,4 @@
-package com.uzery.fglib.utils.data.audio
-
-import javafx.scene.media.MediaPlayer
+package com.uzery.fglib.utils.audio
 
 object AudioBox {
     private val players = ArrayList<FGMediaPlayer>()

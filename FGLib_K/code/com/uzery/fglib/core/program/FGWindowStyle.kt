@@ -1,4 +1,4 @@
-package com.uzery.fglib.utils.program
+package com.uzery.fglib.core.program
 
 enum class FGWindowStyle {
     DECORATED,

@@ -2,7 +2,6 @@ package com.uzery.fglib.core.program
 
 import com.uzery.fglib.utils.graphics.data.FGColor
 import com.uzery.fglib.utils.math.geom.PointN
-import com.uzery.fglib.utils.program.FGWindowStyle
 
 data class LaunchOptions(
     val size: PointN,
