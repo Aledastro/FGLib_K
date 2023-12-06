@@ -4,6 +4,7 @@ import com.uzery.fglib.core.program.Platform.packager
 
 data class FGMouseKey(val value: String, val id: Int) {
     constructor(value: String): this(value, from(value).id)
+
     companion object {
         val PRIMARY = from("PRIMARY")
         val SECONDARY = from("SECONDARY")
