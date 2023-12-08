@@ -9,7 +9,8 @@ class SolveBlock(
 ) {
     private val operators = arrayListOf(
         arrayListOf("+", "-"),
-        arrayListOf("*", "/", "//", "%"),
+        arrayListOf("*", "/", "%"),
+        arrayListOf("//"),
         arrayListOf("^"),
         arrayListOf("|"), //todo
         arrayListOf("(", ")") //todo
@@ -53,8 +54,9 @@ class SolveBlock(
 
             "*" -> first*second
             "/" -> first/second
-            "//" -> first.divFull(second)
             "%" -> first%second
+
+            "//" -> first.divFull(second)
 
             "^" -> first.pow(second)
 
