@@ -11,8 +11,8 @@ class SolveBlock(
         arrayListOf("+", "-"),
         arrayListOf("*", "/", "//", "%"),
         arrayListOf("^"),
-        arrayListOf("|"),
-        arrayListOf("(", ")")
+        arrayListOf("|"), //todo
+        arrayListOf("(", ")") //todo
     )
 
     fun solve(): String {
@@ -53,6 +53,10 @@ class SolveBlock(
 
             "*" -> first*second
             "/" -> first/second
+            "//" -> first.divFull(second)
+            "%" -> first%second
+
+            "^" -> first.pow(second)
 
             else -> throw DebugData.error("wrong operator: $operator")
         }
