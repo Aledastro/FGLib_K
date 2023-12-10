@@ -78,7 +78,11 @@ object WorldUtils {
         for (o in list) {
             val draw_pos = posFrom(o)
 
-            val c = if (o.stats.fly) FGColor(1.0, 1.0, 0.2, 0.7) else FGColor(1.0, 0.2, 1.0, 0.7)
+            val c = when{
+                o.stats.fly -> FGColor(1.0, 1.0, 0.2, 0.7)
+                o.tagged("#immovable") -> FGColor(0.8, 0.8, 0.8, 0.5)
+                else -> FGColor(1.0, 0.2, 1.0, 0.7)
+            }
             val n = map[draw_pos]!!
             val id = mapID[o]!!
 

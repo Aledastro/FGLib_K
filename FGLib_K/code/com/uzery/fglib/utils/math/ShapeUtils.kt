@@ -36,10 +36,8 @@ object ShapeUtils {
 
     private fun intoFigureOval(oval: OvalN, figure: FigureN): Boolean {
         return figure.fields.all { f ->
-            false
-            //f.intoHalfS(oval.C, -oval.S[0]/2)
+            f.intoHalf(oval.C, oval.S[0]/2)
         }
-        //todo
     }
 
     fun into(first: Shape, second: Shape): Boolean {

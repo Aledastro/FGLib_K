@@ -24,8 +24,8 @@ data class FieldN(private val pos: PointN, val normal: UltraMatrix) {
         return normal.intoHalf(pos-this.pos)
     }
 
-    fun intoHalfS(pos: PointN, value: Double = 1.0): Boolean {
-        return normal.intoHalfS(pos-this.pos, value)
+    fun intoHalf(pos: PointN, value: Double = 0.0): Boolean {
+        return normal.intoHalf(pos-this.pos, value)
     }
 
     operator fun times(other: FieldN): FieldN {

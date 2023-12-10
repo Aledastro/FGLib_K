@@ -52,6 +52,7 @@ class UltraMatrix(data: Array2<Double>): Matrix(data) {
         return (0 until height).all { j -> MathUtils.little(levelFor(pos, j)-level(j)) }
     }
 
+    //todo: dev method
     fun intoS(pos: PointN): Boolean {
         return (0 until height).all { j -> abs(levelFor(pos, j)-level(j)) < 10 }
     }
@@ -60,8 +61,8 @@ class UltraMatrix(data: Array2<Double>): Matrix(data) {
         return (0 until height).all { j -> (levelFor(pos, j)-level(j))*sign[j] <= 0 }
     }
 
-    fun intoHalfS(pos: PointN, value: Double = 1.0): Boolean {
-        return (0 until height).all { j -> (levelFor(pos, j)-level(j))*sign[j] <= value }
+    fun intoHalf(pos: PointN, value: Double = 0.0): Boolean {
+        return (0 until height).all { j -> (levelFor(pos, j)-level(j))*sign[j] <= -value }
     }
 
     private val rows_panel = Array(width) { it }

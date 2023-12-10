@@ -26,7 +26,7 @@ open class FigureN(val fields: List<FieldN>): Shape() {
     }
 
     private fun intoS(pos: PointN): Boolean {
-        return fields.all { field -> field.intoHalfS(pos) }
+        return fields.all { field -> field.intoHalf(pos) }
     }
 
     val current_pos = ArrayList<PointN>()
