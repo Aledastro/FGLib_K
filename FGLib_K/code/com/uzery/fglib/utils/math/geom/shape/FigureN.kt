@@ -41,19 +41,19 @@ open class FigureN(val fields: List<FieldN>): Shape() {
         current_fields.addAll(fields)
         //todo it don't work well for large dim>3
         for (d in 0 until dim-1) {
-            val list = ArrayList<FieldN>()
+            val next_fields = ArrayList<FieldN>()
 
             for (i in 0 until current_fields.size) {
                 for (j in i+1 until current_fields.size) {
-                    list.add(current_fields[i]*current_fields[j])
+                    next_fields.add(current_fields[i]*current_fields[j])
                 }
             }
-            list.removeIf { !it.exists() }
+            next_fields.removeIf { !it.exists() }
             current_fields.clear()
-            current_fields.addAll(list)
+            current_fields.addAll(next_fields)
         }
         current_fields.forEach { f -> f.solve()?.let { p -> current_pos.add(p) } }
-        current_pos.removeIf { p -> !intoS(p) }
+        current_pos.removeIf { p -> !intoS(p) } //todo
         init_current_pos = true
     }
 
