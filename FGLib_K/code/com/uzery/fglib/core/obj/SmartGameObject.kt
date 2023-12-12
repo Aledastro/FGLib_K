@@ -21,7 +21,10 @@ abstract class SmartGameObject<Type>(private val filename: String, name: String 
 
         var init = false
         for (next in data) {
-            if (next == "objects:") init = true
+            if (next == "objects:"){
+                init = true
+                continue
+            }
             if (next == "" || next.startsWith("//")) continue
             if (init) objs.add(this.from(next))
         }
