@@ -7,6 +7,10 @@ import com.uzery.fglib.core.obj.bounds.BoundsBox
 import com.uzery.fglib.core.obj.bounds.BoundsBox.Companion.CODE
 import com.uzery.fglib.core.obj.bounds.BoundsComponent
 import com.uzery.fglib.core.obj.bounds.BoundsElement
+import com.uzery.fglib.core.obj.component.OnBirthComponent
+import com.uzery.fglib.core.obj.component.OnDeathComponent
+import com.uzery.fglib.core.obj.component.OnGrabComponent
+import com.uzery.fglib.core.obj.component.OnInitComponent
 import com.uzery.fglib.core.obj.controller.Controller
 import com.uzery.fglib.core.obj.controller.TempAction
 import com.uzery.fglib.core.obj.property.GameProperty
