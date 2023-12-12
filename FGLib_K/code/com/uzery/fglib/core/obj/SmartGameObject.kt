@@ -3,15 +3,15 @@ package com.uzery.fglib.core.obj
 import com.uzery.fglib.utils.data.file.TextData
 
 abstract class SmartGameObject<Type>(private val filename: String, name: String = "temp"): GameObject(name) {
-
     private val objs = ArrayList<Type>()
 
     init {
-        start()
-
-        addComponent(*this.construct(objs).toTypedArray())
-
         tag("#smart_object")
+    }
+
+    protected fun execute(){
+        start()
+        addComponent(*construct(objs).toTypedArray())
     }
 
     private fun start() {
@@ -30,10 +30,10 @@ abstract class SmartGameObject<Type>(private val filename: String, name: String 
         }
     }
 
-    open fun readInfo(data: ArrayList<String>) {}
-    abstract fun from(s: String): Type
+    protected open fun readInfo(data: ArrayList<String>) {}
+    protected abstract fun from(s: String): Type
 
-    abstract fun construct(objs: ArrayList<Type>): List<ObjectComponent>
+    protected abstract fun construct(objs: ArrayList<Type>): List<ObjectComponent>
 
     override fun setValues() {
         values.add(filename)
