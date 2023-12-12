@@ -7,7 +7,7 @@ class SolveBlock(
     private val expression: String,
     private val resolve: (String) -> SolveNumber
 ) {
-    companion object{
+    companion object {
         private val operators = arrayListOf(
             arrayListOf("+", "-"),
             arrayListOf("+-"),
@@ -31,7 +31,7 @@ class SolveBlock(
     private fun solved(): SolveBlock {
         if (operators.all { list -> list.all { it !in expression } }) return this
 
-        fun checkForDoubleOpsOrEndOp(): Boolean{
+        fun checkForDoubleOpsOrEndOp(): Boolean {
             val blocks_un = getBlocks(full_ops)
             var last = false
             var last_block_un = ""
@@ -51,7 +51,7 @@ class SolveBlock(
 
             return false
         }
-        if(checkForDoubleOpsOrEndOp()) return ERROR
+        if (checkForDoubleOpsOrEndOp()) return ERROR
 
         var next_operator: String
         for (ops in operators) {

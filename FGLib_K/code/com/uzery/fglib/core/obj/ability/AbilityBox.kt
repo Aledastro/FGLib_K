@@ -1,5 +1,7 @@
 package com.uzery.fglib.core.obj.ability
 
-fun interface AbilityBox {
+import com.uzery.fglib.core.obj.ObjectComponent
+
+fun interface AbilityBox: ObjectComponent {
     fun run()
 }

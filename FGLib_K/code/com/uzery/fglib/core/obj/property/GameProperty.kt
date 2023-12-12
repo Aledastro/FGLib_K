@@ -1,5 +1,7 @@
 package com.uzery.fglib.core.obj.property
 
-fun interface GameProperty {
+import com.uzery.fglib.core.obj.ObjectComponent
+
+fun interface GameProperty: ObjectComponent {
     fun update()
 }

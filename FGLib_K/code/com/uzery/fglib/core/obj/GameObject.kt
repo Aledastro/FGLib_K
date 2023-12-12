@@ -5,6 +5,7 @@ import com.uzery.fglib.core.obj.ability.ActionListener
 import com.uzery.fglib.core.obj.ability.InputAction
 import com.uzery.fglib.core.obj.bounds.BoundsBox
 import com.uzery.fglib.core.obj.bounds.BoundsBox.Companion.CODE
+import com.uzery.fglib.core.obj.bounds.BoundsComponent
 import com.uzery.fglib.core.obj.bounds.BoundsElement
 import com.uzery.fglib.core.obj.controller.Controller
 import com.uzery.fglib.core.obj.controller.TempAction
@@ -19,7 +20,7 @@ import com.uzery.fglib.utils.math.geom.Shape
 
 abstract class GameObject(var name: String = "temp") {
     val stats = Stats()
-    var bounds = BoundsBox()
+    val bounds = BoundsBox()
 
     private var controller: Controller? = null
     private var temp: TempAction? = null
@@ -29,10 +30,10 @@ abstract class GameObject(var name: String = "temp") {
     private val listeners = ArrayList<ActionListener>()
     private val properties = ArrayList<GameProperty>()
 
-    private val onInit = ArrayList<() -> Unit>()
-    private val onBirth = ArrayList<() -> Unit>()
-    private val onDeath = ArrayList<() -> Unit>()
-    private val onGrab = ArrayList<() -> Unit>()
+    private val onInit = ArrayList<OnInitComponent>()
+    private val onBirth = ArrayList<OnBirthComponent>()
+    private val onDeath = ArrayList<OnDeathComponent>()
+    private val onGrab = ArrayList<OnGrabComponent>()
 
     internal val children = ArrayList<GameObject>()
     internal val followers = ArrayList<GameObject>()
@@ -62,6 +63,27 @@ abstract class GameObject(var name: String = "temp") {
 
     var object_time = 0
         private set
+
+    fun addComponent(vararg component: ObjectComponent) {
+        for (c in component) {
+            when (c) {
+                is BoundsComponent -> addBounds(c.code, c.element)
+
+                is AbilityBox -> addAbility(c)
+                is Controller -> setController(c)
+                is ActionListener -> addListener(c)
+                is GameProperty -> addProperty(c)
+                is Visualiser -> addVisual(c)
+
+                is OnInitComponent -> onInit(c)
+                is OnBirthComponent -> onBirth(c)
+                is OnDeathComponent -> onDeath(c)
+                is OnGrabComponent -> onGrab(c)
+
+                else -> throw DebugData.error("Wrong Component: $c")
+            }
+        }
+    }
 
     private fun addBounds(code: CODE, vararg bs: BoundsElement) = bounds[code.ordinal].add(*bs)
     private fun addBounds(code: CODE, shape: () -> Shape?) = bounds[code.ordinal].add(shape)
@@ -98,7 +120,7 @@ abstract class GameObject(var name: String = "temp") {
     fun addAbility(ability: () -> Unit) = addAbility(AbilityBox { ability() })
     fun addAbility(vararg ability: AbilityBox) = abilities.addAll(ability)
     fun addProperty(vararg property: GameProperty) = properties.addAll(property)
-    fun addVisual(vis: Visualiser) = visuals.add(vis)
+    fun addVisual(vararg vis: Visualiser) = visuals.addAll(vis)
 
     fun addVisual(layer: DrawLayer, vis: (agc: AffineGraphics, draw_pos: PointN) -> Unit) {
         visuals.add(
@@ -110,12 +132,44 @@ abstract class GameObject(var name: String = "temp") {
         )
     }
 
+    fun onInit(f: () -> Unit) {
+        onInit.add(f)
+    }
+
+    fun onInit(f: OnInitComponent) {
+        onInit.add(f)
+    }
+
+    fun onBirth(f: () -> Unit) {
+        onBirth.add(f)
+    }
+
+    fun onBirth(f: OnBirthComponent) {
+        onBirth.add(f)
+    }
+
+    fun onDeath(f: () -> Unit) {
+        onDeath.add(f)
+    }
+
+    fun onDeath(f: OnDeathComponent) {
+        onDeath.add(f)
+    }
+
+    fun onGrab(f: () -> Unit) {
+        onGrab.add(f)
+    }
+
+    fun onGrab(f: OnGrabComponent) {
+        onGrab.add(f)
+    }
+
     fun init() {
-        onInit.forEach { it() }
+        onInit.forEach { it.run() }
     }
 
     fun next() {
-        if (object_time == 0) onBirth.forEach { it() }
+        if (object_time == 0) onBirth.forEach { it.run() }
 
         if (temp == null || temp!!.ends) temp = controller?.get()?.invoke()
         temp?.next()
@@ -153,30 +207,13 @@ abstract class GameObject(var name: String = "temp") {
     fun grab(vararg os: GameObject) {
         followers.addAll(os)
         os.forEach { it.owner = this }
-        os.forEach { o -> o.onGrab.forEach { it() } }
+        os.forEach { o -> o.onGrab.forEach { it.run() } }
     }
 
     fun grab(os: List<GameObject>) {
         followers.addAll(os)
         os.forEach { it.owner = this }
-        os.forEach { o -> o.onGrab.forEach { it() } }
-    }
-
-    protected open fun setValues() {}
-
-    override fun toString(): String {
-        values.clear()
-        setValues()
-        val res = StringBuilder(name)
-        if (values.isNotEmpty()) {
-            res.append(":")
-            values.forEach { value ->
-                val s = value.toString()
-                if (s == "") throw DebugData.error("NULLABLE VALUE: $name: $values")
-                res.append(if (s[s.lastIndex] == ']') " $s" else " [$s]")
-            }
-        }
-        return res.toString()
+        os.forEach { o -> o.onGrab.forEach { it.run() } }
     }
 
     fun activate(action: InputAction) {
@@ -188,25 +225,9 @@ abstract class GameObject(var name: String = "temp") {
 
     open fun collapse() {
         if (dead) return
-        onDeath.forEach { it() }
+        onDeath.forEach { it.run() }
         dead = true
         followers.forEach { it.collapse() }
-    }
-
-    fun onInit(f: () -> Unit) {
-        onInit.add(f)
-    }
-
-    fun onBirth(f: () -> Unit) {
-        onBirth.add(f)
-    }
-
-    fun onDeath(f: () -> Unit) {
-        onDeath.add(f)
-    }
-
-    fun onGrab(f: () -> Unit) {
-        onGrab.add(f)
     }
 
     fun tag(vararg tag: String) = tags.addAll(tag)
@@ -227,4 +248,21 @@ abstract class GameObject(var name: String = "temp") {
 
     open fun answerYN(question: String) = false
     open fun answer(question: String) = ""
+
+    protected open fun setValues() {}
+
+    override fun toString(): String {
+        values.clear()
+        setValues()
+        val res = StringBuilder(name)
+        if (values.isNotEmpty()) {
+            res.append(":")
+            values.forEach { value ->
+                val s = value.toString()
+                if (s == "") throw DebugData.error("NULLABLE VALUE: $name: $values")
+                res.append(if (s[s.lastIndex] == ']') " $s" else " [$s]")
+            }
+        }
+        return res.toString()
+    }
 }
