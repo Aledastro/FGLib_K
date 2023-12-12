@@ -27,12 +27,12 @@ abstract class SmartGameObject<Type>(private val filename: String, name: String 
         }
     }
 
-    abstract fun readInfo(data: ArrayList<String>)
+    open fun readInfo(data: ArrayList<String>) {}
     abstract fun from(s: String): Type
 
     abstract fun construct(objs: ArrayList<Type>): List<ObjectComponent>
 
-    final override fun setValues() {
+    override fun setValues() {
         values.add(filename)
     }
 }
