@@ -25,4 +25,9 @@ abstract class ObjectTransform(private val o: GameObject) {
             o.stats.SIZE = value
             field = value
         }
+
+    open val show_pos: PointN
+        get() = pos
+    open val show_size: PointN
+        get() = size
 }
