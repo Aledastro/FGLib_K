@@ -2,7 +2,7 @@ package com.uzery.fglib.core.obj
 
 import com.uzery.fglib.utils.math.geom.PointN
 
-abstract class ObjectTransform(private val o: GameObject) {
+abstract class ObjectTransform(protected val o: GameObject) {
     open val move: (d_pos: PointN)->Unit = { d_pos->
         pos += d_pos
     }
