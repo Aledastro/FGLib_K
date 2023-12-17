@@ -4,6 +4,7 @@ import com.uzery.fglib.utils.math.geom.PointN
 
 class Stats {
     var fly = false
+
     var POS = PointN.ZERO
     var lPOS = PointN.ZERO
     var nPOS = PointN.ZERO
@@ -12,4 +13,5 @@ class Stats {
     var sortPOS = PointN.ZERO
 
     var SIZE = PointN.ZERO
+    var ALPHA = 0.0
 }
