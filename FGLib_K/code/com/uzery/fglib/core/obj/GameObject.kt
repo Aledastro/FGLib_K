@@ -68,6 +68,8 @@ abstract class GameObject(var name: String = "temp") {
     var object_time = 0
         private set
 
+    val transform: ObjectTransform? = null
+
     fun addComponent(vararg component: ObjectComponent) {
         for (c in component) {
             when (c) {

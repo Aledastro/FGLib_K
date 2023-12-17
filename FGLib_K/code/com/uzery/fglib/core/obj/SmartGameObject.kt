@@ -3,7 +3,7 @@ package com.uzery.fglib.core.obj
 import com.uzery.fglib.utils.data.file.TextData
 
 abstract class SmartGameObject<Type>(private val filename: String, name: String = "temp"): GameObject(name) {
-    private val objs = ArrayList<Type>()
+    protected val objs = ArrayList<Type>()
 
     init {
         tag("#smart_object")
