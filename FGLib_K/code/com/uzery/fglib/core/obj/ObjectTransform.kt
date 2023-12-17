@@ -7,11 +7,11 @@ abstract class ObjectTransform(private val o: GameObject) {
         pos += d_pos
     }
     open val resize: (d_size: PointN)->Unit = { d_size->
-        pos += d_size
+        size += d_size
     }
-    open val addIn: (pos: PointN)->Unit = {}
-    open val removeIn: (pos: PointN)->Unit = {}
-    open val turnTo: (d: Double)->Unit = {}
+    open val addIn: ((pos: PointN)->Unit)? = null
+    open val removeIn: ((pos: PointN)->Unit)? = null
+    open val turnTo: ((d: Double)->Unit)? = null
 
     var pos = PointN.ZERO
         get() = o.stats.POS
