@@ -13,7 +13,7 @@ object TextData: CollectDataClass() {
     }
 
     fun write(filename: String, write: String) {
-        val wr = getWriter("${dir}$filename")
+        val wr = getWriter(resolvePath(filename))
         try {
             wr.write(write)
             wr.close()

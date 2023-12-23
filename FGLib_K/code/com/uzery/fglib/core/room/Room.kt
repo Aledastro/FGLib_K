@@ -250,8 +250,7 @@ class Room(var pos: PointN, var size: PointN) {
 
     override fun toString(): String {
         val wr = StringBuilder()
-        wr.append("//Uzery Game Studio 2019-2023\n")
-        wr.append("//last edit: ${FGUtils.time_YMD()} ${FGUtils.time_HMS()}\n\n")
+        wr.append(ConstL.FILES_COMMENT)
 
         wr.append("room: ${PosValue(pos)} ${SizeValue(size)}\n\n")
 

@@ -9,6 +9,7 @@ import com.uzery.fglib.utils.data.debug.DebugData
 import com.uzery.fglib.utils.data.file.TextData
 import com.uzery.fglib.utils.graphics.data.FGColor
 import com.uzery.fglib.utils.graphics.data.FGFontWeight
+import com.uzery.fglib.utils.math.FGUtils
 import com.uzery.fglib.utils.math.FGUtils.getPosFrom
 import com.uzery.fglib.utils.math.geom.PointN
 import java.util.*
@@ -30,7 +31,7 @@ object WorldUtils {
         val objects = ArrayList<GameObject>()
         var next = ""
 
-        while (next.startsWith("//") || next.isEmpty()) {
+        while (FGUtils.isComment(next)) {
             next = list.removeFirst()
         }
         val t = StringTokenizer(next)
@@ -40,8 +41,8 @@ object WorldUtils {
         val size = getPosFrom(t.nextToken()+t.nextToken())
         while (list.isNotEmpty()) {
             next = list.removeFirst()
-            if (next.startsWith("//")) continue
-            if (next.isNotEmpty()) objects.add(World.getter!![next])
+            if (FGUtils.isComment(next)) continue
+            objects.add(World.getter!![next])
         }
 
         return Room(pos, size, objects)

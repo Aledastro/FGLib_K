@@ -13,6 +13,8 @@ object FGUtils {
     fun minutes(): Int = LocalTime.now().minute
     fun seconds(): Int = LocalTime.now().second
 
+    fun isComment(s: String) = s.isEmpty() || s.startsWith("//")
+
     fun time_YMD(): String {
         val date = LocalDate.now()
         return "${date.year}.${stain(date.month.ordinal+1, 2)}.${stain(date.dayOfMonth, 2)}"

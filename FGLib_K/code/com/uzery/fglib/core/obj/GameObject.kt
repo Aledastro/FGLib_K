@@ -257,7 +257,7 @@ abstract class GameObject(var name: String = "temp") {
 
     protected open fun setValues() {}
 
-    override fun toString(): String {
+    final override fun toString(): String {
         values.clear()
         setValues()
         val res = StringBuilder(name)
