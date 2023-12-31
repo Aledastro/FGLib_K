@@ -4,8 +4,10 @@ import com.uzery.fglib.utils.data.file.ConstL
 import com.uzery.fglib.utils.data.file.TextData
 import com.uzery.fglib.utils.math.FGUtils
 
-abstract class SmartGameObject<Type>(val filename: String, name: String = "temp"): GameObject(name) {
+abstract class SmartGameObject<Type>(name: String = "temp"): GameObject(name) {
     protected val objs = ArrayList<Type>()
+
+    abstract val filename: String
 
     init {
         tag("#smart_object")
