@@ -26,7 +26,7 @@ abstract class SmartGameObject<Type>(val filename: String, name: String = "temp"
     }
 
     fun onSave() {
-        TextData.write(filename, data())
+        TextData.write(filename, data(), true)
     }
 
     protected abstract fun from(s: String): Type

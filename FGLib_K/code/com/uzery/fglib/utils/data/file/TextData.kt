@@ -12,7 +12,13 @@ object TextData: CollectDataClass() {
         return getReader(resolvePath(filename)).lines().collect(Collectors.toCollection { ArrayList() })
     }
 
-    fun write(filename: String, write: String) {
+    fun write(filename: String, write: String, create_dirs: Boolean = false) {
+        if (create_dirs){
+            val s = resolvePath(filename)
+            val file = File(s.substring(0, s.lastIndexOf("\\")))
+            file.mkdir()
+        }
+
         val wr = getWriter(resolvePath(filename))
         try {
             wr.write(write)
@@ -20,6 +26,15 @@ object TextData: CollectDataClass() {
         } catch (e: IOException) {
             throw DebugData.error("[ERROR] FilesData in write(): filename=$filename")
         }
+    }
+
+    fun existFile(filename: String): Boolean {
+        return File(resolvePath(filename)).exists()
+    }
+
+    fun removeFile(filename: String){
+        println(filename)
+        File(resolvePath(filename)).delete()
     }
 
     ///////////////////////////////////////////////////////////////////
