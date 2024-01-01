@@ -2,7 +2,7 @@ package com.uzery.fglib.core.obj
 
 import com.uzery.fglib.utils.math.geom.PointN
 
-abstract class ObjectTransform(protected val o: GameObject) {
+abstract class ObjectTransform(val obj: GameObject) {
     open val move: (d_pos: PointN)->Unit = { d_pos->
         pos += d_pos
     }
@@ -20,21 +20,21 @@ abstract class ObjectTransform(protected val o: GameObject) {
     open val removeIn: ((pos: PointN)->Unit)? = null
 
     var pos = PointN.ZERO
-        get() = o.stats.POS
+        get() = obj.stats.POS
         private set(value){
-            o.stats.POS = value
+            obj.stats.POS = value
             field = value
         }
     var size = PointN.ZERO
-        get() = o.stats.SIZE
+        get() = obj.stats.SIZE
         private set(value){
-            o.stats.SIZE = value
+            obj.stats.SIZE = value
             field = value
         }
     var alpha = 0.0
-        get() = o.stats.ALPHA
+        get() = obj.stats.ALPHA
         private set(value){
-            o.stats.ALPHA = value
+            obj.stats.ALPHA = value
             field = value
         }
 
