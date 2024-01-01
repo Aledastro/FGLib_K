@@ -9,6 +9,9 @@ abstract class ObjectTransform(protected val o: GameObject) {
     open val resize: (d_size: PointN)->Unit = { d_size->
         size += d_size
     }
+    open val resize_move: (d_size: PointN) -> Unit
+        get() = this.move
+
     open val turnTo: ((a: Double)->Unit)? = { a ->
         alpha = a
     }

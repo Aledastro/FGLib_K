@@ -33,7 +33,6 @@ object TextData: CollectDataClass() {
     }
 
     fun removeFile(filename: String){
-        println(filename)
         File(resolvePath(filename)).delete()
     }
 
