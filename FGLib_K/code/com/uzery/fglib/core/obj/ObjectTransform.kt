@@ -16,8 +16,8 @@ abstract class ObjectTransform(val obj: GameObject) {
         alpha = a
     }
 
-    open val addIn: ((pos: PointN)->Unit)? = null
-    open val removeIn: ((pos: PointN)->Unit)? = null
+    open val addIn: ((pos: PointN, size: PointN)->Unit)? = null
+    open val removeIn: ((pos: PointN, size: PointN)->Unit)? = null
 
     var pos = PointN.ZERO
         get() = obj.stats.POS
