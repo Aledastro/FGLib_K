@@ -9,7 +9,10 @@ import java.util.stream.Collectors
 
 object TextData: CollectDataClass() {
     operator fun get(filename: String): ArrayList<String> {
-        return getReader(resolvePath(filename)).lines().collect(Collectors.toCollection { ArrayList() })
+        val rd = getReader(resolvePath(filename))
+        val lines = rd.lines().collect(Collectors.toCollection { ArrayList() })
+        rd.close()
+        return lines
     }
 
     fun write(filename: String, write: String, create_dirs: Boolean = false) {
