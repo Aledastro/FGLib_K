@@ -7,7 +7,7 @@ import java.time.LocalDate
 import java.time.LocalTime
 
 object FGUtils {
-    val project_dir: String = File("").absolutePath
+    val project_dir: String = System.getProperty("user.dir")
 
     fun hours(): Int = LocalTime.now().hour
     fun minutes(): Int = LocalTime.now().minute
