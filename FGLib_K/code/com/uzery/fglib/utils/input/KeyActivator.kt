@@ -30,7 +30,6 @@ abstract class KeyActivator<Key>(private val values: Array<Key>) {
 
     private fun pressedInt(code: Int): Boolean = !block[code] && pressed0(code)
 
-
     //////////////////////////////////////////////////////////////////////////////////////////
 
     fun refuseButtons() {
@@ -50,6 +49,7 @@ abstract class KeyActivator<Key>(private val values: Array<Key>) {
     ///////////////////////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////////////////////////////////
+
     fun pressed(key: Key) = pressedInt(fromKey(key))
     fun pressedIn(frames: Int, key: Key) = timeReleased(key) < frames || pressed(key)
     fun inPressedIn(frames: Int, key: Key) = timePressed(key) in 1..frames
@@ -57,24 +57,27 @@ abstract class KeyActivator<Key>(private val values: Array<Key>) {
     fun inPressed(key: Key) = inPressedIn(1, key)
     fun rePressed(key: Key) = rePressedIn(1, key)
 
-    ///////////////////////////////////////////////////////////////////////////////////////////////////////
-    ///////////////////////////////////////////////////////////////////////////////////////////////////////
-    ///////////////////////////////////////////////////////////////////////////////////////////////////////
-    fun anyPressed(vararg keys: Key): Boolean {
-        return from(keys).any { key -> pressed(key) }
+    ///////////////////////////////////////////////////////////////////////////////////////
+
+    fun periodPressed(start_time: Int, period: Int, key: Key): Boolean {
+        val time = timePressed(key)
+        return inPressed(key) || time >= start_time && (time-start_time)%period == 0L
     }
+
+    fun periodPressed(period: Int, key: Key) = periodPressed(period, period, key)
+
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////
 
     private fun from(keys: Array<out Key>): Array<out Key> {
         return if (keys.isEmpty()) values else keys
     }
 
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    fun anyPressed(vararg keys: Key) = from(keys).any { key -> pressed(key) }
     fun allPressed(vararg keys: Key) = from(keys).all { key -> pressed(key) }
-
-    fun anyInPressed(vararg keys: Key) = from(keys).any { key -> inPressed(key) }
-    fun allInPressed(vararg keys: Key) = from(keys).all { key -> inPressed(key) }
-
-    fun anyRePressed(vararg keys: Key) = from(keys).any { key -> rePressed(key) }
-    fun allRePressed(vararg keys: Key) = from(keys).all { key -> rePressed(key) }
 
     fun anyPressedIn(frames: Int, vararg keys: Key) = from(keys).any { key -> pressedIn(frames, key) }
     fun allPressedIn(frames: Int, vararg keys: Key) = from(keys).all { key -> pressedIn(frames, key) }
@@ -84,6 +87,24 @@ abstract class KeyActivator<Key>(private val values: Array<Key>) {
 
     fun anyRePressedIn(frames: Int, vararg keys: Key) = from(keys).any { key -> rePressedIn(frames, key) }
     fun allRePressedIn(frames: Int, vararg keys: Key) = from(keys).all { key -> rePressedIn(frames, key) }
+
+    fun anyInPressed(vararg keys: Key) = from(keys).any { key -> inPressed(key) }
+    fun allInPressed(vararg keys: Key) = from(keys).all { key -> inPressed(key) }
+
+    fun anyRePressed(vararg keys: Key) = from(keys).any { key -> rePressed(key) }
+    fun allRePressed(vararg keys: Key) = from(keys).all { key -> rePressed(key) }
+
+    ///////////////////////////////////////////////////////////////////////////////////////
+
+    fun allPeriodPressed(start_time: Int, period: Int, vararg keys: Key) =
+        from(keys).all { key -> periodPressed(start_time, period, key) }
+
+    fun anyPeriodPressed(start_time: Int, period: Int, vararg keys: Key) =
+        from(keys).any { key -> periodPressed(start_time, period, key) }
+
+    fun allPeriodPressed(period: Int, vararg keys: Key) = from(keys).all { key -> periodPressed(period, key) }
+
+    fun anyPeriodPressed(period: Int, vararg keys: Key) = from(keys).any { key -> periodPressed(period, key) }
 
     ///////////////////////////////////////////////////////////////////////////////////////
 }
