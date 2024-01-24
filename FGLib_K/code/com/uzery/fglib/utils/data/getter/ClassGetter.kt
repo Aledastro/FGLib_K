@@ -3,6 +3,7 @@ package com.uzery.fglib.utils.data.getter
 import com.uzery.fglib.utils.graphics.data.FGColor
 import com.uzery.fglib.utils.math.geom.Direct
 import com.uzery.fglib.utils.math.geom.PointN
+import com.uzery.fglib.utils.math.num.IntI
 import com.uzery.fglib.utils.math.num.StringN
 import com.uzery.fglib.utils.math.solve.MathSolveUtils
 
@@ -90,8 +91,8 @@ abstract class ClassGetter<Type>: AbstractClassGetter<Type>() {
 
     protected val size: PointN
         get() = pos
+    protected val intI: IntI
+        get() = if (no_info) IntI(0, 0) else IntI(int, intX(1))
     protected val direct: Direct
         get() = if (no_info) Direct.CENTER else Direct.valueOf(string)
-
-
 }
