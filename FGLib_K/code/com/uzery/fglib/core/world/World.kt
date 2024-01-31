@@ -58,6 +58,7 @@ object World {
 
     fun draw(pos: PointN = PointN.ZERO) {
         graphics.drawPOS = controller.drawPOS()+(camera?.drawPOS() ?: PointN.ZERO)
+        controller.draw()
         drawNotActiveRooms(pos)
         drawRooms(pos)
         camera?.draw(camera!!.stats.POS+camera!!.stats.roomPOS+pos)

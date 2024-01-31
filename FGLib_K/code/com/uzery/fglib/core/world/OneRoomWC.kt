@@ -25,4 +25,6 @@ class OneRoomWC: WorldController {
     override fun drawPOS(): PointN {
         return PointN.ZERO
     }
+
+    override fun draw() {}
 }

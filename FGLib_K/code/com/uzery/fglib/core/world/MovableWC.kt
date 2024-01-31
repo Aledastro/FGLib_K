@@ -13,15 +13,18 @@ import com.uzery.fglib.utils.math.geom.shape.RectN
 
 class MovableWC(private val goal: GameObject, private val room_p: Double = 10.0): WorldController {
 
-    private val SIZE = Int.MAX_VALUE/4
+    private val SIZE = Int.MAX_VALUE/2
+    private val SIZE_P = PointN(SIZE, SIZE)
 
-    private val void = Room(PointN.ZERO, PointN.ZERO)
+    private val void = Room(-SIZE_P/2, SIZE_P)
 
-    //private val void = Room(PointN(-1,-1)*SIZE, PointN(2, 2)*SIZE)
     var goal_room = void
         private set
 
-    override fun init() {}
+    override fun init() {
+        goal.stats.roomPOS = goal_room.pos
+        goal.stats.POS -= void.pos
+    }
 
     override fun isActive(r: Room): Boolean {
         val pos = PointN(room_p, -room_p)
@@ -100,12 +103,15 @@ class MovableWC(private val goal: GameObject, private val room_p: Double = 10.0)
             World.add(goal)
         }*/
         void.next()
-        void.draw(PointN.ZERO)
 
         moveObjs()
     }
 
     override fun drawPOS(): PointN {
         return goal_room.pos
+    }
+
+    override fun draw() {
+        void.draw(PointN.ZERO)
     }
 }

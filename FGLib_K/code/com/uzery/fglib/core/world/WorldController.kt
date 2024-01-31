@@ -16,4 +16,5 @@ interface WorldController {
 
     fun update()
     fun drawPOS(): PointN
+    fun draw()
 }
