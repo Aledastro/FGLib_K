@@ -64,7 +64,7 @@ class MovableWC(private val goal: GameObject, private val room_p: Double = 10.0)
 
         fun migrate(oldRoom: Room) {
             oldRoom.objects.filter { it.tagged("migrator") }.forEach { obj ->
-                if (!isInArea(oldRoom, obj)) {
+                if (!isInArea(oldRoom, obj) || oldRoom == void) {
                     val newRoom = roomFor(obj)
                     oldRoom.remove(obj)
                     newRoom.objects.add(obj)
