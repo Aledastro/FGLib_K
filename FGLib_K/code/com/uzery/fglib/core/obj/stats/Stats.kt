@@ -12,6 +12,9 @@ class Stats {
     var roomPOS = PointN.ZERO
     var sortPOS = PointN.ZERO
 
+    val realPOS
+        get() = roomPOS+POS
+
     var SIZE = PointN.ZERO
     var ALPHA = 0.0
 }

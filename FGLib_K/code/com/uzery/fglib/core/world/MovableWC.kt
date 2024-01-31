@@ -30,7 +30,7 @@ class MovableWC(private val goal: GameObject, private val room_p: Double = 10.0)
         val pos = PointN(room_p, -room_p)
         val rect1 = RectN(r.pos-pos, r.size+pos*2)
         val rect2 = RectN(r.pos+pos, r.size-pos*2)
-        val camera = RectN.C(World.camera!!.stats.POS+World.camera!!.stats.roomPOS, CANVAS)
+        val camera = RectN.C(World.camera!!.stats.realPOS, CANVAS)
         return ShapeUtils.into(rect1, camera) || ShapeUtils.into(rect2, camera)
     }
 
@@ -91,7 +91,7 @@ class MovableWC(private val goal: GameObject, private val room_p: Double = 10.0)
     }
 
     private fun isInArea(r: Room, obj: GameObject): Boolean {
-        return r.main.into(obj.stats.POS+obj.stats.roomPOS) //+o.stats.roomPOS
+        return r.main.into(obj.stats.realPOS)
     }
 
     override fun roomFor(obj: GameObject): Room {

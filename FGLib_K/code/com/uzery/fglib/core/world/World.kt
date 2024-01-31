@@ -61,7 +61,7 @@ object World {
         controller.draw()
         drawNotActiveRooms(pos)
         drawRooms(pos)
-        camera?.draw(camera!!.stats.POS+camera!!.stats.roomPOS+pos)
+        camera?.draw(camera!!.stats.realPOS+pos)
         //if(develop_mode) drawRoomsDebug(pos)
     }
 
