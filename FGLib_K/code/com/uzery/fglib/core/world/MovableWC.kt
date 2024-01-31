@@ -63,16 +63,19 @@ class MovableWC(private val goal: GameObject, private val room_p: Double = 10.0)
         moveGoal()
 
         fun migrate(oldRoom: Room) {
+            val objectsToRemove = ArrayList<GameObject>()
+            val objectsToAdd = ArrayList<Pair<Room, GameObject>>()
             oldRoom.objects.filter { it.tagged("migrator") }.forEach { obj ->
                 if (!isInArea(oldRoom, obj) || oldRoom == void) {
                     val newRoom = roomFor(obj)
-                    oldRoom.remove(obj)
-                    newRoom.objects.add(obj)
+                    objectsToRemove.add(obj)
+                    objectsToAdd.add(Pair(newRoom, obj))
                     obj.stats.POS += oldRoom.pos-newRoom.pos
                     obj.stats.roomPOS = newRoom.pos
-                    //obj.stats.POS=obj.stats.POS.round(1.0)
                 }
             }
+            oldRoom.objects.removeAll(objectsToRemove.toSet())
+            objectsToAdd.forEach { it.first.objects.add(it.second) }
         }
 
         migrate(void)
