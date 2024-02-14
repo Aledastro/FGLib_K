@@ -3,6 +3,7 @@ package com.uzery.fglib.utils.input
 abstract class KeyActivator<Key>(private val values: Array<Key>) {
     private val size = values.size
 
+    private var pressedInt = Array(size) { false }
     private var timePressed = Array(size) { 0L }
     private var timeReleased = Array(size) { 0L }
     private var lastTimePressed = Array(size) { 0L }
@@ -16,9 +17,10 @@ abstract class KeyActivator<Key>(private val values: Array<Key>) {
     /** extremely important function! **/
     fun update() {
         for (i in 0 until size) {
+            pressedInt[i] = pressedInt(i)
             timePressed[i]++
             timeReleased[i]++
-            if (pressedInt(i)) {
+            if (pressedInt[i]) {
                 lastTimeReleased[i] = timeReleased[i]
                 timeReleased[i] = 0
             } else {
@@ -50,7 +52,7 @@ abstract class KeyActivator<Key>(private val values: Array<Key>) {
     ///////////////////////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    fun pressed(key: Key) = pressedInt(fromKey(key))
+    fun pressed(key: Key) = pressedInt[fromKey(key)]
     fun pressedIn(frames: Int, key: Key) = timeReleased(key) < frames || pressed(key)
     fun inPressedIn(frames: Int, key: Key) = timePressed(key) in 1..frames
     fun rePressedIn(frames: Int, key: Key) = timeReleased(key) in 1..frames
