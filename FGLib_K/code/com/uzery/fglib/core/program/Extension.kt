@@ -73,7 +73,9 @@ abstract class Extension(vararg children: Extension) {
 
     private fun modify() {
         real_children.addAll(new_children)
+        new_children.clear()
         real_children.removeAll(old_children.toSet())
+        old_children.clear()
     }
 
     internal fun updateWithChildren() {
