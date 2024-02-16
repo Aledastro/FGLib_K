@@ -7,6 +7,9 @@ abstract class Extension(vararg children: Extension) {
     val children = ArrayList<Extension>()
     var draw_pos = PointN.ZERO
 
+    val new_children = ArrayList<Extension>()
+    val old_children = ArrayList<Extension>()
+
     enum class MODE(val draw: Boolean, val update: Boolean) {
         SHOW(true, true),
         HIDE(false, false),
@@ -32,8 +35,12 @@ abstract class Extension(vararg children: Extension) {
     open fun active() = MODE.SHOW
 
     protected fun add(vararg children: Extension) {
-        this.children.addAll(children)
+        new_children.addAll(children)
     }
+    protected fun remove(vararg children: Extension) {
+        old_children.addAll(children)
+    }
+    protected fun clear() = remove(*children.toTypedArray())
 
     init {
         add(*children)
@@ -56,11 +63,19 @@ abstract class Extension(vararg children: Extension) {
 
     internal fun initWithChildren() {
         init()
+        modify()
         children.forEach { it.initWithChildren() }
         initAfter()
     }
 
+    private fun modify() {
+        children.addAll(new_children)
+        children.removeAll(old_children.toSet())
+    }
+
     internal fun updateWithChildren() {
+        modify()
+
         update()
         children.forEach { if (it.mode.update && it.active().update) it.updateWithChildren() }
         updateAfter()
