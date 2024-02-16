@@ -8,6 +8,8 @@ abstract class Extension(vararg children: Extension) {
 
     val children
         get() = ArrayList<Extension>().also { it.addAll(real_children) }
+    val ch_size
+        get() = real_children.size
 
     private val real_children = ArrayList<Extension>()
     private val new_children = ArrayList<Extension>()
