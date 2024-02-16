@@ -4,9 +4,12 @@ import com.uzery.fglib.core.program.Platform.graphics
 import com.uzery.fglib.utils.math.geom.PointN
 
 abstract class Extension(vararg children: Extension) {
-    private val children = ArrayList<Extension>()
     var draw_pos = PointN.ZERO
 
+    val children
+        get() = ArrayList<Extension>().also { it.addAll(real_children) }
+
+    private val real_children = ArrayList<Extension>()
     private val new_children = ArrayList<Extension>()
     private val old_children = ArrayList<Extension>()
 
@@ -40,7 +43,7 @@ abstract class Extension(vararg children: Extension) {
     fun remove(vararg children: Extension) {
         old_children.addAll(children)
     }
-    fun clearChildren() = remove(*children.toTypedArray())
+    fun clearChildren() = remove(*real_children.toTypedArray())
 
     init {
         add(*children)
@@ -64,20 +67,20 @@ abstract class Extension(vararg children: Extension) {
     internal fun initWithChildren() {
         init()
         modify()
-        children.forEach { it.initWithChildren() }
+        real_children.forEach { it.initWithChildren() }
         initAfter()
     }
 
     private fun modify() {
-        children.addAll(new_children)
-        children.removeAll(old_children.toSet())
+        real_children.addAll(new_children)
+        real_children.removeAll(old_children.toSet())
     }
 
     internal fun updateWithChildren() {
         modify()
 
         update()
-        children.forEach { if (it.mode.update && it.active().update) it.updateWithChildren() }
+        real_children.forEach { if (it.mode.update && it.active().update) it.updateWithChildren() }
         updateAfter()
     }
 
@@ -86,7 +89,7 @@ abstract class Extension(vararg children: Extension) {
         graphics.drawPOS = PointN.ZERO
         draw(pos)
 
-        children.forEach { if (it.mode.draw && it.active().draw) it.drawWithChildren(pos+it.draw_pos) }
+        real_children.forEach { if (it.mode.draw && it.active().draw) it.drawWithChildren(pos+it.draw_pos) }
 
         graphics.setDefaults()
         graphics.drawPOS = PointN.ZERO
@@ -96,7 +99,7 @@ abstract class Extension(vararg children: Extension) {
     internal fun updateTasksWithChildren() {
         mode = next_mode
         onBackGround()
-        children.forEach { it.updateTasksWithChildren() }
+        real_children.forEach { it.updateTasksWithChildren() }
     }
 
     open fun onBackGround() {}
