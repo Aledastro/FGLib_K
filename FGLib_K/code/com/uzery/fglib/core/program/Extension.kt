@@ -4,11 +4,11 @@ import com.uzery.fglib.core.program.Platform.graphics
 import com.uzery.fglib.utils.math.geom.PointN
 
 abstract class Extension(vararg children: Extension) {
-    val children = ArrayList<Extension>()
+    private val children = ArrayList<Extension>()
     var draw_pos = PointN.ZERO
 
-    val new_children = ArrayList<Extension>()
-    val old_children = ArrayList<Extension>()
+    private val new_children = ArrayList<Extension>()
+    private val old_children = ArrayList<Extension>()
 
     enum class MODE(val draw: Boolean, val update: Boolean) {
         SHOW(true, true),
@@ -34,13 +34,13 @@ abstract class Extension(vararg children: Extension) {
 
     open fun active() = MODE.SHOW
 
-    protected fun add(vararg children: Extension) {
+    fun add(vararg children: Extension) {
         new_children.addAll(children)
     }
-    protected fun remove(vararg children: Extension) {
+    fun remove(vararg children: Extension) {
         old_children.addAll(children)
     }
-    protected fun clear() = remove(*children.toTypedArray())
+    fun clearChildren() = remove(*children.toTypedArray())
 
     init {
         add(*children)

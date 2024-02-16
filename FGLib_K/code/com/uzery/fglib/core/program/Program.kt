@@ -5,7 +5,7 @@ object Program {
     private val core = object: Extension() {}
 
     fun init(vararg ets: Extension) {
-        core.children.addAll(ets)
+        core.add(*ets)
 
         core.initWithChildren()
     }
