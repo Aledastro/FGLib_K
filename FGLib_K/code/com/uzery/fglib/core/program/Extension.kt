@@ -15,6 +15,10 @@ abstract class Extension(vararg children: Extension) {
     private val new_children = ArrayList<Extension>()
     private val old_children = ArrayList<Extension>()
 
+    private var full_time = 0
+    private var update_time = 0
+    private var draw_time = 0
+
     enum class MODE(val draw: Boolean, val update: Boolean) {
         SHOW(true, true),
         HIDE(false, false),
@@ -86,6 +90,8 @@ abstract class Extension(vararg children: Extension) {
         update()
         real_children.forEach { if (it.mode.update && it.active().update) it.updateWithChildren() }
         updateAfter()
+
+        update_time++
     }
 
     internal fun drawWithChildren(pos: PointN) {
@@ -98,12 +104,16 @@ abstract class Extension(vararg children: Extension) {
         graphics.setDefaults()
         graphics.drawPOS = PointN.ZERO
         drawAfter(pos)
+
+        draw_time++
     }
 
     internal fun updateTasksWithChildren() {
         mode = next_mode
         onBackGround()
         real_children.forEach { it.updateTasksWithChildren() }
+
+        full_time++
     }
 
     open fun onBackGround() {}
