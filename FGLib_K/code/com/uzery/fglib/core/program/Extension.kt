@@ -6,8 +6,7 @@ import com.uzery.fglib.utils.math.geom.PointN
 abstract class Extension(vararg children: Extension) {
     var draw_pos = PointN.ZERO
 
-    val children
-        get() = ArrayList<Extension>().also { it.addAll(real_children) }
+    val children = ArrayList<Extension>()
     val ch_size
         get() = real_children.size
 
@@ -125,6 +124,9 @@ abstract class Extension(vararg children: Extension) {
         mode = next_mode
         onBackGround()
         real_children.forEach { it.updateTasksWithChildren() }
+
+        children.clear()
+        children.addAll(real_children)
 
         full_time++
         updateModeTime()
