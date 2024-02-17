@@ -57,9 +57,11 @@ abstract class Extension(vararg children: Extension) {
     fun add(vararg children: Extension) {
         new_children.addAll(children)
     }
+
     fun remove(vararg children: Extension) {
         old_children.addAll(children)
     }
+
     fun clearChildren() = remove(*real_children.toTypedArray())
 
     init {
@@ -130,17 +132,20 @@ abstract class Extension(vararg children: Extension) {
 
     open fun onBackGround() {}
 
-    private fun resetModeTime(){
+    private fun resetModeTime() {
         show_time = 0
         hide_time = 0
         only_draw_time = 0
         only_update_time = 0
     }
-    private fun updateModeTime(){
-        show_time++
-        hide_time++
-        only_draw_time++
-        only_update_time++
+
+    private fun updateModeTime() {
+        when (mode) {
+            MODE.SHOW -> show_time++
+            MODE.HIDE -> hide_time++
+            MODE.ONLY_DRAW -> only_draw_time++
+            MODE.ONLY_UPDATE -> only_update_time++
+        }
     }
 
     fun show() {
