@@ -4,9 +4,6 @@ import com.uzery.fglib.core.program.Platform.graphics
 import com.uzery.fglib.utils.math.geom.PointN
 
 abstract class Extension(vararg children: Extension) {
-    @Deprecated("Use data instead")
-    var draw_pos = PointN.ZERO
-
     val children = ArrayList<Extension>()
 
     private val real_children = ArrayList<Extension>()
@@ -114,7 +111,7 @@ abstract class Extension(vararg children: Extension) {
 
         real_children.forEach { e ->
             if (e.mode.draw && e.active().draw) {
-                e.drawWithChildren(pos+e.data.pos+e.data.draw_pos+e.draw_pos)
+                e.drawWithChildren(pos+e.data.pos+e.data.draw_pos)
             }
         }
 

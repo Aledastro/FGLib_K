@@ -13,7 +13,7 @@ object Program {
     fun loop() {
         core.updateTasksWithChildren()
         core.updateWithChildren()
-        core.drawWithChildren(core.data.pos+core.data.draw_pos+core.draw_pos)
+        core.drawWithChildren(core.data.pos+core.data.draw_pos)
 
         Platform.update()
         program_time++
