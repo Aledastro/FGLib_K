@@ -9,6 +9,6 @@ object ConstL {
     const val BUFFER_FORMAT = "UTF-8"
 
     val FILES_COMMENT: String
-        get() = "//Uzery Game Studio 2019-2023\n"+
+        get() = "//Uzery Studio 2019-2024\n"+
                 "//last edit: ${FGUtils.time_YMD()} ${FGUtils.time_HMS()}\n\n"
 }
