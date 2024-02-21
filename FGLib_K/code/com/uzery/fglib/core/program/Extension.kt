@@ -96,6 +96,7 @@ abstract class Extension(vararg children: Extension) {
     open fun onOnlyUpdate() {}
 
     internal fun initWithChildren() {
+        modify()
         init()
         modify()
         real_children.forEach { it.initWithChildren() }
