@@ -1,7 +1,9 @@
 package com.uzery.fglib.core.program
 
 import com.uzery.fglib.core.program.Platform.graphics
+import com.uzery.fglib.core.program.Platform.mouse
 import com.uzery.fglib.utils.math.geom.PointN
+import com.uzery.fglib.utils.math.geom.shape.RectN
 
 abstract class Extension(vararg children: Extension) {
     val children = ArrayList<Extension>()
@@ -11,6 +13,19 @@ abstract class Extension(vararg children: Extension) {
     private val old_children = ArrayList<Extension>()
 
     val data = ExtensionData(0)
+
+    fun mouseIn(): Boolean {
+        //todo: size -> bounds
+        if (data.size == PointN.ZERO) return false
+        return RectN(data.render_pos+data.pos, data.size).into(mouse.pos)
+    }
+
+    fun mouseAt(): Boolean {
+        fun notAtChildren(e: Extension): Boolean {
+            return e.children.all { !it.mouseIn() && notAtChildren(it)  }
+        }
+        return mouseIn() && notAtChildren(this)
+    }
 
     protected var full_time = 0
         private set
@@ -125,7 +140,11 @@ abstract class Extension(vararg children: Extension) {
     internal fun updateTasksWithChildren() {
         mode = next_mode
         onBackGround()
-        real_children.forEach { it.updateTasksWithChildren() }
+
+        real_children.forEach {
+            it.data.render_pos = data.render_pos+data.pos
+            it.updateTasksWithChildren()
+        }
 
         children.clear()
         children.addAll(real_children)

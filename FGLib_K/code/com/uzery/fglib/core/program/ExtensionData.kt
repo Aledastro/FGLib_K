@@ -5,6 +5,8 @@ import com.uzery.fglib.utils.graphics.AffineTransform
 import com.uzery.fglib.utils.math.geom.PointN
 
 data class ExtensionData(val id: Int){
+    internal var render_pos = PointN.ZERO
+
     //for updating
     var pos = PointN.ZERO
     var bounds: Bounds? = null
