@@ -4,15 +4,16 @@ import com.uzery.fglib.core.program.Platform.graphics
 import com.uzery.fglib.utils.math.geom.PointN
 
 abstract class Extension(vararg children: Extension) {
+    @Deprecated("Use data instead")
     var draw_pos = PointN.ZERO
 
     val children = ArrayList<Extension>()
-    val ch_size
-        get() = real_children.size
 
     private val real_children = ArrayList<Extension>()
     private val new_children = ArrayList<Extension>()
     private val old_children = ArrayList<Extension>()
+
+    val data = ExtensionData(0)
 
     protected var full_time = 0
         private set
@@ -111,7 +112,11 @@ abstract class Extension(vararg children: Extension) {
         graphics.drawPOS = PointN.ZERO
         draw(pos)
 
-        real_children.forEach { if (it.mode.draw && it.active().draw) it.drawWithChildren(pos+it.draw_pos) }
+        real_children.forEach { e ->
+            if (e.mode.draw && e.active().draw) {
+                e.drawWithChildren(pos+e.data.pos+e.data.draw_pos+e.draw_pos)
+            }
+        }
 
         graphics.setDefaults()
         graphics.drawPOS = PointN.ZERO

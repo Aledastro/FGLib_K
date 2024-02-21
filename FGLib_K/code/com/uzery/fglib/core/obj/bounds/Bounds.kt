@@ -41,7 +41,7 @@ class Bounds {
     val empty
         get() = elements.isEmpty()
 
-    @Deprecated("it doesn't copy original manually")
+    @Deprecated("It doesn't copy original manually")
     fun copy(pos: PointN): Bounds {
         val els = ArrayList<BoundsElement>()
         elements.forEach { els.add(it.copy(pos)) }
