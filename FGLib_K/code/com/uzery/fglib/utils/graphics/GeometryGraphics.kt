@@ -26,8 +26,8 @@ abstract class GeometryGraphics(private val transform: AffineTransform, private 
     ) {
         font = FGFont(family, size, weight, posture)
     }
-    fun font(size: Double = font.size) {
-        font = FGFont(font.family, size, font.weight, font.posture)
+    fun font(size: Double = font.size, weight: FGFontWeight = font.weight, posture: FGFontPosture = font.posture) {
+        font = FGFont(font.family, size, weight, posture)
     }
 
     fun text_size(text: String, font: FGFont): PointN {
