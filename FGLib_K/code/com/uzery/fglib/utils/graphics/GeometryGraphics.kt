@@ -15,15 +15,17 @@ abstract class GeometryGraphics(private val transform: AffineTransform, private 
         alpha = 1.0
     }
 
-    val default_font = FGFont("arial", 10.0, FGFontWeight.BOLD, FGFontPosture.REGULAR)
-    var font = default_font
+    var font = FGFont.default_font
     fun font(
-        family: String = default_font.family,
-        size: Double = default_font.size,
-        weight: FGFontWeight = default_font.weight,
-        posture: FGFontPosture = default_font.posture
+        family: String = font.family,
+        size: Double = font.size,
+        weight: FGFontWeight = font.weight,
+        posture: FGFontPosture = font.posture
     ) {
         font = FGFont(family, size, weight, posture)
+    }
+    fun font(size: Double = font.size) {
+        font = FGFont(font.family, size, font.weight, font.posture)
     }
 
     fun text_size(text: String, font: FGFont): PointN {
