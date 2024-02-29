@@ -1,6 +1,7 @@
 package com.uzery.fglib.utils.graphics
 
 import com.uzery.fglib.core.program.Platform
+import com.uzery.fglib.core.program.Platform.graphics
 import com.uzery.fglib.utils.graphics.data.FGColor
 import com.uzery.fglib.utils.graphics.data.FGFont
 import com.uzery.fglib.utils.graphics.data.FGFontPosture
@@ -13,6 +14,7 @@ abstract class GeometryGraphics(private val transform: AffineTransform, private 
     var alpha = 1.0
     fun setDefaults() {
         alpha = 1.0
+        font = FGFont.default_font
     }
 
     var font = FGFont.default_font
@@ -29,11 +31,11 @@ abstract class GeometryGraphics(private val transform: AffineTransform, private 
     }
 
     fun text_size(text: String, font: FGFont): PointN {
-        return Platform.graphics.text_size(text, font)
+        return graphics.text_size(text, font)
     }
 
     fun text_size(text: String): PointN {
-        return Platform.graphics.text_size(text, font)
+        return graphics.text_size(text, font)
     }
 
     protected abstract fun rect0(pos: PointN, size: PointN, color: FGColor)
