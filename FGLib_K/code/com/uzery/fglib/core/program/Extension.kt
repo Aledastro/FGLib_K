@@ -133,7 +133,7 @@ abstract class Extension(vararg children: Extension) {
 
         real_children.forEach { e ->
             if (e.mode.draw && e.active().draw) {
-                e.drawWithChildren(pos+e.data.pos+e.data.draw_pos)
+                e.drawWithChildren(pos+e.data.render_pos)
             }
         }
 

@@ -14,6 +14,8 @@ class ExtensionData {
         }
 
     internal var real_pos = PointN.ZERO
+    internal val render_pos
+        get() = pos + draw_pos
 
     //for updating
     var pos = PointN.ZERO
