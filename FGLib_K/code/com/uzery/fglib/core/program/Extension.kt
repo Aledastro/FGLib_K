@@ -22,7 +22,7 @@ abstract class Extension(vararg children: Extension) {
 
     fun mouseAt(): Boolean {
         fun notAtChildren(e: Extension): Boolean {
-            return e.children.all { !it.mouseIn() && notAtChildren(it)  }
+            return e.children.all { !it.mouseIn() && notAtChildren(it) }
         }
         return mouseIn() && notAtChildren(this)
     }
@@ -124,8 +124,8 @@ abstract class Extension(vararg children: Extension) {
     }
 
     internal fun drawWithChildren(pos: PointN) {
-        graphics.setDefaults()
-        graphics.transform = data.full_transform
+        graphics.setFullDefaults()
+        graphics.transform = data.full_transform*graphics.transform
         draw(pos)
 
         real_children.forEach { e ->
@@ -134,8 +134,8 @@ abstract class Extension(vararg children: Extension) {
             }
         }
 
-        graphics.setDefaults()
-        graphics.transform = data.full_transform
+        graphics.setFullDefaults()
+        graphics.transform = data.full_transform*graphics.transform
         drawAfter(pos)
 
         draw_time++
