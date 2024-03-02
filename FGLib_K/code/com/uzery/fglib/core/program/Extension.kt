@@ -12,7 +12,9 @@ abstract class Extension(vararg children: Extension) {
     private val new_children = ArrayList<Extension>()
     private val old_children = ArrayList<Extension>()
 
-    val data = ExtensionData(0)
+    val data = ExtensionData()
+
+    var owner: Extension? = null
 
     fun mouseIn(): Boolean {
         //todo: size -> bounds
@@ -146,6 +148,7 @@ abstract class Extension(vararg children: Extension) {
         onBackGround()
 
         real_children.forEach {
+            it.owner = this
             it.data.render_pos = data.render_pos+data.pos
             it.updateTasksWithChildren()
         }

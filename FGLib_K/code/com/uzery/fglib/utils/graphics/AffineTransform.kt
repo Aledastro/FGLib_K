@@ -10,4 +10,8 @@ class AffineTransform(val transform: (PointN) -> PointN) {
     fun size(pos: PointN, size: PointN): PointN {
         return transform(pos+size)-transform(pos)
     }
+
+    operator fun times(other: AffineTransform): AffineTransform {
+        return AffineTransform { p -> this.transform(other.transform(p)) }
+    }
 }
