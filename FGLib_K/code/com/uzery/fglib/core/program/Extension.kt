@@ -14,8 +14,6 @@ abstract class Extension(vararg children: Extension) {
 
     val data = ExtensionData()
 
-    var owner: Extension? = null
-
     fun mouseIn(): Boolean {
         //todo: size -> bounds
         if (data.size == PointN.ZERO) return false
@@ -127,7 +125,7 @@ abstract class Extension(vararg children: Extension) {
 
     internal fun drawWithChildren(pos: PointN) {
         graphics.setDefaults()
-        graphics.drawPOS = PointN.ZERO
+        graphics.transform = data.full_transform
         draw(pos)
 
         real_children.forEach { e ->
@@ -137,7 +135,7 @@ abstract class Extension(vararg children: Extension) {
         }
 
         graphics.setDefaults()
-        graphics.drawPOS = PointN.ZERO
+        graphics.transform = data.full_transform
         drawAfter(pos)
 
         draw_time++
@@ -148,7 +146,7 @@ abstract class Extension(vararg children: Extension) {
         onBackGround()
 
         real_children.forEach {
-            it.owner = this
+            it.data.owner = this
             it.data.render_pos = data.render_pos+data.pos
             it.updateTasksWithChildren()
         }

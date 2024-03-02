@@ -5,6 +5,14 @@ import com.uzery.fglib.utils.graphics.AffineTransform
 import com.uzery.fglib.utils.math.geom.PointN
 
 class ExtensionData {
+    var owner: Extension? = null
+    val full_transform: AffineTransform
+        get() {
+            val transform = transform ?: AffineTransform.NEUTRAL
+            val owner = owner ?: return transform
+            return owner.data.full_transform*transform
+        }
+
     internal var render_pos = PointN.ZERO
 
     //for updating

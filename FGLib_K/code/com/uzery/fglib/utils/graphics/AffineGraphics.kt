@@ -10,6 +10,7 @@ abstract class AffineGraphics {
     var view_scale = 1.0
     var drawPOS = PointN.ZERO
     var layer = DrawLayer.CAMERA_OFF
+    var transform = AffineTransform.NEUTRAL
 
     abstract var scale: Int
 
@@ -20,6 +21,9 @@ abstract class AffineGraphics {
         alpha = 1.0
         view_scale = 1.0
         layer = DrawLayer.CAMERA_OFF
+        drawPOS = PointN.ZERO
+        transform = AffineTransform.NEUTRAL
+
         image.setDefaults()
         fill.setDefaults()
         stroke.setDefaults()

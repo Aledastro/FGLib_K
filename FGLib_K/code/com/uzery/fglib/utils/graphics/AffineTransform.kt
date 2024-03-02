@@ -2,7 +2,7 @@ package com.uzery.fglib.utils.graphics
 
 import com.uzery.fglib.utils.math.geom.PointN
 
-class AffineTransform(val transform: (PointN) -> PointN) {
+class AffineTransform(val transform: (PointN) -> PointN, val t_size: (PointN) -> PointN) {
     fun pos(pos: PointN): PointN {
         return transform(pos)
     }
@@ -12,6 +12,10 @@ class AffineTransform(val transform: (PointN) -> PointN) {
     }
 
     operator fun times(other: AffineTransform): AffineTransform {
-        return AffineTransform { p -> this.transform(other.transform(p)) }
+        return AffineTransform({ p -> this.transform(other.transform(p)) }, { p -> this.t_size(other.t_size(p)) })
+    }
+
+    companion object {
+        val NEUTRAL: AffineTransform = AffineTransform({ p -> p }, { p -> p })
     }
 }

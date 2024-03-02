@@ -1,10 +1,14 @@
 package com.uzery.fglib.utils.graphics
 
+import com.uzery.fglib.core.program.Platform
 import com.uzery.fglib.utils.data.image.FGImage
 import com.uzery.fglib.utils.data.image.ImageUtils
 import com.uzery.fglib.utils.math.geom.PointN
 
-abstract class ImageGraphics(private val transform: AffineTransform) {
+abstract class ImageGraphics(private val agc: AffineGraphics) {
+    val transform
+        get() = agc.transform
+
     var alpha = 1.0
     fun setDefaults() {
         alpha = 1.0
