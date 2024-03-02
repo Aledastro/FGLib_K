@@ -17,37 +17,22 @@ abstract class AffineGraphics {
     abstract var global_view_scale: Double
     var whole_draw = true
 
-    /*private val transform =
-        AffineTransform {
-            var x = (it-drawPOS*layer.z)*scale
-            x *= view_scale*global_view_scale
-            x
-        }
-    private val whole_transform =
-        AffineTransform {
-            var x = (it-drawPOS*layer.z)*scale
-            if (whole_draw) x = x.roundC(1.0)
-            x *= view_scale*global_view_scale
-            x
-        }
-    private val transformSize = AffineTransform { it*scale*view_scale*global_view_scale }*/
+    private val default_t: (PointN) -> PointN = {
+        var x = (it-drawPOS*layer.z)*scale
+        if (whole_draw) x = x.roundC(1.0)
+        x *= view_scale*global_view_scale
+        x
+    }
+    private val default_t_size: (PointN) -> PointN = { x ->
+        x*scale*view_scale*global_view_scale
+    }
+    val default_transform = AffineTransform(default_t, default_t_size)
 
     fun setFullDefaults(){
         setDefaults()
         drawPOS = PointN.ZERO
+
         transform = AffineTransform.NEUTRAL
-
-        val t: (PointN) -> PointN = {
-            var x = (it-drawPOS*layer.z)*scale
-            if (whole_draw) x = x.roundC(1.0)
-            x *= view_scale*global_view_scale
-            x
-        }
-        val t_size: (PointN) -> PointN = { x ->
-            x*scale*view_scale*global_view_scale
-        }
-
-        transform = AffineTransform(t, t_size)
     }
     fun setDefaults() {
         alpha = 1.0

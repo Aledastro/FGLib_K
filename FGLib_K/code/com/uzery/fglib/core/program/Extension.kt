@@ -125,7 +125,7 @@ abstract class Extension(vararg children: Extension) {
 
     internal fun drawWithChildren(pos: PointN) {
         graphics.setFullDefaults()
-        graphics.transform = data.full_transform*graphics.transform
+        graphics.transform = data.full_transform*graphics.default_transform
         draw(pos)
 
         real_children.forEach { e ->
@@ -135,7 +135,7 @@ abstract class Extension(vararg children: Extension) {
         }
 
         graphics.setFullDefaults()
-        graphics.transform = data.full_transform*graphics.transform
+        graphics.transform = data.full_transform*graphics.default_transform
         drawAfter(pos)
 
         draw_time++
