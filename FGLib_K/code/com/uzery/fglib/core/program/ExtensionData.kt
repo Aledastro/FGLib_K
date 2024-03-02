@@ -13,7 +13,7 @@ class ExtensionData {
             return owner.data.full_transform*transform
         }
 
-    internal var render_pos = PointN.ZERO
+    internal var real_pos = PointN.ZERO
 
     //for updating
     var pos = PointN.ZERO
