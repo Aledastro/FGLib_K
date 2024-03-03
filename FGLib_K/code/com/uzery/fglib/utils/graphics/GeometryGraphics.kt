@@ -45,8 +45,6 @@ abstract class GeometryGraphics(protected val agc: AffineGraphics) {
 
     protected abstract fun oval0(pos: PointN, size: PointN, color: FGColor)
 
-    protected abstract fun lineTo0(pos1: PointN, pos2: PointN, color: FGColor)
-
     protected abstract fun text0(pos: PointN, text: String, font: FGFont, color: FGColor)
 
     ///////////////////////////////////////////////////////////////////////////
@@ -102,7 +100,7 @@ abstract class GeometryGraphics(protected val agc: AffineGraphics) {
                 if (shape.exists()) {
                     for (field in fig.fields) {
                         val p = PointN(Array(field.dim) { field.mirage[it, 0] })
-                        line(pos, p, color)
+                        agc.stroke.line(pos, p, color)
                     }
                     for (p in fig.current_pos) {
                         oval(pos-PointN(1, 1)+p, PointN(2, 2), color)
@@ -117,12 +115,4 @@ abstract class GeometryGraphics(protected val agc: AffineGraphics) {
     fun drawL(pos: PointN, shape: Shape, color: FGColor) = draw(pos, shape, color)
     fun drawC(pos: PointN, shape: Shape, color: FGColor) = draw(pos-shape.S/2, shape, color)
     fun drawR(pos: PointN, shape: Shape, color: FGColor) = draw(pos-shape.S, shape, color)
-
-    ///////////////////////////////////////////////////////////////////////////
-
-    fun lineTo(pos1: PointN, pos2: PointN, color: FGColor) {
-        lineTo0(transform.pos(pos1), transform.pos(pos2), color)
-    }
-
-    fun line(pos: PointN, size: PointN, color: FGColor) = lineTo(pos, pos+size, color)
 }
