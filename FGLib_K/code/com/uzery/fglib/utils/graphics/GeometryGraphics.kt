@@ -1,6 +1,5 @@
 package com.uzery.fglib.utils.graphics
 
-import com.uzery.fglib.core.program.Extension
 import com.uzery.fglib.core.program.Platform.graphics
 import com.uzery.fglib.utils.graphics.data.FGColor
 import com.uzery.fglib.utils.graphics.data.FGFont
@@ -110,9 +109,13 @@ abstract class GeometryGraphics(protected val agc: AffineGraphics) {
         }
     }
 
-    fun draw(shape: Shape, color: FGColor) = draw(PointN.ZERO, shape, color)
-
     fun drawL(pos: PointN, shape: Shape, color: FGColor) = draw(pos, shape, color)
     fun drawC(pos: PointN, shape: Shape, color: FGColor) = draw(pos-shape.S/2, shape, color)
     fun drawR(pos: PointN, shape: Shape, color: FGColor) = draw(pos-shape.S, shape, color)
+
+    fun draw(shape: Shape, color: FGColor) = draw(PointN.ZERO, shape, color)
+
+    fun drawL(shape: Shape, color: FGColor) = draw(PointN.ZERO, shape, color)
+    fun drawC(shape: Shape, color: FGColor) = draw(-shape.S/2, shape, color)
+    fun drawR(shape: Shape, color: FGColor) = draw(-shape.S, shape, color)
 }
