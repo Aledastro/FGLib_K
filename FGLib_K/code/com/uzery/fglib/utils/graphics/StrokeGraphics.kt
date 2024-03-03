@@ -17,9 +17,10 @@ abstract class StrokeGraphics(agc: AffineGraphics): GeometryGraphics(agc) {
             return width
         }
 
-    override fun setDefaults() {
-        super.setDefaults()
+    fun setFullDefaults() {
+        setDefaults()
         width = 1.0
+        dashes(0.0)
     }
 
     ///////////////////////////////////////////////////////////////////////////

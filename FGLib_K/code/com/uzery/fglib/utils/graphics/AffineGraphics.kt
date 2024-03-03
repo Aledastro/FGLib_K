@@ -37,8 +37,9 @@ abstract class AffineGraphics {
 
     fun setFullDefaults(){
         setDefaults()
-        drawPOS = PointN.ZERO
+        stroke.setFullDefaults()
 
+        drawPOS = PointN.ZERO
         transform = AffineTransform.NEUTRAL
     }
     fun setDefaults() {
