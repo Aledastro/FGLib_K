@@ -10,14 +10,14 @@ import com.uzery.fglib.utils.math.geom.PointN
 import com.uzery.fglib.utils.math.geom.Shape
 import com.uzery.fglib.utils.math.geom.shape.FigureN
 
-abstract class GeometryGraphics(private val agc: AffineGraphics) {
+abstract class GeometryGraphics(protected val agc: AffineGraphics) {
     val transform
         get() = agc.transform
 
     var alpha = 1.0
     var font = FGFont.default_font
 
-    fun setDefaults() {
+    open fun setDefaults() {
         alpha = 1.0
         font = FGFont.default_font
     }
