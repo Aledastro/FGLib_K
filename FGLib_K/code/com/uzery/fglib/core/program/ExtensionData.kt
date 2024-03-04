@@ -26,8 +26,7 @@ class ExtensionData {
     /*val size: PointN
         get() = bounds.size*/ //todo
 
-    var transform: AffineTransform? = null //todo
-    var ch_transform: AffineTransform? = null //todo
+    var transform: AffineTransform? = null
 
 
     //for drawing
