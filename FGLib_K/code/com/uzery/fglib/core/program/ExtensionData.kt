@@ -13,21 +13,30 @@ class ExtensionData {
             return owner.data.full_transform*transform
         }
 
+    private val layout_pos: PointN
+        get() {
+            val s_pos = transform?.pos(pos) ?: pos
+
+            val owner = owner ?: return s_pos
+            val layoutP = (owner.data.size-size)*layout.value
+
+            return layoutP+s_pos
+        }
+
     internal val real_pos: PointN
         get() {
-            val owner = owner ?: return transform?.pos(pos) ?: pos
-
-            val transform = transform ?: return owner.data.real_pos+pos
-            return owner.data.real_pos+transform.pos(pos)
+            val owner = owner ?: return layout_pos
+            val ownerP = owner.data.real_pos
+            return ownerP+layout_pos
         }
 
     internal val render_pos
-        get() = pos+draw_pos
+        get() = layout_pos+draw_pos
 
     //for updating
     var pos = PointN.ZERO
     var bounds: Bounds? = null
-    var layout = FGLayout.BOTTOM_LEFT //todo
+    var layout = FGLayout.TOP_LEFT
 
     var size = PointN.ZERO
     //todo: get() = if (bounds != null) bounds.size else field
@@ -35,7 +44,6 @@ class ExtensionData {
     var transform: AffineTransform? = null
 
 
-    //for drawing
+    //delta for drawing
     var draw_pos = PointN.ZERO
-    var draw_size = PointN.ZERO
 }
