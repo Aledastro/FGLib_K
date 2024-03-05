@@ -17,7 +17,7 @@ abstract class Extension(vararg children: Extension) {
     fun mouseIn(): Boolean {
         //todo: size -> bounds
         if (data.size == PointN.ZERO) return false
-        return RectN(data.real_pos+data.pos, data.size).into(mouse.pos)
+        return RectN(data.real_pos, data.size).into(mouse.pos)
     }
 
     fun mouseAt(): Boolean {
@@ -149,7 +149,6 @@ abstract class Extension(vararg children: Extension) {
 
         real_children.forEach {
             it.data.owner = this
-            it.data.real_pos = data.real_pos+data.pos
             it.updateTasksWithChildren()
         }
 
