@@ -80,8 +80,8 @@ abstract class Extension(vararg children: Extension) {
         add(*children)
     }
 
-    open fun init() {}
-    open fun initAfter() {}
+    protected open fun init() {}
+    protected open fun initAfter() {}
 
     open fun update() {}
     open fun updateAfter() {}
