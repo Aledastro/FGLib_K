@@ -73,6 +73,8 @@ abstract class GameObject(var name: String = "temp") {
     fun addComponent(vararg component: ObjectComponent) {
         for (c in component) {
             when (c) {
+                is GroupComponent -> c.component.forEach { addComponent(it) }
+
                 is BoundsComponent -> addBounds(c.code, c.element)
 
                 is AbilityBox -> addAbility(c)
