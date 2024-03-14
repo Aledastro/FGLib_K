@@ -171,9 +171,13 @@ class Room(var pos: PointN, var size: PointN) {
         ) {
             val shape1 = sh1.shape() ?: return
             val shape2 = sh2.shape() ?: return
-            if (ShapeUtils.into(shape1.copy(o1.pos_with_owners), shape2.copy(o2.pos_with_owners))) {
-                o1.activate(InputAction(code, o2, "elements | ${sh1.name} ${sh2.name}"))
-            }
+            val copied1 = shape1.copy(o1.pos_with_owners)
+            val copied2 = shape2.copy(o2.pos_with_owners)
+
+            if (!ShapeUtils.into(copied1, copied2)) return
+            if (sh1.group != sh2.group) return
+
+            o1.activate(InputAction(code, o2, "elements | ${sh1.name} ${sh2.name}"))
         }
 
         for (blueObjID in list.indices) {
