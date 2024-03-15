@@ -51,6 +51,8 @@ object Platform {
         keyboard.update()
         char_keyboard.update()
         mouse.keys.update()
+
+        realisation.update()
     }
 
     var develop_mode = false

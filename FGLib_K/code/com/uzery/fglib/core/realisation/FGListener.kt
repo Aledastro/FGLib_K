@@ -8,4 +8,6 @@ abstract class FGListener {
     abstract val keyboard: KeyActivator<FGKey>
     abstract val char_keyboard: KeyActivator<Char>
     abstract val mouse: MouseActivator
+
+    abstract fun update()
 }
