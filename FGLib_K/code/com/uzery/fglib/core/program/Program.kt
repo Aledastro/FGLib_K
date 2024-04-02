@@ -1,5 +1,9 @@
 package com.uzery.fglib.core.program
 
+import com.uzery.fglib.utils.audio.AudioData
+import com.uzery.fglib.utils.data.file.TextData
+import com.uzery.fglib.utils.data.image.ImageData
+
 
 object Program {
     private val core = object: Extension() {}
@@ -11,6 +15,10 @@ object Program {
     }
 
     fun loop() {
+        ImageData.updatePaths()
+        TextData.updatePaths()
+        AudioData.updatePaths()
+
         core.updateTasksWithChildren()
         core.updateWithChildren()
         core.drawWithChildren(core.data.render_pos)
