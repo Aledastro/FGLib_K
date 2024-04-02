@@ -14,10 +14,18 @@ object Program {
         core.initWithChildren()
     }
 
-    fun loop() {
+    private fun updatePaths(){
         ImageData.updatePaths()
         TextData.updatePaths()
         AudioData.updatePaths()
+    }
+
+    init {
+        updatePaths()
+    }
+
+    fun loop() {
+        updatePaths()
 
         core.updateTasksWithChildren()
         core.updateWithChildren()
