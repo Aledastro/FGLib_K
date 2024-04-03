@@ -1,7 +1,7 @@
 package com.uzery.fglib.utils.data
 
+import com.uzery.fglib.utils.data.file.TextData
 import com.uzery.fglib.utils.math.FGUtils
-import java.io.File
 
 abstract class CollectDataClass {
     val paths = HashMap<String, String>()
@@ -17,7 +17,7 @@ abstract class CollectDataClass {
             last = FGUtils.subAfter(name, "|")
         }
 
-        return "$dir$local_path$last".replace("/", File.separator)
+        return "$dir$local_path$last".replace("/", TextData.separator)
     }
 
     fun updatePaths() {

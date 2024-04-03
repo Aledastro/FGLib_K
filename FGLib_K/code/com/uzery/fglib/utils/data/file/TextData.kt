@@ -8,6 +8,8 @@ import java.io.*
 import java.util.stream.Collectors
 
 object TextData: CollectDataClass() {
+    val separator: String = File.separator
+
     operator fun get(filename: String): ArrayList<String> {
         val rd = getReader(resolvePath(filename))
         val lines = rd.lines().collect(Collectors.toCollection { ArrayList() })
@@ -16,10 +18,17 @@ object TextData: CollectDataClass() {
     }
 
     fun write(filename: String, write: String, create_dirs: Boolean = false) {
-        if (create_dirs){
+        if (create_dirs) {
             val s = resolvePath(filename)
-            val file = File(s.substring(0, s.lastIndexOf("\\")))
-            file.mkdir()
+            val path = s.substring(0, s.lastIndexOf(separator))
+            val pathDirs = path.split(separator)
+
+            var current = ""
+            for (dir in pathDirs) {
+                current += "$dir$separator"
+                val file = File(current)
+                if (!file.exists()) file.mkdir()
+            }
         }
 
         val wr = getWriter(resolvePath(filename))
@@ -35,7 +44,7 @@ object TextData: CollectDataClass() {
         return File(resolvePath(filename)).exists()
     }
 
-    fun removeFile(filename: String){
+    fun removeFile(filename: String) {
         File(resolvePath(filename)).delete()
     }
 
