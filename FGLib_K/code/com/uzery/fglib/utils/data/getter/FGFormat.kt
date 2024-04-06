@@ -1,5 +1,6 @@
 package com.uzery.fglib.utils.data.getter
 
+import com.uzery.fglib.utils.data.debug.DebugData
 import com.uzery.fglib.utils.math.FGUtils
 
 object FGFormat {
@@ -13,7 +14,7 @@ object FGFormat {
         val collector = StringBuilder()
         val list = ArrayList<String>()
         var special = false
-        var adding = false
+        var adding = 0
         var waiting = false
 
         fun collect() {
@@ -34,31 +35,50 @@ object FGFormat {
                 collector.append(element)
             }
             when (element) {
-                '[' -> adding = true
+                '[' -> {
+                    adding++
+                    if (adding>1){
+                        collector.append(element)
+                    }
+                }
                 ']' -> {
+                    adding--
+                    if (adding < 0) throw DebugData.error("Wrong FGFormat: $input")
+
+                    if (adding != 0){
+                        collector.append(element)
+                        continue
+                    }
+
                     if (collector.isNotEmpty()) collect()
                     args.add(ArrayList(list))
                     list.clear()
-                    adding = false
                 }
 
                 ' ' -> {
-                    if (adding && !waiting) {
+                    if (adding>0 && !waiting) {
                         collector.append(element)
                     } else continue
                 }
 
                 ',' -> {
+                    if (adding == 0) throw DebugData.error("Wrong FGFormat: $input")
+                    if (adding!=1){
+                        collector.append(element)
+                        continue
+                    }
                     if (collector.isNotEmpty()) collect()
                     waiting = true
                 }
 
-                else -> if (adding) {
+                else -> if (adding>0) {
                     collector.append(element)
                     waiting = false
                 }
             }
         }
+        if (adding != 0) throw DebugData.error("Wrong FGFormat: $input")
+
         return Pair(name, args)
     }
 }
