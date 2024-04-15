@@ -5,6 +5,7 @@ import com.uzery.fglib.utils.graphics.data.FGColor
 import com.uzery.fglib.utils.graphics.data.FGFont
 import com.uzery.fglib.utils.graphics.data.FGFontPosture
 import com.uzery.fglib.utils.graphics.data.FGFontWeight
+import com.uzery.fglib.utils.math.TextUtils
 import com.uzery.fglib.utils.math.geom.PointN
 import com.uzery.fglib.utils.math.geom.Shape
 import com.uzery.fglib.utils.math.geom.shape.FigureN
@@ -38,7 +39,13 @@ abstract class GeometryGraphics(private val agc: AffineGraphics) {
         return graphics.text_size(text, font)
     }
 
-    fun text_size(text: String) = graphics.text_size(text, font)
+    fun text_size(text: String) = text_size(text, font)
+
+    fun splitText(text: String, width: Double, font: FGFont): ArrayList<String>{
+        return TextUtils.splitText(text, width) { text_size(it, font).X }
+    }
+
+    fun splitText(text: String, width: Double) = splitText(text, width, font)
 
     protected abstract fun rect0(pos: PointN, size: PointN, color: FGColor)
 
