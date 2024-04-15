@@ -6,16 +6,33 @@ object TextUtils {
         val res = ArrayList<String>()
         var now = ""
         var word = ""
-        for (ch in text) {
-            if (ch in sep) {
-                if (f(now+word) > width || now.isEmpty()) {
-                    res += now
-                    now = ""
-                }
-                word = ""
-            }
-            word += ch
+
+        fun endLine(){
+            if (now.isEmpty()) return
+
+            res.add(now)
+            now = ""
         }
+
+        fun endWord(){
+            if (f(now+word) > width || now.isEmpty()) {
+                endLine()
+            }
+
+            now += word
+            word = ""
+        }
+
+        for (ch in text) {
+            word += ch
+
+            if (ch in sep) endWord()
+            if (ch == '\n') endLine()
+        }
+
+        endWord()
+        endLine()
+
         return res
     }
 

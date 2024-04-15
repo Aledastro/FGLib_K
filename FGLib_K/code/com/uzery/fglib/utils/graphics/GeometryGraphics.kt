@@ -42,7 +42,9 @@ abstract class GeometryGraphics(private val agc: AffineGraphics) {
     fun text_size(text: String) = text_size(text, font)
 
     fun splitText(text: String, width: Double, font: FGFont): ArrayList<String>{
-        return TextUtils.splitText(text, width) { text_size(it, font).X }
+        return TextUtils.splitText(text, width) { stroke ->
+            text_size(stroke, font).X
+        }
     }
 
     fun splitText(text: String, width: Double) = splitText(text, width, font)
