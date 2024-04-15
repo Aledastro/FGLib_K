@@ -35,19 +35,17 @@ abstract class GeometryGraphics(private val agc: AffineGraphics) {
         font = FGFont(font.family, size, weight, posture)
     }
 
-    fun text_size(text: String, font: FGFont): PointN {
+    fun text_size(text: String, font: FGFont = this.font): PointN {
         return graphics.text_size(text, font)
     }
 
-    fun text_size(text: String) = text_size(text, font)
-
-    fun splitText(text: String, width: Double, font: FGFont): ArrayList<String>{
-        return TextUtils.splitText(text, width) { stroke ->
-            text_size(stroke, font).X
-        }
+    fun splitText(text: String, width: Double, font: FGFont = this.font): ArrayList<String>{
+        return TextUtils.splitText(text, width) { stroke -> text_size(stroke, font).X }
     }
 
-    fun splitText(text: String, width: Double) = splitText(text, width, font)
+    fun splitTextAndMerge(text: String, width: Double, font: FGFont = this.font): String {
+        return TextUtils.splitTextAndMerge(text, width) { stroke -> text_size(stroke, font).X }
+    }
 
     protected abstract fun rect0(pos: PointN, size: PointN, color: FGColor)
 
