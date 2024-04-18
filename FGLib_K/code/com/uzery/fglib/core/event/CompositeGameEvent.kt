@@ -21,7 +21,7 @@ open class CompositeGameEvent(vararg events: GameEvent): GameEvent() {
         }
     }
 
-    fun add(event: GameEvent) = events_list.add(event)
+    fun add(vararg event: GameEvent) = events_list.addAll(event)
 
 
     final override fun ready() = true

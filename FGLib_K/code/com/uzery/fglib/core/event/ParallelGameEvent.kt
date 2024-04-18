@@ -8,7 +8,7 @@ open class ParallelGameEvent(vararg events: GameEvent): GameEvent() {
 
     final override fun ends() = events_list.all { it.wasReadyAndFinished() }
 
-    fun add(event: GameEvent) = events_list.add(event)
+    fun add(vararg event: GameEvent) = events_list.addAll(event)
 
     init {
         onBirth {
