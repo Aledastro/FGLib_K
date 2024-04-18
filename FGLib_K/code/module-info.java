@@ -1,5 +1,6 @@
 module FGLib_K {
     requires transitive kotlin.stdlib;
+    requires java.desktop;
 
     /////////////////////////////////////////////////////////
 

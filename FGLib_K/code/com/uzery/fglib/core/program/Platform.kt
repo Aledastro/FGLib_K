@@ -5,6 +5,8 @@ import com.uzery.fglib.utils.data.debug.DebugData
 import com.uzery.fglib.utils.math.geom.PointN
 import com.uzery.fglib.utils.math.geom.shape.RectN
 import com.uzery.fglib.utils.math.num.IntI
+import java.awt.Toolkit
+import java.awt.datatransfer.DataFlavor
 
 object Platform {
     private val program
@@ -20,6 +22,10 @@ object Platform {
         get() = realisation.listener.char_keyboard
     val mouse
         get() = realisation.listener.mouse
+
+    val clipboard = FGClipboard(Toolkit.getDefaultToolkit().systemClipboard)
+    val clipboard_value
+        get() = clipboard.string
 
     var scale: Int = 1
         get() = graphics.scale
