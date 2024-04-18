@@ -24,8 +24,11 @@ object Platform {
         get() = realisation.listener.mouse
 
     val clipboard = FGClipboard(Toolkit.getDefaultToolkit().systemClipboard)
-    val clipboard_value
+    var clipboard_value
         get() = clipboard.string
+        set(value) {
+            clipboard.string = value
+        }
 
     var scale: Int = 1
         get() = graphics.scale

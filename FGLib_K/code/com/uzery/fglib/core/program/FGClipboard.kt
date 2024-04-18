@@ -2,10 +2,13 @@ package com.uzery.fglib.core.program
 
 import java.awt.datatransfer.Clipboard
 import java.awt.datatransfer.DataFlavor
+import java.awt.datatransfer.StringSelection
+import java.awt.datatransfer.Transferable
 
 class FGClipboard(private val clipboard: Clipboard) {
-    val string: String?
+    var string: String?
         get() = getContent(DataFlavor.stringFlavor) as String?
+        set(value) = setContent(StringSelection(value))
 
     private fun getContent(flavor: DataFlavor): Any?{
         val content = clipboard.getContents(null)
@@ -15,5 +18,9 @@ class FGClipboard(private val clipboard: Clipboard) {
         }
 
         return null
+    }
+
+    private fun setContent(value: Transferable) {
+        clipboard.setContents(value, null)
     }
 }
