@@ -1,6 +1,6 @@
 package com.uzery.fglib.core.event
 
-open class ParallelGameEvent(vararg events: GameEvent): GameEvent() {
+open class ParallelEvent(vararg events: GameEvent): GameEvent() {
 
     private val events_list = ArrayList(events.toList())
 

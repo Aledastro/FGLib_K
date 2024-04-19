@@ -3,7 +3,7 @@ package com.uzery.fglib.core.event
 import com.uzery.fglib.utils.data.debug.DebugData
 import java.util.*
 
-open class CompositeGameEvent(vararg events: GameEvent): GameEvent() {
+open class CompositeEvent(vararg events: GameEvent): GameEvent() {
     private var current: GameEvent? = null
 
     private val events_list = LinkedList(events.toList())
