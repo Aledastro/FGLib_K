@@ -5,8 +5,9 @@ import com.uzery.fglib.utils.math.num.IntI
 
 abstract class FGMultiImage(val origin: FGImage): FGImage(origin.source) {
     val data = HashMap<IntI, FGImage>()
+    protected var info = ""
     fun get(pos: IntI): FGImage {
-        return data[pos] ?: throw DebugData.error("illegal get from ${origin.name} $pos")
+        return data[pos] ?: throw DebugData.error("illegal get from ${origin.name} $pos $info")
     }
 
     abstract fun from(pos: IntI): FGImage
