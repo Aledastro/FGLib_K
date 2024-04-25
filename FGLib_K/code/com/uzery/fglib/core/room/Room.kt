@@ -9,6 +9,9 @@ import com.uzery.fglib.utils.data.file.ConstL
 import com.uzery.fglib.utils.data.getter.value.PosValue
 import com.uzery.fglib.utils.data.getter.value.SizeValue
 import com.uzery.fglib.utils.math.BoundsUtils
+import com.uzery.fglib.utils.math.CollisionUtils
+import com.uzery.fglib.utils.math.CollisionUtils.MAX_MOVE_K
+import com.uzery.fglib.utils.math.CollisionUtils.SUPER_K
 import com.uzery.fglib.utils.math.FGUtils
 import com.uzery.fglib.utils.math.ShapeUtils
 import com.uzery.fglib.utils.math.geom.PointN
@@ -130,7 +133,7 @@ class Room(var pos: PointN, var size: PointN) {
             if (move_bs.empty) continue
 
             fun maxMove(move_p: PointN): Double {
-                if (red_bounds.isEmpty()) return 1.0
+                if (red_bounds.isEmpty()) return MAX_MOVE_K
 
                 return red_bounds.indices.minOf {
                     BoundsUtils.maxMoveOld(red_bounds[it], move_bs, pos[it], obj.pos_with_owners, move_p)
@@ -138,13 +141,15 @@ class Room(var pos: PointN, var size: PointN) {
             }
 
             fun move(move_p: PointN): Double {
-                val mm = maxMove(move_p)
-                obj.stats.POS += move_p*mm*(1-ConstL.LITTLE)
+                if (move_p.length()<ConstL.LITTLE) return MAX_MOVE_K
+
+                val mm = maxMove(move_p*SUPER_K)
+                obj.stats.POS += move_p*mm
                 return mm
             }
 
             val min_d = move(obj.stats.nPOS)
-            obj.stats.fly = min_d == 1.0
+            obj.stats.fly = min_d == MAX_MOVE_K
             val np = obj.stats.nPOS*(1-min_d)
 
             for (i in 0 until np.dim) move(np.separate(i))
