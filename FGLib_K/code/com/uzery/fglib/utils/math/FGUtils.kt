@@ -2,7 +2,6 @@ package com.uzery.fglib.utils.math
 
 import com.uzery.fglib.utils.data.getter.ClassGetter
 import com.uzery.fglib.utils.math.geom.PointN
-import java.io.File
 import java.time.LocalDate
 import java.time.LocalTime
 

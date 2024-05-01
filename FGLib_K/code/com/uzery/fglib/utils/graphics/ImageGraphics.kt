@@ -1,6 +1,5 @@
 package com.uzery.fglib.utils.graphics
 
-import com.uzery.fglib.core.program.Platform
 import com.uzery.fglib.utils.data.image.FGImage
 import com.uzery.fglib.utils.data.image.ImageUtils
 import com.uzery.fglib.utils.math.geom.PointN

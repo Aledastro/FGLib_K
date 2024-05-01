@@ -6,7 +6,6 @@ import com.uzery.fglib.utils.math.geom.PointN
 import com.uzery.fglib.utils.math.geom.shape.RectN
 import com.uzery.fglib.utils.math.num.IntI
 import java.awt.Toolkit
-import java.awt.datatransfer.DataFlavor
 
 object Platform {
     private val program

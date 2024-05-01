@@ -39,7 +39,7 @@ open class FigureN(val fields: List<FieldN>): Shape() {
         val dim = fields[0].dim
         val current_fields = ArrayList<FieldN>()
         current_fields.addAll(fields)
-        //todo it don't work well for large dim>3
+        //todo it doesn't work well for large dim>3
         for (d in 0 until dim-1) {
             val next_fields = ArrayList<FieldN>()
 
