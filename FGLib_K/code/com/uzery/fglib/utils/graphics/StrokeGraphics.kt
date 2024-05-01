@@ -11,7 +11,7 @@ abstract class StrokeGraphics(agc: AffineGraphics): GeometryGraphics(agc) {
 
 
     var width = 1.0
-        set(value){
+        set(value) {
             val width = transform.t_size(PointN(value)).X
             setWidth0(width)
             field = value

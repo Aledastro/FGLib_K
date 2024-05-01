@@ -7,13 +7,14 @@ object TextUtils {
         var now = ""
         var word = ""
 
-        fun endLine(){
+        fun endLine() {
             if (now.isEmpty()) return
 
             res.add(now)
             now = ""
         }
-        fun endWord(){
+
+        fun endWord() {
             if (f(now+word) > width || now.isEmpty()) endLine()
 
             now += word
@@ -35,11 +36,11 @@ object TextUtils {
     fun splitTextAndMerge(text: String, width: Double, f: (String) -> Double = default_f): String {
         val data = splitText(text, width, f)
         var res = ""
-        for (s in data){
+        for (s in data) {
             res += s+"\n"
         }
         return res
     }
 
-    private val default_f: (String)->Double = { it.length.toDouble() }
+    private val default_f: (String) -> Double = { it.length.toDouble() }
 }

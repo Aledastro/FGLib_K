@@ -10,8 +10,8 @@ class FGClipboard(private val clipboard: Clipboard) {
         get() = getContent(DataFlavor.stringFlavor) as String?
         set(value) = setContent(StringSelection(value))
 
-    private fun getContent(flavor: DataFlavor): Any?{
-        val content = clipboard.getContents(null)?: return null
+    private fun getContent(flavor: DataFlavor): Any? {
+        val content = clipboard.getContents(null) ?: return null
 
         if (content.isDataFlavorSupported(flavor)) {
             return content.getTransferData(flavor)

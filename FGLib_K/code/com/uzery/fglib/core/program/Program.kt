@@ -14,7 +14,7 @@ object Program {
         core.initWithChildren()
     }
 
-    private fun updatePaths(){
+    private fun updatePaths() {
         ImageData.updatePaths()
         TextData.updatePaths()
         AudioData.updatePaths()

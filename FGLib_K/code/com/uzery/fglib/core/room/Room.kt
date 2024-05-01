@@ -139,7 +139,7 @@ class Room(var pos: PointN, var size: PointN) {
             }
 
             fun move(move_p: PointN): Double {
-                if (move_p.length()<ConstL.LITTLE) return MAX_MOVE_K
+                if (move_p.length() < ConstL.LITTLE) return MAX_MOVE_K
 
                 val mm = maxMove(move_p*SUPER_K)
                 obj.stats.POS += move_p*mm

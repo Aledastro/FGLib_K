@@ -5,6 +5,7 @@ import com.uzery.fglib.utils.math.FGUtils
 
 abstract class CollectDataClass {
     val paths = HashMap<String, String>()
+
     //private val real_paths = HashMap<String, String>()
     var dir = ""
     //private var real_dir = ""

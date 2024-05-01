@@ -20,6 +20,7 @@ abstract class AffineGraphics {
     ////////////////////////////////////////////////////////////////////////////////////////
 
     val default_transform: AffineTransform
+
     init {
         val default_t: (PointN) -> PointN = {
             var x = (it-drawPOS*layer.z)*scale
@@ -35,7 +36,7 @@ abstract class AffineGraphics {
 
     ////////////////////////////////////////////////////////////////////////////////////////
 
-    fun setFullDefaults(){
+    fun setFullDefaults() {
         setDefaults()
         stroke.setFullDefaults()
 
@@ -43,6 +44,7 @@ abstract class AffineGraphics {
         transform = AffineTransform.NEUTRAL
         global_alpha = 1.0
     }
+
     fun setDefaults() {
         alpha = 1.0
         view_scale = 1.0

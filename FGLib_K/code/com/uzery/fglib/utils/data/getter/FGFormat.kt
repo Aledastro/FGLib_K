@@ -37,15 +37,16 @@ object FGFormat {
             when (element) {
                 '[' -> {
                     adding++
-                    if (adding>1){
+                    if (adding > 1) {
                         collector.append(element)
                     }
                 }
+
                 ']' -> {
                     adding--
                     if (adding < 0) throw DebugData.error("Wrong FGFormat: $input")
 
-                    if (adding != 0){
+                    if (adding != 0) {
                         collector.append(element)
                         continue
                     }
@@ -56,14 +57,14 @@ object FGFormat {
                 }
 
                 ' ' -> {
-                    if (adding>0 && !waiting) {
+                    if (adding > 0 && !waiting) {
                         collector.append(element)
                     } else continue
                 }
 
                 ',' -> {
                     if (adding == 0) throw DebugData.error("Wrong FGFormat: $input")
-                    if (adding!=1){
+                    if (adding != 1) {
                         collector.append(element)
                         continue
                     }
@@ -71,7 +72,7 @@ object FGFormat {
                     waiting = true
                 }
 
-                else -> if (adding>0) {
+                else -> if (adding > 0) {
                     collector.append(element)
                     waiting = false
                 }

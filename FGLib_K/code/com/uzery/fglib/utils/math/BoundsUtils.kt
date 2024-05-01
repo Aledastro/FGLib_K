@@ -13,7 +13,12 @@ object BoundsUtils {
 
         val end_pos = start_pos+move_pos
 
-        if (!CollisionUtils.intoX(r_stay.copy(stay_pos), r_move.copy(start_pos), r_move.copy(end_pos))) return MAX_MOVE_K
+        if (!CollisionUtils.intoX(
+                r_stay.copy(stay_pos),
+                r_move.copy(start_pos),
+                r_move.copy(end_pos)
+            )
+        ) return MAX_MOVE_K
 
         return stay.elements.minOf { stayE ->
             move.elements.minOf { moveE ->
