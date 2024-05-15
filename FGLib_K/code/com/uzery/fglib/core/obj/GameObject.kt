@@ -140,6 +140,20 @@ abstract class GameObject(var name: String = "temp") {
         )
     }
 
+    fun addVisual(layer: DrawLayer, sort_pos: PointN, vis: (agc: AffineGraphics, draw_pos: PointN) -> Unit) {
+        visuals.add(
+            object: LayerVisualiser(layer) {
+                override fun draw(draw_pos: PointN) {
+                    vis(agc, draw_pos)
+                }
+
+                override fun sortPOS(): PointN {
+                    return sort_pos
+                }
+            }
+        )
+    }
+
     fun onInit(f: () -> Unit) {
         onInit.add(f)
     }
