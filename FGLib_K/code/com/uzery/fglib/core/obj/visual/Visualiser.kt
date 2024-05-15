@@ -18,6 +18,8 @@ interface Visualiser: ObjectComponent {
         draw(draw_pos)
     }
 
+    fun sortPOS(): PointN? = null
+
     val main: RectN
     val agc: AffineGraphics
         get() = Platform.graphics

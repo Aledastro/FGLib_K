@@ -92,8 +92,13 @@ class Room(var pos: PointN, var size: PointN) {
         ) {
             vis.addAll(obj.visuals)
 
-            obj.visuals.forEach { pos_map[it] = obj.pos_with_owners+obj.main_owner.stats.roomPOS }
-            obj.visuals.forEach { sort_map[it] = pos_map[it]!!+obj.stats.sortPOS }
+            obj.visuals.forEach { v ->
+                pos_map[v] = obj.pos_with_owners+obj.main_owner.stats.roomPOS
+            }
+            obj.visuals.forEach { v ->
+                val sort_p = v.sortPOS() ?: obj.stats.sortPOS
+                sort_map[v] = pos_map[v]!!+sort_p
+            }
 
             obj.followers.forEach { addObjVis(vis, pos_map, sort_map, it) }
         }
