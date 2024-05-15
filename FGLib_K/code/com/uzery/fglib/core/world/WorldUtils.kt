@@ -3,11 +3,13 @@ package com.uzery.fglib.core.world
 import com.uzery.fglib.core.obj.DrawLayer
 import com.uzery.fglib.core.obj.GameObject
 import com.uzery.fglib.core.obj.bounds.BoundsBox
+import com.uzery.fglib.core.obj.bounds.BoundsElement
 import com.uzery.fglib.core.program.Platform.graphics
 import com.uzery.fglib.core.room.Room
 import com.uzery.fglib.utils.data.debug.DebugData
 import com.uzery.fglib.utils.data.file.TextData
 import com.uzery.fglib.utils.graphics.data.FGColor
+import com.uzery.fglib.utils.graphics.data.FGFont
 import com.uzery.fglib.utils.graphics.data.FGFontWeight
 import com.uzery.fglib.utils.math.FGUtils
 import com.uzery.fglib.utils.math.FGUtils.getPosFrom
@@ -131,6 +133,7 @@ object WorldUtils {
         )
         val bs = o.bounds[color_id]
         if (bs.empty) return
+
         graphics.stroke.width = 1.0
         for (el in bs.elements) {
             val shape = el.shape() ?: continue
@@ -142,8 +145,15 @@ object WorldUtils {
                     colors_h[color_id].transparent(0.8)
                 )
 
-            graphics.fill.draw(pos+o.pos_with_owners, shape, colors[color_id].transparent(0.1))
-            graphics.stroke.draw(pos+o.pos_with_owners, shape, colors[color_id].transparent(0.6))
+            val draw_pos = pos+o.pos_with_owners
+
+            graphics.fill.draw(draw_pos, shape, colors[color_id].transparent(0.1))
+            graphics.stroke.draw(draw_pos, shape, colors[color_id].transparent(0.6))
+
+            if (el.name != BoundsElement.DEFAULT_NAME) {
+                graphics.fill.font = FGFont("Arial", 3.0)
+                graphics.fill.text(draw_pos+shape.L+PointN(0, -2), el.name, colors[color_id].transparent(0.6))
+            }
         }
     }
 

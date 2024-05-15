@@ -14,6 +14,6 @@ data class BoundsElement(var group: String, val name: String, val shape: () -> S
 
     companion object {
         private const val DEFAULT_GROUP = "global"
-        private const val DEFAULT_NAME = "unnamed"
+        const val DEFAULT_NAME = "unnamed"
     }
 }
