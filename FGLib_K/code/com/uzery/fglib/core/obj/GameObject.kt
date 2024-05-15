@@ -147,9 +147,8 @@ abstract class GameObject(var name: String = "temp") {
                     vis(agc, draw_pos)
                 }
 
-                override fun sortPOS(): PointN {
-                    return sort_pos
-                }
+                override val sortPOS: PointN
+                    get() = sort_pos
             }
         )
     }

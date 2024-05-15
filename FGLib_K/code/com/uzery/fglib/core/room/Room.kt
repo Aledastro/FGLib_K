@@ -96,7 +96,7 @@ class Room(var pos: PointN, var size: PointN) {
                 pos_map[v] = obj.pos_with_owners+obj.main_owner.stats.roomPOS
             }
             obj.visuals.forEach { v ->
-                val sort_p = v.sortPOS() ?: obj.stats.sortPOS
+                val sort_p = v.sortPOS ?: obj.stats.sortPOS
                 sort_map[v] = pos_map[v]!!+sort_p
             }
 
