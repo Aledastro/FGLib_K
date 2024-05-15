@@ -253,6 +253,21 @@ class Room(var pos: PointN, var size: PointN) {
                 }
             }
         }
+
+        for (obj1 in list) {
+            val bounds1 = obj1.bounds.blue
+            if (bounds1.empty) continue
+            for (obj2 in list) {
+                if (obj1 == obj2) continue
+                val bounds2 = obj2.bounds.blue
+                if (bounds2.empty) continue
+                bounds2.elements.forEach { element2 ->
+                    bounds1.elements.forEach { element1 ->
+                        setActivate(obj1, element1, obj2, element2, "#INTERSECT")
+                    }
+                }
+            }
+        }
     }
 
     override fun toString(): String {
