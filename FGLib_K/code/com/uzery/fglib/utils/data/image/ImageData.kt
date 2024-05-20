@@ -1,5 +1,7 @@
 package com.uzery.fglib.utils.data.image
 
+import com.uzery.fglib.core.program.Platform
+import com.uzery.fglib.core.program.Platform.packager
 import com.uzery.fglib.utils.data.CollectDataClass
 import com.uzery.fglib.utils.data.debug.DebugData
 import com.uzery.fglib.utils.math.num.IntI
@@ -101,5 +103,9 @@ object ImageData: CollectDataClass() {
 
     operator fun get(name: String, pos: IntI, effects: List<String>): FGImage {
         return get(name, pos, *effects.toTypedArray())
+    }
+
+    fun write(image: FGImage, path: String) {
+        packager.image.writeImage(image.source, resolvePath(path))
     }
 }
