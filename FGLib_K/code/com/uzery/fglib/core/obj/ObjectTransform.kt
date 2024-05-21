@@ -3,6 +3,9 @@ package com.uzery.fglib.core.obj
 import com.uzery.fglib.utils.math.geom.PointN
 
 abstract class ObjectTransform(val obj: GameObject) {
+    val obj_builders = ArrayList<GameObject>()
+    var obj_builders_id = -1
+
     open val move: (d_pos: PointN) -> Unit = { d_pos ->
         pos += d_pos
     }
