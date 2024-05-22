@@ -68,7 +68,17 @@ abstract class GameObject(var name: String = "temp") {
     var object_time = 0
         private set
 
-    open val transform: ObjectTransform? = null
+    val transform: ObjectTransform?
+        get() {
+            if (transforms.isEmpty()) return null
+            return transforms[transformID.coerceIn(transforms.indices)]
+        }
+    val transforms = ArrayList<ObjectTransform>()
+    var transformID = -1
+
+    fun addTransform(vararg transform: ObjectTransform) {
+        transforms.addAll(transform.toList())
+    }
 
     fun addComponent(vararg component: ObjectComponent) {
         for (c in component) {
