@@ -1,7 +1,7 @@
 package com.uzery.fglib.utils.math.matrix
 
 import com.uzery.fglib.utils.data.debug.DebugData
-import com.uzery.fglib.utils.math.MathUtils
+import com.uzery.fglib.utils.MathUtils
 import com.uzery.fglib.utils.math.geom.PointN
 import kotlin.math.abs
 

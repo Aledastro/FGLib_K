@@ -1,4 +1,4 @@
-package com.uzery.fglib.utils.math
+package com.uzery.fglib.utils
 
 object TextUtils {
     fun splitText(text: String, width: Double, f: (String) -> Double = default_f): ArrayList<String> {

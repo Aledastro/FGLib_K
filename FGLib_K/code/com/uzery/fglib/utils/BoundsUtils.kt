@@ -1,7 +1,7 @@
-package com.uzery.fglib.utils.math
+package com.uzery.fglib.utils
 
 import com.uzery.fglib.core.obj.bounds.Bounds
-import com.uzery.fglib.utils.math.CollisionUtils.MAX_MOVE_K
+import com.uzery.fglib.utils.CollisionUtils.MAX_MOVE_K
 import com.uzery.fglib.utils.math.geom.PointN
 
 object BoundsUtils {

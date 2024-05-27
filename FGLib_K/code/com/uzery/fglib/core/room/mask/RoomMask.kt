@@ -3,6 +3,7 @@ package com.uzery.fglib.core.room.mask
 import com.uzery.fglib.core.obj.GameObject
 import com.uzery.fglib.core.room.Room
 import com.uzery.fglib.utils.data.debug.DebugData
+import com.uzery.fglib.utils.data.file.ConstL
 import com.uzery.fglib.utils.data.getter.AbstractClassGetter
 
 data class RoomMask(private val actions: ArrayList<RoomChangeAction> = ArrayList()) {
@@ -99,12 +100,18 @@ data class RoomMask(private val actions: ArrayList<RoomChangeAction> = ArrayList
         return actions.isEmpty()
     }
 
-    override fun toString(): String {
-        //todo \t\t remove
-        if (isEmpty()) return "\t\tmask[]"
+    fun asMaskObject(): String {
+        if (isEmpty()) return "mask[]"
 
         var s = ""
-        actions.forEach { s += "\t\t\t$it\n" }
-        return "\t\tmask[\n$s\t\t]"
+        actions.forEach { s += "\t$it\n" }
+        return "mask[\n$s]"
+    }
+
+    override fun toString(): String {
+        var res = ConstL.FILES_COMMENT
+
+        actions.forEach { res += "$it\n" }
+        return res
     }
 }

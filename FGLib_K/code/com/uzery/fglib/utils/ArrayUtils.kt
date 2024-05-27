@@ -1,4 +1,4 @@
-package com.uzery.fglib.utils.math
+package com.uzery.fglib.utils
 
 object ArrayUtils {
     inline fun <reified T> toArray(vararg xs: T): Array<T> = Array(xs.size) { i -> xs[i] }

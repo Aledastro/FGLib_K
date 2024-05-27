@@ -1,7 +1,7 @@
 package com.uzery.fglib.core.obj.ability
 
 import com.uzery.fglib.core.obj.GameObject
-import com.uzery.fglib.utils.math.FGUtils
+import com.uzery.fglib.utils.FGUtils
 import java.util.*
 
 data class InputAction(val code: String, val prime: GameObject, private val full_info: String = "no_info") {

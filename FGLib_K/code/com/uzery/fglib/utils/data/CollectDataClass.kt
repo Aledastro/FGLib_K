@@ -1,7 +1,7 @@
 package com.uzery.fglib.utils.data
 
 import com.uzery.fglib.utils.data.file.TextData
-import com.uzery.fglib.utils.math.FGUtils
+import com.uzery.fglib.utils.FGUtils
 
 abstract class CollectDataClass {
     val paths = HashMap<String, String>()

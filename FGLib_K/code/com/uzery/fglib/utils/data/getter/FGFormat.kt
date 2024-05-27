@@ -1,7 +1,7 @@
 package com.uzery.fglib.utils.data.getter
 
 import com.uzery.fglib.utils.data.debug.DebugData
-import com.uzery.fglib.utils.math.FGUtils
+import com.uzery.fglib.utils.FGUtils
 
 object FGFormat {
     operator fun get(input: String): Pair<String, ArrayList<ArrayList<String>>> {

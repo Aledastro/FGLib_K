@@ -11,8 +11,8 @@ import com.uzery.fglib.utils.data.file.TextData
 import com.uzery.fglib.utils.graphics.data.FGColor
 import com.uzery.fglib.utils.graphics.data.FGFont
 import com.uzery.fglib.utils.graphics.data.FGFontWeight
-import com.uzery.fglib.utils.math.FGUtils
-import com.uzery.fglib.utils.math.FGUtils.getPosFrom
+import com.uzery.fglib.utils.FGUtils
+import com.uzery.fglib.utils.FGUtils.getPosFrom
 import com.uzery.fglib.utils.math.geom.PointN
 import java.util.*
 import kotlin.math.PI

@@ -1,6 +1,6 @@
 package com.uzery.fglib.utils.data.file
 
-import com.uzery.fglib.utils.math.FGUtils
+import com.uzery.fglib.utils.FGUtils
 
 object ConstL {
     var RUN_JAR = false

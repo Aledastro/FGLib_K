@@ -26,6 +26,8 @@ module FGLib_K {
 
     /////////////////////////////////////////////////////////
 
+    exports com.uzery.fglib.utils;
+
     exports com.uzery.fglib.utils.audio;
 
     exports com.uzery.fglib.utils.data.debug;
@@ -41,7 +43,6 @@ module FGLib_K {
     exports com.uzery.fglib.utils.input;
     exports com.uzery.fglib.utils.input.data;
 
-    exports com.uzery.fglib.utils.math;
     exports com.uzery.fglib.utils.math.geom;
     exports com.uzery.fglib.utils.math.geom.shape;
     exports com.uzery.fglib.utils.math.matrix;

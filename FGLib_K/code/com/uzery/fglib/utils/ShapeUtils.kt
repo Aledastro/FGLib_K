@@ -1,4 +1,4 @@
-package com.uzery.fglib.utils.math
+package com.uzery.fglib.utils
 
 import com.uzery.fglib.utils.data.debug.DebugData
 import com.uzery.fglib.utils.math.geom.PointN
