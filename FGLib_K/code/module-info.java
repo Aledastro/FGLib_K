@@ -20,6 +20,7 @@ module FGLib_K {
     exports com.uzery.fglib.core.realisation;
 
     exports com.uzery.fglib.core.room;
+    exports com.uzery.fglib.core.room.mask;
 
     exports com.uzery.fglib.core.world;
 
