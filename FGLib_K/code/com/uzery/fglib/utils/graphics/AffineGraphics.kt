@@ -43,6 +43,7 @@ abstract class AffineGraphics {
         drawPOS = PointN.ZERO
         transform = AffineTransform.NEUTRAL
         global_alpha = 1.0
+        global_view_scale = 1.0
     }
 
     fun setDefaults() {
