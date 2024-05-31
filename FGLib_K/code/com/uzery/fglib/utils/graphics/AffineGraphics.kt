@@ -7,14 +7,16 @@ import com.uzery.fglib.utils.math.geom.PointN
 abstract class AffineGraphics {
     var global_alpha = 1.0
     var alpha = 1.0
+
     var view_scale = 1.0
+
+    abstract var scale: Int
+    abstract var global_view_scale: Double
+
     var drawPOS = PointN.ZERO
     var layer = DrawLayer.CAMERA_OFF
     var transform = AffineTransform.NEUTRAL
 
-    abstract var scale: Int
-
-    abstract var global_view_scale: Double
     var whole_draw = true
 
     ////////////////////////////////////////////////////////////////////////////////////////

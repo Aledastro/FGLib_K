@@ -107,8 +107,9 @@ abstract class Extension(vararg children: Extension) {
         val toRemove = new_children.filter { (_, b) -> !b }.keys
         new_children.clear()
 
-        real_children.addAll(toAdd)
         real_children.removeAll(toRemove)
+        real_children.removeAll(toAdd)
+        real_children.addAll(toAdd)
 
         children.clear()
         children.addAll(real_children)
