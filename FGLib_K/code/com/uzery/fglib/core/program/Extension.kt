@@ -9,7 +9,7 @@ abstract class Extension(vararg children: Extension) {
     val children = ArrayList<Extension>()
 
     private val real_children = ArrayList<Extension>()
-    private val new_children = HashMap<Extension, Boolean>()
+    private val new_children = ArrayList<Pair<Extension, Boolean>>()
 
     val stats = ExtensionData()
 
@@ -66,11 +66,11 @@ abstract class Extension(vararg children: Extension) {
     open fun active() = MODE.SHOW
 
     fun add(vararg children: Extension) {
-        children.forEach { new_children[it] = true }
+        children.forEach { new_children.add(Pair(it, true)) }
     }
 
     fun remove(vararg children: Extension) {
-        children.forEach { new_children[it] = false }
+        children.forEach { new_children.add(Pair(it, false)) }
     }
 
     fun clearChildren() = remove(*real_children.toTypedArray())
@@ -103,12 +103,24 @@ abstract class Extension(vararg children: Extension) {
     }
 
     private fun modify() {
-        val toAdd = new_children.filter { (_, b) -> b }.keys
-        val toRemove = new_children.filter { (_, b) -> !b }.keys
+        val toAdd = ArrayList<Extension>()
+        val toRemove = ArrayList<Extension>()
+
+        new_children.forEach { pair ->
+            val e = pair.first
+            val isAdd = pair.second
+
+            toAdd.remove(e)
+            toRemove.remove(e)
+
+            if (isAdd) toAdd.add(e)
+            else toRemove.add(e)
+        }
+
         new_children.clear()
 
-        real_children.removeAll(toRemove)
-        real_children.removeAll(toAdd)
+        real_children.removeAll(toRemove.toSet())
+        real_children.removeAll(toAdd.toSet())
         real_children.addAll(toAdd)
 
         children.clear()
