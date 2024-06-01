@@ -10,7 +10,7 @@ class ExtensionData {
         get() {
             val transform = transform ?: AffineTransform.NEUTRAL
             val owner = owner ?: return transform
-            return owner.data.full_transform*transform
+            return owner.stats.full_transform*transform
         }
 
     private val layout_pos: PointN
@@ -18,7 +18,7 @@ class ExtensionData {
             val s_pos = transform?.pos(pos) ?: pos
 
             val owner = owner ?: return s_pos
-            val layoutP = (owner.data.size-size)*layout.value
+            val layoutP = (owner.stats.size-size)*layout.value
 
             return layoutP+s_pos
         }
@@ -26,7 +26,7 @@ class ExtensionData {
     internal val real_pos: PointN
         get() {
             val owner = owner ?: return layout_pos
-            val ownerP = owner.data.real_pos
+            val ownerP = owner.stats.real_pos
             return ownerP+layout_pos
         }
 

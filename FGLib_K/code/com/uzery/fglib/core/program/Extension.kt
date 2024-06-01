@@ -11,12 +11,12 @@ abstract class Extension(vararg children: Extension) {
     private val real_children = ArrayList<Extension>()
     private val new_children = HashMap<Extension, Boolean>()
 
-    val data = ExtensionData()
+    val stats = ExtensionData()
 
     fun mouseIn(): Boolean {
         //todo: size -> bounds
-        if (data.size == PointN.ZERO) return false
-        return RectN(data.real_pos, data.size).into(mouse.pos)
+        if (stats.size == PointN.ZERO) return false
+        return RectN(stats.real_pos, stats.size).into(mouse.pos)
     }
 
     fun mouseAt(): Boolean {
@@ -128,14 +128,14 @@ abstract class Extension(vararg children: Extension) {
     internal fun drawWithChildren(pos: PointN) {
         fun reset() {
             graphics.setFullDefaults()
-            graphics.transform = data.full_transform*graphics.default_transform
+            graphics.transform = stats.full_transform*graphics.default_transform
         }
         reset()
         draw(pos)
 
         real_children.forEach { e ->
             if (e.mode.draw && e.active().draw) {
-                e.drawWithChildren(pos+e.data.render_pos)
+                e.drawWithChildren(pos+e.stats.render_pos)
             }
         }
 
@@ -150,7 +150,7 @@ abstract class Extension(vararg children: Extension) {
         onBackGround()
 
         real_children.forEach {
-            it.data.owner = this
+            it.stats.owner = this
             it.updateTasksWithChildren()
         }
 

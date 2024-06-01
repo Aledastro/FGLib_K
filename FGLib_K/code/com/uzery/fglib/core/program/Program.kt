@@ -29,7 +29,7 @@ object Program {
 
         core.updateTasksWithChildren()
         core.updateWithChildren()
-        core.drawWithChildren(core.data.render_pos)
+        core.drawWithChildren(core.stats.render_pos)
 
         Platform.update()
         program_time++
