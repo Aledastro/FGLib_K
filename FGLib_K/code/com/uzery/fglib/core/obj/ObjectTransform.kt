@@ -25,19 +25,19 @@ abstract class ObjectTransform(val obj: GameObject) {
 
     var pos = PointN.ZERO
         get() = obj.stats.POS
-        private set(value) {
+        set(value) {
             obj.stats.POS = value
             field = value
         }
     var size = PointN.ZERO
         get() = obj.stats.SIZE
-        private set(value) {
+        set(value) {
             obj.stats.SIZE = value
             field = value
         }
     var alpha = 0.0
         get() = obj.stats.ALPHA
-        private set(value) {
+        set(value) {
             obj.stats.ALPHA = value
             field = value
         }
