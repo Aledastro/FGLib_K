@@ -9,6 +9,7 @@ import com.uzery.fglib.utils.math.solve.MathSolveUtils
 
 abstract class ClassGetter<Type>: AbstractClassGetter<Type>() {
     protected var no_info = false
+        private set
     private val map: ArrayList<Pair<StringN, () -> Type>> = ArrayList()
 
     final override fun entries_size(): Int {
@@ -16,8 +17,10 @@ abstract class ClassGetter<Type>: AbstractClassGetter<Type>() {
     }
 
     final override fun getEntry(id: Int): () -> Type {
-        no_info = true
-        return map[id].second
+        return {
+            no_info = true
+            map[id].second()
+        }
     }
 
     final override fun getEntryName(id: Int): StringN {
@@ -51,10 +54,12 @@ abstract class ClassGetter<Type>: AbstractClassGetter<Type>() {
     }
 
     override fun getMark(name: String, args: ArrayList<ArrayList<String>>): () -> Type {
-        input = args
-        in_id = 0
-        no_info = false
-        return map.first { it.first == StringN(name, args.size) }.second
+        return {
+            input = args
+            in_id = 0
+            no_info = false
+            map.first { it.first == StringN(name, args.size) }.second()
+        }
     }
 
 
