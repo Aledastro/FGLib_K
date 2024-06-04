@@ -215,12 +215,19 @@ abstract class Extension(vararg children: Extension) {
         resetModeTime()
     }
 
-    fun switch() {
+    fun switchTo(show: Boolean) {
+        if (show) show()
+        else hide()
+    }
+
+    fun switchTo(mode: MODE) {
         when (mode) {
-            MODE.SHOW -> hide()
-            MODE.HIDE -> show()
-            MODE.ONLY_DRAW -> only_update()
-            MODE.ONLY_UPDATE -> only_draw()
+            MODE.SHOW -> show()
+            MODE.HIDE -> hide()
+            MODE.ONLY_DRAW -> only_draw()
+            MODE.ONLY_UPDATE -> only_update()
         }
     }
+
+    fun switch() = switchTo(-mode)
 }
