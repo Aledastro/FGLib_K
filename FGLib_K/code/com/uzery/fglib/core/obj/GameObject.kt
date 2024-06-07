@@ -269,6 +269,7 @@ abstract class GameObject(var name: String = "temp") {
     fun effected(effect: String) = effects.any { it.name == effect }
     fun effectedAny(vararg effect: String) = effect.any { effected(it) }
     fun effectedAll(vararg effect: String) = effect.all { effected(it) }
+
     fun equalsS(other: GameObject): Boolean {
         return this.toString() == other.toString()
     }
@@ -279,6 +280,8 @@ abstract class GameObject(var name: String = "temp") {
 
     open fun answer(question: String) = false
     open fun answerS(question: String) = ""
+
+    open fun load() {}
 
     protected open fun setValues() {}
 

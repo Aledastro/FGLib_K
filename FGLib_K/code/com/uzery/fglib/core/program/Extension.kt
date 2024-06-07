@@ -230,4 +230,6 @@ abstract class Extension(vararg children: Extension) {
     }
 
     fun switch() = switchTo(-mode)
+
+    open fun load() {}
 }
