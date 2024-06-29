@@ -1,8 +1,8 @@
 package com.uzery.fglib.utils.math.geom
 
-import com.uzery.fglib.utils.data.debug.DebugData
 import com.uzery.fglib.utils.ArrayUtils
 import com.uzery.fglib.utils.MathUtils
+import com.uzery.fglib.utils.data.debug.DebugData
 import com.uzery.fglib.utils.math.num.IntI
 import kotlin.math.*
 

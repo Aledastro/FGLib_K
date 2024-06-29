@@ -10,6 +10,7 @@ object StringUtils {
 
         return res
     }
+
     fun re_split(dat: Array<String>, del: String, keep_first: Boolean = false, keep_last: Boolean = true): String {
         return re_split(dat.toList(), del, keep_first, keep_last)
     }

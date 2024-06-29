@@ -1,8 +1,8 @@
 package com.uzery.fglib.core.obj
 
+import com.uzery.fglib.utils.FGUtils
 import com.uzery.fglib.utils.data.file.ConstL
 import com.uzery.fglib.utils.data.file.TextData
-import com.uzery.fglib.utils.FGUtils
 
 abstract class SmartGameObject<Type>(name: String = "temp"): GameObject(name) {
     protected val objs = ArrayList<Type>()

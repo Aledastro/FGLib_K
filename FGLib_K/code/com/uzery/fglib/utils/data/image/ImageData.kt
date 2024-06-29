@@ -1,6 +1,5 @@
 package com.uzery.fglib.utils.data.image
 
-import com.uzery.fglib.core.program.Platform
 import com.uzery.fglib.core.program.Platform.packager
 import com.uzery.fglib.utils.data.CollectDataClass
 import com.uzery.fglib.utils.data.debug.DebugData

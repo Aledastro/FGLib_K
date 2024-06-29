@@ -3,7 +3,6 @@ package com.uzery.fglib.core.obj.bounds
 import com.uzery.fglib.utils.math.geom.PointN
 import com.uzery.fglib.utils.math.geom.Shape
 import com.uzery.fglib.utils.math.geom.shape.RectN
-import java.util.*
 import kotlin.math.max
 import kotlin.math.min
 
