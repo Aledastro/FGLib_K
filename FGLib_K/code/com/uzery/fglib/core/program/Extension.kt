@@ -97,7 +97,7 @@ abstract class Extension(vararg children: Extension) {
     internal fun initWithChildren() {
         modify()
         init()
-        modify()
+        load()
         real_children.forEach { it.initWithChildren() }
         initAfter()
     }
@@ -116,6 +116,7 @@ abstract class Extension(vararg children: Extension) {
             if (isAdd) toAdd.add(e)
             else toRemove.add(e)
         }
+        new_children.forEach { it.first.initWithChildren() }
 
         new_children.clear()
 

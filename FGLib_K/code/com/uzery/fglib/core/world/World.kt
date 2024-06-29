@@ -99,7 +99,7 @@ object World {
 
     var getter: AbstractClassGetter<GameObject>? = null
 
-    fun init(controller: WorldController, vararg filename: String) {
+    fun init(controller: WorldController, vararg filename: String, init_rooms: Boolean = true) {
         World.controller = controller
         World.controller.init()
         rooms.clear()
@@ -110,6 +110,10 @@ object World {
         filenames.forEach { rooms.add(readInfo(it)) }
         for (i in rooms.indices) last_active.add(false)
 
+        if (init_rooms) initRooms()
+    }
+
+    fun initRooms() {
         rooms.forEach { it.init() }
     }
 

@@ -7,10 +7,7 @@ import com.uzery.fglib.core.obj.bounds.BoundsBox
 import com.uzery.fglib.core.obj.bounds.BoundsBox.Companion.CODE
 import com.uzery.fglib.core.obj.bounds.BoundsComponent
 import com.uzery.fglib.core.obj.bounds.BoundsElement
-import com.uzery.fglib.core.obj.component.OnBirthComponent
-import com.uzery.fglib.core.obj.component.OnDeathComponent
-import com.uzery.fglib.core.obj.component.OnGrabComponent
-import com.uzery.fglib.core.obj.component.OnInitComponent
+import com.uzery.fglib.core.obj.component.*
 import com.uzery.fglib.core.obj.controller.Controller
 import com.uzery.fglib.core.obj.controller.TempAction
 import com.uzery.fglib.core.obj.property.GameProperty
@@ -35,6 +32,7 @@ abstract class GameObject(var name: String = "temp") {
     private val properties = ArrayList<GameProperty>()
 
     private val onInit = ArrayList<OnInitComponent>()
+    private val onLoad = ArrayList<OnLoadComponent>()
     private val onBirth = ArrayList<OnBirthComponent>()
     private val onDeath = ArrayList<OnDeathComponent>()
     private val onGrab = ArrayList<OnGrabComponent>()
@@ -94,6 +92,7 @@ abstract class GameObject(var name: String = "temp") {
                 is Visualiser -> addVisual(c)
 
                 is OnInitComponent -> onInit(c)
+                is OnLoadComponent -> onLoad(c)
                 is OnBirthComponent -> onBirth(c)
                 is OnDeathComponent -> onDeath(c)
                 is OnGrabComponent -> onGrab(c)
@@ -125,7 +124,7 @@ abstract class GameObject(var name: String = "temp") {
     fun addGreenBounds(name: String, shape: () -> Shape?) = addBounds(CODE.GREEN, name, shape)
 
 
-    fun setController(controller: () -> () -> TempAction) {
+    fun setController(controller: () -> (() -> TempAction)) {
         setController(Controller { controller() })
     }
 
@@ -163,40 +162,28 @@ abstract class GameObject(var name: String = "temp") {
         )
     }
 
-    fun onInit(f: () -> Unit) {
-        onInit.add(f)
-    }
+    fun onInit(f: () -> Unit) = onInit.add(f)
+    fun onInit(f: OnInitComponent) = onInit.add(f)
 
-    fun onInit(f: OnInitComponent) {
-        onInit.add(f)
-    }
+    fun onLoad(f: () -> Unit) = onLoad.add(f)
+    fun onLoad(f: OnLoadComponent) = onLoad.add(f)
 
-    fun onBirth(f: () -> Unit) {
-        onBirth.add(f)
-    }
+    fun onBirth(f: () -> Unit) = onBirth.add(f)
+    fun onBirth(f: OnBirthComponent) = onBirth.add(f)
 
-    fun onBirth(f: OnBirthComponent) {
-        onBirth.add(f)
-    }
+    fun onDeath(f: () -> Unit) = onDeath.add(f)
+    fun onDeath(f: OnDeathComponent) = onDeath.add(f)
 
-    fun onDeath(f: () -> Unit) {
-        onDeath.add(f)
-    }
+    fun onGrab(f: () -> Unit) = onGrab.add(f)
+    fun onGrab(f: OnGrabComponent) = onGrab.add(f)
 
-    fun onDeath(f: OnDeathComponent) {
-        onDeath.add(f)
-    }
-
-    fun onGrab(f: () -> Unit) {
-        onGrab.add(f)
-    }
-
-    fun onGrab(f: OnGrabComponent) {
-        onGrab.add(f)
-    }
-
+    private var inited = false
     fun init() {
+        if (inited) return
+
         onInit.forEach { it.run() }
+        onLoad.forEach { it.run() }
+        inited = true
     }
 
     fun next() {
@@ -237,12 +224,14 @@ abstract class GameObject(var name: String = "temp") {
 
     fun grab(vararg os: GameObject) {
         followers.addAll(os)
+        //todo followers.forEach { it.init() }
         os.forEach { it.owner = this }
         os.forEach { o -> o.onGrab.forEach { it.run() } }
     }
 
     fun grab(os: List<GameObject>) {
         followers.addAll(os)
+        //todo followers.forEach { it.init() }
         os.forEach { it.owner = this }
         os.forEach { o -> o.onGrab.forEach { it.run() } }
     }
@@ -280,8 +269,6 @@ abstract class GameObject(var name: String = "temp") {
 
     open fun answer(question: String) = false
     open fun answerS(question: String) = ""
-
-    open fun load() {}
 
     protected open fun setValues() {}
 

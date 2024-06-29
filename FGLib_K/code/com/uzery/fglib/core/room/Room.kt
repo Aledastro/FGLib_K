@@ -29,12 +29,19 @@ class Room(var pos: PointN, var size: PointN) {
     }
 
     fun init() {
-        objects.forEach { it.init() }
+        fun initWithFollowers(obj: GameObject) {
+            obj.init()
+            obj.followers.forEach { initWithFollowers(it) }
+        }
+
+        objects.forEach { initWithFollowers(it) }
     }
 
     fun next() {
         objects.addAll(new_objects)
         new_objects.clear()
+
+        init()
 
         objects.forEach { it.stats.roomPOS = pos }
         objects.forEach { it.nextWithFollowers() }
@@ -45,6 +52,7 @@ class Room(var pos: PointN, var size: PointN) {
         fun addFromObj(obj: GameObject) {
             new_objects.addAll(obj.children)
             obj.children.clear()
+
             obj.followers.forEach { addFromObj(it) }
         }
         objects.forEach { obj -> addFromObj(obj) }
