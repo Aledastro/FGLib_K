@@ -13,6 +13,7 @@ import com.uzery.fglib.core.obj.controller.TempAction
 import com.uzery.fglib.core.obj.property.GameProperty
 import com.uzery.fglib.core.obj.stats.Stats
 import com.uzery.fglib.core.obj.visual.LayerVisualiser
+import com.uzery.fglib.core.obj.visual.LoadVisualiser
 import com.uzery.fglib.core.obj.visual.Visualiser
 import com.uzery.fglib.utils.data.debug.DebugData
 import com.uzery.fglib.utils.graphics.AffineGraphics
@@ -161,6 +162,8 @@ abstract class GameObject(var name: String = "temp") {
             }
         )
     }
+
+    fun addVisual(vis: LoadVisualiser) = addComponent(vis)
 
     fun onInit(f: () -> Unit) = onInit.add(f)
     fun onInit(f: OnInitComponent) = onInit.add(f)
