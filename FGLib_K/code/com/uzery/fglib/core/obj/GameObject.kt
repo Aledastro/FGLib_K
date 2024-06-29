@@ -24,8 +24,7 @@ abstract class GameObject(var name: String = "temp") {
     val stats = Stats()
     val bounds = BoundsBox()
 
-    private var controller: Controller? = null
-    private var temp: TempAction? = null
+    private val controllers = ArrayList<Controller>()
 
     val visuals = ArrayList<Visualiser>()
     private val abilities = ArrayList<AbilityBox>()
@@ -87,7 +86,7 @@ abstract class GameObject(var name: String = "temp") {
                 is BoundsComponent -> addBounds(c.code, c.element)
 
                 is AbilityBox -> addAbility(c)
-                is Controller -> setController(c)
+                is Controller -> addController(c)
                 is ActionListener -> addListener(c)
                 is GameProperty -> addProperty(c)
                 is Visualiser -> addVisual(c)
@@ -125,12 +124,12 @@ abstract class GameObject(var name: String = "temp") {
     fun addGreenBounds(name: String, shape: () -> Shape?) = addBounds(CODE.GREEN, name, shape)
 
 
-    fun setController(controller: () -> (() -> TempAction)) {
-        setController(Controller { controller() })
+    fun addController(controller: () -> (() -> TempAction)) {
+        addController(Controller(controller))
     }
 
-    fun setController(controller: Controller) {
-        this.controller = controller
+    fun addController(vararg controller: Controller) {
+        controllers.addAll(controller)
     }
 
     fun addListener(listener: (InputAction) -> Unit) = addListener(ActionListener { listener(it) })
@@ -192,8 +191,7 @@ abstract class GameObject(var name: String = "temp") {
     fun next() {
         if (object_time == 0) onBirth.forEach { it.run() }
 
-        if (temp == null || temp!!.ends) temp = controller?.get()?.invoke()
-        temp?.next()
+        controllers.forEach { it.update() }
 
         abilities.forEach { it.run() }
 
@@ -227,21 +225,21 @@ abstract class GameObject(var name: String = "temp") {
 
     fun grab(vararg os: GameObject) {
         followers.addAll(os)
-        //todo followers.forEach { it.init() }
+        followers.forEach { it.init() }
         os.forEach { it.owner = this }
         os.forEach { o -> o.onGrab.forEach { it.run() } }
     }
 
     fun grab(os: List<GameObject>) {
         followers.addAll(os)
-        //todo followers.forEach { it.init() }
+        followers.forEach { it.init() }
         os.forEach { it.owner = this }
         os.forEach { o -> o.onGrab.forEach { it.run() } }
     }
 
     fun activate(action: InputAction) {
-        listeners.forEach { a -> a.activate(action) }
-        temp?.activate(action)
+        listeners.forEach { it.activate(action) }
+        controllers.forEach { it.activate(action) }
     }
 
     open fun interact() = false
