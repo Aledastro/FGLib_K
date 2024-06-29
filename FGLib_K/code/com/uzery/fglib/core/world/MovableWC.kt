@@ -22,6 +22,7 @@ class MovableWC(private val goal: GameObject, private val room_p: Double = 10.0)
         private set
 
     override fun init() {
+        goal.init()
         goal.stats.roomPOS = goal_room.pos
         goal.stats.POS -= void.pos
     }
