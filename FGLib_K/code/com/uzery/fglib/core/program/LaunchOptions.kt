@@ -17,7 +17,7 @@ data class LaunchOptions(
             PointN(1920, 1080)/2,
             fullscreen = true,
             FGColor.WHITE,
-            "Room Editor",
+            "FGLib Example",
             listOf("sys|fglib_icon.png"),
             FGWindowStyle.UNDECORATED
         )
