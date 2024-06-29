@@ -1,7 +1,7 @@
 package com.uzery.fglib.utils.math.geom
 
 import com.uzery.fglib.utils.data.debug.DebugData
-import com.uzery.fglib.utils.math.num.IntI
+import com.uzery.fglib.utils.struct.num.IntI
 import kotlin.math.sign
 
 enum class Direct(private val x: Int, private val y: Int) {

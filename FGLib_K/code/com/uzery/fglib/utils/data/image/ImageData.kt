@@ -3,7 +3,7 @@ package com.uzery.fglib.utils.data.image
 import com.uzery.fglib.core.program.Platform.packager
 import com.uzery.fglib.utils.data.CollectDataClass
 import com.uzery.fglib.utils.data.debug.DebugData
-import com.uzery.fglib.utils.math.num.IntI
+import com.uzery.fglib.utils.struct.num.IntI
 
 object ImageData: CollectDataClass() {
     private val origins = HashMap<String, FGImage>()

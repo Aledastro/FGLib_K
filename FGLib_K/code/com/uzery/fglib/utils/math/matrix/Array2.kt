@@ -1,6 +1,6 @@
 package com.uzery.fglib.utils.math.matrix
 
-import com.uzery.fglib.utils.math.num.IntI
+import com.uzery.fglib.utils.struct.num.IntI
 
 class Array2<Type>(val size: IntI, private val default_value: Type) {
     constructor(width: Int, height: Int, default_value: Type): this(IntI(width, height), default_value)

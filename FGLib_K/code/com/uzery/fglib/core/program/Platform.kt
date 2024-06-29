@@ -4,7 +4,7 @@ import com.uzery.fglib.core.program.PlatformSetup.realisation
 import com.uzery.fglib.utils.data.debug.DebugData
 import com.uzery.fglib.utils.math.geom.PointN
 import com.uzery.fglib.utils.math.geom.shape.RectN
-import com.uzery.fglib.utils.math.num.IntI
+import com.uzery.fglib.utils.struct.num.IntI
 import java.awt.Toolkit
 
 object Platform {

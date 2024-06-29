@@ -1,6 +1,6 @@
 package com.uzery.fglib.utils.data.getter.value
 
-import com.uzery.fglib.utils.math.num.IntI
+import com.uzery.fglib.utils.struct.num.IntI
 
 class IntIValue(val value: IntI): ObjectValue {
     override fun toString(): String {

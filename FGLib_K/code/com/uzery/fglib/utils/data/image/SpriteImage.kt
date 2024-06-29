@@ -1,6 +1,6 @@
 package com.uzery.fglib.utils.data.image
 
-import com.uzery.fglib.utils.math.num.IntI
+import com.uzery.fglib.utils.struct.num.IntI
 
 class SpriteImage(origin: FGImage, err_name: String, val sprite_size: IntI, private vararg val effects: String):
     FGMultiImage(origin) {

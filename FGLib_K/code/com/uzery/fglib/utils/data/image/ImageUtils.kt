@@ -1,7 +1,7 @@
 package com.uzery.fglib.utils.data.image
 
 import com.uzery.fglib.utils.graphics.data.FGColor
-import com.uzery.fglib.utils.math.num.IntI
+import com.uzery.fglib.utils.struct.num.IntI
 import kotlin.math.min
 
 object ImageUtils {

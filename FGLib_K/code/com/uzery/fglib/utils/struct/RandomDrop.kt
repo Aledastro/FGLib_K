@@ -1,4 +1,4 @@
-package com.uzery.fglib.utils.data.getter
+package com.uzery.fglib.utils.struct
 
 import com.uzery.fglib.utils.data.debug.DebugData
 

@@ -1,4 +1,4 @@
-package com.uzery.fglib.utils.math.num
+package com.uzery.fglib.utils.struct.num
 
 data class IntI(val x: Int, val y: Int) {
     constructor(): this(0, 0)

@@ -1,4 +1,4 @@
-package com.uzery.fglib.utils.math.num
+package com.uzery.fglib.utils.struct.num
 
 data class StringN(val s: String, val n: Int): Comparable<StringN> {
     constructor(s: String): this(s, 0)

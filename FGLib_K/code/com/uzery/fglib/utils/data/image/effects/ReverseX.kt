@@ -1,7 +1,7 @@
 package com.uzery.fglib.utils.data.image.effects
 
 import com.uzery.fglib.utils.data.image.WritableFGImage
-import com.uzery.fglib.utils.math.num.IntI
+import com.uzery.fglib.utils.struct.num.IntI
 
 object ReverseX: ImageTransformEffect("reverseX") {
     override operator fun get(origin: WritableFGImage, args: List<List<String>>): WritableFGImage {

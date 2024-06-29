@@ -1,7 +1,7 @@
 package com.uzery.fglib.core.realisation
 
 import com.uzery.fglib.utils.graphics.data.FGColor
-import com.uzery.fglib.utils.math.num.IntI
+import com.uzery.fglib.utils.struct.num.IntI
 
 abstract class FGImagePackager {
     abstract fun createImage(filename: String): Any
