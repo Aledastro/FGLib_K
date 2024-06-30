@@ -94,12 +94,18 @@ abstract class Extension(vararg children: Extension) {
     open fun onOnlyDraw() {}
     open fun onOnlyUpdate() {}
 
+    private var inited = false
     internal fun initWithChildren() {
+        if (inited) return
+
         modify()
         init()
+        modify()
         load()
         real_children.forEach { it.initWithChildren() }
         initAfter()
+
+        inited = true
     }
 
     private fun modify() {
