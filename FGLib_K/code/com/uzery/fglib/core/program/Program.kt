@@ -24,15 +24,23 @@ object Program {
         updatePaths()
     }
 
-    fun loop() {
+    fun update() {
         updatePaths()
 
         core.updateTasksWithChildren()
         core.updateWithChildren()
-        core.drawWithChildren(core.stats.render_pos)
 
         Platform.update()
         program_time++
+    }
+
+    fun draw() {
+        core.drawWithChildren(core.stats.render_pos)
+    }
+
+    fun loop() {
+        update()
+        draw()
     }
 
     var program_time = 0

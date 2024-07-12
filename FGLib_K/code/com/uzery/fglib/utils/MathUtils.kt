@@ -37,4 +37,24 @@ object MathUtils {
     fun getDegree(c: PointN, p: PointN) = getDegree(p-c)
 
     fun little(input: Double) = abs(input) < LITTLE
+
+    /*fun from10CC(n: Int, dim: Int, alphabet: String = ""): Int {
+        val res = StringBuilder()
+        var rest = n
+        while (rest!=0) {
+            val now = rest%dim
+            res.append(now)
+            rest/=dim
+        }
+        return res.toString().reversed()
+    }
+
+    fun to10CC(n: Int, dim: Int): Int {
+
+    }
+
+    fun CC(start: Int, start_dim: Int, end_dim: Int) {
+        val n10 = to10CC(start, start_dim)
+        return from10CC(n10, end_dim)
+    }*/
 }

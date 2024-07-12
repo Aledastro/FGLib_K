@@ -6,7 +6,7 @@ import com.uzery.fglib.utils.math.geom.PointN
 import com.uzery.fglib.utils.math.geom.shape.RectN
 import kotlin.math.sign
 
-abstract class MouseActivator(screen: RectN) {
+abstract class MouseActivator {
     protected abstract fun pos0(): PointN
     protected abstract fun scroll0(): PointN
     val pos: PointN

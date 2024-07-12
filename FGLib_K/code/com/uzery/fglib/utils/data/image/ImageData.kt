@@ -77,9 +77,9 @@ object ImageData: CollectDataClass() {
         val key = keyFrom(name, *effects)
 
         if (sprites[key] != null) {
-            if (sprites[key]!!.sprite_size != size)
+            if (sprites[key]!!.sprite_size != size) {
                 throw DebugData.error("duplicate sprite set: $decode old: [${sprites[key]!!.sprite_size}] | new: [$size]")
-            return
+            }
         }
         try {
             sprites[key] = SpriteImage(ImageUtils.from(name), "${resolvePath(name)} ($decode)", size, *effects)

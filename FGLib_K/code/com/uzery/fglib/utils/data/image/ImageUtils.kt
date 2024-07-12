@@ -1,5 +1,6 @@
 package com.uzery.fglib.utils.data.image
 
+import com.uzery.fglib.core.program.Platform
 import com.uzery.fglib.utils.graphics.data.FGColor
 import com.uzery.fglib.utils.struct.num.IntI
 import kotlin.math.min
@@ -53,6 +54,8 @@ object ImageUtils {
     }
 
     fun from(origin: FGImage, vararg effects: String): FGImage {
+        if (effects.isEmpty()) return origin
+
         var res = WritableFGImage(origin.size)
         res.draw(origin)
         effects.forEach { res = ImageTransformUtils.applyEffect(res, it) }

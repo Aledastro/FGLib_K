@@ -1,238 +1,228 @@
 package com.uzery.fglib.utils.input.data
 
-import com.uzery.fglib.core.program.Platform.packager
-
-data class FGKey(val value: String, val id: Int) {
-    constructor(value: String): this(value, from(value).id)
-
-    companion object {
-        val ENTER = from("ENTER")
-        val BACK_SPACE = from("BACK_SPACE")
-        val TAB = from("TAB")
-        val CANCEL = from("CANCEL")
-        val CLEAR = from("CLEAR")
-        val SHIFT = from("SHIFT")
-        val CONTROL = from("CONTROL")
-        val ALT = from("ALT")
-        val PAUSE = from("PAUSE")
-        val CAPS = from("CAPS")
-        val ESCAPE = from("ESCAPE")
-        val SPACE = from("SPACE")
-        val PAGE_UP = from("PAGE_UP")
-        val PAGE_DOWN = from("PAGE_DOWN")
-        val END = from("END")
-        val HOME = from("HOME")
-        val LEFT = from("LEFT")
-        val UP = from("UP")
-        val RIGHT = from("RIGHT")
-        val DOWN = from("DOWN")
-        val COMMA = from("COMMA")
-        val MINUS = from("MINUS")
-        val PERIOD = from("PERIOD")
-        val SLASH = from("SLASH")
-        val DIGIT0 = from("DIGIT0")
-        val DIGIT1 = from("DIGIT1")
-        val DIGIT2 = from("DIGIT2")
-        val DIGIT3 = from("DIGIT3")
-        val DIGIT4 = from("DIGIT4")
-        val DIGIT5 = from("DIGIT5")
-        val DIGIT6 = from("DIGIT6")
-        val DIGIT7 = from("DIGIT7")
-        val DIGIT8 = from("DIGIT8")
-        val DIGIT9 = from("DIGIT9")
-        val SEMICOLON = from("SEMICOLON")
-        val EQUALS = from("EQUALS")
-        val A = from("A")
-        val B = from("B")
-        val C = from("C")
-        val D = from("D")
-        val E = from("E")
-        val F = from("F")
-        val G = from("G")
-        val H = from("H")
-        val I = from("I")
-        val J = from("J")
-        val K = from("K")
-        val L = from("L")
-        val M = from("M")
-        val N = from("N")
-        val O = from("O")
-        val P = from("P")
-        val Q = from("Q")
-        val R = from("R")
-        val S = from("S")
-        val T = from("T")
-        val U = from("U")
-        val V = from("V")
-        val W = from("W")
-        val X = from("X")
-        val Y = from("Y")
-        val Z = from("Z")
-        val OPEN_BRACKET = from("OPEN_BRACKET")
-        val BACK_SLASH = from("BACK_SLASH")
-        val CLOSE_BRACKET = from("CLOSE_BRACKET")
-        val NUMPAD0 = from("NUMPAD0")
-        val NUMPAD1 = from("NUMPAD1")
-        val NUMPAD2 = from("NUMPAD2")
-        val NUMPAD3 = from("NUMPAD3")
-        val NUMPAD4 = from("NUMPAD4")
-        val NUMPAD5 = from("NUMPAD5")
-        val NUMPAD6 = from("NUMPAD6")
-        val NUMPAD7 = from("NUMPAD7")
-        val NUMPAD8 = from("NUMPAD8")
-        val NUMPAD9 = from("NUMPAD9")
-        val MULTIPLY = from("MULTIPLY")
-        val ADD = from("ADD")
-        val SEPARATOR = from("SEPARATOR")
-        val SUBTRACT = from("SUBTRACT")
-        val DECIMAL = from("DECIMAL")
-        val DIVIDE = from("DIVIDE")
-        val DELETE = from("DELETE")
-        val NUM_LOCK = from("NUM_LOCK")
-        val SCROLL_LOCK = from("SCROLL_LOCK")
-        val F1 = from("F1")
-        val F2 = from("F2")
-        val F3 = from("F3")
-        val F4 = from("F4")
-        val F5 = from("F5")
-        val F6 = from("F6")
-        val F7 = from("F7")
-        val F8 = from("F8")
-        val F9 = from("F9")
-        val F10 = from("F10")
-        val F11 = from("F11")
-        val F12 = from("F12")
-        val F13 = from("F13")
-        val F14 = from("F14")
-        val F15 = from("F15")
-        val F16 = from("F16")
-        val F17 = from("F17")
-        val F18 = from("F18")
-        val F19 = from("F19")
-        val F20 = from("F20")
-        val F21 = from("F21")
-        val F22 = from("F22")
-        val F23 = from("F23")
-        val F24 = from("F24")
-        val PRINTSCREEN = from("PRINTSCREEN")
-        val INSERT = from("INSERT")
-        val HELP = from("HELP")
-        val META = from("META")
-        val BACK_QUOTE = from("BACK_QUOTE")
-        val QUOTE = from("QUOTE")
-        val KP_UP = from("KP_UP")
-        val KP_DOWN = from("KP_DOWN")
-        val KP_LEFT = from("KP_LEFT")
-        val KP_RIGHT = from("KP_RIGHT")
-        val DEAD_GRAVE = from("DEAD_GRAVE")
-        val DEAD_ACUTE = from("DEAD_ACUTE")
-        val DEAD_CIRCUMFLEX = from("DEAD_CIRCUMFLEX")
-        val DEAD_TILDE = from("DEAD_TILDE")
-        val DEAD_MACRON = from("DEAD_MACRON")
-        val DEAD_BREVE = from("DEAD_BREVE")
-        val DEAD_ABOVEDOT = from("DEAD_ABOVEDOT")
-        val DEAD_DIAERESIS = from("DEAD_DIAERESIS")
-        val DEAD_ABOVERING = from("DEAD_ABOVERING")
-        val DEAD_DOUBLEACUTE = from("DEAD_DOUBLEACUTE")
-        val DEAD_CARON = from("DEAD_CARON")
-        val DEAD_CEDILLA = from("DEAD_CEDILLA")
-        val DEAD_OGONEK = from("DEAD_OGONEK")
-        val DEAD_IOTA = from("DEAD_IOTA")
-        val DEAD_VOICED_SOUND = from("DEAD_VOICED_SOUND")
-        val DEAD_SEMIVOICED_SOUND = from("DEAD_SEMIVOICED_SOUND")
-        val AMPERSAND = from("AMPERSAND")
-        val ASTERISK = from("ASTERISK")
-        val QUOTEDBL = from("QUOTEDBL")
-        val LESS = from("LESS")
-        val GREATER = from("GREATER")
-        val BRACELEFT = from("BRACELEFT")
-        val BRACERIGHT = from("BRACERIGHT")
-        val AT = from("AT")
-        val COLON = from("COLON")
-        val CIRCUMFLEX = from("CIRCUMFLEX")
-        val DOLLAR = from("DOLLAR")
-        val EURO_SIGN = from("EURO_SIGN")
-        val EXCLAMATION_MARK = from("EXCLAMATION_MARK")
-        val INVERTED_EXCLAMATION_MARK = from("INVERTED_EXCLAMATION_MARK")
-        val LEFT_PARENTHESIS = from("LEFT_PARENTHESIS")
-        val NUMBER_SIGN = from("NUMBER_SIGN")
-        val PLUS = from("PLUS")
-        val RIGHT_PARENTHESIS = from("RIGHT_PARENTHESIS")
-        val UNDERSCORE = from("UNDERSCORE")
-        val WINDOWS = from("WINDOWS")
-        val CONTEXT_MENU = from("CONTEXT_MENU")
-        val FINAL = from("FINAL")
-        val CONVERT = from("CONVERT")
-        val NONCONVERT = from("NONCONVERT")
-        val ACCEPT = from("ACCEPT")
-        val MODECHANGE = from("MODECHANGE")
-        val KANA = from("KANA")
-        val KANJI = from("KANJI")
-        val ALPHANUMERIC = from("ALPHANUMERIC")
-        val KATAKANA = from("KATAKANA")
-        val HIRAGANA = from("HIRAGANA")
-        val FULL_WIDTH = from("FULL_WIDTH")
-        val HALF_WIDTH = from("HALF_WIDTH")
-        val ROMAN_CHARACTERS = from("ROMAN_CHARACTERS")
-        val ALL_CANDIDATES = from("ALL_CANDIDATES")
-        val PREVIOUS_CANDIDATE = from("PREVIOUS_CANDIDATE")
-        val CODE_INPUT = from("CODE_INPUT")
-        val JAPANESE_KATAKANA = from("JAPANESE_KATAKANA")
-        val JAPANESE_HIRAGANA = from("JAPANESE_HIRAGANA")
-        val JAPANESE_ROMAN = from("JAPANESE_ROMAN")
-        val KANA_LOCK = from("KANA_LOCK")
-        val INPUT_METHOD_ON_OFF = from("INPUT_METHOD_ON_OFF")
-        val CUT = from("CUT")
-        val COPY = from("COPY")
-        val PASTE = from("PASTE")
-        val UNDO = from("UNDO")
-        val AGAIN = from("AGAIN")
-        val FIND = from("FIND")
-        val PROPS = from("PROPS")
-        val STOP = from("STOP")
-        val COMPOSE = from("COMPOSE")
-        val ALT_GRAPH = from("ALT_GRAPH")
-        val BEGIN = from("BEGIN")
-        val UNDEFINED = from("UNDEFINED")
-        val SOFTKEY_0 = from("SOFTKEY_0")
-        val SOFTKEY_1 = from("SOFTKEY_1")
-        val SOFTKEY_2 = from("SOFTKEY_2")
-        val SOFTKEY_3 = from("SOFTKEY_3")
-        val SOFTKEY_4 = from("SOFTKEY_4")
-        val SOFTKEY_5 = from("SOFTKEY_5")
-        val SOFTKEY_6 = from("SOFTKEY_6")
-        val SOFTKEY_7 = from("SOFTKEY_7")
-        val SOFTKEY_8 = from("SOFTKEY_8")
-        val SOFTKEY_9 = from("SOFTKEY_9")
-        val GAME_A = from("GAME_A")
-        val GAME_B = from("GAME_B")
-        val GAME_C = from("GAME_C")
-        val GAME_D = from("GAME_D")
-        val STAR = from("STAR")
-        val POUND = from("POUND")
-        val POWER = from("POWER")
-        val INFO = from("INFO")
-        val COLORED_KEY_0 = from("COLORED_KEY_0")
-        val COLORED_KEY_1 = from("COLORED_KEY_1")
-        val COLORED_KEY_2 = from("COLORED_KEY_2")
-        val COLORED_KEY_3 = from("COLORED_KEY_3")
-        val EJECT_TOGGLE = from("EJECT_TOGGLE")
-        val PLAY = from("PLAY")
-        val RECORD = from("RECORD")
-        val FAST_FWD = from("FAST_FWD")
-        val REWIND = from("REWIND")
-        val TRACK_PREV = from("TRACK_PREV")
-        val TRACK_NEXT = from("TRACK_NEXT")
-        val CHANNEL_UP = from("CHANNEL_UP")
-        val CHANNEL_DOWN = from("CHANNEL_DOWN")
-        val VOLUME_UP = from("VOLUME_UP")
-        val VOLUME_DOWN = from("VOLUME_DOWN")
-        val MUTE = from("MUTE")
-        val COMMAND = from("COMMAND")
-        val SHORTCUT = from("SHORTCUT")
-
-        fun from(key: String): FGKey {
-            return packager.fromKey(key)
-        }
-    }
+enum class FGKey {
+    ENTER,
+    BACK_SPACE,
+    TAB,
+    CANCEL,
+    CLEAR,
+    SHIFT,
+    CONTROL,
+    ALT,
+    PAUSE,
+    CAPS,
+    ESCAPE,
+    SPACE,
+    PAGE_UP,
+    PAGE_DOWN,
+    END,
+    HOME,
+    LEFT,
+    UP,
+    RIGHT,
+    DOWN,
+    COMMA,
+    MINUS,
+    PERIOD,
+    SLASH,
+    DIGIT0,
+    DIGIT1,
+    DIGIT2,
+    DIGIT3,
+    DIGIT4,
+    DIGIT5,
+    DIGIT6,
+    DIGIT7,
+    DIGIT8,
+    DIGIT9,
+    SEMICOLON,
+    EQUALS,
+    A,
+    B,
+    C,
+    D,
+    E,
+    F,
+    G,
+    H,
+    I,
+    J,
+    K,
+    L,
+    M,
+    N,
+    O,
+    P,
+    Q,
+    R,
+    S,
+    T,
+    U,
+    V,
+    W,
+    X,
+    Y,
+    Z,
+    OPEN_BRACKET,
+    BACK_SLASH,
+    CLOSE_BRACKET,
+    NUMPAD0,
+    NUMPAD1,
+    NUMPAD2,
+    NUMPAD3,
+    NUMPAD4,
+    NUMPAD5,
+    NUMPAD6,
+    NUMPAD7,
+    NUMPAD8,
+    NUMPAD9,
+    MULTIPLY,
+    ADD,
+    SEPARATOR,
+    SUBTRACT,
+    DECIMAL,
+    DIVIDE,
+    DELETE,
+    NUM_LOCK,
+    SCROLL_LOCK,
+    F1,
+    F2,
+    F3,
+    F4,
+    F5,
+    F6,
+    F7,
+    F8,
+    F9,
+    F10,
+    F11,
+    F12,
+    F13,
+    F14,
+    F15,
+    F16,
+    F17,
+    F18,
+    F19,
+    F20,
+    F21,
+    F22,
+    F23,
+    F24,
+    PRINTSCREEN,
+    INSERT,
+    HELP,
+    META,
+    BACK_QUOTE,
+    QUOTE,
+    KP_UP,
+    KP_DOWN,
+    KP_LEFT,
+    KP_RIGHT,
+    DEAD_GRAVE,
+    DEAD_ACUTE,
+    DEAD_CIRCUMFLEX,
+    DEAD_TILDE,
+    DEAD_MACRON,
+    DEAD_BREVE,
+    DEAD_ABOVEDOT,
+    DEAD_DIAERESIS,
+    DEAD_ABOVERING,
+    DEAD_DOUBLEACUTE,
+    DEAD_CARON,
+    DEAD_CEDILLA,
+    DEAD_OGONEK,
+    DEAD_IOTA,
+    DEAD_VOICED_SOUND,
+    DEAD_SEMIVOICED_SOUND,
+    AMPERSAND,
+    ASTERISK,
+    QUOTEDBL,
+    LESS,
+    GREATER,
+    BRACELEFT,
+    BRACERIGHT,
+    AT,
+    COLON,
+    CIRCUMFLEX,
+    DOLLAR,
+    EURO_SIGN,
+    EXCLAMATION_MARK,
+    INVERTED_EXCLAMATION_MARK,
+    LEFT_PARENTHESIS,
+    NUMBER_SIGN,
+    PLUS,
+    RIGHT_PARENTHESIS,
+    UNDERSCORE,
+    WINDOWS,
+    CONTEXT_MENU,
+    FINAL,
+    CONVERT,
+    NONCONVERT,
+    ACCEPT,
+    MODECHANGE,
+    KANA,
+    KANJI,
+    ALPHANUMERIC,
+    KATAKANA,
+    HIRAGANA,
+    FULL_WIDTH,
+    HALF_WIDTH,
+    ROMAN_CHARACTERS,
+    ALL_CANDIDATES,
+    PREVIOUS_CANDIDATE,
+    CODE_INPUT,
+    JAPANESE_KATAKANA,
+    JAPANESE_HIRAGANA,
+    JAPANESE_ROMAN,
+    KANA_LOCK,
+    INPUT_METHOD_ON_OFF,
+    CUT,
+    COPY,
+    PASTE,
+    UNDO,
+    AGAIN,
+    FIND,
+    PROPS,
+    STOP,
+    COMPOSE,
+    ALT_GRAPH,
+    BEGIN,
+    UNDEFINED,
+    SOFTKEY_0,
+    SOFTKEY_1,
+    SOFTKEY_2,
+    SOFTKEY_3,
+    SOFTKEY_4,
+    SOFTKEY_5,
+    SOFTKEY_6,
+    SOFTKEY_7,
+    SOFTKEY_8,
+    SOFTKEY_9,
+    GAME_A,
+    GAME_B,
+    GAME_C,
+    GAME_D,
+    STAR,
+    POUND,
+    POWER,
+    INFO,
+    COLORED_KEY_0,
+    COLORED_KEY_1,
+    COLORED_KEY_2,
+    COLORED_KEY_3,
+    EJECT_TOGGLE,
+    PLAY,
+    RECORD,
+    FAST_FWD,
+    REWIND,
+    TRACK_PREV,
+    TRACK_NEXT,
+    CHANNEL_UP,
+    CHANNEL_DOWN,
+    VOLUME_UP,
+    VOLUME_DOWN,
+    MUTE,
+    COMMAND,
+    SHORTCUT;
 }
