@@ -15,7 +15,7 @@ object ImageData: CollectDataClass() {
         return entry
     }
 
-    fun keyFrom(name: String, vararg effects: String): String {
+    private fun keyFrom(name: String, vararg effects: String): String {
         return resolvePath(name)+" - "+decode(name, *effects)
     }
 
@@ -80,6 +80,7 @@ object ImageData: CollectDataClass() {
             if (sprites[key]!!.sprite_size != size) {
                 throw DebugData.error("duplicate sprite set: $decode old: [${sprites[key]!!.sprite_size}] | new: [$size]")
             }
+            return
         }
         try {
             sprites[key] = SpriteImage(ImageUtils.from(name), "${resolvePath(name)} ($decode)", size, *effects)

@@ -1,6 +1,7 @@
 package com.uzery.fglib.utils.graphics
 
 import com.uzery.fglib.utils.data.image.FGImage
+import com.uzery.fglib.utils.data.image.ImageData
 import com.uzery.fglib.utils.data.image.ImageUtils
 import com.uzery.fglib.utils.math.geom.PointN
 
@@ -17,8 +18,10 @@ abstract class ImageGraphics(private val agc: AffineGraphics) {
 
     ///////////////////////////////////////////////////////////////////////////
 
-    fun draw(filename: String, pos: PointN, size: PointN) =
-        draw0(ImageUtils.from(filename), transform.pos(pos), transform.size(pos, size))
+    fun draw(filename: String, pos: PointN, size: PointN) {
+        ImageData.set(filename)
+        draw0(ImageData[filename], transform.pos(pos), transform.size(pos, size))
+    }
 
     fun drawL(filename: String, pos: PointN, size: PointN) = draw(filename, pos, size)
     fun drawC(filename: String, pos: PointN, size: PointN) = draw(filename, pos-size/2, size)
