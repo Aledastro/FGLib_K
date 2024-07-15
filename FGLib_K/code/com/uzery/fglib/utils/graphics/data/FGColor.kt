@@ -32,7 +32,7 @@ data class FGColor(val red: Int, val green: Int, val blue: Int, val alpha: Int =
     companion object {
         val WHITE = web("0xffffff")
         val BLACK = web("0x000000")
-        val TRANSPARENT = WHITE.transparent(0.0)
+        val TRANSPARENT = web("0x00000000")
 
         val RED = web("0xff0000")
         val ORANGE = web("0xff7f00")
