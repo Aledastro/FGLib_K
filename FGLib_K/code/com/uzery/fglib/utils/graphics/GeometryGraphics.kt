@@ -10,7 +10,7 @@ import com.uzery.fglib.utils.math.geom.PointN
 import com.uzery.fglib.utils.math.geom.Shape
 import com.uzery.fglib.utils.math.geom.shape.FigureN
 
-abstract class GeometryGraphics(private val agc: AffineGraphics) {
+abstract class GeometryGraphics(protected val agc: AffineGraphics) {
     val transform
         get() = agc.transform
 
@@ -56,6 +56,7 @@ abstract class GeometryGraphics(private val agc: AffineGraphics) {
     ///////////////////////////////////////////////////////////////////////////
 
     fun rect(pos: PointN, size: PointN, color: FGColor) {
+        agc.applyAlphaWith(alpha)
         rect0(transform.pos(pos), transform.size(pos, size), color)
     }
 
@@ -66,6 +67,7 @@ abstract class GeometryGraphics(private val agc: AffineGraphics) {
     ///////////////////////////////////////////////////////////////////////////
 
     fun oval(pos: PointN, size: PointN, color: FGColor) {
+        agc.applyAlphaWith(alpha)
         oval0(transform.pos(pos), transform.size(pos, size), color)
     }
 
@@ -78,6 +80,7 @@ abstract class GeometryGraphics(private val agc: AffineGraphics) {
     ///////////////////////////////////////////////////////////////////////////
 
     fun text(pos: PointN, text: String, font: FGFont, color: FGColor) {
+        agc.applyAlphaWith(alpha)
         text0(transform.pos(pos), text, font.resize(transform.t_size(PointN(font.size)).X), color)
     }
 
@@ -102,6 +105,8 @@ abstract class GeometryGraphics(private val agc: AffineGraphics) {
             Shape.Code.RECT -> rect(pos+shape.L, shape.S, color)
             Shape.Code.OVAL -> oval(pos+shape.L, shape.S, color)
             Shape.Code.FIGURE -> {
+                agc.applyAlphaWith(alpha)
+
                 val fig = shape as FigureN
                 if (shape.exists()) {
                     for (field in fig.fields) {

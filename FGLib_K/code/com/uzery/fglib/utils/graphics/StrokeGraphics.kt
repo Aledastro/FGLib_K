@@ -26,6 +26,7 @@ abstract class StrokeGraphics(agc: AffineGraphics): GeometryGraphics(agc) {
     ///////////////////////////////////////////////////////////////////////////
 
     fun lineTo(pos1: PointN, pos2: PointN, color: FGColor) {
+        agc.applyAlphaWith(alpha)
         lineTo0(transform.pos(pos1), transform.pos(pos2), color)
     }
 

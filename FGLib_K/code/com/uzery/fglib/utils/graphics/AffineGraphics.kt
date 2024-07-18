@@ -64,4 +64,14 @@ abstract class AffineGraphics {
 
     abstract val fill: GeometryGraphics
     abstract val stroke: StrokeGraphics
+
+    protected abstract fun applyAlpha(alpha: Double)
+
+    internal fun applyAlphaWith(alpha: Double) {
+        applyAlpha((global_alpha*this.alpha*alpha).coerceIn(0.0, 1.0))
+    }
+
+    internal fun isIn() {
+
+    }
 }

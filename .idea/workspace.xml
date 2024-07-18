@@ -12,8 +12,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="82970e50-af90-458e-a847-e0b07c98f932" name="Changes" comment="FGLib v.0.14.18.0 [K]">
-      <change beforePath="$PROJECT_DIR$/FGLib_K/code/com/uzery/fglib/utils/graphics/data/FGColor.kt" beforeDir="false" afterPath="$PROJECT_DIR$/FGLib_K/code/com/uzery/fglib/utils/graphics/data/FGColor.kt" afterDir="false" />
+    <list default="true" id="82970e50-af90-458e-a847-e0b07c98f932" name="Changes" comment="FGLib v.0.14.18.1 [K]">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FGLib_K/code/com/uzery/fglib/utils/graphics/AffineGraphics.kt" beforeDir="false" afterPath="$PROJECT_DIR$/FGLib_K/code/com/uzery/fglib/utils/graphics/AffineGraphics.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FGLib_K/code/com/uzery/fglib/utils/graphics/GeometryGraphics.kt" beforeDir="false" afterPath="$PROJECT_DIR$/FGLib_K/code/com/uzery/fglib/utils/graphics/GeometryGraphics.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FGLib_K/code/com/uzery/fglib/utils/graphics/ImageGraphics.kt" beforeDir="false" afterPath="$PROJECT_DIR$/FGLib_K/code/com/uzery/fglib/utils/graphics/ImageGraphics.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FGLib_K/code/com/uzery/fglib/utils/graphics/StrokeGraphics.kt" beforeDir="false" afterPath="$PROJECT_DIR$/FGLib_K/code/com/uzery/fglib/utils/graphics/StrokeGraphics.kt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -43,14 +47,12 @@
     &quot;state&quot;: &quot;OPEN&quot;
   }
 }</component>
-  <component name="GithubPullRequestsUISettings">
-    <option name="selectedUrlAndAccountId">
-      <UrlAndAccount>
-        <option name="accountId" value="c510601b-2e73-48aa-afe7-8bec159dcb5a" />
-        <option name="url" value="https://github.com/SilksongSorrow/FGLib_K.git" />
-      </UrlAndAccount>
-    </option>
-  </component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/SilksongSorrow/FGLib_K.git&quot;,
+    &quot;accountId&quot;: &quot;e96e134a-31f0-4edc-bf37-ca8e349c13f6&quot;
+  }
+}</component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
@@ -472,7 +474,7 @@
       <option name="project" value="LOCAL" />
       <updated>1717724053257</updated>
     </task>
-    <option name="localTasksCounter" value="492" />
+    <option name="localTasksCounter" value="493" />
     <servers />
   </component>
   <component name="UnknownFeatures">
@@ -502,7 +504,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="FGLib v.0.14.10.0 [K]" />
     <MESSAGE value="FGLib v.0.14.11.0 [K]" />
     <MESSAGE value="FGLib v.0.14.11.1 [K]" />
     <MESSAGE value="FGLib v.0.14.11.2 [K]" />
@@ -527,7 +528,8 @@
     <MESSAGE value="FGLib v.0.14.16.2 [K]" />
     <MESSAGE value="FGLib v.0.14.17.0 [K]" />
     <MESSAGE value="FGLib v.0.14.18.0 [K]" />
-    <option name="LAST_COMMIT_MESSAGE" value="FGLib v.0.14.18.0 [K]" />
+    <MESSAGE value="FGLib v.0.14.18.1 [K]" />
+    <option name="LAST_COMMIT_MESSAGE" value="FGLib v.0.14.18.1 [K]" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
