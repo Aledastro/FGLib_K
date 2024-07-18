@@ -81,14 +81,6 @@ class MovableWC(private val goal: GameObject, private val room_p: Double = 10.0)
 
         migrate(void)
         World.active_rooms.forEach { migrate(it) }
-
-        //goal_room.objects.removeIf { o->o.tagged("#immovable") }
-
-        /*if(goal.dead){
-            goal=goal_f()
-            goal.stats.POS -= goal_room.pos
-            camera.move(goal_room.pos - roomFor(goal).pos)
-        }*///todo
     }
 
     private fun isInArea(r: Room, obj: GameObject): Boolean {

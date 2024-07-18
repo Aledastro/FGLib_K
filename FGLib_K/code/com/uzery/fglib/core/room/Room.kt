@@ -169,8 +169,6 @@ class Room(var pos: PointN, var size: PointN) {
     }
 
     private fun nextActivate() {
-        //todo less code
-
         val list = ArrayList<GameObject>()
         fun addInList(obj: GameObject) {
             list.add(obj)

@@ -10,7 +10,7 @@ import com.uzery.fglib.utils.math.geom.shape.RectN
 
 object ShapeUtils {
     fun rect(shape: Shape) = RectN(shape.L, shape.S)
-    fun oval(shape: Shape) = OvalN(shape.C, shape.S)
+    fun oval(shape: Shape) = OvalN(shape.L, shape.S)
 
     fun intoRect(first: RectN, second: RectN): Boolean {
         return (0 until first.dim).all { i -> first.L[i] < second.R[i] && second.L[i] < first.R[i] }
