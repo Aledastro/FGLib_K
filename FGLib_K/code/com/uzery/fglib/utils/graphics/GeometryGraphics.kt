@@ -56,6 +56,8 @@ abstract class GeometryGraphics(protected val agc: AffineGraphics) {
     ///////////////////////////////////////////////////////////////////////////
 
     fun rect(pos: PointN, size: PointN, color: FGColor) {
+        if (agc.isOutOfBounds(pos, size)) return
+
         agc.applyAlphaWith(alpha)
         rect0(transform.pos(pos), transform.size(pos, size), color)
     }
@@ -67,6 +69,8 @@ abstract class GeometryGraphics(protected val agc: AffineGraphics) {
     ///////////////////////////////////////////////////////////////////////////
 
     fun oval(pos: PointN, size: PointN, color: FGColor) {
+        if (agc.isOutOfBounds(pos, size)) return
+
         agc.applyAlphaWith(alpha)
         oval0(transform.pos(pos), transform.size(pos, size), color)
     }
@@ -80,6 +84,8 @@ abstract class GeometryGraphics(protected val agc: AffineGraphics) {
     ///////////////////////////////////////////////////////////////////////////
 
     fun text(pos: PointN, text: String, font: FGFont, color: FGColor) {
+        if (agc.isOutOfBounds(pos, text_size(text, font))) return
+
         agc.applyAlphaWith(alpha)
         text0(transform.pos(pos), text, font.resize(transform.t_size(PointN(font.size)).X), color)
     }
@@ -106,6 +112,7 @@ abstract class GeometryGraphics(protected val agc: AffineGraphics) {
             Shape.Code.OVAL -> oval(pos+shape.L, shape.S, color)
             Shape.Code.FIGURE -> {
                 agc.applyAlphaWith(alpha)
+                //todo out of bounds for Figure
 
                 val fig = shape as FigureN
                 if (shape.exists()) {
@@ -125,8 +132,9 @@ abstract class GeometryGraphics(protected val agc: AffineGraphics) {
     fun drawC(pos: PointN, shape: Shape, color: FGColor) = draw(pos-shape.S/2, shape, color)
     fun drawR(pos: PointN, shape: Shape, color: FGColor) = draw(pos-shape.S, shape, color)
 
-    fun draw(shape: Shape, color: FGColor) = draw(PointN.ZERO, shape, color)
+    ///////////////////////////////////////////////////////////////////////////
 
+    fun draw(shape: Shape, color: FGColor) = draw(PointN.ZERO, shape, color)
     fun drawL(shape: Shape, color: FGColor) = draw(PointN.ZERO, shape, color)
     fun drawC(shape: Shape, color: FGColor) = draw(-shape.S/2, shape, color)
     fun drawR(shape: Shape, color: FGColor) = draw(-shape.S, shape, color)

@@ -1,6 +1,7 @@
 package com.uzery.fglib.utils.graphics
 
 import com.uzery.fglib.core.obj.DrawLayer
+import com.uzery.fglib.core.program.Platform.CANVAS_REAL
 import com.uzery.fglib.utils.graphics.data.FGFont
 import com.uzery.fglib.utils.math.geom.PointN
 
@@ -71,7 +72,15 @@ abstract class AffineGraphics {
         applyAlpha((global_alpha*this.alpha*alpha).coerceIn(0.0, 1.0))
     }
 
-    internal fun isIn() {
+    internal fun isOutOfBounds(pos: PointN, size: PointN): Boolean {
+        val pos2 = pos + size
+        for (i in 0 until pos.dim){
+            val list = listOf(pos[i], pos2[i])
 
+            if (list.all { it < 0 } || list.all { it > CANVAS_REAL[i] }){
+                return true
+            }
+        }
+        return false
     }
 }

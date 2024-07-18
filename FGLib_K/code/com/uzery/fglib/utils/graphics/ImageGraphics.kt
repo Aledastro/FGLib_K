@@ -19,8 +19,9 @@ abstract class ImageGraphics(private val agc: AffineGraphics) {
     ///////////////////////////////////////////////////////////////////////////
 
     fun draw(image: FGImage, pos: PointN, size: PointN) {
-        agc.applyAlphaWith(alpha)
+        if (agc.isOutOfBounds(pos, size)) return
 
+        agc.applyAlphaWith(alpha)
         draw0(image, transform.pos(pos), transform.size(pos, size))
     }
 
