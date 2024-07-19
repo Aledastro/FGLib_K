@@ -1,14 +1,14 @@
-package com.uzery.fglib.utils.math.matrix
+package com.uzery.fglib.utils.struct
 
 import com.uzery.fglib.utils.struct.num.IntI
 
-class Array2<Type>(val size: IntI, private val default_value: Type) {
-    constructor(width: Int, height: Int, default_value: Type): this(IntI(width, height), default_value)
+class Array2<Type>(val size: IntI, private val default_value: () -> Type) {
+    constructor(width: Int, height: Int, default_value: () -> Type): this(IntI(width, height), default_value)
 
-    val data = ArrayList<Type?>()
+    val data = ArrayList<Type>()
 
     init {
-        for (i in 0 until size.width*size.height) data.add(null)
+        for (i in 0 until size.width*size.height) data.add(default_value())
     }
 
     val width = size.width
@@ -20,7 +20,7 @@ class Array2<Type>(val size: IntI, private val default_value: Type) {
     }
 
     operator fun get(i: IntI): Type {
-        return data[from(i.x, i.y)] ?: default_value
+        return data[from(i.x, i.y)]
     }
 
     operator fun set(i: Int, j: Int, value: Type) {

@@ -1,6 +1,7 @@
 package com.uzery.fglib.utils.math.matrix
 
 import com.uzery.fglib.utils.data.debug.DebugData
+import com.uzery.fglib.utils.struct.Array2
 
 open class Matrix(val data: Array2<Double>) {
 
@@ -13,7 +14,7 @@ open class Matrix(val data: Array2<Double>) {
     operator fun plus(other: Matrix): Matrix {
         if (this.size != other.size) throw DebugData.error("WRONG PLUS OPERATION: \n$this\n\n$other")
 
-        val res = Array2(size, 0.0)
+        val res = Array2(size) { 0.0 }
         res.set { i, j -> this[i, j]+other[i, j] }
 
         return Matrix(res)
@@ -22,7 +23,7 @@ open class Matrix(val data: Array2<Double>) {
     operator fun minus(other: Matrix): Matrix {
         if (this.size != other.size) throw DebugData.error("WRONG PLUS OPERATION: \n$this\n\n$other")
 
-        val res = Array2(size, 0.0)
+        val res = Array2(size) { 0.0 }
         res.set { i, j -> this[i, j]-other[i, j] }
 
         return Matrix(res)

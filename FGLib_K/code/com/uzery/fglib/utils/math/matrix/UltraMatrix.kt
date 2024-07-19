@@ -3,6 +3,7 @@ package com.uzery.fglib.utils.math.matrix
 import com.uzery.fglib.utils.MathUtils
 import com.uzery.fglib.utils.data.debug.DebugData
 import com.uzery.fglib.utils.math.geom.PointN
+import com.uzery.fglib.utils.struct.Array2
 import kotlin.math.abs
 
 class UltraMatrix(data: Array2<Double>): Matrix(data) {
@@ -14,7 +15,7 @@ class UltraMatrix(data: Array2<Double>): Matrix(data) {
 
     fun connect(other: UltraMatrix): UltraMatrix {
         if (this.width != other.width) throw DebugData.error("WRONG CONNECT OPERATION: \n$this\n\n$other")
-        val res = Array2(width, height+other.height, 0.0)
+        val res = Array2(width, height+other.height) { 0.0 }
         res.set { i, j -> if (j < height) this[i, j] else other[i, j-height] }
         return UltraMatrix(res)
     }
