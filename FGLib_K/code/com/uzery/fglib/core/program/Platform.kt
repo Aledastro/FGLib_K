@@ -42,10 +42,6 @@ object Platform {
         }
 
     var options: LaunchOptions = LaunchOptions.default
-        get() {
-            if (field == null) return LaunchOptions.default
-            return field //todo: it's so absurd, need to rework
-        }
     lateinit var ets: Array<out Extension>
 
     fun exit() {
