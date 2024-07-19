@@ -15,5 +15,5 @@ abstract class FGImagePackager {
     abstract fun setPixels(source: Any, dest: IntI, size: IntI, origin: Any, src: IntI)
     abstract fun setArgb(source: Any, pos: IntI, argb: Int)
 
-    abstract fun writeImage(image: Any, path: String)
+    abstract fun writeImage(source: Any, path: String)
 }
