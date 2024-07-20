@@ -21,8 +21,8 @@ abstract class Visualiser: ObjectComponent {
     }
 
     var sortPOS = PointN.ZERO
+    protected var main: RectN? = null
 
-    var main: RectN? = null
     val agc: AffineGraphics
         get() = Platform.graphics
 }
