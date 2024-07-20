@@ -1,19 +1,23 @@
 package com.uzery.fglib.utils
 
-import com.uzery.fglib.utils.data.debug.DebugData
 import com.uzery.fglib.utils.math.geom.PointN
 import com.uzery.fglib.utils.math.geom.Shape
+import com.uzery.fglib.utils.math.geom.Shape.Code
 import com.uzery.fglib.utils.math.geom.shape.FigureN
 import com.uzery.fglib.utils.math.geom.shape.FigureRectN
 import com.uzery.fglib.utils.math.geom.shape.OvalN
 import com.uzery.fglib.utils.math.geom.shape.RectN
+import kotlin.math.max
+import kotlin.math.min
 
 object ShapeUtils {
     fun rect(shape: Shape) = RectN(shape.L, shape.S)
     fun oval(shape: Shape) = OvalN(shape.L, shape.S)
 
-    fun intoRect(first: RectN, second: RectN): Boolean {
-        return (0 until first.dim).all { i -> first.L[i] < second.R[i] && second.L[i] < first.R[i] }
+    private fun intoRect(first: RectN, second: RectN): Boolean {
+        return (0 until first.dim).all { i ->
+            first.L[i] < second.R[i] && second.L[i] < first.R[i]
+        }
     }
 
     private fun intoOval(first: OvalN, second: OvalN): Boolean {
@@ -25,62 +29,52 @@ object ShapeUtils {
         return (first*second).exists()
     }
 
-
     private fun intoRectOval(rect: RectN, oval: OvalN): Boolean {
-        return intoFigureOval(oval, FigureRectN(rect))
+        return intoOvalFigure(oval, FigureRectN(rect))
     }
 
     private fun intoRectFigure(rect: RectN, figure: FigureN): Boolean {
         return intoFigure(FigureRectN(rect), figure)
     }
 
-    private fun intoFigureOval(oval: OvalN, figure: FigureN): Boolean {
+    private fun intoOvalFigure(oval: OvalN, figure: FigureN): Boolean {
         return figure.fields.all { f ->
             f.intoHalf(oval.C, oval.S[0]/2)
         }
     }
 
     fun into(first: Shape, second: Shape): Boolean {
+        if (first is RectN && second is RectN) return intoRect(first, second)
+
         if (!intoRect(rect(first), rect(second))) return false
-        return when {
-            first.code == Shape.Code.RECT && second.code == Shape.Code.RECT -> {
-                true
+
+        return when (first.code) {
+            Code.RECT -> {
+                first as RectN
+                when (second.code) {
+                    Code.RECT -> true
+                    Code.OVAL -> intoRectOval(first, second as OvalN)
+                    Code.FIGURE -> intoRectFigure(first, second as FigureN)
+                }
             }
 
-            first.code == Shape.Code.OVAL && second.code == Shape.Code.OVAL -> {
-                intoOval(first as OvalN, second as OvalN)
+            Code.OVAL -> {
+                first as OvalN
+                when (second.code) {
+                    Code.RECT -> intoRectOval(second as RectN, first)
+                    Code.OVAL -> intoOval(first, second as OvalN)
+                    Code.FIGURE -> intoOvalFigure(first, second as FigureN)
+                }
             }
 
-            first.code == Shape.Code.FIGURE && second.code == Shape.Code.FIGURE -> {
-                intoFigure(first as FigureN, second as FigureN)
+            Code.FIGURE -> {
+                first as FigureN
+                when (second.code) {
+                    Code.RECT -> intoRectFigure(second as RectN, first)
+                    Code.OVAL -> intoOvalFigure(second as OvalN, first)
+                    Code.FIGURE -> intoFigure(first, second as FigureN)
+                }
             }
-            ////////////////////////////////////////////////////////////////////
-            first.code == Shape.Code.OVAL && second.code == Shape.Code.RECT -> {
-                intoRectOval(second as RectN, first as OvalN)
-            }
-
-            first.code == Shape.Code.RECT && second.code == Shape.Code.OVAL -> {
-                intoRectOval(first as RectN, second as OvalN)
-            }
-            ////////////////////////////////////////////////////////////////////
-            first.code == Shape.Code.OVAL && second.code == Shape.Code.FIGURE -> {
-                intoFigureOval(first as OvalN, second as FigureN)
-            }
-
-            first.code == Shape.Code.FIGURE && second.code == Shape.Code.OVAL -> {
-                intoFigureOval(second as OvalN, first as FigureN)
-            }
-            ////////////////////////////////////////////////////////////////////
-            first.code == Shape.Code.FIGURE && second.code == Shape.Code.RECT -> {
-                intoRectFigure(second as RectN, first as FigureN)
-            }
-
-            first.code == Shape.Code.RECT && second.code == Shape.Code.FIGURE -> {
-                intoRectFigure(first as RectN, second as FigureN)
-            }
-            ////////////////////////////////////////////////////////////////////
-
-            else -> throw DebugData.error("ERROR: illegal shape codes: ${first.code}, ${second.code}")
         }
     }
 
@@ -89,8 +83,8 @@ object ShapeUtils {
     }
 
     fun rectX(first: RectN, second: RectN): RectN {
-        fun minP(a: PointN, b: PointN) = PointN.transform(a, b) { x, y -> kotlin.math.min(x, y) }
-        fun maxP(a: PointN, b: PointN) = PointN.transform(a, b) { x, y -> kotlin.math.max(x, y) }
+        fun minP(a: PointN, b: PointN) = PointN.transform(a, b) { x, y -> min(x, y) }
+        fun maxP(a: PointN, b: PointN) = PointN.transform(a, b) { x, y -> max(x, y) }
 
         return RectN.LR(minP(first.L, second.L), maxP(first.R, second.R))
     }

@@ -104,9 +104,8 @@ object WorldUtils {
             }
 
             for (v in o.visuals) {
-                val sortPOS = v.sortPOS ?: continue
-                if (sortPOS.length() > 1) {
-                    graphics.fill.ovalC(draw_pos+sortPOS, STEP, c)
+                if (v.sortPOS.length() > 1) {
+                    graphics.fill.ovalC(draw_pos+o.stats.sortPOS+v.sortPOS, STEP, c)
                 }
             }
         }
