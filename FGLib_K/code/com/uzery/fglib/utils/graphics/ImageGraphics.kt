@@ -2,7 +2,6 @@ package com.uzery.fglib.utils.graphics
 
 import com.uzery.fglib.utils.data.image.FGImage
 import com.uzery.fglib.utils.data.image.ImageData
-import com.uzery.fglib.utils.data.image.ImageUtils
 import com.uzery.fglib.utils.math.geom.PointN
 
 abstract class ImageGraphics(private val agc: AffineGraphics) {

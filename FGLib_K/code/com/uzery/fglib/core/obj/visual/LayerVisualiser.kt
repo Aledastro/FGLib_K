@@ -8,6 +8,7 @@ abstract class LayerVisualiser(private val layer: DrawLayer): Visualiser() {
     constructor(pos: PointN, size: PointN, layer: DrawLayer): this(layer) {
         main = RectN(pos, size)
     }
+
     constructor(size: PointN, layer: DrawLayer): this(-size/2, size, layer)
 
     final override fun drawLayer(): DrawLayer = layer

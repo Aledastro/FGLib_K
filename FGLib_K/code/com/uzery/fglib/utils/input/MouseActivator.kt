@@ -3,7 +3,6 @@ package com.uzery.fglib.utils.input
 import com.uzery.fglib.core.program.Platform.graphics
 import com.uzery.fglib.utils.input.data.FGMouseKey
 import com.uzery.fglib.utils.math.geom.PointN
-import com.uzery.fglib.utils.math.geom.shape.RectN
 import kotlin.math.sign
 
 abstract class MouseActivator {

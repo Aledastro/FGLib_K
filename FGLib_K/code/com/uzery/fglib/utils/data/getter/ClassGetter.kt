@@ -3,9 +3,9 @@ package com.uzery.fglib.utils.data.getter
 import com.uzery.fglib.utils.graphics.data.FGColor
 import com.uzery.fglib.utils.math.geom.Direct
 import com.uzery.fglib.utils.math.geom.PointN
+import com.uzery.fglib.utils.math.solve.MathSolveUtils
 import com.uzery.fglib.utils.struct.num.IntI
 import com.uzery.fglib.utils.struct.num.StringN
-import com.uzery.fglib.utils.math.solve.MathSolveUtils
 
 abstract class ClassGetter<Type>: AbstractClassGetter<Type>() {
     protected var no_info = false

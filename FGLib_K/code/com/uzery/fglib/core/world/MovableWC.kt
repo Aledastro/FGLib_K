@@ -12,7 +12,6 @@ import com.uzery.fglib.utils.math.geom.PointN
 import com.uzery.fglib.utils.math.geom.shape.RectN
 
 class MovableWC(private val goal: GameObject, private val room_p: Double = 10.0): WorldController {
-
     private val SIZE = Int.MAX_VALUE/2
     private val SIZE_P = PointN(SIZE, SIZE)
 

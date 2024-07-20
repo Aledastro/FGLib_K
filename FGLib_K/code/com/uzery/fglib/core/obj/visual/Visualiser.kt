@@ -13,7 +13,7 @@ abstract class Visualiser: ObjectComponent {
     abstract fun drawLayer(): DrawLayer
 
     fun drawWithDefaults(draw_pos: PointN) {
-        if(main != null && !ShapeUtils.into(main!!.copy(draw_pos), Platform.CANVAS_R)) return
+        if (main != null && !ShapeUtils.into(main!!.copy(draw_pos), Platform.CANVAS_R)) return
 
         agc.setDefaults()
         agc.layer = drawLayer()
