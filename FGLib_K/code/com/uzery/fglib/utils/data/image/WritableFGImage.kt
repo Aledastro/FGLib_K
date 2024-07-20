@@ -15,8 +15,8 @@ open class WritableFGImage(val size: IntI) {
         return packager.image.colorFrom(source, pos)
     }
 
-    fun setPixels(dest: IntI, size: IntI, origin: FGImage, src: IntI) {
-        packager.image.setPixels(source, dest, size, origin.source, src)
+    fun setPixels(pos: IntI, size: IntI, origin: FGImage) {
+        packager.image.setPixels(source, pos, size, origin.source)
     }
 
     fun setArgb(pos: IntI, argb: Int) {
@@ -28,7 +28,7 @@ open class WritableFGImage(val size: IntI) {
     }
 
     fun draw(origin: FGImage) {
-        setPixels(IntI(), origin.size, origin, IntI())
+        setPixels(IntI(), origin.size, origin)
     }
 
     fun toFGImage(): FGImage {

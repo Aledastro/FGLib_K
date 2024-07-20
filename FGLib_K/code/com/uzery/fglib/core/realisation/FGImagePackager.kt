@@ -12,7 +12,7 @@ abstract class FGImagePackager {
 
     abstract fun createWritableImage(size: IntI): Any
     abstract fun setColor(source: Any, pos: IntI, fgColor: FGColor)
-    abstract fun setPixels(source: Any, dest: IntI, size: IntI, origin: Any, src: IntI)
+    abstract fun setPixels(source: Any, pos: IntI, size: IntI, origin: Any)
     abstract fun setArgb(source: Any, pos: IntI, argb: Int)
 
     abstract fun writeImage(source: Any, path: String)

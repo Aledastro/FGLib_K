@@ -31,7 +31,7 @@ object ImageUtils {
 
     fun split(origin: FGImage, pos: IntI, size: IntI): FGImage {
         val res = WritableFGImage(size)
-        res.setPixels(IntI(), size, origin, pos)
+        res.setPixels(pos, size, origin)
         return res.toFGImage()
     }
 
