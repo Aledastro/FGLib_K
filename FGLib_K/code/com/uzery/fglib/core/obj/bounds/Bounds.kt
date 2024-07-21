@@ -20,8 +20,8 @@ class Bounds {
     fun main(): RectN? {
         if (empty) return null
 
-        var min = PointN.ZERO
-        var max = PointN.ZERO
+        lateinit var min: PointN
+        lateinit var max: PointN
         var first = true
 
         for (element in elements) {
@@ -34,6 +34,8 @@ class Bounds {
             min = PointN.transform(min, shape.L) { a, b -> min(a, b) }
             max = PointN.transform(max, shape.R) { a, b -> max(a, b) }
         }
+
+        if (first) return null
         return RectN.LR(min, max)
     }
 
@@ -45,5 +47,9 @@ class Bounds {
         val els = ArrayList<BoundsElement>()
         elements.forEach { els.add(it.copy(pos)) }
         return Bounds().also { it.add(els) }
+    }
+
+    fun into(pos: PointN): Boolean {
+        return elements.any { it.shape()?.into(pos) == true }
     }
 }

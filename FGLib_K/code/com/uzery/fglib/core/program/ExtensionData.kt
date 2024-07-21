@@ -39,7 +39,7 @@ class ExtensionData {
     var layout = FGLayout.TOP_LEFT
 
     var size = PointN.ZERO
-    //todo: get() = if (bounds != null) bounds.size else field
+        get() = bounds?.main()?.S ?: field
 
     var transform: AffineTransform? = null
 

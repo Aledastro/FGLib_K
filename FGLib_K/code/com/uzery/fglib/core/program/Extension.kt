@@ -2,6 +2,8 @@ package com.uzery.fglib.core.program
 
 import com.uzery.fglib.core.program.Platform.graphics
 import com.uzery.fglib.core.program.Platform.mouse
+import com.uzery.fglib.utils.BoundsUtils
+import com.uzery.fglib.utils.ShapeUtils
 import com.uzery.fglib.utils.math.geom.PointN
 import com.uzery.fglib.utils.math.geom.shape.RectN
 
@@ -15,8 +17,9 @@ abstract class Extension(vararg children: Extension) {
 
     fun mouseIn(): Boolean {
         //todo: size -> bounds
-        if (stats.size == PointN.ZERO) return false
-        return RectN(stats.real_pos, stats.size).into(mouse.pos)
+        stats.bounds?.let { return it.into(mouse.pos-stats.real_pos) }
+        if (stats.size != PointN.ZERO) return RectN(stats.real_pos, stats.size).into(mouse.pos)
+        return false
     }
 
     fun mouseAt(): Boolean {
