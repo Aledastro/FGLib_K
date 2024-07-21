@@ -5,6 +5,7 @@ import com.uzery.fglib.core.obj.ObjectComponent
 import com.uzery.fglib.core.program.Platform
 import com.uzery.fglib.utils.ShapeUtils
 import com.uzery.fglib.utils.graphics.AffineGraphics
+import com.uzery.fglib.utils.graphics.data.FGColor
 import com.uzery.fglib.utils.math.geom.PointN
 import com.uzery.fglib.utils.math.geom.shape.RectN
 
@@ -13,7 +14,7 @@ abstract class Visualiser: ObjectComponent {
     abstract fun drawLayer(): DrawLayer
 
     fun drawWithDefaults(draw_pos: PointN) {
-        if (main != null && !ShapeUtils.into(main!!.copy(draw_pos), Platform.CANVAS_R)) return
+        //todo if (main != null && !ShapeUtils.into(main!!.copy(draw_pos), Platform.CANVAS_R)) return
 
         agc.setDefaults()
         agc.layer = drawLayer()

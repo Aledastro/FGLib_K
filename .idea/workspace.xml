@@ -12,7 +12,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="82970e50-af90-458e-a847-e0b07c98f932" name="Changes" comment="FGLib v.0.14.19.1 [K]">
+    <list default="true" id="82970e50-af90-458e-a847-e0b07c98f932" name="Changes" comment="FGLib v.0.14.19.2 [K]">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FGLib_K/code/com/uzery/fglib/core/obj/visual/LayerVisualiser.kt" beforeDir="false" afterPath="$PROJECT_DIR$/FGLib_K/code/com/uzery/fglib/core/obj/visual/LayerVisualiser.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/FGLib_K/code/com/uzery/fglib/core/obj/visual/Visualiser.kt" beforeDir="false" afterPath="$PROJECT_DIR$/FGLib_K/code/com/uzery/fglib/core/obj/visual/Visualiser.kt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -472,7 +474,7 @@
       <option name="project" value="LOCAL" />
       <updated>1717724053257</updated>
     </task>
-    <option name="localTasksCounter" value="502" />
+    <option name="localTasksCounter" value="503" />
     <servers />
   </component>
   <component name="UnknownFeatures">
@@ -502,7 +504,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="FGLib v.0.14.12.4 [K]" />
     <MESSAGE value="FGLib v.0.14.12.5 [K]" />
     <MESSAGE value="FGLib v.0.14.13.0 [K]" />
     <MESSAGE value="FGLib v.0.14.14.0 [K]" />
@@ -527,7 +528,8 @@
     <MESSAGE value="FGLib v.0.14.18.8 [K]" />
     <MESSAGE value="FGLib v.0.14.19.0 [K]" />
     <MESSAGE value="FGLib v.0.14.19.1 [K]" />
-    <option name="LAST_COMMIT_MESSAGE" value="FGLib v.0.14.19.1 [K]" />
+    <MESSAGE value="FGLib v.0.14.19.2 [K]" />
+    <option name="LAST_COMMIT_MESSAGE" value="FGLib v.0.14.19.2 [K]" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
