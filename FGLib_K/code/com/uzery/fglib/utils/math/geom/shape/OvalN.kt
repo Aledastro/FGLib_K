@@ -13,8 +13,8 @@ data class OvalN(private val pos: PointN, private val size: PointN): Shape() {
         return C.lengthTo(pos) < size[0]/2 //todo
     }
 
-    override val L = pos-size/2
-    override val R = pos+size/2
+    override val L = pos
+    override val R = pos+size
 
     override val code = Code.OVAL
 

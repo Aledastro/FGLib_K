@@ -10,12 +10,27 @@ class Bounds {
     val elements = ArrayList<BoundsElement>()
 
     fun add(vararg els: BoundsElement) = els.forEach { element -> elements.add(element) }
-
-    fun add(els: List<BoundsElement>) = els.forEach { element -> elements.add(element) }
-
     fun add(vararg shapes: () -> Shape?) = shapes.forEach { shape -> elements.add(BoundsElement(shape)) }
     fun add(shape: () -> Shape?) = elements.add(BoundsElement(shape))
     fun add(name: String, shape: () -> Shape?) = elements.add(BoundsElement(name, shape))
+
+    constructor()
+
+    constructor(vararg els: BoundsElement) {
+        add(*els)
+    }
+
+    constructor(vararg shape: () -> Shape?) {
+        add(*shape)
+    }
+
+    constructor(shape: () -> Shape?) {
+        add(shape)
+    }
+
+    constructor(name: String, shape: () -> Shape?) {
+        add(name, shape)
+    }
 
     fun main(): RectN? {
         if (empty) return null
@@ -46,7 +61,7 @@ class Bounds {
     fun copy(pos: PointN): Bounds {
         val els = ArrayList<BoundsElement>()
         elements.forEach { els.add(it.copy(pos)) }
-        return Bounds().also { it.add(els) }
+        return Bounds(*els.toTypedArray())
     }
 
     fun into(pos: PointN): Boolean {
