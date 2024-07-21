@@ -10,7 +10,9 @@ data class OvalN(private val pos: PointN, private val size: PointN): Shape() {
     override fun copy(move: PointN) = OvalN(pos+move, size)
 
     override fun into(pos: PointN): Boolean {
-        return C.lengthTo(pos) < size[0]/2 //todo
+        val st_pos = pos/size
+        val st_oval = OvalN(this.pos/size, PointN(1, 1))
+        return st_oval.C.lengthTo(st_pos) < 0.5
     }
 
     override val L = pos
