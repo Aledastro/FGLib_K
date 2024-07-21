@@ -2,8 +2,6 @@ package com.uzery.fglib.core.program
 
 import com.uzery.fglib.core.program.Platform.graphics
 import com.uzery.fglib.core.program.Platform.mouse
-import com.uzery.fglib.utils.BoundsUtils
-import com.uzery.fglib.utils.ShapeUtils
 import com.uzery.fglib.utils.math.geom.PointN
 import com.uzery.fglib.utils.math.geom.shape.RectN
 
