@@ -21,6 +21,15 @@ object ShapeUtils {
     }
 
     private fun intoOval(first: OvalN, second: OvalN): Boolean {
+        var max_r1 = 0.0
+        var max_r2 = 0.0
+
+        for (i in 0 until  first.C.dim) {
+            max_r1 = max(max_r1, first.S[i])
+            max_r2 = max(max_r2, second.S[i])
+        }
+        if ((first.C-second.C).length() < (max_r1+max_r2)/2) return false
+
         //todo circleN
         return (first.C-second.C).length() < (first.S[0]+second.S[0])/2
     }
@@ -39,7 +48,7 @@ object ShapeUtils {
 
     private fun intoOvalFigure(oval: OvalN, figure: FigureN): Boolean {
         return figure.fields.all { f ->
-            f.intoHalf(oval.C, oval.S[0]/2)
+            f.intoHalf(oval.C, oval.S[0]/2) //todo
         }
     }
 
