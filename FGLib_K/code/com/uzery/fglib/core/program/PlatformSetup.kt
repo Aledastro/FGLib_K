@@ -8,4 +8,12 @@ object PlatformSetup {
     fun init(realisation: FGRealisation) {
         this.realisation = realisation
     }
+
+    fun startProcess(options: LaunchOptions, vararg ets: Extension) {
+        realisation.startProcess(options, *ets)
+    }
+
+    fun startProcess(vararg ets: Extension) {
+        startProcess(LaunchOptions.default, *ets)
+    }
 }
