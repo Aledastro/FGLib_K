@@ -5,7 +5,7 @@ import com.uzery.fglib.utils.data.image.ImageData
 import com.uzery.fglib.utils.math.geom.PointN
 
 abstract class ImageGraphics(private val agc: AffineGraphics) {
-    val transform
+    protected val transform
         get() = agc.transform
 
     var alpha = 1.0

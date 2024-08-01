@@ -73,9 +73,10 @@ abstract class AffineGraphics {
     }
 
     internal fun isOutOfBounds(pos: PointN, size: PointN): Boolean {
-        val pos2 = pos+size
-        for (i in 0 until pos.dim) {
-            val list = listOf(pos[i], pos2[i])
+        val pos1 = transform.pos(pos)
+        val pos2 = transform.pos(pos+size)
+        for (i in 0 until pos1.dim) {
+            val list = listOf(pos1[i], pos2[i])
 
             if (list.all { it < 0 } || list.all { it > CANVAS_REAL[i] }) {
                 return true

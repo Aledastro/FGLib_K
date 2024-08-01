@@ -11,7 +11,7 @@ import com.uzery.fglib.utils.math.geom.Shape
 import com.uzery.fglib.utils.math.geom.shape.FigureN
 
 abstract class GeometryGraphics(protected val agc: AffineGraphics) {
-    val transform
+    protected val transform
         get() = agc.transform
 
     var alpha = 1.0
