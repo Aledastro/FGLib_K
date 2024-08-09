@@ -12,11 +12,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="82970e50-af90-458e-a847-e0b07c98f932" name="Changes" comment="FGLib v.0.14.23.0 [K]">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FGLib_K/code/com/uzery/fglib/core/program/LaunchConfiguration.kt" beforeDir="false" afterPath="$PROJECT_DIR$/FGLib_K/code/com/uzery/fglib/core/program/LaunchConfiguration.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FGLib_K/code/com/uzery/fglib/core/program/PlatformSetup.kt" beforeDir="false" afterPath="$PROJECT_DIR$/FGLib_K/code/com/uzery/fglib/core/program/PlatformSetup.kt" afterDir="false" />
-    </list>
+    <list default="true" id="82970e50-af90-458e-a847-e0b07c98f932" name="Changes" comment="FGLib v.0.14.23.1 [K]" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -474,7 +470,7 @@
       <option name="project" value="LOCAL" />
       <updated>1717724053257</updated>
     </task>
-    <option name="localTasksCounter" value="512" />
+    <option name="localTasksCounter" value="513" />
     <servers />
   </component>
   <component name="UnknownFeatures">
@@ -504,7 +500,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="FGLib v.0.14.16.0 [K]" />
     <MESSAGE value="FGLib v.0.14.16.1 [K]" />
     <MESSAGE value="FGLib v.0.14.16.2 [K]" />
     <MESSAGE value="FGLib v.0.14.17.0 [K]" />
@@ -529,7 +524,8 @@
     <MESSAGE value="FGLib v.0.14.22.1 [K]" />
     <MESSAGE value="FGLib v.0.14.22.2 [K]" />
     <MESSAGE value="FGLib v.0.14.23.0 [K]" />
-    <option name="LAST_COMMIT_MESSAGE" value="FGLib v.0.14.23.0 [K]" />
+    <MESSAGE value="FGLib v.0.14.23.1 [K]" />
+    <option name="LAST_COMMIT_MESSAGE" value="FGLib v.0.14.23.1 [K]" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
