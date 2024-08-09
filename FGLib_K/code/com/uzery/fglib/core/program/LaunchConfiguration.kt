@@ -7,7 +7,7 @@ import com.uzery.fglib.utils.data.image.ImageData
 
 abstract class LaunchConfiguration {
     abstract val main: Extension
-    abstract val options: Extension
+    abstract val options: LaunchOptions
 
     fun init() {
         updatePathDirs()
@@ -15,12 +15,12 @@ abstract class LaunchConfiguration {
         init0()
     }
 
-    protected abstract fun init0()
     protected open fun updatePathDirs() {
         val dir = FGUtils.project_dir
         TextData.dir = "$dir/media/files/"
         ImageData.dir = "$dir/media/images/"
         AudioData.dir = "$dir/media/audio/"
     }
-    protected abstract fun updatePaths()
+    protected open fun updatePaths() {}
+    protected open fun init0() {}
 }

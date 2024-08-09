@@ -9,16 +9,16 @@ object PlatformSetup {
         this.realisation = realisation
     }
 
-    fun startProcess(configuration: LaunchConfiguration) {
-        configuration.init()
-        startProcess(configuration.main, configuration.options)
-    }
-
     fun startProcess(options: LaunchOptions, vararg ets: Extension) {
         realisation.startProcess(options, *ets)
     }
 
     fun startProcess(vararg ets: Extension) {
         startProcess(LaunchOptions.default, *ets)
+    }
+
+    fun startProcess(configuration: LaunchConfiguration) {
+        configuration.init()
+        startProcess(configuration.options, configuration.main)
     }
 }
