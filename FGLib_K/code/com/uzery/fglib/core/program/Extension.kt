@@ -31,6 +31,7 @@ abstract class Extension(vararg children: Extension) {
 
         return RectN(stats.real_pos+pos, size).into(mouse.pos)
     }
+
     fun mouseAt(pos: PointN, size: PointN): Boolean {
         return mouseIn(pos, size) && mouseAt()
     }

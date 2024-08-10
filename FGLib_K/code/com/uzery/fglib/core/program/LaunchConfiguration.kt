@@ -21,6 +21,7 @@ abstract class LaunchConfiguration {
         ImageData.dir = "$dir/media/images/"
         AudioData.dir = "$dir/media/audio/"
     }
+
     protected open fun updatePaths() {}
     protected open fun init0() {}
 }

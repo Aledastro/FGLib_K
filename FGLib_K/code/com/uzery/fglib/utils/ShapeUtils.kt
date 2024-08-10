@@ -24,7 +24,7 @@ object ShapeUtils {
         var max_r1 = 0.0
         var max_r2 = 0.0
 
-        for (i in 0 until  first.C.dim) {
+        for (i in 0 until first.C.dim) {
             max_r1 = max(max_r1, first.S[i])
             max_r2 = max(max_r2, second.S[i])
         }
