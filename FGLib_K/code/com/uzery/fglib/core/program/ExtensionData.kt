@@ -23,7 +23,7 @@ class ExtensionData {
             return layoutP+s_pos
         }
 
-    internal val real_pos: PointN
+    val real_pos: PointN
         get() {
             val owner = owner ?: return layout_pos
             val ownerP = owner.stats.real_pos
