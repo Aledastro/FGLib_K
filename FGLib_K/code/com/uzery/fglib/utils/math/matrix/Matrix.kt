@@ -41,7 +41,7 @@ open class Matrix(val data: Array2<Double>) {
 
     fun swapRows(row1: Int, row2: Int) {
         if (row1 == row2) return
-        for (i in 0 until height) {
+        for (i in 0..<height) {
             val temp1 = data[row1, i]
             val temp2 = data[row2, i]
             data[row1, i] = temp2
@@ -52,7 +52,7 @@ open class Matrix(val data: Array2<Double>) {
     fun swapStrokes(stroke1: Int, stroke2: Int) {
         if (stroke1 == stroke2) return
 
-        for (i in 0 until width) {
+        for (i in 0..<width) {
             val temp1 = data[i, stroke1]
             val temp2 = data[i, stroke2]
             data[i, stroke1] = temp2
@@ -61,13 +61,13 @@ open class Matrix(val data: Array2<Double>) {
     }
 
     fun multiplyStroke(stroke: Int, value: Double) {
-        for (i in 0 until width) {
+        for (i in 0..<width) {
             data[i, stroke] = data[i, stroke]*value
         }
     }
 
     fun minusStrokes(stroke1: Int, stroke2: Int) {
-        for (i in 0 until width) {
+        for (i in 0..<width) {
             data[i, stroke1] -= data[i, stroke2]
         }
     }
@@ -75,9 +75,9 @@ open class Matrix(val data: Array2<Double>) {
     override fun toString(): String {
         val res = StringBuilder()
         res.append("\n")
-        for (stroke in 0 until height) {
+        for (stroke in 0..<height) {
             res.append("| ")
-            for (row in 0 until width) {
+            for (row in 0..<width) {
                 res.append("${data[row, stroke]} ")
             }
             res.append("|\n")

@@ -20,17 +20,17 @@ class UltraMatrix(data: Array2<Double>): Matrix(data) {
         return UltraMatrix(res)
     }
 
-    private fun level(j: Int) = (0 until width).sumOf { i -> data[i, j]*data[i, j] }
-    private fun levelFor(pos: PointN, j: Int) = (0 until width).sumOf { i -> pos[i]*data[i, j] }
+    private fun level(j: Int) = (0..<width).sumOf { i -> data[i, j]*data[i, j] }
+    private fun levelFor(pos: PointN, j: Int) = (0..<width).sumOf { i -> pos[i]*data[i, j] }
 
     fun move(pos: PointN) {
-        for (stroke in 0 until height) {
+        for (stroke in 0..<height) {
             val xs = Array(width) { data[it, stroke] }
             val c_pos = PointN(xs)
             val lv = levelFor(c_pos+pos, stroke)/levelFor(c_pos, stroke)
             if (lv < 0) sign[stroke] *= -1
 
-            for (row in 0 until width) {
+            for (row in 0..<width) {
                 data[row, stroke] *= lv
             }
         }
@@ -50,20 +50,20 @@ class UltraMatrix(data: Array2<Double>): Matrix(data) {
 
 
     fun into(pos: PointN): Boolean {
-        return (0 until height).all { j -> MathUtils.little(levelFor(pos, j)-level(j)) }
+        return (0..<height).all { j -> MathUtils.little(levelFor(pos, j)-level(j)) }
     }
 
     //todo: dev method
     fun intoS(pos: PointN): Boolean {
-        return (0 until height).all { j -> abs(levelFor(pos, j)-level(j)) < 10 }
+        return (0..<height).all { j -> abs(levelFor(pos, j)-level(j)) < 10 }
     }
 
     fun intoHalf(pos: PointN): Boolean {
-        return (0 until height).all { j -> (levelFor(pos, j)-level(j))*sign[j] <= 0 }
+        return (0..<height).all { j -> (levelFor(pos, j)-level(j))*sign[j] <= 0 }
     }
 
     fun intoHalf(pos: PointN, value: Double = 0.0): Boolean {
-        return (0 until height).all { j -> (levelFor(pos, j)-level(j))*sign[j] <= -value }
+        return (0..<height).all { j -> (levelFor(pos, j)-level(j))*sign[j] <= -value }
     }
 
     private val rows_panel = Array(width) { it }
@@ -98,15 +98,15 @@ class UltraMatrix(data: Array2<Double>): Matrix(data) {
 
     fun toTriangle(): Int {
         fun findFirstInRow(row: Int): Int {
-            for (j in row until height) {
+            for (j in row..<height) {
                 if (data[row, j] != 0.0) return j
             }
             return -1
         }
 
         fun findFirstRowAfter(row: Int): Int {
-            for (i in row until width) {
-                for (j in row until height) {
+            for (i in row..<width) {
+                for (j in row..<height) {
                     if (data[i, j] != 0.0) return i
                 }
             }
@@ -114,7 +114,7 @@ class UltraMatrix(data: Array2<Double>): Matrix(data) {
         }
 
         var lastStroke = 0
-        for (row in 0 until width) {
+        for (row in 0..<width) {
             val notZeroRow = findFirstRowAfter(row)
             if (notZeroRow == -1) {
                 break
@@ -122,7 +122,7 @@ class UltraMatrix(data: Array2<Double>): Matrix(data) {
             swapRowsX(row, notZeroRow)
             swapStrokesX(row, findFirstInRow(row))
 
-            for (stroke in row+1 until height) {
+            for (stroke in row+1..<height) {
                 if ((data[row, stroke]) != 0.0) {
                     multiplyStrokeX(stroke, data[row, row]/data[row, stroke])
                     minusStrokesX(stroke, row)
@@ -139,14 +139,14 @@ class UltraMatrix(data: Array2<Double>): Matrix(data) {
 
         if (lastStroke != height-1 || width != height) return false
 
-        for (stroke in lastStroke+1 until height) {
+        for (stroke in lastStroke+1..<height) {
             if (!MathUtils.little(strokes_values[stroke])) return false
         }
 
-        for (row in 0 until width) {
+        for (row in 0..<width) {
             val actual_row = width-1-row
 
-            for (stroke in 0 until actual_row) {
+            for (stroke in 0..<actual_row) {
                 if ((data[actual_row, stroke]) != 0.0) {
                     multiplyStrokeX(stroke, data[actual_row, actual_row]/data[actual_row, stroke])
                     minusStrokesX(stroke, actual_row)
@@ -159,7 +159,7 @@ class UltraMatrix(data: Array2<Double>): Matrix(data) {
     fun exists(): Boolean {
         val lastStroke = copyU().toTriangle()
 
-        for (stroke in lastStroke+1 until height) {
+        for (stroke in lastStroke+1..<height) {
             if (!MathUtils.little(level(stroke))) return false
         }
 
@@ -190,7 +190,7 @@ class UltraMatrix(data: Array2<Double>): Matrix(data) {
 
 
         val xs = Array(matrix.width) { 0.0 }
-        for (i in 0 until matrix.width) {
+        for (i in 0..<matrix.width) {
             val id = matrix.rows_panel[i]
             xs[id] = matrix.strokes_values[i]/matrix[i, i]
         }

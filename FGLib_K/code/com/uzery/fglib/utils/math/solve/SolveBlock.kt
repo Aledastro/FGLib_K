@@ -116,7 +116,7 @@ class SolveBlock(
 
         val list = breaks.toList().sorted()
         val res = ArrayList<String>()
-        for (i in 0 until list.size-1) {
+        for (i in 0..<list.size-1) {
             res.add(expression.substring(list[i], list[i+1]))
         }
         return res

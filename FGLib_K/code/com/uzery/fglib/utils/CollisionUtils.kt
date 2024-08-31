@@ -58,7 +58,7 @@ object CollisionUtils {
 
 
     private fun maxMoveRect(stay: RectN, start: RectN, finish: RectN): Double {
-        return (0 until start.dim).minOf { level -> maxMoveRect(stay, start, finish, level) }
+        return (0..<start.dim).minOf { level -> maxMoveRect(stay, start, finish, level) }
     }
 
     private fun maxMoveRect(stay: RectN, start: RectN, finish: RectN, level: Int): Double {
@@ -79,7 +79,7 @@ object CollisionUtils {
             return if (blockedMove) k else MAX_MOVE_K
         }
 
-        for (i in 1 until dim) {
+        for (i in 1..<dim) {
             val lv = MathUtils.mod(level+i, dim)
 
             path1 = checkMoveOn(path1, lv)

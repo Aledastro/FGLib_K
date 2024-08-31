@@ -112,7 +112,7 @@ object WorldUtils {
     }
 
     fun drawBoundsFor(o: GameObject, pos: PointN) {
-        for (i in 0 until BoundsBox.SIZE) {
+        for (i in 0..<BoundsBox.SIZE) {
             drawBoundsFor(o, pos, i)
         }
     }
@@ -189,7 +189,7 @@ object WorldUtils {
 
     fun nextDebugForRoom(room: Room) {
         if (bs_n[room] == null) bs_n[room] = Array(BoundsBox.SIZE) { 0 }
-        for (index in 0 until BoundsBox.SIZE) {
+        for (index in 0..<BoundsBox.SIZE) {
             bs_n[room]!![index] = room.objects.count { !it.bounds[index].empty }
         }
     }
@@ -216,7 +216,7 @@ object WorldUtils {
 
         graphics.fill.text(p+PointN(0, 60), "FPS: ${(fps/100).toInt()}", FGColor.DARKBLUE)
 
-        for (index in 0 until BoundsBox.SIZE) {
+        for (index in 0..<BoundsBox.SIZE) {
             graphics.fill.text(
                 p+PointN(0, 70+index*10),
                 "bounds[${BoundsBox.name(index)}]: ${bs_n[room]!![index]}",

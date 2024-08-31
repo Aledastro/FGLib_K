@@ -16,7 +16,7 @@ abstract class KeyActivator<Key>(private val values: Array<Key>) {
 
     /** extremely important function! **/
     fun update() {
-        for (i in 0 until size) {
+        for (i in 0..<size) {
             pressedInt[i] = pressedInt(i)
             timePressed[i]++
             timeReleased[i]++

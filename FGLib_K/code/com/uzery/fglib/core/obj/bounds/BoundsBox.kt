@@ -19,10 +19,10 @@ class BoundsBox {
     companion object {
         enum class CODE { RED, ORANGE, BLUE, GREEN }
 
-        fun name(index: Int) = CODE.values()[index].name
+        fun name(index: Int) = CODE.entries[index].name
         fun index(name: String) = CODE.valueOf(name).ordinal
 
-        val SIZE = CODE.values().size
+        val SIZE = CODE.entries.size
 
         val RED = CODE.RED.ordinal
         val ORANGE = CODE.ORANGE.ordinal

@@ -15,7 +15,7 @@ object ShapeUtils {
     fun oval(shape: Shape) = OvalN(shape.L, shape.S)
 
     private fun intoRect(first: RectN, second: RectN): Boolean {
-        return (0 until first.dim).all { i ->
+        return (0..<first.dim).all { i ->
             first.L[i] < second.R[i] && second.L[i] < first.R[i]
         }
     }
@@ -24,7 +24,7 @@ object ShapeUtils {
         var max_r1 = 0.0
         var max_r2 = 0.0
 
-        for (i in 0 until first.C.dim) {
+        for (i in 0..<first.C.dim) {
             max_r1 = max(max_r1, first.S[i])
             max_r2 = max(max_r2, second.S[i])
         }

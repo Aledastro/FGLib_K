@@ -40,11 +40,11 @@ open class FigureN(val fields: List<FieldN>): Shape() {
         val current_fields = ArrayList<FieldN>()
         current_fields.addAll(fields)
         //todo it doesn't work well for large dim>3
-        for (d in 0 until dim-1) {
+        for (d in 0..<dim-1) {
             val next_fields = ArrayList<FieldN>()
 
-            for (i in 0 until current_fields.size) {
-                for (j in i+1 until current_fields.size) {
+            for (i in 0..<current_fields.size) {
+                for (j in i+1..<current_fields.size) {
                     next_fields.add(current_fields[i]*current_fields[j])
                 }
             }

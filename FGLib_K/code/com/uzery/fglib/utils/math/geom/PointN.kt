@@ -148,7 +148,7 @@ data class PointN(private val xs: Array<Double>) {
         fun isSameDirection(p1: PointN, p2: PointN): Boolean {
             if (p1.dim != p2.dim) throw DebugData.error("WRONG DIM: $p1, $p2")
             var k: Double? = null
-            for (i in 0 until p1.dim) {
+            for (i in 0..<p1.dim) {
                 if (p1.xs[i] == 0.0 && p2.xs[i] == 0.0) continue
                 if (p1.xs[i] == 0.0 || p2.xs[i] == 0.0) return false
                 val now_k = p1.xs[i]/p2.xs[i]

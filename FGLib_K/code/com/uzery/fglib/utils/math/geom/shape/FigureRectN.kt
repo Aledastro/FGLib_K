@@ -23,7 +23,7 @@ fun getFields(pos: PointN, size: PointN): List<FieldN> {
     val fields = ArrayList<FieldN>()
     val dim = size.dim
 
-    for (level in 0 until dim) {
+    for (level in 0..<dim) {
         val xs = Array(dim) { i -> if (i == level) size[i]/2 else 0.0 }
         val field = FieldN(PointN.ZERO, PointN(xs))
         fields.add(field.copy(pos))

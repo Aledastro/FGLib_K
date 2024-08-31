@@ -163,7 +163,7 @@ class Room(var pos: PointN, var size: PointN) {
             obj.stats.fly = min_d == MAX_MOVE_K
             val np = obj.stats.nPOS*(1-min_d)
 
-            for (i in 0 until np.dim) move(np.separate(i))
+            for (i in 0..<np.dim) move(np.separate(i))
         }
         list.forEach { it.stats.nPOS = PointN.ZERO }
     }

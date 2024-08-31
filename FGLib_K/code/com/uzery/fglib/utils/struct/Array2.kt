@@ -8,7 +8,7 @@ class Array2<Type>(val size: IntI, private val default_value: () -> Type) {
     val data = ArrayList<Type>()
 
     init {
-        for (i in 0 until size.width*size.height) data.add(default_value())
+        for (i in 0..<size.width*size.height) data.add(default_value())
     }
 
     val width = size.width

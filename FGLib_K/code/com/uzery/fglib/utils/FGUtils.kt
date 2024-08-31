@@ -30,11 +30,11 @@ object FGUtils {
     }
 
     fun subBefore(input: String, index: String, delta: Int = 0): String {
-        return input.substring(0 until input.indexOf(index)+delta)
+        return input.substring(0..<input.indexOf(index)+delta)
     }
 
     fun subBeforeLast(input: String, index: String, delta: Int = 0): String {
-        return input.substring(0 until input.lastIndexOf(index)+delta)
+        return input.substring(0..<input.lastIndexOf(index)+delta)
     }
 
     fun subAfter(input: String, index: String, delta: Int = 0): String {
