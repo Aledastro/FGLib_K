@@ -1,5 +1,6 @@
 package com.uzery.fglib.utils.math.geom.shape
 
+import com.uzery.fglib.utils.ShapeUtils.getFields
 import com.uzery.fglib.utils.math.geom.FieldN
 import com.uzery.fglib.utils.math.geom.PointN
 
@@ -17,18 +18,4 @@ class FigureRectN(pos: PointN, val size: PointN): FigureN(getFields(pos, size)) 
         fun C(s: PointN) = C(PointN.ZERO, s)
         fun R(s: PointN) = R(PointN.ZERO, s)
     }
-}
-
-fun getFields(pos: PointN, size: PointN): List<FieldN> {
-    val fields = ArrayList<FieldN>()
-    val dim = size.dim
-
-    for (level in 0..<dim) {
-        val xs = Array(dim) { i -> if (i == level) size[i]/2 else 0.0 }
-        val field = FieldN(PointN.ZERO, PointN(xs))
-        fields.add(field.copy(pos))
-        fields.add((-field).copy(pos))
-    }
-
-    return fields
 }

@@ -1,5 +1,6 @@
 package com.uzery.fglib.utils
 
+import com.uzery.fglib.utils.math.geom.FieldN
 import com.uzery.fglib.utils.math.geom.PointN
 import com.uzery.fglib.utils.math.geom.Shape
 import com.uzery.fglib.utils.math.geom.Shape.Code
@@ -100,5 +101,19 @@ object ShapeUtils {
 
     fun rectX(first: Shape, second: Shape): RectN {
         return rectX(rect(first), rect(second))
+    }
+
+    fun getFields(pos: PointN, size: PointN): List<FieldN> {
+        val fields = ArrayList<FieldN>()
+        val dim = size.dim
+
+        for (level in 0..<dim) {
+            val xs = Array(dim) { i -> if (i == level) size[i]/2 else 0.0 }
+            val field = FieldN(PointN.ZERO, PointN(xs))
+            fields.add(field.copy(pos))
+            fields.add((-field).copy(pos))
+        }
+
+        return fields
     }
 }
