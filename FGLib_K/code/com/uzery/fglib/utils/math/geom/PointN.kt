@@ -49,9 +49,7 @@ data class PointN(private val xs: Array<Double>) {
 
         other as PointN
 
-        if (!xs.contentEquals(other.xs)) return false
-
-        return true
+        return xs.contentEquals(other.xs)
     }
 
     override fun hashCode(): Int = xs.contentHashCode()

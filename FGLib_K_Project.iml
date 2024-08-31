@@ -2,25 +2,7 @@
 <module type="JAVA_MODULE" version="4">
   <component name="NewModuleRootManager" inherit-compiler-output="true">
     <exclude-output />
-    <content url="file://$MODULE_DIR$">
-      <sourceFolder url="file://$MODULE_DIR$/FGLib/core/code" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/FGLib/core/obj/code" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/FGLib/core/program/code" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/FGLib/main/kotlin" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/FGLib/main/resources" type="java-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/FGLib/test/kotlin" isTestSource="true" />
-      <sourceFolder url="file://$MODULE_DIR$/FGLib/test/resources" type="java-test-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/FGLib/utils/data/code" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/FGLib/utils/graphics/code" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/FGLib/utils/math/code" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/FGLib/core/room/code" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/FGLib/utils/input/code" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/FGLib/core/world/code" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/FGLib/extension/event/code" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/test_3/media" type="java-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/test_1_bullets/media/images" type="java-resource" />
-      <excludeFolder url="file://$MODULE_DIR$/.tmp.driveupload" />
-    </content>
+    <content url="file://$MODULE_DIR$" />
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
   </component>
