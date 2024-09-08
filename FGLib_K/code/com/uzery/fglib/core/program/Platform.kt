@@ -5,7 +5,6 @@ import com.uzery.fglib.utils.data.debug.DebugData
 import com.uzery.fglib.utils.math.geom.PointN
 import com.uzery.fglib.utils.math.geom.shape.RectN
 import com.uzery.fglib.utils.struct.num.IntI
-import java.awt.Toolkit
 
 object Platform {
     private val program
@@ -22,7 +21,7 @@ object Platform {
     val mouse
         get() = realisation.listener.mouse
 
-    val clipboard = FGClipboard(Toolkit.getDefaultToolkit().systemClipboard)
+    val clipboard = realisation.program.clipboard
     var clipboard_value
         get() = clipboard.string
         set(value) {

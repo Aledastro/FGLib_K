@@ -1,6 +1,5 @@
 module FGLib_K {
     requires transitive kotlin.stdlib;
-    requires java.desktop;
 
     /////////////////////////////////////////////////////////
 
@@ -47,6 +46,7 @@ module FGLib_K {
     exports com.uzery.fglib.utils.math.geom.shape;
     exports com.uzery.fglib.utils.math.matrix;
     exports com.uzery.fglib.utils.math.scale;
+    exports com.uzery.fglib.utils.math.scale.fun;
     exports com.uzery.fglib.utils.math.solve;
 
     exports com.uzery.fglib.utils.struct;
