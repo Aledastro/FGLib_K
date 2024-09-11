@@ -72,7 +72,10 @@ abstract class AffineGraphics {
         applyAlpha((global_alpha*this.alpha*alpha).coerceIn(0.0, 1.0))
     }
 
+    private var debug_bounds_optimisation = true
     internal fun isOutOfBounds(pos: PointN, size: PointN): Boolean {
+        if (debug_bounds_optimisation) return false
+
         val pos1 = transform.pos(pos)
         val pos2 = transform.pos(pos+size)
         for (i in 0..<pos1.dim) {
