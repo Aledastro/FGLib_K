@@ -1,16 +1,28 @@
 package com.uzery.fglib.core.program
 
+import com.uzery.fglib.core.program.Platform.CANVAS
+import com.uzery.fglib.core.program.Platform.CANVAS_R
+import com.uzery.fglib.core.program.Platform.graphics
 import com.uzery.fglib.utils.audio.AudioData
 import com.uzery.fglib.utils.data.file.TextData
 import com.uzery.fglib.utils.data.image.ImageData
+import com.uzery.fglib.utils.math.geom.PointN
 
 
 object Program {
-    private val core = object: Extension() {}
+    private val core = object: Extension() {
+        override fun draw(pos: PointN) {
+            if (Platform.MANUAL_CLEAR_ON) return
+
+            graphics.fill.draw(CANVAS_R, Platform.CLEAR_COLOR)
+        }
+    }
 
     fun init(vararg ets: Extension) {
         core.add(*ets)
 
+        core.stats.pos = PointN(0, 0)
+        core.stats.size = CANVAS
         core.initWithChildren()
     }
 

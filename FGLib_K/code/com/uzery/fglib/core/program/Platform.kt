@@ -2,11 +2,15 @@ package com.uzery.fglib.core.program
 
 import com.uzery.fglib.core.program.PlatformSetup.realisation
 import com.uzery.fglib.utils.data.debug.DebugData
+import com.uzery.fglib.utils.graphics.data.FGColor
 import com.uzery.fglib.utils.math.geom.PointN
 import com.uzery.fglib.utils.math.geom.shape.RectN
 import com.uzery.fglib.utils.struct.num.IntI
 
 object Platform {
+    var MANUAL_CLEAR_ON = false
+    var CLEAR_COLOR = FGColor.WHITE
+
     private val program
         get() = realisation.program
     val graphics
