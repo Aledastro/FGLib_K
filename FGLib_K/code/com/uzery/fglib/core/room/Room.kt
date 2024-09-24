@@ -5,6 +5,7 @@ import com.uzery.fglib.core.obj.ability.InputAction
 import com.uzery.fglib.core.obj.bounds.Bounds
 import com.uzery.fglib.core.obj.bounds.BoundsElement
 import com.uzery.fglib.core.obj.visual.Visualiser
+import com.uzery.fglib.core.program.Platform.render_camera
 import com.uzery.fglib.utils.BoundsUtils
 import com.uzery.fglib.utils.CollisionUtils.MAX_MOVE_K
 import com.uzery.fglib.utils.CollisionUtils.SUPER_K
@@ -82,13 +83,14 @@ class Room(var pos: PointN, var size: PointN) {
             sort_map: HashMap<Visualiser, PointN>
         ) {
             vis.sortWith { v1, v2 ->
-                when {
-                    v1.drawLayer().sort != v2.drawLayer().sort -> (v1.drawLayer().sort-v2.drawLayer().sort).toInt()
-                    else -> sign(sort_map[v1]!!.Y-sort_map[v2]!!.Y).toInt()
+                if(v1.drawLayer().sort != v2.drawLayer().sort) {
+                    (v1.drawLayer().sort-v2.drawLayer().sort).sign.toInt()
+                } else {
+                    render_camera.sort(sort_map[v1]!!, sort_map[v2]!!)
                 }
             }
             vis.forEach { visual ->
-                visual.drawWithDefaults(draw_pos+pos_map[visual]!!)
+                visual.drawWithDefaults(draw_pos+render_camera[pos_map[visual]!!])
             }
         }
 

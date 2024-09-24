@@ -45,10 +45,10 @@ object FGUtils {
         return input.substring(input.lastIndexOf(index)+1+delta)
     }
 
-    fun getPosFrom(s: String): PointN {
-        val c = object: ClassGetter<PointN>() {
-            override fun addAll() = add("pos", 1) { pos }
-        }
-        return c["pos: $s"]
+    private val pos_cg = object: ClassGetter<PointN>() {
+        override fun addAll() = add("pos", 1) { pos }
+    }
+    fun posFrom(s: String): PointN {
+        return pos_cg["pos: $s"]
     }
 }

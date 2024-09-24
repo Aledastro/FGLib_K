@@ -7,9 +7,9 @@ import com.uzery.fglib.core.obj.bounds.BoundsElement
 import com.uzery.fglib.core.program.Platform.graphics
 import com.uzery.fglib.core.room.Room
 import com.uzery.fglib.utils.FGUtils
-import com.uzery.fglib.utils.FGUtils.getPosFrom
 import com.uzery.fglib.utils.data.debug.DebugData
 import com.uzery.fglib.utils.data.file.TextData
+import com.uzery.fglib.utils.data.getter.ClassGetter
 import com.uzery.fglib.utils.graphics.data.FGColor
 import com.uzery.fglib.utils.graphics.data.FGFont
 import com.uzery.fglib.utils.graphics.data.FGFontWeight
@@ -30,24 +30,28 @@ object WorldUtils {
         val list = LinkedList<String>()
         list.addAll(input)
 
+        list.removeIf { FGUtils.isComment(it) }
+
         val objects = ArrayList<GameObject>()
         var next = ""
 
-        while (FGUtils.isComment(next)) {
-            next = list.removeFirst()
-        }
-        val t = StringTokenizer(next)
-        t.nextToken()
+        next = list.removeFirst()
 
-        val pos = getPosFrom(t.nextToken()+t.nextToken())
-        val size = getPosFrom(t.nextToken()+t.nextToken())
+        val getter = object: ClassGetter<Pair<PointN, PointN>>() {
+            override fun addAll() {
+                add("room", 2) { Pair(pos, size) }
+            }
+        }
+
+        val room_info = getter[next]
+
         while (list.isNotEmpty()) {
             next = list.removeFirst()
             if (FGUtils.isComment(next)) continue
             objects.add(World.getter!![next])
         }
 
-        return Room(pos, size, objects)
+        return Room(room_info.first, room_info.second, objects)
     }
 
     fun drawBounds(objects: List<GameObject>, pos: PointN = PointN.ZERO) {

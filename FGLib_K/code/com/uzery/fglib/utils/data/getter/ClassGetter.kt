@@ -1,5 +1,6 @@
 package com.uzery.fglib.utils.data.getter
 
+import com.uzery.fglib.utils.data.debug.DebugData
 import com.uzery.fglib.utils.graphics.data.FGColor
 import com.uzery.fglib.utils.math.geom.Direct
 import com.uzery.fglib.utils.math.geom.PointN
@@ -58,7 +59,10 @@ abstract class ClassGetter<Type>: AbstractClassGetter<Type>() {
             input = args
             in_id = 0
             no_info = false
-            map.first { it.first == StringN(name, args.size) }.second()
+            val first = map.firstOrNull { it.first == StringN(name, args.size) }
+                ?: throw DebugData.error("no entry from $name: $args")
+
+            first.second()
         }
     }
 
