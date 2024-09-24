@@ -24,6 +24,12 @@ object WorldUtils {
         return readInfo(TextData[filename])
     }
 
+    private val room_info_cg = object: ClassGetter<Pair<PointN, PointN>>() {
+        override fun addAll() {
+            add("room", 2) { Pair(pos, size) }
+        }
+    }
+
     fun readInfo(input: List<String>): Room {
         if (World.getter == null) throw DebugData.error("getter not loaded")
 
@@ -37,13 +43,7 @@ object WorldUtils {
 
         next = list.removeFirst()
 
-        val getter = object: ClassGetter<Pair<PointN, PointN>>() {
-            override fun addAll() {
-                add("room", 2) { Pair(pos, size) }
-            }
-        }
-
-        val room_info = getter[next]
+        val room_info = room_info_cg[next]
 
         while (list.isNotEmpty()) {
             next = list.removeFirst()
