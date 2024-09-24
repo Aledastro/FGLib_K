@@ -7,11 +7,12 @@ import com.uzery.fglib.core.program.Platform.develop_mode
 import com.uzery.fglib.core.program.Platform.graphics
 import com.uzery.fglib.core.room.Room
 import com.uzery.fglib.core.world.WorldUtils.readInfo
+import com.uzery.fglib.utils.data.debug.DebugData
 import com.uzery.fglib.utils.data.getter.AbstractClassGetter
 import com.uzery.fglib.utils.graphics.data.FGColor
 import com.uzery.fglib.utils.math.geom.PointN
 
-object World {
+class World {
     val rooms = ArrayList<Room>()
     val active_rooms = ArrayList<Room>()
     private val last_active = ArrayList<Boolean>()
@@ -100,14 +101,15 @@ object World {
     var getter: AbstractClassGetter<GameObject>? = null
 
     fun init(controller: WorldController, vararg filename: String, init_rooms: Boolean = true) {
-        World.controller = controller
-        World.controller.init()
+        this.controller = controller
+        this.controller.init()
         rooms.clear()
         active_rooms.clear()
         filenames.clear()
         camera = null
         for (name in filename) filenames.add(name)
-        filenames.forEach { rooms.add(readInfo(it)) }
+        val getter = getter ?: throw DebugData.error("World ClassGetter is not loaded yet!")
+        filenames.forEach { rooms.add(readInfo(getter, it)) }
         for (i in rooms.indices) last_active.add(false)
 
         if (init_rooms) initRooms()

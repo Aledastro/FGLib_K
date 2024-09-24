@@ -9,6 +9,7 @@ import com.uzery.fglib.core.room.Room
 import com.uzery.fglib.utils.FGUtils
 import com.uzery.fglib.utils.data.debug.DebugData
 import com.uzery.fglib.utils.data.file.TextData
+import com.uzery.fglib.utils.data.getter.AbstractClassGetter
 import com.uzery.fglib.utils.data.getter.ClassGetter
 import com.uzery.fglib.utils.graphics.data.FGColor
 import com.uzery.fglib.utils.graphics.data.FGFont
@@ -20,8 +21,8 @@ import kotlin.math.cos
 import kotlin.math.sin
 
 object WorldUtils {
-    fun readInfo(filename: String): Room {
-        return readInfo(TextData[filename])
+    fun readInfo(getter: AbstractClassGetter<GameObject>, filename: String): Room {
+        return readInfo(getter, TextData[filename])
     }
 
     private val room_info_cg = object: ClassGetter<Pair<PointN, PointN>>() {
@@ -30,9 +31,7 @@ object WorldUtils {
         }
     }
 
-    fun readInfo(input: List<String>): Room {
-        if (World.getter == null) throw DebugData.error("getter not loaded")
-
+    fun readInfo(getter: AbstractClassGetter<GameObject>, input: List<String>): Room {
         val list = LinkedList<String>()
         list.addAll(input)
 
@@ -48,7 +47,7 @@ object WorldUtils {
         while (list.isNotEmpty()) {
             next = list.removeFirst()
             if (FGUtils.isComment(next)) continue
-            objects.add(World.getter!![next])
+            objects.add(getter[next])
         }
 
         return Room(room_info.first, room_info.second, objects)
