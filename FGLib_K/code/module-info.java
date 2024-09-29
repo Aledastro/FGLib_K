@@ -1,5 +1,5 @@
 module FGLib_K {
-    requires transitive kotlin.stdlib;
+    requires kotlin.stdlib;
 
     /////////////////////////////////////////////////////////
 
