@@ -13,6 +13,10 @@ abstract class ImageGraphics(private val agc: AffineGraphics) {
         alpha = 1.0
     }
 
+    fun setFullDefaults() {
+        setDefaults()
+    }
+
     protected abstract fun draw0(image: FGImage, pos: PointN, size: PointN)
 
     ///////////////////////////////////////////////////////////////////////////

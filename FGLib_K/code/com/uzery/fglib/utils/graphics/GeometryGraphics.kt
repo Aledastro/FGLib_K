@@ -1,11 +1,7 @@
 package com.uzery.fglib.utils.graphics
 
-import com.uzery.fglib.core.program.Platform.graphics
-import com.uzery.fglib.utils.TextUtils
 import com.uzery.fglib.utils.graphics.data.FGColor
 import com.uzery.fglib.utils.graphics.data.FGFont
-import com.uzery.fglib.utils.graphics.data.FGFontPosture
-import com.uzery.fglib.utils.graphics.data.FGFontWeight
 import com.uzery.fglib.utils.math.geom.PointN
 import com.uzery.fglib.utils.math.geom.Shape
 import com.uzery.fglib.utils.math.geom.shape.FigureN
@@ -15,36 +11,9 @@ abstract class GeometryGraphics(protected val agc: AffineGraphics) {
         get() = agc.transform
 
     var alpha = 1.0
-    var font = FGFont.default_font
 
     open fun setDefaults() {
         alpha = 1.0
-        font = FGFont.default_font
-    }
-
-    fun font(
-        family: String = font.family,
-        size: Double = font.size,
-        weight: FGFontWeight = font.weight,
-        posture: FGFontPosture = font.posture
-    ) {
-        font = FGFont(family, size, weight, posture)
-    }
-
-    fun font(size: Double = font.size, weight: FGFontWeight = font.weight, posture: FGFontPosture = font.posture) {
-        font = FGFont(font.family, size, weight, posture)
-    }
-
-    fun text_size(text: String, font: FGFont = this.font): PointN {
-        return graphics.text_size(text, font)
-    }
-
-    fun splitText(text: String, width: Double, font: FGFont = this.font): ArrayList<String> {
-        return TextUtils.splitText(text, width) { stroke -> text_size(stroke, font).X }
-    }
-
-    fun splitTextAndMerge(text: String, width: Double, font: FGFont = this.font): String {
-        return TextUtils.splitTextAndMerge(text, width) { stroke -> text_size(stroke, font).X }
     }
 
     protected abstract fun rect0(pos: PointN, size: PointN, color: FGColor)
@@ -80,29 +49,6 @@ abstract class GeometryGraphics(protected val agc: AffineGraphics) {
     fun ovalC(pos: PointN, size: PointN, color: FGColor) = oval(pos-size/2, size, color)
 
     fun ovalR(pos: PointN, size: PointN, color: FGColor) = oval(pos-size, size, color)
-
-    ///////////////////////////////////////////////////////////////////////////
-
-    fun text(pos: PointN, text: String, font: FGFont, color: FGColor) {
-        if (agc.isOutOfBounds(pos, text_size(text, font))) return
-
-        agc.applyAlphaWith(alpha)
-        text0(transform.pos(pos), text, font.resize(transform.t_size(PointN(font.size)).X), color)
-    }
-
-    fun textL(pos: PointN, text: String, font: FGFont, color: FGColor) = text(pos, text, font, color)
-    fun textC(pos: PointN, text: String, font: FGFont, color: FGColor) =
-        text(pos-text_size(text, font).XP/2, text, font, color)
-
-    fun textR(pos: PointN, text: String, font: FGFont, color: FGColor) =
-        text(pos-text_size(text, font).XP, text, font, color)
-
-    ///////////////////////////////////////////////////////////////////////////
-
-    fun text(pos: PointN, text: String, color: FGColor) = text(pos, text, font, color)
-    fun textL(pos: PointN, text: String, color: FGColor) = textL(pos, text, font, color)
-    fun textC(pos: PointN, text: String, color: FGColor) = textC(pos, text, font, color)
-    fun textR(pos: PointN, text: String, color: FGColor) = textR(pos, text, font, color)
 
     ///////////////////////////////////////////////////////////////////////////
 
