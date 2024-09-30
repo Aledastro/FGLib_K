@@ -1,7 +1,6 @@
 package com.uzery.fglib.utils.math.geom.shape
 
 import com.uzery.fglib.utils.ShapeUtils.getFields
-import com.uzery.fglib.utils.math.geom.FieldN
 import com.uzery.fglib.utils.math.geom.PointN
 
 class FigureRectN(pos: PointN, val size: PointN): FigureN(getFields(pos, size)) {

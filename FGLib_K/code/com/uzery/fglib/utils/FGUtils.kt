@@ -48,6 +48,7 @@ object FGUtils {
     private val pos_cg = object: ClassGetter<PointN>() {
         override fun addAll() = add("pos", 1) { pos }
     }
+
     fun posFrom(s: String): PointN {
         return pos_cg["pos: $s"]
     }

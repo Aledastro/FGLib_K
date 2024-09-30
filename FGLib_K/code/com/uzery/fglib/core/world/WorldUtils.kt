@@ -7,7 +7,6 @@ import com.uzery.fglib.core.obj.bounds.BoundsElement
 import com.uzery.fglib.core.program.Platform.graphics
 import com.uzery.fglib.core.room.Room
 import com.uzery.fglib.utils.FGUtils
-import com.uzery.fglib.utils.data.debug.DebugData
 import com.uzery.fglib.utils.data.file.TextData
 import com.uzery.fglib.utils.data.getter.AbstractClassGetter
 import com.uzery.fglib.utils.data.getter.ClassGetter
