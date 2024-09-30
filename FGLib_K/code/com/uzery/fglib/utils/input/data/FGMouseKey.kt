@@ -2,14 +2,9 @@ package com.uzery.fglib.utils.input.data
 
 enum class FGMouseKey {
     NONE,
-    PRIMARY,
+    LEFT,
     MIDDLE,
-    SECONDARY,
+    RIGHT,
     BACK,
-    FORWARD;
-
-    val LEFT
-        get() = PRIMARY
-    val RIGHT
-        get() = SECONDARY
+    FORWARD
 }
