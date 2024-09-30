@@ -1,7 +1,6 @@
 package com.uzery.fglib.utils.graphics
 
 import com.uzery.fglib.utils.graphics.data.FGColor
-import com.uzery.fglib.utils.graphics.data.FGFont
 import com.uzery.fglib.utils.math.geom.PointN
 import com.uzery.fglib.utils.math.geom.Shape
 import com.uzery.fglib.utils.math.geom.shape.FigureN
@@ -19,8 +18,6 @@ abstract class GeometryGraphics(protected val agc: AffineGraphics) {
     protected abstract fun rect0(pos: PointN, size: PointN, color: FGColor)
 
     protected abstract fun oval0(pos: PointN, size: PointN, color: FGColor)
-
-    protected abstract fun text0(pos: PointN, text: String, font: FGFont, color: FGColor)
 
     ///////////////////////////////////////////////////////////////////////////
 

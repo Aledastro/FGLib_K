@@ -9,6 +9,8 @@ import com.uzery.fglib.utils.graphics.data.FGFontWeight
 import com.uzery.fglib.utils.math.geom.PointN
 
 abstract class FillGraphics(agc: AffineGraphics): GeometryGraphics(agc) {
+    protected abstract fun text0(pos: PointN, text: String, font: FGFont, color: FGColor)
+
     var font = FGFont.default_font
 
     override fun setDefaults() {
