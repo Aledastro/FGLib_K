@@ -5,6 +5,7 @@ import com.uzery.fglib.core.obj.GameObject
 import com.uzery.fglib.core.obj.bounds.BoundsBox
 import com.uzery.fglib.core.obj.bounds.BoundsElement
 import com.uzery.fglib.core.program.Platform.graphics
+import com.uzery.fglib.core.program.Platform.render_camera
 import com.uzery.fglib.core.room.Room
 import com.uzery.fglib.utils.FGUtils
 import com.uzery.fglib.utils.data.file.TextData
@@ -14,6 +15,9 @@ import com.uzery.fglib.utils.graphics.data.FGColor
 import com.uzery.fglib.utils.graphics.data.FGFont
 import com.uzery.fglib.utils.graphics.data.FGFontWeight
 import com.uzery.fglib.utils.math.geom.PointN
+import com.uzery.fglib.utils.math.geom.Shape
+import com.uzery.fglib.utils.math.geom.shape.OvalN
+import com.uzery.fglib.utils.math.geom.shape.RectN
 import java.util.*
 import kotlin.math.PI
 import kotlin.math.cos
@@ -67,7 +71,7 @@ object WorldUtils {
         val mapID = HashMap<GameObject, Int>()
 
         fun posFrom(o: GameObject): PointN {
-            return pos+o.pos_with_owners
+            return pos+render_camera[o.pos_with_owners]
         }
 
         for (o in list) {
@@ -102,12 +106,12 @@ object WorldUtils {
             }
 
             if (o.stats.sortPOS.length() > 1) {
-                graphics.fill.ovalC(draw_pos+o.stats.sortPOS, STEP*2, c)
+                graphics.fill.ovalC(draw_pos+render_camera[o.stats.sortPOS], STEP*2, c)
             }
 
             for (v in o.visuals) {
                 if (v.sortPOS.length() > 1) {
-                    graphics.fill.ovalC(draw_pos+o.stats.sortPOS+v.sortPOS, STEP, c)
+                    graphics.fill.ovalC(draw_pos+render_camera[o.stats.sortPOS+v.sortPOS], STEP, c)
                 }
             }
         }
@@ -137,23 +141,98 @@ object WorldUtils {
 
         graphics.stroke.width = 1.0
         for (el in bs.elements) {
-            val shape = el.shape() ?: continue
+            val sh = el.shape() ?: continue
 
-            if (shape.S.more(PointN.ZERO))
+            fun p2(p: PointN): PointN {
+                return PointN(p.X, p.Y)
+            }
+
+            //todo
+            val shape = when(sh.code) {
+                Shape.Code.RECT -> RectN(p2(sh.L), p2(sh.S))
+                Shape.Code.OVAL -> OvalN(p2(sh.L), p2(sh.S))
+                Shape.Code.FIGURE -> sh
+            }
+            val z1 = render_camera[sh.L.ZP]
+            val z2 = render_camera[sh.R.ZP]
+
+            if (shape.S.more(PointN.ZERO)) {
                 graphics.stroke.line(
-                    pos+o.pos_with_owners+shape.L,
+                    pos+render_camera[o.pos_with_owners+sh.L],
+                    render_camera[sh.R]-render_camera[sh.L],
+                    colors_h[color_id].transparent(0.8)
+                )
+            }
+
+            val draw_pos = pos+render_camera[o.pos_with_owners]
+
+            graphics.fill.draw(draw_pos+z1, shape, colors[color_id].transparent(0.05))
+            graphics.stroke.draw(draw_pos+z1, shape, colors[color_id].transparent(0.3))
+            graphics.fill.draw(draw_pos+z2, shape, colors[color_id].transparent(0.1))
+            graphics.stroke.draw(draw_pos+z2, shape, colors[color_id].transparent(0.6))
+
+            if (el.name != BoundsElement.DEFAULT_NAME) {
+                graphics.fill.font = FGFont("Arial", 3.0)
+                graphics.fill.text(
+                    draw_pos+shape.L+PointN(0, -2),
+                    el.name,
+                    colors[color_id].transparent(0.6)
+                )
+            }
+        }
+    }
+
+    fun drawBoundsForOld(o: GameObject, pos: PointN, color_id: Int) {
+        val colors = arrayOf(
+            FGColor.RED,
+            FGColor.ORANGERED,
+            FGColor.BLUE,
+            FGColor.GREEN
+        )
+        val colors_h = arrayOf(
+            FGColor.RED.interpolate(FGColor.WHITE, 0.5),
+            FGColor.ORANGERED.interpolate(FGColor.WHITE, 0.5),
+            FGColor.BLUE.interpolate(FGColor.WHITE, 0.5),
+            FGColor.GREEN.interpolate(FGColor.WHITE, 0.5)
+        )
+        val bs = o.bounds[color_id]
+        if (bs.empty) return
+
+        graphics.stroke.width = 1.0
+        for (el in bs.elements) {
+            val sh = el.shape() ?: continue
+
+            fun p2(p: PointN): PointN {
+                return PointN(p.X, p.Y)
+            }
+
+            //todo
+            val shape = when(sh.code) {
+                Shape.Code.RECT -> RectN(p2(sh.L), p2(sh.S))
+                Shape.Code.OVAL -> OvalN(p2(sh.L), p2(sh.S))
+                Shape.Code.FIGURE -> sh
+            }
+
+            if (shape.S.more(PointN.ZERO)) {
+                graphics.stroke.line(
+                    pos+render_camera[o.pos_with_owners]+shape.L,
                     shape.S,
                     colors_h[color_id].transparent(0.8)
                 )
+            }
 
-            val draw_pos = pos+o.pos_with_owners
+            val draw_pos = pos+render_camera[o.pos_with_owners]
 
             graphics.fill.draw(draw_pos, shape, colors[color_id].transparent(0.1))
             graphics.stroke.draw(draw_pos, shape, colors[color_id].transparent(0.6))
 
             if (el.name != BoundsElement.DEFAULT_NAME) {
                 graphics.fill.font = FGFont("Arial", 3.0)
-                graphics.fill.text(draw_pos+shape.L+PointN(0, -2), el.name, colors[color_id].transparent(0.6))
+                graphics.fill.text(
+                    draw_pos+shape.L+PointN(0, -2),
+                    el.name,
+                    colors[color_id].transparent(0.6)
+                )
             }
         }
     }
