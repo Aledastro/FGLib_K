@@ -4,6 +4,7 @@ import com.uzery.fglib.utils.math.geom.PointN
 
 class Stats {
     var fly = false
+    var fly_by = Array(0) { false }
 
     var POS = PointN.ZERO
     var lPOS = PointN.ZERO

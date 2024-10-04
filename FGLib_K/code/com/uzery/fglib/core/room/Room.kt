@@ -162,10 +162,21 @@ class Room(var pos: PointN, var size: PointN) {
             }
 
             val min_d = move(obj.stats.nPOS)
-            obj.stats.fly = min_d == MAX_MOVE_K
+
+            val is_move_complete = min_d == MAX_MOVE_K
+
+            obj.stats.fly = is_move_complete
+            //if(is_move_complete) return
+
             val np = obj.stats.nPOS*(1-min_d)
 
-            for (i in 0..<np.dim) move(np.separate(i))
+            obj.stats.fly_by = Array(np.dim) { false }
+
+            for (level in 0..<np.dim) {
+                val m = move(np.separate(level))
+
+                obj.stats.fly_by[level] = m == MAX_MOVE_K
+            }
         }
         list.forEach { it.stats.nPOS = PointN.ZERO }
     }
