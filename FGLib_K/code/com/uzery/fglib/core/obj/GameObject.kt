@@ -118,12 +118,12 @@ abstract class GameObject(var name: String = "temp") {
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    fun addBounds(vis: GroupBounds) = addComponent(vis)
+    fun addBounds(bs: GroupBounds) = addComponent(bs)
 
-    fun addAbility(vis: GroupAbility) = addComponent(vis)
-    fun addController(vis: GroupController) = addComponent(vis)
-    fun addListener(vis: GroupListener) = addComponent(vis)
-    fun addProperty(vis: GroupProperty) = addComponent(vis)
+    fun addAbility(ability: GroupAbility) = addComponent(ability)
+    fun addController(controller: GroupController) = addComponent(controller)
+    fun addListener(listener: GroupListener) = addComponent(listener)
+    fun addProperty(property: GroupProperty) = addComponent(property)
     fun addVisual(vis: GroupVisualiser) = addComponent(vis)
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -156,15 +156,15 @@ abstract class GameObject(var name: String = "temp") {
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    fun addController(controller: () -> (() -> TempAction)) {
-        addController(Controller(controller))
-    }
+    fun addController(controller: () -> (() -> TempAction)) = addController(Controller(controller))
     fun addController(vararg controller: Controller) = controllers.addAll(controller)
 
-    fun addListener(listener: (InputAction) -> Unit) = addListener(ActionListener { listener(it) })
+    fun addListener(listener: (InputAction) -> Unit) = addListener(ActionListener(listener))
     fun addListener(vararg listener: ActionListener) = listeners.addAll(listener)
-    fun addAbility(ability: () -> Unit) = addAbility(AbilityBox { ability() })
+
+    fun addAbility(ability: () -> Unit) = addAbility(AbilityBox(ability))
     fun addAbility(vararg ability: AbilityBox) = abilities.addAll(ability)
+
     fun addProperty(vararg property: GameProperty) = properties.addAll(property)
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
