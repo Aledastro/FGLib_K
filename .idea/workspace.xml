@@ -12,10 +12,22 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="82970e50-af90-458e-a847-e0b07c98f932" name="Changes" comment="FGLib v.0.15.4.3 [K]">
+    <list default="true" id="82970e50-af90-458e-a847-e0b07c98f932" name="Changes" comment="FGLib v.0.15.5.0 [K]">
+      <change afterPath="$PROJECT_DIR$/FGLib_K/code/com/uzery/fglib/core/obj/ability/GroupAbility.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/FGLib_K/code/com/uzery/fglib/core/obj/bounds/GroupBounds.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/FGLib_K/code/com/uzery/fglib/core/obj/controller/GroupController.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/FGLib_K/code/com/uzery/fglib/core/obj/listener/GroupListener.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/FGLib_K/code/com/uzery/fglib/core/obj/property/GroupProperty.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/FGLib_K/code/com/uzery/fglib/core/obj/visual/GroupVisualiser.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FGLib_K/code/com/uzery/fglib/core/obj/stats/Stats.kt" beforeDir="false" afterPath="$PROJECT_DIR$/FGLib_K/code/com/uzery/fglib/core/obj/stats/Stats.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FGLib_K/code/com/uzery/fglib/core/obj/GameObject.kt" beforeDir="false" afterPath="$PROJECT_DIR$/FGLib_K/code/com/uzery/fglib/core/obj/GameObject.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FGLib_K/code/com/uzery/fglib/core/obj/ability/ActionListener.kt" beforeDir="false" afterPath="$PROJECT_DIR$/FGLib_K/code/com/uzery/fglib/core/obj/listener/ActionListener.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FGLib_K/code/com/uzery/fglib/core/obj/ability/InputAction.kt" beforeDir="false" afterPath="$PROJECT_DIR$/FGLib_K/code/com/uzery/fglib/core/obj/listener/InputAction.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FGLib_K/code/com/uzery/fglib/core/obj/controller/Controller.kt" beforeDir="false" afterPath="$PROJECT_DIR$/FGLib_K/code/com/uzery/fglib/core/obj/controller/Controller.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FGLib_K/code/com/uzery/fglib/core/obj/controller/TempAction.kt" beforeDir="false" afterPath="$PROJECT_DIR$/FGLib_K/code/com/uzery/fglib/core/obj/controller/TempAction.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FGLib_K/code/com/uzery/fglib/core/obj/visual/LoadVisualiser.kt" beforeDir="false" afterPath="$PROJECT_DIR$/FGLib_K/code/com/uzery/fglib/core/obj/visual/LoadVisualiser.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/FGLib_K/code/com/uzery/fglib/core/room/Room.kt" beforeDir="false" afterPath="$PROJECT_DIR$/FGLib_K/code/com/uzery/fglib/core/room/Room.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FGLib_K/code/module-info.java" beforeDir="false" afterPath="$PROJECT_DIR$/FGLib_K/code/module-info.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -108,18 +120,18 @@
       <recent name="com.uzery.fglib.utils.data.image" />
     </key>
     <key name="MoveKotlinTopLevelDeclarationsDialog.RECENTS_KEY">
+      <recent name="com.uzery.fglib.core.obj.listener" />
       <recent name="com.uzery.fglib.utils.graphics" />
       <recent name="com.uzery.fglib.utils.math.scale.fun" />
       <recent name="com.uzery.fglib.utils.struct" />
       <recent name="com.uzery.fglib.utils" />
-      <recent name="com.uzery.fglib.utils.math" />
     </key>
     <key name="CopyKotlinDeclarationDialog.RECENTS_KEY">
-      <recent name="com.uzery.fglib.utils.struct.num" />
-      <recent name="com.uzery.fglib.utils.struct" />
-      <recent name="com.uzery.fglib.core.obj.component" />
-      <recent name="com.uzery.fglib.core.program" />
+      <recent name="com.uzery.fglib.core.obj.listener" />
+      <recent name="com.uzery.fglib.core.obj.ability" />
+      <recent name="com.uzery.fglib.core.obj.property" />
       <recent name="com.uzery.fglib.core.obj.bounds" />
+      <recent name="com.uzery.fglib.core.obj.controller" />
     </key>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
@@ -474,7 +486,7 @@
       <option name="project" value="LOCAL" />
       <updated>1717724053257</updated>
     </task>
-    <option name="localTasksCounter" value="537" />
+    <option name="localTasksCounter" value="538" />
     <servers />
   </component>
   <component name="UnknownFeatures">
@@ -504,7 +516,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="FGLib v.0.14.23.0 [K]" />
     <MESSAGE value="FGLib v.0.14.23.1 [K]" />
     <MESSAGE value="FGLib v.0.14.23.2 [K]" />
     <MESSAGE value="FGLib v.0.14.23.3 [K]" />
@@ -529,7 +540,8 @@
     <MESSAGE value="FGLib v.0.15.4.1 [K]" />
     <MESSAGE value="FGLib v.0.15.4.2 [K]" />
     <MESSAGE value="FGLib v.0.15.4.3 [K]" />
-    <option name="LAST_COMMIT_MESSAGE" value="FGLib v.0.15.4.3 [K]" />
+    <MESSAGE value="FGLib v.0.15.5.0 [K]" />
+    <option name="LAST_COMMIT_MESSAGE" value="FGLib v.0.15.5.0 [K]" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

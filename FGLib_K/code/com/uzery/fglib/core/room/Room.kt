@@ -1,7 +1,7 @@
 package com.uzery.fglib.core.room
 
 import com.uzery.fglib.core.obj.GameObject
-import com.uzery.fglib.core.obj.ability.InputAction
+import com.uzery.fglib.core.obj.listener.InputAction
 import com.uzery.fglib.core.obj.bounds.Bounds
 import com.uzery.fglib.core.obj.bounds.BoundsElement
 import com.uzery.fglib.core.obj.visual.Visualiser

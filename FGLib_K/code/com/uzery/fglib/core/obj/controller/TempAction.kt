@@ -1,6 +1,6 @@
 package com.uzery.fglib.core.obj.controller
 
-import com.uzery.fglib.core.obj.ability.InputAction
+import com.uzery.fglib.core.obj.listener.InputAction
 
 interface TempAction {
     fun next()

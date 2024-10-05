@@ -1,19 +1,24 @@
 package com.uzery.fglib.core.obj
 
 import com.uzery.fglib.core.obj.ability.AbilityBox
-import com.uzery.fglib.core.obj.ability.ActionListener
-import com.uzery.fglib.core.obj.ability.InputAction
+import com.uzery.fglib.core.obj.listener.ActionListener
+import com.uzery.fglib.core.obj.ability.GroupAbility
+import com.uzery.fglib.core.obj.listener.InputAction
 import com.uzery.fglib.core.obj.bounds.BoundsBox
 import com.uzery.fglib.core.obj.bounds.BoundsBox.Companion.CODE
 import com.uzery.fglib.core.obj.bounds.BoundsComponent
 import com.uzery.fglib.core.obj.bounds.BoundsElement
+import com.uzery.fglib.core.obj.bounds.GroupBounds
 import com.uzery.fglib.core.obj.component.*
 import com.uzery.fglib.core.obj.controller.Controller
+import com.uzery.fglib.core.obj.controller.GroupController
 import com.uzery.fglib.core.obj.controller.TempAction
+import com.uzery.fglib.core.obj.listener.GroupListener
 import com.uzery.fglib.core.obj.property.GameProperty
+import com.uzery.fglib.core.obj.property.GroupProperty
 import com.uzery.fglib.core.obj.stats.Stats
+import com.uzery.fglib.core.obj.visual.GroupVisualiser
 import com.uzery.fglib.core.obj.visual.LayerVisualiser
-import com.uzery.fglib.core.obj.visual.LoadVisualiser
 import com.uzery.fglib.core.obj.visual.Visualiser
 import com.uzery.fglib.utils.data.debug.DebugData
 import com.uzery.fglib.utils.graphics.AffineGraphics
@@ -22,6 +27,9 @@ import com.uzery.fglib.utils.math.geom.Shape
 
 abstract class GameObject(var name: String = "temp") {
     val stats = Stats()
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
     val bounds = BoundsBox()
 
     private val controllers = ArrayList<Controller>()
@@ -36,6 +44,8 @@ abstract class GameObject(var name: String = "temp") {
     private val onBirth = ArrayList<OnBirthComponent>()
     private val onDeath = ArrayList<OnDeathComponent>()
     private val onGrab = ArrayList<OnGrabComponent>()
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     internal val children = ArrayList<GameObject>()
     internal val followers = ArrayList<GameObject>()
@@ -66,6 +76,8 @@ abstract class GameObject(var name: String = "temp") {
     var object_time = 0
         private set
 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
     val transform: ObjectTransform?
         get() {
             if (transforms.isEmpty()) return null
@@ -77,6 +89,8 @@ abstract class GameObject(var name: String = "temp") {
     fun addTransform(vararg transform: ObjectTransform) {
         transforms.addAll(transform.toList())
     }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     fun addComponent(vararg component: ObjectComponent) {
         for (c in component) {
@@ -102,10 +116,27 @@ abstract class GameObject(var name: String = "temp") {
         }
     }
 
-    private fun addBounds(code: CODE, vararg bs: BoundsElement) = bounds[code.ordinal].add(*bs)
-    private fun addBounds(code: CODE, shape: () -> Shape?) = bounds[code.ordinal].add(shape)
-    private fun addBounds(code: CODE, name: String, shape: () -> Shape?) =
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    fun addBounds(vis: GroupBounds) = addComponent(vis)
+
+    fun addAbility(vis: GroupAbility) = addComponent(vis)
+    fun addController(vis: GroupController) = addComponent(vis)
+    fun addListener(vis: GroupListener) = addComponent(vis)
+    fun addProperty(vis: GroupProperty) = addComponent(vis)
+    fun addVisual(vis: GroupVisualiser) = addComponent(vis)
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    private fun addBounds(code: CODE, vararg bs: BoundsElement) {
+        bounds[code.ordinal].add(*bs)
+    }
+    private fun addBounds(code: CODE, shape: () -> Shape?) {
+        bounds[code.ordinal].add(shape)
+    }
+    private fun addBounds(code: CODE, name: String, shape: () -> Shape?) {
         bounds[code.ordinal].add(BoundsElement(name, shape))
+    }
 
     fun addRedBounds(vararg bs: BoundsElement) = addBounds(CODE.RED, *bs)
     fun addRedBounds(shape: () -> Shape?) = addBounds(CODE.RED, shape)
@@ -123,20 +154,21 @@ abstract class GameObject(var name: String = "temp") {
     fun addGreenBounds(shape: () -> Shape?) = addBounds(CODE.GREEN, shape)
     fun addGreenBounds(name: String, shape: () -> Shape?) = addBounds(CODE.GREEN, name, shape)
 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     fun addController(controller: () -> (() -> TempAction)) {
         addController(Controller(controller))
     }
-
-    fun addController(vararg controller: Controller) {
-        controllers.addAll(controller)
-    }
+    fun addController(vararg controller: Controller) = controllers.addAll(controller)
 
     fun addListener(listener: (InputAction) -> Unit) = addListener(ActionListener { listener(it) })
     fun addListener(vararg listener: ActionListener) = listeners.addAll(listener)
     fun addAbility(ability: () -> Unit) = addAbility(AbilityBox { ability() })
     fun addAbility(vararg ability: AbilityBox) = abilities.addAll(ability)
     fun addProperty(vararg property: GameProperty) = properties.addAll(property)
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
     fun addVisual(vararg vis: Visualiser) = visuals.addAll(vis)
 
     fun addVisual(layer: DrawLayer, vis: (agc: AffineGraphics, draw_pos: PointN) -> Unit) {
@@ -163,7 +195,7 @@ abstract class GameObject(var name: String = "temp") {
         )
     }
 
-    fun addVisual(vis: LoadVisualiser) = addComponent(vis)
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     fun onInit(f: () -> Unit) = onInit.add(f)
     fun onInit(f: OnInitComponent) = onInit.add(f)
@@ -179,6 +211,8 @@ abstract class GameObject(var name: String = "temp") {
 
     fun onGrab(f: () -> Unit) = onGrab.add(f)
     fun onGrab(f: OnGrabComponent) = onGrab.add(f)
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     private var inited = false
     fun init() {

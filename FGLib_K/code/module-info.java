@@ -10,6 +10,7 @@ module FGLib_K {
     exports com.uzery.fglib.core.obj.bounds;
     exports com.uzery.fglib.core.obj.component;
     exports com.uzery.fglib.core.obj.controller;
+    exports com.uzery.fglib.core.obj.listener;
     exports com.uzery.fglib.core.obj.property;
     exports com.uzery.fglib.core.obj.stats;
     exports com.uzery.fglib.core.obj.visual;

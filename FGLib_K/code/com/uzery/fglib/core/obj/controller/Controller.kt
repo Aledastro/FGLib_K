@@ -1,7 +1,7 @@
 package com.uzery.fglib.core.obj.controller
 
 import com.uzery.fglib.core.obj.ObjectComponent
-import com.uzery.fglib.core.obj.ability.InputAction
+import com.uzery.fglib.core.obj.listener.InputAction
 
 class Controller(private val f: () -> (() -> TempAction)?): ObjectComponent {
     fun get(): (() -> TempAction)? {

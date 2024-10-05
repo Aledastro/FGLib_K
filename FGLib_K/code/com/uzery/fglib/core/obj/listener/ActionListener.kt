@@ -1,4 +1,4 @@
-package com.uzery.fglib.core.obj.ability
+package com.uzery.fglib.core.obj.listener
 
 import com.uzery.fglib.core.obj.ObjectComponent
 
