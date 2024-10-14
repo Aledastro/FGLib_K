@@ -43,6 +43,13 @@ data class PointN(private val xs: Array<Double>) {
     val ZP: PointN
         get() = separate(2)
 
+    val intX: Int
+        get() = X.toInt()
+    val intY: Int
+        get() = Y.toInt()
+    val intZ: Int
+        get() = Z.toInt()
+
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
         if (javaClass != other?.javaClass) return false
