@@ -45,7 +45,7 @@ object ImageUtils {
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     fun from(path: String): FGImage {
-        return FGImage("file:"+ImageData.resolvePath(path))
+        return FGImage(ImageData.resolvePath(path))
     }
 
     fun from(path: String, vararg effects: String): FGImage {
