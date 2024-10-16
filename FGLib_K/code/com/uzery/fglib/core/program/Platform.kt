@@ -76,24 +76,6 @@ object Platform {
 
     var develop_mode = false
 
-    fun resizeCursorFrom(pos: IntI): FGCursor {
-        return when (pos) {
-            IntI(-1, -1) -> FGCursor.NW_RESIZE
-            IntI(0, -1) -> FGCursor.N_RESIZE
-            IntI(1, -1) -> FGCursor.NE_RESIZE
-
-            IntI(-1, 0) -> FGCursor.W_RESIZE
-            IntI(0, 0) -> FGCursor.DEFAULT
-            IntI(1, 0) -> FGCursor.E_RESIZE
-
-            IntI(-1, 1) -> FGCursor.SW_RESIZE
-            IntI(0, 1) -> FGCursor.S_RESIZE
-            IntI(1, 1) -> FGCursor.SE_RESIZE
-
-            else -> throw DebugData.error("wrong: $pos")
-        }
-    }
-
     fun initWith(options: LaunchOptions, vararg ets: Extension) {
         Platform.options = options
         this.ets = ets

@@ -12,7 +12,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="82970e50-af90-458e-a847-e0b07c98f932" name="Changes" comment="FGLib v.0.15.10.0 [K]" />
+    <list default="true" id="82970e50-af90-458e-a847-e0b07c98f932" name="Changes" comment="FGLib v.0.15.10.1 [K]" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -470,7 +470,7 @@
       <option name="project" value="LOCAL" />
       <updated>1717724053257</updated>
     </task>
-    <option name="localTasksCounter" value="547" />
+    <option name="localTasksCounter" value="548" />
     <servers />
   </component>
   <component name="UnknownFeatures">
@@ -500,7 +500,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="FGLib v.0.14.24.0 [K]" />
     <MESSAGE value="FGLib v.0.14.24.1 [K]" />
     <MESSAGE value="FGLib v.0.14.24.2 [K]" />
     <MESSAGE value="FGLib v.0.14.25.0 [K]" />
@@ -525,7 +524,8 @@
     <MESSAGE value="FGLib v.0.15.9.1 [K]" />
     <MESSAGE value="FGLib v.0.15.9.2 [K]" />
     <MESSAGE value="FGLib v.0.15.10.0 [K]" />
-    <option name="LAST_COMMIT_MESSAGE" value="FGLib v.0.15.10.0 [K]" />
+    <MESSAGE value="FGLib v.0.15.10.1 [K]" />
+    <option name="LAST_COMMIT_MESSAGE" value="FGLib v.0.15.10.1 [K]" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

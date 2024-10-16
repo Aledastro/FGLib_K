@@ -1,5 +1,8 @@
 package com.uzery.fglib.core.program
 
+import com.uzery.fglib.utils.data.debug.DebugData
+import com.uzery.fglib.utils.struct.num.IntI
+
 enum class FGCursor {
     DEFAULT,
     CROSSHAIR,
@@ -20,5 +23,25 @@ enum class FGCursor {
     DISAPPEAR,
     H_RESIZE,
     V_RESIZE,
-    NONE
+    NONE;
+
+    companion object {
+        fun resize(pos: IntI): FGCursor {
+            return when (pos) {
+                IntI(-1, -1) -> NW_RESIZE
+                IntI(0, -1) -> N_RESIZE
+                IntI(1, -1) -> NE_RESIZE
+
+                IntI(-1, 0) -> W_RESIZE
+                IntI(0, 0) -> DEFAULT
+                IntI(1, 0) -> E_RESIZE
+
+                IntI(-1, 1) -> SW_RESIZE
+                IntI(0, 1) -> S_RESIZE
+                IntI(1, 1) -> SE_RESIZE
+
+                else -> throw DebugData.error("wrong: $pos")
+            }
+        }
+    }
 }
