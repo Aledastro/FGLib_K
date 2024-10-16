@@ -15,8 +15,8 @@ abstract class FillGraphics(agc: AffineGraphics): GeometryGraphics(agc) {
 
     var font = FGFont.default_font
 
-    override fun setDefaults() {
-        super.setDefaults()
+    fun setDefaults() {
+        alpha = 1.0
         font = FGFont.default_font
         rotate = 0.0
     }

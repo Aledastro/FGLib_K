@@ -11,10 +11,6 @@ abstract class GeometryGraphics(protected val agc: AffineGraphics) {
 
     var alpha = 1.0
 
-    open fun setDefaults() {
-        alpha = 1.0
-    }
-
     protected abstract fun rect0(pos: PointN, size: PointN, color: FGColor)
 
     protected abstract fun oval0(pos: PointN, size: PointN, color: FGColor)

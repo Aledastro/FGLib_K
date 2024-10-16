@@ -18,8 +18,8 @@ abstract class StrokeGraphics(agc: AffineGraphics): GeometryGraphics(agc) {
             field = value
         }
 
-    override fun setDefaults() {
-        super.setDefaults()
+    fun setDefaults() {
+        alpha = 1.0
         rotate = 0.0
     }
 
