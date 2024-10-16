@@ -5,19 +5,22 @@ import com.uzery.fglib.utils.data.image.ImageData
 import com.uzery.fglib.utils.math.geom.PointN
 
 abstract class ImageGraphics(private val agc: AffineGraphics) {
+    protected abstract fun draw0(image: FGImage, pos: PointN, size: PointN)
+
+    abstract var rotate: Double
+
     protected val transform
         get() = agc.transform
 
     var alpha = 1.0
     fun setDefaults() {
         alpha = 1.0
+        rotate = 0.0
     }
 
     fun setFullDefaults() {
         setDefaults()
     }
-
-    protected abstract fun draw0(image: FGImage, pos: PointN, size: PointN)
 
     ///////////////////////////////////////////////////////////////////////////
 

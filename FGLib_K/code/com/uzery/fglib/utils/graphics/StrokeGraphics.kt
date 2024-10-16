@@ -9,6 +9,7 @@ abstract class StrokeGraphics(agc: AffineGraphics): GeometryGraphics(agc) {
 
     abstract fun dashes(offset: Double, vararg dashes: Double)
 
+    abstract var rotate: Double
 
     var width = 1.0
         set(value) {
@@ -16,6 +17,11 @@ abstract class StrokeGraphics(agc: AffineGraphics): GeometryGraphics(agc) {
             setWidth0(width)
             field = value
         }
+
+    override fun setDefaults() {
+        super.setDefaults()
+        rotate = 0.0
+    }
 
     fun setFullDefaults() {
         setDefaults()
