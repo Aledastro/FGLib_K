@@ -3,6 +3,7 @@ package com.uzery.fglib.utils.math.geom
 import com.uzery.fglib.utils.ArrayUtils
 import com.uzery.fglib.utils.MathUtils
 import com.uzery.fglib.utils.data.debug.DebugData
+import com.uzery.fglib.utils.data.file.ConstL
 import com.uzery.fglib.utils.struct.num.IntI
 import kotlin.math.*
 
@@ -84,6 +85,11 @@ data class PointN(private val xs: Array<Double>) {
     }
 
     fun length() = sqrt(lengthX2())
+
+    fun normalised(): PointN {
+        val len = length()
+        return if (len!=0.0) PointN(this) else this/len
+    }
 
     fun lengthTo(pos: PointN) = (this-pos).length()
 
