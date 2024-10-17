@@ -88,7 +88,7 @@ data class PointN(private val xs: Array<Double>) {
 
     fun normalised(): PointN {
         val len = length()
-        return if (len!=0.0) PointN(this) else this/len
+        return if (len==0.0) PointN(this) else this/len
     }
 
     fun lengthTo(pos: PointN) = (this-pos).length()
