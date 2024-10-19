@@ -143,7 +143,11 @@ class Room(var pos: PointN, var size: PointN) {
             if (obj.tagged("#immovable")) continue
             obj.stats.lPOS = obj.stats.POS
             val move_bs = obj.bounds.orange
-            if (move_bs.empty) continue
+
+            if (move_bs.empty) {
+                obj.stats.POS += obj.stats.nPOS
+                continue
+            }
 
             fun maxMove(move_p: PointN): Double {
                 if (red_bounds.isEmpty()) return MAX_MOVE_K
