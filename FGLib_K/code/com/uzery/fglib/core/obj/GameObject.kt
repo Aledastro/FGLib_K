@@ -21,11 +21,12 @@ import com.uzery.fglib.core.obj.visual.GroupVisualiser
 import com.uzery.fglib.core.obj.visual.LayerVisualiser
 import com.uzery.fglib.core.obj.visual.Visualiser
 import com.uzery.fglib.utils.data.debug.DebugData
+import com.uzery.fglib.utils.data.getter.value.ObjectValue
 import com.uzery.fglib.utils.graphics.AffineGraphics
 import com.uzery.fglib.utils.math.geom.PointN
 import com.uzery.fglib.utils.math.geom.Shape
 
-abstract class GameObject(var name: String = "temp") {
+abstract class GameObject {
     val stats = Stats()
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -67,8 +68,6 @@ abstract class GameObject(var name: String = "temp") {
 
     private val tags = HashSet<String>()
     private val effects = HashSet<TagEffect>()
-
-    val values = ArrayList<Any>()
 
     var dead = false
         private set
@@ -306,11 +305,21 @@ abstract class GameObject(var name: String = "temp") {
     open fun answer(question: String) = false
     open fun answerS(question: String) = ""
 
-    protected open fun setValues() {}
+    private val TEMP_NAME = "temp"
+    var name: String = TEMP_NAME
+        private set
+    private var values: () -> List<Any> = { emptyList() }
+
+    fun isTemp() = name == TEMP_NAME
+
+    fun exportInfo(name: String, values: () -> List<Any>) {
+        this.name = name
+        this.values = values
+    }
 
     final override fun toString(): String {
-        values.clear()
-        setValues()
+        val values = values()
+
         val res = StringBuilder(name)
         if (values.isNotEmpty()) {
             res.append(":")

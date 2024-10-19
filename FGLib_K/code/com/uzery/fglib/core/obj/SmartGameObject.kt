@@ -4,7 +4,7 @@ import com.uzery.fglib.utils.FGUtils
 import com.uzery.fglib.utils.data.file.ConstL
 import com.uzery.fglib.utils.data.file.TextData
 
-abstract class SmartGameObject<Type>(name: String = "temp"): GameObject(name) {
+abstract class SmartGameObject<Type>: GameObject() {
     protected val objs = ArrayList<Type>()
 
     abstract val filename: String
@@ -34,10 +34,6 @@ abstract class SmartGameObject<Type>(name: String = "temp"): GameObject(name) {
     protected abstract fun from(s: String): Type
 
     protected abstract fun construct(objs: ArrayList<Type>): List<ObjectComponent>
-
-    override fun setValues() {
-        values.add(filename)
-    }
 
     fun data(): String {
         var s = ""

@@ -11,8 +11,4 @@ abstract class Camera: GameObject() {
 
     open fun drawPOS() = stats.POS-CANVAS/2
     abstract fun move(p: PointN)
-
-    final override fun setValues() {
-        super.setValues()
-    }
 }
