@@ -308,17 +308,17 @@ abstract class GameObject {
     private val TEMP_NAME = "temp"
     var name: String = TEMP_NAME
         private set
-    private var values: () -> List<Any> = { emptyList() }
+    private var values: (() -> List<Any>)? = null
 
     fun isTemp() = name == TEMP_NAME
 
-    fun exportInfo(name: String, values: () -> List<Any>) {
+    fun exportInfo(name: String, values: (() -> List<Any>)?) {
         this.name = name
         this.values = values
     }
 
     final override fun toString(): String {
-        val values = values()
+        val values = values?.invoke() ?: emptyList()
 
         val res = StringBuilder(name)
         if (values.isNotEmpty()) {
