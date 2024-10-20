@@ -305,7 +305,7 @@ class Room(var pos: PointN, var size: PointN) {
         wr.append("room: ${PosValue(pos)} ${SizeValue(size)}\n\n")
 
         for (o in objects) {
-            if (o.isTemp()) wr.append("$o\n")
+            if (!o.isTemp()) wr.append("$o\n")
         }
 
         return wr.toString()
