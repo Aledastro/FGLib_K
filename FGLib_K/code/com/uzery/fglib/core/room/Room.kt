@@ -1,9 +1,9 @@
 package com.uzery.fglib.core.room
 
 import com.uzery.fglib.core.obj.GameObject
-import com.uzery.fglib.core.obj.listener.InputAction
 import com.uzery.fglib.core.obj.bounds.Bounds
 import com.uzery.fglib.core.obj.bounds.BoundsElement
+import com.uzery.fglib.core.obj.listener.InputAction
 import com.uzery.fglib.core.obj.visual.Visualiser
 import com.uzery.fglib.core.program.Platform.render_camera
 import com.uzery.fglib.utils.BoundsUtils
@@ -172,7 +172,15 @@ class Room(var pos: PointN, var size: PointN) {
             obj.stats.fly = is_move_complete
             //if(is_move_complete) return
 
-            val np = obj.stats.nPOS*(1-min_d)
+            var np = obj.stats.nPOS*(1-min_d)
+
+            if (obj.stats.sticky) {
+                val sticky_by_default = false
+                val sticky = PointN(Array(np.dim) { i ->
+                    if (obj.stats.sticky_by[i] ?: sticky_by_default) 1.0 else 0.0
+                })
+                np *= sticky
+            }
 
             obj.stats.fly_by = Array(np.dim) { false }
 
