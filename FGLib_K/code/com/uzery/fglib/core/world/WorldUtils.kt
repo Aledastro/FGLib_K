@@ -24,14 +24,14 @@ import kotlin.math.cos
 import kotlin.math.sin
 
 object WorldUtils {
-    fun readInfo(getter: AbstractClassGetter<GameObject>, filename: String): Room {
-        return readInfo(getter, TextData[filename])
-    }
-
-    private val room_info_cg = object: ClassGetter<Pair<PointN, PointN>>() {
+    val room_info_cg = object: ClassGetter<Pair<PointN, PointN>>() {
         override fun addAll() {
             add("room", 2) { Pair(pos, size) }
         }
+    }
+
+    fun readInfo(getter: AbstractClassGetter<GameObject>, filename: String): Room {
+        return readInfo(getter, TextData[filename])
     }
 
     fun readInfo(getter: AbstractClassGetter<GameObject>, input: List<String>): Room {
@@ -55,6 +55,8 @@ object WorldUtils {
 
         return Room(room_info.first, room_info.second, objects)
     }
+
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     fun drawBounds(objects: List<GameObject>, pos: PointN = PointN.ZERO) {
         val STEP = PointN(1.0, 1.0)
@@ -237,6 +239,8 @@ object WorldUtils {
         }
     }
 
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////
+
     private var ids_time = 0
     var fps = 6000.0
         private set
@@ -305,4 +309,6 @@ object WorldUtils {
             )
         }
     }
+
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////
 }
