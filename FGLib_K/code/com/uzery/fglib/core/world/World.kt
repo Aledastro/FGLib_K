@@ -99,6 +99,7 @@ class World {
     }
 
     var getter: AbstractClassGetter<GameObject>? = null
+        private set
 
     fun init(load_info: WorldLoadInfo) {
         controller = load_info.controller
@@ -108,7 +109,7 @@ class World {
         filenames.clear()
         camera = null
         for (name in load_info.filenames) filenames.add(name)
-        val getter = load_info.getter ?: throw DebugData.error("World ClassGetter is not loaded yet!")
+        val getter = load_info.getter
         filenames.forEach { rooms.add(readInfo(getter, it)) }
         for (i in rooms.indices) last_active.add(false)
 
