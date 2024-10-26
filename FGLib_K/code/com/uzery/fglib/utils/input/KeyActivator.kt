@@ -1,6 +1,8 @@
 package com.uzery.fglib.utils.input
 
-abstract class KeyActivator<Key>(private val values: Array<Key>) {
+import com.uzery.fglib.core.program.PlatformUpdatable
+
+abstract class KeyActivator<Key>(private val values: Array<Key>): PlatformUpdatable {
     private val size = values.size
 
     private var pressedInt = Array(size) { false }
@@ -15,7 +17,7 @@ abstract class KeyActivator<Key>(private val values: Array<Key>) {
     protected abstract fun fromKey(key: Key): Int
 
     /** extremely important function! **/
-    fun update() {
+    override fun update() {
         for (i in 0..<size) {
             pressedInt[i] = pressedInt(i)
             timePressed[i]++

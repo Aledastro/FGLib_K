@@ -1,12 +1,10 @@
 package com.uzery.fglib.core.program
 
 import com.uzery.fglib.core.program.PlatformSetup.realisation
-import com.uzery.fglib.utils.data.debug.DebugData
 import com.uzery.fglib.utils.graphics.RenderCamera
 import com.uzery.fglib.utils.graphics.data.FGColor
 import com.uzery.fglib.utils.math.geom.PointN
 import com.uzery.fglib.utils.math.geom.shape.RectN
-import com.uzery.fglib.utils.struct.num.IntI
 import kotlin.math.sign
 
 object Platform {
@@ -66,12 +64,15 @@ object Platform {
     val charArray
         get() = Array(Char.MAX_VALUE.code) { i -> Char(i) }
 
-    internal fun update() {
-        keyboard.update()
-        char_keyboard.update()
-        mouse.keys.update()
+    private val updatables = HashSet<PlatformUpdatable>()
+    fun addUpdatable(vararg updatable: PlatformUpdatable) {
+        updatables.addAll(updatable)
+    }
 
+    internal fun update() {
         realisation.update()
+
+        updatables.forEach { it.update() }
     }
 
     var develop_mode = false
