@@ -62,7 +62,6 @@ class World {
     fun draw(pos: PointN = PointN.ZERO) {
         graphics.drawPOS = controller.drawPOS()+(camera?.drawPOS() ?: PointN.ZERO)
         controller.draw()
-        drawNotActiveRooms(pos)
         drawRooms(pos)
         camera?.draw(camera!!.stats.realPOS+pos)
         //if (develop_mode) drawRoomsDebug(pos)
@@ -80,10 +79,6 @@ class World {
         Room.drawVisuals(pos, vis, pos_map, sort_map)
     }
 
-    private fun drawRoomsOld(pos: PointN) {
-        active_rooms.forEach { it.draw(pos+it.pos) }
-    }
-
     private fun drawRoomsDebug(pos: PointN) {
         graphics.layer = DrawLayer.CAMERA_FOLLOW
         active_rooms.forEach { graphics.stroke.rect(pos+it.pos, it.size, FGColor.DARKBLUE) }
@@ -91,7 +86,7 @@ class World {
         active_rooms.forEach { WorldUtils.drawDebug(pos+it.pos, it) }
     }
 
-    private fun drawNotActiveRooms(pos: PointN) {
+    fun drawNotActiveRoomBounds(pos: PointN) {
         if (!develop_mode) return
 
         graphics.layer = DrawLayer.CAMERA_FOLLOW
