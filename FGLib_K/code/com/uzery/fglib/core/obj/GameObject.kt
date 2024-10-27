@@ -320,15 +320,17 @@ abstract class GameObject {
     final override fun toString(): String {
         val values = values?.invoke() ?: emptyList()
 
-        val res = StringBuilder(name)
-        if (values.isNotEmpty()) {
-            res.append(":")
-            values.forEach { value ->
-                val s = value.toString()
-                if (s == "") throw DebugData.error("NULLABLE VALUE: $name: $values")
-                res.append(if (s[s.lastIndex] == ']') " $s" else " [$s]")
+        return buildString {
+            append(name)
+
+            if (values.isNotEmpty()) {
+                append(":")
+                values.forEach { value ->
+                    val s = value.toString()
+                    if (s == "") throw DebugData.error("NULLABLE VALUE: $name: $values")
+                    append(if (s[s.lastIndex] == ']') " $s" else " [$s]")
+                }
             }
         }
-        return res.toString()
     }
 }

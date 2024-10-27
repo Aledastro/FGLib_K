@@ -307,15 +307,14 @@ class Room(var pos: PointN, var size: PointN) {
     }
 
     override fun toString(): String {
-        val wr = StringBuilder()
-        wr.append(ConstL.FILES_COMMENT)
+        return buildString {
+            append(ConstL.FILES_COMMENT)
 
-        wr.append("room: ${PosValue(pos)} ${SizeValue(size)}\n\n")
+            append("room: ${PosValue(pos)} ${SizeValue(size)}\n\n")
 
-        for (o in objects) {
-            if (!o.isTemp()) wr.append("$o\n")
+            for (o in objects) {
+                if (!o.isTemp()) append("$o\n")
+            }
         }
-
-        return wr.toString()
     }
 }

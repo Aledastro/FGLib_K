@@ -6,8 +6,14 @@ data class SizeValue(val input: PointN): ObjectValue {
     override fun toString(): String {
         if (input == PointN.ZERO) return "pos[ZERO]"
 
-        val b = StringBuilder("size[${input[0].toInt()}")
-        for (i in 1..<input.dim) b.append(", ${input[i].toInt()}")
-        return b.append("]").toString()
+        return buildString {
+            append("size[")
+            append(input[0].toInt())
+            for (i in 1..<input.dim) {
+                append(", ")
+                append(input[i].toInt())
+            }
+            append("]")
+        }
     }
 }

@@ -73,17 +73,17 @@ open class Matrix(val data: Array2<Double>) {
     }
 
     override fun toString(): String {
-        val res = StringBuilder()
-        res.append("\n")
-        for (stroke in 0..<height) {
-            res.append("| ")
-            for (row in 0..<width) {
-                res.append("${data[row, stroke]} ")
+        return buildString {
+            append("\n")
+            for (stroke in 0..<height) {
+                append("| ")
+                for (row in 0..<width) {
+                    append("${data[row, stroke]} ")
+                }
+                append("|\n")
             }
-            res.append("|\n")
+            append("\n")
         }
-        res.append("\n")
-        return res.toString()
     }
 
     open operator fun times(c: Double): Matrix {
