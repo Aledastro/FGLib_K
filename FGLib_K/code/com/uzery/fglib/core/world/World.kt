@@ -7,7 +7,6 @@ import com.uzery.fglib.core.program.Platform.develop_mode
 import com.uzery.fglib.core.program.Platform.graphics
 import com.uzery.fglib.core.room.Room
 import com.uzery.fglib.core.world.WorldUtils.readInfo
-import com.uzery.fglib.utils.data.debug.DebugData
 import com.uzery.fglib.utils.data.getter.AbstractClassGetter
 import com.uzery.fglib.utils.graphics.data.FGColor
 import com.uzery.fglib.utils.math.geom.PointN
@@ -21,6 +20,11 @@ class World {
 
     private lateinit var controller: WorldController
 
+    lateinit var getter: AbstractClassGetter<GameObject>
+        private set
+
+    var camera: Camera? = null
+
     fun allTagged(tag: String): List<GameObject> {
         val res = ArrayList<GameObject>()
         for (room in active_rooms) {
@@ -33,8 +37,6 @@ class World {
     fun anyExists(vararg tag: String) = tag.any { allTagged(it).isNotEmpty() }
 
     fun noneExists(vararg tag: String) = !anyExists(*tag)
-
-    var camera: Camera? = null
 
     fun next() {
         controller.update()
@@ -98,9 +100,6 @@ class World {
         }
     }
 
-    lateinit var getter: AbstractClassGetter<GameObject>
-        private set
-
     fun init(load_info: WorldLoadInfo) {
         controller = load_info.controller
         controller.init()
@@ -112,6 +111,15 @@ class World {
         for (i in rooms.indices) last_active.add(false)
 
         if (load_info.init_rooms) initRooms()
+    }
+
+    fun init(
+        filenames: Array<String>,
+        getter: AbstractClassGetter<GameObject>,
+        controller: WorldController,
+        init_rooms: Boolean = true
+    ) {
+        init(WorldLoadInfo(filenames, getter, controller, init_rooms))
     }
 
     fun initRooms() {
