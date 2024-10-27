@@ -150,7 +150,7 @@ object WorldUtils {
             }
 
             //todo
-            val shape = when(sh.code) {
+            val shape = when (sh.code) {
                 Shape.Code.RECT -> RectN(p2(sh.L), p2(sh.S))
                 Shape.Code.OVAL -> OvalN(p2(sh.L), p2(sh.S))
                 Shape.Code.FIGURE -> sh
@@ -209,7 +209,7 @@ object WorldUtils {
             }
 
             //todo
-            val shape = when(sh.code) {
+            val shape = when (sh.code) {
                 Shape.Code.RECT -> RectN(p2(sh.L), p2(sh.S))
                 Shape.Code.OVAL -> OvalN(p2(sh.L), p2(sh.S))
                 Shape.Code.FIGURE -> sh

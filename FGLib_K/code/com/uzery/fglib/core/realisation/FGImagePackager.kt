@@ -8,7 +8,7 @@ abstract class FGImagePackager {
     abstract fun size(source: Any): IntI
     abstract fun argbFrom(source: Any, pos: IntI): Int
 
-    fun colorFrom(source: Any, pos: IntI): FGColor{
+    fun colorFrom(source: Any, pos: IntI): FGColor {
         return FGColor.argb(argbFrom(source, pos))
     }
 

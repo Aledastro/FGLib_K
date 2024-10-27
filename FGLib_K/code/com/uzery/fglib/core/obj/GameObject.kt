@@ -1,9 +1,7 @@
 package com.uzery.fglib.core.obj
 
 import com.uzery.fglib.core.obj.ability.AbilityBox
-import com.uzery.fglib.core.obj.listener.ActionListener
 import com.uzery.fglib.core.obj.ability.GroupAbility
-import com.uzery.fglib.core.obj.listener.InputAction
 import com.uzery.fglib.core.obj.bounds.BoundsBox
 import com.uzery.fglib.core.obj.bounds.BoundsBox.Companion.CODE
 import com.uzery.fglib.core.obj.bounds.BoundsComponent
@@ -13,7 +11,9 @@ import com.uzery.fglib.core.obj.component.*
 import com.uzery.fglib.core.obj.controller.Controller
 import com.uzery.fglib.core.obj.controller.GroupController
 import com.uzery.fglib.core.obj.controller.TempAction
+import com.uzery.fglib.core.obj.listener.ActionListener
 import com.uzery.fglib.core.obj.listener.GroupListener
+import com.uzery.fglib.core.obj.listener.InputAction
 import com.uzery.fglib.core.obj.property.GameProperty
 import com.uzery.fglib.core.obj.property.GroupProperty
 import com.uzery.fglib.core.obj.stats.Stats
@@ -21,7 +21,6 @@ import com.uzery.fglib.core.obj.visual.GroupVisualiser
 import com.uzery.fglib.core.obj.visual.LayerVisualiser
 import com.uzery.fglib.core.obj.visual.Visualiser
 import com.uzery.fglib.utils.data.debug.DebugData
-import com.uzery.fglib.utils.data.getter.value.ObjectValue
 import com.uzery.fglib.utils.graphics.AffineGraphics
 import com.uzery.fglib.utils.math.geom.PointN
 import com.uzery.fglib.utils.math.geom.Shape
@@ -130,9 +129,11 @@ abstract class GameObject {
     private fun addBounds(code: CODE, vararg bs: BoundsElement) {
         bounds[code.ordinal].add(*bs)
     }
+
     private fun addBounds(code: CODE, shape: () -> Shape?) {
         bounds[code.ordinal].add(shape)
     }
+
     private fun addBounds(code: CODE, name: String, shape: () -> Shape?) {
         bounds[code.ordinal].add(BoundsElement(name, shape))
     }
