@@ -2,13 +2,13 @@ package com.uzery.fglib.utils
 
 object StringUtils {
     fun re_split(dat: List<String>, del: String, keep_first: Boolean = false, keep_last: Boolean = true): String {
-        var res = ""
-        dat.forEach { res += it+del }
+        return buildString {
+            if (keep_first) append(del)
 
-        if (keep_first) res = del+res
-        if (!keep_last) res = res.substring(0, res.length-del.length)
+            dat.forEach { append(it+del) }
 
-        return res
+            if (!keep_last) substring(0, length-del.length)
+        }
     }
 
     fun re_split(dat: Array<String>, del: String, keep_first: Boolean = false, keep_last: Boolean = true): String {

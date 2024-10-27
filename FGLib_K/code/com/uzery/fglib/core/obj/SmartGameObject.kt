@@ -36,9 +36,10 @@ abstract class SmartGameObject<Type>: GameObject() {
     protected abstract fun construct(objs: ArrayList<Type>): List<ObjectComponent>
 
     fun data(): String {
-        var s = ""
-        s += ConstL.FILES_COMMENT
-        objs.forEach { s += it.toString()+"\n" }
-        return s
+        return buildString {
+            append(ConstL.FILES_COMMENT)
+
+            objs.forEach { append("$it\n") }
+        }
     }
 }

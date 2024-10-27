@@ -10,9 +10,10 @@ object ImageData: CollectDataClass() {
     private val sprites = HashMap<String, SpriteImage>()
 
     private fun decode(name: String, vararg effects: String): String {
-        var entry = name
-        effects.forEach { entry += "#$it" }
-        return entry
+        return buildString {
+            append(name)
+            effects.forEach { append("#$it") }
+        }
     }
 
     private fun keyFrom(name: String, vararg effects: String): String {

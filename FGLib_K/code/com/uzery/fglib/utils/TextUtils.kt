@@ -35,11 +35,12 @@ object TextUtils {
 
     fun splitTextAndMerge(text: String, width: Double, f: (String) -> Double = default_f): String {
         val data = splitText(text, width, f)
-        var res = ""
-        for (s in data) {
-            res += s+"\n"
+
+        return buildString {
+            for (s in data) {
+                append(s+"\n")
+            }
         }
-        return res
     }
 
     private val default_f: (String) -> Double = { it.length.toDouble() }

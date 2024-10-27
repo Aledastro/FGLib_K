@@ -103,15 +103,18 @@ data class RoomMask(private val actions: ArrayList<RoomChangeAction> = ArrayList
     fun asMaskObject(): String {
         if (isEmpty()) return "mask[]"
 
-        var s = ""
-        actions.forEach { s += "\t$it\n" }
-        return "mask[\n$s]"
+        return buildString {
+            append("mask[\n")
+            actions.forEach { append("\t$it\n") }
+            append("]")
+        }
     }
 
     override fun toString(): String {
-        var res = ConstL.FILES_COMMENT
+        return buildString {
+            append(ConstL.FILES_COMMENT)
 
-        actions.forEach { res += "$it\n" }
-        return res
+            actions.forEach { append("$it\n") }
+        }
     }
 }
