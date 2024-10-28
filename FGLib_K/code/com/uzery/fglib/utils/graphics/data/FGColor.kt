@@ -4,7 +4,7 @@ import com.uzery.fglib.utils.data.debug.DebugData
 
 data class FGColor(val red: Int, val green: Int, val blue: Int, val alpha: Int = 255) {
     val argb: Int
-        get() = (alpha shl 0)+(red shl 8)+(green shl 16)+(blue shl 24)
+        get() = (alpha shl 24)+(red shl 16)+(green shl 8)+(blue shl 0)
 
     constructor(red: Int, green: Int, blue: Int, alpha: Double = 1.0): this(
         red, green, blue, (alpha*255).toInt()
@@ -76,10 +76,10 @@ data class FGColor(val red: Int, val green: Int, val blue: Int, val alpha: Int =
         }
 
         fun argb(argb: Int): FGColor {
-            val a = (argb shr 24)%256
-            val r = (argb shr 16)%256
-            val g = (argb shr 8)%256
-            val b = (argb shr 0)%256
+            val a = (argb shr 24).mod(256)
+            val r = (argb shr 16).mod(256)
+            val g = (argb shr 8).mod(256)
+            val b = (argb shr 0).mod(256)
 
             return FGColor(r, g, b, a)
         }
