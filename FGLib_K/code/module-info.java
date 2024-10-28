@@ -40,6 +40,7 @@ module FGLib_K {
 
     exports com.uzery.fglib.utils.graphics;
     exports com.uzery.fglib.utils.graphics.data;
+    exports com.uzery.fglib.utils.graphics.shader;
 
     exports com.uzery.fglib.utils.input;
     exports com.uzery.fglib.utils.input.data;
