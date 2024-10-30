@@ -1,9 +1,10 @@
 package com.uzery.fglib.core.component.controller.node
 
+import com.uzery.fglib.core.component.ComponentSyntaxable
 import com.uzery.fglib.core.component.ObjectComponent
 import com.uzery.fglib.core.component.controller.TempAction
 
-abstract class TempActionNode {
+abstract class TempActionNode: ComponentSyntaxable {
     val action: () -> TempAction
         get() = { getAction() }
 
@@ -15,7 +16,7 @@ abstract class TempActionNode {
 
     val components = ArrayList<ObjectComponent>()
 
-    fun add(vararg component: ObjectComponent) {
+    override fun add(vararg component: ObjectComponent) {
         components.addAll(component)
     }
 
