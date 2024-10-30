@@ -101,7 +101,6 @@ class World {
         controller = load_info.controller
         controller.init()
 
-        camera = null
         for (name in load_info.filenames) filenames.add(name)
         getter = load_info.getter
         filenames.forEach { rooms.add(readInfo(getter, it)) }
