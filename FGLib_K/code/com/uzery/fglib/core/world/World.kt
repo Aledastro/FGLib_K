@@ -1,8 +1,8 @@
 package com.uzery.fglib.core.world
 
+import com.uzery.fglib.core.component.visual.Visualiser
 import com.uzery.fglib.core.obj.DrawLayer
 import com.uzery.fglib.core.obj.GameObject
-import com.uzery.fglib.core.component.visual.Visualiser
 import com.uzery.fglib.core.program.Platform.develop_mode
 import com.uzery.fglib.core.program.Platform.graphics
 import com.uzery.fglib.core.room.Room

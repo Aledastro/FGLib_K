@@ -1,10 +1,10 @@
 package com.uzery.fglib.core.room
 
-import com.uzery.fglib.core.obj.GameObject
 import com.uzery.fglib.core.component.bounds.Bounds
 import com.uzery.fglib.core.component.bounds.BoundsElement
 import com.uzery.fglib.core.component.listener.InputAction
 import com.uzery.fglib.core.component.visual.Visualiser
+import com.uzery.fglib.core.obj.GameObject
 import com.uzery.fglib.core.program.Platform.render_camera
 import com.uzery.fglib.utils.BoundsUtils
 import com.uzery.fglib.utils.CollisionUtils.MAX_MOVE_K

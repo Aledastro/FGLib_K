@@ -1,9 +1,9 @@
 package com.uzery.fglib.core.world
 
-import com.uzery.fglib.core.obj.DrawLayer
-import com.uzery.fglib.core.obj.GameObject
 import com.uzery.fglib.core.component.bounds.BoundsBox
 import com.uzery.fglib.core.component.bounds.BoundsElement
+import com.uzery.fglib.core.obj.DrawLayer
+import com.uzery.fglib.core.obj.GameObject
 import com.uzery.fglib.core.program.Platform.graphics
 import com.uzery.fglib.core.program.Platform.render_camera
 import com.uzery.fglib.core.room.Room
