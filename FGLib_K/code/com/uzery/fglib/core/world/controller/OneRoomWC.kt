@@ -1,4 +1,4 @@
-package com.uzery.fglib.core.world
+package com.uzery.fglib.core.world.controller
 
 import com.uzery.fglib.core.obj.GameObject
 import com.uzery.fglib.core.room.Room

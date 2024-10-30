@@ -1,7 +1,8 @@
 package com.uzery.fglib.core.realisation
 
-import com.uzery.fglib.core.program.Extension
-import com.uzery.fglib.core.program.LaunchOptions
+import com.uzery.fglib.core.program.extension.Extension
+import com.uzery.fglib.core.program.launch.LaunchOptions
+import com.uzery.fglib.core.realisation.packager.FGPackager
 import com.uzery.fglib.utils.graphics.AffineGraphics
 
 abstract class FGRealisation {

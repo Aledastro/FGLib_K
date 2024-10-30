@@ -1,4 +1,4 @@
-package com.uzery.fglib.core.program
+package com.uzery.fglib.core.program.data
 
 import com.uzery.fglib.utils.data.debug.DebugData
 import com.uzery.fglib.utils.struct.num.IntI

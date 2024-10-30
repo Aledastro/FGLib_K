@@ -3,6 +3,7 @@ package com.uzery.fglib.core.program
 import com.uzery.fglib.core.program.Platform.CANVAS
 import com.uzery.fglib.core.program.Platform.CANVAS_R
 import com.uzery.fglib.core.program.Platform.graphics
+import com.uzery.fglib.core.program.extension.Extension
 import com.uzery.fglib.utils.audio.AudioData
 import com.uzery.fglib.utils.data.file.TextData
 import com.uzery.fglib.utils.data.image.ImageData

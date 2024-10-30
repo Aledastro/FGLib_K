@@ -1,4 +1,4 @@
-package com.uzery.fglib.core.program
+package com.uzery.fglib.core.program.extension
 
 import com.uzery.fglib.core.program.Platform.graphics
 import com.uzery.fglib.core.program.Platform.mouse

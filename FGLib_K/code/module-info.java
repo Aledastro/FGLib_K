@@ -18,13 +18,19 @@ module FGLib_K {
     exports com.uzery.fglib.core.obj.stats;
 
     exports com.uzery.fglib.core.program;
+    exports com.uzery.fglib.core.program.data;
+    exports com.uzery.fglib.core.program.extension;
+    exports com.uzery.fglib.core.program.launch;
 
     exports com.uzery.fglib.core.realisation;
+    exports com.uzery.fglib.core.realisation.packager;
 
     exports com.uzery.fglib.core.room;
     exports com.uzery.fglib.core.room.mask;
 
     exports com.uzery.fglib.core.world;
+    exports com.uzery.fglib.core.world.camera;
+    exports com.uzery.fglib.core.world.controller;
 
     /////////////////////////////////////////////////////////
 

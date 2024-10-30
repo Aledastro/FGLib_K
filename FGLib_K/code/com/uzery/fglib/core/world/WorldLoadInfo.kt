@@ -1,6 +1,7 @@
 package com.uzery.fglib.core.world
 
 import com.uzery.fglib.core.obj.GameObject
+import com.uzery.fglib.core.world.controller.WorldController
 import com.uzery.fglib.utils.data.getter.AbstractClassGetter
 
 class WorldLoadInfo(

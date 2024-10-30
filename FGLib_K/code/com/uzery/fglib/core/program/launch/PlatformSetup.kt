@@ -1,16 +1,17 @@
-package com.uzery.fglib.core.program
+package com.uzery.fglib.core.program.launch
 
 import com.uzery.fglib.core.program.Platform.addUpdatable
 import com.uzery.fglib.core.program.Platform.char_keyboard
 import com.uzery.fglib.core.program.Platform.keyboard
 import com.uzery.fglib.core.program.Platform.mouse
+import com.uzery.fglib.core.program.extension.Extension
 import com.uzery.fglib.core.realisation.FGRealisation
 
 object PlatformSetup {
     internal lateinit var realisation: FGRealisation
 
     fun init(realisation: FGRealisation) {
-        this.realisation = realisation
+        PlatformSetup.realisation = realisation
 
         addUpdatable(keyboard, char_keyboard, mouse.keys)
     }

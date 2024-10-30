@@ -1,9 +1,10 @@
-package com.uzery.fglib.core.world
+package com.uzery.fglib.core.world.controller
 
 import com.uzery.fglib.core.obj.GameObject
 import com.uzery.fglib.core.program.Platform.CANVAS
 import com.uzery.fglib.core.program.Platform.graphics
 import com.uzery.fglib.core.room.Room
+import com.uzery.fglib.core.world.World
 import com.uzery.fglib.utils.ShapeUtils
 import com.uzery.fglib.utils.data.debug.DebugData
 import com.uzery.fglib.utils.graphics.data.FGColor

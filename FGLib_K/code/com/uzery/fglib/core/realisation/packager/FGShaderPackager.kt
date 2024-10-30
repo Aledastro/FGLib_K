@@ -1,4 +1,4 @@
-package com.uzery.fglib.core.realisation
+package com.uzery.fglib.core.realisation.packager
 
 abstract class FGShaderPackager {
     abstract fun createShader(shader_source: ArrayList<String>): Any

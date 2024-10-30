@@ -1,4 +1,4 @@
-package com.uzery.fglib.core.world
+package com.uzery.fglib.core.world.camera
 
 import com.uzery.fglib.core.obj.GameObject
 import com.uzery.fglib.core.program.Platform.CANVAS

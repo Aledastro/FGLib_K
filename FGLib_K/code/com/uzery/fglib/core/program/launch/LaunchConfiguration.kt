@@ -1,5 +1,6 @@
-package com.uzery.fglib.core.program
+package com.uzery.fglib.core.program.launch
 
+import com.uzery.fglib.core.program.extension.Extension
 import com.uzery.fglib.utils.FGUtils
 import com.uzery.fglib.utils.audio.AudioData
 import com.uzery.fglib.utils.data.file.TextData

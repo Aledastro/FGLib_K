@@ -1,5 +1,6 @@
-package com.uzery.fglib.core.program
+package com.uzery.fglib.core.program.launch
 
+import com.uzery.fglib.core.program.data.FGWindowStyle
 import com.uzery.fglib.utils.graphics.data.FGColor
 import com.uzery.fglib.utils.math.geom.PointN
 

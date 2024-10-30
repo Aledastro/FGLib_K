@@ -1,4 +1,4 @@
-package com.uzery.fglib.core.realisation
+package com.uzery.fglib.core.realisation.packager
 
 import com.uzery.fglib.utils.graphics.data.FGColor
 import com.uzery.fglib.utils.struct.num.IntI

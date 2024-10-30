@@ -7,6 +7,8 @@ import com.uzery.fglib.core.program.Platform.develop_mode
 import com.uzery.fglib.core.program.Platform.graphics
 import com.uzery.fglib.core.room.Room
 import com.uzery.fglib.core.world.WorldUtils.readInfo
+import com.uzery.fglib.core.world.camera.Camera
+import com.uzery.fglib.core.world.controller.WorldController
 import com.uzery.fglib.utils.data.getter.AbstractClassGetter
 import com.uzery.fglib.utils.graphics.data.FGColor
 import com.uzery.fglib.utils.math.geom.PointN
