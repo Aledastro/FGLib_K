@@ -216,7 +216,7 @@ class Room(var pos: PointN, var size: PointN) {
             if (!ShapeUtils.into(copied1, copied2)) return
             if (sh1.group != sh2.group) return
 
-            o1.activate(InputAction(code, o2, "elements | ${sh1.name} ${sh2.name}"))
+            o1.activate(InputAction(code, o2, sh1.name, sh2.name))
         }
 
         for (blueObjID in list.indices) {
