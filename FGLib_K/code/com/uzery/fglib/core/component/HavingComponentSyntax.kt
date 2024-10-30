@@ -24,57 +24,33 @@ import com.uzery.fglib.utils.graphics.AffineGraphics
 import com.uzery.fglib.utils.math.geom.PointN
 import com.uzery.fglib.utils.math.geom.Shape
 
-interface ComponentSyntaxable {
-    fun add(vararg component: ObjectComponent)
-
-    fun addComponent(vararg component: ObjectComponent) {
-        for (c in component) {
-            when (c) {
-                is GroupComponent -> c.components.forEach { addComponent(it) }
-
-                is BoundsComponent -> addBounds(c.code, c.element)
-
-                is AbilityBox -> addAbility(c)
-                is Controller -> addController(c)
-                is ActionListener -> addListener(c)
-                is GameProperty -> addProperty(c)
-                is Visualiser -> addVisual(c)
-
-                is OnInitComponent -> onInit(c)
-                is OnLoadComponent -> onLoad(c)
-                is OnBirthComponent -> onBirth(c)
-                is OnDeathComponent -> onDeath(c)
-                is OnGrabComponent -> onGrab(c)
-
-                else -> throw DebugData.error("Wrong Component: $c")
-            }
-        }
-    }
+interface HavingComponentSyntax {
+    fun addComponent(vararg component: ObjectComponent)
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    fun addBounds(bs: GroupBounds) = add(bs)
+    fun addBounds(bs: GroupBounds) = addComponent(bs)
 
-    fun addAbility(ability: GroupAbility) = add(ability)
-    fun addController(controller: GroupController) = add(controller)
-    fun addListener(listener: GroupListener) = add(listener)
-    fun addProperty(property: GroupProperty) = add(property)
-    fun addVisual(vis: GroupVisualiser) = add(vis)
+    fun addAbility(ability: GroupAbility) = addComponent(ability)
+    fun addController(controller: GroupController) = addComponent(controller)
+    fun addListener(listener: GroupListener) = addComponent(listener)
+    fun addProperty(property: GroupProperty) = addComponent(property)
+    fun addVisual(vis: GroupVisualiser) = addComponent(vis)
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    private fun addBounds(code: CODE, vararg bs: BoundsElement) {
+    fun addBounds(code: CODE, vararg bs: BoundsElement) {
         bs.forEach {
-            add(BoundsComponent(code, it))
+            addComponent(BoundsComponent(code, it))
         }
     }
 
-    private fun addBounds(code: CODE, shape: () -> Shape?) {
-        add(BoundsComponent(code, BoundsElement(shape)))
+    fun addBounds(code: CODE, shape: () -> Shape?) {
+        addComponent(BoundsComponent(code, BoundsElement(shape)))
     }
 
-    private fun addBounds(code: CODE, name: String, shape: () -> Shape?) {
-        add(BoundsComponent(code, BoundsElement(name, shape)))
+    fun addBounds(code: CODE, name: String, shape: () -> Shape?) {
+        addComponent(BoundsComponent(code, BoundsElement(name, shape)))
     }
 
     fun addRedBounds(vararg bs: BoundsElement) = addBounds(CODE.RED, *bs)
@@ -95,23 +71,23 @@ interface ComponentSyntaxable {
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    fun addController(controller: () -> (() -> TempAction)) = add(Controller(controller))
-    fun addController(vararg controller: Controller) = add(*controller)
+    fun addController(controller: () -> (() -> TempAction)) = addComponent(Controller(controller))
+    fun addController(vararg controller: Controller) = addComponent(*controller)
 
-    fun addListener(listener: (InputAction) -> Unit) = add(ActionListener(listener))
-    fun addListener(vararg listener: ActionListener) = add(*listener)
+    fun addListener(listener: (InputAction) -> Unit) = addComponent(ActionListener(listener))
+    fun addListener(vararg listener: ActionListener) = addComponent(*listener)
 
-    fun addAbility(ability: () -> Unit) = add(AbilityBox(ability))
-    fun addAbility(vararg ability: AbilityBox) = add(*ability)
+    fun addAbility(ability: () -> Unit) = addComponent(AbilityBox(ability))
+    fun addAbility(vararg ability: AbilityBox) = addComponent(*ability)
 
-    fun addProperty(vararg property: GameProperty) = add(*property)
+    fun addProperty(vararg property: GameProperty) = addComponent(*property)
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    fun addVisual(vararg vis: Visualiser) = add(*vis)
+    fun addVisual(vararg vis: Visualiser) = addComponent(*vis)
 
     fun addVisual(layer: DrawLayer, vis: (agc: AffineGraphics, draw_pos: PointN) -> Unit) {
-        add(
+        addComponent(
             object: LayerVisualiser(layer) {
                 override fun draw(draw_pos: PointN) {
                     vis(agc, draw_pos)
@@ -121,7 +97,7 @@ interface ComponentSyntaxable {
     }
 
     fun addVisual(layer: DrawLayer, sort_pos: PointN, vis: (agc: AffineGraphics, draw_pos: PointN) -> Unit) {
-        add(
+        addComponent(
             object: LayerVisualiser(layer) {
                 init {
                     sortPOS = sort_pos
@@ -136,20 +112,20 @@ interface ComponentSyntaxable {
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    fun onInit(f: () -> Unit) = add(OnInitComponent(f))
-    fun onInit(f: OnInitComponent) = add(f)
+    fun onInit(f: () -> Unit) = addComponent(OnInitComponent(f))
+    fun onInit(f: OnInitComponent) = addComponent(f)
 
-    fun onLoad(f: () -> Unit) = add(OnLoadComponent(f))
-    fun onLoad(f: OnLoadComponent) = add(f)
+    fun onLoad(f: () -> Unit) = addComponent(OnLoadComponent(f))
+    fun onLoad(f: OnLoadComponent) = addComponent(f)
 
-    fun onBirth(f: () -> Unit) = add(OnBirthComponent(f))
-    fun onBirth(f: OnBirthComponent) = add(f)
+    fun onBirth(f: () -> Unit) = addComponent(OnBirthComponent(f))
+    fun onBirth(f: OnBirthComponent) = addComponent(f)
 
-    fun onDeath(f: () -> Unit) = add(OnDeathComponent(f))
-    fun onDeath(f: OnDeathComponent) = add(f)
+    fun onDeath(f: () -> Unit) = addComponent(OnDeathComponent(f))
+    fun onDeath(f: OnDeathComponent) = addComponent(f)
 
-    fun onGrab(f: () -> Unit) = add(OnGrabComponent(f))
-    fun onGrab(f: OnGrabComponent) = add(f)
+    fun onGrab(f: () -> Unit) = addComponent(OnGrabComponent(f))
+    fun onGrab(f: OnGrabComponent) = addComponent(f)
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 }

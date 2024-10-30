@@ -1,32 +1,23 @@
 package com.uzery.fglib.core.obj
 
+import com.uzery.fglib.core.component.GroupComponent
+import com.uzery.fglib.core.component.HavingComponentSyntax
+import com.uzery.fglib.core.component.ObjectComponent
+import com.uzery.fglib.core.component.ObjectTransform
 import com.uzery.fglib.core.component.ability.AbilityBox
-import com.uzery.fglib.core.component.ability.GroupAbility
 import com.uzery.fglib.core.component.bounds.BoundsBox
-import com.uzery.fglib.core.component.bounds.BoundsBox.Companion.CODE
 import com.uzery.fglib.core.component.bounds.BoundsComponent
-import com.uzery.fglib.core.component.bounds.BoundsElement
-import com.uzery.fglib.core.component.bounds.GroupBounds
-import com.uzery.fglib.core.component.*
 import com.uzery.fglib.core.component.controller.Controller
-import com.uzery.fglib.core.component.controller.GroupController
-import com.uzery.fglib.core.component.controller.TempAction
 import com.uzery.fglib.core.component.listener.ActionListener
-import com.uzery.fglib.core.component.listener.GroupListener
 import com.uzery.fglib.core.component.listener.InputAction
 import com.uzery.fglib.core.component.property.GameProperty
-import com.uzery.fglib.core.component.property.GroupProperty
 import com.uzery.fglib.core.component.reaction.*
-import com.uzery.fglib.core.obj.stats.Stats
-import com.uzery.fglib.core.component.visual.GroupVisualiser
-import com.uzery.fglib.core.component.visual.LayerVisualiser
 import com.uzery.fglib.core.component.visual.Visualiser
+import com.uzery.fglib.core.obj.stats.Stats
 import com.uzery.fglib.utils.data.debug.DebugData
-import com.uzery.fglib.utils.graphics.AffineGraphics
 import com.uzery.fglib.utils.math.geom.PointN
-import com.uzery.fglib.utils.math.geom.Shape
 
-abstract class GameObject {
+abstract class GameObject: HavingComponentSyntax {
     val stats = Stats()
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -91,127 +82,29 @@ abstract class GameObject {
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    fun addComponent(vararg component: ObjectComponent) {
+    override fun addComponent(vararg component: ObjectComponent) {
         for (c in component) {
             when (c) {
                 is GroupComponent -> c.components.forEach { addComponent(it) }
 
-                is BoundsComponent -> addBounds(c.code, c.element)
+                is BoundsComponent -> bounds[c.code.ordinal].add(c.element)
 
-                is AbilityBox -> addAbility(c)
-                is Controller -> addController(c)
-                is ActionListener -> addListener(c)
-                is GameProperty -> addProperty(c)
-                is Visualiser -> addVisual(c)
+                is AbilityBox -> abilities.add(c)
+                is Controller -> controllers.add(c)
+                is ActionListener -> listeners.add(c)
+                is GameProperty -> properties.add(c)
+                is Visualiser -> visuals.add(c)
 
-                is OnInitComponent -> onInit(c)
-                is OnLoadComponent -> onLoad(c)
-                is OnBirthComponent -> onBirth(c)
-                is OnDeathComponent -> onDeath(c)
-                is OnGrabComponent -> onGrab(c)
+                is OnInitComponent -> onInit.add(c)
+                is OnLoadComponent -> onLoad.add(c)
+                is OnBirthComponent -> onBirth.add(c)
+                is OnDeathComponent -> onDeath.add(c)
+                is OnGrabComponent -> onGrab.add(c)
 
                 else -> throw DebugData.error("Wrong Component: $c")
             }
         }
     }
-
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-    fun addBounds(bs: GroupBounds) = addComponent(bs)
-
-    fun addAbility(ability: GroupAbility) = addComponent(ability)
-    fun addController(controller: GroupController) = addComponent(controller)
-    fun addListener(listener: GroupListener) = addComponent(listener)
-    fun addProperty(property: GroupProperty) = addComponent(property)
-    fun addVisual(vis: GroupVisualiser) = addComponent(vis)
-
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-    private fun addBounds(code: CODE, vararg bs: BoundsElement) {
-        bounds[code.ordinal].add(*bs)
-    }
-
-    private fun addBounds(code: CODE, shape: () -> Shape?) {
-        bounds[code.ordinal].add(shape)
-    }
-
-    private fun addBounds(code: CODE, name: String, shape: () -> Shape?) {
-        bounds[code.ordinal].add(BoundsElement(name, shape))
-    }
-
-    fun addRedBounds(vararg bs: BoundsElement) = addBounds(CODE.RED, *bs)
-    fun addRedBounds(shape: () -> Shape?) = addBounds(CODE.RED, shape)
-    fun addRedBounds(name: String, shape: () -> Shape?) = addBounds(CODE.RED, name, shape)
-
-    fun addOrangeBounds(vararg bs: BoundsElement) = addBounds(CODE.ORANGE, *bs)
-    fun addOrangeBounds(shape: () -> Shape?) = addBounds(CODE.ORANGE, shape)
-    fun addOrangeBounds(name: String, shape: () -> Shape?) = addBounds(CODE.ORANGE, name, shape)
-
-    fun addBlueBounds(vararg bs: BoundsElement) = addBounds(CODE.BLUE, *bs)
-    fun addBlueBounds(shape: () -> Shape?) = addBounds(CODE.BLUE, shape)
-    fun addBlueBounds(name: String, shape: () -> Shape?) = addBounds(CODE.BLUE, name, shape)
-
-    fun addGreenBounds(vararg bs: BoundsElement) = addBounds(CODE.GREEN, *bs)
-    fun addGreenBounds(shape: () -> Shape?) = addBounds(CODE.GREEN, shape)
-    fun addGreenBounds(name: String, shape: () -> Shape?) = addBounds(CODE.GREEN, name, shape)
-
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-    fun addController(controller: () -> (() -> TempAction)) = addController(Controller(controller))
-    fun addController(vararg controller: Controller) = controllers.addAll(controller)
-
-    fun addListener(listener: (InputAction) -> Unit) = addListener(ActionListener(listener))
-    fun addListener(vararg listener: ActionListener) = listeners.addAll(listener)
-
-    fun addAbility(ability: () -> Unit) = addAbility(AbilityBox(ability))
-    fun addAbility(vararg ability: AbilityBox) = abilities.addAll(ability)
-
-    fun addProperty(vararg property: GameProperty) = properties.addAll(property)
-
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-    fun addVisual(vararg vis: Visualiser) = visuals.addAll(vis)
-
-    fun addVisual(layer: DrawLayer, vis: (agc: AffineGraphics, draw_pos: PointN) -> Unit) {
-        visuals.add(
-            object: LayerVisualiser(layer) {
-                override fun draw(draw_pos: PointN) {
-                    vis(agc, draw_pos)
-                }
-            }
-        )
-    }
-
-    fun addVisual(layer: DrawLayer, sort_pos: PointN, vis: (agc: AffineGraphics, draw_pos: PointN) -> Unit) {
-        visuals.add(
-            object: LayerVisualiser(layer) {
-                init {
-                    sortPOS = sort_pos
-                }
-
-                override fun draw(draw_pos: PointN) {
-                    vis(agc, draw_pos)
-                }
-            }
-        )
-    }
-
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-    fun onInit(f: () -> Unit) = onInit.add(f)
-    fun onInit(f: OnInitComponent) = onInit.add(f)
-
-    fun onLoad(f: () -> Unit) = onLoad.add(f)
-    fun onLoad(f: OnLoadComponent) = onLoad.add(f)
-
-    fun onBirth(f: () -> Unit) = onBirth.add(f)
-    fun onBirth(f: OnBirthComponent) = onBirth.add(f)
-
-    fun onDeath(f: () -> Unit) = onDeath.add(f)
-    fun onDeath(f: OnDeathComponent) = onDeath.add(f)
-
-    fun onGrab(f: () -> Unit) = onGrab.add(f)
-    fun onGrab(f: OnGrabComponent) = onGrab.add(f)
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 

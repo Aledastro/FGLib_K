@@ -6,31 +6,14 @@ import com.uzery.fglib.utils.math.geom.shape.RectN
 import kotlin.math.max
 import kotlin.math.min
 
-class Bounds {
-    val elements = ArrayList<BoundsElement>()
-
-    fun add(vararg els: BoundsElement) = els.forEach { element -> elements.add(element) }
-    fun add(vararg shapes: () -> Shape?) = shapes.forEach { shape -> elements.add(BoundsElement(shape)) }
-    fun add(shape: () -> Shape?) = elements.add(BoundsElement(shape))
-    fun add(name: String, shape: () -> Shape?) = elements.add(BoundsElement(name, shape))
-
-    constructor()
-
-    constructor(vararg els: BoundsElement) {
+class Bounds(vararg els: BoundsElement) {
+    init {
         add(*els)
     }
 
-    constructor(vararg shape: () -> Shape?) {
-        add(*shape)
-    }
+    val elements = ArrayList<BoundsElement>()
 
-    constructor(shape: () -> Shape?) {
-        add(shape)
-    }
-
-    constructor(name: String, shape: () -> Shape?) {
-        add(name, shape)
-    }
+    fun add(vararg els: BoundsElement) = els.forEach { element -> elements.add(element) }
 
     fun main(): RectN? {
         if (empty) return null
@@ -56,13 +39,6 @@ class Bounds {
 
     val empty
         get() = elements.isEmpty()
-
-    @Deprecated("It doesn't copy original manually")
-    fun copy(pos: PointN): Bounds {
-        val els = ArrayList<BoundsElement>()
-        elements.forEach { els.add(it.copy(pos)) }
-        return Bounds(*els.toTypedArray())
-    }
 
     fun into(pos: PointN): Boolean {
         return elements.any { it.shape()?.into(pos) == true }
