@@ -1,5 +1,6 @@
 package com.uzery.fglib.core.obj
 
+import com.uzery.fglib.core.component.ObjectComponent
 import com.uzery.fglib.utils.FGUtils
 import com.uzery.fglib.utils.data.file.ConstL
 import com.uzery.fglib.utils.data.file.TextData

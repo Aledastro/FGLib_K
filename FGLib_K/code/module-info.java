@@ -3,18 +3,19 @@ module FGLib_K {
 
     /////////////////////////////////////////////////////////
 
-    exports com.uzery.fglib.core.event;
+    exports com.uzery.fglib.core.component;
+    exports com.uzery.fglib.core.component.ability;
+    exports com.uzery.fglib.core.component.bounds;
+    exports com.uzery.fglib.core.component.controller;
+    exports com.uzery.fglib.core.component.controller.node;
+    exports com.uzery.fglib.core.component.listener;
+    exports com.uzery.fglib.core.component.property;
+    exports com.uzery.fglib.core.component.reaction;
+    exports com.uzery.fglib.core.component.visual;
 
     exports com.uzery.fglib.core.obj;
-    exports com.uzery.fglib.core.obj.ability;
-    exports com.uzery.fglib.core.obj.bounds;
-    exports com.uzery.fglib.core.obj.component;
-    exports com.uzery.fglib.core.obj.controller;
-    exports com.uzery.fglib.core.obj.controller.node;
-    exports com.uzery.fglib.core.obj.listener;
-    exports com.uzery.fglib.core.obj.property;
+    exports com.uzery.fglib.core.obj.event;
     exports com.uzery.fglib.core.obj.stats;
-    exports com.uzery.fglib.core.obj.visual;
 
     exports com.uzery.fglib.core.program;
 
