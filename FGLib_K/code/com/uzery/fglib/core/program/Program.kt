@@ -51,11 +51,6 @@ object Program {
         core.drawWithChildren(core.stats.render_pos)
     }
 
-    fun loop() {
-        update()
-        draw()
-    }
-
     var program_time = 0
         private set
 }
