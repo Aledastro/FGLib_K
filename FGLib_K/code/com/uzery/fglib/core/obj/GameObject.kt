@@ -118,6 +118,11 @@ abstract class GameObject: HavingComponentSyntax {
     }
 
     fun next() {
+        next0()
+        nextTime()
+    }
+
+    private fun next0() {
         if (object_time == 0) onBirth.forEach { it.run() }
 
         controllers.forEach { it.update() }
@@ -128,15 +133,28 @@ abstract class GameObject: HavingComponentSyntax {
 
         effects.forEach { it.update() }
         effects.removeIf { it.dead }
+    }
 
+    private fun nextTime() {
         object_time++
     }
 
-    fun nextWithFollowers() {
+    internal fun nextWithFollowers() {
         next()
         followers.removeIf { it.dead }
 
         followers.forEach { it.nextWithFollowers() }
+    }
+    internal fun next0WithFollowers() {
+        next0()
+        followers.removeIf { it.dead }
+
+        followers.forEach { it.next0WithFollowers() }
+    }
+    internal fun nextTimeWithFollowers() {
+        nextTime()
+
+        followers.forEach { it.nextTimeWithFollowers() }
     }
 
     fun draw(draw_pos: PointN) {
