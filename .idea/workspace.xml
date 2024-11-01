@@ -12,13 +12,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="82970e50-af90-458e-a847-e0b07c98f932" name="Changes" comment="FGLib v.0.15.19.2 [K]">
-      <change afterPath="$PROJECT_DIR$/FGLib_K/code/com/uzery/fglib/core/component/ComponentSyntaxOwner.kt" afterDir="false" />
+    <list default="true" id="82970e50-af90-458e-a847-e0b07c98f932" name="Changes" comment="FGLib v.0.15.19.3 [K]">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FGLib_K/code/com/uzery/fglib/core/component/GroupComponent.kt" beforeDir="false" afterPath="$PROJECT_DIR$/FGLib_K/code/com/uzery/fglib/core/component/GroupComponent.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FGLib_K/code/com/uzery/fglib/core/component/HavingComponentSyntax.kt" beforeDir="false" afterPath="$PROJECT_DIR$/FGLib_K/code/com/uzery/fglib/core/component/HavingComponentSyntax.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FGLib_K/code/com/uzery/fglib/core/component/controller/node/TempActionNode.kt" beforeDir="false" afterPath="$PROJECT_DIR$/FGLib_K/code/com/uzery/fglib/core/component/controller/node/TempActionNode.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FGLib_K/code/com/uzery/fglib/core/obj/GameObject.kt" beforeDir="false" afterPath="$PROJECT_DIR$/FGLib_K/code/com/uzery/fglib/core/obj/GameObject.kt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -477,7 +472,7 @@
       <option name="project" value="LOCAL" />
       <updated>1717724053257</updated>
     </task>
-    <option name="localTasksCounter" value="578" />
+    <option name="localTasksCounter" value="579" />
     <servers />
   </component>
   <component name="UnknownFeatures">
@@ -507,7 +502,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="FGLib v.0.15.11.3 [K]" />
     <MESSAGE value="FGLib v.0.15.11.4 [K]" />
     <MESSAGE value="FGLib v.0.15.12.0 [K]" />
     <MESSAGE value="FGLib v.0.15.12.1 [K]" />
@@ -532,7 +526,8 @@
     <MESSAGE value="FGLib v.0.15.19.0 [K]" />
     <MESSAGE value="FGLib v.0.15.19.1 [K]" />
     <MESSAGE value="FGLib v.0.15.19.2 [K]" />
-    <option name="LAST_COMMIT_MESSAGE" value="FGLib v.0.15.19.2 [K]" />
+    <MESSAGE value="FGLib v.0.15.19.3 [K]" />
+    <option name="LAST_COMMIT_MESSAGE" value="FGLib v.0.15.19.3 [K]" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

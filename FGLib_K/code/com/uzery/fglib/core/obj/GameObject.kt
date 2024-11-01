@@ -36,18 +36,41 @@ abstract class GameObject: HavingComponentSyntax {
 
     val bounds = BoundsBox()
 
-    private val controllers = ArrayList<Controller>()
-
-    val visuals = ArrayList<Visualiser>()
     private val abilities = ArrayList<AbilityBox>()
+    private val controllers = ArrayList<Controller>()
     private val listeners = ArrayList<ActionListener>()
     private val properties = ArrayList<GameProperty>()
+    val visuals = ArrayList<Visualiser>()
 
     private val onInit = ArrayList<OnInitComponent>()
     private val onLoad = ArrayList<OnLoadComponent>()
     private val onBirth = ArrayList<OnBirthComponent>()
     private val onDeath = ArrayList<OnDeathComponent>()
     private val onGrab = ArrayList<OnGrabComponent>()
+
+    final override fun addComponent(vararg component: ObjectComponent) {
+        for (c in component) {
+            when (c) {
+                is GroupComponent -> c.components.forEach { addComponent(it) }
+
+                is BoundsComponent -> bounds[c.code.ordinal].add(c.element)
+
+                is AbilityBox -> abilities.add(c)
+                is Controller -> controllers.add(c)
+                is ActionListener -> listeners.add(c)
+                is GameProperty -> properties.add(c)
+                is Visualiser -> visuals.add(c)
+
+                is OnInitComponent -> onInit.add(c)
+                is OnLoadComponent -> onLoad.add(c)
+                is OnBirthComponent -> onBirth.add(c)
+                is OnDeathComponent -> onDeath.add(c)
+                is OnGrabComponent -> onGrab.add(c)
+
+                else -> throw DebugData.error("Wrong Component: $c")
+            }
+        }
+    }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -94,32 +117,6 @@ abstract class GameObject: HavingComponentSyntax {
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    final override fun addComponent(vararg component: ObjectComponent) {
-        for (c in component) {
-            when (c) {
-                is GroupComponent -> c.components.forEach { addComponent(it) }
-
-                is BoundsComponent -> bounds[c.code.ordinal].add(c.element)
-
-                is AbilityBox -> abilities.add(c)
-                is Controller -> controllers.add(c)
-                is ActionListener -> listeners.add(c)
-                is GameProperty -> properties.add(c)
-                is Visualiser -> visuals.add(c)
-
-                is OnInitComponent -> onInit.add(c)
-                is OnLoadComponent -> onLoad.add(c)
-                is OnBirthComponent -> onBirth.add(c)
-                is OnDeathComponent -> onDeath.add(c)
-                is OnGrabComponent -> onGrab.add(c)
-
-                else -> throw DebugData.error("Wrong Component: $c")
-            }
-        }
-    }
-
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
     private var inited = false
     fun init() {
         if (inited) return
@@ -128,6 +125,8 @@ abstract class GameObject: HavingComponentSyntax {
         onLoad.forEach { it.run() }
         inited = true
     }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     fun next() {
         next0()
@@ -169,10 +168,14 @@ abstract class GameObject: HavingComponentSyntax {
         followers.forEach { it.nextTimeWithFollowers() }
     }
 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
     fun draw(draw_pos: PointN) {
         visuals.sortBy { v -> v.drawLayer().sort }
         visuals.forEach { it.drawWithDefaults(draw_pos) }
     }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     protected fun produce(vararg os: GameObject) {
         children.addAll(os)
@@ -196,6 +199,8 @@ abstract class GameObject: HavingComponentSyntax {
         os.forEach { o -> o.onGrab.forEach { it.run() } }
     }
 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
     fun activate(action: InputAction) {
         listeners.forEach { it.activate(action) }
         controllers.forEach { it.activate(action) }
@@ -203,12 +208,16 @@ abstract class GameObject: HavingComponentSyntax {
 
     open fun interact() = false
 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
     open fun collapse() {
         if (dead) return
         onDeath.forEach { it.run() }
         dead = true
         followers.forEach { it.collapse() }
     }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     fun tag(vararg tag: String) = tags.addAll(tag)
     fun untag(vararg tag: String) = tags.removeAll(tag.toSet())
@@ -219,6 +228,11 @@ abstract class GameObject: HavingComponentSyntax {
     fun effectedAny(vararg effect: String) = effect.any { effected(it) }
     fun effectedAll(vararg effect: String) = effect.all { effected(it) }
 
+    open fun answer(question: String) = false
+    open fun answerS(question: String) = ""
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
     fun equalsS(other: GameObject): Boolean {
         return this.toString() == other.toString()
     }
@@ -227,8 +241,7 @@ abstract class GameObject: HavingComponentSyntax {
         return this.name == other.name
     }
 
-    open fun answer(question: String) = false
-    open fun answerS(question: String) = ""
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     private val TEMP_NAME = "temp"
     var name: String = TEMP_NAME
@@ -260,9 +273,23 @@ abstract class GameObject: HavingComponentSyntax {
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    final override fun hashCode(): Int {
+        return super.hashCode()
+    }
+
+    final override fun equals(other: Any?): Boolean {
+        return super.equals(other)
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////// Component Functionality ////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     fun addBounds(bs: GroupBounds) = addComponent(bs)
