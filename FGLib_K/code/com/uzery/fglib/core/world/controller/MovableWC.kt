@@ -12,15 +12,24 @@ import com.uzery.fglib.utils.graphics.data.FGFontWeight
 import com.uzery.fglib.utils.math.geom.PointN
 import com.uzery.fglib.utils.math.geom.shape.RectN
 
-class MovableWC(
-    private val world: World,
-    private val goal: GameObject,
-    private val room_p: Double = 10.0
-): WorldController {
+class MovableWC(): WorldController {
     private val SIZE = Int.MAX_VALUE/2
     private val SIZE_P = PointN(SIZE, SIZE)
 
     private val void = Room(-SIZE_P/2, SIZE_P)
+
+    private lateinit var world: World
+    private lateinit var goal: GameObject
+    private var room_p: Double = 10.0
+    fun initZero(world: World, goal: GameObject, room_p: Double = 10.0) {
+        this.world = world
+        this.goal = goal
+        this.room_p = room_p
+
+        goal.init()
+        goal.stats.roomPOS = goal_room.pos
+        goal.stats.POS -= void.pos
+    }
 
     val camera
         get() = world.camera ?: throw DebugData.error("World Camera is not loaded yet!")
@@ -29,9 +38,7 @@ class MovableWC(
         private set
 
     override fun init() {
-        goal.init()
-        goal.stats.roomPOS = goal_room.pos
-        goal.stats.POS -= void.pos
+
     }
 
     override fun isActive(r: Room): Boolean {
