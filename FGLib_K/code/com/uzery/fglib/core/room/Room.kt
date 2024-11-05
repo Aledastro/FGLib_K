@@ -196,20 +196,16 @@ class Room(var pos: PointN, var size: PointN) {
     }
 
     private fun nextActivate() {
-        val list = ArrayList<GameObject>()
+        val all = ArrayList<GameObject>()
+        val active = ArrayList<GameObject>()
         fun addInList(obj: GameObject) {
-            list.add(obj)
+            all.add(obj)
             obj.followers.forEach { addInList(it) }
         }
-        objects.forEach { if (!it.tagged("#inactive")) addInList(it) }
+        objects.forEach { addInList(it) }
+        active.addAll(all.filter { !it.tagged("#inactive") })
 
-        fun setActivate(
-            o1: GameObject,
-            sh1: BoundsElement,
-            o2: GameObject,
-            sh2: BoundsElement,
-            code: String,
-        ) {
+        fun setActivate(o1: GameObject, sh1: BoundsElement, o2: GameObject, sh2: BoundsElement, code: String) {
             val shape1 = sh1.shape() ?: return
             val shape2 = sh2.shape() ?: return
             val copied1 = shape1.copy(o1.pos_with_owners)
@@ -221,87 +217,66 @@ class Room(var pos: PointN, var size: PointN) {
             o1.activate(InputAction(code, o2, sh1.name, sh2.name))
         }
 
-        for (blueObjID in list.indices) {
-            val blueObj = list[blueObjID]
+        for (blueObjID in active.indices) {
+            val blueObj = active[blueObjID]
 
             val blueBounds = blueObj.bounds.blue
             if (blueBounds.empty) continue
-            for (mainObj in list) {
+            for (mainObj in all) {
                 val mainBounds = mainObj.bounds.main
                 if (mainBounds.empty) continue
                 blueBounds.elements.forEach { blueElement ->
                     mainBounds.elements.forEach { mainElement ->
-                        setActivate(
-                            blueObj,
-                            blueElement,
-                            mainObj,
-                            mainElement,
-                            "#INTERRUPT"
-                        )
-                        setActivate(
-                            mainObj,
-                            mainElement,
-                            blueObj,
-                            blueElement,
-                            "#INTERRUPT_I"
-                        )
+                        setActivate(blueObj, blueElement, mainObj, mainElement, "#INTERRUPT")
+                        setActivate(mainObj, mainElement, blueObj, blueElement, "#INTERRUPT_I")
                     }
                 }
             }
         }
 
-        for (mainObj in list) {
+        for (mainObj in all) {
             if (!mainObj.interact()) continue
             val mainBounds = mainObj.bounds.main
             if (mainBounds.empty) continue
-            for (greenObj in list) {
+            for (greenObj in active) {
                 val greenBounds = greenObj.bounds.green
                 if (greenBounds.empty) continue
                 greenBounds.elements.forEach { greenElement ->
                     mainBounds.elements.forEach { mainElement ->
-                        setActivate(
-                            greenObj,
-                            greenElement,
-                            mainObj,
-                            mainElement,
-                            "#INTERACT"
-                        )
-                        setActivate(
-                            mainObj,
-                            mainElement,
-                            greenObj,
-                            greenElement,
-                            "#INTERACT_I"
-                        )
+                        setActivate(greenObj, greenElement, mainObj, mainElement, "#INTERACT")
+                        setActivate(mainObj, mainElement, greenObj, greenElement, "#INTERACT_I")
                     }
                 }
             }
         }
-        for (obj1 in list) {
+
+        for (obj1 in active) {
             val bounds1 = obj1.bounds.orange
             if (bounds1.empty) continue
-            for (obj2 in list) {
+            for (obj2 in all) {
                 if (obj1 == obj2) continue
                 val bounds2 = obj2.bounds.orange
                 if (bounds2.empty) continue
                 bounds2.elements.forEach { element2 ->
                     bounds1.elements.forEach { element1 ->
                         setActivate(obj1, element1, obj2, element2, "#IMPACT")
+                        setActivate(obj2, element2, obj1, element1, "#IMPACT_I")
                     }
                 }
             }
         }
 
-        for (obj1 in list) {
+        for (obj1 in active) {
             val bounds1 = obj1.bounds.blue
             if (bounds1.empty) continue
-            for (obj2 in list) {
+            for (obj2 in all) {
                 if (obj1 == obj2) continue
                 val bounds2 = obj2.bounds.blue
                 if (bounds2.empty) continue
                 bounds2.elements.forEach { element2 ->
                     bounds1.elements.forEach { element1 ->
                         setActivate(obj1, element1, obj2, element2, "#INTERSECT")
+                        setActivate(obj2, element2, obj1, element1, "#INTERSECT_I")
                     }
                 }
             }
