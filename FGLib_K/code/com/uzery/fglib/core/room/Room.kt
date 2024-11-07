@@ -5,6 +5,7 @@ import com.uzery.fglib.core.component.bounds.BoundsElement
 import com.uzery.fglib.core.component.listener.InputAction
 import com.uzery.fglib.core.component.visual.Visualiser
 import com.uzery.fglib.core.obj.GameObject
+import com.uzery.fglib.core.program.FGLibSettings.ROOM_ACTIVATE_GRID
 import com.uzery.fglib.core.program.Platform.render_camera
 import com.uzery.fglib.utils.BoundsUtils
 import com.uzery.fglib.utils.CollisionUtils.MAX_MOVE_K
@@ -202,19 +203,14 @@ class Room(var pos: PointN, var size: PointN) {
     }
 
     private fun nextActivate(objs: ArrayList<GameObject>) {
-        val nano = System.nanoTime()
-        fun nano() = System.nanoTime() - nano
-        println("1: "+nano())
-        val GRID = 64
         val cell_map = HashMap<IntI, ArrayList<GameObject>>()
 
         val our = objs.filter { obj -> !obj.tagged("#inactive") && obj.main != null }
 
-        println("2: "+nano())
         our.forEach { obj ->
             val main = obj.main ?: return@forEach
-            val L = (obj.stats.POS+main.L)/GRID
-            val R = (obj.stats.POS+main.R)/GRID
+            val L = (obj.stats.POS+main.L)/ROOM_ACTIVATE_GRID
+            val R = (obj.stats.POS+main.R)/ROOM_ACTIVATE_GRID
             for (i in L.intX..R.intX) {
                 for (j in L.intY..R.intY) {
                     val ii = IntI(i, j)
@@ -276,97 +272,10 @@ class Room(var pos: PointN, var size: PointN) {
             checked.add(pc)
         }
 
-        println("3: "+nano())
-        var n = 0
-        cell_map.values.forEach { n++ }
-        println("size: "+cell_map.size)
         cell_map.values.forEach { cell_objs ->
             for (i in cell_objs.indices) {
                 for (j in cell_objs.indices) {
                     checkFor(cell_objs[i], cell_objs[j])
-                }
-            }
-        }
-        println("4: "+nano())
-    }
-
-    private fun nextActivateOld(objs: ArrayList<GameObject>) {
-        val active = ArrayList<GameObject>()
-        active.addAll(objs.filter { !it.tagged("#inactive") })
-
-        fun setActivate(o1: GameObject, sh1: BoundsElement, o2: GameObject, sh2: BoundsElement, code: String) {
-            val shape1 = sh1.shape() ?: return
-            val shape2 = sh2.shape() ?: return
-            val copied1 = shape1.copy(o1.pos_with_owners)
-            val copied2 = shape2.copy(o2.pos_with_owners)
-
-            if (!ShapeUtils.into(copied1, copied2)) return
-            if (sh1.group != sh2.group) return
-
-            o1.activate(InputAction(code, o2, sh1.name, sh2.name))
-        }
-
-        for (blueObjID in active.indices) {
-            val blueObj = active[blueObjID]
-
-            val blueBounds = blueObj.bounds.blue
-            if (blueBounds.empty) continue
-            for (mainObj in objs) {
-                val mainBounds = mainObj.bounds.main
-                if (mainBounds.empty) continue
-                blueBounds.elements.forEach { blueElement ->
-                    mainBounds.elements.forEach { mainElement ->
-                        setActivate(blueObj, blueElement, mainObj, mainElement, "#INTERRUPT")
-                        setActivate(mainObj, mainElement, blueObj, blueElement, "#INTERRUPT_I")
-                    }
-                }
-            }
-        }
-
-        for (mainObj in objs) {
-            if (!mainObj.interact()) continue
-            val mainBounds = mainObj.bounds.main
-            if (mainBounds.empty) continue
-            for (greenObj in active) {
-                val greenBounds = greenObj.bounds.green
-                if (greenBounds.empty) continue
-                greenBounds.elements.forEach { greenElement ->
-                    mainBounds.elements.forEach { mainElement ->
-                        setActivate(greenObj, greenElement, mainObj, mainElement, "#INTERACT")
-                        setActivate(mainObj, mainElement, greenObj, greenElement, "#INTERACT_I")
-                    }
-                }
-            }
-        }
-
-        for (obj1 in active) {
-            val bounds1 = obj1.bounds.orange
-            if (bounds1.empty) continue
-            for (obj2 in objs) {
-                if (obj1 == obj2) continue
-                val bounds2 = obj2.bounds.orange
-                if (bounds2.empty) continue
-                bounds2.elements.forEach { element2 ->
-                    bounds1.elements.forEach { element1 ->
-                        setActivate(obj1, element1, obj2, element2, "#IMPACT")
-                        setActivate(obj2, element2, obj1, element1, "#IMPACT_I")
-                    }
-                }
-            }
-        }
-
-        for (obj1 in active) {
-            val bounds1 = obj1.bounds.blue
-            if (bounds1.empty) continue
-            for (obj2 in objs) {
-                if (obj1 == obj2) continue
-                val bounds2 = obj2.bounds.blue
-                if (bounds2.empty) continue
-                bounds2.elements.forEach { element2 ->
-                    bounds1.elements.forEach { element1 ->
-                        setActivate(obj1, element1, obj2, element2, "#INTERSECT")
-                        setActivate(obj2, element2, obj1, element1, "#INTERSECT_I")
-                    }
                 }
             }
         }
