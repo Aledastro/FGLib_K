@@ -15,6 +15,7 @@ import com.uzery.fglib.utils.data.getter.value.PosValue
 import com.uzery.fglib.utils.data.getter.value.SizeValue
 import com.uzery.fglib.utils.math.geom.PointN
 import com.uzery.fglib.utils.math.geom.shape.RectN
+import com.uzery.fglib.utils.struct.num.IntI
 import kotlin.math.sign
 
 class Room(var pos: PointN, var size: PointN) {
@@ -47,8 +48,9 @@ class Room(var pos: PointN, var size: PointN) {
         objects.forEach { it.stats.roomPOS = pos }
         objects.forEach { it.next0WithFollowers() }
 
-        nextMoveOld()
-        nextActivate()
+        val all = getAllObjects()
+        nextMoveOld(all)
+        nextActivate(all)
 
         objects.forEach { it.nextTimeWithFollowers() }
 
@@ -64,6 +66,17 @@ class Room(var pos: PointN, var size: PointN) {
 
         objects.removeAll(old_objects)
         old_objects.clear()
+    }
+
+    private fun getAllObjects(): java.util.ArrayList<GameObject> {
+        val all = ArrayList<GameObject>()
+        fun addInList(obj: GameObject) {
+            all.add(obj)
+            obj.followers.forEach { addInList(it) }
+        }
+        objects.forEach { addInList(it) }
+
+        return all
     }
 
     fun draw(draw_pos: PointN) {
@@ -122,18 +135,11 @@ class Room(var pos: PointN, var size: PointN) {
     fun add(objs: List<GameObject>) = new_objects.addAll(objs)
     fun remove(objs: List<GameObject>) = old_objects.addAll(objs)
 
-    private fun nextMoveOld() {
+    private fun nextMoveOld(objs: ArrayList<GameObject>) {
         val red_bounds = ArrayList<Bounds>()
         val pos = ArrayList<PointN>()
 
-        val list = ArrayList<GameObject>()
-        fun addInList(obj: GameObject) {
-            list.add(obj)
-            obj.followers.forEach { addInList(it) }
-        }
-        objects.forEach { addInList(it) }
-
-        list.forEach {
+        objs.forEach {
             val bs = it.bounds.red
             if (!bs.empty) {
                 red_bounds.add(bs)
@@ -141,7 +147,7 @@ class Room(var pos: PointN, var size: PointN) {
             }
         }
 
-        for (obj in list) {
+        for (obj in objs) {
             if (obj.tagged("#immovable")) continue
             obj.stats.lPOS = obj.stats.POS
             val move_bs = obj.bounds.orange
@@ -192,18 +198,101 @@ class Room(var pos: PointN, var size: PointN) {
                 obj.stats.fly_by[level] = m == MAX_MOVE_K
             }
         }
-        list.forEach { it.stats.nPOS = PointN.ZERO }
+        objs.forEach { it.stats.nPOS = PointN.ZERO }
     }
 
-    private fun nextActivate() {
-        val all = ArrayList<GameObject>()
-        val active = ArrayList<GameObject>()
-        fun addInList(obj: GameObject) {
-            all.add(obj)
-            obj.followers.forEach { addInList(it) }
+    private fun nextActivate(objs: ArrayList<GameObject>) {
+        val nano = System.nanoTime()
+        fun nano() = System.nanoTime() - nano
+        println("1: "+nano())
+        val GRID = 64
+        val cell_map = HashMap<IntI, ArrayList<GameObject>>()
+
+        val our = objs.filter { obj -> !obj.tagged("#inactive") && obj.main != null }
+
+        println("2: "+nano())
+        our.forEach { obj ->
+            val main = obj.main ?: return@forEach
+            val L = (obj.stats.POS+main.L)/GRID
+            val R = (obj.stats.POS+main.R)/GRID
+            for (i in L.intX..R.intX) {
+                for (j in L.intY..R.intY) {
+                    val ii = IntI(i, j)
+                    if (ii !in cell_map) cell_map[ii] = ArrayList()
+                    cell_map[ii]!!.add(obj)
+                }
+            }
         }
-        objects.forEach { addInList(it) }
-        active.addAll(all.filter { !it.tagged("#inactive") })
+
+        val checked = HashSet<Pair<GameObject, GameObject>>()
+        fun checkFor(obj1: GameObject, obj2: GameObject) {
+            if (obj1 == obj2) return
+
+            val pc = Pair(obj1, obj2)
+            if (pc in checked) return
+            if (!ShapeUtils.into(obj1.main!!, obj2.main!!)) return
+
+            fun setActivate(o1: GameObject, sh1: BoundsElement, o2: GameObject, sh2: BoundsElement, code: String) {
+                val shape1 = sh1.shape() ?: return
+                val shape2 = sh2.shape() ?: return
+                val copied1 = shape1.copy(o1.pos_with_owners)
+                val copied2 = shape2.copy(o2.pos_with_owners)
+
+                if (!ShapeUtils.into(copied1, copied2)) return
+                if (sh1.group != sh2.group) return
+
+                o1.activate(InputAction(code, o2, sh1.name, sh2.name))
+            }
+
+            obj1.bounds.blue.elements.forEach { el1 ->
+                obj2.bounds.main.elements.forEach { el2 ->
+                    setActivate(obj1, el1, obj2, el2, "#INTERRUPT")
+                    setActivate(obj2, el2, obj1, el1, "#INTERRUPT_I")
+                }
+            }
+            obj1.bounds.main.elements.forEach { el1 ->
+                if (!obj1.interact()) return@forEach
+
+                obj2.bounds.green.elements.forEach { el2 ->
+                    if (obj1.interact()) {
+                        setActivate(obj2, el2, obj1, el1, "#INTERRACT")
+                        setActivate(obj1, el1, obj2, el2, "#INTERRACT_I")
+                    }
+                }
+            }
+            obj1.bounds.blue.elements.forEach { el1 ->
+                obj2.bounds.blue.elements.forEach { el2 ->
+                    setActivate(obj1, el1, obj2, el2, "#INTERSECT")
+                    setActivate(obj2, el2, obj1, el1, "#INTERSECT_I")
+                }
+            }
+            obj1.bounds.orange.elements.forEach { el1 ->
+                obj2.bounds.orange.elements.forEach { el2 ->
+                    setActivate(obj1, el1, obj2, el2, "#IMPACT")
+                    setActivate(obj2, el2, obj1, el1, "#IMPACT_I")
+                }
+            }
+
+            checked.add(pc)
+        }
+
+        println("3: "+nano())
+        var n = 0
+        cell_map.values.forEach { n++ }
+        println("size: "+cell_map.size)
+        cell_map.values.forEach { cell_objs ->
+            for (i in cell_objs.indices) {
+                for (j in cell_objs.indices) {
+                    checkFor(cell_objs[i], cell_objs[j])
+                }
+            }
+        }
+        println("4: "+nano())
+    }
+
+    private fun nextActivateOld(objs: ArrayList<GameObject>) {
+        val active = ArrayList<GameObject>()
+        active.addAll(objs.filter { !it.tagged("#inactive") })
 
         fun setActivate(o1: GameObject, sh1: BoundsElement, o2: GameObject, sh2: BoundsElement, code: String) {
             val shape1 = sh1.shape() ?: return
@@ -222,7 +311,7 @@ class Room(var pos: PointN, var size: PointN) {
 
             val blueBounds = blueObj.bounds.blue
             if (blueBounds.empty) continue
-            for (mainObj in all) {
+            for (mainObj in objs) {
                 val mainBounds = mainObj.bounds.main
                 if (mainBounds.empty) continue
                 blueBounds.elements.forEach { blueElement ->
@@ -234,7 +323,7 @@ class Room(var pos: PointN, var size: PointN) {
             }
         }
 
-        for (mainObj in all) {
+        for (mainObj in objs) {
             if (!mainObj.interact()) continue
             val mainBounds = mainObj.bounds.main
             if (mainBounds.empty) continue
@@ -253,7 +342,7 @@ class Room(var pos: PointN, var size: PointN) {
         for (obj1 in active) {
             val bounds1 = obj1.bounds.orange
             if (bounds1.empty) continue
-            for (obj2 in all) {
+            for (obj2 in objs) {
                 if (obj1 == obj2) continue
                 val bounds2 = obj2.bounds.orange
                 if (bounds2.empty) continue
@@ -269,7 +358,7 @@ class Room(var pos: PointN, var size: PointN) {
         for (obj1 in active) {
             val bounds1 = obj1.bounds.blue
             if (bounds1.empty) continue
-            for (obj2 in all) {
+            for (obj2 in objs) {
                 if (obj1 == obj2) continue
                 val bounds2 = obj2.bounds.blue
                 if (bounds2.empty) continue

@@ -28,5 +28,8 @@ class BoundsBox {
         val ORANGE = CODE.ORANGE.ordinal
         val BLUE = CODE.BLUE.ordinal
         val GREEN = CODE.GREEN.ordinal
+
+        val indices
+            get() = CODE.entries.indices
     }
 }

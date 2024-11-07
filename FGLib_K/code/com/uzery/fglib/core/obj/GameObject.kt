@@ -24,10 +24,12 @@ import com.uzery.fglib.core.component.visual.GroupVisualiser
 import com.uzery.fglib.core.component.visual.LayerVisualiser
 import com.uzery.fglib.core.component.visual.Visualiser
 import com.uzery.fglib.core.obj.stats.Stats
+import com.uzery.fglib.utils.ShapeUtils
 import com.uzery.fglib.utils.data.debug.DebugData
 import com.uzery.fglib.utils.graphics.AffineGraphics
 import com.uzery.fglib.utils.math.geom.PointN
 import com.uzery.fglib.utils.math.geom.Shape
+import com.uzery.fglib.utils.math.geom.shape.RectN
 
 abstract class GameObject: HavingComponentSyntax {
     val stats = Stats()
@@ -144,6 +146,20 @@ abstract class GameObject: HavingComponentSyntax {
 
         effects.forEach { it.update() }
         effects.removeIf { it.dead }
+
+        setMain()
+    }
+
+    var main: RectN? = null
+        private set
+
+    private fun setMain() {
+        val bsl = ArrayList<RectN>()
+        for (bc in BoundsBox.indices) {
+            bounds[bc].main()?.let { bsl.add(it) }
+        }
+        main = if (bsl.isEmpty()) null
+        else ShapeUtils.mainOf(*bsl.toTypedArray())
     }
 
     private fun nextTime() {

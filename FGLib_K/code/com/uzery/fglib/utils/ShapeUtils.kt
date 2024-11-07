@@ -9,7 +9,6 @@ import com.uzery.fglib.utils.math.geom.shape.FigureRectN
 import com.uzery.fglib.utils.math.geom.shape.OvalN
 import com.uzery.fglib.utils.math.geom.shape.RectN
 import kotlin.math.max
-import kotlin.math.min
 
 object ShapeUtils {
     fun rect(shape: Shape) = RectN(shape.L, shape.S)
@@ -92,15 +91,11 @@ object ShapeUtils {
         return RectN.LR(start.L.interpolate(finish.L, k), start.R.interpolate(finish.R, k))
     }
 
-    fun rectX(first: RectN, second: RectN): RectN {
-        fun minP(a: PointN, b: PointN) = PointN.transform(a, b) { x, y -> min(x, y) }
-        fun maxP(a: PointN, b: PointN) = PointN.transform(a, b) { x, y -> max(x, y) }
+    fun mainOf(vararg list: Shape): RectN {
+        val minP = PointN(Array(list[0].dim) { i -> list.minOf { p -> p.L[i] } })
+        val maxP = PointN(Array(list[0].dim) { i -> list.maxOf { p -> p.R[i] } })
 
-        return RectN.LR(minP(first.L, second.L), maxP(first.R, second.R))
-    }
-
-    fun rectX(first: Shape, second: Shape): RectN {
-        return rectX(rect(first), rect(second))
+        return RectN.LR(minP, maxP)
     }
 
     fun getFields(pos: PointN, size: PointN): List<FieldN> {

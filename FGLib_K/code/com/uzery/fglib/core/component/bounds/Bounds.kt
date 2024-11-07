@@ -1,6 +1,8 @@
 package com.uzery.fglib.core.component.bounds
 
+import com.uzery.fglib.utils.ShapeUtils
 import com.uzery.fglib.utils.math.geom.PointN
+import com.uzery.fglib.utils.math.geom.Shape
 import com.uzery.fglib.utils.math.geom.shape.RectN
 import kotlin.math.max
 import kotlin.math.min
@@ -17,23 +19,11 @@ class Bounds(vararg els: BoundsElement) {
     fun main(): RectN? {
         if (empty) return null
 
-        lateinit var min: PointN
-        lateinit var max: PointN
-        var first = true
+        val list = ArrayList<Shape>()
+        elements.forEach { el -> el.shape()?.let { list.add(it) } }
 
-        for (element in elements) {
-            val shape = element.shape() ?: continue
-            if (first) {
-                min = shape.L
-                max = shape.R
-                first = false
-            }
-            min = PointN.transform(min, shape.L) { a, b -> min(a, b) }
-            max = PointN.transform(max, shape.R) { a, b -> max(a, b) }
-        }
-
-        if (first) return null
-        return RectN.LR(min, max)
+        if (list.isEmpty()) return null
+        return ShapeUtils.mainOf(*list.toTypedArray())
     }
 
     val empty
