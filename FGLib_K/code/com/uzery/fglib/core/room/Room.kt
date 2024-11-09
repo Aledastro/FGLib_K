@@ -179,7 +179,6 @@ class Room(var pos: PointN, var size: PointN) {
             val is_move_complete = min_d == MAX_MOVE_K
 
             obj.stats.fly = is_move_complete
-            //if(is_move_complete) return
 
             var np = obj.stats.nPOS*(1-min_d)
 
