@@ -25,7 +25,8 @@ class Room(var pos: PointN, var size: PointN) {
     private val new_objects = ArrayList<GameObject>()
     private val old_objects = HashSet<GameObject>()
 
-    val main = RectN(pos, size)
+    val main
+        get() = RectN(pos, size)
 
     constructor(pos: PointN, size: PointN, objs: List<GameObject>): this(pos, size) {
         objects.addAll(objs)
