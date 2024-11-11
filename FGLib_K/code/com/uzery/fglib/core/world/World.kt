@@ -18,8 +18,6 @@ class World {
     val active_rooms = ArrayList<Room>()
     private val last_active = ArrayList<Boolean>()
 
-    private val filenames = ArrayList<String>()
-
     private lateinit var controller: WorldController
 
     lateinit var getter: AbstractClassGetter<GameObject>
@@ -101,12 +99,20 @@ class World {
         controller = load_info.controller
         controller.init()
 
-        for (name in load_info.filenames) filenames.add(name)
         getter = load_info.getter
-        filenames.forEach { rooms.add(readInfo(getter, it)) }
+        rooms.addAll(load_info.rooms)
         for (i in rooms.indices) last_active.add(false)
 
         if (load_info.init_rooms) initRooms()
+    }
+
+    fun init(
+        rooms: Array<Room>,
+        getter: AbstractClassGetter<GameObject>,
+        controller: WorldController,
+        init_rooms: Boolean = true
+    ) {
+        init(WorldLoadInfo(rooms, getter, controller, init_rooms))
     }
 
     fun init(
