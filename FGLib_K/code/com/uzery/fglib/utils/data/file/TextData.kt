@@ -48,6 +48,19 @@ object TextData: CollectDataClass() {
         File(resolvePath(filename)).delete()
     }
 
+    fun filesFrom(filename: String): ArrayList<String> {
+        val files = File(resolvePath(filename)).listFiles()
+        val res = ArrayList<String>()
+        files?.forEach { if (it.isFile) res.add(filename+"/"+it.name) }
+        return res
+    }
+    fun dirsFrom(filename: String): ArrayList<String> {
+        val dirs = File(resolvePath(filename)).listFiles()
+        val res = ArrayList<String>()
+        dirs?.forEach { if (it.isDirectory) res.add(filename+"/"+it.name) }
+        return res
+    }
+
     ///////////////////////////////////////////////////////////////////
     private fun getWriter(filename: String): BufferedWriter {
         return getWriter(outFileStream(filename))
