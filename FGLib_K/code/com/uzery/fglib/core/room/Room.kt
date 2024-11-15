@@ -214,8 +214,8 @@ class Room(var pos: PointN, var size: PointN) {
 
                 obj2.bounds.green.elements.forEach { el2 ->
                     if (obj1.interact()) {
-                        setActivate(obj2, el2, obj1, el1, "#INTERRACT")
-                        setActivate(obj1, el1, obj2, el2, "#INTERRACT_I")
+                        setActivate(obj2, el2, obj1, el1, "#INTERACT")
+                        setActivate(obj1, el1, obj2, el2, "#INTERACT_I")
                     }
                 }
             }
