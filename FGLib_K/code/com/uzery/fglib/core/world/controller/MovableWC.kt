@@ -12,17 +12,15 @@ import com.uzery.fglib.utils.graphics.data.FGFontWeight
 import com.uzery.fglib.utils.math.geom.PointN
 import com.uzery.fglib.utils.math.geom.shape.RectN
 
-class MovableWC(): WorldController {
+class MovableWC(private val world: World): WorldController {
     private val SIZE = Int.MAX_VALUE/2
     private val SIZE_P = PointN(SIZE, SIZE)
 
     private val void = Room(-SIZE_P/2, SIZE_P)
 
-    private lateinit var world: World
-    private lateinit var goal: GameObject
+    private var goal: GameObject? = null
     private var room_p: Double = 10.0
-    fun initZero(world: World, goal: GameObject, room_p: Double = 10.0) {
-        this.world = world
+    fun initZero(goal: GameObject, room_p: Double = 10.0) {
         this.goal = goal
         this.room_p = room_p
 
@@ -31,8 +29,8 @@ class MovableWC(): WorldController {
         goal.stats.POS -= void.pos
     }
 
-    val camera
-        get() = world.camera ?: throw DebugData.error("World Camera is not loaded yet!")
+    val camera_pos
+        get() = world.camera?.stats?.realPOS ?: PointN.ZERO
 
     var goal_room = void
         private set
@@ -45,7 +43,7 @@ class MovableWC(): WorldController {
         val pos = PointN(room_p, -room_p)
         val rect1 = RectN(r.pos-pos, r.size+pos*2)
         val rect2 = RectN(r.pos+pos, r.size-pos*2)
-        val camera_main = RectN.C(camera.stats.realPOS, CANVAS)
+        val camera_main = RectN.C(camera_pos, CANVAS)
         return ShapeUtils.into(rect1, camera_main) || ShapeUtils.into(rect2, camera_main)
     }
 
@@ -65,11 +63,13 @@ class MovableWC(): WorldController {
 
     private fun moveObjs() {
         fun moveGoal() {
+            val goal = goal?: return
+
             val newRoom = roomFor(goal)
             goal.stats.POS += goal_room.pos-newRoom.pos
             goal.stats.roomPOS = newRoom.pos
-            camera.stats.roomPOS = goal.stats.roomPOS
-            camera.move(goal_room.pos-newRoom.pos)
+            world.camera?.stats?.roomPOS = goal.stats.roomPOS
+            world.camera?.move(goal_room.pos-newRoom.pos)
 
             goal_room.objects.remove(goal)
             goal_room = newRoom
@@ -107,7 +107,7 @@ class MovableWC(): WorldController {
 
     override fun update() {
         graphics.fill.font("TimesNewRoman", 12.0/2, FGFontWeight.BOLD)
-        graphics.fill.textL(PointN(20, 60), "pos: "+goal.stats.POS, FGColor.BLACK)
+        graphics.fill.textL(PointN(20, 60), "pos: "+goal?.stats?.POS, FGColor.BLACK)
         /*if(Platform.keyboard.pressed(KeyCode.CONTROL) && Platform.keyboard.inPressed(KeyCode.R)) {
             active_rooms.forEach { room->room.objects.removeIf { it.tagged("player") } }
             world.add(goal)
