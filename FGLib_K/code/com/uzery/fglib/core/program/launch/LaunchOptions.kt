@@ -24,4 +24,13 @@ data class LaunchOptions(
             FGWindowStyle.UNDECORATED
         )
     }
+
+    constructor(
+        size: PointN,
+        fullscreen: Boolean,
+        fill: FGColor = FGColor.WHITE,
+        title: String = "",
+        icons: List<String> = ArrayList(),
+        style: FGWindowStyle = FGWindowStyle.UNDECORATED
+    ): this(size, if (fullscreen) FGWindowMode.FULLSCREEN else FGWindowMode.WINDOWED, fill, title, icons, style)
 }
