@@ -34,7 +34,7 @@ internal object RoomActivateLogics {
             val rev_pc = Pair(obj2, obj1)
 
             if (pc in checked) return
-            if (!ShapeUtils.into(obj1.main!!, obj2.main!!)) return
+            if (!ShapeUtils.into(obj1.main!!.copy(obj1.stats.POS), obj2.main!!.copy(obj2.stats.POS))) return
 
             obj1.bounds.blue.elements.forEach { el1 ->
                 obj2.bounds.main.elements.forEach { el2 ->
