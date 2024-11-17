@@ -1,7 +1,7 @@
 package com.uzery.fglib.utils.graphics
 
 import com.uzery.fglib.core.program.Platform.graphics
-import com.uzery.fglib.utils.TextUtils
+import com.uzery.fglib.utils.SplitUtils
 import com.uzery.fglib.utils.graphics.data.FGColor
 import com.uzery.fglib.utils.graphics.data.FGFont
 import com.uzery.fglib.utils.graphics.data.FGFontPosture
@@ -43,11 +43,11 @@ abstract class FillGraphics(agc: AffineGraphics): GeometryGraphics(agc) {
     }
 
     fun splitText(text: String, width: Double, font: FGFont = this.font): ArrayList<String> {
-        return TextUtils.splitText(text, width) { stroke -> text_size(stroke, font).X }
+        return SplitUtils.splitText(text, width) { stroke -> text_size(stroke, font).X }
     }
 
     fun splitTextAndMerge(text: String, width: Double, font: FGFont = this.font): String {
-        return TextUtils.splitTextAndMerge(text, width) { stroke -> text_size(stroke, font).X }
+        return SplitUtils.splitTextAndMerge(text, width) { stroke -> text_size(stroke, font).X }
     }
 
     ///////////////////////////////////////////////////////////////////////////

@@ -1,6 +1,6 @@
 package com.uzery.fglib.utils
 
-object TextUtils {
+object SplitUtils {
     fun splitText(text: String, width: Double, f: (String) -> Double = default_f): ArrayList<String> {
         val sep = listOf(' ', '\n')
         val res = ArrayList<String>()
