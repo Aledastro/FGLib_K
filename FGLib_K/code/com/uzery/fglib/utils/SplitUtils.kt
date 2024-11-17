@@ -1,7 +1,7 @@
 package com.uzery.fglib.utils
 
 object SplitUtils {
-    fun splitText(text: String, width: Double, f: (String) -> Double = default_f): ArrayList<String> {
+    fun splitTextByWidth(text: String, width: Double, f: (String) -> Double = { it.length.toDouble() }): ArrayList<String> {
         val sep = listOf(' ', '\n')
         val res = ArrayList<String>()
         var now = ""
@@ -33,15 +33,19 @@ object SplitUtils {
         return res
     }
 
-    fun splitTextAndMerge(text: String, width: Double, f: (String) -> Double = default_f): String {
-        val data = splitText(text, width, f)
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+    fun unite(dat: List<String>, del: String, keep_first: Boolean = false, keep_last: Boolean = true): String {
         return buildString {
-            for (s in data) {
-                append(s+"\n")
-            }
+            if (keep_first) append(del)
+
+            dat.forEach { append(it+del) }
+
+            if (!keep_last) substring(0, length-del.length)
         }
     }
 
-    private val default_f: (String) -> Double = { it.length.toDouble() }
+    fun unite(dat: Array<String>, del: String, keep_first: Boolean = false, keep_last: Boolean = true): String {
+        return unite(dat.toList(), del, keep_first, keep_last)
+    }
 }
