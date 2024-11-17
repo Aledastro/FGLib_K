@@ -2,7 +2,6 @@ package com.uzery.fglib.core.world
 
 import com.uzery.fglib.core.component.visual.Visualiser
 import com.uzery.fglib.core.obj.GameObject
-import com.uzery.fglib.core.program.Platform.graphics
 import com.uzery.fglib.core.room.Room
 import com.uzery.fglib.core.room.RoomUtils
 import com.uzery.fglib.core.world.controller.WorldController

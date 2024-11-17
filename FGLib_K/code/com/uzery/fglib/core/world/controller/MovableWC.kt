@@ -6,7 +6,6 @@ import com.uzery.fglib.core.program.Platform.graphics
 import com.uzery.fglib.core.room.Room
 import com.uzery.fglib.core.world.World
 import com.uzery.fglib.utils.ShapeUtils
-import com.uzery.fglib.utils.data.debug.DebugData
 import com.uzery.fglib.utils.graphics.data.FGColor
 import com.uzery.fglib.utils.graphics.data.FGFontWeight
 import com.uzery.fglib.utils.math.geom.PointN
@@ -63,7 +62,7 @@ class MovableWC(private val world: World): CameraWorldController() {
 
     private fun moveObjs() {
         fun moveGoal() {
-            val goal = goal?: return
+            val goal = goal ?: return
 
             val newRoom = roomFor(goal)
             goal.stats.POS += goal_room.pos-newRoom.pos

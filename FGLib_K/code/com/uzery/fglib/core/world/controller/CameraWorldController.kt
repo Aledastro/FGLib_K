@@ -10,16 +10,19 @@ abstract class CameraWorldController: WorldController {
         camera?.next()
         update0()
     }
+
     open fun update0() {}
 
     final override fun drawAfter(pos: PointN) {
         camera?.draw(camera!!.stats.realPOS+pos)
         drawAfter0(pos)
     }
+
     open fun drawAfter0(pos: PointN) {}
 
     final override fun drawPOS(): PointN {
         return drawPOS0()+(camera?.drawPOS() ?: PointN.ZERO)
     }
+
     abstract fun drawPOS0(): PointN
 }

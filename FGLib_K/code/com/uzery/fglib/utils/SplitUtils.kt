@@ -1,7 +1,11 @@
 package com.uzery.fglib.utils
 
 object SplitUtils {
-    fun splitTextByWidth(text: String, width: Double, f: (String) -> Double = { it.length.toDouble() }): ArrayList<String> {
+    fun splitTextByWidth(
+        text: String,
+        width: Double,
+        f: (String) -> Double = { it.length.toDouble() }
+    ): ArrayList<String> {
         val sep = listOf(' ', '\n')
         val res = ArrayList<String>()
         var now = ""

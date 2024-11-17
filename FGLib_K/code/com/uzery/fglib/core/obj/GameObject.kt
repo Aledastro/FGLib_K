@@ -172,12 +172,14 @@ abstract class GameObject: HavingComponentSyntax {
 
         followers.forEach { it.nextWithFollowers() }
     }
+
     internal fun next0WithFollowers() {
         next0()
         followers.removeIf { it.dead }
 
         followers.forEach { it.next0WithFollowers() }
     }
+
     internal fun nextTimeWithFollowers() {
         nextTime()
 
