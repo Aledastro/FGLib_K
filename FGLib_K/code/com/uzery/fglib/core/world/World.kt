@@ -26,18 +26,42 @@ class World {
 
     var camera: Camera? = null
 
-    fun allTagged(tag: String): List<GameObject> {
-        val res = ArrayList<GameObject>()
-        for (room in active_rooms) {
-            res.addAll(room.objects.filter { it.tagged(tag) })
-        }
-        return res
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    fun init(load_info: WorldLoadInfo) {
+        controller = load_info.controller
+        controller.init()
+
+        getter = load_info.getter
+        rooms.addAll(load_info.rooms)
+        for (i in rooms.indices) last_active.add(false)
+
+        if (load_info.init_rooms) initRooms()
     }
 
-    fun allExists(vararg tag: String) = tag.all { allTagged(it).isNotEmpty() }
-    fun anyExists(vararg tag: String) = tag.any { allTagged(it).isNotEmpty() }
+    fun init(
+        rooms: Array<Room>,
+        getter: AbstractClassGetter<GameObject>,
+        controller: WorldController,
+        init_rooms: Boolean = true
+    ) {
+        init(WorldLoadInfo(rooms, getter, controller, init_rooms))
+    }
 
-    fun noneExists(vararg tag: String) = !anyExists(*tag)
+    fun init(
+        filenames: Array<String>,
+        getter: AbstractClassGetter<GameObject>,
+        controller: WorldController,
+        init_rooms: Boolean = true
+    ) {
+        init(WorldLoadInfo(filenames, getter, controller, init_rooms))
+    }
+
+    fun initRooms() {
+        rooms.forEach { it.init() }
+    }
+
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     fun next() {
         controller.update()
@@ -59,6 +83,8 @@ class World {
         WorldUtils.nextDebug()
         active_rooms.forEach { WorldUtils.nextDebugForRoom(it) }
     }
+
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     fun draw(pos: PointN = PointN.ZERO) {
         graphics.drawPOS = controller.drawPOS()+(camera?.drawPOS() ?: PointN.ZERO)
@@ -96,42 +122,24 @@ class World {
         }
     }
 
-    fun init(load_info: WorldLoadInfo) {
-        controller = load_info.controller
-        controller.init()
-
-        getter = load_info.getter
-        rooms.addAll(load_info.rooms)
-        for (i in rooms.indices) last_active.add(false)
-
-        if (load_info.init_rooms) initRooms()
-    }
-
-    fun init(
-        rooms: Array<Room>,
-        getter: AbstractClassGetter<GameObject>,
-        controller: WorldController,
-        init_rooms: Boolean = true
-    ) {
-        init(WorldLoadInfo(rooms, getter, controller, init_rooms))
-    }
-
-    fun init(
-        filenames: Array<String>,
-        getter: AbstractClassGetter<GameObject>,
-        controller: WorldController,
-        init_rooms: Boolean = true
-    ) {
-        init(WorldLoadInfo(filenames, getter, controller, init_rooms))
-    }
-
-    fun initRooms() {
-        rooms.forEach { it.init() }
-    }
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     fun add(o: GameObject) {
         controller.roomFor(o).add(o)
     }
 
     //////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    fun allTagged(tag: String): List<GameObject> {
+        val res = ArrayList<GameObject>()
+        for (room in active_rooms) {
+            res.addAll(room.objects.filter { it.tagged(tag) })
+        }
+        return res
+    }
+
+    fun allExists(vararg tag: String) = tag.all { allTagged(it).isNotEmpty() }
+    fun anyExists(vararg tag: String) = tag.any { allTagged(it).isNotEmpty() }
+
+    fun noneExists(vararg tag: String) = !anyExists(*tag)
 }
