@@ -3,21 +3,27 @@ package com.uzery.fglib.utils.graphics
 import com.uzery.fglib.core.obj.DrawLayer
 import com.uzery.fglib.core.program.FGLibSettings.OPTIMISATION_NOT_DRAW_OUT_OF_BOUNDS
 import com.uzery.fglib.core.program.Platform.CANVAS_REAL
+import com.uzery.fglib.core.program.Platform.scale
+import com.uzery.fglib.utils.graphics.data.FGColor
 import com.uzery.fglib.utils.graphics.data.FGFont
 import com.uzery.fglib.utils.math.geom.PointN
 
 abstract class AffineGraphics {
-    var global_alpha = 1.0
-    var alpha = 1.0
+    private val DEFAULT_ROTATE = 0.0
+    private val DEFAULT_VIEW_SCALE = 1.0
+    private val DEFAULT_ALPHA = 1.0
 
-    var view_scale = 1.0
+    var global_rotate = DEFAULT_ROTATE
+    var global_view_scale = DEFAULT_VIEW_SCALE
+    var global_alpha = DEFAULT_ALPHA
 
-    abstract var scale: Int
-    abstract var global_view_scale: Double
+    var rotate = DEFAULT_ROTATE
+    var view_scale = DEFAULT_VIEW_SCALE
+    var alpha = DEFAULT_ALPHA
 
     var drawPOS = PointN.ZERO
-    var layer = DrawLayer.CAMERA_OFF
     var transform = AffineTransform.NEUTRAL
+    var layer = DrawLayer.CAMERA_OFF
 
     var whole_draw = true
 
@@ -43,19 +49,19 @@ abstract class AffineGraphics {
     fun setFullDefaults() {
         setDefaults()
 
+        global_rotate = DEFAULT_ROTATE
+        global_view_scale = DEFAULT_VIEW_SCALE
+        global_alpha = DEFAULT_ALPHA
+
         drawPOS = PointN.ZERO
         transform = AffineTransform.NEUTRAL
-        global_alpha = 1.0
-        global_view_scale = 1.0
-
-        fill.setFullDefaults()
-        stroke.setFullDefaults()
-        image.setFullDefaults()
     }
 
     fun setDefaults() {
-        alpha = 1.0
-        view_scale = 1.0
+        rotate = DEFAULT_ROTATE
+        view_scale = DEFAULT_VIEW_SCALE
+        alpha = DEFAULT_ALPHA
+
         layer = DrawLayer.CAMERA_OFF
 
         fill.setDefaults()
@@ -70,12 +76,6 @@ abstract class AffineGraphics {
     abstract val fill: FillGraphics
     abstract val stroke: StrokeGraphics
 
-    protected abstract fun applyAlpha(alpha: Double)
-
-    internal fun applyAlphaWith(alpha: Double) {
-        applyAlpha((global_alpha*this.alpha*alpha).coerceIn(0.0, 1.0))
-    }
-
     internal fun isOutOfBounds(pos: PointN, size: PointN): Boolean {
         if (!OPTIMISATION_NOT_DRAW_OUT_OF_BOUNDS) return false
 
@@ -89,5 +89,13 @@ abstract class AffineGraphics {
             }
         }
         return false
+    }
+
+    internal fun getAlpha(): Double {
+        return (global_alpha*this.alpha).coerceIn(0.0, 1.0)
+    }
+
+    internal fun getAlphaColor(c: FGColor): FGColor {
+        return c.transparent(getAlpha())
     }
 }

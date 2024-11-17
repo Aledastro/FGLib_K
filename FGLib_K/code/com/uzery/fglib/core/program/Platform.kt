@@ -36,11 +36,7 @@ object Platform {
         }
 
     var scale: Int = 1
-        get() = graphics.scale
-        set(value) {
-            graphics.scale = value
-            field = value
-        }
+
     var cursor = FGCursor.DEFAULT
         set(value) {
             field = value
@@ -90,7 +86,7 @@ object Platform {
     val CANVAS
         get() = PointN(options.size)
     val CANVAS_REAL
-        get() = CANVAS*graphics.scale
+        get() = CANVAS*scale
 
     val WINDOW_R
         get() = RectN(PointN.ZERO, WINDOW)

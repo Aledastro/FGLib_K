@@ -11,18 +11,10 @@ import com.uzery.fglib.utils.math.geom.PointN
 abstract class FillGraphics(agc: AffineGraphics): GeometryGraphics(agc) {
     protected abstract fun text0(pos: PointN, text: String, font: FGFont, color: FGColor)
 
-    abstract var rotate: Double
-
     var font = FGFont.default_font
 
     fun setDefaults() {
-        alpha = 1.0
         font = FGFont.default_font
-        rotate = 0.0
-    }
-
-    fun setFullDefaults() {
-        setDefaults()
     }
 
     fun font(
@@ -51,9 +43,10 @@ abstract class FillGraphics(agc: AffineGraphics): GeometryGraphics(agc) {
     fun text(pos: PointN, text: String, font: FGFont, color: FGColor) {
         if (agc.isOutOfBounds(pos, text_size(text, font))) return
 
-        agc.applyAlphaWith(alpha)
-        text0(transform.pos(pos), text, font.resize(transform.t_size(PointN(font.size)).X), color)
+        text0(transform.pos(pos), text, font.resize(transform.t_size(PointN(font.size)).X), agc.getAlphaColor(color))
     }
+
+    ///////////////////////////////////////////////////////////////////////////
 
     fun textL(pos: PointN, text: String, font: FGFont, color: FGColor) = text(pos, text, font, color)
     fun textC(pos: PointN, text: String, font: FGFont, color: FGColor) =
@@ -61,8 +54,6 @@ abstract class FillGraphics(agc: AffineGraphics): GeometryGraphics(agc) {
 
     fun textR(pos: PointN, text: String, font: FGFont, color: FGColor) =
         text(pos-text_size(text, font).XP, text, font, color)
-
-    ///////////////////////////////////////////////////////////////////////////
 
     fun text(pos: PointN, text: String, color: FGColor) = text(pos, text, font, color)
     fun textL(pos: PointN, text: String, color: FGColor) = textL(pos, text, font, color)

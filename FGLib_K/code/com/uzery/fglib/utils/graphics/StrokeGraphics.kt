@@ -9,8 +9,6 @@ abstract class StrokeGraphics(agc: AffineGraphics): GeometryGraphics(agc) {
 
     abstract fun dashes(offset: Double, vararg dashes: Double)
 
-    abstract var rotate: Double
-
     var width = 1.0
         set(value) {
             val width = transform.t_size(PointN(value)).X
@@ -19,12 +17,6 @@ abstract class StrokeGraphics(agc: AffineGraphics): GeometryGraphics(agc) {
         }
 
     fun setDefaults() {
-        alpha = 1.0
-        rotate = 0.0
-    }
-
-    fun setFullDefaults() {
-        setDefaults()
         width = 1.0
         dashes(0.0)
     }
@@ -34,8 +26,7 @@ abstract class StrokeGraphics(agc: AffineGraphics): GeometryGraphics(agc) {
     fun lineTo(pos1: PointN, pos2: PointN, color: FGColor) {
         if (agc.isOutOfBounds(pos1, pos2-pos1)) return
 
-        agc.applyAlphaWith(alpha)
-        lineTo0(transform.pos(pos1), transform.pos(pos2), color)
+        lineTo0(transform.pos(pos1), transform.pos(pos2), agc.getAlphaColor(color))
     }
 
     fun line(pos: PointN, size: PointN, color: FGColor) = lineTo(pos, pos+size, color)
