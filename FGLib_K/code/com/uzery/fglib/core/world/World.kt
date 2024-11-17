@@ -19,10 +19,7 @@ class World {
     val active_rooms = ArrayList<Room>()
     private val last_active = ArrayList<Boolean>()
 
-    private lateinit var controller: WorldController
-
-    lateinit var getter: AbstractClassGetter<GameObject>
-        private set
+    lateinit var controller: WorldController
 
     var camera: Camera? = null
 
@@ -32,7 +29,6 @@ class World {
         controller = load_info.controller
         controller.init()
 
-        getter = load_info.getter
         rooms.addAll(load_info.rooms)
         for (i in rooms.indices) last_active.add(false)
 
@@ -41,11 +37,10 @@ class World {
 
     fun init(
         rooms: Array<Room>,
-        getter: AbstractClassGetter<GameObject>,
         controller: WorldController,
         init_rooms: Boolean = true
     ) {
-        init(WorldLoadInfo(rooms, getter, controller, init_rooms))
+        init(WorldLoadInfo(rooms, controller, init_rooms))
     }
 
     fun init(

@@ -7,7 +7,6 @@ import com.uzery.fglib.utils.data.getter.AbstractClassGetter
 
 class WorldLoadInfo(
     val rooms: Array<Room>,
-    val getter: AbstractClassGetter<GameObject>,
     val controller: WorldController,
     val init_rooms: Boolean = true
 ) {
@@ -20,6 +19,6 @@ class WorldLoadInfo(
         controller: WorldController,
         init_rooms: Boolean = true
     ): this(
-        Array(filenames.size) { i -> WorldUtils.readInfo(getter, filenames[i]) }, getter, controller, init_rooms
+        Array(filenames.size) { i -> WorldUtils.readInfo(getter, filenames[i]) }, controller, init_rooms
     )
 }
