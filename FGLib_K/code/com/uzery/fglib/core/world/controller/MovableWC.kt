@@ -12,7 +12,7 @@ import com.uzery.fglib.utils.graphics.data.FGFontWeight
 import com.uzery.fglib.utils.math.geom.PointN
 import com.uzery.fglib.utils.math.geom.shape.RectN
 
-class MovableWC(private val world: World): WorldController {
+class MovableWC(private val world: World): CameraWorldController() {
     private val SIZE = Int.MAX_VALUE/2
     private val SIZE_P = PointN(SIZE, SIZE)
 
@@ -30,7 +30,7 @@ class MovableWC(private val world: World): WorldController {
     }
 
     val camera_pos
-        get() = world.camera?.stats?.realPOS ?: PointN.ZERO
+        get() = camera?.stats?.realPOS ?: PointN.ZERO
 
     var goal_room = void
         private set
@@ -68,8 +68,8 @@ class MovableWC(private val world: World): WorldController {
             val newRoom = roomFor(goal)
             goal.stats.POS += goal_room.pos-newRoom.pos
             goal.stats.roomPOS = newRoom.pos
-            world.camera?.stats?.roomPOS = goal.stats.roomPOS
-            world.camera?.move(goal_room.pos-newRoom.pos)
+            camera?.stats?.roomPOS = goal.stats.roomPOS
+            camera?.move(goal_room.pos-newRoom.pos)
 
             goal_room.objects.remove(goal)
             goal_room = newRoom
@@ -105,7 +105,7 @@ class MovableWC(private val world: World): WorldController {
         return world.rooms.firstOrNull { isInArea(it, obj) } ?: void
     }
 
-    override fun update() {
+    override fun update0() {
         graphics.fill.font("TimesNewRoman", 12.0/2, FGFontWeight.BOLD)
         graphics.fill.textL(PointN(20, 60), "pos: "+goal?.stats?.POS, FGColor.BLACK)
         /*if(Platform.keyboard.pressed(KeyCode.CONTROL) && Platform.keyboard.inPressed(KeyCode.R)) {
@@ -117,11 +117,11 @@ class MovableWC(private val world: World): WorldController {
         moveObjs()
     }
 
-    override fun drawPOS(): PointN {
+    override fun drawPOS0(): PointN {
         return goal_room.pos
     }
 
-    override fun draw() {
-        void.draw(PointN.ZERO)
+    override fun draw(pos: PointN) {
+        void.draw(pos)
     }
 }

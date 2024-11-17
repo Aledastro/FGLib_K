@@ -4,8 +4,10 @@ import com.uzery.fglib.core.component.bounds.BoundsBox
 import com.uzery.fglib.core.component.bounds.BoundsElement
 import com.uzery.fglib.core.obj.DrawLayer
 import com.uzery.fglib.core.obj.GameObject
+import com.uzery.fglib.core.program.Platform
 import com.uzery.fglib.core.program.Platform.graphics
 import com.uzery.fglib.core.program.Platform.render_camera
+import com.uzery.fglib.core.program.PlatformUpdatable
 import com.uzery.fglib.core.room.Room
 import com.uzery.fglib.utils.FGUtils
 import com.uzery.fglib.utils.data.file.TextData
@@ -23,7 +25,15 @@ import kotlin.math.PI
 import kotlin.math.cos
 import kotlin.math.sin
 
-object WorldUtils {
+object WorldUtils: PlatformUpdatable {
+    override fun update() {
+        nextDebug()
+    }
+
+    init {
+        Platform.addUpdatable(this)
+    }
+
     val room_info_cg = object: ClassGetter<Pair<PointN, PointN>>() {
         override fun addAll() {
             add("room", 2) { Pair(pos, size) }

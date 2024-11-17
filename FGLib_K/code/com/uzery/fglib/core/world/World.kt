@@ -1,59 +1,29 @@
 package com.uzery.fglib.core.world
 
 import com.uzery.fglib.core.component.visual.Visualiser
-import com.uzery.fglib.core.obj.DrawLayer
 import com.uzery.fglib.core.obj.GameObject
-import com.uzery.fglib.core.program.Platform.develop_mode
 import com.uzery.fglib.core.program.Platform.graphics
 import com.uzery.fglib.core.room.Room
 import com.uzery.fglib.core.room.RoomUtils
-import com.uzery.fglib.core.world.WorldUtils.readInfo
-import com.uzery.fglib.core.world.camera.Camera
 import com.uzery.fglib.core.world.controller.WorldController
-import com.uzery.fglib.utils.data.getter.AbstractClassGetter
-import com.uzery.fglib.utils.graphics.data.FGColor
 import com.uzery.fglib.utils.math.geom.PointN
 
 class World {
     val rooms = ArrayList<Room>()
     val active_rooms = ArrayList<Room>()
-    private val last_active = ArrayList<Boolean>()
+    private val last_active = HashMap<Room, Boolean>()
 
     lateinit var controller: WorldController
 
-    var camera: Camera? = null
-
     //////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    fun init(load_info: WorldLoadInfo) {
-        controller = load_info.controller
+    fun init(rooms: Array<Room>, controller: WorldController, init_rooms: Boolean = true) {
+        this.controller = controller
         controller.init()
 
-        rooms.addAll(load_info.rooms)
-        for (i in rooms.indices) last_active.add(false)
+        this.rooms.addAll(rooms)
 
-        if (load_info.init_rooms) initRooms()
-    }
-
-    fun init(
-        rooms: Array<Room>,
-        controller: WorldController,
-        init_rooms: Boolean = true
-    ) {
-        init(WorldLoadInfo(rooms, controller, init_rooms))
-    }
-
-    fun init(
-        filenames: Array<String>,
-        getter: AbstractClassGetter<GameObject>,
-        controller: WorldController,
-        init_rooms: Boolean = true
-    ) {
-        init(WorldLoadInfo(filenames, getter, controller, init_rooms))
-    }
-
-    fun initRooms() {
-        rooms.forEach { it.init() }
+        if (init_rooms) rooms.forEach { it.init() }
     }
 
     //////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -61,32 +31,27 @@ class World {
     fun next() {
         controller.update()
         active_rooms.clear()
-        for (id in rooms.indices) {
-            if (controller.isActive(rooms[id])) {
-                if (!last_active[id]) controller.onAppear(rooms[id])
-                active_rooms.add(rooms[id])
-                last_active[id] = true
+        for (room in rooms) {
+            if (controller.isActive(room)) {
+                if (last_active[room] != true) controller.onAppear(room)
+                active_rooms.add(room)
+                last_active[room] = true
             } else {
-                if (last_active[id]) controller.onDisappear(rooms[id])
-                last_active[id] = false
+                if (last_active[room] == true) controller.onDisappear(room)
+                last_active[room] = false
             }
         }
         active_rooms.forEach { it.next() }
-
-        camera?.next()
-
-        WorldUtils.nextDebug()
-        active_rooms.forEach { WorldUtils.nextDebugForRoom(it) }
     }
 
     //////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     fun draw(pos: PointN = PointN.ZERO) {
-        graphics.drawPOS = controller.drawPOS()+(camera?.drawPOS() ?: PointN.ZERO)
-        controller.draw()
-        drawRooms(pos)
-        camera?.draw(camera!!.stats.realPOS+pos)
-        //if (develop_mode) drawRoomsDebug(pos)
+        val drawPOS = pos+controller.drawPOS()
+
+        controller.draw(drawPOS)
+        drawRooms(drawPOS)
+        controller.drawAfter(drawPOS)
     }
 
     private fun drawRooms(pos: PointN) {
@@ -101,22 +66,6 @@ class World {
         RoomUtils.drawVisuals(pos, vis, pos_map, sort_map)
     }
 
-    private fun drawRoomsDebug(pos: PointN) {
-        graphics.layer = DrawLayer.CAMERA_FOLLOW
-        active_rooms.forEach { graphics.stroke.rect(pos+it.pos, it.size, FGColor.DARKBLUE) }
-
-        active_rooms.forEach { WorldUtils.drawDebug(pos+it.pos, it) }
-    }
-
-    fun drawNotActiveRoomBounds(pos: PointN) {
-        if (!develop_mode) return
-
-        graphics.layer = DrawLayer.CAMERA_FOLLOW
-        rooms.forEach { room ->
-            graphics.stroke.rect(room.pos+pos, room.size, FGColor.LIGHTGRAY.transparent(0.5))
-        }
-    }
-
     //////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     fun add(o: GameObject) {
@@ -125,16 +74,13 @@ class World {
 
     //////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    fun allTagged(tag: String): List<GameObject> {
+    fun allMatch(predicate: (GameObject) -> Boolean): List<GameObject> {
         val res = ArrayList<GameObject>()
         for (room in active_rooms) {
-            res.addAll(room.objects.filter { it.tagged(tag) })
+            res.addAll(room.objects.filter { obj -> predicate(obj) })
         }
         return res
     }
 
-    fun allExists(vararg tag: String) = tag.all { allTagged(it).isNotEmpty() }
-    fun anyExists(vararg tag: String) = tag.any { allTagged(it).isNotEmpty() }
-
-    fun noneExists(vararg tag: String) = !anyExists(*tag)
+    fun allTagged(tag: String) = allMatch { obj -> obj.tagged(tag) }
 }
