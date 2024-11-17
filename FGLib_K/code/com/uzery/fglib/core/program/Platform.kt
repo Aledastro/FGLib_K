@@ -8,6 +8,7 @@ import com.uzery.fglib.utils.graphics.RenderCamera
 import com.uzery.fglib.utils.graphics.data.FGColor
 import com.uzery.fglib.utils.math.geom.PointN
 import com.uzery.fglib.utils.math.geom.shape.RectN
+import kotlin.math.min
 import kotlin.math.sign
 
 object Platform {
@@ -36,6 +37,12 @@ object Platform {
         }
 
     var scale: Int = 1
+        get() {
+            return if (field == -1) {
+                val size = WINDOW/CANVAS
+                min(size.intX, size.intY)
+            } else field
+        }
 
     var cursor = FGCursor.DEFAULT
         set(value) {
