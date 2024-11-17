@@ -2,7 +2,7 @@ package com.uzery.fglib.core.obj
 
 import com.uzery.fglib.core.component.ObjectComponent
 import com.uzery.fglib.utils.FGUtils
-import com.uzery.fglib.utils.data.file.ConstL
+import com.uzery.fglib.utils.data.file.FGLibConst
 import com.uzery.fglib.utils.data.file.TextData
 
 abstract class SmartGameObject<Type>: GameObject() {
@@ -38,7 +38,7 @@ abstract class SmartGameObject<Type>: GameObject() {
 
     fun data(): String {
         return buildString {
-            append(ConstL.FILES_COMMENT)
+            append(FGLibConst.FILES_COMMENT)
 
             objs.forEach { append("$it\n") }
         }

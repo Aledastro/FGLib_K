@@ -2,7 +2,7 @@ package com.uzery.fglib.utils
 
 import com.uzery.fglib.utils.ShapeUtils.rect
 import com.uzery.fglib.utils.data.debug.DebugData
-import com.uzery.fglib.utils.data.file.ConstL.LITTLE
+import com.uzery.fglib.utils.data.file.FGLibConst.LITTLE
 import com.uzery.fglib.utils.math.geom.Shape
 import com.uzery.fglib.utils.math.geom.shape.RectN
 import kotlin.math.abs

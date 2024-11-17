@@ -2,8 +2,7 @@ package com.uzery.fglib.utils.data.file
 
 import com.uzery.fglib.utils.FGUtils
 
-object ConstL {
-    var RUN_JAR = false
+object FGLibConst {
     const val LITTLE = 0.00_001
 
     const val BUFFER_FORMAT = "UTF-8"

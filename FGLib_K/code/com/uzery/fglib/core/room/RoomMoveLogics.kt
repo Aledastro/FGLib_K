@@ -5,7 +5,7 @@ import com.uzery.fglib.core.obj.GameObject
 import com.uzery.fglib.utils.BoundsUtils
 import com.uzery.fglib.utils.CollisionUtils.MAX_MOVE_K
 import com.uzery.fglib.utils.CollisionUtils.SUPER_K
-import com.uzery.fglib.utils.data.file.ConstL
+import com.uzery.fglib.utils.data.file.FGLibConst
 import com.uzery.fglib.utils.math.geom.PointN
 
 internal object RoomMoveLogics {
@@ -40,7 +40,7 @@ internal object RoomMoveLogics {
             }
 
             fun move(move_p: PointN): Double {
-                if (move_p.length() < ConstL.LITTLE) return MAX_MOVE_K
+                if (move_p.length() < FGLibConst.LITTLE) return MAX_MOVE_K
 
                 val mm = maxMove(move_p*SUPER_K)
                 obj.stats.POS += move_p*mm

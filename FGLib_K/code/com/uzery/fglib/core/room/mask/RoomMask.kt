@@ -3,7 +3,7 @@ package com.uzery.fglib.core.room.mask
 import com.uzery.fglib.core.obj.GameObject
 import com.uzery.fglib.core.room.Room
 import com.uzery.fglib.utils.data.debug.DebugData
-import com.uzery.fglib.utils.data.file.ConstL
+import com.uzery.fglib.utils.data.file.FGLibConst
 import com.uzery.fglib.utils.data.getter.AbstractClassGetter
 
 data class RoomMask(private val actions: ArrayList<RoomChangeAction> = ArrayList()) {
@@ -112,7 +112,7 @@ data class RoomMask(private val actions: ArrayList<RoomChangeAction> = ArrayList
 
     override fun toString(): String {
         return buildString {
-            append(ConstL.FILES_COMMENT)
+            append(FGLibConst.FILES_COMMENT)
 
             actions.forEach { append("$it\n") }
         }

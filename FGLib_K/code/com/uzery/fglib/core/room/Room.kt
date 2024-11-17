@@ -6,7 +6,7 @@ import com.uzery.fglib.core.room.RoomActivateLogics.nextActivate
 import com.uzery.fglib.core.room.RoomMoveLogics.nextMoveOld
 import com.uzery.fglib.core.room.RoomUtils.addObjVis
 import com.uzery.fglib.core.room.RoomUtils.drawVisuals
-import com.uzery.fglib.utils.data.file.ConstL
+import com.uzery.fglib.utils.data.file.FGLibConst
 import com.uzery.fglib.utils.data.getter.value.PosValue
 import com.uzery.fglib.utils.data.getter.value.SizeValue
 import com.uzery.fglib.utils.math.geom.PointN
@@ -93,7 +93,7 @@ class Room(var pos: PointN, var size: PointN) {
 
     override fun toString(): String {
         return buildString {
-            append(ConstL.FILES_COMMENT)
+            append(FGLibConst.FILES_COMMENT)
 
             append("room: ${PosValue(pos)} ${SizeValue(size)}\n\n")
 

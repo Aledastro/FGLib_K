@@ -1,9 +1,7 @@
 package com.uzery.fglib.utils
 
 import com.uzery.fglib.utils.data.debug.DebugData
-import com.uzery.fglib.utils.data.file.ConstL.BUFFER_FORMAT
-import com.uzery.fglib.utils.data.file.ConstL.RUN_JAR
-import com.uzery.fglib.utils.data.file.TextData
+import com.uzery.fglib.utils.data.file.FGLibConst.BUFFER_FORMAT
 import java.io.*
 
 object BufferedIOUtils {
@@ -32,15 +30,10 @@ object BufferedIOUtils {
     }
 
     fun inFileStream(filename: String): InputStream {
-        return if (RUN_JAR) {
-            return TextData::class.java.getResourceAsStream("/$filename")
-                ?: throw DebugData.error("Can't run stream from: $filename")
-        } else {
-            try {
-                FileInputStream(File(filename).absolutePath)
-            } catch (e: Exception) {
-                throw DebugData.error("Can't run stream from: $filename")
-            }
+        return try {
+            FileInputStream(File(filename).absolutePath)
+        } catch (e: Exception) {
+            throw DebugData.error("Can't run stream from: $filename")
         }
     }
 
