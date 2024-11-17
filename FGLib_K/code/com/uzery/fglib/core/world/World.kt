@@ -46,7 +46,7 @@ class World {
     //////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     fun draw(pos: PointN = PointN.ZERO) {
-        val drawPOS = pos+controller.drawPOS()
+        val drawPOS = pos-controller.drawPOS()
 
         controller.draw(drawPOS)
         drawRooms(drawPOS)
