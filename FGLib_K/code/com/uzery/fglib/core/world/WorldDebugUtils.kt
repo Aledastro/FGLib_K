@@ -240,8 +240,9 @@ object WorldDebugUtils: PlatformUpdatable {
             ram = maxRam-freeRam
         }
 
-        time = System.currentTimeMillis()-last
-        last = System.currentTimeMillis()
+        val now = System.currentTimeMillis()
+        time = now-last
+        last = now
         fps += (1000.0/time)
         fps *= 0.99
 
