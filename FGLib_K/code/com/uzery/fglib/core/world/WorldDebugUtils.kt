@@ -234,8 +234,9 @@ object WorldDebugUtils: PlatformUpdatable {
 
     fun nextDebug() {
         if (ids_time%20 == 0) {
-            maxRam = Runtime.getRuntime().totalMemory()
-            freeRam = Runtime.getRuntime().freeMemory()
+            val runtime = Runtime.getRuntime()
+            maxRam = runtime.totalMemory()
+            freeRam = runtime.freeMemory()
             ram = maxRam-freeRam
         }
 
