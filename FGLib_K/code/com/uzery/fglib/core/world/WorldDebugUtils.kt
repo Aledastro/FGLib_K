@@ -9,10 +9,6 @@ import com.uzery.fglib.core.program.Platform.graphics
 import com.uzery.fglib.core.program.Platform.render_camera
 import com.uzery.fglib.core.program.PlatformUpdatable
 import com.uzery.fglib.core.room.Room
-import com.uzery.fglib.utils.FGUtils
-import com.uzery.fglib.utils.data.file.TextData
-import com.uzery.fglib.utils.data.getter.AbstractClassGetter
-import com.uzery.fglib.utils.data.getter.ClassGetter
 import com.uzery.fglib.utils.graphics.data.FGColor
 import com.uzery.fglib.utils.graphics.data.FGFont
 import com.uzery.fglib.utils.graphics.data.FGFontWeight
@@ -20,50 +16,19 @@ import com.uzery.fglib.utils.math.geom.PointN
 import com.uzery.fglib.utils.math.geom.Shape
 import com.uzery.fglib.utils.math.geom.shape.OvalN
 import com.uzery.fglib.utils.math.geom.shape.RectN
-import java.util.*
+import java.util.ArrayList
+import java.util.HashMap
 import kotlin.math.PI
 import kotlin.math.cos
 import kotlin.math.sin
 
-object WorldUtils: PlatformUpdatable {
+object WorldDebugUtils: PlatformUpdatable {
     override fun update() {
         nextDebug()
     }
 
     init {
         Platform.addUpdatable(this)
-    }
-
-    val room_info_cg = object: ClassGetter<Pair<PointN, PointN>>() {
-        override fun addAll() {
-            add("room", 2) { Pair(pos, size) }
-        }
-    }
-
-    fun readInfo(getter: AbstractClassGetter<GameObject>, filename: String): Room {
-        return readInfo(getter, TextData[filename])
-    }
-
-    fun readInfo(getter: AbstractClassGetter<GameObject>, input: List<String>): Room {
-        val list = LinkedList<String>()
-        list.addAll(input)
-
-        list.removeIf { FGUtils.isComment(it) }
-
-        val objects = ArrayList<GameObject>()
-        var next = ""
-
-        next = list.removeFirst()
-
-        val room_info = room_info_cg[next]
-
-        while (list.isNotEmpty()) {
-            next = list.removeFirst()
-            if (FGUtils.isComment(next)) continue
-            objects.add(getter[next])
-        }
-
-        return Room(room_info.first, room_info.second, objects)
     }
 
     //////////////////////////////////////////////////////////////////////////////////////////////////////////
