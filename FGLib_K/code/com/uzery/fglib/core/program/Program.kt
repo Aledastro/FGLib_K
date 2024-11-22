@@ -28,9 +28,9 @@ object Program {
     }
 
     private fun updatePaths() {
-        ImageData.updatePaths()
-        TextData.updatePaths()
-        AudioData.updatePaths()
+        ImageData.paths.updatePaths()
+        TextData.paths.updatePaths()
+        AudioData.paths.updatePaths()
     }
 
     init {
