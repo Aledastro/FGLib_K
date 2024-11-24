@@ -35,4 +35,16 @@ class MediaPaths {
 
         real_dir = dir*/
     }
+
+    override fun toString(): String {
+        return buildString {
+            append("media_paths[\n")
+            append("\tdir: $dir\n")
+            append("\n")
+            for ((key,value) in paths) {
+                append("\t$key = $value\n")
+            }
+            append("]")
+        }
+    }
 }
