@@ -5,7 +5,7 @@ import com.uzery.fglib.core.program.Platform.mouse
 import com.uzery.fglib.utils.input.data.FGKey
 import com.uzery.fglib.utils.input.data.FGMouseKey
 
-class KeyCombinationPart(construct: KeyCombinationPart.() -> Unit) {
+class FGKeyCombinationPart(construct: FGKeyCombinationPart.() -> Unit) {
     private val pressed = ArrayList<FGKey>()
     private val inPressed = ArrayList<FGKey>()
     private val rePressed = ArrayList<FGKey>()

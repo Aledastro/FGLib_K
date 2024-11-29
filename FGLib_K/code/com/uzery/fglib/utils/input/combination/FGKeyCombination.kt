@@ -3,16 +3,16 @@ package com.uzery.fglib.utils.input.combination
 import com.uzery.fglib.utils.input.data.FGKey
 import com.uzery.fglib.utils.input.data.FGMouseKey
 
-class KeyCombination(construct: KeyCombination.() -> Unit) {
-    val main = KeyCombinationPart {}
-    val parts = ArrayList<KeyCombinationPart>()
+class FGKeyCombination(construct: FGKeyCombination.() -> Unit) {
+    val main = FGKeyCombinationPart {}
+    val parts = ArrayList<FGKeyCombinationPart>()
 
-    fun combination(part: KeyCombinationPart) {
+    fun combination(part: FGKeyCombinationPart) {
         parts.add(part)
     }
 
-    fun combination(construct: KeyCombinationPart.() -> Unit) {
-        parts.add(KeyCombinationPart { construct() })
+    fun combination(construct: FGKeyCombinationPart.() -> Unit) {
+        parts.add(FGKeyCombinationPart { construct() })
     }
 
     //////////////////////////////////////////////////////////////////////////////////////
