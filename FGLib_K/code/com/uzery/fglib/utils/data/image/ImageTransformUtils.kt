@@ -19,11 +19,10 @@ object ImageTransformUtils {
     }
 
     fun applyEffect(origin: WritableFGImage, effect: String): WritableFGImage {
-        val effect_name = FGFormat[effect].first
-        val effect_args = FGFormat[effect].second
+        val effect_entry = FGFormat[effect]
 
-        val transform = map[effect_name] ?: throw DebugData.error("unknown image effect: $effect")
+        val transform = map[effect_entry.name] ?: throw DebugData.error("unknown image effect: $effect")
 
-        return transform[origin, effect_args]
+        return transform[origin, effect_entry.args]
     }
 }

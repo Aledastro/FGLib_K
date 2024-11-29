@@ -16,9 +16,9 @@ abstract class ParentClassGetter<Type>(private vararg val getters: ClassGetter<T
         sums.removeFirst()
     }
 
-    final override fun getMark(name: String, args: ArrayList<ArrayList<String>>): () -> Type {
-        return getters.firstOrNull { StringN(name, args.size) in it }?.getMark(name, args)
-            ?: throw DebugData.error("ERROR parent getMark(): $name | $args")
+    final override fun getMark(entry: FGEntry): () -> Type {
+        return getters.firstOrNull { StringN(entry.name, entry.args.size) in it }?.getMark(entry)
+            ?: throw DebugData.error("ERROR parent getMark(): $entry")
     }
 
     final override fun getEntry(id: Int): () -> Type {

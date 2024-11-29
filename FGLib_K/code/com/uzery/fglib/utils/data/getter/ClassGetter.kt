@@ -54,18 +54,17 @@ abstract class ClassGetter<Type>: AbstractClassGetter<Type>() {
         add(StringN(s), mark)
     }
 
-    override fun getMark(name: String, args: ArrayList<ArrayList<String>>): () -> Type {
+    override fun getMark(entry: FGEntry): () -> Type {
         return {
-            input = args
+            input = entry.args
             in_id = 0
             no_info = false
-            val first = map.firstOrNull { it.first == StringN(name, args.size) }
-                ?: throw DebugData.error("no entry from $name: $args")
+            val first = map.firstOrNull { it.first == StringN(entry.name, entry.args.size) }
+                ?: throw DebugData.error("no entry from $entry")
 
             first.second()
         }
     }
-
 
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 

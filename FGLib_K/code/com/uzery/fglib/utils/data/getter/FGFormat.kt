@@ -4,9 +4,9 @@ import com.uzery.fglib.utils.FGUtils
 import com.uzery.fglib.utils.data.debug.DebugData
 
 object FGFormat {
-    operator fun get(input: String): Pair<String, ArrayList<ArrayList<String>>> {
+    operator fun get(input: String): FGEntry {
         val args = ArrayList<ArrayList<String>>()
-        if (input.indexOf(':') == -1) return Pair(input, ArrayList())
+        if (input.indexOf(':') == -1) return FGEntry(input)
 
         val name = FGUtils.subBefore(input, ":")
         val argsInput = FGUtils.subAfter(input, ":")
@@ -80,21 +80,6 @@ object FGFormat {
         }
         if (adding != 0) throw DebugData.error("Wrong FGFormat: $input")
 
-        return Pair(name, args)
-    }
-
-    fun construct(name: String, args: ArrayList<ArrayList<String>>): String {
-        return buildString {
-            append(name)
-
-            if (args.isNotEmpty()) {
-                append(":")
-                args.forEach { value ->
-                    val s = value.toString()
-                    if (s == "") throw DebugData.error("NULLABLE VALUE: $name: $args")
-                    append(if (s[s.lastIndex] == ']') " $s" else " [$s]")
-                }
-            }
-        }
+        return FGEntry(name, args)
     }
 }
