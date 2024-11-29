@@ -14,4 +14,8 @@ data class FGEntry(val name: String, val args: ArrayList<ArrayList<String>> = Ar
             }
         }
     }
+
+    companion object {
+        fun from(input: String) = FGFormat[input]
+    }
 }
