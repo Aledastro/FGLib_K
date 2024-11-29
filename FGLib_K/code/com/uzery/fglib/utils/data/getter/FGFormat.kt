@@ -6,7 +6,7 @@ import com.uzery.fglib.utils.data.debug.DebugData
 object FGFormat {
     operator fun get(input: String): FGEntry {
         val args = ArrayList<ArrayList<String>>()
-        if (input.indexOf(':') == -1) return FGEntry(input)
+        if (input.indexOf(':') == -1) return FGEntry(input, ArrayList())
 
         val name = FGUtils.subBefore(input, ":")
         val argsInput = FGUtils.subAfter(input, ":")
