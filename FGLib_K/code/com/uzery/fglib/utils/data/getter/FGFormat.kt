@@ -82,4 +82,19 @@ object FGFormat {
 
         return Pair(name, args)
     }
+
+    fun construct(input: Pair<String, ArrayList<ArrayList<String>>>): String {
+        return buildString {
+            append(input.first)
+
+            if (input.second.isNotEmpty()) {
+                append(":")
+                input.second.forEach { value ->
+                    val s = value.toString()
+                    if (s == "") throw DebugData.error("NULLABLE VALUE: ${input.first}: ${input.second}")
+                    append(if (s[s.lastIndex] == ']') " $s" else " [$s]")
+                }
+            }
+        }
+    }
 }
