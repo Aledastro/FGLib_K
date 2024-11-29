@@ -83,15 +83,15 @@ object FGFormat {
         return Pair(name, args)
     }
 
-    fun construct(input: Pair<String, ArrayList<ArrayList<String>>>): String {
+    fun construct(name: String, args: ArrayList<ArrayList<String>>): String {
         return buildString {
-            append(input.first)
+            append(name)
 
-            if (input.second.isNotEmpty()) {
+            if (args.isNotEmpty()) {
                 append(":")
-                input.second.forEach { value ->
+                args.forEach { value ->
                     val s = value.toString()
-                    if (s == "") throw DebugData.error("NULLABLE VALUE: ${input.first}: ${input.second}")
+                    if (s == "") throw DebugData.error("NULLABLE VALUE: $name: $args")
                     append(if (s[s.lastIndex] == ']') " $s" else " [$s]")
                 }
             }
