@@ -41,7 +41,7 @@ class MediaPaths {
             append("media_paths[\n")
             append("\tdir: $dir\n")
             append("\n")
-            for ((key,value) in paths) {
+            for ((key, value) in paths) {
                 append("\t$key = $value\n")
             }
             append("]")

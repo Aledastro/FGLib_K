@@ -16,8 +16,6 @@ import com.uzery.fglib.utils.math.geom.PointN
 import com.uzery.fglib.utils.math.geom.Shape
 import com.uzery.fglib.utils.math.geom.shape.OvalN
 import com.uzery.fglib.utils.math.geom.shape.RectN
-import java.util.ArrayList
-import java.util.HashMap
 import kotlin.math.PI
 import kotlin.math.cos
 import kotlin.math.sin
