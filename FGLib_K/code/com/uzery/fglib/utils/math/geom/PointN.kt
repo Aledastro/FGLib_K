@@ -20,6 +20,10 @@ data class PointN(private val xs: Array<Double>) {
         if (dim == 0) return 0.0
         return xs[n]
     }
+    operator fun set(n: Int, value: Double) {
+        if (dim == 0) return
+        xs[n] = value
+    }
 
     var X: Double
         get() = get(0)
