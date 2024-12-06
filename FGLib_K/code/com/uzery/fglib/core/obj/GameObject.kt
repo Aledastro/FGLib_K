@@ -355,8 +355,17 @@ abstract class GameObject: HavingComponentSyntax {
     fun addController(controller: () -> (() -> TempAction)) = addComponent(Controller(controller))
     fun addController(vararg controller: Controller) = addComponent(*controller)
 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
     fun addListener(listener: (InputAction) -> Unit) = addComponent(ActionListener(listener))
     fun addListener(vararg listener: ActionListener) = addComponent(*listener)
+    fun addListener(code: String, f: (action: InputAction) -> Unit) {
+        addListener { action ->
+            if (action.code == code) f(action)
+        }
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     fun addAbility(ability: () -> Unit) = addComponent(AbilityBox(ability))
     fun addAbility(vararg ability: AbilityBox) = addComponent(*ability)
