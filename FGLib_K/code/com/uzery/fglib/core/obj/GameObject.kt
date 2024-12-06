@@ -17,6 +17,9 @@ import com.uzery.fglib.core.component.controller.TempAction
 import com.uzery.fglib.core.component.listener.ActionListener
 import com.uzery.fglib.core.component.listener.GroupListener
 import com.uzery.fglib.core.component.listener.InputAction
+import com.uzery.fglib.core.component.load.AudioResource
+import com.uzery.fglib.core.component.load.ImageResource
+import com.uzery.fglib.core.component.load.SpriteResource
 import com.uzery.fglib.core.component.property.GameProperty
 import com.uzery.fglib.core.component.property.GroupProperty
 import com.uzery.fglib.core.component.reaction.*
@@ -30,6 +33,7 @@ import com.uzery.fglib.utils.graphics.AffineGraphics
 import com.uzery.fglib.utils.math.geom.PointN
 import com.uzery.fglib.utils.math.geom.Shape
 import com.uzery.fglib.utils.math.geom.shape.RectN
+import com.uzery.fglib.utils.struct.num.IntI
 
 abstract class GameObject: HavingComponentSyntax {
     val stats = Stats()
@@ -399,6 +403,13 @@ abstract class GameObject: HavingComponentSyntax {
             }
         )
     }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    fun addImage(name: String, vararg effects: String) = addComponent(ImageResource(name, *effects))
+    fun addImage(name: String, size: IntI, vararg effects: String) = addComponent(SpriteResource(name, size, *effects))
+
+    fun addAudio(name: String) = addComponent(AudioResource(name))
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
