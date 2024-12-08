@@ -12,6 +12,7 @@ import com.uzery.fglib.core.component.controller.Controller
 import com.uzery.fglib.core.component.controller.GroupController
 import com.uzery.fglib.core.component.controller.TempAction
 import com.uzery.fglib.core.component.listener.ActionListener
+import com.uzery.fglib.core.component.listener.BoundsInputAction
 import com.uzery.fglib.core.component.listener.GroupListener
 import com.uzery.fglib.core.component.listener.InputAction
 import com.uzery.fglib.core.component.load.AudioResource
@@ -110,6 +111,17 @@ abstract class TempActionNode: HavingComponentSyntax {
     fun addListener(code: String, f: (action: InputAction) -> Unit) {
         addListener { action ->
             if (action.code == code) f(action)
+        }
+    }
+    fun addBoundsListener(code: String, our: String? = null, their: String? = null, f: (action: BoundsInputAction) -> Unit) {
+        addListener { action ->
+            if (action.args.size != 2) return@addListener
+            val bounds_action = BoundsInputAction(action)
+            if (our != null && our != bounds_action.our) return@addListener
+            if (their != null && their != bounds_action.their) return@addListener
+            if (action.code != code) return@addListener
+
+            f(bounds_action)
         }
     }
 
