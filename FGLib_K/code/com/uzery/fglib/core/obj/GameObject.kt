@@ -371,11 +371,12 @@ abstract class GameObject: HavingComponentSyntax {
     }
     fun addBoundsListener(code: String, our: String? = null, their: String? = null, f: (action: BoundsInputAction) -> Unit) {
         addListener { action ->
-            if (action.args.size != 2) return@addListener
+            if (action.code != code) return@addListener
+            if (action.args.size != 2) throw DebugData.error("Can't cast to BoundsInputAction: $action")
+
             val bounds_action = BoundsInputAction(action)
             if (our != null && our != bounds_action.our) return@addListener
             if (their != null && their != bounds_action.their) return@addListener
-            if (action.code != code) return@addListener
 
             f(bounds_action)
         }

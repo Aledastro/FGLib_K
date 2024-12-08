@@ -23,6 +23,7 @@ import com.uzery.fglib.core.component.visual.GroupVisualiser
 import com.uzery.fglib.core.component.visual.LayerVisualiser
 import com.uzery.fglib.core.component.visual.Visualiser
 import com.uzery.fglib.core.obj.DrawLayer
+import com.uzery.fglib.utils.data.debug.DebugData
 import com.uzery.fglib.utils.graphics.AffineGraphics
 import com.uzery.fglib.utils.math.geom.PointN
 import com.uzery.fglib.utils.math.geom.Shape
@@ -101,11 +102,12 @@ open class GroupComponent(vararg component: ObjectComponent): ObjectComponent, H
     }
     fun addBoundsListener(code: String, our: String? = null, their: String? = null, f: (action: BoundsInputAction) -> Unit) {
         addListener { action ->
-            if (action.args.size != 2) return@addListener
+            if (action.code != code) return@addListener
+            if (action.args.size != 2) throw DebugData.error("Can't cast to BoundsInputAction: $action")
+
             val bounds_action = BoundsInputAction(action)
             if (our != null && our != bounds_action.our) return@addListener
             if (their != null && their != bounds_action.their) return@addListener
-            if (action.code != code) return@addListener
 
             f(bounds_action)
         }
