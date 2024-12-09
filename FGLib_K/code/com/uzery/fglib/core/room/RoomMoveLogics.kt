@@ -63,7 +63,7 @@ internal object RoomMoveLogics {
                 np *= sticky
             }
 
-            obj.stats.fly_by = Array(np.dim) { false }
+            obj.stats.fly_by.clear()
 
             for (level in 0..<np.dim) {
                 val m = move(np.separate(level))

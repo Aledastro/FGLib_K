@@ -4,9 +4,9 @@ import com.uzery.fglib.utils.math.geom.PointN
 
 class Stats {
     var fly = false
-    var fly_by = Array(0) { false }
+    val fly_by = HashMap<Int, Boolean>()
     var sticky = false
-    var sticky_by = HashMap<Int, Boolean>()
+    val sticky_by = HashMap<Int, Boolean>()
 
     var POS = PointN.ZERO
     var lPOS = PointN.ZERO
