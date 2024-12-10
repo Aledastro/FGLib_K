@@ -8,8 +8,8 @@ object BoundsUtils {
     fun maxMoveOld(stay: Bounds, move: Bounds, stay_pos: PointN, start_pos: PointN, move_pos: PointN): Double {
         if (stay.elements.isEmpty() || move.elements.isEmpty()) return MAX_MOVE_K
 
-        val r_stay = stay.main() ?: return MAX_MOVE_K
-        val r_move = move.main() ?: return MAX_MOVE_K
+        val r_stay = stay.main ?: return MAX_MOVE_K
+        val r_move = move.main ?: return MAX_MOVE_K
 
         val end_pos = start_pos+move_pos
 
@@ -22,10 +22,10 @@ object BoundsUtils {
 
         return stay.elements.minOf { stayE ->
             move.elements.minOf { moveE ->
-                if (stayE.shape() == null || moveE.shape() == null) MAX_MOVE_K
+                if (stayE.now == null || moveE.now == null) MAX_MOVE_K
                 else {
-                    val staySh = stayE.shape()!!
-                    val moveSh = moveE.shape()!!
+                    val staySh = stayE.now!!
+                    val moveSh = moveE.now!!
                     CollisionUtils.maxMove(staySh.copy(stay_pos), moveSh.copy(start_pos), moveSh.copy(end_pos))
                 }
             }

@@ -5,6 +5,10 @@ import com.uzery.fglib.utils.graphics.AffineTransform
 import com.uzery.fglib.utils.math.geom.PointN
 
 class ExtensionData {
+    fun next() {
+        bounds?.next()
+    }
+
     var owner: Extension? = null
     internal val full_transform: AffineTransform
         get() {
@@ -39,7 +43,7 @@ class ExtensionData {
     var layout = FGLayout.TOP_LEFT
 
     var size = PointN.ZERO
-        get() = if (bounds == null) field else bounds?.main()?.S ?: PointN.ZERO
+        get() = if (bounds == null) field else bounds?.main?.S ?: PointN.ZERO
 
     var transform: AffineTransform? = null
 

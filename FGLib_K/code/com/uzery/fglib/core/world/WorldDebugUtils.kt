@@ -116,7 +116,7 @@ object WorldDebugUtils: PlatformUpdatable {
 
         graphics.stroke.width = 1.0
         for (el in bs.elements) {
-            val sh = el.shape() ?: continue
+            val sh = el.now ?: continue
 
             fun p2(p: PointN): PointN {
                 return PointN(p.X, p.Y)
@@ -175,7 +175,7 @@ object WorldDebugUtils: PlatformUpdatable {
 
         graphics.stroke.width = 1.0
         for (el in bs.elements) {
-            val sh = el.shape() ?: continue
+            val sh = el.now ?: continue
 
             fun p2(p: PointN): PointN {
                 return PointN(p.X, p.Y)

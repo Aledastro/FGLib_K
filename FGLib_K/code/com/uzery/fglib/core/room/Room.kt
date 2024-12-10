@@ -42,12 +42,11 @@ class Room(var pos: PointN, var size: PointN) {
 
         objects.forEach { it.stats.roomPOS = pos }
         objects.forEach { it.next0WithFollowers() }
+        objects.forEach { it.nextTimeWithFollowers() }
 
         val all = getAllObjects()
         nextMoveOld(all)
         nextActivate(all)
-
-        objects.forEach { it.nextTimeWithFollowers() }
 
         fun addFromObj(obj: GameObject) {
             new_objects.addAll(obj.children)

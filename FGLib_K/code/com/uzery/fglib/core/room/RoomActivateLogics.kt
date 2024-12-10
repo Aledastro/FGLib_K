@@ -79,8 +79,8 @@ internal object RoomActivateLogics {
     }
 
     private fun setActivate(o1: GameObject, sh1: BoundsElement, o2: GameObject, sh2: BoundsElement, code: String) {
-        val shape1 = sh1.shape() ?: return
-        val shape2 = sh2.shape() ?: return
+        val shape1 = sh1.now ?: return
+        val shape2 = sh2.now ?: return
         val copied1 = shape1.copy(o1.pos_with_owners)
         val copied2 = shape2.copy(o2.pos_with_owners)
 

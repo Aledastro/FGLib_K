@@ -145,6 +145,8 @@ abstract class Extension(vararg children: Extension) {
     }
 
     internal fun updateWithChildren() {
+        stats.next()
+
         modify()
 
         update()

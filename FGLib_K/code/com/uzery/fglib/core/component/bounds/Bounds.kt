@@ -14,11 +14,11 @@ class Bounds(vararg els: BoundsElement) {
 
     fun add(vararg els: BoundsElement) = els.forEach { element -> elements.add(element) }
 
-    fun main(): RectN? {
+    private fun main(): RectN? {
         if (empty) return null
 
         val list = ArrayList<Shape>()
-        elements.forEach { el -> el.shape()?.let { list.add(it) } }
+        elements.forEach { el -> el.now?.let { list.add(it) } }
 
         if (list.isEmpty()) return null
         return ShapeUtils.mainOf(*list.toTypedArray())
@@ -28,6 +28,12 @@ class Bounds(vararg els: BoundsElement) {
         get() = elements.isEmpty()
 
     fun into(pos: PointN): Boolean {
-        return elements.any { it.shape()?.into(pos) == true }
+        return elements.any { it.now?.into(pos) == true }
+    }
+
+    var main: RectN? = null
+    fun next() {
+        elements.forEach { it.next() }
+        main = main()
     }
 }

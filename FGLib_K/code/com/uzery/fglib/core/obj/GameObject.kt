@@ -143,6 +143,8 @@ abstract class GameObject: HavingComponentSyntax {
     private fun next0() {
         if (object_time == 0) onBirth.forEach { it.run() }
 
+        bounds.next()
+
         controllers.forEach { it.update() }
 
         abilities.forEach { it.run() }
@@ -161,7 +163,7 @@ abstract class GameObject: HavingComponentSyntax {
     private fun setMain() {
         val bsl = ArrayList<RectN>()
         for (bc in BoundsBox.indices) {
-            bounds[bc].main()?.let { bsl.add(it) }
+            bounds[bc].main?.let { bsl.add(it) }
         }
         main = if (bsl.isEmpty()) null
         else ShapeUtils.mainOf(*bsl.toTypedArray())

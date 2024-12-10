@@ -4,6 +4,10 @@ class BoundsBox {
     private val bounds = Array(SIZE) { Bounds() }
     operator fun get(index: Int) = bounds[index]
 
+    fun next() {
+        bounds.forEach { it.next() }
+    }
+
     val red: Bounds
         get() = bounds[RED]
     val orange: Bounds
