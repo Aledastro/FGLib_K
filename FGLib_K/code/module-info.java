@@ -21,14 +21,17 @@
  * <p>
  * FGLib is technology-independent and more about philosophy about how to make games.
  * It has different realisations for different purposes,
- * such as simple JavaAwt for lightweight apps, raw OpenGL for complex games or JavaFX, that keeps balance.
- * And all works in unite environment. You can make your own realisation as well!
+ * such as simple JavaAwt for lightweight apps or games, that can weight around 2MB,
+ * raw OpenGL (work in progress) for complex games or
+ * stable JavaFX, that keeps balance with performance and complexity.
+ * All works in unite environment, so you can change realisation in two lines of code.
+ * Of course, you can make your own realisations as well!
  * <p>
  * Cons:
  * <p>
  * (*) Many features are still in development, because I not need them currently
  * <p>
- * (*) Lack of documentation, but you can have developer support
+ * (*) Lack of documentation
  * <p>
  * (*) Limited in some ways
  * <p>
