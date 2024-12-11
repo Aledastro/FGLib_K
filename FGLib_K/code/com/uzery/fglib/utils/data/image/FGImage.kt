@@ -4,6 +4,9 @@ import com.uzery.fglib.core.program.Platform.packager
 import com.uzery.fglib.utils.graphics.data.FGColor
 import com.uzery.fglib.utils.struct.num.IntI
 
+/**
+ * TODO("doc")
+ **/
 open class FGImage(val source: Any) {
     constructor(filename: String): this(packager.image.createImage(filename))
 

@@ -2,6 +2,9 @@ package com.uzery.fglib.utils.audio
 
 import com.uzery.fglib.utils.data.CollectDataClass
 
+/**
+ * TODO("doc")
+ **/
 object AudioData: CollectDataClass() {
     private val origins = HashMap<String, FGAudio>()
     operator fun get(name: String): FGAudio {

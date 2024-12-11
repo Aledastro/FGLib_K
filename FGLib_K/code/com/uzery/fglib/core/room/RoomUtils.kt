@@ -6,6 +6,9 @@ import com.uzery.fglib.core.program.Platform.render_camera
 import com.uzery.fglib.utils.math.geom.PointN
 import kotlin.math.sign
 
+/**
+ * TODO("doc")
+ **/
 object RoomUtils {
     fun drawVisuals(
         draw_pos: PointN,

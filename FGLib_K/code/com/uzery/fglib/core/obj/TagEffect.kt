@@ -1,5 +1,8 @@
 package com.uzery.fglib.core.obj
 
+/**
+ * TODO("doc")
+ **/
 data class TagEffect(val name: String, val duration: Int) {
     private var time_left = duration
     var dead = false

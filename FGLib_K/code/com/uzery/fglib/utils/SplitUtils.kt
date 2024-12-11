@@ -1,5 +1,8 @@
 package com.uzery.fglib.utils
 
+/**
+ * TODO("doc")
+ **/
 object SplitUtils {
     fun splitTextByWidth(
         text: String,

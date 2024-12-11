@@ -1,5 +1,8 @@
 package com.uzery.fglib.core.component.bounds
 
+/**
+ * TODO("doc")
+ **/
 class BoundsBox {
     private val bounds = Array(SIZE) { Bounds() }
     operator fun get(index: Int) = bounds[index]

@@ -3,6 +3,9 @@ package com.uzery.fglib.core.component.controller
 import com.uzery.fglib.core.component.ObjectComponent
 import com.uzery.fglib.core.component.listener.InputAction
 
+/**
+ * TODO("doc")
+ **/
 class Controller(private val f: () -> (() -> TempAction)?): ObjectComponent {
     fun get(): (() -> TempAction)? {
         return f()

@@ -8,6 +8,9 @@ import com.uzery.fglib.utils.CollisionUtils.SUPER_K
 import com.uzery.fglib.utils.data.file.FGLibConst
 import com.uzery.fglib.utils.math.geom.PointN
 
+/**
+ * TODO("doc")
+ **/
 internal object RoomMoveLogics {
     fun nextMoveOld(objs: ArrayList<GameObject>) {
         val red_bounds = ArrayList<Bounds>()

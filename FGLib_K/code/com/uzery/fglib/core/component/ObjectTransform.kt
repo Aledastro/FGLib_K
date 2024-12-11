@@ -4,6 +4,9 @@ import com.uzery.fglib.core.component.visual.Visualiser
 import com.uzery.fglib.core.obj.GameObject
 import com.uzery.fglib.utils.math.geom.PointN
 
+/**
+ * TODO("doc")
+ **/
 abstract class ObjectTransform(val obj: GameObject) {
     open val name = ""
     open val vis: Visualiser? = null

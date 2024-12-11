@@ -4,6 +4,9 @@ import com.uzery.fglib.core.program.FGClipboard
 import com.uzery.fglib.core.program.data.FGCursor
 import com.uzery.fglib.utils.math.geom.PointN
 
+/**
+ * TODO("doc")
+ **/
 abstract class FGProgram {
     abstract var WINDOW_SIZE: PointN
 

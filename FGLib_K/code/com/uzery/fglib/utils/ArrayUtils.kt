@@ -1,5 +1,8 @@
 package com.uzery.fglib.utils
 
+/**
+ * TODO("doc")
+ **/
 object ArrayUtils {
     inline fun <reified T> toArray(vararg xs: T): Array<T> = Array(xs.size) { i -> xs[i] }
     inline fun <reified T> transform(xs: Array<T>, transform: (x: T) -> T) =

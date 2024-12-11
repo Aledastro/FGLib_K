@@ -5,6 +5,9 @@ import com.uzery.fglib.core.program.data.FGWindowStyle
 import com.uzery.fglib.utils.graphics.data.FGColor
 import com.uzery.fglib.utils.math.geom.PointN
 
+/**
+ * TODO("doc")
+ **/
 data class LaunchOptions(
     val size: PointN,
     val window_mode: FGWindowMode = FGWindowMode.WINDOWED,

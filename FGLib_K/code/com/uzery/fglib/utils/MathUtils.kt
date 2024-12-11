@@ -6,6 +6,9 @@ import kotlin.math.PI
 import kotlin.math.abs
 import kotlin.math.atan
 
+/**
+ * TODO("doc")
+ **/
 object MathUtils {
     fun mod(input: Double, mod: Double) = input%mod+(if (input < 0 && input%mod != 0.0) mod else 0.0)
 

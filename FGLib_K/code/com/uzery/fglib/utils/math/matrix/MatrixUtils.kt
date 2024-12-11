@@ -4,6 +4,9 @@ import com.uzery.fglib.utils.data.debug.DebugData
 import com.uzery.fglib.utils.math.geom.PointN
 import com.uzery.fglib.utils.struct.Array2
 
+/**
+ * TODO("doc")
+ **/
 object MatrixUtils {
     fun toArray(vararg data: PointN): Array2<Double> {
         val dim = data[0].dim

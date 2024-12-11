@@ -6,6 +6,9 @@ import com.uzery.fglib.utils.math.geom.PointN
 import com.uzery.fglib.utils.struct.Array2
 import kotlin.math.abs
 
+/**
+ * TODO("doc")
+ **/
 class UltraMatrix(data: Array2<Double>): Matrix(data) {
     constructor(vararg normal: PointN): this(MatrixUtils.toArray(*normal))
 

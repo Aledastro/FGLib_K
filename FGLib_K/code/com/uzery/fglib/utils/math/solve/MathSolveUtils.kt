@@ -1,5 +1,8 @@
 package com.uzery.fglib.utils.math.solve
 
+/**
+ * TODO("doc")
+ **/
 object MathSolveUtils {
     fun solveInt(expression: String): Int {
         return try {

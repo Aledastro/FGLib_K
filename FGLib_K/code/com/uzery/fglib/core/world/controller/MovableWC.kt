@@ -11,6 +11,9 @@ import com.uzery.fglib.utils.graphics.data.FGFontWeight
 import com.uzery.fglib.utils.math.geom.PointN
 import com.uzery.fglib.utils.math.geom.shape.RectN
 
+/**
+ * TODO("doc")
+ **/
 class MovableWC(private val world: World): CameraWorldController() {
     private val SIZE = Int.MAX_VALUE/2
     private val SIZE_P = PointN(SIZE, SIZE)

@@ -5,6 +5,9 @@ import com.uzery.fglib.utils.input.data.FGMouseKey
 import com.uzery.fglib.utils.math.geom.PointN
 import kotlin.math.sign
 
+/**
+ * TODO("doc")
+ **/
 abstract class MouseActivator {
     protected abstract fun pos0(): PointN
     protected abstract fun scroll0(): PointN

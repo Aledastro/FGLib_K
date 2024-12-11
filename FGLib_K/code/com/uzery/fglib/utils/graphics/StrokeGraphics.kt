@@ -3,6 +3,9 @@ package com.uzery.fglib.utils.graphics
 import com.uzery.fglib.utils.graphics.data.FGColor
 import com.uzery.fglib.utils.math.geom.PointN
 
+/**
+ * TODO("doc")
+ **/
 abstract class StrokeGraphics(agc: AffineGraphics): GeometryGraphics(agc) {
     protected abstract fun lineTo0(pos1: PointN, pos2: PointN, color: FGColor)
     protected abstract fun setWidth0(width: Double)

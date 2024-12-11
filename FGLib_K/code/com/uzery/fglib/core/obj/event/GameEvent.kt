@@ -2,6 +2,9 @@ package com.uzery.fglib.core.obj.event
 
 import com.uzery.fglib.core.obj.GameObject
 
+/**
+ * TODO("doc")
+ **/
 abstract class GameEvent: GameObject() {
     var repeatable = false
         protected set

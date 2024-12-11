@@ -3,8 +3,10 @@ package com.uzery.fglib.utils.math.matrix
 import com.uzery.fglib.utils.data.debug.DebugData
 import com.uzery.fglib.utils.struct.Array2
 
+/**
+ * TODO("doc")
+ **/
 open class Matrix(val data: Array2<Double>) {
-
     val size
         get() = data.size
 

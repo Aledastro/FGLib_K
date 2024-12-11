@@ -6,6 +6,9 @@ import com.uzery.fglib.utils.audio.AudioData
 import com.uzery.fglib.utils.data.file.TextData
 import com.uzery.fglib.utils.data.image.ImageData
 
+/**
+ * TODO("doc")
+ **/
 abstract class LaunchConfiguration {
     abstract val main: Extension
     abstract val options: LaunchOptions

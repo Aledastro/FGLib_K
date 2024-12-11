@@ -4,6 +4,9 @@ import com.uzery.fglib.core.component.bounds.Bounds
 import com.uzery.fglib.utils.graphics.AffineTransform
 import com.uzery.fglib.utils.math.geom.PointN
 
+/**
+ * TODO("doc")
+ **/
 class ExtensionData {
     fun next() {
         bounds?.next()

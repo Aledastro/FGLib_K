@@ -3,6 +3,9 @@ package com.uzery.fglib.utils.graphics.shader
 import com.uzery.fglib.core.program.Platform.packager
 import com.uzery.fglib.utils.data.file.TextData
 
+/**
+ * TODO("doc")
+ **/
 class FGShader(shader_source: ArrayList<String>) {
     constructor(filename: String): this(TextData[filename])
 

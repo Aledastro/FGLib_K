@@ -2,6 +2,9 @@ package com.uzery.fglib.utils.graphics
 
 import com.uzery.fglib.utils.math.geom.PointN
 
+/**
+ * TODO("doc")
+ **/
 class AffineTransform(val transform: (PointN) -> PointN, val t_size: (PointN) -> PointN) {
     fun pos(pos: PointN): PointN {
         return transform(pos)

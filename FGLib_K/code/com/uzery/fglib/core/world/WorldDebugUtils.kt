@@ -20,6 +20,9 @@ import kotlin.math.PI
 import kotlin.math.cos
 import kotlin.math.sin
 
+/**
+ * TODO("doc")
+ **/
 object WorldDebugUtils: PlatformUpdatable {
     override fun update() {
         nextDebug()

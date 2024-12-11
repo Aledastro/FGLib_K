@@ -2,6 +2,9 @@ package com.uzery.fglib.utils.graphics.data
 
 import com.uzery.fglib.utils.data.debug.DebugData
 
+/**
+ * TODO("doc")
+ **/
 data class FGColor(val red: Int, val green: Int, val blue: Int, val alpha: Int = 255) {
     val argb: Int
         get() = (alpha shl 24)+(red shl 16)+(green shl 8)+(blue shl 0)

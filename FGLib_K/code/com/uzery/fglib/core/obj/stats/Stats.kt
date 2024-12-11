@@ -2,6 +2,9 @@ package com.uzery.fglib.core.obj.stats
 
 import com.uzery.fglib.utils.math.geom.PointN
 
+/**
+ * TODO("doc")
+ **/
 class Stats {
     var fly = false
     val fly_by = HashMap<Int, Boolean>()

@@ -4,6 +4,9 @@ import com.uzery.fglib.core.obj.GameObject
 import com.uzery.fglib.core.room.Room
 import com.uzery.fglib.utils.math.geom.PointN
 
+/**
+ * TODO("doc")
+ **/
 interface WorldController {
     fun roomFor(obj: GameObject): Room
 

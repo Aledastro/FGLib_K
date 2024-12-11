@@ -1,5 +1,8 @@
 package com.uzery.fglib.utils.struct.num
 
+/**
+ * TODO("doc")
+ **/
 data class LongL(val x: Long, val y: Long) {
     constructor(): this(0L, 0L)
 

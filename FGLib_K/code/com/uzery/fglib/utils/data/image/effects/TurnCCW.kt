@@ -4,6 +4,9 @@ import com.uzery.fglib.utils.MathUtils
 import com.uzery.fglib.utils.data.debug.DebugData
 import com.uzery.fglib.utils.data.image.WritableFGImage
 
+/**
+ * TODO("doc")
+ **/
 object TurnCCW: ImageTransformEffect("turnCCW") {
     override operator fun get(origin: WritableFGImage, args: List<List<String>>): WritableFGImage {
         return when (val degree = MathUtils.mod(args[0][0].toInt(), 360)) {

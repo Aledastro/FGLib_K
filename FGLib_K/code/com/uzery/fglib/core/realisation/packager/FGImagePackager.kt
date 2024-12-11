@@ -3,6 +3,9 @@ package com.uzery.fglib.core.realisation.packager
 import com.uzery.fglib.utils.graphics.data.FGColor
 import com.uzery.fglib.utils.struct.num.IntI
 
+/**
+ * TODO("doc")
+ **/
 abstract class FGImagePackager {
     abstract fun createImage(filename: String): Any
     abstract fun size(source: Any): IntI

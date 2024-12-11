@@ -29,6 +29,9 @@ import com.uzery.fglib.utils.math.geom.PointN
 import com.uzery.fglib.utils.math.geom.Shape
 import com.uzery.fglib.utils.struct.num.IntI
 
+/**
+ * TODO("doc")
+ **/
 open class GroupComponent(vararg component: ObjectComponent): ObjectComponent, HavingComponentSyntax {
     val components = ArrayList<ObjectComponent>()
 

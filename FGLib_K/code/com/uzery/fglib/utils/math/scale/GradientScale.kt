@@ -2,6 +2,9 @@ package com.uzery.fglib.utils.math.scale
 
 import com.uzery.fglib.utils.MathUtils
 
+/**
+ * TODO("doc")
+ **/
 data class GradientScale(val f: (Double) -> Double) {
     fun linear(input: Double): Double = f(input.coerceIn(0.0, 1.0))
     fun cycled(input: Double): Double = f(MathUtils.mod(input, 1.0))

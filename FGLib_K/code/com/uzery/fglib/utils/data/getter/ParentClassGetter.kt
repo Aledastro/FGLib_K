@@ -4,8 +4,10 @@ import com.uzery.fglib.utils.data.debug.DebugData
 import com.uzery.fglib.utils.struct.num.IntI
 import com.uzery.fglib.utils.struct.num.StringN
 
+/**
+ * TODO("doc")
+ **/
 abstract class ParentClassGetter<Type>(private vararg val getters: ClassGetter<Type>): AbstractClassGetter<Type>() {
-
     private val sums = ArrayList<Int>()
 
     init {

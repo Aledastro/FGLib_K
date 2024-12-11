@@ -8,6 +8,9 @@ import com.uzery.fglib.utils.graphics.data.FGFontPosture
 import com.uzery.fglib.utils.graphics.data.FGFontWeight
 import com.uzery.fglib.utils.math.geom.PointN
 
+/**
+ * TODO("doc")
+ **/
 abstract class FillGraphics(agc: AffineGraphics): GeometryGraphics(agc) {
     protected abstract fun text0(pos: PointN, text: String, font: FGFont, color: FGColor)
 

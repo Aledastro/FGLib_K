@@ -11,6 +11,9 @@ import com.uzery.fglib.utils.math.geom.shape.RectN
 import kotlin.math.min
 import kotlin.math.sign
 
+/**
+ * TODO("doc")
+ **/
 object Platform {
     var MANUAL_CLEAR_ON = false
     var CLEAR_COLOR = FGColor.WHITE

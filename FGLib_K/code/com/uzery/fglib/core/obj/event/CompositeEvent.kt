@@ -3,6 +3,9 @@ package com.uzery.fglib.core.obj.event
 import com.uzery.fglib.utils.data.debug.DebugData
 import java.util.*
 
+/**
+ * TODO("doc")
+ **/
 open class CompositeEvent(vararg events: GameEvent): GameEvent() {
     private var current: GameEvent? = null
 

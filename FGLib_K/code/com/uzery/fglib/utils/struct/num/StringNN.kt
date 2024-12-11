@@ -1,5 +1,8 @@
 package com.uzery.fglib.utils.struct.num
 
+/**
+ * TODO("doc")
+ **/
 data class StringNN(val s: String, val n: Int, val m: Int): Comparable<StringNN> {
     constructor(s: String): this(s, 0, 0)
 

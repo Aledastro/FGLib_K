@@ -31,6 +31,9 @@ import com.uzery.fglib.utils.math.geom.PointN
 import com.uzery.fglib.utils.math.geom.Shape
 import com.uzery.fglib.utils.struct.num.IntI
 
+/**
+ * TODO("doc")
+ **/
 abstract class TempActionNode: HavingComponentSyntax {
     val action: () -> TempAction
         get() = { getAction() }

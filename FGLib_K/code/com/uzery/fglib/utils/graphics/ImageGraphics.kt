@@ -4,6 +4,9 @@ import com.uzery.fglib.utils.data.image.FGImage
 import com.uzery.fglib.utils.data.image.ImageData
 import com.uzery.fglib.utils.math.geom.PointN
 
+/**
+ * TODO("doc")
+ **/
 abstract class ImageGraphics(private val agc: AffineGraphics) {
     protected abstract fun draw0(image: FGImage, pos: PointN, size: PointN, alpha: Double)
 

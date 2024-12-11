@@ -10,6 +10,9 @@ import com.uzery.fglib.utils.math.geom.shape.OvalN
 import com.uzery.fglib.utils.math.geom.shape.RectN
 import kotlin.math.max
 
+/**
+ * TODO("doc")
+ **/
 object ShapeUtils {
     fun rect(shape: Shape) = RectN(shape.L, shape.S)
     fun oval(shape: Shape) = OvalN(shape.L, shape.S)

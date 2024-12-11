@@ -2,6 +2,9 @@ package com.uzery.fglib.utils.math.solve
 
 import kotlin.math.pow
 
+/**
+ * TODO("doc")
+ **/
 class SolveDouble(val value: Double): SolveNumber(value.toString()) {
     override fun plus(other: SolveNumber): SolveNumber {
         return SolveDouble(this.value+(other as SolveDouble).value)

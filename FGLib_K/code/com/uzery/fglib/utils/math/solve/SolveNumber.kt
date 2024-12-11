@@ -1,5 +1,8 @@
 package com.uzery.fglib.utils.math.solve
 
+/**
+ * TODO("doc")
+ **/
 abstract class SolveNumber(val expression: String) {
     abstract operator fun plus(other: SolveNumber): SolveNumber
     abstract operator fun minus(other: SolveNumber): SolveNumber

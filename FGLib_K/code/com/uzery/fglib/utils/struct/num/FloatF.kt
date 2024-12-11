@@ -1,5 +1,8 @@
 package com.uzery.fglib.utils.struct.num
 
+/**
+ * TODO("doc")
+ **/
 data class FloatF(val x: Float, val y: Float) {
     constructor(): this(0.0F, 0.0F)
 

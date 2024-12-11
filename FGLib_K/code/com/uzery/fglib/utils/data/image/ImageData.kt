@@ -5,6 +5,9 @@ import com.uzery.fglib.utils.data.CollectDataClass
 import com.uzery.fglib.utils.data.debug.DebugData
 import com.uzery.fglib.utils.struct.num.IntI
 
+/**
+ * TODO("doc")
+ **/
 object ImageData: CollectDataClass() {
     private val origins = HashMap<String, FGImage>()
     private val sprites = HashMap<String, SpriteImage>()

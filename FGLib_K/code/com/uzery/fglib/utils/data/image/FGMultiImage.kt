@@ -3,6 +3,9 @@ package com.uzery.fglib.utils.data.image
 import com.uzery.fglib.utils.data.debug.DebugData
 import com.uzery.fglib.utils.struct.num.IntI
 
+/**
+ * TODO("doc")
+ **/
 abstract class FGMultiImage(val origin: FGImage): FGImage(origin.source) {
     val data = HashMap<IntI, FGImage>()
     protected var info = ""

@@ -7,6 +7,9 @@ import com.uzery.fglib.utils.graphics.AffineGraphics
 import com.uzery.fglib.utils.math.geom.PointN
 import com.uzery.fglib.utils.math.geom.shape.RectN
 
+/**
+ * TODO("doc")
+ **/
 abstract class Visualiser: ObjectComponent {
     abstract fun draw(draw_pos: PointN)
     abstract fun drawLayer(): DrawLayer

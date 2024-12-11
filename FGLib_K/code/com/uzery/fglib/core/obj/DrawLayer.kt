@@ -1,5 +1,8 @@
 package com.uzery.fglib.core.obj
 
+/**
+ * TODO("doc")
+ **/
 data class DrawLayer(val z: Double, val sort: Double = z, val name: String = "unnamed") {
     constructor(z: Double, sort: Int, name: String): this(z, sort.toDouble(), name)
 

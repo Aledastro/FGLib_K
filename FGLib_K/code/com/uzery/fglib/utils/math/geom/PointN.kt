@@ -6,6 +6,9 @@ import com.uzery.fglib.utils.data.debug.DebugData
 import com.uzery.fglib.utils.struct.num.IntI
 import kotlin.math.*
 
+/**
+ * TODO("doc")
+ **/
 data class PointN(private val xs: Array<Double>) {
     val dim
         get() = xs.size

@@ -2,6 +2,9 @@ package com.uzery.fglib.utils.data.getter.value
 
 import com.uzery.fglib.utils.math.geom.PointN
 
+/**
+ * TODO("doc")
+ **/
 data class SizeValue(val input: PointN): ObjectValue {
     override fun toString(): String {
         if (input == PointN.ZERO) return "pos[ZERO]"

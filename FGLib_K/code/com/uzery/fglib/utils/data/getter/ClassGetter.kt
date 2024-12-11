@@ -8,6 +8,9 @@ import com.uzery.fglib.utils.math.solve.MathSolveUtils
 import com.uzery.fglib.utils.struct.num.IntI
 import com.uzery.fglib.utils.struct.num.StringN
 
+/**
+ * TODO("doc")
+ **/
 abstract class ClassGetter<Type>: AbstractClassGetter<Type>() {
     protected var no_info = false
         private set

@@ -5,6 +5,9 @@ import com.uzery.fglib.utils.math.geom.PointN
 import java.time.LocalDate
 import java.time.LocalTime
 
+/**
+ * TODO("doc")
+ **/
 object FGUtils {
     val project_dir: String = System.getProperty("user.dir")
 

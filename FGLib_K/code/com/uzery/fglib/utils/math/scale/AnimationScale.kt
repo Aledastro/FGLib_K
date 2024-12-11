@@ -1,5 +1,8 @@
 package com.uzery.fglib.utils.math.scale
 
+/**
+ * TODO("doc")
+ **/
 data class AnimationScale(val startTime: Long, val frames: Double, val scale: GradientScale) {
     constructor(startTime: Long, frames: Double, f: (Double) -> Double): this(startTime, frames, GradientScale(f))
 

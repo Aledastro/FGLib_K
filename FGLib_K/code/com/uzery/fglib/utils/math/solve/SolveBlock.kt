@@ -2,6 +2,9 @@ package com.uzery.fglib.utils.math.solve
 
 import com.uzery.fglib.utils.data.debug.DebugData
 
+/**
+ * TODO("doc")
+ **/
 class SolveBlock(
     private val defaultValue: SolveNumber,
     private val expression: String,

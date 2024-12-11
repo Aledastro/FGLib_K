@@ -1,5 +1,8 @@
 package com.uzery.fglib.utils.input.data
 
+/**
+ * TODO("doc")
+ **/
 enum class FGKey {
     ENTER,
     BACK_SPACE,

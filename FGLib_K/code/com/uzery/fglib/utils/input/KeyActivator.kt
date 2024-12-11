@@ -2,6 +2,9 @@ package com.uzery.fglib.utils.input
 
 import com.uzery.fglib.core.program.PlatformUpdatable
 
+/**
+ * TODO("doc")
+ **/
 abstract class KeyActivator<Key>(private val values: Array<Key>): PlatformUpdatable {
     private val size = values.size
 

@@ -2,6 +2,9 @@ package com.uzery.fglib.utils
 
 import com.uzery.fglib.utils.SplitUtils.unite
 
+/**
+ * TODO("doc")
+ **/
 object StringUtils {
     fun applyToEach(input: String, del: String, action: (String) -> String): String {
         val keep_first = input.startsWith(del)

@@ -2,6 +2,9 @@ package com.uzery.fglib.core.component.controller.node
 
 import com.uzery.fglib.core.component.controller.GroupController
 
+/**
+ * TODO("doc")
+ **/
 class StateController(
     default: TempActionNode,
     private val all_nodes: Array<TempActionNode>,

@@ -1,5 +1,8 @@
 package com.uzery.fglib.core.component.controller
 
+/**
+ * TODO("doc")
+ **/
 abstract class TimeTempAction: TempAction {
     protected var temp_time = 0
         private set

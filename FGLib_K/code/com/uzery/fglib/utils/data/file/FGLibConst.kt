@@ -2,6 +2,9 @@ package com.uzery.fglib.utils.data.file
 
 import com.uzery.fglib.utils.FGUtils
 
+/**
+ * TODO("doc")
+ **/
 object FGLibConst {
     const val LITTLE = 0.00_001
 

@@ -3,6 +3,9 @@ package com.uzery.fglib.utils.data.image.effects
 import com.uzery.fglib.utils.data.image.WritableFGImage
 import com.uzery.fglib.utils.struct.num.IntI
 
+/**
+ * TODO("doc")
+ **/
 object ReverseXY: ImageTransformEffect("reverseXY") {
     override operator fun get(origin: WritableFGImage, args: List<List<String>>): WritableFGImage {
         val res = WritableFGImage(origin.size)

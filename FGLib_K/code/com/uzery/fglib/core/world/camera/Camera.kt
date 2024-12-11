@@ -4,6 +4,9 @@ import com.uzery.fglib.core.obj.GameObject
 import com.uzery.fglib.core.program.Platform.CANVAS
 import com.uzery.fglib.utils.math.geom.PointN
 
+/**
+ * TODO("doc")
+ **/
 abstract class Camera: GameObject() {
     init {
         tag("migrator")

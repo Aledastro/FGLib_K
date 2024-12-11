@@ -5,6 +5,9 @@ import com.uzery.fglib.core.program.Platform.mouse
 import com.uzery.fglib.utils.math.geom.PointN
 import com.uzery.fglib.utils.math.geom.shape.RectN
 
+/**
+ * TODO("doc")
+ **/
 abstract class Extension(vararg children: Extension) {
     val children = ArrayList<Extension>()
 

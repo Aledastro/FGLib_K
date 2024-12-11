@@ -12,6 +12,9 @@ import com.uzery.fglib.utils.data.getter.value.SizeValue
 import com.uzery.fglib.utils.math.geom.PointN
 import com.uzery.fglib.utils.math.geom.shape.RectN
 
+/**
+ * TODO("doc")
+ **/
 class Room(var pos: PointN, var size: PointN) {
     //todo private
     val objects = ArrayList<GameObject>()

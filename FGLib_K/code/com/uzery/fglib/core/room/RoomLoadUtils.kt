@@ -8,6 +8,9 @@ import com.uzery.fglib.utils.data.getter.ClassGetter
 import com.uzery.fglib.utils.math.geom.PointN
 import java.util.*
 
+/**
+ * TODO("doc")
+ **/
 object RoomLoadUtils {
     val room_info_cg = object: ClassGetter<Pair<PointN, PointN>>() {
         override fun addAll() {

@@ -5,6 +5,9 @@ import com.uzery.fglib.utils.math.geom.PointN
 import com.uzery.fglib.utils.math.geom.Shape
 import com.uzery.fglib.utils.math.geom.shape.FigureN
 
+/**
+ * TODO("doc")
+ **/
 abstract class GeometryGraphics(protected val agc: AffineGraphics) {
     protected val transform
         get() = agc.transform

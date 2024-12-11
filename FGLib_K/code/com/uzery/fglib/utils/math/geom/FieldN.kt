@@ -2,6 +2,9 @@ package com.uzery.fglib.utils.math.geom
 
 import com.uzery.fglib.utils.math.matrix.UltraMatrix
 
+/**
+ * TODO("doc")
+ **/
 data class FieldN(private val pos: PointN, val normal: UltraMatrix) {
     constructor(normal: UltraMatrix): this(PointN.ZERO, normal)
     constructor(pos: PointN, vararg normal: PointN): this(pos, UltraMatrix(*normal))

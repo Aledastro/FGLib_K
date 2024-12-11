@@ -3,6 +3,9 @@ package com.uzery.fglib.utils.input.combination
 import com.uzery.fglib.utils.input.data.FGKey
 import com.uzery.fglib.utils.input.data.FGMouseKey
 
+/**
+ * TODO("doc")
+ **/
 class FGKeyCombination(construct: FGKeyCombination.() -> Unit) {
     val main = FGKeyCombinationPart {}
     val parts = ArrayList<FGKeyCombinationPart>()

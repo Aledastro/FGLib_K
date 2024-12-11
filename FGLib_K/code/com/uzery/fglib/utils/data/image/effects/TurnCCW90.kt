@@ -3,6 +3,9 @@ package com.uzery.fglib.utils.data.image.effects
 import com.uzery.fglib.utils.data.image.WritableFGImage
 import com.uzery.fglib.utils.struct.num.IntI
 
+/**
+ * TODO("doc")
+ **/
 object TurnCCW90: ImageTransformEffect("turnCCW90") {
     override operator fun get(origin: WritableFGImage, args: List<List<String>>): WritableFGImage {
         val res = WritableFGImage(IntI(origin.size.width, origin.size.height))

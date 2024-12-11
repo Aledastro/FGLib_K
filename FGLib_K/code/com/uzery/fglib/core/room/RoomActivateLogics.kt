@@ -7,6 +7,9 @@ import com.uzery.fglib.core.program.FGLibSettings.ROOM_ACTIVATE_GRID
 import com.uzery.fglib.utils.ShapeUtils
 import com.uzery.fglib.utils.struct.num.IntI
 
+/**
+ * TODO("doc")
+ **/
 internal object RoomActivateLogics {
     fun nextActivate(objs: ArrayList<GameObject>) {
         val cell_map = HashMap<IntI, ArrayList<GameObject>>()

@@ -4,6 +4,9 @@ import com.uzery.fglib.utils.data.debug.DebugData
 import com.uzery.fglib.utils.data.file.FGLibConst.BUFFER_FORMAT
 import java.io.*
 
+/**
+ * TODO("doc")
+ **/
 object BufferedIOUtils {
     fun getWriter(filename: String): BufferedWriter {
         return getWriter(outFileStream(filename))

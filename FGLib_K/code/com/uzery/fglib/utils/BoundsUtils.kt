@@ -4,6 +4,9 @@ import com.uzery.fglib.core.component.bounds.Bounds
 import com.uzery.fglib.utils.CollisionUtils.MAX_MOVE_K
 import com.uzery.fglib.utils.math.geom.PointN
 
+/**
+ * TODO("doc")
+ **/
 object BoundsUtils {
     fun maxMoveOld(stay: Bounds, move: Bounds, stay_pos: PointN, start_pos: PointN, move_pos: PointN): Double {
         if (stay.elements.isEmpty() || move.elements.isEmpty()) return MAX_MOVE_K

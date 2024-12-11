@@ -8,6 +8,9 @@ import com.uzery.fglib.utils.graphics.data.FGColor
 import com.uzery.fglib.utils.graphics.data.FGFont
 import com.uzery.fglib.utils.math.geom.PointN
 
+/**
+ * TODO("doc")
+ **/
 abstract class AffineGraphics {
     private val DEFAULT_ROTATE = 0.0
     private val DEFAULT_VIEW_SCALE = 1.0

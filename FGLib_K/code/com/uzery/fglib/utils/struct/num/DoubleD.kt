@@ -1,5 +1,8 @@
 package com.uzery.fglib.utils.struct.num
 
+/**
+ * TODO("doc")
+ **/
 data class DoubleD(val x: Double, val y: Double) {
     constructor(): this(0.0, 0.0)
 

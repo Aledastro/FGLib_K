@@ -2,6 +2,9 @@ package com.uzery.fglib.utils.math.geom
 
 import kotlin.math.max
 
+/**
+ * TODO("doc")
+ **/
 abstract class Shape {
     abstract fun copy(move: PointN): Shape
     abstract fun into(pos: PointN): Boolean

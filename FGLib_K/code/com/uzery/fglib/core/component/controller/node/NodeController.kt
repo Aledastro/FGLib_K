@@ -2,6 +2,9 @@ package com.uzery.fglib.core.component.controller.node
 
 import com.uzery.fglib.core.component.controller.GroupController
 
+/**
+ * TODO("doc")
+ **/
 class NodeController(
     default: TempActionNode,
     private vararg val nodes: TempActionNode

@@ -5,6 +5,9 @@ import com.uzery.fglib.core.program.launch.LaunchOptions
 import com.uzery.fglib.core.realisation.packager.FGPackager
 import com.uzery.fglib.utils.graphics.AffineGraphics
 
+/**
+ * TODO("doc")
+ **/
 abstract class FGRealisation {
     fun update() {
         listener.update()

@@ -1,5 +1,8 @@
 package com.uzery.fglib.utils.data.getter
 
+/**
+ * TODO("doc")
+ **/
 data class FGEntry(val name: String, val args: ArrayList<ArrayList<String>>) {
     override fun toString(): String {
         return buildString {

@@ -2,6 +2,9 @@ package com.uzery.fglib.core.room.mask
 
 import com.uzery.fglib.utils.data.debug.DebugData
 
+/**
+ * TODO("doc")
+ **/
 class RoomChangeAction(val sign: String, val obj: String) {
     constructor(action: String): this(
         action.substringBefore(' '),

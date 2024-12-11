@@ -1,5 +1,8 @@
 package com.uzery.fglib.core.obj.event
 
+/**
+ * TODO("doc")
+ **/
 open class ParallelEvent(vararg events: GameEvent): GameEvent() {
 
     private val events_list = ArrayList(events.toList())

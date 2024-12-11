@@ -7,6 +7,9 @@ import com.uzery.fglib.core.room.RoomUtils
 import com.uzery.fglib.core.world.controller.WorldController
 import com.uzery.fglib.utils.math.geom.PointN
 
+/**
+ * TODO("doc")
+ **/
 class World {
     val rooms = ArrayList<Room>()
     val active_rooms = ArrayList<Room>()

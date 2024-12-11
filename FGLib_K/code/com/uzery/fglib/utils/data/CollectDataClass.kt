@@ -1,5 +1,8 @@
 package com.uzery.fglib.utils.data
 
+/**
+ * TODO("doc")
+ **/
 abstract class CollectDataClass {
     var paths = MediaPaths()
 

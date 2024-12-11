@@ -8,6 +8,9 @@ import java.io.File
 import java.io.IOException
 import java.util.stream.Collectors
 
+/**
+ * TODO("doc")
+ **/
 object TextData: CollectDataClass() {
     val separator: String = File.separator
 

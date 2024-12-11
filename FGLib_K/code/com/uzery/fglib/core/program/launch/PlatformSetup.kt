@@ -7,6 +7,9 @@ import com.uzery.fglib.core.program.Platform.mouse
 import com.uzery.fglib.core.program.extension.Extension
 import com.uzery.fglib.core.realisation.FGRealisation
 
+/**
+ * TODO("doc")
+ **/
 object PlatformSetup {
     internal lateinit var realisation: FGRealisation
 

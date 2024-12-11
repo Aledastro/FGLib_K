@@ -2,6 +2,9 @@ package com.uzery.fglib.utils.struct
 
 import com.uzery.fglib.utils.data.debug.DebugData
 
+/**
+ * TODO("doc")
+ **/
 class RandomDrop<T>() {
     constructor(f: () -> T): this() {
         add(f)

@@ -1,5 +1,8 @@
 package com.uzery.fglib.utils.struct.num
 
+/**
+ * TODO("doc")
+ **/
 data class IntI(val x: Int, val y: Int) {
     constructor(): this(0, 0)
 

@@ -1,5 +1,8 @@
 package com.uzery.fglib.utils.struct
 
+/**
+ * TODO("doc")
+ **/
 class EnumVar<Type>(private vararg val var_sizes: Type) {
     fun fromValue(type: Type): Int {
         return var_sizes.indexOf(type)

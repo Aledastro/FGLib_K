@@ -36,6 +36,9 @@ import com.uzery.fglib.utils.math.geom.Shape
 import com.uzery.fglib.utils.math.geom.shape.RectN
 import com.uzery.fglib.utils.struct.num.IntI
 
+/**
+ * TODO("doc")
+ **/
 abstract class GameObject: HavingComponentSyntax {
     val stats = Stats()
 

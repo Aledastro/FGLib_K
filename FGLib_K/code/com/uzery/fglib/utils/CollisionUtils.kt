@@ -8,6 +8,9 @@ import com.uzery.fglib.utils.math.geom.shape.RectN
 import kotlin.math.abs
 import kotlin.math.min
 
+/**
+ * TODO("doc")
+ **/
 object CollisionUtils {
     const val MIN_MOVE_K = 0.0
     const val MAX_MOVE_K = 1.0

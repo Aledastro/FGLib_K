@@ -3,6 +3,9 @@ package com.uzery.fglib.utils.data.getter
 import com.uzery.fglib.utils.FGUtils
 import com.uzery.fglib.utils.data.debug.DebugData
 
+/**
+ * TODO("doc")
+ **/
 object FGFormat {
     operator fun get(input: String): FGEntry {
         val args = ArrayList<ArrayList<String>>()

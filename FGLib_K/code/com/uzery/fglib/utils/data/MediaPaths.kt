@@ -3,6 +3,9 @@ package com.uzery.fglib.utils.data
 import com.uzery.fglib.utils.FGUtils
 import com.uzery.fglib.utils.data.file.TextData
 
+/**
+ * TODO("doc")
+ **/
 class MediaPaths {
     var dir = ""
 
