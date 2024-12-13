@@ -1,8 +1,8 @@
 package com.uzery.fglib.core.component.ability
 
 import com.uzery.fglib.core.component.GroupComponent
-import com.uzery.fglib.core.component.ObjectComponent
 import com.uzery.fglib.core.component.HavingComponentSyntax
+import com.uzery.fglib.core.component.ObjectComponent
 
 /**
  * [GroupAbility] is just [GroupComponent] under the hood

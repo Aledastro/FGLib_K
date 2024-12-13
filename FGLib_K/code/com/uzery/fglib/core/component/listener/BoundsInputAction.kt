@@ -6,7 +6,12 @@ import com.uzery.fglib.core.obj.GameObject
  * TODO("doc")
  **/
 class BoundsInputAction(val code: String, val prime: GameObject, val our: String, val their: String) {
-    constructor(action: InputAction): this(action.code, action.prime, action.args[0] as String, action.args[1] as String)
+    constructor(action: InputAction): this(
+        action.code,
+        action.prime,
+        action.args[0] as String,
+        action.args[1] as String
+    )
 
     val stats = prime.stats
 

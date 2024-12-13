@@ -374,7 +374,13 @@ abstract class GameObject: HavingComponentSyntax {
             if (action.code == code) f(action)
         }
     }
-    fun addBoundsListener(code: String, our: String? = null, their: String? = null, f: (action: BoundsInputAction) -> Unit) {
+
+    fun addBoundsListener(
+        code: String,
+        our: String? = null,
+        their: String? = null,
+        f: (action: BoundsInputAction) -> Unit
+    ) {
         addListener { action ->
             if (action.code != code) return@addListener
             if (action.args.size != 2) throw DebugData.error("Can't cast to BoundsInputAction: $action")

@@ -4,7 +4,9 @@ import com.uzery.fglib.core.component.ObjectComponent
 import com.uzery.fglib.core.component.listener.InputAction
 
 /**
- * TODO("doc")
+ * [Controller] is one of basic [ObjectComponent]
+ *
+ * Updates active [TempAction] and if it ended, replaces with new [TempAction]
  **/
 class Controller(private val f: () -> (() -> TempAction)?): ObjectComponent {
     fun get(): (() -> TempAction)? {

@@ -1,7 +1,7 @@
 package com.uzery.fglib.core.component.controller
 
 /**
- * TODO("doc")
+ * [TempAction] with time handling
  **/
 abstract class TimeTempAction: TempAction {
     protected var temp_time = 0
