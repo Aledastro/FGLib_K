@@ -7,7 +7,6 @@ module FGLib_K {
     exports com.uzery.fglib.core.component.ability;
     exports com.uzery.fglib.core.component.bounds;
     exports com.uzery.fglib.core.component.controller;
-    exports com.uzery.fglib.core.component.controller.node;
     exports com.uzery.fglib.core.component.listener;
     exports com.uzery.fglib.core.component.load;
     exports com.uzery.fglib.core.component.property;
