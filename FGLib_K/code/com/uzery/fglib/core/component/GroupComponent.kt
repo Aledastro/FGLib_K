@@ -16,8 +16,6 @@ import com.uzery.fglib.core.component.listener.InputAction
 import com.uzery.fglib.core.component.resource.AudioResource
 import com.uzery.fglib.core.component.resource.ImageResource
 import com.uzery.fglib.core.component.resource.SpriteResource
-import com.uzery.fglib.core.component.property.GameProperty
-import com.uzery.fglib.core.component.property.GroupProperty
 import com.uzery.fglib.core.component.reaction.*
 import com.uzery.fglib.core.component.visual.GroupVisualiser
 import com.uzery.fglib.core.component.visual.LayerVisualiser
@@ -54,7 +52,6 @@ open class GroupComponent(vararg component: ObjectComponent): ObjectComponent, H
     fun addAbility(ability: GroupAbility) = addComponent(ability)
     fun addController(controller: GroupController) = addComponent(controller)
     fun addListener(listener: GroupListener) = addComponent(listener)
-    fun addProperty(property: GroupProperty) = addComponent(property)
     fun addVisual(vis: GroupVisualiser) = addComponent(vis)
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -126,8 +123,6 @@ open class GroupComponent(vararg component: ObjectComponent): ObjectComponent, H
 
     fun addAbility(ability: () -> Unit) = addComponent(AbilityBox(ability))
     fun addAbility(vararg ability: AbilityBox) = addComponent(*ability)
-
-    fun addProperty(vararg property: GameProperty) = addComponent(*property)
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 

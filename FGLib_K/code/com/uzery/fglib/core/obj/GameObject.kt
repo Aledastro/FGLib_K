@@ -21,8 +21,6 @@ import com.uzery.fglib.core.component.listener.InputAction
 import com.uzery.fglib.core.component.resource.AudioResource
 import com.uzery.fglib.core.component.resource.ImageResource
 import com.uzery.fglib.core.component.resource.SpriteResource
-import com.uzery.fglib.core.component.property.GameProperty
-import com.uzery.fglib.core.component.property.GroupProperty
 import com.uzery.fglib.core.component.reaction.*
 import com.uzery.fglib.core.component.visual.GroupVisualiser
 import com.uzery.fglib.core.component.visual.LayerVisualiser
@@ -49,7 +47,6 @@ abstract class GameObject: HavingComponentSyntax {
     private val abilities = ArrayList<AbilityBox>()
     private val controllers = ArrayList<Controller>()
     private val listeners = ArrayList<ActionListener>()
-    private val properties = ArrayList<GameProperty>()
     val visuals = ArrayList<Visualiser>()
 
     private val onInit = ArrayList<OnInitComponent>()
@@ -68,7 +65,6 @@ abstract class GameObject: HavingComponentSyntax {
                 is AbilityBox -> abilities.add(c)
                 is Controller -> controllers.add(c)
                 is ActionListener -> listeners.add(c)
-                is GameProperty -> properties.add(c)
                 is Visualiser -> visuals.add(c)
 
                 is OnInitComponent -> onInit.add(c)
@@ -151,8 +147,6 @@ abstract class GameObject: HavingComponentSyntax {
         controllers.forEach { it.update() }
 
         abilities.forEach { it.run() }
-
-        properties.forEach { it.update() }
 
         effects.forEach { it.update() }
         effects.removeIf { it.dead }
@@ -325,7 +319,6 @@ abstract class GameObject: HavingComponentSyntax {
     fun addAbility(ability: GroupAbility) = addComponent(ability)
     fun addController(controller: GroupController) = addComponent(controller)
     fun addListener(listener: GroupListener) = addComponent(listener)
-    fun addProperty(property: GroupProperty) = addComponent(property)
     fun addVisual(vis: GroupVisualiser) = addComponent(vis)
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -397,8 +390,6 @@ abstract class GameObject: HavingComponentSyntax {
 
     fun addAbility(ability: () -> Unit) = addComponent(AbilityBox(ability))
     fun addAbility(vararg ability: AbilityBox) = addComponent(*ability)
-
-    fun addProperty(vararg property: GameProperty) = addComponent(*property)
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
