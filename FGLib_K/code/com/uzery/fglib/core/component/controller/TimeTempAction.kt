@@ -2,6 +2,9 @@ package com.uzery.fglib.core.component.controller
 
 /**
  * [TempAction] with time handling
+ *
+ * @property temp_time
+ * @see [Controller]
  **/
 abstract class TimeTempAction: TempAction {
     protected var temp_time = 0

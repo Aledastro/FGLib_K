@@ -3,7 +3,10 @@ package com.uzery.fglib.core.component.listener
 import com.uzery.fglib.core.obj.GameObject
 
 /**
- * TODO("doc")
+ * Special [InputAction] wrapper for bounds input actions
+ *
+ * @property our receiver(`this`) bounds name
+ * @property their activator(`prime`) bounds name
  **/
 class BoundsInputAction(val code: String, val prime: GameObject, val our: String, val their: String) {
     constructor(action: InputAction): this(

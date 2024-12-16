@@ -18,9 +18,9 @@ import com.uzery.fglib.core.component.listener.ActionListener
 import com.uzery.fglib.core.component.listener.BoundsInputAction
 import com.uzery.fglib.core.component.listener.GroupListener
 import com.uzery.fglib.core.component.listener.InputAction
-import com.uzery.fglib.core.component.load.AudioResource
-import com.uzery.fglib.core.component.load.ImageResource
-import com.uzery.fglib.core.component.load.SpriteResource
+import com.uzery.fglib.core.component.resource.AudioResource
+import com.uzery.fglib.core.component.resource.ImageResource
+import com.uzery.fglib.core.component.resource.SpriteResource
 import com.uzery.fglib.core.component.property.GameProperty
 import com.uzery.fglib.core.component.property.GroupProperty
 import com.uzery.fglib.core.component.reaction.*

@@ -7,6 +7,8 @@ import com.uzery.fglib.core.component.listener.InputAction
  * [Controller] is one of basic [ObjectComponent]
  *
  * Updates active [TempAction] and if it ended, replaces with new [TempAction]
+ *
+ * Useful to create a complex behaviour, such as state machines
  **/
 class Controller(private val f: () -> (() -> TempAction)?): ObjectComponent {
     fun get(): (() -> TempAction)? {

@@ -7,7 +7,7 @@ import com.uzery.fglib.core.component.ObjectComponent
 /**
  * [GroupController] is just [GroupComponent] under the hood
  *
- * Only difference is that it can use addController() function using [HavingComponentSyntax]
+ * Can use `addController()` via [HavingComponentSyntax]
  *
  * @see ObjectComponent
  **/

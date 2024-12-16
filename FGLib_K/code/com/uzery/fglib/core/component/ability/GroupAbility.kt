@@ -7,7 +7,7 @@ import com.uzery.fglib.core.component.ObjectComponent
 /**
  * [GroupAbility] is just [GroupComponent] under the hood
  *
- * Only difference is that it can use addAbility() function using [HavingComponentSyntax]
+ * Can use `addAbility()` via [HavingComponentSyntax]
  *
  * @see ObjectComponent
  **/

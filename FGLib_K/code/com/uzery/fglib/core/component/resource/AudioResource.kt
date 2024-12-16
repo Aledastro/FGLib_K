@@ -1,4 +1,4 @@
-package com.uzery.fglib.core.component.load
+package com.uzery.fglib.core.component.resource
 
 import com.uzery.fglib.core.component.reaction.OnLoadComponent
 import com.uzery.fglib.utils.audio.AudioData
