@@ -9,6 +9,6 @@ import com.uzery.fglib.core.component.ObjectComponent
  *
  * Can use `addListener()` via [HavingComponentSyntax]
  *
- * @see ObjectComponent
+ * @see [ObjectComponent]
  **/
 abstract class GroupListener(vararg component: ObjectComponent): GroupComponent(*component)

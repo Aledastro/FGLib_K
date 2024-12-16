@@ -9,6 +9,6 @@ import com.uzery.fglib.core.component.ObjectComponent
  *
  * Can use `addAbility()` via [HavingComponentSyntax]
  *
- * @see ObjectComponent
+ * @see [ObjectComponent]
  **/
 abstract class GroupAbility(vararg component: ObjectComponent): GroupComponent(*component)

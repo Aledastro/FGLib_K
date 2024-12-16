@@ -9,6 +9,6 @@ import com.uzery.fglib.core.component.ObjectComponent
  *
  * Can use `addController()` via [HavingComponentSyntax]
  *
- * @see ObjectComponent
+ * @see [ObjectComponent]
  **/
 abstract class GroupController(vararg component: ObjectComponent): GroupComponent(*component)
