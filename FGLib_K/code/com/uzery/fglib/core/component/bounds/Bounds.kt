@@ -6,7 +6,7 @@ import com.uzery.fglib.utils.math.geom.Shape
 import com.uzery.fglib.utils.math.geom.shape.RectN
 
 /**
- * TODO("doc")
+ * Geometric union of [BoundsElement]
  **/
 class Bounds(vararg els: BoundsElement) {
     init {

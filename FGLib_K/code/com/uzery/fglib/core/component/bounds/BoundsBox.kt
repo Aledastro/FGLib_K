@@ -1,7 +1,11 @@
 package com.uzery.fglib.core.component.bounds
 
+import com.uzery.fglib.core.obj.GameObject
+
 /**
- * TODO("doc")
+ * RED, ORANGE, BLUE and GREEN [Bounds] for [GameObject]
+ *
+ * `main` is `red` if it's not empty, `orange` otherwise
  **/
 class BoundsBox {
     private val bounds = Array(SIZE) { Bounds() }
