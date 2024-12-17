@@ -18,6 +18,7 @@ import com.uzery.fglib.core.component.reaction.*
 import com.uzery.fglib.core.component.visual.LayerVisualiser
 import com.uzery.fglib.core.component.visual.Visualiser
 import com.uzery.fglib.core.obj.DrawLayer
+import com.uzery.fglib.core.obj.GameObject
 import com.uzery.fglib.utils.data.debug.DebugData
 import com.uzery.fglib.utils.graphics.AffineGraphics
 import com.uzery.fglib.utils.math.geom.PointN
@@ -25,7 +26,11 @@ import com.uzery.fglib.utils.math.geom.Shape
 import com.uzery.fglib.utils.struct.num.IntI
 
 /**
- * TODO("doc")
+ * One of basic [ObjectComponent]
+ *
+ * Adding this to [GameObject] is equivalent of adding all it's children
+ *
+ * Can add elements via [HavingComponentSyntax]
  **/
 open class GroupComponent(vararg component: ObjectComponent): ObjectComponent, HavingComponentSyntax {
     val components = ArrayList<ObjectComponent>()

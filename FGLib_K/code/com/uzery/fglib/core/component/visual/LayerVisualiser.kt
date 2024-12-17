@@ -5,7 +5,7 @@ import com.uzery.fglib.utils.math.geom.PointN
 import com.uzery.fglib.utils.math.geom.shape.RectN
 
 /**
- * TODO("doc")
+ * [Visualiser] with fixed [DrawLayer]
  **/
 abstract class LayerVisualiser(private val layer: DrawLayer): Visualiser() {
     constructor(pos: PointN, size: PointN, layer: DrawLayer): this(layer) {

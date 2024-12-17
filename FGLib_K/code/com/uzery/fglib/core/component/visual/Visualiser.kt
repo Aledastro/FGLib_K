@@ -8,7 +8,7 @@ import com.uzery.fglib.utils.math.geom.PointN
 import com.uzery.fglib.utils.math.geom.shape.RectN
 
 /**
- * [Visualiser] is one of basic [ObjectComponent]
+ * One of basic [ObjectComponent]
  *
  * Draws on screen
  *

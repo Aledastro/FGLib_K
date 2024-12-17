@@ -4,7 +4,7 @@ import com.uzery.fglib.core.component.ObjectComponent
 import com.uzery.fglib.core.obj.GameObject
 
 /**
- * [OnGrabComponent] is one of basic [ObjectComponent]
+ * One of basic [ObjectComponent]
  *
  * Triggered once when [GameObject] is grabbed
  **/

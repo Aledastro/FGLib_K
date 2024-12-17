@@ -1,7 +1,14 @@
 package com.uzery.fglib.core.component
 
 /**
- * TODO("doc")
+ * Special component syntax for creating generic [ObjectComponent]
+ *
+ * for example:
+ * ```
+ * addAbility {
+ *     time++
+ * }
+ * ```
  **/
 interface HavingComponentSyntax {
     fun addComponent(vararg component: ObjectComponent)
