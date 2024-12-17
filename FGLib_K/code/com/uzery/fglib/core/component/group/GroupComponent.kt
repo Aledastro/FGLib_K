@@ -1,23 +1,20 @@
-package com.uzery.fglib.core.component
+package com.uzery.fglib.core.component.group
 
+import com.uzery.fglib.core.component.HavingComponentSyntax
+import com.uzery.fglib.core.component.ObjectComponent
 import com.uzery.fglib.core.component.ability.AbilityBox
-import com.uzery.fglib.core.component.ability.GroupAbility
 import com.uzery.fglib.core.component.bounds.BoundsBox.Companion.CODE
 import com.uzery.fglib.core.component.bounds.BoundsComponent
 import com.uzery.fglib.core.component.bounds.BoundsElement
-import com.uzery.fglib.core.component.bounds.GroupBounds
 import com.uzery.fglib.core.component.controller.Controller
-import com.uzery.fglib.core.component.controller.GroupController
 import com.uzery.fglib.core.component.controller.TempAction
 import com.uzery.fglib.core.component.listener.ActionListener
 import com.uzery.fglib.core.component.listener.BoundsInputAction
-import com.uzery.fglib.core.component.listener.GroupListener
 import com.uzery.fglib.core.component.listener.InputAction
 import com.uzery.fglib.core.component.resource.AudioResource
 import com.uzery.fglib.core.component.resource.ImageResource
 import com.uzery.fglib.core.component.resource.SpriteResource
 import com.uzery.fglib.core.component.reaction.*
-import com.uzery.fglib.core.component.visual.GroupVisualiser
 import com.uzery.fglib.core.component.visual.LayerVisualiser
 import com.uzery.fglib.core.component.visual.Visualiser
 import com.uzery.fglib.core.obj.DrawLayer

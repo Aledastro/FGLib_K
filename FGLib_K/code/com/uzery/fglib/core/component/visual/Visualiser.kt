@@ -8,7 +8,11 @@ import com.uzery.fglib.utils.math.geom.PointN
 import com.uzery.fglib.utils.math.geom.shape.RectN
 
 /**
- * TODO("doc")
+ * [Visualiser] is one of basic [ObjectComponent]
+ *
+ * Draws on screen
+ *
+ * @property agc [AffineGraphics]
  **/
 abstract class Visualiser: ObjectComponent {
     abstract fun draw(draw_pos: PointN)

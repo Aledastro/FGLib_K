@@ -1,6 +1,5 @@
-package com.uzery.fglib.core.component.bounds
+package com.uzery.fglib.core.component.group
 
-import com.uzery.fglib.core.component.GroupComponent
 import com.uzery.fglib.core.component.ObjectComponent
 
 /**
