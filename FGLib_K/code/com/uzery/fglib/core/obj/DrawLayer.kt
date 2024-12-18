@@ -1,7 +1,12 @@
 package com.uzery.fglib.core.obj
 
+import com.uzery.fglib.utils.data.getter.value.DrawLayerValue
+import com.uzery.fglib.utils.graphics.AffineGraphics
+
 /**
- * TODO("doc")
+ * @property z [AffineGraphics] drawPOS change value
+ * @property sort to compare draw order with another [DrawLayer]
+ * @property name for export in [DrawLayerValue]
  **/
 data class DrawLayer(val z: Double, val sort: Double = z, val name: String = "unnamed") {
     constructor(z: Double, sort: Int, name: String): this(z, sort.toDouble(), name)

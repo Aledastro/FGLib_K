@@ -4,7 +4,11 @@ import com.uzery.fglib.utils.data.debug.DebugData
 import java.util.*
 
 /**
- * TODO("doc")
+ * [GameEvent], consisting of children [GameEvent]
+ *
+ * Children events running one after another in list order
+ *
+ * Ends when all children events are finished
  **/
 open class CompositeEvent(vararg events: GameEvent): GameEvent() {
     private var current: GameEvent? = null

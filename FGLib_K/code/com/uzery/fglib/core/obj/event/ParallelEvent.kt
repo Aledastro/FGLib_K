@@ -1,7 +1,11 @@
 package com.uzery.fglib.core.obj.event
 
 /**
- * TODO("doc")
+ * [GameEvent], consisting of children [GameEvent]
+ *
+ * Children events running at the same time
+ *
+ * Ends when all children events are finished
  **/
 open class ParallelEvent(vararg events: GameEvent): GameEvent() {
 
