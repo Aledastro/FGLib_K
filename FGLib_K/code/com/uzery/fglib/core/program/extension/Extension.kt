@@ -16,10 +16,11 @@ abstract class Extension(vararg children: Extension) {
 
     val stats = ExtensionData()
 
+    fun mousePos() = mouse.pos-stats.real_pos
     fun mouseIn(): Boolean {
-        stats.bounds?.let { return it.into(mouse.pos-stats.real_pos) }
+        stats.bounds?.let { return it.into(mousePos()) }
         if (stats.size == PointN.ZERO) return false
-        return RectN(stats.real_pos, stats.size).into(mouse.pos)
+        return RectN(PointN.ZERO, stats.size).into(mousePos())
     }
 
     fun mouseAt(): Boolean {
@@ -32,7 +33,7 @@ abstract class Extension(vararg children: Extension) {
     fun mouseIn(pos: PointN, size: PointN): Boolean {
         if (!mouseIn()) return false
 
-        return RectN(stats.real_pos+pos, size).into(mouse.pos)
+        return RectN(pos, size).into(mousePos())
     }
 
     fun mouseAt(pos: PointN, size: PointN): Boolean {
