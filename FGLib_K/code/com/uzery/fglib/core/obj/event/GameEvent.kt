@@ -3,7 +3,15 @@ package com.uzery.fglib.core.obj.event
 import com.uzery.fglib.core.obj.GameObject
 
 /**
- * TODO("doc")
+ * [GameObject] with controlled live behavior
+ *
+ * 1) First it checks for `ready()`
+ * 2) While it ready calls `start()`
+ * 3) Then it loops with `update()`
+ * 4) When it `ends()` calls `finish()`
+ * 5) After `finish()` it `collapse()` or reinit if `repeatable`
+ *
+ * @property repeatable
  **/
 abstract class GameEvent: GameObject() {
     var repeatable = false
@@ -34,16 +42,17 @@ abstract class GameEvent: GameObject() {
     init {
         addAbility {
             if (!init) {
-                if (ready()) {
-                    start()
-                    init = true
-                } else return@addAbility
+                if (!ready()) return@addAbility
+
+                start()
+                init = true
             }
             update()
             if (ends()) {
                 finish()
                 if (repeatable) {
                     init = false
+                    event_time = -1
                 } else {
                     finished = true
                     collapse()
