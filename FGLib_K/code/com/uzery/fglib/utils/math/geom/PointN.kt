@@ -111,7 +111,7 @@ data class PointN(private val xs: Array<Double>) {
 
     fun mod(size: Double) = transform { x -> MathUtils.mod(x, size) }
     fun mod(size: Int) = mod(size.toDouble())
-    fun mod(p: PointN) = transform(this, p) { x, y -> x%y }
+    fun mod(p: PointN) = transform(this, p) { x, y -> x.mod(y) }
 
     fun interpolate(pos: PointN, k: Double): PointN {
         return this+(pos-this)*k
