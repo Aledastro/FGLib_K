@@ -23,6 +23,7 @@ data class PointN(private val xs: Array<Double>) {
         if (dim == 0) return 0.0
         return xs[n]
     }
+
     operator fun set(n: Int, value: Double) {
         if (dim == 0) return
         xs[n] = value
@@ -66,30 +67,30 @@ data class PointN(private val xs: Array<Double>) {
         return xs.contentEquals(other.xs)
     }
 
+    fun transform(transform: (x: Double) -> Double): PointN {
+        return PointN(ArrayUtils.transform(xs, transform))
+    }
+
     override fun hashCode(): Int = xs.contentHashCode()
 
-    operator fun plus(p: PointN) = PointN(ArrayUtils.transformP(xs, p.xs, 0.0) { x, y -> x+y })
+    operator fun plus(p: PointN) = transform(this, p) { x, y -> x+y }
+    operator fun minus(p: PointN) = transform(this, p) { x, y -> x-y }
 
-    operator fun minus(p: PointN) = PointN(ArrayUtils.transformP(xs, p.xs, 0.0) { x, y -> x-y })
+    operator fun div(p: PointN) = transform(this, p) { x, y -> x/y }
+    operator fun div(v: Double) = transform { x -> x/v }
+    operator fun div(v: Int) = transform { x -> x/v }
 
-    operator fun div(p: PointN) = PointN(ArrayUtils.transformP(xs, p.xs, 0.0) { x, y -> x/y })
-    operator fun div(v: Double) = PointN(ArrayUtils.transform(xs) { x -> x/v })
-    operator fun div(v: Int) = PointN(ArrayUtils.transform(xs) { x -> x/v })
+    operator fun times(p: PointN) = transform(this, p) { x, y -> x*y }
+    operator fun times(v: Double) = transform { x -> x*v }
+    operator fun times(v: Int) = transform { x -> x*v }
 
-    operator fun times(p: PointN) = PointN(ArrayUtils.transformP(xs, p.xs, 0.0) { x, y -> x*y })
-    operator fun times(v: Double) = PointN(ArrayUtils.transform(xs) { x -> x*v })
-    operator fun times(v: Int) = PointN(ArrayUtils.transform(xs) { x -> x*v })
-
-    operator fun unaryMinus() = PointN(ArrayUtils.transform(xs) { x -> -x })
+    operator fun unaryMinus() = transform { x -> -x }
 
     fun less(other: PointN) = (this-other).isNegative()
     fun more(other: PointN) = (other-this).isNegative()
-
     private fun isNegative() = xs.all { i -> i <= 0 }
-    fun lengthX2(): Double {
-        return xs.sumOf { x -> x*x }
-    }
 
+    fun lengthX2() = xs.sumOf { x -> x*x }
     fun length() = sqrt(lengthX2())
 
     fun normalised(): PointN {
@@ -101,15 +102,17 @@ data class PointN(private val xs: Array<Double>) {
 
     fun separate(level: Int) = PointN(Array(dim) { i -> if (level == i) xs[i] else 0.0 })
 
-    fun transform(transform: (x: Double) -> Double) = PointN(ArrayUtils.transform(xs, transform))
     fun roundL(size: Double) = transform { x -> MathUtils.roundL(x, size) }
     fun roundC(size: Double) = transform { x -> MathUtils.roundC(x, size) }
     fun roundR(size: Double) = transform { x -> MathUtils.roundR(x, size) }
-    fun mod(size: Double) = transform { x -> MathUtils.mod(x, size) }
     fun roundL(size: Int) = roundL(size.toDouble())
     fun roundC(size: Int) = roundC(size.toDouble())
     fun roundR(size: Int) = roundR(size.toDouble())
+
+    fun mod(size: Double) = transform { x -> MathUtils.mod(x, size) }
     fun mod(size: Int) = mod(size.toDouble())
+    fun mod(p: PointN) = transform(this, p) { x, y -> x%y }
+
     fun interpolate(pos: PointN, k: Double): PointN {
         return this+(pos-this)*k
     }
@@ -154,14 +157,14 @@ data class PointN(private val xs: Array<Double>) {
     }
 
     override fun toString(): String {
-        return "PointN${Array(xs.size) { xs[it].toInt() }.toList()}"
+        return "PointN${Array(xs.size) { i -> xs[i].toInt() }.toList()}"
     }
 
     companion object {
         val ZERO = PointN(Array(0) { 0.0 })
 
         fun transform(p1: PointN, p2: PointN, transform: (x: Double, y: Double) -> Double): PointN {
-            return PointN(ArrayUtils.transformP(p1.xs, p2.xs, 0.0, transform))
+            return PointN(ArrayUtils.transformWith(p1.xs, p2.xs, 0.0, transform))
         }
 
         fun isSameDirection(p1: PointN, p2: PointN): Boolean {

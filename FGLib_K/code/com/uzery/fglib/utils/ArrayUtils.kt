@@ -14,7 +14,7 @@ object ArrayUtils {
     }
 
     //can work with zero arrays
-    inline fun <reified T> transformP(
+    inline fun <reified T> transformWith(
         xs: Array<T>,
         ys: Array<T>,
         value: T,
