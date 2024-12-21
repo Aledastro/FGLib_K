@@ -36,19 +36,19 @@ import com.uzery.fglib.utils.math.geom.shape.RectN
 import com.uzery.fglib.utils.struct.num.IntI
 
 /**
- * TODO("doc2")
- *
  * Base class for entity in *Entity-Component System*
  *
  * Is final form of game logic
  *
- * Contains stats, components, transform and export info
+ * Contains stats, components, transforms and export info
  *
  * Use serialisation via [FGFormat].
  * To make it serializable, you need to add export info (`exportInfo()`) and add entry in [ClassGetter]
  *
- * @property stats [Stats]
- * @property object_time
+ * @see [Stats]
+ * @see [ObjectComponent]
+ * @see [ObjectTransform]
+ * @see [HavingComponentSyntax]
  **/
 abstract class GameObject: HavingComponentSyntax {
     val stats = Stats()

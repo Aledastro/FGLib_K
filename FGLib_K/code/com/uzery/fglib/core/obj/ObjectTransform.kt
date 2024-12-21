@@ -4,7 +4,9 @@ import com.uzery.fglib.core.component.visual.Visualiser
 import com.uzery.fglib.utils.math.geom.PointN
 
 /**
- * TODO("doc")
+ * [GameObject] Transform Rules
+ *
+ * Can be used for manipulating in RoomEditor
  **/
 abstract class ObjectTransform(val obj: GameObject) {
     open val name = ""

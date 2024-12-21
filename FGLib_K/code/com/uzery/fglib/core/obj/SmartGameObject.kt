@@ -6,7 +6,7 @@ import com.uzery.fglib.utils.data.file.FGLibConst
 import com.uzery.fglib.utils.data.file.TextData
 
 /**
- * TODO("doc")
+ * TODO("doc_un")
  **/
 abstract class SmartGameObject<Type>: GameObject() {
     protected val objs = ArrayList<Type>()
