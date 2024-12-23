@@ -50,6 +50,8 @@ class ExtensionData {
 
     var transform: AffineTransform? = null
 
+    var ui_level = UILevel.UP
+
 
     //delta for drawing
     var draw_pos = PointN.ZERO

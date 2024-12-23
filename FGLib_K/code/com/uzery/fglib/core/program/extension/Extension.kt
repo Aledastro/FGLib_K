@@ -12,7 +12,7 @@ abstract class Extension(vararg children: Extension) {
     val children = ArrayList<Extension>()
 
     private val real_children = ArrayList<Extension>()
-    private val new_children = ArrayList<Pair<Extension, Boolean>>()
+    private val new_children = ArrayList<ExtensionEntry>()
 
     val stats = ExtensionData()
 
@@ -80,11 +80,18 @@ abstract class Extension(vararg children: Extension) {
     open fun active() = MODE.SHOW
 
     fun add(vararg children: Extension) {
-        children.forEach { new_children.add(Pair(it, true)) }
+        children.forEach { e -> new_children.add(ExtensionEntry.ADD(e)) }
+    }
+
+    fun addOn(level: UILevel, vararg children: Extension) {
+        children.forEach { e ->
+            e.stats.ui_level = level
+            new_children.add(ExtensionEntry.ADD(e))
+        }
     }
 
     fun remove(vararg children: Extension) {
-        children.forEach { new_children.add(Pair(it, false)) }
+        children.forEach { e -> new_children.add(ExtensionEntry.REMOVE(e)) }
     }
 
     fun clearChildren() = remove(*real_children.toTypedArray())
@@ -126,18 +133,14 @@ abstract class Extension(vararg children: Extension) {
         val toAdd = ArrayList<Extension>()
         val toRemove = ArrayList<Extension>()
 
-        new_children.forEach { pair ->
-            val e = pair.first
-            val isAdd = pair.second
+        new_children.forEach { entry ->
+            toAdd.remove(entry.e)
+            toRemove.remove(entry.e)
 
-            toAdd.remove(e)
-            toRemove.remove(e)
-
-            if (isAdd) toAdd.add(e)
-            else toRemove.add(e)
+            if (entry.isAdd) toAdd.add(entry.e)
+            else toRemove.add(entry.e)
         }
-        new_children.forEach { it.first.initWithChildren() }
-
+        new_children.forEach { it.e.initWithChildren() }
         new_children.clear()
 
         real_children.removeAll(toRemove.toSet())
