@@ -15,6 +15,8 @@ import kotlin.math.sign
  * TODO("doc")
  **/
 object Platform {
+    var focused_extension: Extension? = null
+
     var MANUAL_CLEAR_ON = false
     var CLEAR_COLOR = FGColor.WHITE
 

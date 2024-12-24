@@ -16,30 +16,6 @@ abstract class Extension(vararg children: Extension) {
 
     val stats = ExtensionData()
 
-    fun mousePos() = mouse.pos-stats.real_pos
-    fun mouseIn(): Boolean {
-        stats.bounds?.let { return it.into(mousePos()) }
-        if (stats.size == PointN.ZERO) return false
-        return RectN(PointN.ZERO, stats.size).into(mousePos())
-    }
-
-    fun mouseAt(): Boolean {
-        fun notAtChildren(e: Extension): Boolean {
-            return e.children.all { !it.mouseIn() && notAtChildren(it) }
-        }
-        return mouseIn() && notAtChildren(this)
-    }
-
-    fun mouseIn(pos: PointN, size: PointN): Boolean {
-        if (!mouseIn()) return false
-
-        return RectN(pos, size).into(mousePos())
-    }
-
-    fun mouseAt(pos: PointN, size: PointN): Boolean {
-        return mouseIn(pos, size) && mouseAt()
-    }
-
     protected var full_time = 0
         private set
     protected var update_time = 0
