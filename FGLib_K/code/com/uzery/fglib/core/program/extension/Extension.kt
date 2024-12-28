@@ -122,7 +122,7 @@ abstract class Extension(vararg children: Extension) {
 
     internal fun updateAllWithChildren() {
         rearrangeWithChildren()
-        setTopExtension()
+        Platform.extension_at_top = getOnTop()
         updateTasksWithChildren()
         updateWithChildren()
     }
@@ -182,11 +182,16 @@ abstract class Extension(vararg children: Extension) {
         //TODO()
     }
 
-    private fun setTopExtension() {
-        val ch = real_children.findLast { e -> e.mouseIn() } ?: return
-        Platform.extension_at_top = ch
+    fun getOnTop(): Extension? {
+        var res: Extension? = null
+        if (mouseIn()) res = this
 
-        ch.setTopExtension()
+        for (e in real_children) {
+            val e_res = e.getOnTop() ?: continue
+            res = e_res
+        }
+
+        return res
     }
 
     open fun onBackGround() {}
@@ -231,9 +236,6 @@ abstract class Extension(vararg children: Extension) {
 
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    val atTop
-        get() = Platform.extension_at_top == this
-
     fun mousePos() = mouse.pos-stats.real_pos
 
     fun mouseIn(): Boolean {
@@ -244,9 +246,13 @@ abstract class Extension(vararg children: Extension) {
 
     fun mouseAt(): Boolean {
         fun notAtChildren(now: Extension): Boolean {
-            return now.children.all { e -> !mouseIn() && notAtChildren(e) }
+            return now.children.all { e -> !e.mouseIn() && notAtChildren(e) }
         }
         return mouseIn() && notAtChildren(this)
+    }
+
+    fun mouseAtTop(): Boolean {
+        return Platform.extension_at_top == this
     }
 
     fun mouseIn(pos: PointN, size: PointN): Boolean {
@@ -260,6 +266,6 @@ abstract class Extension(vararg children: Extension) {
     }
 
     fun mouseAtTop(pos: PointN, size: PointN): Boolean {
-        return mouseIn(pos, size) && atTop
+        return mouseIn(pos, size) && mouseAtTop()
     }
 }
