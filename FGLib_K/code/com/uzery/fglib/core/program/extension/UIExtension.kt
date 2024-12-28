@@ -11,7 +11,7 @@ abstract class UIExtension(vararg children: Extension): Extension(*children) {
         if (isFocused) whenFocused()
         else whenUnfocused()
 
-        if (mouseAt() && focusAction()) {
+        if (mouseAtTop() && focusAction()) {
             Platform.extension_focused = this
         }
     }
