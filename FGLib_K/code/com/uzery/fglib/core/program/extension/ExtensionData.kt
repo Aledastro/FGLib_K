@@ -50,7 +50,7 @@ class ExtensionData {
 
     var transform: AffineTransform? = null
 
-    var ui_level = UILevel.UP
+    var ui_level = UILevel.NEUTRAL
 
 
     //delta for drawing
