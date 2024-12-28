@@ -1,5 +1,6 @@
 package com.uzery.fglib.core.program.extension
 
+import com.uzery.fglib.core.program.Platform
 import com.uzery.fglib.core.program.Platform.graphics
 import com.uzery.fglib.core.program.Platform.mouse
 import com.uzery.fglib.utils.math.geom.PointN
@@ -121,13 +122,20 @@ abstract class Extension(vararg children: Extension) {
 
         real_children.removeAll(toRemove.toSet())
         real_children.removeAll(toAdd.toSet())
-        real_children.addAll(toAdd)
+        real_children.addAll(toAdd.toSet())
 
         children.clear()
         children.addAll(real_children)
     }
 
-    internal fun updateWithChildren() {
+    internal fun updateAllWithChildren() {
+        rearrangeWithChildren()
+        setTopExtension()
+        updateTasksWithChildren()
+        updateWithChildren()
+    }
+
+    private fun updateWithChildren() {
         stats.next()
 
         modify()
@@ -159,13 +167,13 @@ abstract class Extension(vararg children: Extension) {
         draw_time++
     }
 
-    internal fun updateTasksWithChildren() {
+    private fun updateTasksWithChildren() {
         mode = next_mode
         onBackGround()
 
-        real_children.forEach {
-            it.stats.owner = this
-            it.updateTasksWithChildren()
+        real_children.forEach { e ->
+            e.stats.owner = this
+            e.updateTasksWithChildren()
         }
 
         children.clear()
@@ -173,6 +181,21 @@ abstract class Extension(vararg children: Extension) {
 
         full_time++
         updateModeTime()
+    }
+
+    internal fun rearrange() {
+        //TODO()
+    }
+
+    private fun rearrangeWithChildren() {
+        //TODO()
+    }
+
+    private fun setTopExtension() {
+        val ch = real_children.findLast { e -> e.mouseIn() } ?: return
+        Platform.extension_at_top = ch
+
+        ch.setTopExtension()
     }
 
     open fun onBackGround() {}
@@ -234,4 +257,38 @@ abstract class Extension(vararg children: Extension) {
     fun switch() = switchTo(-mode)
 
     open fun load() {}
+
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    val atTop
+        get() = Platform.extension_at_top == this
+
+    fun mousePos() = mouse.pos-stats.real_pos
+
+    fun mouseIn(): Boolean {
+        stats.bounds?.let { return it.into(mousePos()) }
+        if (stats.size == PointN.ZERO) return false
+        return RectN(PointN.ZERO, stats.size).into(mousePos())
+    }
+
+    fun mouseAt(): Boolean {
+        fun notAtChildren(now: Extension): Boolean {
+            return now.children.all { e -> !mouseIn() && notAtChildren(e) }
+        }
+        return mouseIn() && notAtChildren(this)
+    }
+
+    fun mouseIn(pos: PointN, size: PointN): Boolean {
+        if (!mouseIn()) return false
+
+        return RectN(pos, size).into(mousePos())
+    }
+
+    fun mouseAt(pos: PointN, size: PointN): Boolean {
+        return mouseIn(pos, size) && mouseAt()
+    }
+
+    fun mouseAtTop(pos: PointN, size: PointN): Boolean {
+        return mouseIn(pos, size) && atTop
+    }
 }

@@ -42,8 +42,7 @@ object Program {
     fun update() {
         updatePaths()
 
-        core.updateTasksWithChildren()
-        core.updateWithChildren()
+        core.updateAllWithChildren()
 
         Platform.update()
         program_time++
