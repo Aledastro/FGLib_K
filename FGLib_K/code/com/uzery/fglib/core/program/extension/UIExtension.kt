@@ -3,7 +3,7 @@ package com.uzery.fglib.core.program.extension
 import com.uzery.fglib.core.program.Platform
 import com.uzery.fglib.core.program.Platform.mouse
 
-abstract class UIExtension: Extension() {
+abstract class UIExtension(vararg children: Extension): Extension(*children) {
     open fun focusAction() = mouse.keys.anyInPressed()
 
     final override fun update() {
