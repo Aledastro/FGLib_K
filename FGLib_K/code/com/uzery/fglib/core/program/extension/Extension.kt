@@ -13,6 +13,7 @@ abstract class Extension(vararg children: Extension) {
     val children = ArrayList<Extension>()
 
     private val real_children = ArrayList<Extension>()
+    private val arranged_children = ArrayList<Extension>()
     private val new_children = ArrayList<ExtensionEntry>()
 
     val stats = ExtensionData()
@@ -63,7 +64,7 @@ abstract class Extension(vararg children: Extension) {
         children.forEach { e -> new_children.add(ExtensionEntry.REMOVE(e)) }
     }
 
-    fun clearChildren() = remove(*real_children.toTypedArray())
+    fun clearChildren() = remove(*arranged_children.toTypedArray())
 
     init {
         add(*children)
@@ -92,7 +93,8 @@ abstract class Extension(vararg children: Extension) {
         init()
         modify()
         load()
-        real_children.forEach { it.initWithChildren() }
+        rearrange()
+        arranged_children.forEach { it.initWithChildren() }
         initAfter()
 
         inited = true
@@ -133,7 +135,11 @@ abstract class Extension(vararg children: Extension) {
         modify()
 
         update()
-        real_children.forEach { if (it.mode.update && it.active().update) it.updateWithChildren() }
+        arranged_children.forEach { e ->
+            if (e.mode.update && e.active().update) {
+                e.updateWithChildren()
+            }
+        }
         updateAfter()
 
         update_time++
@@ -147,7 +153,7 @@ abstract class Extension(vararg children: Extension) {
         reset()
         draw(pos)
 
-        real_children.forEach { e ->
+        arranged_children.forEach { e ->
             if (e.mode.draw && e.active().draw) {
                 e.drawWithChildren(pos+e.stats.render_pos)
             }
@@ -163,30 +169,32 @@ abstract class Extension(vararg children: Extension) {
         mode = next_mode
         onBackGround()
 
-        real_children.forEach { e ->
+        arranged_children.forEach { e ->
             e.stats.owner = this
             e.updateTasksWithChildren()
         }
 
-        children.clear()
-        children.addAll(real_children)
-
         full_time++
     }
 
-    internal fun rearrange() {
-        //TODO()
+    private fun rearrange() {
+        arranged_children.clear()
+        arranged_children.addAll(real_children)
+
+        arranged_children.sortBy { it.stats.ui_level.level }
     }
 
     private fun rearrangeWithChildren() {
-        //TODO()
+        rearrange()
+
+        arranged_children.forEach { it.rearrangeWithChildren() }
     }
 
     fun getOnTop(): Extension? {
         var res: Extension? = null
         if (mouseIn()) res = this
 
-        for (e in real_children) {
+        for (e in arranged_children) {
             val e_res = e.getOnTop() ?: continue
             res = e_res
         }
