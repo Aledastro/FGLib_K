@@ -23,14 +23,6 @@ abstract class Extension(vararg children: Extension) {
         private set
     protected var draw_time = 0
         private set
-    protected var show_time = 0
-        private set
-    protected var hide_time = 0
-        private set
-    protected var only_draw_time = 0
-        private set
-    protected var only_update_time = 0
-        private set
 
     enum class MODE(val draw: Boolean, val update: Boolean) {
         SHOW(true, true),
@@ -180,7 +172,6 @@ abstract class Extension(vararg children: Extension) {
         children.addAll(real_children)
 
         full_time++
-        updateModeTime()
     }
 
     internal fun rearrange() {
@@ -200,44 +191,24 @@ abstract class Extension(vararg children: Extension) {
 
     open fun onBackGround() {}
 
-    private fun resetModeTime() {
-        show_time = 0
-        hide_time = 0
-        only_draw_time = 0
-        only_update_time = 0
-    }
-
-    private fun updateModeTime() {
-        when (mode) {
-            MODE.SHOW -> show_time++
-            MODE.HIDE -> hide_time++
-            MODE.ONLY_DRAW -> only_draw_time++
-            MODE.ONLY_UPDATE -> only_update_time++
-        }
-    }
-
     fun show() {
         next_mode = MODE.SHOW
         onShow()
-        resetModeTime()
     }
 
     fun hide() {
         next_mode = MODE.HIDE
         onHide()
-        resetModeTime()
     }
 
     fun only_draw() {
         next_mode = MODE.ONLY_DRAW
         onOnlyDraw()
-        resetModeTime()
     }
 
     fun only_update() {
         next_mode = MODE.ONLY_UPDATE
         onOnlyDraw()
-        resetModeTime()
     }
 
     fun switchTo(show: Boolean) {
