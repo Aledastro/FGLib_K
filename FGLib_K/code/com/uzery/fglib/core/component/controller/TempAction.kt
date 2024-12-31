@@ -8,13 +8,32 @@ import com.uzery.fglib.core.component.listener.InputAction
  * Updates every frame, also reacts on [InputAction] activation
  *
  * After action ends [Controller] chooses another [InputAction]
+ *
+ * @property temp_time
  **/
-interface TempAction {
-    fun next()
+abstract class TempAction {
+    protected var temp_time = 0
+        private set
+    internal var finished = false
+        private set
 
-    fun activate(action: InputAction) {
-        /* ignore */
+    internal fun next() {
+        if (temp_time == 0) start()
+
+        update()
+
+        if (ends()) {
+            finish()
+            finished = true
+        }
+        temp_time++
     }
 
-    val ends: Boolean
+    open fun start() {}
+    open fun update() {}
+    open fun finish() {}
+
+    open fun activate(action: InputAction) {}
+
+    abstract fun ends(): Boolean
 }

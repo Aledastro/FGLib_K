@@ -17,7 +17,7 @@ class Controller(private val f: () -> (() -> TempAction)?): ObjectComponent {
 
     private var temp: TempAction? = null
     fun update() {
-        if (temp == null || temp!!.ends) temp = get()?.invoke()
+        if (temp == null || temp!!.finished) temp = get()?.invoke()
         temp?.next()
     }
 
