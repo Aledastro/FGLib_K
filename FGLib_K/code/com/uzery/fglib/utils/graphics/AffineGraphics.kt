@@ -35,8 +35,8 @@ abstract class AffineGraphics {
     val default_transform: AffineTransform
 
     init {
-        val default_t: (PointN) -> PointN = {
-            var x = (it-drawPOS*layer.z)*scale
+        val default_t: (PointN) -> PointN = { p ->
+            var x = (p-drawPOS*layer.z)*scale
             if (whole_draw) x = x.roundC(1.0)
             x *= view_scale*global_view_scale
             x
