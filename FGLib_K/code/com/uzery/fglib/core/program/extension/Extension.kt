@@ -148,7 +148,7 @@ abstract class Extension(vararg children: Extension) {
     internal fun drawWithChildren(pos: PointN) {
         fun reset() {
             graphics.setFullDefaults()
-            graphics.transform = stats.full_transform*graphics.default_transform
+            graphics.global_transform = stats.full_transform*graphics.default_transform
         }
         reset()
         draw(pos)

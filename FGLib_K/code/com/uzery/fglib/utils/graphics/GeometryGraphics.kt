@@ -10,7 +10,7 @@ import com.uzery.fglib.utils.math.geom.shape.FigureN
  **/
 abstract class GeometryGraphics(protected val agc: AffineGraphics) {
     protected val transform
-        get() = agc.transform
+        get() = agc.global_transform
 
     protected abstract fun rect0(pos: PointN, size: PointN, color: FGColor)
 

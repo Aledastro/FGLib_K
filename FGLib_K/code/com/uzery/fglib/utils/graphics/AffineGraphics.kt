@@ -20,12 +20,13 @@ abstract class AffineGraphics {
     var global_view_scale = DEFAULT_VIEW_SCALE
     var global_alpha = DEFAULT_ALPHA
 
+    var global_transform = AffineTransform.NEUTRAL
+
     var rotate = DEFAULT_ROTATE
     var view_scale = DEFAULT_VIEW_SCALE
     var alpha = DEFAULT_ALPHA
 
     var drawPOS = PointN.ZERO
-    var transform = AffineTransform.NEUTRAL
     var layer = DrawLayer.CAMERA_OFF
 
     var whole_draw = true
@@ -56,8 +57,7 @@ abstract class AffineGraphics {
         global_view_scale = DEFAULT_VIEW_SCALE
         global_alpha = DEFAULT_ALPHA
 
-        drawPOS = PointN.ZERO
-        transform = AffineTransform.NEUTRAL
+        global_transform = AffineTransform.NEUTRAL
     }
 
     fun setDefaults() {
@@ -66,6 +66,7 @@ abstract class AffineGraphics {
         alpha = DEFAULT_ALPHA
 
         layer = DrawLayer.CAMERA_OFF
+        drawPOS = PointN.ZERO
 
         fill.setDefaults()
         stroke.setDefaults()
@@ -82,8 +83,8 @@ abstract class AffineGraphics {
     internal fun isOutOfBounds(pos: PointN, size: PointN): Boolean {
         if (!OPTIMISATION_NOT_DRAW_OUT_OF_BOUNDS) return false
 
-        val pos1 = transform.pos(pos)
-        val pos2 = transform.pos(pos+size)
+        val pos1 = global_transform.pos(pos)
+        val pos2 = global_transform.pos(pos+size)
         for (i in 0..<pos1.dim) {
             val list = listOf(pos1[i], pos2[i])
 

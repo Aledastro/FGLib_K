@@ -11,7 +11,7 @@ abstract class ImageGraphics(private val agc: AffineGraphics) {
     protected abstract fun draw0(image: FGImage, pos: PointN, size: PointN, alpha: Double)
 
     protected val transform
-        get() = agc.transform
+        get() = agc.global_transform
 
     fun setDefaults() {
 
