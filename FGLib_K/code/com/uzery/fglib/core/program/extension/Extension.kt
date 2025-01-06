@@ -25,6 +25,11 @@ abstract class Extension(vararg children: Extension) {
     protected var draw_time = 0
         private set
 
+    val is_drawing
+        get() = mode.draw && active().draw
+    val is_updating
+        get() = mode.update && active().update
+
     enum class MODE(val draw: Boolean, val update: Boolean) {
         SHOW(true, true),
         HIDE(false, false),
@@ -135,10 +140,8 @@ abstract class Extension(vararg children: Extension) {
         modify()
 
         update()
-        arranged_children.forEach { e ->
-            if (e.mode.update && e.active().update) {
-                e.updateWithChildren()
-            }
+        arranged_children.filter { it.is_updating }.forEach { e ->
+            e.updateWithChildren()
         }
         updateAfter()
 
@@ -153,10 +156,8 @@ abstract class Extension(vararg children: Extension) {
         reset()
         draw(pos)
 
-        arranged_children.forEach { e ->
-            if (e.mode.draw && e.active().draw) {
-                e.drawWithChildren(pos+e.stats.render_pos)
-            }
+        arranged_children.filter { it.is_drawing }.forEach { e ->
+            e.drawWithChildren(pos+e.stats.render_pos)
         }
 
         reset()
@@ -195,6 +196,7 @@ abstract class Extension(vararg children: Extension) {
         if (mouseIn()) res = this
 
         for (e in arranged_children) {
+            if (!e.is_drawing) continue
             val e_res = e.getOnTop() ?: continue
             res = e_res
         }
