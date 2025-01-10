@@ -15,6 +15,10 @@ class Bounds(vararg els: BoundsElement) {
         add(*els)
     }
 
+    constructor(group: String, name: String, shape: () -> Shape?): this(BoundsElement(group, name, shape))
+    constructor(name: String, shape: () -> Shape?): this(BoundsElement(name, shape))
+    constructor(shape: () -> Shape?): this(BoundsElement(shape))
+
     fun add(vararg els: BoundsElement) = els.forEach { element -> elements.add(element) }
 
     private fun main(): RectN? {

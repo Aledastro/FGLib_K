@@ -46,7 +46,7 @@ class ExtensionData {
     var pos = PointN.ZERO
     var size = PointN.ZERO
 
-    var bounds: Bounds? = Bounds(BoundsElement { if (size != PointN.ZERO) RectN(PointN.ZERO, size) else null })
+    var bounds: Bounds? = Bounds { if (size != PointN.ZERO) RectN(PointN.ZERO, size) else null }
     var layout = FGLayout.TOP_LEFT
 
 
