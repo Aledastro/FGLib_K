@@ -1,8 +1,10 @@
 package com.uzery.fglib.core.program.extension
 
 import com.uzery.fglib.core.component.bounds.Bounds
+import com.uzery.fglib.core.component.bounds.BoundsElement
 import com.uzery.fglib.utils.graphics.AffineTransform
 import com.uzery.fglib.utils.math.geom.PointN
+import com.uzery.fglib.utils.math.geom.shape.RectN
 
 /**
  * TODO("doc")
@@ -42,11 +44,10 @@ class ExtensionData {
 
     //for updating
     var pos = PointN.ZERO
-    var bounds: Bounds? = null
+    var bounds: Bounds? = Bounds(BoundsElement { if (size != PointN.ZERO) RectN(pos, size) else null })
     var layout = FGLayout.TOP_LEFT
 
     var size = PointN.ZERO
-        get() = if (bounds == null) field else bounds?.main?.S ?: PointN.ZERO
 
     var transform: AffineTransform? = null
 

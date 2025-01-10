@@ -249,9 +249,7 @@ abstract class Extension(vararg children: Extension) {
     fun mousePos() = mouse.pos-stats.real_pos
 
     fun mouseIn(): Boolean {
-        stats.bounds?.let { return it.into(mousePos()) }
-        if (stats.size == PointN.ZERO) return false
-        return RectN(PointN.ZERO, stats.size).into(mousePos())
+        return stats.bounds?.into(mousePos()) ?: false
     }
 
     fun mouseAt(): Boolean {
