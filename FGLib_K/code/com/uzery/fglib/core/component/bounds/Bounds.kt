@@ -9,11 +9,11 @@ import com.uzery.fglib.utils.math.geom.shape.RectN
  * Geometric union of [BoundsElement]
  **/
 class Bounds(vararg els: BoundsElement) {
+    val elements = ArrayList<BoundsElement>()
+
     init {
         add(*els)
     }
-
-    val elements = ArrayList<BoundsElement>()
 
     fun add(vararg els: BoundsElement) = els.forEach { element -> elements.add(element) }
 

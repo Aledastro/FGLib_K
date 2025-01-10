@@ -44,10 +44,11 @@ class ExtensionData {
 
     //for updating
     var pos = PointN.ZERO
-    var bounds: Bounds? = Bounds(BoundsElement { if (size != PointN.ZERO) RectN(pos, size) else null })
+    var size = PointN.ZERO
+
+    var bounds: Bounds? = Bounds(BoundsElement { if (size != PointN.ZERO) RectN(PointN.ZERO, size) else null })
     var layout = FGLayout.TOP_LEFT
 
-    var size = PointN.ZERO
 
     var transform: AffineTransform? = null
 
