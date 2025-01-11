@@ -191,18 +191,19 @@ abstract class Extension(vararg children: Extension) {
         arranged_children.forEach { it.rearrangeWithChildren() }
     }
 
-    fun getOnTop(): Extension? {
+    fun getOnTop(pos: PointN): Extension? {
         var res: Extension? = null
-        if (mouseIn()) res = this
+        if (posIn(pos)) res = this
 
         for (e in arranged_children) {
             if (!e.is_drawing) continue
-            val e_res = e.getOnTop() ?: continue
+            val e_res = e.getOnTop(pos) ?: continue
             res = e_res
         }
 
         return res
     }
+    fun getOnTop() = getOnTop(mouse.pos)
 
     open fun onBackGround() {}
 
@@ -246,34 +247,24 @@ abstract class Extension(vararg children: Extension) {
 
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+    fun posIn(pos: PointN): Boolean {
+        return stats.bounds?.into(pos-stats.real_pos) ?: false
+    }
+    fun posAt(pos: PointN): Boolean {
+        fun notAtChildren(now: Extension): Boolean {
+            return now.children.all { e -> !e.posIn(pos) && notAtChildren(e) }
+        }
+        return posIn(pos) && notAtChildren(this)
+    }
+    fun posAtTop(pos: PointN): Boolean {
+        return getOnTop(pos) == this
+    }
+
     fun mousePos() = mouse.pos-stats.real_pos
 
-    fun mouseIn(): Boolean {
-        return stats.bounds?.into(mousePos()) ?: false
-    }
-
-    fun mouseAt(): Boolean {
-        fun notAtChildren(now: Extension): Boolean {
-            return now.children.all { e -> !e.mouseIn() && notAtChildren(e) }
-        }
-        return mouseIn() && notAtChildren(this)
-    }
-
+    fun mouseIn() = posIn(mouse.pos)
+    fun mouseAt() = posAt(mouse.pos)
     fun mouseAtTop(): Boolean {
         return Platform.extension_at_top == this
-    }
-
-    fun mouseIn(pos: PointN, size: PointN): Boolean {
-        if (!mouseIn()) return false
-
-        return RectN(pos, size).into(mousePos())
-    }
-
-    fun mouseAt(pos: PointN, size: PointN): Boolean {
-        return mouseIn(pos, size) && mouseAt()
-    }
-
-    fun mouseAtTop(pos: PointN, size: PointN): Boolean {
-        return mouseIn(pos, size) && mouseAtTop()
     }
 }
