@@ -144,9 +144,9 @@ object WorldDebugUtils: PlatformUpdatable {
 
             val draw_pos = pos+render_camera[o.pos_with_owners]
 
-            graphics.fill.draw(draw_pos+z1, shape, colors[color_id].transparent(0.05))
+            //graphics.fill.draw(draw_pos+z1, shape, colors[color_id].transparent(0.05))
             graphics.stroke.draw(draw_pos+z1, shape, colors[color_id].transparent(0.3))
-            graphics.fill.draw(draw_pos+z2, shape, colors[color_id].transparent(0.1))
+            //graphics.fill.draw(draw_pos+z2, shape, colors[color_id].transparent(0.1))
             graphics.stroke.draw(draw_pos+z2, shape, colors[color_id].transparent(0.6))
 
             if (el.name != BoundsElement.DEFAULT_NAME) {
