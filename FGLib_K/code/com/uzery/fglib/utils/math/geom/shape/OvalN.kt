@@ -6,7 +6,7 @@ import com.uzery.fglib.utils.math.geom.Shape
 /**
  * TODO("doc")
  **/
-data class OvalN(private val pos: PointN, private val size: PointN): Shape() {
+data class OvalN(val pos: PointN, val size: PointN): Shape() {
     constructor(size: PointN): this(PointN.ZERO, size)
 
     override fun copy(move: PointN) = OvalN(pos+move, size)
