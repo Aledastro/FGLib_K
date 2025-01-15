@@ -20,6 +20,8 @@ object Platform {
     var extension_at_top: Extension? = null
         internal set
 
+    fun getGlobalOnTop(pos: PointN) = Program.core.getOnTop(pos)
+
     var MANUAL_CLEAR_ON = false
     var CLEAR_COLOR = FGColor.WHITE
 

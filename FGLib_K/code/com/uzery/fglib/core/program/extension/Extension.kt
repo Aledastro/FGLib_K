@@ -1,8 +1,10 @@
 package com.uzery.fglib.core.program.extension
 
 import com.uzery.fglib.core.program.Platform
+import com.uzery.fglib.core.program.Platform.getGlobalOnTop
 import com.uzery.fglib.core.program.Platform.graphics
 import com.uzery.fglib.core.program.Platform.mouse
+import com.uzery.fglib.core.program.Program
 import com.uzery.fglib.utils.math.geom.PointN
 import com.uzery.fglib.utils.math.geom.shape.RectN
 
@@ -129,7 +131,7 @@ abstract class Extension(vararg children: Extension) {
 
     internal fun updateAllWithChildren() {
         rearrangeWithChildren()
-        Platform.extension_at_top = getOnTop()
+        Platform.extension_at_top = getOnTop(mouse.pos)
         updateTasksWithChildren()
         updateWithChildren()
     }
@@ -191,20 +193,6 @@ abstract class Extension(vararg children: Extension) {
         arranged_children.forEach { it.rearrangeWithChildren() }
     }
 
-    fun getOnTop(pos: PointN): Extension? {
-        var res: Extension? = null
-        if (posIn(pos)) res = this
-
-        for (e in arranged_children) {
-            if (!e.is_drawing) continue
-            val e_res = e.getOnTop(pos) ?: continue
-            res = e_res
-        }
-
-        return res
-    }
-    fun getOnTop() = getOnTop(mouse.pos)
-
     open fun onBackGround() {}
 
     fun show() {
@@ -247,6 +235,21 @@ abstract class Extension(vararg children: Extension) {
 
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+    fun getOnTop(pos: PointN): Extension? {
+        var res: Extension? = null
+        if (posIn(pos)) res = this
+
+        for (e in arranged_children) {
+            if (!e.is_drawing) continue
+            val e_res = e.getOnTop(pos) ?: continue
+            res = e_res
+        }
+
+        return res
+    }
+
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
     fun posIn(pos: PointN): Boolean {
         return stats.bounds?.into(pos-stats.real_pos) ?: false
     }
@@ -257,7 +260,10 @@ abstract class Extension(vararg children: Extension) {
         return posIn(pos) && notAtChildren(this)
     }
     fun posAtTop(pos: PointN): Boolean {
-        return getOnTop(pos) == this
+        return getGlobalOnTop(pos) == this
+    }
+    fun posAtTopWithChildren(pos: PointN): Boolean {
+        return getGlobalOnTop(pos) == getOnTop(mouse.pos)
     }
 
     fun mousePos() = mouse.pos-stats.real_pos
@@ -266,5 +272,8 @@ abstract class Extension(vararg children: Extension) {
     fun mouseAt() = posAt(mouse.pos)
     fun mouseAtTop(): Boolean {
         return Platform.extension_at_top == this
+    }
+    fun mouseAtTopWithChildren(): Boolean {
+        return Platform.extension_at_top == getOnTop(mouse.pos)
     }
 }

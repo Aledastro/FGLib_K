@@ -13,7 +13,7 @@ import com.uzery.fglib.utils.math.geom.PointN
  * TODO("doc")
  **/
 object Program {
-    private val core = object: Extension() {
+    internal val core = object: Extension() {
         override fun draw(pos: PointN) {
             if (Platform.MANUAL_CLEAR_ON) return
 
