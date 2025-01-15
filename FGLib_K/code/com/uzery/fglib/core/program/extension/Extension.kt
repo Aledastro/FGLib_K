@@ -4,9 +4,7 @@ import com.uzery.fglib.core.program.Platform
 import com.uzery.fglib.core.program.Platform.getGlobalOnTop
 import com.uzery.fglib.core.program.Platform.graphics
 import com.uzery.fglib.core.program.Platform.mouse
-import com.uzery.fglib.core.program.Program
 import com.uzery.fglib.utils.math.geom.PointN
-import com.uzery.fglib.utils.math.geom.shape.RectN
 
 /**
  * TODO("doc")
@@ -32,6 +30,8 @@ abstract class Extension(vararg children: Extension) {
     val is_updating
         get() = mode.update && active().update
 
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
     enum class MODE(val draw: Boolean, val update: Boolean) {
         SHOW(true, true),
         HIDE(false, false),
@@ -56,6 +56,8 @@ abstract class Extension(vararg children: Extension) {
 
     open fun active() = MODE.SHOW
 
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
     fun add(vararg children: Extension) {
         children.forEach { e -> new_children.add(ExtensionEntry.ADD(e)) }
     }
@@ -77,6 +79,8 @@ abstract class Extension(vararg children: Extension) {
         add(*children)
     }
 
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
     protected open fun init() {}
     protected open fun initAfter() {}
 
@@ -91,6 +95,8 @@ abstract class Extension(vararg children: Extension) {
 
     open fun onOnlyDraw() {}
     open fun onOnlyUpdate() {}
+
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     private var inited = false
     internal fun initWithChildren() {
@@ -125,6 +131,8 @@ abstract class Extension(vararg children: Extension) {
         real_children.removeAll(toAdd.toSet())
         real_children.addAll(toAdd.toSet())
 
+        real_children.removeIf { it.ready_to_collapse }
+
         children.clear()
         children.addAll(real_children)
     }
@@ -138,8 +146,6 @@ abstract class Extension(vararg children: Extension) {
 
     private fun updateWithChildren() {
         stats.next()
-
-        modify()
 
         update()
         arranged_children.filter { it.is_updating }.forEach { e ->
@@ -181,6 +187,8 @@ abstract class Extension(vararg children: Extension) {
     }
 
     private fun rearrange() {
+        modify()
+
         arranged_children.clear()
         arranged_children.addAll(real_children)
 
@@ -194,6 +202,8 @@ abstract class Extension(vararg children: Extension) {
     }
 
     open fun onBackGround() {}
+
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     fun show() {
         next_mode = MODE.SHOW
@@ -231,7 +241,16 @@ abstract class Extension(vararg children: Extension) {
 
     fun switch() = switchTo(-mode)
 
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
     open fun load() {}
+
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    private var ready_to_collapse = false
+    fun collapse() {
+        ready_to_collapse = true
+    }
 
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
