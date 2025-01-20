@@ -1,7 +1,7 @@
 package com.uzery.fglib.utils.data.image
 
 import com.uzery.fglib.utils.data.debug.DebugData
-import com.uzery.fglib.utils.data.getter.FGFormat
+import com.uzery.fglib.utils.data.entry.FGFormat
 import com.uzery.fglib.utils.data.image.effects.*
 
 /**
@@ -22,7 +22,7 @@ object ImageTransformUtils {
     }
 
     fun applyEffect(origin: WritableFGImage, effect: String): WritableFGImage {
-        val effect_entry = FGFormat[effect]
+        val effect_entry = FGFormat.entryFrom(effect)
 
         val transform = map[effect_entry.name] ?: throw DebugData.error("unknown image effect: $effect")
 

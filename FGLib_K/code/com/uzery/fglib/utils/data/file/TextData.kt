@@ -6,7 +6,6 @@ import com.uzery.fglib.utils.data.CollectDataClass
 import com.uzery.fglib.utils.data.debug.DebugData
 import java.io.File
 import java.io.IOException
-import java.util.stream.Collectors
 
 /**
  * TODO("doc")
@@ -14,11 +13,18 @@ import java.util.stream.Collectors
 object TextData: CollectDataClass() {
     val separator: String = File.separator
 
-    operator fun get(filename: String): ArrayList<String> {
-        val rd = getReader(resolvePath(filename))
-        val lines = rd.lines().collect(Collectors.toCollection { ArrayList() })
-        rd.close()
-        return lines
+    operator fun get(filename: String) = readLines(filename)
+
+    fun read(filename: String): String {
+        getReader(resolvePath(filename)).use { r ->
+            return r.readText()
+        }
+    }
+
+    fun readLines(filename: String): ArrayList<String> {
+        return getReader(resolvePath(filename)).useLines { sequence ->
+            sequence.toCollection(ArrayList())
+        }
     }
 
     fun write(filename: String, write: String, create_dirs: Boolean = false) {

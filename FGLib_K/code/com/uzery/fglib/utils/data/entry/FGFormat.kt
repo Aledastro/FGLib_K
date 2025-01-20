@@ -1,4 +1,4 @@
-package com.uzery.fglib.utils.data.getter
+package com.uzery.fglib.utils.data.entry
 
 import com.uzery.fglib.utils.FGUtils
 import com.uzery.fglib.utils.data.debug.DebugData
@@ -7,7 +7,21 @@ import com.uzery.fglib.utils.data.debug.DebugData
  * TODO("doc")
  **/
 object FGFormat {
-    operator fun get(input: String): FGEntry {
+    fun stringFrom(entry: FGEntry): String {
+        return buildString {
+            append(entry.name)
+
+            if (entry.args.isNotEmpty()) {
+                append(":")
+                entry.args.forEach { value ->
+                    val s = value.toString()
+                    append(if (s[s.lastIndex] == ']') " $s" else " [$s]")
+                }
+            }
+        }
+    }
+
+    fun entryFrom(input: String): FGEntry {
         val args = ArrayList<ArrayList<String>>()
         if (input.indexOf(':') == -1) return FGEntry(input, ArrayList())
 

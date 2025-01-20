@@ -27,8 +27,9 @@ import com.uzery.fglib.core.component.visual.Visualiser
 import com.uzery.fglib.core.obj.stats.Stats
 import com.uzery.fglib.utils.ShapeUtils
 import com.uzery.fglib.utils.data.debug.DebugData
+import com.uzery.fglib.utils.data.entry.FGEntry
+import com.uzery.fglib.utils.data.entry.FGFormat
 import com.uzery.fglib.utils.data.getter.ClassGetter
-import com.uzery.fglib.utils.data.getter.FGFormat
 import com.uzery.fglib.utils.graphics.AffineGraphics
 import com.uzery.fglib.utils.math.geom.PointN
 import com.uzery.fglib.utils.math.geom.Shape
@@ -42,7 +43,7 @@ import com.uzery.fglib.utils.struct.num.IntI
  *
  * Contains stats, components, transforms and export info
  *
- * Use serialisation via [FGFormat].
+ * Use serialisation via [FGEntrySerialization].
  * To make it serializable, you need to add export info (`exportInfo()`) and add entry in [ClassGetter]
  *
  * @see [Stats]
@@ -305,6 +306,10 @@ abstract class GameObject: HavingComponentSyntax {
                 }
             }
         }
+    }
+
+    fun toEntry(): FGEntry {
+        return FGFormat.entryFrom(toString())
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////

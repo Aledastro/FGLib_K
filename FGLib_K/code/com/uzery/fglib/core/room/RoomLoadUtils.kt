@@ -1,56 +1,47 @@
 package com.uzery.fglib.core.room
 
 import com.uzery.fglib.core.obj.GameObject
-import com.uzery.fglib.utils.FGUtils
+import com.uzery.fglib.core.room.entry.FGRoomEntry
+import com.uzery.fglib.core.room.entry.FGRoomFormat
+import com.uzery.fglib.core.room.entry.FGRoomSerialization
 import com.uzery.fglib.utils.data.file.TextData
 import com.uzery.fglib.utils.data.getter.AbstractClassGetter
-import com.uzery.fglib.utils.data.getter.ClassGetter
-import com.uzery.fglib.utils.math.geom.PointN
-import java.util.*
 
 /**
  * TODO("doc")
  **/
 object RoomLoadUtils {
-    val room_info_cg = object: ClassGetter<Pair<PointN, PointN>>() {
-        override fun addAll() {
-            add("room", 2) { Pair(pos, size) }
-        }
-    }
-
-    fun makeRoom(getter: AbstractClassGetter<GameObject>, input: List<String>): Room {
-        val list = LinkedList<String>()
-        list.addAll(input)
-
-        list.removeIf { FGUtils.isComment(it) }
-
+    fun makeRoom(entry: FGRoomEntry, getter: AbstractClassGetter<GameObject>): Room {
         val objects = ArrayList<GameObject>()
-        var next = ""
+        entry.objs.forEach { e -> objects.add(getter[e]) }
 
-        next = list.removeFirst()
-
-        val room_info = room_info_cg[next]
-
-        while (list.isNotEmpty()) {
-            next = list.removeFirst()
-            if (FGUtils.isComment(next)) continue
-            objects.add(getter[next])
-        }
-
-        return Room(room_info.first, room_info.second, objects)
+        return Room(entry.pos, entry.size, objects)
     }
 
-    fun readRoom(getter: AbstractClassGetter<GameObject>, filename: String): Room {
-        return makeRoom(getter, TextData[filename])
+    fun readRoom(
+        getter: AbstractClassGetter<GameObject>,
+        filename: String,
+        serialization: FGRoomSerialization = FGRoomFormat
+    ): Room {
+        val entry = serialization.roomFrom(TextData.read(filename))
+        return makeRoom(entry, getter)
     }
 
-    fun readRooms(getter: AbstractClassGetter<GameObject>, filenames: Array<String>): Array<Room> {
+    fun readRooms(
+        getter: AbstractClassGetter<GameObject>,
+        filenames: Array<String>,
+        serialization: FGRoomSerialization = FGRoomFormat
+    ): Array<Room> {
         return Array(filenames.size) { i ->
-            readRoom(getter, filenames[i])
+            readRoom(getter, filenames[i], serialization)
         }
     }
 
-    fun readAllFrom(getter: AbstractClassGetter<GameObject>, dir: String): Array<Room> {
-        return readRooms(getter, TextData.filesFrom(dir).toTypedArray())
+    fun readAllFrom(
+        getter: AbstractClassGetter<GameObject>,
+        dir: String,
+        serialization: FGRoomSerialization = FGRoomFormat
+    ): Array<Room> {
+        return readRooms(getter, TextData.filesFrom(dir).toTypedArray(), serialization)
     }
 }

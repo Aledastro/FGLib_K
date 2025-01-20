@@ -3,6 +3,8 @@ package com.uzery.fglib.core.room.mask
 import com.uzery.fglib.core.obj.GameObject
 import com.uzery.fglib.core.room.Room
 import com.uzery.fglib.utils.data.debug.DebugData
+import com.uzery.fglib.utils.data.entry.FGEntry
+import com.uzery.fglib.utils.data.entry.FGFormat
 import com.uzery.fglib.utils.data.file.FGLibConst
 import com.uzery.fglib.utils.data.getter.AbstractClassGetter
 
@@ -10,21 +12,22 @@ import com.uzery.fglib.utils.data.getter.AbstractClassGetter
  * TODO("doc")
  **/
 data class RoomMask(private val actions: ArrayList<RoomChangeAction> = ArrayList()) {
-    fun apply(room: Room, getter: AbstractClassGetter<GameObject>) {
+    fun apply(
+        room: Room,
+        getter: AbstractClassGetter<GameObject>
+    ) {
         for (action in actions) {
-            when (action.sign) {
-                "+" -> {
+            when (action) {
+                is RoomChangeAction.ADD -> {
                     room.objects.add(getter[action.obj])
                 }
 
-                "-" -> {
+                is RoomChangeAction.REMOVE -> {
                     val obj_id = room.objects.indexOfLast {
-                        it.toString() == action.obj
+                        it.toEntry() == action.obj
                     }
                     room.objects.removeAt(obj_id)
                 }
-
-                else -> throw DebugData.error("unsupported sign: ${action.sign}")
             }
         }
     }
@@ -32,7 +35,7 @@ data class RoomMask(private val actions: ArrayList<RoomChangeAction> = ArrayList
     operator fun plus(other: RoomMask): RoomMask {
         val this_map = this.toMap()
         val other_map = other.toMap()
-        val res = HashMap<String, Int>()
+        val res = HashMap<FGEntry, Int>()
 
         res.putAll(this_map)
         other_map.forEach { (key, value) ->
@@ -54,32 +57,36 @@ data class RoomMask(private val actions: ArrayList<RoomChangeAction> = ArrayList
         return res
     }
 
-    private fun toMap(): HashMap<String, Int> {
-        val map = HashMap<String, Int>()
+    private fun toMap(): HashMap<FGEntry, Int> {
+        val map = HashMap<FGEntry, Int>()
         for (action in actions) {
             val current = map[action.obj] ?: 0
 
-            when (action.sign) {
-                "+" -> map[action.obj] = current+1
-                "-" -> map[action.obj] = current-1
+            when (action) {
+                is RoomChangeAction.ADD -> {
+                    map[action.obj] = current+1
+                }
+                is RoomChangeAction.REMOVE -> {
+                    map[action.obj] = current-1
+                }
             }
         }
         return map
     }
 
-    private fun toMask(map: HashMap<String, Int>): RoomMask {
+    private fun toMask(map: HashMap<FGEntry, Int>): RoomMask {
         val actions = ArrayList<RoomChangeAction>()
         map.forEach { (key, value) ->
             when {
                 value < 0 -> {
                     for (i in 1..-value) {
-                        actions.add(RoomChangeAction("- $key"))
+                        actions.add(RoomChangeAction.REMOVE(key))
                     }
                 }
 
                 value > 0 -> {
                     for (i in 1..value) {
-                        actions.add(RoomChangeAction("+ $key"))
+                        actions.add(RoomChangeAction.ADD(key))
                     }
                 }
             }
@@ -91,12 +98,12 @@ data class RoomMask(private val actions: ArrayList<RoomChangeAction> = ArrayList
         actions.clear()
     }
 
-    fun toAdd(obj: String) {
-        actions.add(RoomChangeAction("+ $obj"))
+    fun toAdd(obj: FGEntry) {
+        actions.add(RoomChangeAction.ADD(obj))
     }
 
-    fun toRemove(obj: String) {
-        actions.add(RoomChangeAction("- $obj"))
+    fun toRemove(obj: FGEntry) {
+        actions.add(RoomChangeAction.REMOVE(obj))
     }
 
     fun isEmpty(): Boolean {

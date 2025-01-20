@@ -1,6 +1,7 @@
 package com.uzery.fglib.utils.data.getter
 
 import com.uzery.fglib.utils.data.debug.DebugData
+import com.uzery.fglib.utils.data.entry.FGEntry
 import com.uzery.fglib.utils.struct.num.IntI
 import com.uzery.fglib.utils.struct.num.StringN
 

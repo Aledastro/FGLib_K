@@ -1,26 +1,22 @@
 package com.uzery.fglib.core.room.mask
 
-import com.uzery.fglib.utils.data.debug.DebugData
+import com.uzery.fglib.utils.data.entry.FGEntry
 
 /**
  * TODO("doc")
  **/
-class RoomChangeAction(val sign: String, val obj: String) {
-    constructor(action: String): this(
-        action.substringBefore(' '),
-        action.substringAfter(' ')
-    )
-
+sealed class RoomChangeAction(val sign: String, val obj: FGEntry) {
     override fun toString(): String {
         return "$sign $obj"
     }
 
     operator fun unaryMinus(): RoomChangeAction {
-        val new_sign = when (sign) {
-            "+" -> "-"
-            "-" -> "+"
-            else -> throw DebugData.error("Unsupported sign: $sign")
+        return when (this) {
+            is ADD -> REMOVE(obj)
+            is REMOVE -> ADD(obj)
         }
-        return RoomChangeAction(new_sign, obj)
     }
+
+    class ADD(obj: FGEntry): RoomChangeAction("+", obj)
+    class REMOVE(obj: FGEntry): RoomChangeAction("-", obj)
 }

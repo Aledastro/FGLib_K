@@ -6,9 +6,8 @@ import com.uzery.fglib.core.room.RoomActivateLogics.nextActivate
 import com.uzery.fglib.core.room.RoomMoveLogics.nextMoveOld
 import com.uzery.fglib.core.room.RoomUtils.addObjVis
 import com.uzery.fglib.core.room.RoomUtils.drawVisuals
-import com.uzery.fglib.utils.data.file.FGLibConst
-import com.uzery.fglib.utils.data.getter.value.PosValue
-import com.uzery.fglib.utils.data.getter.value.SizeValue
+import com.uzery.fglib.core.room.entry.FGRoomEntry
+import com.uzery.fglib.utils.data.entry.FGEntry
 import com.uzery.fglib.utils.math.geom.PointN
 import com.uzery.fglib.utils.math.geom.shape.RectN
 
@@ -93,15 +92,10 @@ class Room(var pos: PointN, var size: PointN) {
     fun add(objs: List<GameObject>) = new_objects.addAll(objs)
     fun remove(objs: List<GameObject>) = old_objects.addAll(objs)
 
-    override fun toString(): String {
-        return buildString {
-            append(FGLibConst.FILES_COMMENT)
+    fun toEntry(): FGRoomEntry {
+        val objs = ArrayList<FGEntry>()
+        for (o in objects) objs.add(o.toEntry())
 
-            append("room: ${PosValue(pos)} ${SizeValue(size)}\n\n")
-
-            for (o in objects) {
-                if (!o.isTemp()) append("$o\n")
-            }
-        }
+        return FGRoomEntry(PointN(pos), PointN(size), objs)
     }
 }

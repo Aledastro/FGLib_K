@@ -26,6 +26,7 @@ module FGLib_K {
     exports com.uzery.fglib.core.realisation.packager;
 
     exports com.uzery.fglib.core.room;
+    exports com.uzery.fglib.core.room.entry;
     exports com.uzery.fglib.core.room.mask;
 
     exports com.uzery.fglib.core.world;
@@ -40,6 +41,7 @@ module FGLib_K {
 
     exports com.uzery.fglib.utils.data;
     exports com.uzery.fglib.utils.data.debug;
+    exports com.uzery.fglib.utils.data.entry;
     exports com.uzery.fglib.utils.data.file;
     exports com.uzery.fglib.utils.data.getter;
     exports com.uzery.fglib.utils.data.getter.value;
