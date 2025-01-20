@@ -94,7 +94,9 @@ class Room(var pos: PointN, var size: PointN) {
 
     fun toEntry(): FGRoomEntry {
         val objs = ArrayList<FGEntry>()
-        for (o in objects) objs.add(o.toEntry())
+        for (o in objects) {
+            if (!o.isTemp()) objs.add(o.toEntry())
+        }
 
         return FGRoomEntry(PointN(pos), PointN(size), objs)
     }
