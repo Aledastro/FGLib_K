@@ -8,17 +8,7 @@ import com.uzery.fglib.utils.data.debug.DebugData
  **/
 object FGFormat {
     fun stringFrom(entry: FGEntry): String {
-        return buildString {
-            append(entry.name)
-
-            if (entry.args.isNotEmpty()) {
-                append(":")
-                entry.args.forEach { value ->
-                    val s = value.toString()
-                    append(if (s[s.lastIndex] == ']') " $s" else " [$s]")
-                }
-            }
-        }
+        return entry.toString()
     }
 
     fun entryFrom(input: String): FGEntry {
