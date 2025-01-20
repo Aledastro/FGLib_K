@@ -41,7 +41,7 @@ enum class Direct(private val x: Int, private val y: Int) {
             return from(x.sign.toInt(), y.sign.toInt())
         }
 
-        val AXIAL = listOf(UP, DOWN, LEFT, RIGHT)
+        val PRIMARY = listOf(UP, DOWN, LEFT, RIGHT)
         val DIAGONAL = listOf(UP_LEFT, UP_RIGHT, DOWN_LEFT, DOWN_RIGHT)
     }
 }
