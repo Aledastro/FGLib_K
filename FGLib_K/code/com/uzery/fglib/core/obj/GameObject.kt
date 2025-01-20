@@ -43,7 +43,7 @@ import com.uzery.fglib.utils.struct.num.IntI
  *
  * Contains stats, components, transforms and export info
  *
- * Use serialisation via [FGEntrySerialization].
+ * Use serialisation via [FGFormat].
  * To make it serializable, you need to add export info (`exportInfo()`) and add entry in [ClassGetter]
  *
  * @see [Stats]
