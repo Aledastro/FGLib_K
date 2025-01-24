@@ -289,6 +289,13 @@ abstract class Extension(vararg children: Extension) {
         return getGlobalOnTop(pos) == getOnTop(mouse.pos)
     }
 
+    fun posIn(find: PointN, area: RectN): Boolean {
+        return posIn(find) && area.into(find-stats.real_pos)
+    }
+    fun posIn(find: PointN, pos: PointN, size: PointN): Boolean {
+        return posIn(find, RectN(pos, size))
+    }
+
     fun mousePos() = mouse.pos-stats.real_pos
 
     fun mouseIn() = posIn(mouse.pos)
@@ -298,5 +305,12 @@ abstract class Extension(vararg children: Extension) {
     }
     fun mouseAtTopWithChildren(): Boolean {
         return Platform.extension_at_top == getOnTop(mouse.pos)
+    }
+
+    fun mouseIn(area: RectN): Boolean {
+        return mouseIn() && area.into(mousePos())
+    }
+    fun mouseIn(pos: PointN, size: PointN): Boolean {
+        return mouseIn(RectN(pos, size))
     }
 }
