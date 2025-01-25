@@ -1,7 +1,9 @@
 package com.uzery.fglib.utils.math.geom
 
+import com.uzery.fglib.utils.MathUtils
 import com.uzery.fglib.utils.data.debug.DebugData
 import com.uzery.fglib.utils.struct.num.IntI
+import kotlin.math.PI
 import kotlin.math.sign
 
 /**
@@ -14,6 +16,22 @@ enum class Direct(private val x: Int, private val y: Int) {
     val value = IntI(x, y)
     val valueP = PointN(value)
     val p = if (value == IntI()) PointN.ZERO else valueP/valueP.length()
+
+    fun alpha(): Double {
+        return MathUtils.getDegree(p)
+    }
+
+    fun rotate45(steps: Int): Direct {
+        if (this == CENTER) throw DebugData.error("Direct.CENTER can't be rotated")
+        val id = ROTATE_ORDER.indexOf(this)+steps
+        return ROTATE_ORDER[id.mod(ROTATE_ORDER.size)]
+    }
+
+    //todo test this
+    fun rotate(alpha: Double) {
+        val steps = ((alpha.mod(2*PI)+PI/8)/(PI/4)).toInt()
+        rotate45(steps)
+    }
 
     operator fun plus(dir: Direct) = from(x+dir.x, y+dir.y)
 
@@ -43,5 +61,6 @@ enum class Direct(private val x: Int, private val y: Int) {
 
         val PRIMARY = listOf(UP, DOWN, LEFT, RIGHT)
         val DIAGONAL = listOf(UP_LEFT, UP_RIGHT, DOWN_LEFT, DOWN_RIGHT)
+        val ROTATE_ORDER = listOf(RIGHT, UP_RIGHT, UP, UP_LEFT, LEFT, DOWN_LEFT, DOWN, DOWN_RIGHT)
     }
 }
