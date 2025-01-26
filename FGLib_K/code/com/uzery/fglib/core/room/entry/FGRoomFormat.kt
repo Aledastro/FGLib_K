@@ -5,28 +5,34 @@ import com.uzery.fglib.core.room.RoomLoadUtils
 import com.uzery.fglib.utils.FGUtils
 import com.uzery.fglib.utils.data.entry.FGEntry
 import com.uzery.fglib.utils.data.entry.FGFormat
+import com.uzery.fglib.utils.data.file.TextData
 import com.uzery.fglib.utils.data.getter.AbstractClassGetter
 import com.uzery.fglib.utils.data.getter.ClassGetter
 import com.uzery.fglib.utils.math.geom.shape.RectN
 import java.util.*
 
 object FGRoomFormat: FGRoomSerialization() {
-    val room_info_cg = object: ClassGetter<RectN>() {
+    override fun writeTo(filepath: String, entry: FGRoomLoadEntry, getter: AbstractClassGetter<GameObject>) {
+        val room = RoomLoadUtils.makeRoom(getter, entry).toString()
+
+        TextData.write(filepath, room, true)
+    }
+
+    override fun readFrom(filepath: String): FGRoomLoadEntry {
+        val room = getRoomEntry(filepath)
+
+        return FGRoomLoadEntry(room, ArrayList())
+    }
+
+    /////////////////////////////////////////////////////////////////////////////////////
+
+    private val room_info_cg = object: ClassGetter<RectN>() {
         override fun addAll() {
             add("room", 2) { RectN(pos, size) }
         }
     }
-
-    override fun decoratorStringFrom(room: FGRoomEntry, getter: AbstractClassGetter<GameObject>): String {
-        return RoomLoadUtils.makeRoom(room, getter).toString()
-    }
-
-    override fun stringFrom(room: FGRoomEntry): String {
-        return room.toString().replaceFirst("room entry", "room")
-    }
-
-    override fun roomFrom(source: String): FGRoomEntry {
-        val lines = source.split("\n")
+    private fun getRoomEntry(filename: String): FGRoomEntry {
+        val lines = TextData.readLines(filename)
 
         val list = LinkedList<String>()
         list.addAll(lines)
