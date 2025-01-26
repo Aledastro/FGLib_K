@@ -13,7 +13,7 @@ object FGFormat {
 
     fun entryFrom(input: String): FGEntry {
         val args = ArrayList<ArrayList<String>>()
-        if (input.indexOf(':') == -1) return FGEntry(input, ArrayList())
+        if (input.indexOf(':') == -1) return FGEntry(input, emptyArray())
 
         val name = FGUtils.subBefore(input, ":")
         val argsInput = FGUtils.subAfter(input, ":")
@@ -87,6 +87,6 @@ object FGFormat {
         }
         if (adding != 0) throw DebugData.error("Wrong FGFormat: $input")
 
-        return FGEntry(name, args)
+        return FGEntry(name, Array(args.size) { i -> args[i].toTypedArray() } )
     }
 }
