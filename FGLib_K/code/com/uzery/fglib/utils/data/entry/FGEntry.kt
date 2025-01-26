@@ -11,7 +11,7 @@ data class FGEntry(val name: String, val args: Array<Array<String>>) {
             if (args.isNotEmpty()) {
                 append(":")
                 args.forEach { value ->
-                    val s = value.toString()
+                    val s = value.contentToString()
                     append(if (s[s.lastIndex] == ']') " $s" else " [$s]")
                 }
             }
@@ -25,8 +25,6 @@ data class FGEntry(val name: String, val args: Array<Array<String>>) {
     }
 
     override fun hashCode(): Int {
-        var result = name.hashCode()
-        result = 31*result+args.hashCode()
-        return result
+        return 31*name.hashCode()+args.hashCode()
     }
 }
