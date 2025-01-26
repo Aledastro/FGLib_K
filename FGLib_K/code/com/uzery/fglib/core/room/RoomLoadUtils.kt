@@ -1,9 +1,11 @@
 package com.uzery.fglib.core.room
 
 import com.uzery.fglib.core.obj.GameObject
+import com.uzery.fglib.core.room.entry.FGRoomEntry
 import com.uzery.fglib.core.room.entry.FGRoomFormat
 import com.uzery.fglib.core.room.entry.FGRoomLoadEntry
 import com.uzery.fglib.core.room.entry.FGRoomSerialization
+import com.uzery.fglib.core.room.mask.RoomMask
 import com.uzery.fglib.utils.data.file.TextData
 import com.uzery.fglib.utils.data.getter.AbstractClassGetter
 
@@ -20,6 +22,13 @@ object RoomLoadUtils {
         val room = Room(entry.room.pos, entry.room.size, objects)
         entry.masks.forEach { mask -> mask.apply(room, getter) }
         return room
+    }
+    fun makeRoom(
+        getter: AbstractClassGetter<GameObject>,
+        room: FGRoomEntry,
+        masks: ArrayList<RoomMask> = ArrayList()
+    ): Room {
+        return makeRoom(getter, FGRoomLoadEntry(room, masks))
     }
 
     fun readRoom(
