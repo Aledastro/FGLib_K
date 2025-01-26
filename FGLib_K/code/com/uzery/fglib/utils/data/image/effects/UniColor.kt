@@ -7,7 +7,7 @@ import com.uzery.fglib.utils.graphics.data.FGColor
  * TODO("doc")
  **/
 object UniColor: ImageTransformEffect("uni_color") {
-    override operator fun get(origin: WritableFGImage, args: List<List<String>>): WritableFGImage {
+    override operator fun get(origin: WritableFGImage, args: Array<Array<String>>): WritableFGImage {
         val color = FGColor.web(args[0][0])
 
         val res = WritableFGImage(origin.size)

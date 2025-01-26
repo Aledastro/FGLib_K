@@ -81,7 +81,7 @@ abstract class ClassGetter<Type>: AbstractClassGetter<Type>() {
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     private var in_id = 0
-    private var input = ArrayList<ArrayList<String>>()
+    private lateinit var input: Array<Array<String>>
     protected val string: String
         get() = if (no_info) "" else input[in_id++][0]
     protected val int: Int

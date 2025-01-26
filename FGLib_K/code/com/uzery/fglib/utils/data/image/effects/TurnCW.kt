@@ -8,7 +8,7 @@ import com.uzery.fglib.utils.data.image.WritableFGImage
  * TODO("doc")
  **/
 object TurnCW: ImageTransformEffect("turnCW") {
-    override operator fun get(origin: WritableFGImage, args: List<List<String>>): WritableFGImage {
+    override operator fun get(origin: WritableFGImage, args: Array<Array<String>>): WritableFGImage {
         return when (val degree = MathUtils.mod(args[0][0].toInt(), 360)) {
             0 -> origin
             90 -> TurnCW90[origin]

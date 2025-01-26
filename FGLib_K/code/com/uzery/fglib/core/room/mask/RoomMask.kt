@@ -2,6 +2,7 @@ package com.uzery.fglib.core.room.mask
 
 import com.uzery.fglib.core.obj.GameObject
 import com.uzery.fglib.core.room.Room
+import com.uzery.fglib.core.room.entry.FGRoomEntry
 import com.uzery.fglib.utils.data.entry.FGEntry
 import com.uzery.fglib.utils.data.file.FGLibConst
 import com.uzery.fglib.utils.data.getter.AbstractClassGetter
@@ -21,11 +22,20 @@ data class RoomMask(val name: String, private val actions: ArrayList<RoomChangeA
                 }
 
                 is RoomChangeAction.REMOVE -> {
-                    val obj_id = room.objects.indexOfLast {
+                    val obj_id = room.objects.indexOfFirst {
                         it.toEntry() == action.obj
                     }
                     room.objects.removeAt(obj_id)
                 }
+            }
+        }
+    }
+
+    fun apply(room: FGRoomEntry) {
+        for (action in actions) {
+            when (action) {
+                is RoomChangeAction.ADD -> room.objs.add(action.obj)
+                is RoomChangeAction.REMOVE -> room.objs.remove(action.obj)
             }
         }
     }
