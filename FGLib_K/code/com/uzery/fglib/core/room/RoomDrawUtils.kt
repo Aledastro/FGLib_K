@@ -9,7 +9,7 @@ import kotlin.math.sign
 /**
  * TODO("doc")
  **/
-object RoomUtils {
+object RoomDrawUtils {
     fun drawVisuals(
         draw_pos: PointN,
         vis: ArrayList<Visualiser>,

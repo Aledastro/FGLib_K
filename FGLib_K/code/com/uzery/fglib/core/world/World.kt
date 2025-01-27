@@ -3,7 +3,7 @@ package com.uzery.fglib.core.world
 import com.uzery.fglib.core.component.visual.Visualiser
 import com.uzery.fglib.core.obj.GameObject
 import com.uzery.fglib.core.room.Room
-import com.uzery.fglib.core.room.RoomUtils
+import com.uzery.fglib.core.room.RoomDrawUtils
 import com.uzery.fglib.core.world.controller.WorldController
 import com.uzery.fglib.utils.math.geom.PointN
 
@@ -62,10 +62,10 @@ class World {
         val sort_map = HashMap<Visualiser, PointN>()
         active_rooms.forEach { room ->
             room.objects.forEach { obj ->
-                RoomUtils.addObjVis(vis, pos_map, sort_map, obj)
+                RoomDrawUtils.addObjVis(vis, pos_map, sort_map, obj)
             }
         }
-        RoomUtils.drawVisuals(pos, vis, pos_map, sort_map)
+        RoomDrawUtils.drawVisuals(pos, vis, pos_map, sort_map)
     }
 
     //////////////////////////////////////////////////////////////////////////////////////////////////////////

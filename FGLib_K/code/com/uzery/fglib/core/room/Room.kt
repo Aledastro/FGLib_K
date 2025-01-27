@@ -4,8 +4,8 @@ import com.uzery.fglib.core.component.visual.Visualiser
 import com.uzery.fglib.core.obj.GameObject
 import com.uzery.fglib.core.room.RoomActivateLogics.nextActivate
 import com.uzery.fglib.core.room.RoomMoveLogics.nextMoveOld
-import com.uzery.fglib.core.room.RoomUtils.addObjVis
-import com.uzery.fglib.core.room.RoomUtils.drawVisuals
+import com.uzery.fglib.core.room.RoomDrawUtils.addObjVis
+import com.uzery.fglib.core.room.RoomDrawUtils.drawVisuals
 import com.uzery.fglib.core.room.entry.FGRoomEntry
 import com.uzery.fglib.utils.data.entry.FGEntry
 import com.uzery.fglib.utils.data.file.FGLibConst
