@@ -95,7 +95,7 @@ abstract class GameObject: HavingComponentSyntax {
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     internal val children = ArrayList<GameObject>()
-    internal val followers = ArrayList<GameObject>()
+    val followers = ArrayList<GameObject>()
     var owner: GameObject? = null
 
     val main_owner: GameObject

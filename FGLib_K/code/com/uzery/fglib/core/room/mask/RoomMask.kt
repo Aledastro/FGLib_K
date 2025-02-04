@@ -11,7 +11,7 @@ import com.uzery.fglib.utils.data.getter.AbstractClassGetter
 /**
  * TODO("doc")
  **/
-data class RoomMask(val name: String, private val actions: ArrayList<RoomChangeAction> = ArrayList()) {
+data class RoomMask(val name: String, val actions: ArrayList<RoomChangeAction> = ArrayList()) {
     fun apply(
         room: Room,
         getter: AbstractClassGetter<GameObject>
