@@ -11,7 +11,11 @@ object ImageTransformUtils {
     private val map = HashMap<String, ImageTransformEffect>()
 
     init {
-        addEffect(ReverseX, ReverseY, ReverseXY, TurnCW, TurnCCW, TurnCW90, TurnCCW90, UniColor)
+        addEffect(
+            ReverseX, ReverseY, ReverseXY,
+            TurnCW, TurnCCW, TurnCW90, TurnCCW90, TurnDirect,
+            UniColor
+        )
     }
 
     fun addEffect(vararg effects: ImageTransformEffect) {
