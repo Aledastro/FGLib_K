@@ -1,27 +1,22 @@
 package com.uzery.fglib.core.obj
 
-import com.uzery.fglib.core.component.group.GroupComponent
 import com.uzery.fglib.core.component.HavingComponentSyntax
 import com.uzery.fglib.core.component.ObjectComponent
 import com.uzery.fglib.core.component.ability.AbilityBox
-import com.uzery.fglib.core.component.group.GroupAbility
 import com.uzery.fglib.core.component.bounds.BoundsBox
 import com.uzery.fglib.core.component.bounds.BoundsBox.Companion.CODE
 import com.uzery.fglib.core.component.bounds.BoundsComponent
 import com.uzery.fglib.core.component.bounds.BoundsElement
-import com.uzery.fglib.core.component.group.GroupBounds
 import com.uzery.fglib.core.component.controller.Controller
-import com.uzery.fglib.core.component.group.GroupController
 import com.uzery.fglib.core.component.controller.TempAction
+import com.uzery.fglib.core.component.group.*
 import com.uzery.fglib.core.component.listener.ActionListener
 import com.uzery.fglib.core.component.listener.BoundsInputAction
-import com.uzery.fglib.core.component.group.GroupListener
 import com.uzery.fglib.core.component.listener.InputAction
+import com.uzery.fglib.core.component.reaction.*
 import com.uzery.fglib.core.component.resource.AudioResource
 import com.uzery.fglib.core.component.resource.ImageResource
 import com.uzery.fglib.core.component.resource.SpriteResource
-import com.uzery.fglib.core.component.reaction.*
-import com.uzery.fglib.core.component.group.GroupVisualiser
 import com.uzery.fglib.core.component.visual.LayerVisualiser
 import com.uzery.fglib.core.component.visual.Visualiser
 import com.uzery.fglib.core.obj.stats.Stats
@@ -113,7 +108,6 @@ abstract class GameObject: HavingComponentSyntax {
         }
 
     private val tags = HashSet<String>()
-    private val effects = HashSet<TagEffect>()
 
     var dead = false
         private set
@@ -157,13 +151,8 @@ abstract class GameObject: HavingComponentSyntax {
         if (object_time == 0) onBirth.forEach { it.run() }
 
         bounds.next()
-
         controllers.forEach { it.update() }
-
         abilities.forEach { it.run() }
-
-        effects.forEach { it.update() }
-        effects.removeIf { it.dead }
 
         setMain()
     }
@@ -259,10 +248,6 @@ abstract class GameObject: HavingComponentSyntax {
     fun untag(vararg tag: String) = tags.removeAll(tag.toSet())
 
     fun tagged(tag: String) = tag in tags
-    fun addEffect(vararg effect: TagEffect) = effects.addAll(effect)
-    fun effected(effect: String) = effects.any { it.name == effect }
-    fun effectedAny(vararg effect: String) = effect.any { effected(it) }
-    fun effectedAll(vararg effect: String) = effect.all { effected(it) }
 
     open fun answer(question: String) = false
     open fun answerS(question: String) = ""
