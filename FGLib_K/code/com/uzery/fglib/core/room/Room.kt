@@ -1,11 +1,13 @@
 package com.uzery.fglib.core.room
 
+import com.uzery.fglib.core.component.bounds.Bounds
 import com.uzery.fglib.core.component.visual.Visualiser
 import com.uzery.fglib.core.obj.GameObject
 import com.uzery.fglib.core.room.RoomActivateLogics.nextActivate
-import com.uzery.fglib.core.room.RoomMoveLogics.nextMoveOld
 import com.uzery.fglib.core.room.RoomDrawUtils.addObjVis
 import com.uzery.fglib.core.room.RoomDrawUtils.drawVisuals
+import com.uzery.fglib.core.room.RoomMoveLogics.getBS
+import com.uzery.fglib.core.room.RoomMoveLogics.nextMoveOld
 import com.uzery.fglib.core.room.entry.FGRoomEntry
 import com.uzery.fglib.utils.data.entry.FGEntry
 import com.uzery.fglib.utils.data.file.FGLibConst
@@ -39,6 +41,15 @@ class Room(var pos: PointN, var size: PointN) {
         objects.forEach { initWithFollowers(it) }
     }
 
+    fun allowPos(pos: PointN): Boolean {
+        return !red_bounds.any { rbs -> rbs.bounds.into(pos-rbs.pos) }
+    }
+
+    fun allowBounds(bs: Bounds): Boolean {
+        return !red_bounds.any { rbs -> rbs.bounds.into(pos-rbs.pos) }
+    }
+
+    private var red_bounds = ArrayList<PosBounds>()
     fun next() {
         objects.addAll(new_objects)
         new_objects.clear()
@@ -50,7 +61,8 @@ class Room(var pos: PointN, var size: PointN) {
         objects.forEach { it.nextTimeWithFollowers() }
 
         val all = getAllObjects()
-        nextMoveOld(all)
+        red_bounds = getBS(all)
+        nextMoveOld(red_bounds, all)
         nextActivate(all)
 
         fun addFromObj(obj: GameObject) {

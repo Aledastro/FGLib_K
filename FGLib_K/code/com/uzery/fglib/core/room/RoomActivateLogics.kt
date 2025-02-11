@@ -16,8 +16,8 @@ internal object RoomActivateLogics {
 
         val our = objs.filter { obj -> !obj.tagged("#inactive") && obj.main != null }
 
-        our.forEach { obj ->
-            val main = obj.main ?: return@forEach
+        for (obj in our) {
+            val main = obj.main!!
             val L = (obj.stats.POS+main.L)/ROOM_ACTIVATE_GRID
             val R = (obj.stats.POS+main.R)/ROOM_ACTIVATE_GRID
             for (i in L.intX..R.intX) {

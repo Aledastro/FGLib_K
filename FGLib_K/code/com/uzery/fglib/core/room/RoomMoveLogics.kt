@@ -1,6 +1,5 @@
 package com.uzery.fglib.core.room
 
-import com.uzery.fglib.core.component.bounds.Bounds
 import com.uzery.fglib.core.obj.GameObject
 import com.uzery.fglib.utils.BoundsUtils
 import com.uzery.fglib.utils.CollisionUtils.MAX_MOVE_K
@@ -12,18 +11,18 @@ import com.uzery.fglib.utils.math.geom.PointN
  * TODO("doc")
  **/
 internal object RoomMoveLogics {
-    fun nextMoveOld(objs: ArrayList<GameObject>) {
-        val red_bounds = ArrayList<Bounds>()
-        val pos = ArrayList<PointN>()
+    fun getBS(objs: ArrayList<GameObject>): ArrayList<PosBounds> {
+        val red_bounds = ArrayList<PosBounds>()
 
         objs.forEach {
             val bs = it.bounds.red
             if (!bs.empty) {
-                red_bounds.add(bs)
-                pos.add(it.pos_with_owners)
+                red_bounds.add(PosBounds(it.pos_with_owners, bs))
             }
         }
-
+        return red_bounds
+    }
+    fun nextMoveOld(red_bounds: ArrayList<PosBounds>, objs: ArrayList<GameObject>) {
         for (obj in objs) {
             if (obj.tagged("#immovable")) continue
             obj.stats.lPOS = obj.stats.POS
@@ -37,8 +36,8 @@ internal object RoomMoveLogics {
             fun maxMove(move_p: PointN): Double {
                 if (red_bounds.isEmpty()) return MAX_MOVE_K
 
-                return red_bounds.indices.minOf {
-                    BoundsUtils.maxMoveOld(red_bounds[it], move_bs, pos[it], obj.pos_with_owners, move_p)
+                return red_bounds.indices.minOf { i ->
+                    BoundsUtils.maxMoveOld(red_bounds[i].bounds, move_bs, red_bounds[i].pos, obj.pos_with_owners, move_p)
                 }
             }
 
