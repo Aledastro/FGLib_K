@@ -25,6 +25,9 @@ abstract class ObjectTransform(val obj: GameObject) {
         alpha = a
     }
 
+    open val resize_turnX: Boolean = true
+    open val resize_turnY: Boolean = true
+
     open val addIn: ((pos: PointN, size: PointN) -> Unit)? = null
     open val removeIn: ((pos: PointN, size: PointN) -> Unit)? = null
 
