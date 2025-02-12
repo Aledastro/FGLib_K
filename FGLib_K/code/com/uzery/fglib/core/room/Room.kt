@@ -9,11 +9,13 @@ import com.uzery.fglib.core.room.RoomDrawUtils.drawVisuals
 import com.uzery.fglib.core.room.RoomMoveLogics.getBS
 import com.uzery.fglib.core.room.RoomMoveLogics.nextMoveOld
 import com.uzery.fglib.core.room.entry.FGRoomEntry
+import com.uzery.fglib.utils.ShapeUtils
 import com.uzery.fglib.utils.data.entry.FGEntry
 import com.uzery.fglib.utils.data.file.FGLibConst
 import com.uzery.fglib.utils.data.getter.value.PosValue
 import com.uzery.fglib.utils.data.getter.value.SizeValue
 import com.uzery.fglib.utils.math.geom.PointN
+import com.uzery.fglib.utils.math.geom.Shape
 import com.uzery.fglib.utils.math.geom.shape.RectN
 
 /**
@@ -42,11 +44,29 @@ class Room(var pos: PointN, var size: PointN) {
     }
 
     fun allowPos(pos: PointN): Boolean {
-        return !red_bounds.any { rbs -> rbs.bounds.into(pos-rbs.pos) }
+        return !red_bounds.any { rbs ->
+            rbs.bounds.into(pos-rbs.pos)
+        }
     }
 
-    fun allowBounds(bs: Bounds): Boolean {
-        return !red_bounds.any { rbs -> rbs.bounds.into(pos-rbs.pos) }
+    fun allowShape(sh: Shape, pos: PointN = PointN.ZERO): Boolean {
+        return !red_bounds.any { rbs ->
+            rbs.bounds.elements.any { el ->
+                if (el.now == null) false
+                else ShapeUtils.into(el.now!!, sh.copy(pos-rbs.pos))
+            }
+        }
+    }
+
+    fun allowBounds(bs: Bounds, pos: PointN = PointN.ZERO): Boolean {
+        return !red_bounds.any { rbs ->
+            rbs.bounds.elements.any { el1 ->
+                bs.elements.any { el2 ->
+                    if (el1.now == null || el2.now == null) false
+                    else ShapeUtils.into(el1.now!!, el2.now!!.copy(pos-rbs.pos))
+                }
+            }
+        }
     }
 
     private var red_bounds = ArrayList<PosBounds>()

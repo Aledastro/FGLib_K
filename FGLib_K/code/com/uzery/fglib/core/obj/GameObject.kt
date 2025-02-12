@@ -356,6 +356,10 @@ abstract class GameObject: HavingComponentSyntax {
     fun addGreenBounds(shape: () -> Shape?) = addBounds(CODE.GREEN, shape)
     fun addGreenBounds(name: String, shape: () -> Shape?) = addBounds(CODE.GREEN, name, shape)
 
+    fun addGrayBounds(vararg bs: BoundsElement) = addBounds(CODE.GRAY, *bs)
+    fun addGrayBounds(shape: () -> Shape?) = addBounds(CODE.GRAY, shape)
+    fun addGrayBounds(name: String, shape: () -> Shape?) = addBounds(CODE.GRAY, name, shape)
+
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     fun addController(controller: () -> (() -> TempAction)) = addComponent(Controller(controller))

@@ -23,12 +23,14 @@ class BoundsBox {
         get() = bounds[BLUE]
     val green: Bounds
         get() = bounds[GREEN]
+    val gray: Bounds
+        get() = bounds[GRAY]
     val main: Bounds
         get() = if (red.empty) orange else red
 
 
     companion object {
-        enum class CODE { RED, ORANGE, BLUE, GREEN }
+        enum class CODE { RED, ORANGE, BLUE, GREEN, GRAY }
 
         fun name(index: Int) = CODE.entries[index].name
         fun index(name: String) = CODE.valueOf(name).ordinal
@@ -39,6 +41,7 @@ class BoundsBox {
         val ORANGE = CODE.ORANGE.ordinal
         val BLUE = CODE.BLUE.ordinal
         val GREEN = CODE.GREEN.ordinal
+        val GRAY = CODE.GRAY.ordinal
 
         val indices
             get() = CODE.entries.indices
