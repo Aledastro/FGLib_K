@@ -106,13 +106,15 @@ object WorldDebugUtils: PlatformUpdatable {
             FGColor.RED,
             FGColor.ORANGERED,
             FGColor.BLUE,
-            FGColor.GREEN
+            FGColor.GREEN,
+            FGColor.GRAY
         )
         val colors_h = arrayOf(
             FGColor.RED.interpolate(FGColor.WHITE, 0.5),
             FGColor.ORANGERED.interpolate(FGColor.WHITE, 0.5),
             FGColor.BLUE.interpolate(FGColor.WHITE, 0.5),
-            FGColor.GREEN.interpolate(FGColor.WHITE, 0.5)
+            FGColor.GREEN.interpolate(FGColor.WHITE, 0.5),
+            FGColor.GRAY.interpolate(FGColor.WHITE, 0.5)
         )
         val bs = o.bounds[color_id]
         if (bs.empty) return

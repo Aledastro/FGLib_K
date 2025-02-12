@@ -9,6 +9,7 @@ import com.uzery.fglib.core.room.RoomDrawUtils.drawVisuals
 import com.uzery.fglib.core.room.RoomMoveLogics.getBS
 import com.uzery.fglib.core.room.RoomMoveLogics.nextMoveOld
 import com.uzery.fglib.core.room.entry.FGRoomEntry
+import com.uzery.fglib.utils.BoundsUtils
 import com.uzery.fglib.utils.ShapeUtils
 import com.uzery.fglib.utils.data.entry.FGEntry
 import com.uzery.fglib.utils.data.file.FGLibConst
@@ -51,21 +52,13 @@ class Room(var pos: PointN, var size: PointN) {
 
     fun allowShape(sh: Shape, pos: PointN = PointN.ZERO): Boolean {
         return !red_bounds.any { rbs ->
-            rbs.bounds.elements.any { el ->
-                if (el.now == null) false
-                else ShapeUtils.into(el.now!!, sh.copy(pos-rbs.pos))
-            }
+            BoundsUtils.intoShape(rbs.bounds, sh, pos-rbs.pos)
         }
     }
 
     fun allowBounds(bs: Bounds, pos: PointN = PointN.ZERO): Boolean {
         return !red_bounds.any { rbs ->
-            rbs.bounds.elements.any { el1 ->
-                bs.elements.any { el2 ->
-                    if (el1.now == null || el2.now == null) false
-                    else ShapeUtils.into(el1.now!!, el2.now!!.copy(pos-rbs.pos))
-                }
-            }
+            BoundsUtils.into(rbs.bounds, bs, pos-rbs.pos)
         }
     }
 
@@ -83,7 +76,7 @@ class Room(var pos: PointN, var size: PointN) {
         val all = getAllObjects()
         red_bounds = getBS(all)
         nextMoveOld(red_bounds, all)
-        nextActivate(all)
+        nextActivate(red_bounds, all)
 
         fun addFromObj(obj: GameObject) {
             new_objects.addAll(obj.children)

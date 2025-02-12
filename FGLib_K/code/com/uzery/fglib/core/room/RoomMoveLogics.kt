@@ -14,10 +14,10 @@ internal object RoomMoveLogics {
     fun getBS(objs: ArrayList<GameObject>): ArrayList<PosBounds> {
         val red_bounds = ArrayList<PosBounds>()
 
-        objs.forEach {
-            val bs = it.bounds.red
+        objs.forEach { obj ->
+            val bs = obj.bounds.red
             if (!bs.empty) {
-                red_bounds.add(PosBounds(it.pos_with_owners, bs))
+                red_bounds.add(PosBounds(obj.pos_with_owners, bs, obj))
             }
         }
         return red_bounds

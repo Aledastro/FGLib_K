@@ -11,10 +11,25 @@ import com.uzery.fglib.utils.struct.num.IntI
  * TODO("doc")
  **/
 internal object RoomActivateLogics {
-    fun nextActivate(objs: ArrayList<GameObject>) {
-        val cell_map = HashMap<IntI, ArrayList<GameObject>>()
-
+    fun nextActivate(red_bounds: ArrayList<PosBounds>, objs: ArrayList<GameObject>) {
         val our = objs.filter { obj -> !obj.tagged("#inactive") && obj.main != null }
+
+        our.filter { !it.bounds.gray.empty }.forEach { obj ->
+            red_bounds.forEach { rbs ->
+                rbs.bounds.elements.forEach { el1 ->
+                    obj.bounds.gray.elements.forEach { el2 ->
+                        setActivate(obj, el2, rbs.o, el1, "#OVERLAP")
+                        setActivate(rbs.o, el1, obj, el2, "#OVERLAP_I")
+                    }
+                }
+            }
+        }
+
+        activateOur(our)
+    }
+
+    private fun activateOur(our: List<GameObject>) {
+        val cell_map = HashMap<IntI, ArrayList<GameObject>>()
 
         for (obj in our) {
             val main = obj.main!!
