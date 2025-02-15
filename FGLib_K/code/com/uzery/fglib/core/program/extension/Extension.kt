@@ -5,6 +5,7 @@ import com.uzery.fglib.core.program.Platform
 import com.uzery.fglib.core.program.Platform.getGlobalOnTop
 import com.uzery.fglib.core.program.Platform.graphics
 import com.uzery.fglib.core.program.Platform.mouse
+import com.uzery.fglib.utils.graphics.data.FGColor
 import com.uzery.fglib.utils.math.geom.PointN
 import com.uzery.fglib.utils.math.geom.shape.RectN
 
@@ -254,6 +255,15 @@ abstract class Extension(vararg children: Extension) {
     private var ready_to_collapse = false
     fun collapse() {
         ready_to_collapse = true
+    }
+
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    fun drawBounds(color: FGColor = FGColor.DARKBLUE) {
+        val save_width = graphics.stroke.width
+        graphics.stroke.width = 1.0
+        graphics.stroke.rect(stats.real_pos, stats.size, color)
+        graphics.stroke.width = save_width
     }
 
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
