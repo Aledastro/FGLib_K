@@ -202,11 +202,7 @@ abstract class GameObject: HavingComponentSyntax {
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    protected fun produce(vararg os: GameObject) {
-        children.addAll(os)
-    }
-
-    protected fun produce(os: List<GameObject>) {
+    fun produce(vararg os: GameObject) {
         children.addAll(os)
     }
 
