@@ -1,6 +1,6 @@
 package com.uzery.fglib.core.obj
 
-import com.uzery.fglib.core.component.HavingComponentSyntax
+import com.uzery.fglib.core.component.ComponentFunctionality
 import com.uzery.fglib.core.component.ObjectComponent
 import com.uzery.fglib.core.component.ability.AbilityBox
 import com.uzery.fglib.core.component.bounds.BoundsBox
@@ -44,9 +44,9 @@ import com.uzery.fglib.utils.struct.num.IntI
  * @see [Stats]
  * @see [ObjectComponent]
  * @see [ObjectTransform]
- * @see [HavingComponentSyntax]
+ * @see [ComponentFunctionality]
  **/
-abstract class GameObject: HavingComponentSyntax {
+abstract class GameObject: ComponentFunctionality {
     val stats = Stats()
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////

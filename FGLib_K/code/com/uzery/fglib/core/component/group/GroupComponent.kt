@@ -1,6 +1,6 @@
 package com.uzery.fglib.core.component.group
 
-import com.uzery.fglib.core.component.HavingComponentSyntax
+import com.uzery.fglib.core.component.ComponentFunctionality
 import com.uzery.fglib.core.component.ObjectComponent
 import com.uzery.fglib.core.component.ability.AbilityBox
 import com.uzery.fglib.core.component.bounds.BoundsBox.Companion.CODE
@@ -30,9 +30,9 @@ import com.uzery.fglib.utils.struct.num.IntI
  *
  * Adding this to [GameObject] is equivalent of adding all it's children
  *
- * Can add elements via [HavingComponentSyntax]
+ * Can add elements via [ComponentFunctionality]
  **/
-open class GroupComponent(vararg component: ObjectComponent): ObjectComponent, HavingComponentSyntax {
+open class GroupComponent(vararg component: ObjectComponent): ObjectComponent, ComponentFunctionality {
     val components = ArrayList<ObjectComponent>()
 
     init {

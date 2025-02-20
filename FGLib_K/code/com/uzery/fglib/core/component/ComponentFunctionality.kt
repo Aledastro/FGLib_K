@@ -10,6 +10,6 @@ package com.uzery.fglib.core.component
  * }
  * ```
  **/
-interface HavingComponentSyntax {
+interface ComponentFunctionality {
     fun addComponent(vararg component: ObjectComponent)
 }
