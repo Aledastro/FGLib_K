@@ -16,6 +16,10 @@ enum class Direct(private val x: Int, private val y: Int) {
     val value = IntI(x, y)
     val valueP = PointN(value)
     val p = if (value == IntI()) PointN.ZERO else valueP/valueP.length()
+    val vertical
+        get() = this in VERTICAL
+    val horizontal
+        get() = this in HORIZONTAL
 
     fun alpha(): Double {
         return MathUtils.getDegree(p)
