@@ -12,7 +12,6 @@ import com.uzery.fglib.utils.data.getter.AbstractClassGetter
 import com.uzery.fglib.utils.data.getter.ClassGetter
 import com.uzery.fglib.utils.math.geom.shape.RectN
 import java.util.*
-import kotlin.collections.ArrayList
 
 object FGRoomFormat: FGRoomSerialization() {
     override fun writeTo(filepath: String, entry: FGRoomLoadEntry, getter: AbstractClassGetter<GameObject>) {

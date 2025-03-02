@@ -23,6 +23,7 @@ object RoomLoadUtils {
         entry.masks.forEach { mask -> mask.apply(room, getter) }
         return room
     }
+
     fun makeRoom(
         getter: AbstractClassGetter<GameObject>,
         room: FGRoomEntry,

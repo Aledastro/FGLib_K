@@ -12,6 +12,6 @@ import com.uzery.fglib.utils.math.geom.PointN
 data class DrawLayer(val z: PointN, val sort: Double, val name: String = "unnamed") {
     companion object {
         val CAMERA_OFF = DrawLayer(PointN(0.0, 0.0), 0.0, "UTIL_CAMERA_OFF")
-        val CAMERA_FOLLOW = DrawLayer(PointN(1.0, 1.0),1.0, "UTIL_CAMERA_FOLLOW")
+        val CAMERA_FOLLOW = DrawLayer(PointN(1.0, 1.0), 1.0, "UTIL_CAMERA_FOLLOW")
     }
 }

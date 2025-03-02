@@ -45,6 +45,7 @@ object BoundsUtils {
             }
         }
     }
+
     fun intoShape(b1: Bounds, sh: Shape, pos: PointN = PointN.ZERO): Boolean {
         return b1.elements.any { el1 ->
             if (el1.now == null) false

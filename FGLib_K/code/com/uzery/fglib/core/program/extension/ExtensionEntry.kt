@@ -5,6 +5,7 @@ internal data class ExtensionEntry(val e: Extension, val isAdd: Boolean) {
         fun ADD(e: Extension): ExtensionEntry {
             return ExtensionEntry(e, true)
         }
+
         fun REMOVE(e: Extension): ExtensionEntry {
             return ExtensionEntry(e, false)
         }

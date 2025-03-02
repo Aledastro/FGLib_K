@@ -22,6 +22,7 @@ internal object RoomMoveLogics {
         }
         return red_bounds
     }
+
     fun nextMoveOld(red_bounds: ArrayList<PosBounds>, objs: ArrayList<GameObject>) {
         for (obj in objs) {
             if (obj.tagged("#immovable")) continue
@@ -37,7 +38,13 @@ internal object RoomMoveLogics {
                 if (red_bounds.isEmpty()) return MAX_MOVE_K
 
                 return red_bounds.indices.minOf { i ->
-                    BoundsUtils.maxMoveOld(red_bounds[i].bounds, move_bs, red_bounds[i].pos, obj.pos_with_owners, move_p)
+                    BoundsUtils.maxMoveOld(
+                        red_bounds[i].bounds,
+                        move_bs,
+                        red_bounds[i].pos,
+                        obj.pos_with_owners,
+                        move_p
+                    )
                 }
             }
 

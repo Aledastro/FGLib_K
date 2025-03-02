@@ -87,6 +87,6 @@ object FGFormat {
         }
         if (adding != 0) throw DebugData.error("Wrong FGFormat: $input")
 
-        return FGEntry(name, Array(args.size) { i -> args[i].toTypedArray() } )
+        return FGEntry(name, Array(args.size) { i -> args[i].toTypedArray() })
     }
 }

@@ -10,7 +10,6 @@ import com.uzery.fglib.core.room.RoomMoveLogics.getBS
 import com.uzery.fglib.core.room.RoomMoveLogics.nextMoveOld
 import com.uzery.fglib.core.room.entry.FGRoomEntry
 import com.uzery.fglib.utils.BoundsUtils
-import com.uzery.fglib.utils.ShapeUtils
 import com.uzery.fglib.utils.data.entry.FGEntry
 import com.uzery.fglib.utils.data.file.FGLibConst
 import com.uzery.fglib.utils.data.getter.value.PosValue

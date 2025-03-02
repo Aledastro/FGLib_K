@@ -15,6 +15,7 @@ data class BoundsElement(var group: String, val name: String, private val shape:
 
     var now = shape()
         private set
+
     fun next() {
         now = shape()
     }
