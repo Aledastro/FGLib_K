@@ -59,8 +59,14 @@ enum class Direct(private val x: Int, private val y: Int) {
             return from(x.sign.toInt(), y.sign.toInt())
         }
 
+        val VERTICAL = listOf(UP, DOWN)
+        val HORIZONTAL = listOf(LEFT, RIGHT)
+
         val PRIMARY = listOf(UP, DOWN, LEFT, RIGHT)
         val DIAGONAL = listOf(UP_LEFT, UP_RIGHT, DOWN_LEFT, DOWN_RIGHT)
+
         val ROTATE_ORDER = listOf(RIGHT, UP_RIGHT, UP, UP_LEFT, LEFT, DOWN_LEFT, DOWN, DOWN_RIGHT)
+        val ROTATE_PRIMARY = listOf(RIGHT, UP, LEFT, DOWN)
+        val ROTATE_DIAGONAL = listOf(UP_RIGHT, UP_LEFT, DOWN_LEFT, DOWN_RIGHT)
     }
 }
