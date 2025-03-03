@@ -21,9 +21,15 @@ abstract class ObjectTransform(val obj: GameObject) {
     open val resize_move: (d_size: PointN) -> Unit
         get() = this.move
 
-    open val turnTo: ((a: Double) -> Unit)? = { a ->
+    open val rotateTo: (a: Double) -> Unit = { a ->
         alpha = a
     }
+    open val flipH: ((a: Double) -> Unit)? = null
+    open val flipV: ((a: Double) -> Unit)? = null
+
+    open val group_rotate_to: ((a: Double) -> Unit)? = null
+    open val group_flipH: ((a: Double) -> Unit)? = null
+    open val group_flipV: ((a: Double) -> Unit)? = null
 
     open val resize_turnX: Boolean = true
     open val resize_turnY: Boolean = true
