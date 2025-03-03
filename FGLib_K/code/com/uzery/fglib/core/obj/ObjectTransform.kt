@@ -27,9 +27,12 @@ abstract class ObjectTransform(val obj: GameObject) {
     open val flipH: ((a: Double) -> Unit)? = null
     open val flipV: ((a: Double) -> Unit)? = null
 
-    open val group_rotate_to: ((a: Double) -> Unit)? = null
-    open val group_flipH: ((a: Double) -> Unit)? = null
-    open val group_flipV: ((a: Double) -> Unit)? = null
+    open val group_rotate_to: ((a: Double) -> Unit)?
+        get() = rotateTo
+    open val group_flipH: ((a: Double) -> Unit)?
+        get() = flipH
+    open val group_flipV: ((a: Double) -> Unit)?
+        get() = flipV
 
     open val resize_turnX: Boolean = true
     open val resize_turnY: Boolean = true
