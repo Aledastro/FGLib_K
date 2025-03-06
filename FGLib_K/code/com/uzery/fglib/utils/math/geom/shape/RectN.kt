@@ -1,5 +1,7 @@
 package com.uzery.fglib.utils.math.geom.shape
 
+import com.uzery.fglib.utils.data.getter.value.PosValue
+import com.uzery.fglib.utils.data.getter.value.SizeValue
 import com.uzery.fglib.utils.math.geom.PointN
 import com.uzery.fglib.utils.math.geom.Shape
 
@@ -21,7 +23,7 @@ data class RectN(val pos: PointN, val size: PointN): Shape() {
     override val code = Code.RECT
 
     override fun toString(): String {
-        return "rect[$pos, $size]"
+        return "rect[${PosValue(pos)}, ${SizeValue(size)}]"
     }
 
     companion object {

@@ -1,5 +1,7 @@
 package com.uzery.fglib.utils.math.geom.shape
 
+import com.uzery.fglib.utils.data.getter.value.PosValue
+import com.uzery.fglib.utils.data.getter.value.SizeValue
 import com.uzery.fglib.utils.math.geom.PointN
 import com.uzery.fglib.utils.math.geom.Shape
 
@@ -23,7 +25,7 @@ data class OvalN(val pos: PointN, val size: PointN): Shape() {
     override val code = Code.OVAL
 
     override fun toString(): String {
-        return "oval[$pos, $size]"
+        return "oval[${PosValue(pos)}, ${SizeValue(size)}]"
     }
 
     companion object {
