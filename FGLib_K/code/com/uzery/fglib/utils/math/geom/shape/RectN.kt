@@ -23,7 +23,7 @@ data class RectN(val pos: PointN, val size: PointN): Shape() {
     override val code = Code.RECT
 
     override fun toString(): String {
-        return "rect[${PosValue(pos)}, ${SizeValue(size)}]"
+        return "rect[${PosValue(pos)} ${SizeValue(size)}]"
     }
 
     companion object {

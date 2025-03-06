@@ -25,7 +25,7 @@ data class OvalN(val pos: PointN, val size: PointN): Shape() {
     override val code = Code.OVAL
 
     override fun toString(): String {
-        return "oval[${PosValue(pos)}, ${SizeValue(size)}]"
+        return "oval[${PosValue(pos)} ${SizeValue(size)}]"
     }
 
     companion object {
