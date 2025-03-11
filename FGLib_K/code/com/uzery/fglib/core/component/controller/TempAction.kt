@@ -23,15 +23,24 @@ abstract class TempAction {
         update()
 
         if (ends()) {
+            onSuccessFinish()
             finish()
             finished = true
         }
         temp_time++
     }
 
+    internal fun breakFinish() {
+        onBrokenFinish()
+        finish()
+        finished = true
+    }
+
     open fun start() {}
     open fun update() {}
     open fun finish() {}
+    open fun onSuccessFinish() {}
+    open fun onBrokenFinish() {}
 
     open fun activate(action: InputAction) {}
 

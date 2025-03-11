@@ -10,18 +10,28 @@ import com.uzery.fglib.core.component.listener.InputAction
  *
  * Useful to create a complex behaviour, such as state machines
  **/
-class Controller(private val f: () -> (() -> TempAction)?): ObjectComponent {
+open class Controller(private val f: () -> (() -> TempAction)?): ObjectComponent {
     fun get(): (() -> TempAction)? {
         return f()
     }
 
     private var temp: TempAction? = null
+    private fun newAction() {
+        temp = get()?.invoke()
+    }
+
     fun update() {
-        if (temp == null || temp!!.finished) temp = get()?.invoke()
+        if (temp == null || temp!!.finished) newAction()
+        else if (isBroken()) {
+            temp?.breakFinish()
+            newAction()
+        }
         temp?.next()
     }
 
     fun activate(action: InputAction) {
         temp?.activate(action)
     }
+
+    open fun isBroken(): Boolean = false
 }
