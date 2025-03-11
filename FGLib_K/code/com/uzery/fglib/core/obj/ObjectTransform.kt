@@ -24,11 +24,14 @@ abstract class ObjectTransform(val obj: GameObject) {
     open val rotateTo: (a: Double) -> Unit = { a ->
         alpha = a
     }
+    open val rotate_once: (() -> Unit)? = null
     open val flipH: (() -> Unit)? = null
     open val flipV: (() -> Unit)? = null
 
     open val group_rotate_to: ((a: Double) -> Unit)?
         get() = rotateTo
+    open val group_rotate_once: (() -> Unit)?
+        get() = rotate_once
     open val group_flipH: (() -> Unit)?
         get() = flipH
     open val group_flipV: (() -> Unit)?
