@@ -4,6 +4,7 @@ import com.uzery.fglib.core.component.bounds.BoundsBox
 import com.uzery.fglib.core.component.bounds.BoundsElement
 import com.uzery.fglib.core.obj.DrawLayer
 import com.uzery.fglib.core.obj.GameObject
+import com.uzery.fglib.core.obj.UtilTags.util_immovable
 import com.uzery.fglib.core.program.Platform
 import com.uzery.fglib.core.program.Platform.graphics
 import com.uzery.fglib.core.program.Platform.render_camera
@@ -67,7 +68,7 @@ object WorldDebugUtils: PlatformUpdatable {
 
             val c = when {
                 o.stats.fly -> FGColor(1.0, 1.0, 0.2, 0.7)
-                o.tagged("#immovable") -> FGColor(0.8, 0.8, 0.8, 0.5)
+                o.tagged(util_immovable) -> FGColor(0.8, 0.8, 0.8, 0.5)
                 else -> FGColor(1.0, 0.2, 1.0, 0.7)
             }
             val n = map[draw_pos]!!

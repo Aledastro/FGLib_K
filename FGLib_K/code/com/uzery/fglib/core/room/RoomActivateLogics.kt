@@ -3,6 +3,7 @@ package com.uzery.fglib.core.room
 import com.uzery.fglib.core.component.bounds.BoundsElement
 import com.uzery.fglib.core.component.listener.InputAction
 import com.uzery.fglib.core.obj.GameObject
+import com.uzery.fglib.core.obj.UtilTags.util_inactive
 import com.uzery.fglib.core.program.FGLibSettings.ROOM_ACTIVATE_GRID
 import com.uzery.fglib.utils.ShapeUtils
 import com.uzery.fglib.utils.struct.num.IntI
@@ -12,7 +13,7 @@ import com.uzery.fglib.utils.struct.num.IntI
  **/
 internal object RoomActivateLogics {
     fun nextActivate(red_bounds: ArrayList<PosBounds>, objs: ArrayList<GameObject>) {
-        val our = objs.filter { obj -> !obj.tagged("#inactive") && obj.main != null }
+        val our = objs.filter { obj -> !obj.tagged(util_inactive) && obj.main != null }
 
         our.filter { !it.bounds.gray.empty }.forEach { obj ->
             red_bounds.forEach { rbs ->

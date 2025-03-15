@@ -14,7 +14,7 @@ abstract class SmartGameObject<Type>: GameObject() {
     abstract val filename: String
 
     init {
-        tag("#smart_object")
+        tag()
     }
 
     protected fun execute() {

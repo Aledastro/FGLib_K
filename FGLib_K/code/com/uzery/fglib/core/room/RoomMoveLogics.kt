@@ -1,6 +1,7 @@
 package com.uzery.fglib.core.room
 
 import com.uzery.fglib.core.obj.GameObject
+import com.uzery.fglib.core.obj.UtilTags.util_immovable
 import com.uzery.fglib.utils.BoundsUtils
 import com.uzery.fglib.utils.CollisionUtils.MAX_MOVE_K
 import com.uzery.fglib.utils.CollisionUtils.SUPER_K
@@ -25,7 +26,7 @@ internal object RoomMoveLogics {
 
     fun nextMoveOld(red_bounds: ArrayList<PosBounds>, objs: ArrayList<GameObject>) {
         for (obj in objs) {
-            if (obj.tagged("#immovable")) continue
+            if (obj.tagged(util_immovable)) continue
             obj.stats.lPOS = obj.stats.POS
             val move_bs = obj.bounds.orange
 
