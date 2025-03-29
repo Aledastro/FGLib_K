@@ -4,5 +4,5 @@ import com.uzery.fglib.core.room.mask.RoomMask
 
 data class FGRoomLoadEntry(
     val room: FGRoomEntry,
-    val masks: ArrayList<RoomMask>
+    val masks: List<RoomMask>
 )

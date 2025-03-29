@@ -4,6 +4,7 @@ import com.uzery.fglib.core.obj.GameObject
 import com.uzery.fglib.core.room.RoomLoadUtils
 import com.uzery.fglib.core.room.mask.RoomMask
 import com.uzery.fglib.utils.FGUtils
+import com.uzery.fglib.utils.FileUtils
 import com.uzery.fglib.utils.data.debug.DebugData
 import com.uzery.fglib.utils.data.entry.FGEntry
 import com.uzery.fglib.utils.data.entry.FGFormat
@@ -13,10 +14,10 @@ import com.uzery.fglib.utils.data.getter.ClassGetter
 import com.uzery.fglib.utils.math.geom.shape.RectN
 import java.util.*
 
-object FGRoomFormat: FGRoomSerialization() {
+object FGRoomFormat: RoomSerialization() {
     override fun writeTo(filepath: String, entry: FGRoomLoadEntry, getter: AbstractClassGetter<GameObject>) {
+        val dir = getDedicatedDir(filepath)
         writeRoom(filepath, entry.room, getter)
-        val dir = getDir(filepath)
         entry.masks.forEach { mask -> writeMask(dir+mask.name+".mask", mask) }
     }
 
@@ -33,10 +34,15 @@ object FGRoomFormat: FGRoomSerialization() {
     /////////////////////////////////////////////////////////////////////////////////////
 
     override fun readFrom(filepath: String): FGRoomLoadEntry {
-        val room = getRoomEntry(filepath)
-        val masks = getAllMasks(filepath)
+        val files = TextData.filesFrom(getDedicatedDir(filepath))
 
-        return FGRoomLoadEntry(room, masks)
+        val room_filename = filepath //files.find { FileUtils.extensionOf(it) == "room" }
+            ?: throw DebugData.error("room file not found in: $filepath")
+
+        val mask_filenames = files.filter { filename -> FileUtils.extensionOf(filename) == "mask" }
+        val masks = List(mask_filenames.size) { i -> getMask(mask_filenames[i]) }
+
+        return FGRoomLoadEntry(getRoomEntry(room_filename), masks)
     }
 
     /////////////////////////////////////////////////////////////////////////////////////
@@ -61,28 +67,14 @@ object FGRoomFormat: FGRoomSerialization() {
             objects.add(FGFormat.entryFrom(next))
         }
 
-        return FGRoomEntry(room_info.pos, room_info.size, objects)
+        return FGRoomEntry(FileUtils.nameOf(filename), room_info.pos, room_info.size, objects)
     }
 
     /////////////////////////////////////////////////////////////////////////////////////
 
-    private fun getAllMasks(filepath: String): ArrayList<RoomMask> {
-        val masks = ArrayList<RoomMask>()
-        val dir = getDir(filepath)
-        val files = TextData.filesFrom(dir)
-        val mask_filenames = files.filter { filename -> filename.endsWith(".mask") }
-
-        mask_filenames.forEach { filename ->
-            masks.add(getMask(filename))
-        }
-
-        return masks
-    }
-
     private fun getMask(filename: String): RoomMask {
         val lines = getLines(filename)
-        val name = filename.substring(filename.lastIndexOf("/")+1, filename.lastIndexOf("."))
-        val mask = RoomMask(name)
+        val mask = RoomMask(FileUtils.nameOf(filename))
 
         while (lines.isNotEmpty()) {
             val next = lines.removeFirst()
@@ -102,10 +94,10 @@ object FGRoomFormat: FGRoomSerialization() {
 
     /////////////////////////////////////////////////////////////////////////////////////
 
-    private fun getDir(filepath: String): String {
-        val prev = filepath.substring(0, filepath.lastIndexOf("/")+1)
-        val name = filepath.substring(filepath.lastIndexOf("/")+1)
-        return prev+name.substring(0, name.lastIndexOf("."))+"/"
+    private fun getDedicatedDir(filepath: String): String {
+        val prev = FileUtils.dirOf(filepath)
+        val name = FileUtils.nameOf(filepath)
+        return "$prev/$name/"
     }
 
     private fun getLines(filename: String): LinkedList<String> {

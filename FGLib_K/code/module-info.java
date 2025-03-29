@@ -32,6 +32,7 @@ module FGLib_K {
     exports com.uzery.fglib.core.world;
     exports com.uzery.fglib.core.world.camera;
     exports com.uzery.fglib.core.world.controller;
+    exports com.uzery.fglib.core.world.system;
 
     /////////////////////////////////////////////////////////
 

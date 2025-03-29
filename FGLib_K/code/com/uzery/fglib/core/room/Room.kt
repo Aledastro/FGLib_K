@@ -21,7 +21,7 @@ import com.uzery.fglib.utils.math.geom.shape.RectN
 /**
  * TODO("doc")
  **/
-class Room(var pos: PointN, var size: PointN) {
+class Room(val name: String, var pos: PointN, var size: PointN) {
     //todo private
     val objects = ArrayList<GameObject>()
     private val new_objects = ArrayList<GameObject>()
@@ -30,7 +30,7 @@ class Room(var pos: PointN, var size: PointN) {
     val main
         get() = RectN(pos, size)
 
-    constructor(pos: PointN, size: PointN, objs: List<GameObject>): this(pos, size) {
+    constructor(name: String, pos: PointN, size: PointN, objs: List<GameObject>): this(name, pos, size) {
         objects.addAll(objs)
     }
 
@@ -125,7 +125,7 @@ class Room(var pos: PointN, var size: PointN) {
             if (!o.isTemp()) objs.add(o.toEntry())
         }
 
-        return FGRoomEntry(PointN(pos), PointN(size), objs)
+        return FGRoomEntry(name, PointN(pos), PointN(size), objs)
     }
 
     override fun toString(): String {

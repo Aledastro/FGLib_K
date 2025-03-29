@@ -5,6 +5,7 @@ import com.uzery.fglib.core.obj.GameObject
 import com.uzery.fglib.core.room.Room
 import com.uzery.fglib.core.room.RoomDrawUtils
 import com.uzery.fglib.core.world.controller.WorldController
+import com.uzery.fglib.core.world.system.WorldSystem
 import com.uzery.fglib.utils.math.geom.PointN
 
 /**
@@ -16,44 +17,52 @@ class World {
     private val last_active = HashMap<Room, Boolean>()
 
     lateinit var controller: WorldController
+    private lateinit var systems: Array<WorldSystem>
 
     //////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    fun init(rooms: Array<Room>, controller: WorldController, init_rooms: Boolean = true) {
+    fun init(controller: WorldController, systems: Array<WorldSystem>, rooms: Array<Room>, init_rooms: Boolean = true) {
         this.controller = controller
-        controller.init()
+        controller.init(this)
 
         this.rooms.addAll(rooms)
 
         if (init_rooms) rooms.forEach { it.init() }
+
+        this.systems = systems
+        systems.forEach { it.init(this) }
     }
 
     //////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     fun next() {
-        controller.update()
+        controller.update(this)
+
         active_rooms.clear()
         for (room in rooms) {
-            if (controller.isActive(room)) {
-                if (last_active[room] != true) controller.onAppear(room)
+            if (controller.isActive(this, room)) {
+                if (last_active[room] != true) controller.onAppear(this, room)
                 active_rooms.add(room)
                 last_active[room] = true
             } else {
-                if (last_active[room] == true) controller.onDisappear(room)
+                if (last_active[room] == true) controller.onDisappear(this, room)
                 last_active[room] = false
             }
         }
         active_rooms.forEach { it.next() }
+
+        systems.sortBy { it.priority }
+        systems.forEach { it.update(this) }
     }
 
     //////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     fun draw(pos: PointN = PointN.ZERO) {
-        val drawPOS = pos-controller.drawPOS()
+        val drawPOS = pos-controller.drawPOS(this)
 
-        controller.draw(drawPOS)
+        controller.draw(this, drawPOS)
         drawRooms(drawPOS)
-        controller.drawAfter(drawPOS)
+        controller.drawAfter(this, drawPOS)
     }
 
     private fun drawRooms(pos: PointN) {
@@ -71,7 +80,7 @@ class World {
     //////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     fun add(o: GameObject) {
-        controller.roomFor(o).add(o)
+        controller.roomFor(this, o).add(o)
     }
 
     //////////////////////////////////////////////////////////////////////////////////////////////////////////

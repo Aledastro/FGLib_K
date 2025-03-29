@@ -14,11 +14,11 @@ import com.uzery.fglib.utils.math.geom.shape.RectN
 /**
  * TODO("doc")
  **/
-class MovableWC(private val world: World): CameraWorldController() {
+class MovableWC: CameraWorldController() {
     private val SIZE = Int.MAX_VALUE/2
     private val SIZE_P = PointN(SIZE, SIZE)
 
-    private val void = Room(-SIZE_P/2, SIZE_P)
+    private val void = Room("void", -SIZE_P/2, SIZE_P)
 
     private var goal: GameObject? = null
     private var room_p: Double = 10.0
@@ -37,11 +37,11 @@ class MovableWC(private val world: World): CameraWorldController() {
     var goal_room = void
         private set
 
-    override fun init() {
+    override fun init(world: World) {
 
     }
 
-    override fun isActive(r: Room): Boolean {
+    override fun isActive(world: World, r: Room): Boolean {
         val pos = PointN(room_p, -room_p)
         val rect1 = RectN(r.pos-pos, r.size+pos*2)
         val rect2 = RectN(r.pos+pos, r.size-pos*2)
@@ -49,25 +49,25 @@ class MovableWC(private val world: World): CameraWorldController() {
         return ShapeUtils.into(rect1, camera_main) || ShapeUtils.into(rect2, camera_main)
     }
 
-    override fun onAppear(r: Room) {
-        moveObjs()
+    override fun onAppear(world: World, r: Room) {
+        moveObjs(world)
     }
 
-    override fun onDisappear(r: Room) {
+    override fun onDisappear(world: World, r: Room) {
         /*for (o in r.objects) {
             if(roomFor(o)!=void){
                 world.add(o)
             }
         }*/
 
-        moveObjs()
+        moveObjs(world)
     }
 
-    private fun moveObjs() {
+    private fun moveObjs(world: World) {
         fun moveGoal() {
             val goal = goal ?: return
 
-            val newRoom = roomFor(goal)
+            val newRoom = roomFor(world, goal)
             goal.stats.POS += goal_room.pos-newRoom.pos
             goal.stats.roomPOS = newRoom.pos
             camera?.stats?.roomPOS = goal.stats.roomPOS
@@ -84,7 +84,7 @@ class MovableWC(private val world: World): CameraWorldController() {
             val objectsToAdd = ArrayList<Pair<Room, GameObject>>()
             oldRoom.objects.filter { it.tagged("migrator") }.forEach { obj ->
                 if (!isInArea(oldRoom, obj) || oldRoom == void) {
-                    val newRoom = roomFor(obj)
+                    val newRoom = roomFor(world, obj)
                     objectsToRemove.add(obj)
                     objectsToAdd.add(Pair(newRoom, obj))
                     obj.stats.POS += oldRoom.pos-newRoom.pos
@@ -103,27 +103,21 @@ class MovableWC(private val world: World): CameraWorldController() {
         return r.main.into(obj.stats.realPOS)
     }
 
-    override fun roomFor(obj: GameObject): Room {
+    override fun roomFor(world: World, obj: GameObject): Room {
         return world.rooms.firstOrNull { isInArea(it, obj) } ?: void
     }
 
-    override fun update0() {
-        graphics.fill.font("TimesNewRoman", 12.0/2, FGFontWeight.BOLD)
-        graphics.fill.textL(PointN(20, 60), "pos: "+goal?.stats?.POS, FGColor.BLACK)
-        /*if(Platform.keyboard.pressed(KeyCode.CONTROL) && Platform.keyboard.inPressed(KeyCode.R)) {
-            active_rooms.forEach { room->room.objects.removeIf { it.tagged("player") } }
-            world.add(goal)
-        }*/
+    override fun update0(world: World) {
         void.next()
 
-        moveObjs()
+        moveObjs(world)
     }
 
     override fun drawPOS0(): PointN {
         return goal_room.pos
     }
 
-    override fun draw(pos: PointN) {
+    override fun draw(world: World, pos: PointN) {
         void.draw(pos)
     }
 }

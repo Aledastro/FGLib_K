@@ -5,10 +5,10 @@ import com.uzery.fglib.utils.data.getter.value.PosValue
 import com.uzery.fglib.utils.data.getter.value.SizeValue
 import com.uzery.fglib.utils.math.geom.PointN
 
-data class FGRoomEntry(val pos: PointN, val size: PointN, val objs: ArrayList<FGEntry>) {
+data class FGRoomEntry(val name: String, val pos: PointN, val size: PointN, val objs: ArrayList<FGEntry>) {
     override fun toString(): String {
         return buildString {
-            append("room entry: ${PosValue(pos)} ${SizeValue(size)}\n\n")
+            append("room entry[$name]: ${PosValue(pos)} ${SizeValue(size)}\n\n")
 
             for (o in objs) {
                 append("$o\n")
