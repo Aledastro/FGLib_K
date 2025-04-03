@@ -25,6 +25,8 @@ import com.uzery.fglib.utils.data.debug.DebugData
 import com.uzery.fglib.utils.data.entry.FGEntry
 import com.uzery.fglib.utils.data.entry.FGFormat
 import com.uzery.fglib.utils.data.getter.ClassGetter
+import com.uzery.fglib.utils.data.getter.value.PosValue
+import com.uzery.fglib.utils.data.getter.value.SizeValue
 import com.uzery.fglib.utils.graphics.AffineGraphics
 import com.uzery.fglib.utils.math.geom.PointN
 import com.uzery.fglib.utils.math.geom.Shape
@@ -291,6 +293,20 @@ abstract class GameObject: ComponentFunctionality {
 
     fun toEntry(): FGEntry {
         return FGFormat.entryFrom(toString())
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    protected val ei_pos = {
+        listOf(
+            PosValue(stats.POS)
+        )
+    }
+    protected val ei_pos_size = {
+        listOf(
+            PosValue(stats.POS),
+            SizeValue(stats.SIZE)
+        )
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
