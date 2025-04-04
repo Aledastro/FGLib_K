@@ -24,6 +24,10 @@ class FGKeyCombination(construct: FGKeyCombination.() -> Unit) {
         main.pressed(*key)
     }
 
+    fun notPressed(vararg key: FGKey) {
+        main.notPressed(*key)
+    }
+
     fun inPressed(vararg key: FGKey) {
         main.inPressed(*key)
     }
@@ -44,6 +48,10 @@ class FGKeyCombination(construct: FGKeyCombination.() -> Unit) {
 
     fun pressed(vararg key: FGMouseKey) {
         main.pressed(*key)
+    }
+
+    fun notPressed(vararg key: FGMouseKey) {
+        main.notPressed(*key)
     }
 
     fun inPressed(vararg key: FGMouseKey) {

@@ -10,11 +10,13 @@ import com.uzery.fglib.utils.input.data.FGMouseKey
  **/
 class FGKeyCombinationPart(construct: FGKeyCombinationPart.() -> Unit) {
     private val pressed = ArrayList<FGKey>()
+    private val notPressed = ArrayList<FGKey>()
     private val inPressed = ArrayList<FGKey>()
     private val rePressed = ArrayList<FGKey>()
     private val periodPressed = ArrayList<Triple<Int, Int, FGKey>>()
 
     private val mousePressed = ArrayList<FGMouseKey>()
+    private val mouseNotPressed = ArrayList<FGMouseKey>()
     private val mouseInPressed = ArrayList<FGMouseKey>()
     private val mouseRePressed = ArrayList<FGMouseKey>()
     private val mousePeriodPressed = ArrayList<Triple<Int, Int, FGMouseKey>>()
@@ -27,6 +29,10 @@ class FGKeyCombinationPart(construct: FGKeyCombinationPart.() -> Unit) {
 
     fun pressed(vararg key: FGKey) {
         pressed.addAll(key)
+    }
+
+    fun notPressed(vararg key: FGKey) {
+        notPressed.addAll(key)
     }
 
     fun inPressed(vararg key: FGKey) {
@@ -51,6 +57,10 @@ class FGKeyCombinationPart(construct: FGKeyCombinationPart.() -> Unit) {
         mousePressed.addAll(key)
     }
 
+    fun notPressed(vararg key: FGMouseKey) {
+        mouseNotPressed.addAll(key)
+    }
+
     fun inPressed(vararg key: FGMouseKey) {
         mouseInPressed.addAll(key)
     }
@@ -71,16 +81,18 @@ class FGKeyCombinationPart(construct: FGKeyCombinationPart.() -> Unit) {
 
     fun active(): Boolean {
         val k1 = pressed.all { keyboard.pressed(it) }
-        val k2 = inPressed.all { keyboard.inPressed(it) }
-        val k3 = rePressed.all { keyboard.rePressed(it) }
-        val k4 = periodPressed.all { keyboard.periodPressed(it.first, it.second, it.third) }
-        val b1 = k1 && k2 && k3 && k4
+        val k2 = notPressed.all { !keyboard.pressed(it) }
+        val k3 = inPressed.all { keyboard.inPressed(it) }
+        val k4 = rePressed.all { keyboard.rePressed(it) }
+        val k5 = periodPressed.all { keyboard.periodPressed(it.first, it.second, it.third) }
+        val b1 = k1 && k2 && k3 && k4 && k5
 
         val m1 = mousePressed.all { mouse.keys.pressed(it) }
-        val m2 = mouseInPressed.all { mouse.keys.inPressed(it) }
-        val m3 = mouseRePressed.all { mouse.keys.rePressed(it) }
-        val m4 = mousePeriodPressed.all { mouse.keys.periodPressed(it.first, it.second, it.third) }
-        val b2 = m1 && m2 && m3 && m4
+        val m2 = mouseNotPressed.all { !mouse.keys.pressed(it) }
+        val m3 = mouseInPressed.all { mouse.keys.inPressed(it) }
+        val m4 = mouseRePressed.all { mouse.keys.rePressed(it) }
+        val m5 = mousePeriodPressed.all { mouse.keys.periodPressed(it.first, it.second, it.third) }
+        val b2 = m1 && m2 && m3 && m4 && m5
 
         return b1 && b2
     }
