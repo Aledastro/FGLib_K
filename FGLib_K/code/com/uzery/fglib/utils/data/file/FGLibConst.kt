@@ -11,6 +11,5 @@ object FGLibConst {
     const val BUFFER_FORMAT = "UTF-8"
 
     val FILES_COMMENT: String
-        get() = "//Uzery Studio 2017-2025\n"+
-                "//last edit: ${FGUtils.time_YMD()} ${FGUtils.time_HMS()}\n\n"
+        get() = "//Uzery Studio 2017-2025\n\n"
 }
