@@ -87,11 +87,20 @@ class World {
 
     fun allMatch(predicate: (GameObject) -> Boolean): List<GameObject> {
         val res = ArrayList<GameObject>()
-        for (room in active_rooms) {
+        for (room in rooms) {
             res.addAll(room.objects.filter { obj -> predicate(obj) })
         }
         return res
     }
 
     fun allTagged(tag: String) = allMatch { obj -> obj.tagged(tag) }
+
+    fun find(predicate: (GameObject) -> Boolean): Pair<Room, GameObject>? {
+        for (room in rooms) {
+            for (o in room.objects) {
+                if (predicate(o)) return Pair(room, o)
+            }
+        }
+        return null
+    }
 }

@@ -3,6 +3,7 @@ package com.uzery.fglib.core.world.controller
 import com.uzery.fglib.core.obj.GameObject
 import com.uzery.fglib.core.room.Room
 import com.uzery.fglib.core.world.World
+import com.uzery.fglib.core.world.camera.Camera
 import com.uzery.fglib.utils.math.geom.PointN
 
 /**
@@ -16,14 +17,20 @@ class OneRoomWC: CameraWorldController() {
     }
 
     override fun isActive(world: World, r: Room) = true
-    override fun onDisappear(world: World, r: Room) {}
 
+    override fun onDisappear(world: World, r: Room) {}
     override fun onAppear(world: World, r: Room) {}
 
-    override fun init(world: World) {}
+    override fun init(world: World) {
+    }
 
     override fun update0(world: World) {
+        initRoom(world)
+
         void.next()
+        if (camera == null && room != null) {
+            room!!.objects.find { it is Camera }?.let { camera = it as Camera; println("camera set") }
+        }
     }
 
     override fun drawPOS0(): PointN {
@@ -31,4 +38,10 @@ class OneRoomWC: CameraWorldController() {
     }
 
     override fun draw(world: World, pos: PointN) {}
+
+    private fun initRoom(world: World) {
+        if (room != null) return
+        val p = world.find { o -> o.tagged("wc_goal") } ?: return
+        room = p.first
+    }
 }
