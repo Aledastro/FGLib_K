@@ -175,6 +175,8 @@ abstract class GameObject: ComponentFunctionality {
         object_time++
     }
 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
     internal fun nextWithFollowers() {
         next()
         followers.removeIf { it.dead }

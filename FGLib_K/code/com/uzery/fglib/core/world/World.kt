@@ -55,12 +55,14 @@ class World {
             .sortedBy { it.priority }
             .forEach { it.update(this) }
 
-        active_rooms.forEach { it.next() }
+        active_rooms.forEach { it.next0() }
 
         systems
             .filter { it.priority>=0 }
             .sortedBy { it.priority }
             .forEach { it.update(this) }
+
+        active_rooms.forEach { it.nextTime() }
     }
 
     //////////////////////////////////////////////////////////////////////////////////////////////////////////

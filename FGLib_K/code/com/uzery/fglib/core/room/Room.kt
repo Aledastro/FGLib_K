@@ -65,6 +65,11 @@ class Room(val name: String, var pos: PointN, var size: PointN) {
         private set
 
     fun next() {
+        next0()
+        nextTime()
+    }
+
+    fun next0() {
         objects.addAll(new_objects)
         new_objects.clear()
 
@@ -72,7 +77,6 @@ class Room(val name: String, var pos: PointN, var size: PointN) {
 
         objects.forEach { it.stats.roomPOS = pos }
         objects.forEach { it.next0WithFollowers() }
-        objects.forEach { it.nextTimeWithFollowers() }
 
         all_objs = getAllObjects()
         red_bounds = getBS(all_objs)
@@ -89,6 +93,10 @@ class Room(val name: String, var pos: PointN, var size: PointN) {
 
         objects.removeAll(old_objects)
         old_objects.clear()
+    }
+
+    fun nextTime() {
+        objects.forEach { it.nextTimeWithFollowers() }
     }
 
     private fun getAllObjects(): java.util.ArrayList<GameObject> {
