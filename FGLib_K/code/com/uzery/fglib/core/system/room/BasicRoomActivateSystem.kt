@@ -13,23 +13,31 @@ import com.uzery.fglib.utils.struct.num.IntI
 /**
  * TODO("doc")
  **/
-object BasicRoomActivateSystem: WorldSystem() {
+class BasicRoomActivateSystem(
+    private val has_overlap: Boolean,
+    private val has_interrupt: Boolean,
+    private val has_interact: Boolean,
+    private val has_intersect: Boolean,
+    private val has_impact: Boolean,
+): WorldSystem() {
     override fun updateRoom(room: Room) {
         val our = room.all_objs
             .filter { obj -> !obj.tagged(util_inactive) && obj.main != null }
 
-        our
-            .filter { !it.bounds.gray.empty }
-            .forEach { obj ->
-                room.red_bounds.forEach { rbs ->
-                    rbs.bounds.elements.forEach { el1 ->
-                        obj.bounds.gray.elements.forEach { el2 ->
-                            setActivate(obj, el2, rbs.o, el1, "#OVERLAP")
-                            setActivate(rbs.o, el1, obj, el2, "#OVERLAP_I")
+        if (has_overlap) {
+            our
+                .filter { !it.bounds.gray.empty }
+                .forEach { obj ->
+                    room.red_bounds.forEach { rbs ->
+                        rbs.bounds.elements.forEach { el1 ->
+                            obj.bounds.gray.elements.forEach { el2 ->
+                                setActivate(obj, el2, rbs.o, el1, STD_OVERLAP)
+                                setActivate(rbs.o, el1, obj, el2, STD_OVERLAP_I)
+                            }
                         }
                     }
                 }
-            }
+        }
 
         activateOur(our)
     }
@@ -59,33 +67,38 @@ object BasicRoomActivateSystem: WorldSystem() {
             if (pc in checked) return
             if (!ShapeUtils.into(obj1.main!!.copy(obj1.stats.POS), obj2.main!!.copy(obj2.stats.POS))) return
 
-            obj1.bounds.blue.elements.forEach { el1 ->
-                obj2.bounds.main.elements.forEach { el2 ->
-                    setActivate(obj1, el1, obj2, el2, "#INTERRUPT")
-                    setActivate(obj2, el2, obj1, el1, "#INTERRUPT_I")
-                }
-            }
-
-            if (obj1.interact()) {
-                obj1.bounds.main.elements.forEach { el1 ->
-                    obj2.bounds.green.elements.forEach { el2 ->
-                        setActivate(obj2, el2, obj1, el1, "#INTERACT")
-                        setActivate(obj1, el1, obj2, el2, "#INTERACT_I")
+            if (has_interrupt) {
+                obj1.bounds.blue.elements.forEach { el1 ->
+                    obj2.bounds.main.elements.forEach { el2 ->
+                        setActivate(obj1, el1, obj2, el2, STD_INTERRUPT)
+                        setActivate(obj2, el2, obj1, el1, STD_INTERRUPT_I)
                     }
                 }
             }
 
-            obj1.bounds.blue.elements.forEach { el1 ->
-                obj2.bounds.blue.elements.forEach { el2 ->
-                    setActivate(obj1, el1, obj2, el2, "#INTERSECT")
-                    setActivate(obj2, el2, obj1, el1, "#INTERSECT_I")
+            if (has_interact && obj1.interact()) {
+                obj1.bounds.main.elements.forEach { el1 ->
+                    obj2.bounds.green.elements.forEach { el2 ->
+                        setActivate(obj2, el2, obj1, el1, STD_INTERACT)
+                        setActivate(obj1, el1, obj2, el2, STD_INTERACT_I)
+                    }
+                }
+            }
+            if (has_intersect) {
+                obj1.bounds.blue.elements.forEach { el1 ->
+                    obj2.bounds.blue.elements.forEach { el2 ->
+                        setActivate(obj1, el1, obj2, el2, STD_INTERSECT)
+                        setActivate(obj2, el2, obj1, el1, STD_INTERSECT_I)
+                    }
                 }
             }
 
-            obj1.bounds.orange.elements.forEach { el1 ->
-                obj2.bounds.orange.elements.forEach { el2 ->
-                    setActivate(obj1, el1, obj2, el2, "#IMPACT")
-                    setActivate(obj2, el2, obj1, el1, "#IMPACT_I")
+            if (has_impact) {
+                obj1.bounds.orange.elements.forEach { el1 ->
+                    obj2.bounds.orange.elements.forEach { el2 ->
+                        setActivate(obj1, el1, obj2, el2, STD_IMPACT)
+                        setActivate(obj2, el2, obj1, el1, STD_IMPACT_I)
+                    }
                 }
             }
         }
@@ -112,5 +125,22 @@ object BasicRoomActivateSystem: WorldSystem() {
         if (sh1.group != sh2.group) return
 
         o1.activate(InputAction(code, o2, sh1.name, sh2.name))
+    }
+
+    companion object {
+        const val STD_OVERLAP = "STD_OVERLAP"
+        const val STD_OVERLAP_I = "STD_OVERLAP_I"
+
+        const val STD_INTERRUPT = "STD_INTERRUPT"
+        const val STD_INTERRUPT_I = "STD_INTERRUPT_I"
+
+        const val STD_INTERACT = "STD_INTERACT"
+        const val STD_INTERACT_I = "STD_INTERACT_I"
+
+        const val STD_INTERSECT = "STD_INTERSECT"
+        const val STD_INTERSECT_I = "STD_INTERSECT_I"
+
+        const val STD_IMPACT = "STD_IMPACT"
+        const val STD_IMPACT_I = "STD_IMPACT_I"
     }
 }
