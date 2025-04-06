@@ -1,4 +1,4 @@
-package com.uzery.fglib.core.system
+package com.uzery.fglib.core.world.system
 
 import com.uzery.fglib.core.room.Room
 import com.uzery.fglib.core.world.World

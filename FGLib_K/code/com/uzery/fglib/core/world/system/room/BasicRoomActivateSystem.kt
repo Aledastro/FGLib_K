@@ -1,4 +1,4 @@
-package com.uzery.fglib.core.system.room
+package com.uzery.fglib.core.world.system.room
 
 import com.uzery.fglib.core.component.bounds.BoundsElement
 import com.uzery.fglib.core.component.listener.InputAction
@@ -6,7 +6,7 @@ import com.uzery.fglib.core.obj.GameObject
 import com.uzery.fglib.core.obj.UtilTags.util_inactive
 import com.uzery.fglib.core.program.FGLibSettings.ROOM_ACTIVATE_GRID
 import com.uzery.fglib.core.room.Room
-import com.uzery.fglib.core.system.WorldSystem
+import com.uzery.fglib.core.world.system.WorldSystem
 import com.uzery.fglib.utils.ShapeUtils
 import com.uzery.fglib.utils.struct.num.IntI
 

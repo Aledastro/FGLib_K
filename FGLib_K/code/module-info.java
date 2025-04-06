@@ -29,12 +29,11 @@ module FGLib_K {
     exports com.uzery.fglib.core.room.entry;
     exports com.uzery.fglib.core.room.mask;
 
-    exports com.uzery.fglib.core.system;
-    exports com.uzery.fglib.core.system.room;
-
     exports com.uzery.fglib.core.world;
     exports com.uzery.fglib.core.world.camera;
     exports com.uzery.fglib.core.world.controller;
+    exports com.uzery.fglib.core.world.system;
+    exports com.uzery.fglib.core.world.system.room;
 
     /////////////////////////////////////////////////////////
 

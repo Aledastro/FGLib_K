@@ -1,10 +1,10 @@
-package com.uzery.fglib.core.system.room
+package com.uzery.fglib.core.world.system.room
 
 import com.uzery.fglib.core.obj.GameObject
 import com.uzery.fglib.core.obj.UtilTags.util_immovable
 import com.uzery.fglib.core.room.PosBounds
 import com.uzery.fglib.core.room.Room
-import com.uzery.fglib.core.system.WorldSystem
+import com.uzery.fglib.core.world.system.WorldSystem
 import com.uzery.fglib.utils.BoundsUtils
 import com.uzery.fglib.utils.CollisionUtils.MAX_MOVE_K
 import com.uzery.fglib.utils.CollisionUtils.SUPER_K

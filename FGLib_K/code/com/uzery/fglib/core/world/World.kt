@@ -5,7 +5,7 @@ import com.uzery.fglib.core.obj.GameObject
 import com.uzery.fglib.core.room.Room
 import com.uzery.fglib.core.room.RoomDrawUtils
 import com.uzery.fglib.core.world.controller.WorldController
-import com.uzery.fglib.core.system.WorldSystem
+import com.uzery.fglib.core.world.system.WorldSystem
 import com.uzery.fglib.utils.math.geom.PointN
 
 /**
