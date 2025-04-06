@@ -145,11 +145,11 @@ abstract class GameObject: ComponentFunctionality {
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     fun next() {
-        next0()
+        nextLogics()
         nextTime()
     }
 
-    private fun next0() {
+    private fun nextLogics() {
         if (object_time == 0) onBirth.forEach { it.run() }
 
         bounds.next()
@@ -184,11 +184,11 @@ abstract class GameObject: ComponentFunctionality {
         followers.forEach { it.nextWithFollowers() }
     }
 
-    internal fun next0WithFollowers() {
-        next0()
+    internal fun nextLogicsWithFollowers() {
+        nextLogics()
         followers.removeIf { it.dead }
 
-        followers.forEach { it.next0WithFollowers() }
+        followers.forEach { it.nextLogicsWithFollowers() }
     }
 
     internal fun nextTimeWithFollowers() {

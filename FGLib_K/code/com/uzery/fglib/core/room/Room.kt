@@ -65,18 +65,18 @@ class Room(val name: String, var pos: PointN, var size: PointN) {
         private set
 
     fun next() {
-        next0()
+        nextLogics()
         nextTime()
     }
 
-    fun next0() {
+    fun nextLogics() {
         objects.addAll(new_objects)
         new_objects.clear()
 
         init()
 
         objects.forEach { it.stats.roomPOS = pos }
-        objects.forEach { it.next0WithFollowers() }
+        objects.forEach { it.nextLogicsWithFollowers() }
 
         all_objs = getAllObjects()
         red_bounds = getBS(all_objs)

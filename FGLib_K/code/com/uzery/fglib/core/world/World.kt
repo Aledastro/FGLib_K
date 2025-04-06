@@ -36,11 +36,11 @@ class World {
     //////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     fun next() {
-        next0()
+        nextLogics()
         nextTime()
     }
 
-    fun next0() {
+    fun nextLogics() {
         controller.update(this)
 
         active_rooms.clear()
@@ -60,7 +60,7 @@ class World {
             .sortedBy { it.priority }
             .forEach { it.update(this) }
 
-        active_rooms.forEach { it.next0() }
+        active_rooms.forEach { it.nextLogics() }
 
         systems
             .filter { it.priority>=0 }
