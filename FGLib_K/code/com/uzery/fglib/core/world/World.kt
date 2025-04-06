@@ -49,10 +49,18 @@ class World {
                 last_active[room] = false
             }
         }
+
+        systems
+            .filter { it.priority<0 }
+            .sortedBy { it.priority }
+            .forEach { it.update(this) }
+
         active_rooms.forEach { it.next() }
 
-        systems.sortBy { it.priority }
-        systems.forEach { it.update(this) }
+        systems
+            .filter { it.priority>=0 }
+            .sortedBy { it.priority }
+            .forEach { it.update(this) }
     }
 
     //////////////////////////////////////////////////////////////////////////////////////////////////////////

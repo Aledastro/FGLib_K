@@ -7,7 +7,8 @@ abstract class WorldSystem {
     open val priority = 0
 
     open fun init(world: World) {}
-    fun update(world: World) {
+
+    internal fun update(world: World) {
         updateWorld(world)
         world.rooms.forEach { room -> updateRoom(room) }
     }
