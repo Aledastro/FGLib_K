@@ -69,7 +69,7 @@ class Room(val name: String, var pos: PointN, var size: PointN) {
         nextTime()
     }
 
-    fun nextLogics() {
+    internal fun nextLogics() {
         objects.addAll(new_objects)
         new_objects.clear()
 
@@ -95,7 +95,7 @@ class Room(val name: String, var pos: PointN, var size: PointN) {
         old_objects.clear()
     }
 
-    fun nextTime() {
+    internal fun nextTime() {
         objects.forEach { it.nextTimeWithFollowers() }
     }
 

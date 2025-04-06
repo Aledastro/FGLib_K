@@ -40,7 +40,7 @@ class World {
         nextTime()
     }
 
-    fun nextLogics() {
+    private fun nextLogics() {
         controller.update(this)
 
         active_rooms.clear()
@@ -68,7 +68,7 @@ class World {
             .forEach { it.update(this) }
     }
 
-    fun nextTime() {
+    private fun nextTime() {
         active_rooms.forEach { it.nextTime() }
     }
 
