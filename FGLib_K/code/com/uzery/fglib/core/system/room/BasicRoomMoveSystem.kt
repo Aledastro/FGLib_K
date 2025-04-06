@@ -1,7 +1,10 @@
-package com.uzery.fglib.core.room
+package com.uzery.fglib.core.system.room
 
 import com.uzery.fglib.core.obj.GameObject
 import com.uzery.fglib.core.obj.UtilTags.util_immovable
+import com.uzery.fglib.core.room.PosBounds
+import com.uzery.fglib.core.room.Room
+import com.uzery.fglib.core.system.WorldSystem
 import com.uzery.fglib.utils.BoundsUtils
 import com.uzery.fglib.utils.CollisionUtils.MAX_MOVE_K
 import com.uzery.fglib.utils.CollisionUtils.SUPER_K
@@ -11,7 +14,7 @@ import com.uzery.fglib.utils.math.geom.PointN
 /**
  * TODO("doc")
  **/
-internal object RoomMoveLogics {
+object BasicRoomMoveSystem: WorldSystem() {
     fun getBS(objs: ArrayList<GameObject>): ArrayList<PosBounds> {
         val red_bounds = ArrayList<PosBounds>()
 
@@ -24,8 +27,10 @@ internal object RoomMoveLogics {
         return red_bounds
     }
 
-    fun nextMoveOld(red_bounds: ArrayList<PosBounds>, objs: ArrayList<GameObject>) {
-        for (obj in objs) {
+    override fun updateRoom(room: Room) {
+        val red_bounds = room.red_bounds
+
+        for (obj in room.all_objs) {
             if (obj.tagged(util_immovable)) continue
             obj.stats.lPOS = obj.stats.POS
             val move_bs = obj.bounds.orange
@@ -81,6 +86,6 @@ internal object RoomMoveLogics {
                 obj.stats.fly_by[level] = m == MAX_MOVE_K
             }
         }
-        objs.forEach { it.stats.nPOS = PointN.ZERO }
+        room.all_objs.forEach { it.stats.nPOS = PointN.ZERO }
     }
 }

@@ -3,11 +3,9 @@ package com.uzery.fglib.core.room
 import com.uzery.fglib.core.component.bounds.Bounds
 import com.uzery.fglib.core.component.visual.Visualiser
 import com.uzery.fglib.core.obj.GameObject
-import com.uzery.fglib.core.room.RoomActivateLogics.nextActivate
 import com.uzery.fglib.core.room.RoomDrawUtils.addObjVis
 import com.uzery.fglib.core.room.RoomDrawUtils.drawVisuals
-import com.uzery.fglib.core.room.RoomMoveLogics.getBS
-import com.uzery.fglib.core.room.RoomMoveLogics.nextMoveOld
+import com.uzery.fglib.core.system.room.BasicRoomMoveSystem.getBS
 import com.uzery.fglib.core.room.entry.FGRoomEntry
 import com.uzery.fglib.utils.BoundsUtils
 import com.uzery.fglib.utils.data.entry.FGEntry
@@ -61,7 +59,11 @@ class Room(val name: String, var pos: PointN, var size: PointN) {
         }
     }
 
-    private var red_bounds = ArrayList<PosBounds>()
+    var all_objs = ArrayList<GameObject>()
+        private set
+    var red_bounds = ArrayList<PosBounds>()
+        private set
+
     fun next() {
         objects.addAll(new_objects)
         new_objects.clear()
@@ -72,10 +74,8 @@ class Room(val name: String, var pos: PointN, var size: PointN) {
         objects.forEach { it.next0WithFollowers() }
         objects.forEach { it.nextTimeWithFollowers() }
 
-        val all = getAllObjects()
-        red_bounds = getBS(all)
-        nextMoveOld(red_bounds, all)
-        nextActivate(red_bounds, all)
+        all_objs = getAllObjects()
+        red_bounds = getBS(all_objs)
 
         fun addFromObj(obj: GameObject) {
             new_objects.addAll(obj.children)
@@ -92,14 +92,13 @@ class Room(val name: String, var pos: PointN, var size: PointN) {
     }
 
     private fun getAllObjects(): java.util.ArrayList<GameObject> {
-        val all = ArrayList<GameObject>()
-        fun addInList(obj: GameObject) {
-            all.add(obj)
-            obj.followers.forEach { addInList(it) }
+        return ArrayList<GameObject>().apply {
+            fun addInList(obj: GameObject) {
+                add(obj)
+                obj.followers.forEach { addInList(it) }
+            }
+            objects.forEach { addInList(it) }
         }
-        objects.forEach { addInList(it) }
-
-        return all
     }
 
     fun draw(draw_pos: PointN) {
