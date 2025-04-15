@@ -94,7 +94,7 @@ open class GroupComponent(vararg component: ObjectComponent): ObjectComponent, C
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    fun addController(controller: () -> (() -> TempAction)) = addComponent(Controller(controller))
+    fun addController(controller: () -> (() -> TempAction)?) = addComponent(Controller(controller))
     fun addController(vararg controller: Controller) = addComponent(*controller)
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
