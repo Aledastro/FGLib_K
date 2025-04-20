@@ -9,10 +9,10 @@ abstract class KeyActivator<Key>(private val values: Array<Key>): PlatformUpdata
     private val size = values.size
 
     private var pressedInt = Array(size) { false }
-    private var timePressed = Array(size) { 0L }
-    private var timeReleased = Array(size) { 2L }
-    private var lastTimePressed = Array(size) { 0L }
-    private var lastTimeReleased = Array(size) { 2L }
+    private var timePressed = Array(size) { -1L }
+    private var timeReleased = Array(size) { -1L }
+    private var lastTimePressed = Array(size) { -1L }
+    private var lastTimeReleased = Array(size) { -1L }
     private var block = Array(size) { false }
 
     protected abstract fun pressed0(code: Int): Boolean
@@ -23,8 +23,10 @@ abstract class KeyActivator<Key>(private val values: Array<Key>): PlatformUpdata
     override fun update() {
         for (i in 0..<size) {
             pressedInt[i] = pressedInt(i)
-            timePressed[i]++
-            timeReleased[i]++
+
+            if (timePressed[i] != -1L) timePressed[i]++
+            if (timeReleased[i] != -1L) timeReleased[i]++
+
             if (pressedInt[i]) {
                 lastTimeReleased[i] = timeReleased[i]
                 timeReleased[i] = 0
@@ -58,7 +60,7 @@ abstract class KeyActivator<Key>(private val values: Array<Key>): PlatformUpdata
     ///////////////////////////////////////////////////////////////////////////////////////////////////////
 
     fun pressed(key: Key) = pressedInt[fromKey(key)]
-    fun pressedIn(frames: Int, key: Key) = timeReleased(key) < frames || pressed(key)
+    fun pressedIn(frames: Int, key: Key) = pressed(key) || timeReleased(key) != -1L && timeReleased(key) < frames
     fun inPressedIn(frames: Int, key: Key) = timePressed(key) in 1..frames
     fun rePressedIn(frames: Int, key: Key) = timeReleased(key) in 1..frames
     fun inPressed(key: Key) = inPressedIn(1, key)
