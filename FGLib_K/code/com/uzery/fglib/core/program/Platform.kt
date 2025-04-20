@@ -22,9 +22,6 @@ object Platform {
 
     fun getGlobalOnTop(pos: PointN) = Program.core.getOnTop(pos)
 
-    var MANUAL_CLEAR_ON = false
-    var CLEAR_COLOR = FGColor.WHITE
-
     private val program
         get() = realisation.program
     val graphics

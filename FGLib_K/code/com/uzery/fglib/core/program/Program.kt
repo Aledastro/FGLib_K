@@ -15,9 +15,9 @@ import com.uzery.fglib.utils.math.geom.PointN
 object Program {
     internal val core = object: Extension() {
         override fun draw(pos: PointN) {
-            if (Platform.MANUAL_CLEAR_ON) return
+            if (FGLibSettings.MANUAL_CLEAR_ON) return
 
-            graphics.fill.draw(CANVAS_R, Platform.CLEAR_COLOR)
+            graphics.fill.draw(CANVAS_R, FGLibSettings.CLEAR_COLOR)
         }
     }
 
