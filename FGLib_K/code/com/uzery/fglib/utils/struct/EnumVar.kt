@@ -12,6 +12,14 @@ class EnumVar<Type>(private vararg val var_sizes: Type) {
         return var_sizes[id]
     }
 
+    fun toValue(type: Type) {
+        id = fromValue(type)
+    }
+
+    fun toID(id: Int) {
+        this.id = id
+    }
+
     var id = -1
         set(value) {
             field = value.coerceIn(var_sizes.indices)
