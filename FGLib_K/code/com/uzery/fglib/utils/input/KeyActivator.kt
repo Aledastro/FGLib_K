@@ -10,9 +10,9 @@ abstract class KeyActivator<Key>(private val values: Array<Key>): PlatformUpdata
 
     private var pressedInt = Array(size) { false }
     private var timePressed = Array(size) { 0L }
-    private var timeReleased = Array(size) { 0L }
+    private var timeReleased = Array(size) { 2L }
     private var lastTimePressed = Array(size) { 0L }
-    private var lastTimeReleased = Array(size) { 0L }
+    private var lastTimeReleased = Array(size) { 2L }
     private var block = Array(size) { false }
 
     protected abstract fun pressed0(code: Int): Boolean
