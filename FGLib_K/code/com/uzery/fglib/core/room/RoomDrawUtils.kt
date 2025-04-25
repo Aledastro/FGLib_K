@@ -17,11 +17,8 @@ object RoomDrawUtils {
         sort_map: HashMap<Visualiser, PointN>
     ) {
         vis.sortWith { v1, v2 ->
-            if (v1.drawLayer().sort != v2.drawLayer().sort) {
-                (v1.drawLayer().sort-v2.drawLayer().sort).sign.toInt()
-            } else {
-                render_camera.sort(sort_map[v1]!!, sort_map[v2]!!)
-            }
+            val c = v1.compareTo(v2)
+            if (c != 0) c else render_camera.sort(sort_map[v1]!!, sort_map[v2]!!)
         }
         vis.forEach { visual ->
             visual.drawWithDefaults(draw_pos+render_camera[pos_map[visual]!!])
