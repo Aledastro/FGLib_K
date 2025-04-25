@@ -200,7 +200,7 @@ abstract class GameObject: ComponentFunctionality {
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     fun draw(draw_pos: PointN) {
-        visuals.sortBy { v -> v.drawLayer().sort }
+        visuals.sort()
         visuals.forEach { it.drawWithDefaults(draw_pos) }
     }
 

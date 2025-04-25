@@ -14,7 +14,7 @@ import com.uzery.fglib.utils.math.geom.shape.RectN
  *
  * @property agc [AffineGraphics]
  **/
-abstract class Visualiser: ObjectComponent {
+abstract class Visualiser: ObjectComponent, Comparable<Visualiser> {
     abstract fun draw(draw_pos: PointN)
     abstract fun drawLayer(): DrawLayer
 
@@ -31,4 +31,8 @@ abstract class Visualiser: ObjectComponent {
 
     val agc: AffineGraphics
         get() = Platform.graphics
+
+    override fun compareTo(other: Visualiser): Int {
+        return this.drawLayer().compareTo(other.drawLayer())
+    }
 }
