@@ -13,8 +13,8 @@ import com.uzery.fglib.utils.math.geom.PointN
 data class DrawLayer(
     val z: PointN,
     private val sort: Double,
-    private val name: String = "unnamed",
-    private val suf: Int = 0
+    val name: String = "unnamed",
+    val suf: Int = 0
 ): Comparable<DrawLayer> {
     companion object {
         val CAMERA_OFF = DrawLayer(PointN(0.0, 0.0), 0.0, "UTIL_CAMERA_OFF")
@@ -36,7 +36,7 @@ data class DrawLayer(
         return this.suf.compareTo(other.suf)
     }
 
-    internal val name_with_suf: String
+    val name_with_suf: String
         get() {
             return name+when {
                 suf < 0 -> suf
