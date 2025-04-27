@@ -4,20 +4,12 @@ import com.uzery.fglib.core.component.ComponentFunctionality
 import com.uzery.fglib.core.component.ObjectComponent
 import com.uzery.fglib.core.component.ability.AbilityBox
 import com.uzery.fglib.core.component.bounds.BoundsBox
-import com.uzery.fglib.core.component.bounds.BoundsBox.Companion.CODE
 import com.uzery.fglib.core.component.bounds.BoundsComponent
-import com.uzery.fglib.core.component.bounds.BoundsElement
 import com.uzery.fglib.core.component.controller.Controller
-import com.uzery.fglib.core.component.controller.TempAction
-import com.uzery.fglib.core.component.group.*
+import com.uzery.fglib.core.component.group.GroupComponent
 import com.uzery.fglib.core.component.listener.ActionListener
-import com.uzery.fglib.core.component.listener.BoundsInputAction
 import com.uzery.fglib.core.component.listener.InputAction
 import com.uzery.fglib.core.component.reaction.*
-import com.uzery.fglib.core.component.resource.AudioResource
-import com.uzery.fglib.core.component.resource.ImageResource
-import com.uzery.fglib.core.component.resource.SpriteResource
-import com.uzery.fglib.core.component.visual.LayerVisualiser
 import com.uzery.fglib.core.component.visual.Visualiser
 import com.uzery.fglib.core.obj.stats.Stats
 import com.uzery.fglib.utils.ShapeUtils
@@ -27,11 +19,8 @@ import com.uzery.fglib.utils.data.entry.FGFormat
 import com.uzery.fglib.utils.data.getter.ClassGetter
 import com.uzery.fglib.utils.data.getter.value.PosValue
 import com.uzery.fglib.utils.data.getter.value.SizeValue
-import com.uzery.fglib.utils.graphics.AffineGraphics
 import com.uzery.fglib.utils.math.geom.PointN
-import com.uzery.fglib.utils.math.geom.Shape
 import com.uzery.fglib.utils.math.geom.shape.RectN
-import com.uzery.fglib.utils.struct.num.IntI
 
 /**
  * Base class for entity in *Entity-Component System*
