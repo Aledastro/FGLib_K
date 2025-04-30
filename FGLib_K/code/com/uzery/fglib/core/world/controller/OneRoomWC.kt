@@ -24,7 +24,7 @@ class OneRoomWC: CameraWorldController() {
     override fun init(world: World) {
     }
 
-    override fun update0(world: World) {
+    override fun update(world: World) {
         initRoom(world)
 
         void.next()
@@ -38,6 +38,7 @@ class OneRoomWC: CameraWorldController() {
     }
 
     override fun draw(world: World, pos: PointN) {}
+    override fun drawAfter(world: World, pos: PointN) {}
 
     private fun initRoom(world: World) {
         if (room != null) return

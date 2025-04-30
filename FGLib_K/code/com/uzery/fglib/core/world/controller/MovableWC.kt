@@ -107,7 +107,7 @@ class MovableWC: CameraWorldController() {
         return world.rooms.firstOrNull { isInArea(it, obj) } ?: void
     }
 
-    override fun update0(world: World) {
+    override fun update(world: World) {
         void.next()
 
         moveObjs(world)
@@ -120,4 +120,5 @@ class MovableWC: CameraWorldController() {
     override fun draw(world: World, pos: PointN) {
         void.draw(pos)
     }
+    override fun drawAfter(world: World, pos: PointN) {}
 }
