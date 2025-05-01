@@ -10,7 +10,7 @@ import com.uzery.fglib.utils.math.geom.PointN
 /**
  * TODO("doc")
  **/
-class OneRoomWC: CameraWorldController() {
+class MigrateRoomWC: CameraWorldController() {
     var room: Room? = null
     private val void = Room("void", PointN.ZERO, PointN.ZERO)
     override fun roomFor(world: World, obj: GameObject): Room {

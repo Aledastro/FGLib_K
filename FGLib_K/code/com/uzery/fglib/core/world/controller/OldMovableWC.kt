@@ -1,20 +1,18 @@
 package com.uzery.fglib.core.world.controller
 
 import com.uzery.fglib.core.obj.GameObject
+import com.uzery.fglib.core.obj.UtilTags
 import com.uzery.fglib.core.program.Platform.CANVAS
-import com.uzery.fglib.core.program.Platform.graphics
 import com.uzery.fglib.core.room.Room
 import com.uzery.fglib.core.world.World
 import com.uzery.fglib.utils.ShapeUtils
-import com.uzery.fglib.utils.graphics.data.FGColor
-import com.uzery.fglib.utils.graphics.data.FGFontWeight
 import com.uzery.fglib.utils.math.geom.PointN
 import com.uzery.fglib.utils.math.geom.shape.RectN
 
 /**
  * TODO("doc")
  **/
-class MovableWC: CameraWorldController() {
+class OldMovableWC: CameraWorldController() {
     private val SIZE = Int.MAX_VALUE/2
     private val SIZE_P = PointN(SIZE, SIZE)
 
@@ -82,7 +80,7 @@ class MovableWC: CameraWorldController() {
         fun migrate(oldRoom: Room) {
             val objectsToRemove = ArrayList<GameObject>()
             val objectsToAdd = ArrayList<Pair<Room, GameObject>>()
-            oldRoom.objects.filter { it.tagged("migrator") }.forEach { obj ->
+            oldRoom.objects.filter { it.tagged(UtilTags.util_wc_migrator) }.forEach { obj ->
                 if (!isInArea(oldRoom, obj) || oldRoom == void) {
                     val newRoom = roomFor(world, obj)
                     objectsToRemove.add(obj)
