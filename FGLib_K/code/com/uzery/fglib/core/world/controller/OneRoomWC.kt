@@ -11,7 +11,7 @@ import com.uzery.fglib.utils.math.geom.PointN
  * TODO("doc")
  **/
 class OneRoomWC: CameraWorldController() {
-    var room: Room? = null
+    private var room: Room? = null
     private val void = Room("void", PointN.ZERO, PointN.ZERO)
     override fun roomFor(world: World, obj: GameObject): Room {
         return room ?: void
