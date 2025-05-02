@@ -57,7 +57,7 @@ object ZipUtils {
             FileInputStream(file).use { input ->
                 zip_out.putNextEntry(ZipEntry(filename))
 
-                readWithBuffer(input, zip_out)
+                input.copyTo(zip_out)
 
                 zip_out.closeEntry()
             }
@@ -118,7 +118,7 @@ object ZipUtils {
         } else {
             new_file.parentFile?.mkdirs()
             FileOutputStream(new_file).use { output ->
-                readWithBuffer(zip_in, output)
+                zip_in.copyTo(output)
             }
         }
     }
@@ -127,14 +127,5 @@ object ZipUtils {
 
     private fun basePath(file: File, flatten: Boolean): String {
         return if (flatten && file.isDirectory) "" else file.name
-    }
-
-    private fun readWithBuffer(input: InputStream, output: OutputStream) {
-        val buffer = ByteArray(1024)
-        while (true) {
-            val length = input.read(buffer)
-            if (length < 0) break
-            output.write(buffer, 0, length)
-        }
     }
 }
