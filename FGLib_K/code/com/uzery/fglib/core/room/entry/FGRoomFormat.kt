@@ -4,7 +4,7 @@ import com.uzery.fglib.core.obj.GameObject
 import com.uzery.fglib.core.room.RoomLoadUtils
 import com.uzery.fglib.core.room.mask.RoomMask
 import com.uzery.fglib.utils.FGUtils
-import com.uzery.fglib.utils.FileUtils
+import com.uzery.fglib.utils.file.FilenameUtils
 import com.uzery.fglib.utils.data.debug.DebugData
 import com.uzery.fglib.utils.data.entry.FGEntry
 import com.uzery.fglib.utils.data.entry.FGFormat
@@ -39,7 +39,7 @@ object FGRoomFormat: RoomSerialization() {
         val room_filename = filepath //files.find { FileUtils.extensionOf(it) == "room" }
             ?: throw DebugData.error("room file not found in: $filepath")
 
-        val mask_filenames = files.filter { filename -> FileUtils.extensionOf(filename) == "mask" }
+        val mask_filenames = files.filter { filename -> FilenameUtils.extensionOf(filename) == "mask" }
         val masks = List(mask_filenames.size) { i -> getMask(mask_filenames[i]) }
 
         return FGRoomLoadEntry(getRoomEntry(room_filename), masks)
@@ -67,14 +67,14 @@ object FGRoomFormat: RoomSerialization() {
             objects.add(FGFormat.entryFrom(next))
         }
 
-        return FGRoomEntry(FileUtils.nameOf(filename), room_info.pos, room_info.size, objects)
+        return FGRoomEntry(FilenameUtils.nameOf(filename), room_info.pos, room_info.size, objects)
     }
 
     /////////////////////////////////////////////////////////////////////////////////////
 
     private fun getMask(filename: String): RoomMask {
         val lines = getLines(filename)
-        val mask = RoomMask(FileUtils.nameOf(filename))
+        val mask = RoomMask(FilenameUtils.nameOf(filename))
 
         while (lines.isNotEmpty()) {
             val next = lines.removeFirst()
@@ -95,8 +95,8 @@ object FGRoomFormat: RoomSerialization() {
     /////////////////////////////////////////////////////////////////////////////////////
 
     private fun getDedicatedDir(filepath: String): String {
-        val prev = FileUtils.dirOf(filepath)
-        val name = FileUtils.nameOf(filepath)
+        val prev = FilenameUtils.dirOf(filepath)
+        val name = FilenameUtils.nameOf(filepath)
         return "$prev/$name/"
     }
 

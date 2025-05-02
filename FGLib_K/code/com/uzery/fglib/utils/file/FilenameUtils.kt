@@ -1,6 +1,6 @@
-package com.uzery.fglib.utils
+package com.uzery.fglib.utils.file
 
-object FileUtils {
+object FilenameUtils {
     fun fullNameOf(filename: String): String {
         val id = filename.lastIndexOf('/')
         return if (id == -1) filename else filename.substring(id+1)
