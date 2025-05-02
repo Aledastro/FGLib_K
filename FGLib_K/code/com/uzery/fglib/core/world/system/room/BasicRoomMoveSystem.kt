@@ -79,7 +79,7 @@ object BasicRoomMoveSystem: WorldSystem() {
             for (level in 0..<np.dim) {
                 val nnp = np.separate(level)
 
-                if (nnp.length()<FGLibConst.LITTLE) {
+                if (nnp.length() < FGLibConst.LITTLE) {
                     obj.stats.fly_by[level] = true
                     continue
                 }

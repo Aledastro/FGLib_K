@@ -56,14 +56,14 @@ class World {
         }
 
         systems
-            .filter { it.priority<0 }
+            .filter { it.priority < 0 }
             .sortedBy { it.priority }
             .forEach { it.update(this) }
 
         active_rooms.forEach { it.nextLogics() }
 
         systems
-            .filter { it.priority>=0 }
+            .filter { it.priority >= 0 }
             .sortedBy { it.priority }
             .forEach { it.update(this) }
     }

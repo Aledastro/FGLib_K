@@ -56,9 +56,7 @@ object ZipUtils {
         } else {
             FileInputStream(file).use { input ->
                 zip_out.putNextEntry(ZipEntry(filename))
-
                 input.copyTo(zip_out)
-
                 zip_out.closeEntry()
             }
         }

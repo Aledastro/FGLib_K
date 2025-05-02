@@ -118,5 +118,6 @@ class OldMovableWC: CameraWorldController() {
     override fun draw(world: World, pos: PointN) {
         void.draw(pos)
     }
+
     override fun drawAfter(world: World, pos: PointN) {}
 }

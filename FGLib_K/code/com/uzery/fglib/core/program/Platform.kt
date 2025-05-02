@@ -5,7 +5,6 @@ import com.uzery.fglib.core.program.extension.Extension
 import com.uzery.fglib.core.program.launch.LaunchOptions
 import com.uzery.fglib.core.program.launch.PlatformSetup.realisation
 import com.uzery.fglib.utils.graphics.RenderCamera
-import com.uzery.fglib.utils.graphics.data.FGColor
 import com.uzery.fglib.utils.math.geom.PointN
 import com.uzery.fglib.utils.math.geom.shape.RectN
 import kotlin.math.min

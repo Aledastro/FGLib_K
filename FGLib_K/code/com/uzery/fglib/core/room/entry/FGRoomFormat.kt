@@ -4,13 +4,13 @@ import com.uzery.fglib.core.obj.GameObject
 import com.uzery.fglib.core.room.RoomLoadUtils
 import com.uzery.fglib.core.room.mask.RoomMask
 import com.uzery.fglib.utils.FGUtils
-import com.uzery.fglib.utils.file.FilenameUtils
 import com.uzery.fglib.utils.data.debug.DebugData
 import com.uzery.fglib.utils.data.entry.FGEntry
 import com.uzery.fglib.utils.data.entry.FGFormat
 import com.uzery.fglib.utils.data.file.TextData
 import com.uzery.fglib.utils.data.getter.AbstractClassGetter
 import com.uzery.fglib.utils.data.getter.ClassGetter
+import com.uzery.fglib.utils.file.FilenameUtils
 import com.uzery.fglib.utils.math.geom.shape.RectN
 import java.util.*
 
