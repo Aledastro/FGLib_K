@@ -13,8 +13,9 @@ class Stats {
     val sticky_by = HashMap<Int, Boolean>()
 
     var POS = PointN.ZERO
-    var lPOS = PointN.ZERO
     var nPOS = PointN.ZERO
+
+    var lastPOS = PointN.ZERO
 
     var roomPOS = PointN.ZERO
     var sortPOS = PointN.ZERO

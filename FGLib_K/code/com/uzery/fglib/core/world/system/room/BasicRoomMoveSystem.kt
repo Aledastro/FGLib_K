@@ -32,8 +32,13 @@ object BasicRoomMoveSystem: WorldSystem() {
 
         for (obj in room.all_objs) {
             if (obj.tagged(util_immovable)) continue
-            obj.stats.lPOS = obj.stats.POS
+
+            obj.stats.fly = true
+            obj.stats.fly_by.clear()
+
+            obj.stats.lastPOS = obj.stats.POS
             val move_bs = obj.bounds.orange
+            if (obj.stats.nPOS.length() < FGLibConst.LITTLE) continue
 
             if (move_bs.empty) {
                 obj.stats.POS += obj.stats.nPOS
@@ -54,19 +59,12 @@ object BasicRoomMoveSystem: WorldSystem() {
                 }
             }
 
-            fun move(move_p: PointN): Double {
-                if (move_p.length() < FGLibConst.LITTLE) return MAX_MOVE_K
-
-                val mm = maxMove(move_p*SUPER_K)
-                obj.stats.POS += move_p*mm
-                return mm
+            fun move(move_p: PointN) = maxMove(move_p*SUPER_K).also { k ->
+                obj.stats.POS += move_p*k
             }
 
             val min_d = move(obj.stats.nPOS)
-
-            val is_move_complete = min_d == MAX_MOVE_K
-
-            obj.stats.fly = is_move_complete
+            obj.stats.fly = min_d == MAX_MOVE_K
 
             var np = obj.stats.nPOS*(1-min_d)
 
@@ -78,11 +76,15 @@ object BasicRoomMoveSystem: WorldSystem() {
                 np *= sticky
             }
 
-            obj.stats.fly_by.clear()
-
             for (level in 0..<np.dim) {
-                val m = move(np.separate(level))
+                val nnp = np.separate(level)
 
+                if (nnp.length()<FGLibConst.LITTLE) {
+                    obj.stats.fly_by[level] = true
+                    continue
+                }
+
+                val m = move(nnp)
                 obj.stats.fly_by[level] = m == MAX_MOVE_K
             }
         }
