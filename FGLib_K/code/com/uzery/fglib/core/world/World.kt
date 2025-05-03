@@ -19,6 +19,9 @@ class World {
     lateinit var controller: WorldController
     private lateinit var systems: Array<WorldSystem>
 
+    val draw_pos
+        get() = -controller.drawPOS(this)
+
     //////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     fun init(controller: WorldController, systems: Array<WorldSystem>, rooms: Array<Room>, init_rooms: Boolean = true) {
@@ -75,7 +78,7 @@ class World {
     //////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     fun draw(pos: PointN = PointN.ZERO) {
-        val drawPOS = pos-controller.drawPOS(this)
+        val drawPOS = pos-draw_pos
 
         controller.draw(this, drawPOS)
         drawRooms(drawPOS)
