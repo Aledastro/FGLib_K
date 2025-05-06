@@ -1,6 +1,7 @@
 package com.uzery.fglib.core.program.extension
 
 import com.uzery.fglib.core.component.bounds.Bounds
+import com.uzery.fglib.core.program.DebugTools
 import com.uzery.fglib.core.program.Platform
 import com.uzery.fglib.core.program.Platform.getGlobalOnTop
 import com.uzery.fglib.core.program.Platform.graphics
@@ -8,6 +9,7 @@ import com.uzery.fglib.core.program.Platform.mouse
 import com.uzery.fglib.utils.graphics.data.FGColor
 import com.uzery.fglib.utils.math.geom.PointN
 import com.uzery.fglib.utils.math.geom.shape.RectN
+import java.util.HashMap
 
 /**
  * TODO("doc")
@@ -149,14 +151,31 @@ abstract class Extension(vararg children: Extension) {
         updateWithChildren()
     }
 
+    private val java_code = this.javaClass.name
+
+    private inline fun countTime(name: String, f: ()->Unit) {
+        val t = System.nanoTime()
+        f()
+        val dt = System.nanoTime() - t
+
+        val map = DebugTools.extension_time.getOrPut(name) { HashMap() }
+        val et = map[java_code]
+        map[java_code] = if (et == null) dt else et+dt
+    }
+
     private fun updateWithChildren() {
         stats.next()
 
-        update()
+        countTime("update") {
+            update()
+        }
+
         arranged_children.filter { it.is_updating }.forEach { e ->
             e.updateWithChildren()
         }
-        updateAfter()
+        countTime("update") {
+            updateAfter()
+        }
 
         update_time++
     }
@@ -167,21 +186,29 @@ abstract class Extension(vararg children: Extension) {
             graphics.global_transform = stats.full_transform*graphics.default_transform
         }
         reset()
-        draw(pos)
+        countTime("draw") {
+            draw(pos)
+        }
 
         arranged_children.filter { it.is_drawing }.forEach { e ->
             e.drawWithChildren(pos+e.stats.render_pos)
         }
 
         reset()
-        drawAfter(pos)
+
+        countTime("draw") {
+            drawAfter(pos)
+        }
 
         draw_time++
     }
 
     private fun updateTasksWithChildren() {
         mode = next_mode
-        onBackGround()
+
+        countTime("onBackGround") {
+            onBackGround()
+        }
 
         arranged_children.forEach { e ->
             e.stats.owner = this
