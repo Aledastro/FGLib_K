@@ -63,10 +63,10 @@ abstract class ClassGetter<Type>: AbstractClassGetter<Type>() {
             input = entry.args
             in_id = 0
             no_info = false
-            val first = map.firstOrNull { it.first == StringN(entry.name, entry.args.size) }
+            val e = map.firstOrNull { it.first == StringN(entry.name, entry.args.size) }
                 ?: throw DebugData.error("no entry from $entry")
 
-            first.second()
+            e.second()
         }
     }
 
