@@ -16,7 +16,7 @@ object PlatformSetup {
     fun init(realisation: FGRealisation) {
         PlatformSetup.realisation = realisation
 
-        addUpdatable(keyboard, char_keyboard, mouse.keys)
+        addUpdatable(keyboard, char_keyboard, mouse)
     }
 
     fun startProcess(options: LaunchOptions, vararg ets: Extension) {

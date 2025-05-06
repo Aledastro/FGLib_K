@@ -57,7 +57,6 @@ object Platform {
         }
 
     var options: LaunchOptions = LaunchOptions.default
-    lateinit var ets: Array<out Extension>
 
     var render_camera = object: RenderCamera {
         override fun get(p: PointN): PointN {
@@ -88,11 +87,6 @@ object Platform {
     }
 
     var develop_mode = false
-
-    fun initWith(options: LaunchOptions, vararg ets: Extension) {
-        Platform.options = options
-        this.ets = ets
-    }
 
     val WINDOW
         get() = PointN(program.WINDOW_SIZE)
