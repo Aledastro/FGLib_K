@@ -2,6 +2,7 @@ package com.uzery.fglib.core.world
 
 import com.uzery.fglib.core.component.visual.Visualiser
 import com.uzery.fglib.core.obj.GameObject
+import com.uzery.fglib.core.program.DebugTools.countTime
 import com.uzery.fglib.core.room.Room
 import com.uzery.fglib.core.room.RoomDrawUtils
 import com.uzery.fglib.core.world.controller.WorldController
@@ -34,6 +35,8 @@ class World {
 
         this.systems = systems
         systems.forEach { it.init(this) }
+
+        name = "world"+this.rooms.map { it.name } //todo?
     }
 
     //////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -42,6 +45,8 @@ class World {
         nextLogics()
         nextTime()
     }
+
+    private lateinit var name: String
 
     private fun nextLogics() {
         controller.update(this)
@@ -63,7 +68,9 @@ class World {
             .sortedBy { it.priority }
             .forEach { it.update(this) }
 
-        active_rooms.forEach { it.nextLogics() }
+        countTime("world | update", name) {
+            active_rooms.forEach { it.nextLogics() }
+        }
 
         systems
             .filter { it.priority >= 0 }
@@ -78,11 +85,13 @@ class World {
     //////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     fun draw(pos: PointN = PointN.ZERO) {
-        val drawPOS = pos+draw_pos
+        countTime("world | draw", name) {
+            val drawPOS = pos+draw_pos
 
-        controller.draw(this, drawPOS)
-        drawRooms(drawPOS)
-        controller.drawAfter(this, drawPOS)
+            controller.draw(this, drawPOS)
+            drawRooms(drawPOS)
+            controller.drawAfter(this, drawPOS)
+        }
     }
 
     private fun drawRooms(pos: PointN) {

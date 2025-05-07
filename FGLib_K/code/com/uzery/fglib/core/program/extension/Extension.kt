@@ -2,6 +2,7 @@ package com.uzery.fglib.core.program.extension
 
 import com.uzery.fglib.core.component.bounds.Bounds
 import com.uzery.fglib.core.program.DebugTools
+import com.uzery.fglib.core.program.DebugTools.countTime
 import com.uzery.fglib.core.program.Platform
 import com.uzery.fglib.core.program.Platform.getGlobalOnTop
 import com.uzery.fglib.core.program.Platform.graphics
@@ -153,27 +154,17 @@ abstract class Extension(vararg children: Extension) {
 
     private val java_code = this.javaClass.name
 
-    private inline fun countTime(name: String, f: ()->Unit) {
-        val t = System.nanoTime()
-        f()
-        val dt = System.nanoTime() - t
-
-        val map = DebugTools.extension_time.getOrPut(name) { HashMap() }
-        val et = map[java_code]
-        map[java_code] = if (et == null) dt else et+dt
-    }
-
     private fun updateWithChildren() {
         stats.next()
 
-        countTime("update") {
+        countTime("update", java_code) {
             update()
         }
 
         arranged_children.filter { it.is_updating }.forEach { e ->
             e.updateWithChildren()
         }
-        countTime("update") {
+        countTime("update", java_code) {
             updateAfter()
         }
 
@@ -186,7 +177,7 @@ abstract class Extension(vararg children: Extension) {
             graphics.global_transform = stats.full_transform*graphics.default_transform
         }
         reset()
-        countTime("draw") {
+        countTime("draw", java_code) {
             draw(pos)
         }
 
@@ -196,7 +187,7 @@ abstract class Extension(vararg children: Extension) {
 
         reset()
 
-        countTime("draw") {
+        countTime("draw", java_code) {
             drawAfter(pos)
         }
 
@@ -206,7 +197,7 @@ abstract class Extension(vararg children: Extension) {
     private fun updateTasksWithChildren() {
         mode = next_mode
 
-        countTime("onBackGround") {
+        countTime("onBackGround", java_code) {
             onBackGround()
         }
 
