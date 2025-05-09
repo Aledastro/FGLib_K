@@ -120,8 +120,8 @@ abstract class Extension(vararg children: Extension) {
     }
 
     private fun modify() {
-        val toAdd = ArrayList<Extension>()
-        val toRemove = ArrayList<Extension>()
+        val toAdd = HashSet<Extension>()
+        val toRemove = HashSet<Extension>()
 
         new_children.forEach { entry ->
             toAdd.remove(entry.e)
@@ -129,13 +129,15 @@ abstract class Extension(vararg children: Extension) {
 
             if (entry.isAdd) toAdd.add(entry.e)
             else toRemove.add(entry.e)
+
+            entry.e.stats.owner = this
         }
         new_children.forEach { it.e.initWithChildren() }
         new_children.clear()
 
-        real_children.removeAll(toRemove.toSet())
-        real_children.removeAll(toAdd.toSet())
-        real_children.addAll(toAdd.toSet())
+        real_children.removeAll(toRemove)
+        real_children.removeAll(toAdd)
+        real_children.addAll(toAdd)
 
         real_children.removeIf { it.ready_to_collapse }
 
@@ -174,8 +176,9 @@ abstract class Extension(vararg children: Extension) {
             graphics.setFullDefaults()
             graphics.global_transform = stats.full_transform*graphics.default_transform
         }
-        reset()
+
         countTime("draw", java_code) {
+            reset()
             draw(pos)
         }
 
@@ -183,9 +186,8 @@ abstract class Extension(vararg children: Extension) {
             e.drawWithChildren(pos+e.stats.render_pos)
         }
 
-        reset()
-
         countTime("draw", java_code) {
+            reset()
             drawAfter(pos)
         }
 
@@ -199,10 +201,7 @@ abstract class Extension(vararg children: Extension) {
             onBackGround()
         }
 
-        arranged_children.forEach { e ->
-            e.stats.owner = this
-            e.updateTasksWithChildren()
-        }
+        arranged_children.forEach { e -> e.updateTasksWithChildren() }
 
         full_time++
     }
@@ -219,7 +218,8 @@ abstract class Extension(vararg children: Extension) {
     private fun rearrangeWithChildren() {
         rearrange()
 
-        arranged_children.forEach { it.rearrangeWithChildren() }
+        arranged_children.forEach { e -> e.stats.owner = this }
+        arranged_children.forEach { e -> e.rearrangeWithChildren() }
     }
 
     open fun onBackGround() {}
