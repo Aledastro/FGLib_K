@@ -118,8 +118,8 @@ abstract class Extension(vararg children: Extension) {
     }
 
     private fun modify(with_init: Boolean) {
-        val toAdd = HashSet<Extension>()
-        val toRemove = HashSet<Extension>()
+        val toAdd = ArrayList<Extension>()
+        val toRemove = ArrayList<Extension>()
 
         new_children.forEach { entry ->
             toAdd.remove(entry.e)
@@ -133,8 +133,8 @@ abstract class Extension(vararg children: Extension) {
         if (with_init) new_children.forEach { it.e.initWithChildren() }
         new_children.clear()
 
-        real_children.removeAll(toRemove)
-        real_children.removeAll(toAdd)
+        real_children.removeAll(toRemove.toSet())
+        real_children.removeAll(toAdd.toSet())
         real_children.addAll(toAdd)
 
         real_children.removeIf { it.ready_to_collapse }
