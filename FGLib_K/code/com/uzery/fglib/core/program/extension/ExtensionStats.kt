@@ -40,17 +40,28 @@ class ExtensionStats {
     internal val render_pos
         get() = layout_pos+draw_pos
 
+    /////////////////////////////////////////////////////////////////////////////////////////
+
     //for updating
+    var is_group = false
+    private val owner_stats
+        get() = owner!!.stats
+
     var pos = PointN.ZERO
+        get() = if (is_group) owner_stats.pos else field
     var size = PointN.ZERO
+        get() = if (is_group) owner_stats.size else field
 
     var bounds: Bounds? = null
+        get() = if (is_group) null else field
     var layout = FGLayout.TOP_LEFT
+        get() = if (is_group) owner_stats.layout else field
+
+    /////////////////////////////////////////////////////////////////////////////////////////
 
     var transform: AffineTransform? = null
 
     var ui_level = UILevel.NEUTRAL
-
 
     //delta for drawing
     var draw_pos = PointN.ZERO
