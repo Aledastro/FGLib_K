@@ -42,20 +42,22 @@ class ExtensionStats {
 
     /////////////////////////////////////////////////////////////////////////////////////////
 
-    //for updating
-    var is_group = false
-    private val owner_stats
-        get() = owner!!.stats
+    fun toGroup() {
+        val st = owner!!.stats
 
+        pos = st.pos
+        size = st.size
+        layout = st.layout
+
+        bounds = null
+    }
+
+    //for updating
     var pos = PointN.ZERO
-        get() = if (is_group) owner_stats.pos else field
     var size = PointN.ZERO
-        get() = if (is_group) owner_stats.size else field
+    var layout = FGLayout.TOP_LEFT
 
     var bounds: Bounds? = null
-        get() = if (is_group) null else field
-    var layout = FGLayout.TOP_LEFT
-        get() = if (is_group) owner_stats.layout else field
 
     /////////////////////////////////////////////////////////////////////////////////////////
 
