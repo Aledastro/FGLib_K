@@ -44,8 +44,6 @@ abstract class Extension(vararg children: Extension) {
         ONLY_DRAW(true, false),
         ONLY_UPDATE(false, true);
 
-        fun active() = draw || update
-
         operator fun unaryMinus(): MODE {
             return when (this) {
                 SHOW -> HIDE
