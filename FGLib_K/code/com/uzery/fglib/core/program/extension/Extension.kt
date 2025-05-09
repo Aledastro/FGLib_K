@@ -106,9 +106,9 @@ abstract class Extension(vararg children: Extension) {
     internal fun initWithChildren() {
         if (inited) return
 
-        modify()
+        modify(false)
         init()
-        modify()
+        modify(false)
         load()
         rearrange()
         arranged_children.forEach { it.initWithChildren() }
@@ -117,7 +117,7 @@ abstract class Extension(vararg children: Extension) {
         inited = true
     }
 
-    private fun modify() {
+    private fun modify(with_init: Boolean) {
         val toAdd = HashSet<Extension>()
         val toRemove = HashSet<Extension>()
 
@@ -130,7 +130,7 @@ abstract class Extension(vararg children: Extension) {
 
             entry.e.stats.owner = this
         }
-        new_children.forEach { it.e.initWithChildren() }
+        if (with_init) new_children.forEach { it.e.initWithChildren() }
         new_children.clear()
 
         real_children.removeAll(toRemove)
@@ -205,7 +205,7 @@ abstract class Extension(vararg children: Extension) {
     }
 
     private fun rearrange() {
-        modify()
+        modify(true)
 
         arranged_children.clear()
         arranged_children.addAll(real_children)
