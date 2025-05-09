@@ -7,7 +7,7 @@ import com.uzery.fglib.utils.math.geom.PointN
 /**
  * TODO("doc")
  **/
-class ExtensionData {
+class ExtensionStats {
     fun next() {
         bounds?.next()
     }
