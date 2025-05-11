@@ -36,25 +36,79 @@ data class FGColor(val red: Int, val green: Int, val blue: Int, val alpha: Int =
     }
 
     companion object {
-        val WHITE = web("0xffffff")
-        val BLACK = web("0x000000")
+        ////////////////////////////////////////////////////////////////////////////////////////////
+
         val TRANSPARENT = web("0x00000000")
 
-        val RED = web("0xff0000")
-        val ORANGE = web("0xff7f00")
-        val ORANGERED = web("0xff3f00")
-        val BLUE = web("0x0000ff")
-        val GREEN = web("0x00ff00")
-        val BEIGE = web("0xf0f0f0")
-        val GOLD = web("0xaf5f00")
-        val CYAN = web("0x0000af")
-        val GRAY = web("0x5f5f5f")
-        val DARKGRAY = web("0x7f7f7f")
-        val DARKBLUE = web("0x2f2fff")
-        val LIGHTGRAY = web("0x1f1f1f")
-        val PURPLE = web("0x5f00ff")
-        val DEEPSKYBLUE = web("0x1f3fff")
+        val PURE_BLACK = web("0x000000")
+        val PURE_RED = web("0xff0000")
+        val PURE_GREEN = web("0x00ff00")
+        val PURE_BLUE = web("0x0000ff")
+        val PURE_YELLOW = web("0xffff00")
+        val PURE_PURPLE = web("0xff00ff")
+        val PURE_CYAN = web("0x00ffff")
+        val PURE_WHITE = web("0xffffff")
 
+        ////////////////////////////////////////////////////////////////////////////////////////////
+
+        val BLACK = web("0x161616")
+        val RED = web("0xb91b42")
+        val GREEN = web("0x269e23")
+        val BLUE = web("0x295cd3")
+        val YELLOW = web("0xe0dd19")
+        val PURPLE = web("0xb00ea6")
+        val CYAN = web("0x58c5ca")
+        val WHITE = web("0xe0e0e0")
+
+        val BEIGE = web("0xcac9b3")
+        val GOLD = web("0xa39103")
+        val ORANGE = web("0xc97e1e")
+        val ORANGE_RED = web("0xe04b28")
+        val DARK_BLUE = web("0x23216e")
+        val DEEP_SKY_BLUE = web("0x456ad1")
+        val BROWN = web("0x4b3019")
+
+        val LIGHT_GRAY = web("0xb0b0b0")
+        val GRAY = web("0x848484")
+        val DARK_GRAY = web("0x393939")
+
+        ////////////////////////////////////////////////////////////////////////////////////////////
+
+        @Deprecated("use new palette")
+        val OLD_WHITE = web("0xffffff")
+        @Deprecated("use new palette")
+        val OLD_BLACK = web("0x000000")
+
+        @Deprecated("use new palette")
+        val OLD_RED = web("0xff0000")
+        @Deprecated("use new palette")
+        val OLD_ORANGE = web("0xff7f00")
+        @Deprecated("use new palette")
+        val OLD_ORANGERED = web("0xff3f00")
+        @Deprecated("use new palette")
+        val OLD_BLUE = web("0x0000ff")
+        @Deprecated("use new palette")
+        val OLD_GREEN = web("0x00ff00")
+        @Deprecated("use new palette")
+        val OLD_BEIGE = web("0xf0f0f0")
+        @Deprecated("use new palette")
+        val OLD_GOLD = web("0xaf5f00")
+        @Deprecated("use new palette")
+        val OLD_CYAN = web("0x0000af")
+        @Deprecated("use new palette")
+        val OLD_GRAY = web("0x5f5f5f")
+        @Deprecated("use new palette")
+        val OLD_DARKGRAY = web("0x7f7f7f")
+        @Deprecated("use new palette")
+        val OLD_DARKBLUE = web("0x2f2fff")
+        @Deprecated("use new palette")
+        val OLD_LIGHTGRAY = web("0x1f1f1f")
+        @Deprecated("use new palette")
+        val OLD_PURPLE = web("0x5f00ff")
+        @Deprecated("use new palette")
+        val OLD_DEEPSKYBLUE = web("0x1f3fff")
+
+        ////////////////////////////////////////////////////////////////////////////////////////////
 
         fun web(web: String): FGColor {
             var source = web
