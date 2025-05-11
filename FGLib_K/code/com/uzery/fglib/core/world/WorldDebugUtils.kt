@@ -105,14 +105,14 @@ object WorldDebugUtils: PlatformUpdatable {
     fun drawBoundsFor(o: GameObject, pos: PointN, color_id: Int) {
         val colors = arrayOf(
             FGColor.RED,
-            FGColor.ORANGERED,
+            FGColor.ORANGE_RED,
             FGColor.BLUE,
             FGColor.GREEN,
             FGColor.GRAY
         )
         val colors_h = arrayOf(
             FGColor.RED.interpolate(FGColor.WHITE, 0.5),
-            FGColor.ORANGERED.interpolate(FGColor.WHITE, 0.5),
+            FGColor.ORANGE_RED.interpolate(FGColor.WHITE, 0.5),
             FGColor.BLUE.interpolate(FGColor.WHITE, 0.5),
             FGColor.GREEN.interpolate(FGColor.WHITE, 0.5),
             FGColor.GRAY.interpolate(FGColor.WHITE, 0.5)
@@ -166,13 +166,13 @@ object WorldDebugUtils: PlatformUpdatable {
     fun drawBoundsForOld(o: GameObject, pos: PointN, color_id: Int) {
         val colors = arrayOf(
             FGColor.RED,
-            FGColor.ORANGERED,
+            FGColor.ORANGE_RED,
             FGColor.BLUE,
             FGColor.GREEN
         )
         val colors_h = arrayOf(
             FGColor.RED.interpolate(FGColor.WHITE, 0.5),
-            FGColor.ORANGERED.interpolate(FGColor.WHITE, 0.5),
+            FGColor.ORANGE_RED.interpolate(FGColor.WHITE, 0.5),
             FGColor.BLUE.interpolate(FGColor.WHITE, 0.5),
             FGColor.GREEN.interpolate(FGColor.WHITE, 0.5)
         )
@@ -266,27 +266,27 @@ object WorldDebugUtils: PlatformUpdatable {
 
         val p = draw_pos+room.size.XP+PointN(10, 0)
 
-        graphics.fill.text(p+PointN(0, 10), "pos: ${room.pos}", FGColor.DARKBLUE)
-        graphics.fill.text(p+PointN(0, 20), "size: ${room.size}", FGColor.DARKBLUE)
-        graphics.fill.text(p+PointN(0, 30), "objects: ${room.objects.size}", FGColor.DARKBLUE)
+        graphics.fill.text(p+PointN(0, 10), "pos: ${room.pos}", FGColor.DARK_BLUE)
+        graphics.fill.text(p+PointN(0, 20), "size: ${room.size}", FGColor.DARK_BLUE)
+        graphics.fill.text(p+PointN(0, 30), "objects: ${room.objects.size}", FGColor.DARK_BLUE)
         graphics.fill.text(
             p+PointN(0, 40),
             "ram (MB): ${ram/1000_000}/${maxRam/1000_000}",
-            FGColor.DARKBLUE
+            FGColor.DARK_BLUE
         )
         graphics.fill.text(
             p+PointN(0, 50),
             "ram (KB) per obj: ${if (room.objects.size != 0) (ram/1000/room.objects.size).toInt() else 0}",
-            FGColor.DARKBLUE
+            FGColor.DARK_BLUE
         )
 
-        graphics.fill.text(p+PointN(0, 60), "FPS: ${(fps/100).toInt()}", FGColor.DARKBLUE)
+        graphics.fill.text(p+PointN(0, 60), "FPS: ${(fps/100).toInt()}", FGColor.DARK_BLUE)
 
         for (index in 0..<BoundsBox.SIZE) {
             graphics.fill.text(
                 p+PointN(0, 70+index*10),
                 "bounds[${BoundsBox.name(index)}]: ${bs_n[room]!![index]}",
-                FGColor.DARKBLUE
+                FGColor.DARK_BLUE
             )
         }
     }

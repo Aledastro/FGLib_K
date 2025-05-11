@@ -273,7 +273,7 @@ abstract class Extension(vararg children: Extension) {
 
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    fun drawBounds(color: FGColor = FGColor.DARKBLUE) {
+    fun drawBounds(color: FGColor = FGColor.DARK_BLUE) {
         val save_width = graphics.stroke.width
         graphics.stroke.width = 1.0
         graphics.stroke.rect(stats.real_pos, stats.size, color)
