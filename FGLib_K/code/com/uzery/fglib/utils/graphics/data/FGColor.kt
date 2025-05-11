@@ -115,10 +115,10 @@ data class FGColor(val red: Int, val green: Int, val blue: Int, val alpha: Int =
             if (web.startsWith("#")) source = web.replace("#", "")
             if (web.startsWith("0x")) source = web.replace("0x", "")
 
-            val sr = "0x"+source.substring(2, 4)
-            val sg = "0x"+source.substring(4, 6)
-            val sb = "0x"+source.substring(6, 8)
-            val sa = "0x"+if (source.length == 10) source.substring(8, 10) else "ff"
+            val sr = "0x"+source.substring(0, 2)
+            val sg = "0x"+source.substring(2, 4)
+            val sb = "0x"+source.substring(4, 6)
+            val sa = "0x"+if (source.length == 8) source.substring(6, 8) else "ff"
 
             val r = Integer.decode(sr)
             val g = Integer.decode(sg)
