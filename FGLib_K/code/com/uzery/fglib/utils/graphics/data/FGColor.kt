@@ -112,8 +112,8 @@ data class FGColor(val red: Int, val green: Int, val blue: Int, val alpha: Int =
 
         fun web(web: String): FGColor {
             var source = web
-            if (web.startsWith("#")) source = web.replace("#", "0x")
-            if (!source.startsWith("0x")) throw DebugData.error("web color: $web")
+            if (web.startsWith("#")) source = web.replace("#", "")
+            if (web.startsWith("0x")) source = web.replace("0x", "")
 
             val sr = "0x"+source.substring(2, 4)
             val sg = "0x"+source.substring(4, 6)
