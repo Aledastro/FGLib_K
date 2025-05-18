@@ -74,42 +74,6 @@ data class FGColor(val red: Int, val green: Int, val blue: Int, val alpha: Int =
 
         ////////////////////////////////////////////////////////////////////////////////////////////
 
-        @Deprecated("use new palette")
-        val OLD_WHITE = web("0xffffff")
-        @Deprecated("use new palette")
-        val OLD_BLACK = web("0x000000")
-
-        @Deprecated("use new palette")
-        val OLD_RED = web("0xff0000")
-        @Deprecated("use new palette")
-        val OLD_ORANGE = web("0xff7f00")
-        @Deprecated("use new palette")
-        val OLD_ORANGERED = web("0xff3f00")
-        @Deprecated("use new palette")
-        val OLD_BLUE = web("0x0000ff")
-        @Deprecated("use new palette")
-        val OLD_GREEN = web("0x00ff00")
-        @Deprecated("use new palette")
-        val OLD_BEIGE = web("0xf0f0f0")
-        @Deprecated("use new palette")
-        val OLD_GOLD = web("0xaf5f00")
-        @Deprecated("use new palette")
-        val OLD_CYAN = web("0x0000af")
-        @Deprecated("use new palette")
-        val OLD_GRAY = web("0x5f5f5f")
-        @Deprecated("use new palette")
-        val OLD_DARKGRAY = web("0x7f7f7f")
-        @Deprecated("use new palette")
-        val OLD_DARKBLUE = web("0x2f2fff")
-        @Deprecated("use new palette")
-        val OLD_LIGHTGRAY = web("0x1f1f1f")
-        @Deprecated("use new palette")
-        val OLD_PURPLE = web("0x5f00ff")
-        @Deprecated("use new palette")
-        val OLD_DEEPSKYBLUE = web("0x1f3fff")
-
-        ////////////////////////////////////////////////////////////////////////////////////////////
-
         fun web(web: String): FGColor {
             var source = web
             if (web.startsWith("#")) source = web.replace("#", "")
