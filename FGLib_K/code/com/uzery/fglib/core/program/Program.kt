@@ -7,6 +7,7 @@ import com.uzery.fglib.core.program.extension.Extension
 import com.uzery.fglib.utils.audio.AudioData
 import com.uzery.fglib.utils.data.file.TextData
 import com.uzery.fglib.utils.data.image.ImageData
+import com.uzery.fglib.utils.graphics.AffineGraphics
 import com.uzery.fglib.utils.math.geom.PointN
 
 /**
@@ -14,7 +15,7 @@ import com.uzery.fglib.utils.math.geom.PointN
  **/
 object Program {
     internal val core = object: Extension() {
-        override fun draw(pos: PointN) {
+        override fun draw(graphics: AffineGraphics, pos: PointN, size: PointN) {
             if (FGLibSettings.MANUAL_CLEAR_ON) return
 
             graphics.fill.draw(CANVAS_R, FGLibSettings.CLEAR_COLOR)
@@ -49,7 +50,7 @@ object Program {
     }
 
     fun draw() {
-        core.drawWithChildren(core.stats.render_pos)
+        core.drawWithChildren(graphics, core.stats.render_pos, core.stats.size)
     }
 
     var program_time = 0

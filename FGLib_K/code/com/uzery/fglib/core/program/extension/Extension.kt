@@ -6,6 +6,7 @@ import com.uzery.fglib.core.program.Platform
 import com.uzery.fglib.core.program.Platform.getGlobalOnTop
 import com.uzery.fglib.core.program.Platform.graphics
 import com.uzery.fglib.core.program.Platform.mouse
+import com.uzery.fglib.utils.graphics.AffineGraphics
 import com.uzery.fglib.utils.graphics.data.FGColor
 import com.uzery.fglib.utils.math.geom.PointN
 import com.uzery.fglib.utils.math.geom.shape.RectN
@@ -91,8 +92,8 @@ abstract class Extension(vararg children: Extension) {
     open fun update() {}
     open fun updateAfter() {}
 
-    open fun draw(pos: PointN) {}
-    open fun drawAfter(pos: PointN) {}
+    open fun draw(graphics: AffineGraphics, pos: PointN, size: PointN) {}
+    open fun drawAfter(graphics: AffineGraphics, pos: PointN, size: PointN) {}
 
     open fun onShow() {}
     open fun onHide() {}
@@ -169,7 +170,7 @@ abstract class Extension(vararg children: Extension) {
         update_time++
     }
 
-    internal fun drawWithChildren(pos: PointN) {
+    internal fun drawWithChildren(graphics: AffineGraphics, pos: PointN, size: PointN) {
         fun reset() {
             graphics.setFullDefaults()
             graphics.global_transform = stats.full_transform*graphics.default_transform
@@ -177,16 +178,16 @@ abstract class Extension(vararg children: Extension) {
 
         countTime("draw", java_code) {
             reset()
-            draw(pos)
+            draw(graphics, pos, size)
         }
 
         arranged_children.filter { it.is_drawing }.forEach { e ->
-            e.drawWithChildren(pos+e.stats.render_pos)
+            e.drawWithChildren(graphics,pos+e.stats.render_pos, e.stats.size)
         }
 
         countTime("draw", java_code) {
             reset()
-            drawAfter(pos)
+            drawAfter(graphics, pos, size)
         }
 
         draw_time++
