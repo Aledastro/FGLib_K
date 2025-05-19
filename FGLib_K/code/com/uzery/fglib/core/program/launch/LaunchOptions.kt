@@ -11,7 +11,7 @@ import com.uzery.fglib.utils.math.geom.PointN
 data class LaunchOptions(
     val size: PointN,
     val window_mode: FGWindowMode = FGWindowMode.WINDOWED,
-    val fill: FGColor = FGColor.WHITE,
+    val fill: FGColor = FGColor.PURE_WHITE,
     var title: String = "",
     var icons: List<String> = ArrayList(),
     val style: FGWindowStyle = FGWindowStyle.UNDECORATED
@@ -21,7 +21,7 @@ data class LaunchOptions(
         val default2 = LaunchOptions(
             PointN(1920, 1080)/2,
             window_mode = FGWindowMode.FULLSCREEN,
-            FGColor.WHITE,
+            FGColor.PURE_WHITE,
             "FGLib Example",
             listOf("sys|fglib_icon.png"),
             FGWindowStyle.UNDECORATED
@@ -31,7 +31,7 @@ data class LaunchOptions(
     constructor(
         size: PointN,
         fullscreen: Boolean,
-        fill: FGColor = FGColor.WHITE,
+        fill: FGColor = FGColor.PURE_WHITE,
         title: String = "",
         icons: List<String> = ArrayList(),
         style: FGWindowStyle = FGWindowStyle.UNDECORATED
