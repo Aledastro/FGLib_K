@@ -10,5 +10,5 @@ object FGLibSettings {
     var ROOM_ACTIVATE_GRID = 64
 
     var MANUAL_CLEAR_ON = false
-    var CLEAR_COLOR = FGColor.WHITE
+    var CLEAR_COLOR = FGColor.PURE_WHITE
 }
