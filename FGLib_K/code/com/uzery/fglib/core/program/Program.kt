@@ -1,13 +1,11 @@
 package com.uzery.fglib.core.program
 
 import com.uzery.fglib.core.program.Platform.CANVAS
-import com.uzery.fglib.core.program.Platform.CANVAS_R
-import com.uzery.fglib.core.program.Platform.graphics
 import com.uzery.fglib.core.program.extension.Extension
 import com.uzery.fglib.utils.audio.AudioData
 import com.uzery.fglib.utils.data.file.TextData
 import com.uzery.fglib.utils.data.image.ImageData
-import com.uzery.fglib.utils.graphics.AffineGraphics
+import com.uzery.fglib.utils.graphics.render.GraphicsRender
 import com.uzery.fglib.utils.math.geom.PointN
 
 /**
@@ -15,10 +13,10 @@ import com.uzery.fglib.utils.math.geom.PointN
  **/
 object Program {
     internal val core = object: Extension() {
-        override fun draw(graphics: AffineGraphics, pos: PointN, size: PointN) {
+        override fun draw(render: GraphicsRender) {
             if (FGLibSettings.MANUAL_CLEAR_ON) return
 
-            graphics.fill.draw(CANVAS_R, FGLibSettings.CLEAR_COLOR)
+            graphics.fill.rect(render.pos, render.size, FGLibSettings.CLEAR_COLOR)
         }
     }
 
@@ -50,7 +48,7 @@ object Program {
     }
 
     fun draw() {
-        core.drawWithChildren(graphics, core.stats.render_pos, core.stats.size)
+        core.drawWithChildren(GraphicsRender(PointN(0, 0), CANVAS))
     }
 
     var program_time = 0

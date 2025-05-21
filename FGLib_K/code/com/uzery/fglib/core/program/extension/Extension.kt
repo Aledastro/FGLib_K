@@ -8,6 +8,7 @@ import com.uzery.fglib.core.program.Platform.graphics
 import com.uzery.fglib.core.program.Platform.mouse
 import com.uzery.fglib.utils.graphics.AffineGraphics
 import com.uzery.fglib.utils.graphics.data.FGColor
+import com.uzery.fglib.utils.graphics.render.GraphicsRender
 import com.uzery.fglib.utils.math.geom.PointN
 import com.uzery.fglib.utils.math.geom.shape.RectN
 
@@ -36,6 +37,11 @@ abstract class Extension(vararg children: Extension) {
         get() = mode.draw && active().draw
     val is_updating
         get() = mode.update && active().update
+
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    val graphics
+        get() = Platform.graphics
 
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -92,8 +98,8 @@ abstract class Extension(vararg children: Extension) {
     open fun update() {}
     open fun updateAfter() {}
 
-    open fun draw(graphics: AffineGraphics, pos: PointN, size: PointN) {}
-    open fun drawAfter(graphics: AffineGraphics, pos: PointN, size: PointN) {}
+    open fun draw(render: GraphicsRender) {}
+    open fun drawAfter(render: GraphicsRender) {}
 
     open fun onShow() {}
     open fun onHide() {}
@@ -170,7 +176,7 @@ abstract class Extension(vararg children: Extension) {
         update_time++
     }
 
-    internal fun drawWithChildren(graphics: AffineGraphics, pos: PointN, size: PointN) {
+    internal fun drawWithChildren(render: GraphicsRender) {
         fun reset() {
             graphics.setFullDefaults()
             graphics.global_transform = stats.full_transform*graphics.default_transform
@@ -178,19 +184,23 @@ abstract class Extension(vararg children: Extension) {
 
         countTime("draw", java_code) {
             reset()
-            draw(graphics, pos, size)
+            draw(render)
         }
 
         arranged_children.filter { it.is_drawing }.forEach { e ->
-            e.drawWithChildren(graphics,pos+e.stats.render_pos, e.stats.size)
+            e.drawWithChildren(getRenderChild(render, e))
         }
 
         countTime("draw", java_code) {
             reset()
-            drawAfter(graphics, pos, size)
+            drawAfter(render)
         }
 
         draw_time++
+    }
+
+    private fun getRenderChild(render: GraphicsRender, e: Extension): GraphicsRender {
+        return GraphicsRender(render.pos+e.stats.render_pos, e.stats.size)
     }
 
     private fun updateTasksWithChildren() {
