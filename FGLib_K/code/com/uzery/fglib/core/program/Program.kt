@@ -48,7 +48,7 @@ object Program {
     }
 
     fun draw() {
-        core.drawWithChildren(GraphicsRender(PointN(0, 0), CANVAS))
+        core.drawWithChildren(GraphicsRender(core.stats.pos, core.stats.size))
     }
 
     var program_time = 0
