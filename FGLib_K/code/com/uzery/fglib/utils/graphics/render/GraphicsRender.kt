@@ -7,17 +7,19 @@ import com.uzery.fglib.utils.math.geom.shape.RectN
 class GraphicsRender(val pos: PointN, val size: PointN) {
     val main = RectN(pos, size)
 
-    private fun of(layout: FGLayout): PointN {
-        return pos+size*layout.value
+    fun layout(k_pos: PointN): PointN {
+        return pos+size*k_pos
     }
 
-    val TOP_LEFT = of(FGLayout.TOP_LEFT)
-    val TOP = of(FGLayout.TOP)
-    val TOP_RIGHT = of(FGLayout.TOP_RIGHT)
-    val LEFT = of(FGLayout.LEFT)
-    val CENTER = of(FGLayout.CENTER)
-    val RIGHT = of(FGLayout.RIGHT)
-    val BOTTOM_LEFT = of(FGLayout.BOTTOM_LEFT)
-    val BOTTOM = of(FGLayout.BOTTOM)
-    val BOTTOM_RIGHT = of(FGLayout.BOTTOM_RIGHT)
+    private fun layout(layout: FGLayout) = layout(layout.value)
+
+    val TOP_LEFT = layout(FGLayout.TOP_LEFT)
+    val TOP = layout(FGLayout.TOP)
+    val TOP_RIGHT = layout(FGLayout.TOP_RIGHT)
+    val LEFT = layout(FGLayout.LEFT)
+    val CENTER = layout(FGLayout.CENTER)
+    val RIGHT = layout(FGLayout.RIGHT)
+    val BOTTOM_LEFT = layout(FGLayout.BOTTOM_LEFT)
+    val BOTTOM = layout(FGLayout.BOTTOM)
+    val BOTTOM_RIGHT = layout(FGLayout.BOTTOM_RIGHT)
 }
