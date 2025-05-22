@@ -11,6 +11,4 @@ object FGLibSettings {
 
     var MANUAL_CLEAR_ON = false
     var CLEAR_COLOR = FGColor.PURE_WHITE
-
-    var ON_INIT_SETTING_DEFAULT_CLOSE = true
 }

@@ -68,7 +68,13 @@ object Platform {
         }
     }
 
+    var on_exit: () -> Unit = {}
+    var on_event_exit: () -> Unit = {
+        exit()
+    }
+
     fun exit() {
+        on_exit()
         program.exit()
     }
 
