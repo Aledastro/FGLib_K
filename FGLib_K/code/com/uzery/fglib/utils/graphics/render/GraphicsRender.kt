@@ -5,5 +5,5 @@ import com.uzery.fglib.utils.math.geom.shape.RectN
 
 class GraphicsRender(val pos: PointN, val size: PointN) {
     val main = RectN(pos, size)
-    val center = (pos+size)/2
+    val center = pos+size/2
 }
