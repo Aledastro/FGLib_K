@@ -11,6 +11,10 @@ class GraphicsRender(val pos: PointN, val size: PointN) {
         return pos+size*k_pos
     }
 
+    fun layout(x: Double, y: Double): PointN {
+        return pos+size*PointN(x, y)
+    }
+
     private fun layout(layout: FGLayout) = layout(layout.value)
 
     val TOP_LEFT = layout(FGLayout.TOP_LEFT)
