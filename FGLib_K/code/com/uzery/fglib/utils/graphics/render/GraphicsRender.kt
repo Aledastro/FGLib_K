@@ -11,13 +11,13 @@ class GraphicsRender(val pos: PointN, val size: PointN) {
         return pos+size*layout.value
     }
 
-    val top_left = of(FGLayout.TOP_LEFT)
-    val top = of(FGLayout.TOP)
-    val top_right = of(FGLayout.TOP_RIGHT)
-    val left = of(FGLayout.LEFT)
-    val center = of(FGLayout.CENTER)
-    val right = of(FGLayout.RIGHT)
-    val bottom_left = of(FGLayout.BOTTOM_LEFT)
-    val bottom = of(FGLayout.BOTTOM)
-    val bottom_right = of(FGLayout.BOTTOM_RIGHT)
+    val TOP_LEFT = of(FGLayout.TOP_LEFT)
+    val TOP = of(FGLayout.TOP)
+    val TOP_RIGHT = of(FGLayout.TOP_RIGHT)
+    val LEFT = of(FGLayout.LEFT)
+    val CENTER = of(FGLayout.CENTER)
+    val RIGHT = of(FGLayout.RIGHT)
+    val BOTTOM_LEFT = of(FGLayout.BOTTOM_LEFT)
+    val BOTTOM = of(FGLayout.BOTTOM)
+    val BOTTOM_RIGHT = of(FGLayout.BOTTOM_RIGHT)
 }
