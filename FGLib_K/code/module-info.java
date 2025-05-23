@@ -1,4 +1,4 @@
-module FGLib_K {
+module FGLib {
     requires kotlin.stdlib;
 
     /////////////////////////////////////////////////////////
