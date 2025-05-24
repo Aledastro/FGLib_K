@@ -33,4 +33,7 @@ abstract class StrokeGraphics(agc: AffineGraphics): GeometryGraphics(agc) {
     }
 
     fun line(pos: PointN, size: PointN, color: FGColor) = lineTo(pos, pos+size, color)
+    fun lineL(pos: PointN, size: PointN, color: FGColor) = lineTo(pos, pos+size, color)
+    fun lineC(pos: PointN, size: PointN, color: FGColor) = lineTo(pos-size/2, pos+size/2, color)
+    fun lineR(pos: PointN, size: PointN, color: FGColor) = lineTo(pos-size, pos, color)
 }
