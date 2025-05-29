@@ -3,7 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/FGLib/FGLib.iml" filepath="$PROJECT_DIR$/FGLib/FGLib.iml" />
-      <module fileurl="file://$PROJECT_DIR$/FGLib_K_Project.iml" filepath="$PROJECT_DIR$/FGLib_K_Project.iml" />
+      <module fileurl="file://$PROJECT_DIR$/FGLib_Project.iml" filepath="$PROJECT_DIR$/FGLib_Project.iml" />
     </modules>
   </component>
 </project>
