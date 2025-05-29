@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/FGLib_Project.iml" filepath="$PROJECT_DIR$/FGLib_Project.iml" />
+      <module fileurl="file://$PROJECT_DIR$/FGLibProject.iml" filepath="$PROJECT_DIR$/FGLibProject.iml" />
       <module fileurl="file://$PROJECT_DIR$/fglib/fglib.iml" filepath="$PROJECT_DIR$/fglib/fglib.iml" />
     </modules>
   </component>
