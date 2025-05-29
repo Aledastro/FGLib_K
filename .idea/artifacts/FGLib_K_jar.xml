@@ -2,7 +2,7 @@
   <artifact type="jar" name="FGLib_K:jar">
     <output-path>$PROJECT_DIR$/bin</output-path>
     <root id="archive" name="FGLib_K.jar">
-      <element id="module-output" name="FGLib_K" />
+      <element id="module-output" name="FGLib" />
     </root>
   </artifact>
 </component>
