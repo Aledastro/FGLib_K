@@ -6,9 +6,16 @@ import com.uzery.fglib.utils.input.data.FGMouseKey
 /**
  * TODO("doc")
  **/
-class FGKeyCombination(construct: FGKeyCombination.() -> Unit) {
-    val main = FGKeyCombinationPart {}
-    val parts = ArrayList<FGKeyCombinationPart>()
+class FGKeyCombination {
+    constructor(vararg part: FGKeyCombinationPart) {
+        parts.addAll(part)
+    }
+    constructor(construct: FGKeyCombination.() -> Unit) {
+        construct(this)
+    }
+
+    private val main = FGKeyCombinationPart()
+    private val parts = ArrayList<FGKeyCombinationPart>()
 
     fun combination(part: FGKeyCombinationPart) {
         parts.add(part)
@@ -71,10 +78,6 @@ class FGKeyCombination(construct: FGKeyCombination.() -> Unit) {
     }
 
     //////////////////////////////////////////////////////////////////////////////////////
-
-    init {
-        construct(this)
-    }
 
     fun active(): Boolean {
         return parts.any { it.active() } || !main.isEmpty() && main.active()

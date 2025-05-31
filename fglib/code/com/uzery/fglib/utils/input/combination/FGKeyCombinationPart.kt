@@ -8,7 +8,13 @@ import com.uzery.fglib.utils.input.data.FGMouseKey
 /**
  * TODO("doc")
  **/
-class FGKeyCombinationPart(construct: FGKeyCombinationPart.() -> Unit) {
+class FGKeyCombinationPart {
+    constructor()
+
+    constructor(construct: FGKeyCombinationPart.() -> Unit) {
+        construct(this)
+    }
+
     private val pressed = ArrayList<FGKey>()
     private val notPressed = ArrayList<FGKey>()
     private val inPressed = ArrayList<FGKey>()
@@ -20,10 +26,6 @@ class FGKeyCombinationPart(construct: FGKeyCombinationPart.() -> Unit) {
     private val mouseInPressed = ArrayList<FGMouseKey>()
     private val mouseRePressed = ArrayList<FGMouseKey>()
     private val mousePeriodPressed = ArrayList<Triple<Int, Int, FGMouseKey>>()
-
-    init {
-        construct(this)
-    }
 
     //////////////////////////////////////////////////////////////////////////////////////
 
