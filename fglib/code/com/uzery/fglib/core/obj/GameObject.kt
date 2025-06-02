@@ -84,8 +84,8 @@ abstract class GameObject: ComponentFunctionality() {
     val followers = ArrayList<GameObject>()
     var owner: GameObject? = null
 
-    val main_owner: GameObject
-        get() = owner?.main_owner ?: this
+    val top_owner: GameObject
+        get() = owner?.top_owner ?: this
 
     val pos_with_owners: PointN
         get() {
@@ -145,19 +145,19 @@ abstract class GameObject: ComponentFunctionality() {
         controllers.forEach { it.update() }
         abilities.forEach { it.run() }
 
-        setMain()
+        setCoverArea()
     }
 
-    var main: RectN? = null
+    var cover_area: RectN? = null
         private set
 
-    private fun setMain() {
+    private fun setCoverArea() {
         val bsl = ArrayList<RectN>()
         for (bc in BoundsBox.indices) {
-            bounds[bc].main?.let { bsl.add(it) }
+            bounds[bc].cover_area?.let { bsl.add(it) }
         }
-        main = if (bsl.isEmpty()) null
-        else ShapeUtils.mainOf(*bsl.toTypedArray())
+        cover_area = if (bsl.isEmpty()) null
+        else ShapeUtils.coverAreaOf(*bsl.toTypedArray())
     }
 
     private fun nextTime() {

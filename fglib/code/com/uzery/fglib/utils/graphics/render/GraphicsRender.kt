@@ -5,7 +5,7 @@ import com.uzery.fglib.utils.math.geom.PointN
 import com.uzery.fglib.utils.math.geom.shape.RectN
 
 class GraphicsRender(val pos: PointN, val size: PointN) {
-    val main = RectN(pos, size)
+    val draw_area = RectN(pos, size)
 
     fun layout(k_pos: PointN): PointN {
         return pos+size*k_pos

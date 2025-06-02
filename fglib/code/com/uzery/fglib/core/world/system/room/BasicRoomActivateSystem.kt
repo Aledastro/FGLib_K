@@ -1,5 +1,7 @@
 package com.uzery.fglib.core.world.system.room
 
+import com.uzery.fglib.core.component.bounds.Bounds
+import com.uzery.fglib.core.component.bounds.BoundsBox
 import com.uzery.fglib.core.component.bounds.BoundsElement
 import com.uzery.fglib.core.component.listener.InputAction
 import com.uzery.fglib.core.obj.GameObject
@@ -22,7 +24,7 @@ class BasicRoomActivateSystem(
 ): WorldSystem() {
     override fun updateRoom(room: Room) {
         val our = room.all_objs
-            .filter { obj -> !obj.tagged(util_inactive) && obj.main != null }
+            .filter { obj -> !obj.tagged(util_inactive) && obj.cover_area != null }
 
         if (has_overlap) {
             our
@@ -46,9 +48,9 @@ class BasicRoomActivateSystem(
         val cell_map = HashMap<IntI, ArrayList<GameObject>>()
 
         for (obj in our) {
-            val main = obj.main!!
-            val L = (obj.stats.POS+main.L)/ROOM_ACTIVATE_GRID
-            val R = (obj.stats.POS+main.R)/ROOM_ACTIVATE_GRID
+            val area = obj.cover_area!!
+            val L = (obj.stats.POS+area.L)/ROOM_ACTIVATE_GRID
+            val R = (obj.stats.POS+area.R)/ROOM_ACTIVATE_GRID
             for (i in L.intX..R.intX) {
                 for (j in L.intY..R.intY) {
                     val ii = IntI(i, j)
@@ -58,6 +60,10 @@ class BasicRoomActivateSystem(
             }
         }
 
+        fun BoundsBox.collide(): Bounds {
+            return if (red.empty) orange else red
+        }
+
         val checked = HashSet<Pair<GameObject, GameObject>>()
         fun checkFor(obj1: GameObject, obj2: GameObject) {
             if (obj1 == obj2) return
@@ -65,11 +71,11 @@ class BasicRoomActivateSystem(
             val pc = Pair(obj1, obj2)
 
             if (pc in checked) return
-            if (!ShapeUtils.into(obj1.main!!.copy(obj1.stats.POS), obj2.main!!.copy(obj2.stats.POS))) return
+            if (!ShapeUtils.into(obj1.cover_area!!.copy(obj1.stats.POS), obj2.cover_area!!.copy(obj2.stats.POS))) return
 
             if (has_interrupt) {
                 obj1.bounds.blue.elements.forEach { el1 ->
-                    obj2.bounds.main.elements.forEach { el2 ->
+                    obj2.bounds.collide().elements.forEach { el2 ->
                         setActivate(obj1, el1, obj2, el2, STD_INTERRUPT)
                         setActivate(obj2, el2, obj1, el1, STD_INTERRUPT_I)
                     }
@@ -77,7 +83,7 @@ class BasicRoomActivateSystem(
             }
 
             if (has_interact && obj1.interact()) {
-                obj1.bounds.main.elements.forEach { el1 ->
+                obj1.bounds.collide().elements.forEach { el1 ->
                     obj2.bounds.green.elements.forEach { el2 ->
                         setActivate(obj2, el2, obj1, el1, STD_INTERACT)
                         setActivate(obj1, el1, obj2, el2, STD_INTERACT_I)

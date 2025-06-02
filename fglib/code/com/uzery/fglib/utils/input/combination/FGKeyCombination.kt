@@ -14,12 +14,12 @@ class FGKeyCombination {
         construct(this)
     }
 
-    private val main = FGKeyCombinationPart()
+    private val inner = FGKeyCombinationPart()
     private val parts = ArrayList<FGKeyCombinationPart>()
 
     fun getCombinations(): List<FGKeyCombinationPart> {
         return ArrayList<FGKeyCombinationPart>().apply {
-            if (!main.isEmpty()) add(main)
+            if (!inner.isEmpty()) add(inner)
             parts.forEach { part -> if (!part.isEmpty()) add(part) }
         }
     }
@@ -35,58 +35,58 @@ class FGKeyCombination {
     //////////////////////////////////////////////////////////////////////////////////////
 
     fun pressed(vararg key: FGKey) {
-        main.pressed(*key)
+        inner.pressed(*key)
     }
 
     fun notPressed(vararg key: FGKey) {
-        main.notPressed(*key)
+        inner.notPressed(*key)
     }
 
     fun inPressed(vararg key: FGKey) {
-        main.inPressed(*key)
+        inner.inPressed(*key)
     }
 
     fun rePressed(vararg key: FGKey) {
-        main.rePressed(*key)
+        inner.rePressed(*key)
     }
 
     fun periodPressed(period: Int, key: FGKey) {
-        main.periodPressed(period, key)
+        inner.periodPressed(period, key)
     }
 
     fun periodPressed(start_time: Int, period: Int, key: FGKey) {
-        main.periodPressed(start_time, period, key)
+        inner.periodPressed(start_time, period, key)
     }
 
     //////////////////////////////////////////////////////////////////////////////////////
 
     fun pressed(vararg key: FGMouseKey) {
-        main.pressed(*key)
+        inner.pressed(*key)
     }
 
     fun notPressed(vararg key: FGMouseKey) {
-        main.notPressed(*key)
+        inner.notPressed(*key)
     }
 
     fun inPressed(vararg key: FGMouseKey) {
-        main.inPressed(*key)
+        inner.inPressed(*key)
     }
 
     fun rePressed(vararg key: FGMouseKey) {
-        main.rePressed(*key)
+        inner.rePressed(*key)
     }
 
     fun periodPressed(period: Int, key: FGMouseKey) {
-        main.periodPressed(period, key)
+        inner.periodPressed(period, key)
     }
 
     fun periodPressed(start_time: Int, period: Int, key: FGMouseKey) {
-        main.periodPressed(start_time, period, key)
+        inner.periodPressed(start_time, period, key)
     }
 
     //////////////////////////////////////////////////////////////////////////////////////
 
     fun active(): Boolean {
-        return parts.any { it.active() } || !main.isEmpty() && main.active()
+        return parts.any { it.active() } || !inner.isEmpty() && inner.active()
     }
 }

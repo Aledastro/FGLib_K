@@ -9,7 +9,7 @@ import com.uzery.fglib.utils.math.geom.shape.RectN
  **/
 abstract class LayerVisualiser(private val layer: DrawLayer): Visualiser() {
     constructor(pos: PointN, size: PointN, layer: DrawLayer): this(layer) {
-        main = RectN(pos, size)
+        draw_area = RectN(pos, size)
     }
 
     constructor(size: PointN, layer: DrawLayer): this(PointN.ZERO, size, layer)

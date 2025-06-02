@@ -25,7 +25,7 @@ class Room(val name: String, var pos: PointN, var size: PointN) {
     private val new_objects = ArrayList<GameObject>()
     private val old_objects = HashSet<GameObject>()
 
-    val main
+    val area
         get() = RectN(pos, size)
 
     constructor(name: String, pos: PointN, size: PointN, objs: List<GameObject>): this(name, pos, size) {

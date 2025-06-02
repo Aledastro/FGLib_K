@@ -12,8 +12,8 @@ object BoundsUtils {
     fun maxMoveOld(stay: Bounds, move: Bounds, stay_pos: PointN, start_pos: PointN, move_pos: PointN): Double {
         if (stay.elements.isEmpty() || move.elements.isEmpty()) return MAX_MOVE_K
 
-        val r_stay = stay.main ?: return MAX_MOVE_K
-        val r_move = move.main ?: return MAX_MOVE_K
+        val r_stay = stay.cover_area ?: return MAX_MOVE_K
+        val r_move = move.cover_area ?: return MAX_MOVE_K
 
         val end_pos = start_pos+move_pos
 

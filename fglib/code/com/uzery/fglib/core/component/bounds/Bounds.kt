@@ -21,14 +21,14 @@ class Bounds(vararg els: BoundsElement) {
 
     fun add(vararg els: BoundsElement) = els.forEach { element -> elements.add(element) }
 
-    private fun main(): RectN? {
+    private fun getCoverArea(): RectN? {
         if (empty) return null
 
         val list = ArrayList<Shape>()
         elements.forEach { el -> el.now?.let { list.add(it) } }
 
         if (list.isEmpty()) return null
-        return ShapeUtils.mainOf(*list.toTypedArray())
+        return ShapeUtils.coverAreaOf(*list.toTypedArray())
     }
 
     val empty
@@ -38,9 +38,9 @@ class Bounds(vararg els: BoundsElement) {
         return elements.any { it.now?.into(pos) == true }
     }
 
-    var main: RectN? = null
+    var cover_area: RectN? = null
     fun next() {
         elements.forEach { it.next() }
-        main = main()
+        cover_area = getCoverArea()
     }
 }

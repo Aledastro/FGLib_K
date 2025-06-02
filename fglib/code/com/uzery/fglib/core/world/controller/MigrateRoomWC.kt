@@ -18,7 +18,7 @@ class MigrateRoomWC: CameraWorldController() {
     }
 
     private fun isInArea(r: Room, obj: GameObject): Boolean {
-        return r.main.into(obj.stats.realPOS)
+        return r.area.into(obj.stats.realPOS)
     }
 
     override fun isActive(world: World, r: Room) = true

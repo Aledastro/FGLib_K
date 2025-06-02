@@ -52,7 +52,7 @@ object CollisionUtils {
     }
 
     fun intoX(stay: Shape, start: Shape, finish: Shape): Boolean {
-        return ShapeUtils.into(stay, ShapeUtils.mainOf(start, finish))
+        return ShapeUtils.into(stay, ShapeUtils.coverAreaOf(start, finish))
     }
 
     /*private fun maxMoveOval(stay: OvalN, start: OvalN, finish: OvalN): Double {

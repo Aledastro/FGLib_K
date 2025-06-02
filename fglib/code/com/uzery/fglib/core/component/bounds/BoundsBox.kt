@@ -3,9 +3,7 @@ package com.uzery.fglib.core.component.bounds
 import com.uzery.fglib.core.obj.GameObject
 
 /**
- * RED, ORANGE, BLUE and GREEN [Bounds] for [GameObject]
- *
- * `main` is `red` if it's not empty, `orange` otherwise
+ * RED, ORANGE, BLUE, GREEN and GRAY [Bounds] for [GameObject]
  **/
 class BoundsBox {
     private val bounds = Array(SIZE) { Bounds() }
@@ -25,9 +23,6 @@ class BoundsBox {
         get() = bounds[GREEN]
     val gray: Bounds
         get() = bounds[GRAY]
-    val main: Bounds
-        get() = if (red.empty) orange else red
-
 
     companion object {
         enum class CODE { RED, ORANGE, BLUE, GREEN, GRAY }

@@ -94,7 +94,7 @@ object ShapeUtils {
         return RectN.LR(start.L.interpolate(finish.L, k), start.R.interpolate(finish.R, k))
     }
 
-    fun mainOf(vararg list: Shape): RectN {
+    fun coverAreaOf(vararg list: Shape): RectN {
         val minP = PointN(Array(list[0].dim) { i -> list.minOf { p -> p.L[i] } })
         val maxP = PointN(Array(list[0].dim) { i -> list.maxOf { p -> p.R[i] } })
 

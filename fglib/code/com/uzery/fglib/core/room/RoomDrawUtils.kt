@@ -33,7 +33,7 @@ object RoomDrawUtils {
         vis.addAll(obj.visuals)
 
         obj.visuals.forEach { v ->
-            pos_map[v] = obj.pos_with_owners+obj.main_owner.stats.roomPOS
+            pos_map[v] = obj.pos_with_owners+obj.top_owner.stats.roomPOS
         }
         obj.visuals.forEach { v ->
             val sort_p = v.sortPOS+obj.stats.sortPOS

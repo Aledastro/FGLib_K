@@ -19,7 +19,7 @@ abstract class Visualiser: ObjectComponent, Comparable<Visualiser> {
     abstract fun drawLayer(): DrawLayer
 
     fun drawWithDefaults(draw_pos: PointN) {
-        //todo if (main != null && !ShapeUtils.into(main!!.copy(draw_pos), Platform.CANVAS_R)) return
+        //todo if (draw_area != null && !ShapeUtils.into(draw_area!!.copy(draw_pos), Platform.CANVAS_R)) return
 
         agc.setDefaults()
         agc.layer = drawLayer()
@@ -27,7 +27,7 @@ abstract class Visualiser: ObjectComponent, Comparable<Visualiser> {
     }
 
     var sortPOS = PointN.ZERO
-    protected var main: RectN? = null
+    protected var draw_area: RectN? = null
 
     val agc: AffineGraphics
         get() = Platform.graphics
