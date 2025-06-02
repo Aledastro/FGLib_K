@@ -1,6 +1,6 @@
 package com.uzery.fglib.utils.graphics.render
 
-import com.uzery.fglib.core.program.extension.FGLayout
+import com.uzery.fglib.utils.math.geom.FGLayout
 import com.uzery.fglib.utils.math.geom.PointN
 import com.uzery.fglib.utils.math.geom.shape.RectN
 

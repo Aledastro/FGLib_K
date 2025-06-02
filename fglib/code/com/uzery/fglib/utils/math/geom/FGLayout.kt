@@ -1,6 +1,4 @@
-package com.uzery.fglib.core.program.extension
-
-import com.uzery.fglib.utils.math.geom.PointN
+package com.uzery.fglib.utils.math.geom
 
 /**
  * TODO("doc")
