@@ -17,6 +17,13 @@ class FGKeyCombination {
     private val main = FGKeyCombinationPart()
     private val parts = ArrayList<FGKeyCombinationPart>()
 
+    fun getCombinations(): List<FGKeyCombinationPart> {
+        return ArrayList<FGKeyCombinationPart>().apply {
+            if (!main.isEmpty()) add(main)
+            parts.forEach { part -> if (!part.isEmpty()) add(part) }
+        }
+    }
+
     fun combination(part: FGKeyCombinationPart) {
         parts.add(part)
     }
