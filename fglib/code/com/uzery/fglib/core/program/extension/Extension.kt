@@ -188,7 +188,7 @@ abstract class Extension(vararg children: Extension) {
         }
 
         arranged_children.filter { it.is_drawing }.forEach { e ->
-            e.drawWithChildren(getRenderChild(render, e))
+            e.drawWithChildren(render.child(e.stats.render_pos, e.stats.size))
         }
 
         countTime("draw", java_code) {
@@ -197,10 +197,6 @@ abstract class Extension(vararg children: Extension) {
         }
 
         draw_time++
-    }
-
-    private fun getRenderChild(render: GraphicsRender, e: Extension): GraphicsRender {
-        return GraphicsRender(render.pos+e.stats.render_pos, e.stats.size)
     }
 
     private fun updateTasksWithChildren() {
