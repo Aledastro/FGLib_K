@@ -1,44 +1,32 @@
 package com.uzery.fglib.core.component.bounds
 
-import com.uzery.fglib.core.obj.GameObject
-
 /**
- * RED, ORANGE, BLUE, GREEN and GRAY [Bounds] for [GameObject]
+ * todo doc
  **/
-class BoundsBox {
-    private val bounds = Array(SIZE) { Bounds() }
-    operator fun get(index: Int) = bounds[index]
+class BoundsBox(bounds: ArrayList<BoundsComponent>) {
+    private val map = HashMap<String, Bounds>()
+    val codes = ArrayList<String>()
 
-    fun next() {
-        bounds.forEach { it.next() }
+    init {
+        for (bs in bounds) {
+            if (map[bs.code] == null) {
+                map[bs.code] = Bounds()
+            }
+            map[bs.code]!!.add(bs.element)
+        }
+
+        codes.addAll(map.keys)
     }
 
-    val red: Bounds
-        get() = bounds[RED]
-    val orange: Bounds
-        get() = bounds[ORANGE]
-    val blue: Bounds
-        get() = bounds[BLUE]
-    val green: Bounds
-        get() = bounds[GREEN]
-    val gray: Bounds
-        get() = bounds[GRAY]
+    operator fun get(code: String) = map[code] ?: Bounds()
 
-    companion object {
-        enum class CODE { RED, ORANGE, BLUE, GREEN, GRAY }
+    fun isEmpty(code: String) = map[code]?.empty ?: true
 
-        fun name(index: Int) = CODE.entries[index].name
-        fun index(name: String) = CODE.valueOf(name).ordinal
+    fun name(index: Int) = codes[index]
+    fun index(name: String) = codes.indexOf(name)
 
-        val SIZE = CODE.entries.size
+    val SIZE = map.keys.size
 
-        val RED = CODE.RED.ordinal
-        val ORANGE = CODE.ORANGE.ordinal
-        val BLUE = CODE.BLUE.ordinal
-        val GREEN = CODE.GREEN.ordinal
-        val GRAY = CODE.GRAY.ordinal
-
-        val indices
-            get() = CODE.entries.indices
-    }
+    val indices
+        get() = map.keys.indices
 }

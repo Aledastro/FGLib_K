@@ -1,6 +1,5 @@
 package com.uzery.fglib.core.world
 
-import com.uzery.fglib.core.component.bounds.BoundsBox
 import com.uzery.fglib.core.component.bounds.BoundsElement
 import com.uzery.fglib.core.obj.DrawLayer
 import com.uzery.fglib.core.obj.GameObject
@@ -12,7 +11,6 @@ import com.uzery.fglib.core.program.PlatformUpdatable
 import com.uzery.fglib.core.room.Room
 import com.uzery.fglib.utils.graphics.data.FGColor
 import com.uzery.fglib.utils.graphics.data.FGFont
-import com.uzery.fglib.utils.graphics.data.FGFontWeight
 import com.uzery.fglib.utils.math.geom.PointN
 import com.uzery.fglib.utils.math.geom.Shape
 import com.uzery.fglib.utils.math.geom.shape.OvalN
@@ -97,27 +95,16 @@ object WorldDebugUtils: PlatformUpdatable {
     }
 
     fun drawBoundsFor(o: GameObject, pos: PointN) {
-        for (i in 0..<BoundsBox.SIZE) {
-            drawBoundsFor(o, pos, i)
+        for (code in o.bounds.codes) {
+            drawBoundsFor(o, pos, code)
         }
     }
 
-    fun drawBoundsFor(o: GameObject, pos: PointN, color_id: Int) {
-        val colors = arrayOf(
-            FGColor.RED,
-            FGColor.ORANGE_RED,
-            FGColor.BLUE,
-            FGColor.GREEN,
-            FGColor.GRAY
-        )
-        val colors_h = arrayOf(
-            FGColor.RED.interpolate(FGColor.WHITE, 0.5),
-            FGColor.ORANGE_RED.interpolate(FGColor.WHITE, 0.5),
-            FGColor.BLUE.interpolate(FGColor.WHITE, 0.5),
-            FGColor.GREEN.interpolate(FGColor.WHITE, 0.5),
-            FGColor.GRAY.interpolate(FGColor.WHITE, 0.5)
-        )
-        val bs = o.bounds[color_id]
+    fun drawBoundsFor(o: GameObject, pos: PointN, color_code: String) {
+        val color = o.bounds[color_code].color
+        val color_h = color.interpolate(FGColor.WHITE, 0.5)
+
+        val bs = o.bounds[color_code]
         if (bs.empty) return
 
         graphics.stroke.width = 1.0
@@ -141,42 +128,33 @@ object WorldDebugUtils: PlatformUpdatable {
                 graphics.stroke.line(
                     pos+render_camera[o.pos_with_owners+sh.L],
                     render_camera[sh.R]-render_camera[sh.L],
-                    colors_h[color_id].transparent(0.8)
+                    color_h.transparent(0.8)
                 )
             }
 
             val draw_pos = pos+render_camera[o.pos_with_owners]
 
-            //graphics.fill.draw(draw_pos+z1, shape, colors[color_id].transparent(0.05))
-            graphics.stroke.draw(draw_pos+z1, shape, colors[color_id].transparent(0.3))
-            //graphics.fill.draw(draw_pos+z2, shape, colors[color_id].transparent(0.1))
-            graphics.stroke.draw(draw_pos+z2, shape, colors[color_id].transparent(0.6))
+            //graphics.fill.draw(draw_pos+z1, shape, color.transparent(0.05))
+            graphics.stroke.draw(draw_pos+z1, shape, color.transparent(0.3))
+            //graphics.fill.draw(draw_pos+z2, shape, color.transparent(0.1))
+            graphics.stroke.draw(draw_pos+z2, shape, color.transparent(0.6))
 
             if (el.name != BoundsElement.DEFAULT_NAME) {
                 graphics.fill.font = FGFont("Arial", 3.0)
                 graphics.fill.text(
                     draw_pos+shape.L+PointN(0, -2),
                     el.name,
-                    colors[color_id].transparent(0.6)
+                    color.transparent(0.6)
                 )
             }
         }
     }
 
-    fun drawBoundsForOld(o: GameObject, pos: PointN, color_id: Int) {
-        val colors = arrayOf(
-            FGColor.RED,
-            FGColor.ORANGE_RED,
-            FGColor.BLUE,
-            FGColor.GREEN
-        )
-        val colors_h = arrayOf(
-            FGColor.RED.interpolate(FGColor.WHITE, 0.5),
-            FGColor.ORANGE_RED.interpolate(FGColor.WHITE, 0.5),
-            FGColor.BLUE.interpolate(FGColor.WHITE, 0.5),
-            FGColor.GREEN.interpolate(FGColor.WHITE, 0.5)
-        )
-        val bs = o.bounds[color_id]
+    fun drawBoundsForOld(o: GameObject, pos: PointN, color_code: String) {
+        val color = o.bounds[color_code].color
+        val color_h = color.interpolate(FGColor.WHITE, 0.5)
+
+        val bs = o.bounds[color_code]
         if (bs.empty) return
 
         graphics.stroke.width = 1.0
@@ -198,21 +176,21 @@ object WorldDebugUtils: PlatformUpdatable {
                 graphics.stroke.line(
                     pos+render_camera[o.pos_with_owners]+shape.L,
                     shape.S,
-                    colors_h[color_id].transparent(0.8)
+                    color_h.transparent(0.8)
                 )
             }
 
             val draw_pos = pos+render_camera[o.pos_with_owners]
 
-            graphics.fill.draw(draw_pos, shape, colors[color_id].transparent(0.1))
-            graphics.stroke.draw(draw_pos, shape, colors[color_id].transparent(0.6))
+            graphics.fill.draw(draw_pos, shape, color.transparent(0.1))
+            graphics.stroke.draw(draw_pos, shape, color.transparent(0.6))
 
             if (el.name != BoundsElement.DEFAULT_NAME) {
                 graphics.fill.font = FGFont("Arial", 3.0)
                 graphics.fill.text(
                     draw_pos+shape.L+PointN(0, -2),
                     el.name,
-                    colors[color_id].transparent(0.6)
+                    color.transparent(0.6)
                 )
             }
         }
@@ -253,7 +231,7 @@ object WorldDebugUtils: PlatformUpdatable {
         ids_time++
     }
 
-    fun nextDebugForRoom(room: Room) {
+    /*fun nextDebugForRoom(room: Room) {
         if (bs_n[room] == null) bs_n[room] = Array(BoundsBox.SIZE) { 0 }
         for (index in 0..<BoundsBox.SIZE) {
             bs_n[room]!![index] = room.objects.count { !it.bounds[index].empty }
@@ -289,7 +267,7 @@ object WorldDebugUtils: PlatformUpdatable {
                 FGColor.DARK_BLUE
             )
         }
-    }
+    }*/
 
     //////////////////////////////////////////////////////////////////////////////////////////////////////////
 }

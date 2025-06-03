@@ -42,7 +42,8 @@ abstract class GameObject: ComponentFunctionality() {
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    val bounds = BoundsBox()
+    private val bounds_elements = ArrayList<BoundsComponent>()
+    lateinit var bounds: BoundsBox
 
     private val abilities = ArrayList<AbilityBox>()
     private val controllers = ArrayList<Controller>()
@@ -60,7 +61,7 @@ abstract class GameObject: ComponentFunctionality() {
             when (c) {
                 is GroupComponent -> c.components.forEach { addComponent(it) }
 
-                is BoundsComponent -> bounds[c.code.ordinal].add(c.element)
+                is BoundsComponent -> bounds_elements.add(c)
 
                 is AbilityBox -> abilities.add(c)
                 is Controller -> controllers.add(c)
@@ -141,7 +142,8 @@ abstract class GameObject: ComponentFunctionality() {
     private fun nextLogics() {
         if (object_time == 0) onBirth.forEach { it.run() }
 
-        bounds.next()
+        bounds = BoundsBox(bounds_elements)
+
         controllers.forEach { it.update() }
         abilities.forEach { it.run() }
 
@@ -152,12 +154,12 @@ abstract class GameObject: ComponentFunctionality() {
         private set
 
     private fun setCoverArea() {
-        val bsl = ArrayList<RectN>()
-        for (bc in BoundsBox.indices) {
-            bounds[bc].cover_area?.let { bsl.add(it) }
+        val areas = ArrayList<RectN>()
+        for (code in bounds.codes) {
+            bounds[code].cover_area?.let { area -> areas.add(area) }
         }
-        cover_area = if (bsl.isEmpty()) null
-        else ShapeUtils.coverAreaOf(*bsl.toTypedArray())
+        cover_area = if (areas.isEmpty()) null
+        else ShapeUtils.coverAreaOf(*areas.toTypedArray())
     }
 
     private fun nextTime() {

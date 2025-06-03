@@ -15,11 +15,17 @@ import com.uzery.fglib.utils.math.geom.PointN
  * TODO("doc")
  **/
 object BasicRoomMoveSystem: WorldSystem() {
+    private val RED = "RED"
+    private val ORANGE = "ORANGE"
+    private val BLUE = "BLUE"
+    private val GREEN = "GREEN"
+    private val GRAY = "GRAY"
+
     fun getBS(objs: ArrayList<GameObject>): ArrayList<PosBounds> {
         val red_bounds = ArrayList<PosBounds>()
 
         objs.forEach { obj ->
-            val bs = obj.bounds.red
+            val bs = obj.bounds[RED]
             if (!bs.empty) {
                 red_bounds.add(PosBounds(obj.pos_with_owners, bs, obj))
             }
@@ -37,7 +43,7 @@ object BasicRoomMoveSystem: WorldSystem() {
             obj.stats.fly_by.clear()
 
             obj.stats.lastPOS = obj.stats.POS
-            val move_bs = obj.bounds.orange
+            val move_bs = obj.bounds[ORANGE]
             if (obj.stats.nPOS.length() < FGLibConst.LITTLE) continue
 
             if (move_bs.empty) {

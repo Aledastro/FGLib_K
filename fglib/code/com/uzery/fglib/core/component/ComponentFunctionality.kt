@@ -1,7 +1,6 @@
 package com.uzery.fglib.core.component
 
 import com.uzery.fglib.core.component.ability.AbilityBox
-import com.uzery.fglib.core.component.bounds.BoundsBox.Companion.CODE
 import com.uzery.fglib.core.component.bounds.BoundsComponent
 import com.uzery.fglib.core.component.bounds.BoundsElement
 import com.uzery.fglib.core.component.controller.Controller
@@ -55,39 +54,39 @@ abstract class ComponentFunctionality {
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    fun addBounds(code: CODE, vararg bs: BoundsElement) {
+    fun addBounds(code: String, vararg bs: BoundsElement) {
         bs.forEach {
             addComponent(BoundsComponent(code, it))
         }
     }
 
-    fun addBounds(code: CODE, shape: () -> Shape?) {
+    fun addBounds(code: String, shape: () -> Shape?) {
         addComponent(BoundsComponent(code, BoundsElement(shape)))
     }
 
-    fun addBounds(code: CODE, name: String, shape: () -> Shape?) {
+    fun addBounds(code: String, name: String, shape: () -> Shape?) {
         addComponent(BoundsComponent(code, BoundsElement(name, shape)))
     }
 
-    fun addRedBounds(vararg bs: BoundsElement) = addBounds(CODE.RED, *bs)
-    fun addRedBounds(shape: () -> Shape?) = addBounds(CODE.RED, shape)
-    fun addRedBounds(name: String, shape: () -> Shape?) = addBounds(CODE.RED, name, shape)
+    fun addRedBounds(vararg bs: BoundsElement) = addBounds("RED", *bs)
+    fun addRedBounds(shape: () -> Shape?) = addBounds("RED", shape)
+    fun addRedBounds(name: String, shape: () -> Shape?) = addBounds("RED", name, shape)
 
-    fun addOrangeBounds(vararg bs: BoundsElement) = addBounds(CODE.ORANGE, *bs)
-    fun addOrangeBounds(shape: () -> Shape?) = addBounds(CODE.ORANGE, shape)
-    fun addOrangeBounds(name: String, shape: () -> Shape?) = addBounds(CODE.ORANGE, name, shape)
+    fun addOrangeBounds(vararg bs: BoundsElement) = addBounds("ORANGE", *bs)
+    fun addOrangeBounds(shape: () -> Shape?) = addBounds("ORANGE", shape)
+    fun addOrangeBounds(name: String, shape: () -> Shape?) = addBounds("ORANGE", name, shape)
 
-    fun addBlueBounds(vararg bs: BoundsElement) = addBounds(CODE.BLUE, *bs)
-    fun addBlueBounds(shape: () -> Shape?) = addBounds(CODE.BLUE, shape)
-    fun addBlueBounds(name: String, shape: () -> Shape?) = addBounds(CODE.BLUE, name, shape)
+    fun addBlueBounds(vararg bs: BoundsElement) = addBounds("BLUE", *bs)
+    fun addBlueBounds(shape: () -> Shape?) = addBounds("BLUE", shape)
+    fun addBlueBounds(name: String, shape: () -> Shape?) = addBounds("BLUE", name, shape)
 
-    fun addGreenBounds(vararg bs: BoundsElement) = addBounds(CODE.GREEN, *bs)
-    fun addGreenBounds(shape: () -> Shape?) = addBounds(CODE.GREEN, shape)
-    fun addGreenBounds(name: String, shape: () -> Shape?) = addBounds(CODE.GREEN, name, shape)
+    fun addGreenBounds(vararg bs: BoundsElement) = addBounds("GREEN", *bs)
+    fun addGreenBounds(shape: () -> Shape?) = addBounds("GREEN", shape)
+    fun addGreenBounds(name: String, shape: () -> Shape?) = addBounds("GREEN", name, shape)
 
-    fun addGrayBounds(vararg bs: BoundsElement) = addBounds(CODE.GRAY, *bs)
-    fun addGrayBounds(shape: () -> Shape?) = addBounds(CODE.GRAY, shape)
-    fun addGrayBounds(name: String, shape: () -> Shape?) = addBounds(CODE.GRAY, name, shape)
+    fun addGrayBounds(vararg bs: BoundsElement) = addBounds("GRAY", *bs)
+    fun addGrayBounds(shape: () -> Shape?) = addBounds("GRAY", shape)
+    fun addGrayBounds(name: String, shape: () -> Shape?) = addBounds("GRAY", name, shape)
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
