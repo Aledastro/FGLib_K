@@ -140,9 +140,9 @@ abstract class GameObject: ComponentFunctionality() {
     }
 
     private fun nextLogics() {
-        if (object_time == 0) onBirth.forEach { it.run() }
-
         bounds = BoundsBox(bounds_elements)
+
+        if (object_time == 0) onBirth.forEach { it.run() }
 
         controllers.forEach { it.update() }
         abilities.forEach { it.run() }

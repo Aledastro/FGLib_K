@@ -16,6 +16,10 @@ class BoundsBox(bounds: ArrayList<BoundsComponent>) {
         }
 
         codes.addAll(map.keys)
+
+        for (code in codes) {
+            map[code]!!.next()
+        }
     }
 
     operator fun get(code: String) = map[code] ?: Bounds()
