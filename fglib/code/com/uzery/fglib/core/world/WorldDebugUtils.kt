@@ -1,5 +1,6 @@
 package com.uzery.fglib.core.world
 
+import com.uzery.fglib.core.component.bounds.BoundsCode
 import com.uzery.fglib.core.component.bounds.BoundsElement
 import com.uzery.fglib.core.obj.DrawLayer
 import com.uzery.fglib.core.obj.GameObject
@@ -100,7 +101,7 @@ object WorldDebugUtils: PlatformUpdatable {
         }
     }
 
-    fun drawBoundsFor(o: GameObject, pos: PointN, color_code: String) {
+    fun drawBoundsFor(o: GameObject, pos: PointN, color_code: BoundsCode) {
         val color = o.bounds[color_code].color
         val color_h = color.interpolate(FGColor.WHITE, 0.5)
 
@@ -150,7 +151,7 @@ object WorldDebugUtils: PlatformUpdatable {
         }
     }
 
-    fun drawBoundsForOld(o: GameObject, pos: PointN, color_code: String) {
+    fun drawBoundsForOld(o: GameObject, pos: PointN, color_code: BoundsCode) {
         val color = o.bounds[color_code].color
         val color_h = color.interpolate(FGColor.WHITE, 0.5)
 

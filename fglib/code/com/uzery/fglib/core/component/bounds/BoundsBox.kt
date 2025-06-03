@@ -4,8 +4,8 @@ package com.uzery.fglib.core.component.bounds
  * todo doc
  **/
 class BoundsBox(bounds: ArrayList<BoundsComponent>) {
-    private val map = HashMap<String, Bounds>()
-    val codes = ArrayList<String>()
+    private val map = HashMap<BoundsCode, Bounds>()
+    val codes = ArrayList<BoundsCode>()
 
     init {
         for (bs in bounds) {
@@ -22,12 +22,12 @@ class BoundsBox(bounds: ArrayList<BoundsComponent>) {
         }
     }
 
-    operator fun get(code: String) = map[code] ?: Bounds()
+    operator fun get(code: BoundsCode) = map[code] ?: Bounds()
 
-    fun isEmpty(code: String) = map[code]?.empty ?: true
+    fun isEmpty(code: BoundsCode) = map[code]?.empty ?: true
 
     fun name(index: Int) = codes[index]
-    fun index(name: String) = codes.indexOf(name)
+    fun index(name: BoundsCode) = codes.indexOf(name)
 
     val SIZE = map.keys.size
 

@@ -1,6 +1,7 @@
 package com.uzery.fglib.core.component
 
 import com.uzery.fglib.core.component.ability.AbilityBox
+import com.uzery.fglib.core.component.bounds.BoundsCode
 import com.uzery.fglib.core.component.bounds.BoundsComponent
 import com.uzery.fglib.core.component.bounds.BoundsElement
 import com.uzery.fglib.core.component.controller.Controller
@@ -16,6 +17,7 @@ import com.uzery.fglib.core.component.resource.SpriteResource
 import com.uzery.fglib.core.component.visual.LayerVisualiser
 import com.uzery.fglib.core.component.visual.Visualiser
 import com.uzery.fglib.core.obj.DrawLayer
+import com.uzery.fglib.core.world.system.room.UtilBounds
 import com.uzery.fglib.utils.data.debug.DebugData
 import com.uzery.fglib.utils.graphics.AffineGraphics
 import com.uzery.fglib.utils.math.geom.PointN
@@ -54,39 +56,39 @@ abstract class ComponentFunctionality {
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    fun addBounds(code: String, vararg bs: BoundsElement) {
+    fun addBounds(code: BoundsCode, vararg bs: BoundsElement) {
         bs.forEach {
             addComponent(BoundsComponent(code, it))
         }
     }
 
-    fun addBounds(code: String, shape: () -> Shape?) {
+    fun addBounds(code: BoundsCode, shape: () -> Shape?) {
         addComponent(BoundsComponent(code, BoundsElement(shape)))
     }
 
-    fun addBounds(code: String, name: String, shape: () -> Shape?) {
+    fun addBounds(code: BoundsCode, name: String, shape: () -> Shape?) {
         addComponent(BoundsComponent(code, BoundsElement(name, shape)))
     }
 
-    fun addRedBounds(vararg bs: BoundsElement) = addBounds("RED", *bs)
-    fun addRedBounds(shape: () -> Shape?) = addBounds("RED", shape)
-    fun addRedBounds(name: String, shape: () -> Shape?) = addBounds("RED", name, shape)
+    fun addRedBounds(vararg bs: BoundsElement) = addBounds(UtilBounds.RED, *bs)
+    fun addRedBounds(shape: () -> Shape?) = addBounds(UtilBounds.RED, shape)
+    fun addRedBounds(name: String, shape: () -> Shape?) = addBounds(UtilBounds.RED, name, shape)
 
-    fun addOrangeBounds(vararg bs: BoundsElement) = addBounds("ORANGE", *bs)
-    fun addOrangeBounds(shape: () -> Shape?) = addBounds("ORANGE", shape)
-    fun addOrangeBounds(name: String, shape: () -> Shape?) = addBounds("ORANGE", name, shape)
+    fun addOrangeBounds(vararg bs: BoundsElement) = addBounds(UtilBounds.ORANGE, *bs)
+    fun addOrangeBounds(shape: () -> Shape?) = addBounds(UtilBounds.ORANGE, shape)
+    fun addOrangeBounds(name: String, shape: () -> Shape?) = addBounds(UtilBounds.ORANGE, name, shape)
 
-    fun addBlueBounds(vararg bs: BoundsElement) = addBounds("BLUE", *bs)
-    fun addBlueBounds(shape: () -> Shape?) = addBounds("BLUE", shape)
-    fun addBlueBounds(name: String, shape: () -> Shape?) = addBounds("BLUE", name, shape)
+    fun addBlueBounds(vararg bs: BoundsElement) = addBounds(UtilBounds.BLUE, *bs)
+    fun addBlueBounds(shape: () -> Shape?) = addBounds(UtilBounds.BLUE, shape)
+    fun addBlueBounds(name: String, shape: () -> Shape?) = addBounds(UtilBounds.BLUE, name, shape)
 
-    fun addGreenBounds(vararg bs: BoundsElement) = addBounds("GREEN", *bs)
-    fun addGreenBounds(shape: () -> Shape?) = addBounds("GREEN", shape)
-    fun addGreenBounds(name: String, shape: () -> Shape?) = addBounds("GREEN", name, shape)
+    fun addGreenBounds(vararg bs: BoundsElement) = addBounds(UtilBounds.GREEN, *bs)
+    fun addGreenBounds(shape: () -> Shape?) = addBounds(UtilBounds.GREEN, shape)
+    fun addGreenBounds(name: String, shape: () -> Shape?) = addBounds(UtilBounds.GREEN, name, shape)
 
-    fun addGrayBounds(vararg bs: BoundsElement) = addBounds("GRAY", *bs)
-    fun addGrayBounds(shape: () -> Shape?) = addBounds("GRAY", shape)
-    fun addGrayBounds(name: String, shape: () -> Shape?) = addBounds("GRAY", name, shape)
+    fun addPurpleBounds(vararg bs: BoundsElement) = addBounds(UtilBounds.PURPLE, *bs)
+    fun addPurpleBounds(shape: () -> Shape?) = addBounds(UtilBounds.PURPLE, shape)
+    fun addPurpleBounds(name: String, shape: () -> Shape?) = addBounds(UtilBounds.PURPLE, name, shape)
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 

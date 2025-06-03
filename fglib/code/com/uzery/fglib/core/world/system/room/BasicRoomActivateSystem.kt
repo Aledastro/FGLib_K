@@ -22,23 +22,19 @@ class BasicRoomActivateSystem(
     private val has_intersect: Boolean,
     private val has_impact: Boolean,
 ): WorldSystem() {
-    private val RED = "RED"
-    private val ORANGE = "ORANGE"
-    private val BLUE = "BLUE"
-    private val GREEN = "GREEN"
-    private val GRAY = "GRAY"
-
     override fun updateRoom(room: Room) {
+        val red_bounds = BasicRoomMoveSystem.red_bounds
+
         val our = room.all_objs
             .filter { obj -> !obj.tagged(util_inactive) && obj.cover_area != null }
 
         if (has_overlap) {
             our
-                .filter { !it.bounds.isEmpty(GRAY) }
+                .filter { !it.bounds.isEmpty(UtilBounds.PURPLE) }
                 .forEach { obj ->
-                    room.red_bounds.forEach { rbs ->
+                    red_bounds.forEach { rbs ->
                         rbs.bounds.elements.forEach { el1 ->
-                            obj.bounds[GRAY].elements.forEach { el2 ->
+                            obj.bounds[UtilBounds.PURPLE].elements.forEach { el2 ->
                                 setActivate(obj, el2, rbs.o, el1, STD_OVERLAP)
                                 setActivate(rbs.o, el1, obj, el2, STD_OVERLAP_I)
                             }
@@ -67,7 +63,7 @@ class BasicRoomActivateSystem(
         }
 
         fun BoundsBox.collide(): Bounds {
-            return if (isEmpty(RED)) get(ORANGE) else get(RED)
+            return if (isEmpty(UtilBounds.RED)) get(UtilBounds.ORANGE) else get(UtilBounds.RED)
         }
 
         val checked = HashSet<Pair<GameObject, GameObject>>()
@@ -80,7 +76,7 @@ class BasicRoomActivateSystem(
             if (!ShapeUtils.into(obj1.cover_area!!.copy(obj1.stats.POS), obj2.cover_area!!.copy(obj2.stats.POS))) return
 
             if (has_interrupt) {
-                obj1.bounds[BLUE].elements.forEach { el1 ->
+                obj1.bounds[UtilBounds.BLUE].elements.forEach { el1 ->
                     obj2.bounds.collide().elements.forEach { el2 ->
                         setActivate(obj1, el1, obj2, el2, STD_INTERRUPT)
                         setActivate(obj2, el2, obj1, el1, STD_INTERRUPT_I)
@@ -90,15 +86,15 @@ class BasicRoomActivateSystem(
 
             if (has_interact && obj1.interact()) {
                 obj1.bounds.collide().elements.forEach { el1 ->
-                    obj2.bounds[GREEN].elements.forEach { el2 ->
+                    obj2.bounds[UtilBounds.GREEN].elements.forEach { el2 ->
                         setActivate(obj2, el2, obj1, el1, STD_INTERACT)
                         setActivate(obj1, el1, obj2, el2, STD_INTERACT_I)
                     }
                 }
             }
             if (has_intersect) {
-                obj1.bounds[BLUE].elements.forEach { el1 ->
-                    obj2.bounds[BLUE].elements.forEach { el2 ->
+                obj1.bounds[UtilBounds.BLUE].elements.forEach { el1 ->
+                    obj2.bounds[UtilBounds.BLUE].elements.forEach { el2 ->
                         setActivate(obj1, el1, obj2, el2, STD_INTERSECT)
                         setActivate(obj2, el2, obj1, el1, STD_INTERSECT_I)
                     }
@@ -106,8 +102,8 @@ class BasicRoomActivateSystem(
             }
 
             if (has_impact) {
-                obj1.bounds[ORANGE].elements.forEach { el1 ->
-                    obj2.bounds[ORANGE].elements.forEach { el2 ->
+                obj1.bounds[UtilBounds.ORANGE].elements.forEach { el1 ->
+                    obj2.bounds[UtilBounds.ORANGE].elements.forEach { el2 ->
                         setActivate(obj1, el1, obj2, el2, STD_IMPACT)
                         setActivate(obj2, el2, obj1, el1, STD_IMPACT_I)
                     }

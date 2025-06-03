@@ -1,5 +1,6 @@
 package com.uzery.fglib.core.world.system.room
 
+import com.uzery.fglib.core.component.bounds.Bounds
 import com.uzery.fglib.core.obj.GameObject
 import com.uzery.fglib.core.obj.UtilTags.util_immovable
 import com.uzery.fglib.core.room.PosBounds
@@ -10,22 +11,19 @@ import com.uzery.fglib.utils.CollisionUtils.MAX_MOVE_K
 import com.uzery.fglib.utils.CollisionUtils.SUPER_K
 import com.uzery.fglib.utils.data.file.FGLibConst
 import com.uzery.fglib.utils.math.geom.PointN
+import com.uzery.fglib.utils.math.geom.Shape
 
 /**
  * TODO("doc")
  **/
 object BasicRoomMoveSystem: WorldSystem() {
-    private val RED = "RED"
-    private val ORANGE = "ORANGE"
-    private val BLUE = "BLUE"
-    private val GREEN = "GREEN"
-    private val GRAY = "GRAY"
+    lateinit var red_bounds: ArrayList<PosBounds>
 
     fun getBS(objs: ArrayList<GameObject>): ArrayList<PosBounds> {
         val red_bounds = ArrayList<PosBounds>()
 
         objs.forEach { obj ->
-            val bs = obj.bounds[RED]
+            val bs = obj.bounds[UtilBounds.RED]
             if (!bs.empty) {
                 red_bounds.add(PosBounds(obj.pos_with_owners, bs, obj))
             }
@@ -33,8 +31,26 @@ object BasicRoomMoveSystem: WorldSystem() {
         return red_bounds
     }
 
+    fun allowPos(pos: PointN): Boolean {
+        return !red_bounds.any { rbs ->
+            rbs.bounds.into(pos-rbs.pos)
+        }
+    }
+
+    fun allowShape(sh: Shape, pos: PointN = PointN.ZERO): Boolean {
+        return !red_bounds.any { rbs ->
+            BoundsUtils.intoShape(rbs.bounds, sh, pos-rbs.pos)
+        }
+    }
+
+    fun allowBounds(bs: Bounds, pos: PointN = PointN.ZERO): Boolean {
+        return !red_bounds.any { rbs ->
+            BoundsUtils.into(rbs.bounds, bs, pos-rbs.pos)
+        }
+    }
+
     override fun updateRoom(room: Room) {
-        val red_bounds = room.red_bounds
+        red_bounds = getBS(room.all_objs)
 
         for (obj in room.all_objs) {
             if (obj.tagged(util_immovable)) continue
@@ -43,7 +59,7 @@ object BasicRoomMoveSystem: WorldSystem() {
             obj.stats.fly_by.clear()
 
             obj.stats.lastPOS = obj.stats.POS
-            val move_bs = obj.bounds[ORANGE]
+            val move_bs = obj.bounds[UtilBounds.ORANGE]
             if (obj.stats.nPOS.length() < FGLibConst.LITTLE) continue
 
             if (move_bs.empty) {

@@ -1,19 +1,15 @@
 package com.uzery.fglib.core.room
 
-import com.uzery.fglib.core.component.bounds.Bounds
 import com.uzery.fglib.core.component.visual.Visualiser
 import com.uzery.fglib.core.obj.GameObject
 import com.uzery.fglib.core.room.RoomDrawUtils.addObjVis
 import com.uzery.fglib.core.room.RoomDrawUtils.drawVisuals
 import com.uzery.fglib.core.room.entry.FGRoomEntry
-import com.uzery.fglib.core.world.system.room.BasicRoomMoveSystem.getBS
-import com.uzery.fglib.utils.BoundsUtils
 import com.uzery.fglib.utils.data.entry.FGEntry
 import com.uzery.fglib.utils.data.file.FGLibConst
 import com.uzery.fglib.utils.data.getter.value.PosValue
 import com.uzery.fglib.utils.data.getter.value.SizeValue
 import com.uzery.fglib.utils.math.geom.PointN
-import com.uzery.fglib.utils.math.geom.Shape
 import com.uzery.fglib.utils.math.geom.shape.RectN
 
 /**
@@ -41,27 +37,7 @@ class Room(val name: String, var pos: PointN, var size: PointN) {
         objects.forEach { initWithFollowers(it) }
     }
 
-    fun allowPos(pos: PointN): Boolean {
-        return !red_bounds.any { rbs ->
-            rbs.bounds.into(pos-rbs.pos)
-        }
-    }
-
-    fun allowShape(sh: Shape, pos: PointN = PointN.ZERO): Boolean {
-        return !red_bounds.any { rbs ->
-            BoundsUtils.intoShape(rbs.bounds, sh, pos-rbs.pos)
-        }
-    }
-
-    fun allowBounds(bs: Bounds, pos: PointN = PointN.ZERO): Boolean {
-        return !red_bounds.any { rbs ->
-            BoundsUtils.into(rbs.bounds, bs, pos-rbs.pos)
-        }
-    }
-
     var all_objs = ArrayList<GameObject>()
-        private set
-    var red_bounds = ArrayList<PosBounds>()
         private set
 
     fun next() {
@@ -79,7 +55,6 @@ class Room(val name: String, var pos: PointN, var size: PointN) {
         objects.forEach { it.nextLogicsWithFollowers() }
 
         all_objs = getAllObjects()
-        red_bounds = getBS(all_objs)
 
         fun addFromObj(obj: GameObject) {
             new_objects.addAll(obj.children)
