@@ -11,6 +11,7 @@ class BoundsBox(bounds: ArrayList<BoundsComponent>) {
         for (bs in bounds) {
             if (map[bs.code] == null) {
                 map[bs.code] = Bounds()
+                map[bs.code]!!.color = bs.code.color
             }
             map[bs.code]!!.add(bs.element)
         }
