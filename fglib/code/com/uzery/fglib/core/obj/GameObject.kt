@@ -129,6 +129,9 @@ abstract class GameObject: ComponentFunctionality() {
 
         onInit.forEach { it.run() }
         onLoad.forEach { it.run() }
+
+        bounds = BoundsBox(bounds_elements)
+
         inited = true
     }
 
