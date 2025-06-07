@@ -17,7 +17,6 @@ import com.uzery.fglib.core.component.resource.SpriteResource
 import com.uzery.fglib.core.component.visual.LayerVisualiser
 import com.uzery.fglib.core.component.visual.Visualiser
 import com.uzery.fglib.core.obj.DrawLayer
-import com.uzery.fglib.core.world.system.room.UtilBounds
 import com.uzery.fglib.utils.data.debug.DebugData
 import com.uzery.fglib.utils.graphics.AffineGraphics
 import com.uzery.fglib.utils.math.geom.PointN
@@ -69,26 +68,6 @@ abstract class ComponentFunctionality {
     fun addBounds(code: BoundsCode, name: String, shape: () -> Shape?) {
         addComponent(BoundsComponent(code, BoundsElement(name, shape)))
     }
-
-    fun addRedBounds(vararg bs: BoundsElement) = addBounds(UtilBounds.RED, *bs)
-    fun addRedBounds(shape: () -> Shape?) = addBounds(UtilBounds.RED, shape)
-    fun addRedBounds(name: String, shape: () -> Shape?) = addBounds(UtilBounds.RED, name, shape)
-
-    fun addOrangeBounds(vararg bs: BoundsElement) = addBounds(UtilBounds.ORANGE, *bs)
-    fun addOrangeBounds(shape: () -> Shape?) = addBounds(UtilBounds.ORANGE, shape)
-    fun addOrangeBounds(name: String, shape: () -> Shape?) = addBounds(UtilBounds.ORANGE, name, shape)
-
-    fun addBlueBounds(vararg bs: BoundsElement) = addBounds(UtilBounds.BLUE, *bs)
-    fun addBlueBounds(shape: () -> Shape?) = addBounds(UtilBounds.BLUE, shape)
-    fun addBlueBounds(name: String, shape: () -> Shape?) = addBounds(UtilBounds.BLUE, name, shape)
-
-    fun addGreenBounds(vararg bs: BoundsElement) = addBounds(UtilBounds.GREEN, *bs)
-    fun addGreenBounds(shape: () -> Shape?) = addBounds(UtilBounds.GREEN, shape)
-    fun addGreenBounds(name: String, shape: () -> Shape?) = addBounds(UtilBounds.GREEN, name, shape)
-
-    fun addPurpleBounds(vararg bs: BoundsElement) = addBounds(UtilBounds.PURPLE, *bs)
-    fun addPurpleBounds(shape: () -> Shape?) = addBounds(UtilBounds.PURPLE, shape)
-    fun addPurpleBounds(name: String, shape: () -> Shape?) = addBounds(UtilBounds.PURPLE, name, shape)
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
