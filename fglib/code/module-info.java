@@ -33,7 +33,6 @@ module fglib {
     exports com.uzery.fglib.core.world.camera;
     exports com.uzery.fglib.core.world.controller;
     exports com.uzery.fglib.core.world.system;
-    exports com.uzery.fglib.core.world.system.room;
 
     /////////////////////////////////////////////////////////
 
