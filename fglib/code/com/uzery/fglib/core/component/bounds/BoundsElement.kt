@@ -22,6 +22,6 @@ data class BoundsElement(var group: String, val name: String, private val shape:
 
     companion object {
         private const val DEFAULT_GROUP = "global"
-        const val DEFAULT_NAME = "unnamed"
+        private const val DEFAULT_NAME = "unnamed"
     }
 }
