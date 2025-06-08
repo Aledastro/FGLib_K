@@ -5,13 +5,11 @@ import com.uzery.fglib.utils.math.geom.Shape
 /**
  * [Bounds] element of one [Shape]
  *
- * @property group activate group
  * @property name element name
  * @property shape shape builder
  **/
-data class BoundsElement(val group: String, val name: String, private val shape: () -> Shape?) {
-    constructor(name: String, shape: () -> Shape?): this(DEFAULT_GROUP, name, shape)
-    constructor(shape: () -> Shape?): this(DEFAULT_GROUP, DEFAULT_NAME, shape)
+data class BoundsElement(val name: String, private val shape: () -> Shape?) {
+    constructor(shape: () -> Shape?): this(DEFAULT_NAME, shape)
 
     var now = shape()
         private set
@@ -21,7 +19,6 @@ data class BoundsElement(val group: String, val name: String, private val shape:
     }
 
     companion object {
-        private const val DEFAULT_GROUP = "global"
         private const val DEFAULT_NAME = "unnamed"
     }
 }
