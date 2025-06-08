@@ -19,6 +19,6 @@ data class BoundsElement(val name: String, private val shape: () -> Shape?) {
     }
 
     companion object {
-        private const val DEFAULT_NAME = "unnamed"
+        const val DEFAULT_NAME = "unnamed"
     }
 }

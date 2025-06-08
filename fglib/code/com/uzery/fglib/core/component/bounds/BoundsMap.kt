@@ -27,8 +27,8 @@ class BoundsMap(bounds: ArrayList<BoundsComponent>) {
 
     fun isEmpty(code: BoundsCode) = map[code]?.empty ?: true
 
-    fun name(index: Int) = codes[index]
-    fun index(name: BoundsCode) = codes.indexOf(name)
+    fun codeOf(index: Int) = codes[index]
+    fun indexOf(name: BoundsCode) = codes.indexOf(name)
 
     val SIZE = map.keys.size
 
