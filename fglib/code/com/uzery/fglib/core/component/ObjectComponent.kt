@@ -1,7 +1,7 @@
 package com.uzery.fglib.core.component
 
 import com.uzery.fglib.core.component.ability.AbilityBox
-import com.uzery.fglib.core.component.bounds.BoundsElement
+import com.uzery.fglib.core.component.bounds.BoundsComponent
 import com.uzery.fglib.core.component.controller.Controller
 import com.uzery.fglib.core.component.group.*
 import com.uzery.fglib.core.component.listener.ActionListener
@@ -20,7 +20,7 @@ import com.uzery.fglib.core.obj.GameObject
  * - [GroupAbility], [GroupBounds], [GroupController], [GroupListener], [GroupVisualiser]
  *
  * Basic components:
- * - [AbilityBox], [BoundsElement], [Controller], [ActionListener], [Visualiser]
+ * - [AbilityBox], [BoundsComponent], [Controller], [ActionListener], [Visualiser]
  *
  * Reaction components:
  * - [OnBirthComponent],  [OnDeathComponent], [OnGrabComponent], [OnInitComponent], [OnLoadComponent]
