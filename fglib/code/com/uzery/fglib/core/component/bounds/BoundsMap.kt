@@ -30,7 +30,7 @@ class BoundsMap(bounds: ArrayList<BoundsComponent>) {
     fun codeOf(index: Int) = codes[index]
     fun indexOf(name: BoundsCode) = codes.indexOf(name)
 
-    val SIZE = map.keys.size
+    val size = map.keys.size
 
     val indices
         get() = map.keys.indices
