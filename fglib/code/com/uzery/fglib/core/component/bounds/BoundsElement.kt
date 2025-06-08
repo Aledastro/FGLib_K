@@ -9,7 +9,7 @@ import com.uzery.fglib.utils.math.geom.Shape
  * @property name element name
  * @property shape shape builder
  **/
-data class BoundsElement(var group: String, val name: String, private val shape: () -> Shape?) {
+data class BoundsElement(val group: String, val name: String, private val shape: () -> Shape?) {
     constructor(name: String, shape: () -> Shape?): this(DEFAULT_GROUP, name, shape)
     constructor(shape: () -> Shape?): this(DEFAULT_GROUP, DEFAULT_NAME, shape)
 

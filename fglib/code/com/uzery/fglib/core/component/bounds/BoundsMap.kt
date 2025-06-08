@@ -3,7 +3,7 @@ package com.uzery.fglib.core.component.bounds
 /**
  * todo doc
  **/
-class BoundsBox(bounds: ArrayList<BoundsComponent>) {
+class BoundsMap(bounds: ArrayList<BoundsComponent>) {
     private val map = HashMap<BoundsCode, Bounds>()
     val codes = ArrayList<BoundsCode>()
 

@@ -3,7 +3,7 @@ package com.uzery.fglib.core.obj
 import com.uzery.fglib.core.component.ComponentFunctionality
 import com.uzery.fglib.core.component.ObjectComponent
 import com.uzery.fglib.core.component.ability.AbilityBox
-import com.uzery.fglib.core.component.bounds.BoundsBox
+import com.uzery.fglib.core.component.bounds.BoundsMap
 import com.uzery.fglib.core.component.bounds.BoundsComponent
 import com.uzery.fglib.core.component.controller.Controller
 import com.uzery.fglib.core.component.group.GroupComponent
@@ -43,7 +43,7 @@ abstract class GameObject: ComponentFunctionality() {
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     private val bounds_elements = ArrayList<BoundsComponent>()
-    lateinit var bounds: BoundsBox
+    lateinit var bounds: BoundsMap
 
     private val abilities = ArrayList<AbilityBox>()
     private val controllers = ArrayList<Controller>()
@@ -130,7 +130,7 @@ abstract class GameObject: ComponentFunctionality() {
         onInit.forEach { it.run() }
         onLoad.forEach { it.run() }
 
-        bounds = BoundsBox(bounds_elements)
+        bounds = BoundsMap(bounds_elements)
 
         inited = true
     }
@@ -143,7 +143,7 @@ abstract class GameObject: ComponentFunctionality() {
     }
 
     private fun nextLogics() {
-        bounds = BoundsBox(bounds_elements)
+        bounds = BoundsMap(bounds_elements)
 
         if (object_time == 0) onBirth.forEach { it.run() }
 
