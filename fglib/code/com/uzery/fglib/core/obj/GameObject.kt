@@ -5,6 +5,7 @@ import com.uzery.fglib.core.component.ObjectComponent
 import com.uzery.fglib.core.component.ability.AbilityBox
 import com.uzery.fglib.core.component.bounds.BoundsMap
 import com.uzery.fglib.core.component.bounds.BoundsComponent
+import com.uzery.fglib.core.component.bounds.CollisionComponent
 import com.uzery.fglib.core.component.controller.Controller
 import com.uzery.fglib.core.component.group.GroupComponent
 import com.uzery.fglib.core.component.listener.ActionListener
@@ -42,8 +43,10 @@ abstract class GameObject: ComponentFunctionality() {
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    private val bounds_elements = ArrayList<BoundsComponent>()
-    lateinit var bounds: BoundsMap
+    val bounds_elements = ArrayList<BoundsComponent>()
+    var bounds = BoundsMap()
+        private set
+    val collisions = ArrayList<CollisionComponent>()
 
     private val abilities = ArrayList<AbilityBox>()
     private val controllers = ArrayList<Controller>()
@@ -61,7 +64,10 @@ abstract class GameObject: ComponentFunctionality() {
             when (c) {
                 is GroupComponent -> c.components.forEach { addComponent(it) }
 
-                is BoundsComponent -> bounds_elements.add(c)
+                is BoundsComponent -> {
+                    bounds_elements.add(c)
+                    collisions.add(CollisionComponent(c))
+                }
 
                 is AbilityBox -> abilities.add(c)
                 is Controller -> controllers.add(c)
