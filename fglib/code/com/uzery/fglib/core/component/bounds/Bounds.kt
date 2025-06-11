@@ -12,8 +12,6 @@ import com.uzery.fglib.utils.math.geom.shape.RectN
 class Bounds(vararg els: BoundsElement) {
     val elements = ArrayList<BoundsElement>()
 
-    var color = FGColor.GRAY
-
     init {
         add(*els)
     }

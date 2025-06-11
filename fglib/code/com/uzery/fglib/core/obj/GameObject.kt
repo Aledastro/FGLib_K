@@ -6,6 +6,7 @@ import com.uzery.fglib.core.component.ability.AbilityBox
 import com.uzery.fglib.core.component.bounds.BoundsMap
 import com.uzery.fglib.core.component.bounds.BoundsComponent
 import com.uzery.fglib.core.component.bounds.CollisionComponent
+import com.uzery.fglib.core.component.bounds.CollisionMap
 import com.uzery.fglib.core.component.controller.Controller
 import com.uzery.fglib.core.component.group.GroupComponent
 import com.uzery.fglib.core.component.listener.ActionListener
@@ -46,7 +47,8 @@ abstract class GameObject: ComponentFunctionality() {
     val bounds_elements = ArrayList<BoundsComponent>()
     var bounds = BoundsMap()
         private set
-    val collisions = ArrayList<CollisionComponent>()
+    val collision_elements = ArrayList<CollisionComponent>()
+    var collisions = CollisionMap()
 
     private val abilities = ArrayList<AbilityBox>()
     private val controllers = ArrayList<Controller>()
@@ -66,7 +68,7 @@ abstract class GameObject: ComponentFunctionality() {
 
                 is BoundsComponent -> {
                     bounds_elements.add(c)
-                    collisions.add(CollisionComponent(c))
+                    collision_elements.add(CollisionComponent(c))
                 }
 
                 is AbilityBox -> abilities.add(c)
@@ -137,6 +139,7 @@ abstract class GameObject: ComponentFunctionality() {
         onLoad.forEach { it.run() }
 
         bounds = BoundsMap(bounds_elements)
+        collisions = CollisionMap(collision_elements)
 
         inited = true
     }
@@ -150,6 +153,7 @@ abstract class GameObject: ComponentFunctionality() {
 
     private fun nextLogics() {
         bounds = BoundsMap(bounds_elements)
+        collisions = CollisionMap(collision_elements)
 
         if (object_time == 0) onBirth.forEach { it.run() }
 
