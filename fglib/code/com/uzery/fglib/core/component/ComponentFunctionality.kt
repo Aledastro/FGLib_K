@@ -111,17 +111,17 @@ abstract class ComponentFunctionality {
 
     fun addVisual(vararg vis: Visualiser) = addComponent(*vis)
 
-    fun addVisual(layer: DrawLayer, vis: (agc: AffineGraphics, draw_pos: PointN) -> Unit) {
+    fun addVisual(layer: DrawLayer, vis: (draw_pos: PointN) -> Unit) {
         addComponent(
             object: LayerVisualiser(layer) {
                 override fun draw(draw_pos: PointN) {
-                    vis(agc, draw_pos)
+                    vis(draw_pos)
                 }
             }
         )
     }
 
-    fun addVisual(layer: DrawLayer, sort_pos: PointN, vis: (agc: AffineGraphics, draw_pos: PointN) -> Unit) {
+    fun addVisual(layer: DrawLayer, sort_pos: PointN, vis: (draw_pos: PointN) -> Unit) {
         addComponent(
             object: LayerVisualiser(layer) {
                 init {
@@ -129,7 +129,7 @@ abstract class ComponentFunctionality {
                 }
 
                 override fun draw(draw_pos: PointN) {
-                    vis(agc, draw_pos)
+                    vis(draw_pos)
                 }
             }
         )
