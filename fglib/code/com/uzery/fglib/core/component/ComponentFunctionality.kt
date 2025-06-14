@@ -17,6 +17,7 @@ import com.uzery.fglib.core.component.resource.SpriteResource
 import com.uzery.fglib.core.component.visual.LayerVisualiser
 import com.uzery.fglib.core.component.visual.Visualiser
 import com.uzery.fglib.core.obj.DrawLayer
+import com.uzery.fglib.core.program.Platform
 import com.uzery.fglib.utils.data.debug.DebugData
 import com.uzery.fglib.utils.graphics.AffineGraphics
 import com.uzery.fglib.utils.math.geom.PointN
@@ -158,6 +159,11 @@ abstract class ComponentFunctionality {
 
     fun onGrab(f: () -> Unit) = addComponent(OnGrabComponent(f))
     fun onGrab(f: OnGrabComponent) = addComponent(f)
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    val graphics
+        get() = Platform.graphics
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 }
