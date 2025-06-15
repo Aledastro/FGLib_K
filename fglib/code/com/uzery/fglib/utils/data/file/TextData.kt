@@ -21,8 +21,15 @@ object TextData: CollectDataClass() {
     fun existFile(filename: String) = FileUtils.existFile(resolvePath(filename))
     fun removeFile(filename: String) = FileUtils.removeFile(resolvePath(filename))
 
-    fun filesFrom(filename: String) = FileUtils.filesFrom(resolvePath(filename))
-    fun dirsFrom(filename: String) = FileUtils.dirsFrom(resolvePath(filename))
+    fun filesFrom(filename: String): List<String> {
+        return FileUtils.filesFrom(resolvePath(filename))
+            .map { it.substring(dir.length) }
+    }
+
+    fun dirsFrom(filename: String): List<String> {
+        return FileUtils.dirsFrom(resolvePath(filename))
+            .map { it.substring(dir.length) }
+    }
 
     ///////////////////////////////////////////////////////////////////
 }

@@ -56,14 +56,14 @@ object FileUtils {
         File(filename).delete()
     }
 
-    fun filesFrom(filename: String): ArrayList<String> {
+    fun filesFrom(filename: String): List<String> {
         val files = File(filename).listFiles()
         val res = ArrayList<String>()
         files?.forEach { if (it.isFile) res.add(filename+"/"+it.name) }
         return res
     }
 
-    fun dirsFrom(filename: String): ArrayList<String> {
+    fun dirsFrom(filename: String): List<String> {
         val dirs = File(filename).listFiles()
         val res = ArrayList<String>()
         dirs?.forEach { if (it.isDirectory) res.add(filename+"/"+it.name) }
