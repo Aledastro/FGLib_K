@@ -19,7 +19,6 @@ import com.uzery.fglib.core.component.visual.Visualiser
 import com.uzery.fglib.core.obj.DrawLayer
 import com.uzery.fglib.core.program.Platform
 import com.uzery.fglib.utils.data.debug.DebugData
-import com.uzery.fglib.utils.graphics.AffineGraphics
 import com.uzery.fglib.utils.math.geom.PointN
 import com.uzery.fglib.utils.math.geom.Shape
 import com.uzery.fglib.utils.struct.num.IntI

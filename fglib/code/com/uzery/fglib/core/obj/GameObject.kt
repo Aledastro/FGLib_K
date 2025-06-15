@@ -14,7 +14,6 @@ import com.uzery.fglib.core.component.listener.InputAction
 import com.uzery.fglib.core.component.reaction.*
 import com.uzery.fglib.core.component.visual.Visualiser
 import com.uzery.fglib.core.obj.stats.Stats
-import com.uzery.fglib.core.program.Platform
 import com.uzery.fglib.utils.ShapeUtils
 import com.uzery.fglib.utils.data.debug.DebugData
 import com.uzery.fglib.utils.data.entry.FGEntry
