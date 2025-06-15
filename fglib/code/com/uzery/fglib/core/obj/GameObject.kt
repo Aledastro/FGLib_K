@@ -3,8 +3,8 @@ package com.uzery.fglib.core.obj
 import com.uzery.fglib.core.component.ComponentFunctionality
 import com.uzery.fglib.core.component.ObjectComponent
 import com.uzery.fglib.core.component.ability.AbilityBox
-import com.uzery.fglib.core.component.bounds.BoundsMap
 import com.uzery.fglib.core.component.bounds.BoundsComponent
+import com.uzery.fglib.core.component.bounds.BoundsMap
 import com.uzery.fglib.core.component.bounds.CollisionComponent
 import com.uzery.fglib.core.component.bounds.CollisionMap
 import com.uzery.fglib.core.component.controller.Controller

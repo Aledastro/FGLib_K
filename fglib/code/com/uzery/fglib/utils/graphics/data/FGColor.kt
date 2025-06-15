@@ -1,7 +1,5 @@
 package com.uzery.fglib.utils.graphics.data
 
-import com.uzery.fglib.utils.data.debug.DebugData
-
 /**
  * TODO("doc")
  **/

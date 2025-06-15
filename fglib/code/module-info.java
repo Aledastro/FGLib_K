@@ -1,7 +1,7 @@
 module fglib {
     requires kotlin.stdlib;
 
-    /////////////////////////////////////////////////////////
+    /// //////////////////////////////////////////////////////
 
     exports com.uzery.fglib.core.component;
     exports com.uzery.fglib.core.component.ability;

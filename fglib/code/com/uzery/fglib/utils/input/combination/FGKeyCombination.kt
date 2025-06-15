@@ -10,6 +10,7 @@ class FGKeyCombination {
     constructor(vararg part: FGKeyCombinationPart) {
         parts.addAll(part)
     }
+
     constructor(construct: FGKeyCombination.() -> Unit) {
         construct(this)
     }

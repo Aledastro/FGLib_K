@@ -1,7 +1,6 @@
 package com.uzery.fglib.core.component.bounds
 
 import com.uzery.fglib.utils.ShapeUtils
-import com.uzery.fglib.utils.graphics.data.FGColor
 import com.uzery.fglib.utils.math.geom.PointN
 import com.uzery.fglib.utils.math.geom.Shape
 import com.uzery.fglib.utils.math.geom.shape.RectN

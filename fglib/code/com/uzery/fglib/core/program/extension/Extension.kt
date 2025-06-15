@@ -4,9 +4,7 @@ import com.uzery.fglib.core.component.bounds.Bounds
 import com.uzery.fglib.core.program.DebugTools.countTime
 import com.uzery.fglib.core.program.Platform
 import com.uzery.fglib.core.program.Platform.getGlobalOnTop
-import com.uzery.fglib.core.program.Platform.graphics
 import com.uzery.fglib.core.program.Platform.mouse
-import com.uzery.fglib.utils.graphics.AffineGraphics
 import com.uzery.fglib.utils.graphics.data.FGColor
 import com.uzery.fglib.utils.graphics.render.GraphicsRender
 import com.uzery.fglib.utils.math.geom.PointN
