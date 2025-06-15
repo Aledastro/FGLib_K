@@ -2,7 +2,6 @@ package com.uzery.fglib.utils.data.file
 
 import com.uzery.fglib.utils.data.CollectDataClass
 import com.uzery.fglib.utils.file.FileUtils
-import java.io.File
 
 /**
  * TODO("doc")
