@@ -2,6 +2,7 @@ package com.uzery.fglib.utils.data
 
 import com.uzery.fglib.utils.FGUtils
 import com.uzery.fglib.utils.data.file.TextData
+import com.uzery.fglib.utils.file.FileUtils
 
 /**
  * TODO("doc")
@@ -23,7 +24,7 @@ class MediaPaths {
             last = FGUtils.subAfter(name, "|")
         }
 
-        return "$dir$local_path$last".replace("/", TextData.separator)
+        return "$dir$local_path$last".replace("/", FileUtils.SEPARATOR)
     }
 
     operator fun set(key: String, value: String) {
