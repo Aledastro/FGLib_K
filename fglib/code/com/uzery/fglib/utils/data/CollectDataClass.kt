@@ -12,7 +12,7 @@ abstract class CollectDataClass {
             paths.dir = value
         }
 
-    internal fun resolvePath(name: String): String {
+    fun resolvePath(name: String): String {
         return paths.resolvePath(name)
     }
 }
