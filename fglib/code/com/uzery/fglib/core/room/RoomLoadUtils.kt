@@ -6,8 +6,8 @@ import com.uzery.fglib.core.room.entry.FGRoomFormat
 import com.uzery.fglib.core.room.entry.FGRoomLoadEntry
 import com.uzery.fglib.core.room.entry.RoomSerialization
 import com.uzery.fglib.core.room.mask.RoomMask
-import com.uzery.fglib.utils.data.file.TextData
 import com.uzery.fglib.utils.data.getter.AbstractClassGetter
+import com.uzery.fglib.utils.file.FileUtils
 
 /**
  * TODO("doc")
@@ -56,6 +56,6 @@ object RoomLoadUtils {
         dir: String,
         serialization: RoomSerialization = FGRoomFormat
     ): Array<Room> {
-        return readRooms(getter, TextData.filesFrom(dir).toTypedArray(), serialization)
+        return readRooms(getter, FileUtils.filesFrom(dir).toTypedArray(), serialization)
     }
 }
