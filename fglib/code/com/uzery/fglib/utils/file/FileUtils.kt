@@ -12,8 +12,6 @@ import java.io.IOException
 object FileUtils {
     val SEPARATOR = '/'
 
-    operator fun get(filename: String) = readLines(filename)
-
     fun read(filename: String): String {
         getReader(filename).use { r ->
             return r.readText()

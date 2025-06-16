@@ -7,7 +7,7 @@ import com.uzery.fglib.utils.file.FileUtils
  * TODO("doc")
  **/
 object TextData: CollectDataClass() {
-    operator fun get(filename: String) = readLines(resolvePath(filename))
+    operator fun get(filename: String) = readLines(filename)
 
     fun read(filename: String) = FileUtils.read(resolvePath(filename))
     fun readLines(filename: String) = FileUtils.readLines(resolvePath(filename))
