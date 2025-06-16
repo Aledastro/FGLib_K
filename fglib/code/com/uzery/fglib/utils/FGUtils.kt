@@ -9,7 +9,7 @@ import java.time.LocalTime
  * TODO("doc")
  **/
 object FGUtils {
-    val project_dir: String = System.getProperty("user.dir")
+    val project_dir: String = System.getProperty("user.dir").replace("\\", "/")
 
     fun hours(): Int = LocalTime.now().hour
     fun minutes(): Int = LocalTime.now().minute

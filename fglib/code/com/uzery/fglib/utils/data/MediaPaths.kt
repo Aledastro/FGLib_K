@@ -24,7 +24,7 @@ class MediaPaths {
             last = FGUtils.subAfter(name, "|")
         }
 
-        return "$dir$local_path$last".replace("/", FileUtils.SEPARATOR)
+        return "$dir$local_path$last"
     }
 
     operator fun set(key: String, value: String) {
