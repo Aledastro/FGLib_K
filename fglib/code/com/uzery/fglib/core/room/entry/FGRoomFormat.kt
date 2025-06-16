@@ -7,7 +7,7 @@ import com.uzery.fglib.utils.FGUtils
 import com.uzery.fglib.utils.data.debug.DebugData
 import com.uzery.fglib.utils.data.entry.FGEntry
 import com.uzery.fglib.utils.data.entry.FGFormat
-import com.uzery.fglib.utils.data.file.TextData
+import com.uzery.fglib.utils.file.FileUtils
 import com.uzery.fglib.utils.data.getter.AbstractClassGetter
 import com.uzery.fglib.utils.data.getter.ClassGetter
 import com.uzery.fglib.utils.file.FilenameUtils
@@ -24,17 +24,17 @@ object FGRoomFormat: RoomSerialization() {
     private fun writeRoom(filename: String, entry: FGRoomEntry, getter: AbstractClassGetter<GameObject>) {
         val room = RoomLoadUtils.makeRoom(getter, entry).toString()
 
-        TextData.write(filename, room, true)
+        FileUtils.write(filename, room, true)
     }
 
     private fun writeMask(filename: String, mask: RoomMask) {
-        TextData.write(filename, mask.toString(), true)
+        FileUtils.write(filename, mask.toString(), true)
     }
 
     /////////////////////////////////////////////////////////////////////////////////////
 
     override fun readFrom(filepath: String): FGRoomLoadEntry {
-        val files = TextData.filesFrom(getDedicatedDir(filepath))
+        val files = FileUtils.filesFrom(getDedicatedDir(filepath))
 
         val room_filename = filepath //files.find { FileUtils.extensionOf(it) == "room" }
             ?: throw DebugData.error("room file not found in: $filepath")
@@ -101,7 +101,7 @@ object FGRoomFormat: RoomSerialization() {
     }
 
     private fun getLines(filename: String): LinkedList<String> {
-        val lines = TextData.readLines(filename)
+        val lines = FileUtils.readLines(filename)
 
         val list = LinkedList<String>()
         list.addAll(lines)
