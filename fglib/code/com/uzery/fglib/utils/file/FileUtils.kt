@@ -10,7 +10,7 @@ import java.io.IOException
  * TODO("doc")
  **/
 object FileUtils {
-    val SEPARATOR: String = File.separator
+    val SEPARATOR = '/'
 
     operator fun get(filename: String) = readLines(filename)
 
@@ -28,7 +28,7 @@ object FileUtils {
 
     fun write(filename: String, write: String, create_dirs: Boolean = false) {
         if (create_dirs) {
-            val path = filename.substring(0, filename.lastIndexOf(SEPARATOR))
+            val path = filename.substringBeforeLast(SEPARATOR)
             val pathDirs = path.split(SEPARATOR)
 
             var current = ""

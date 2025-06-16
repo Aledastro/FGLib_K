@@ -7,8 +7,6 @@ import com.uzery.fglib.utils.file.FileUtils
  * TODO("doc")
  **/
 object TextData: CollectDataClass() {
-    val SEPARATOR: String = FileUtils.SEPARATOR
-
     operator fun get(filename: String) = readLines(resolvePath(filename))
 
     fun read(filename: String) = FileUtils.read(resolvePath(filename))
