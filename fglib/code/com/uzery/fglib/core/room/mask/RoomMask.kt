@@ -62,11 +62,7 @@ data class RoomMask(val name: String, val actions: ArrayList<RoomChangeAction> =
     }
 
     private operator fun unaryMinus(): RoomMask {
-        val res = RoomMask(name)
-        actions.forEach {
-            res.actions.add(-it)
-        }
-        return res
+        return RoomMask(name, ArrayList(actions.map { -it }))
     }
 
     private fun toMap(): HashMap<FGEntry, Int> {

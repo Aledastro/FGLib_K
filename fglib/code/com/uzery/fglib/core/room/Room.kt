@@ -102,12 +102,11 @@ class Room(val name: String, var pos: PointN, var size: PointN) {
     fun remove(objs: List<GameObject>) = old_objects.addAll(objs)
 
     fun toEntry(): FGRoomEntry {
-        val objs = ArrayList<FGEntry>()
-        for (o in objects) {
-            if (!o.isTemp()) objs.add(o.toEntry())
-        }
+        val objs = objects
+            .filter { o -> !o.isTemp() }
+            .map { o -> o.toEntry() }
 
-        return FGRoomEntry(name, PointN(pos), PointN(size), objs)
+        return FGRoomEntry(name, PointN(pos), PointN(size), ArrayList(objs))
     }
 
     override fun toString(): String {

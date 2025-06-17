@@ -18,7 +18,7 @@ class Bounds(vararg els: BoundsElement) {
     constructor(name: String, shape: () -> Shape?): this(BoundsElement(name, shape))
     constructor(shape: () -> Shape?): this(BoundsElement(shape))
 
-    fun add(vararg els: BoundsElement) = els.forEach { element -> elements.add(element) }
+    fun add(vararg els: BoundsElement) = elements.addAll(els)
 
     private fun getCoverArea(): RectN? {
         if (empty) return null

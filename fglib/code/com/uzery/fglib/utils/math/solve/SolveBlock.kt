@@ -20,11 +20,7 @@ class SolveBlock(
             /*arrayListOf("|"), //todo
             arrayListOf("(", ")") //todo*/
         )
-        private val full_ops = ArrayList<String>()
-
-        init {
-            operators.forEach { full_ops.addAll(it) }
-        }
+        private val full_ops = operators.flatten()
     }
 
     fun solve(): String {
@@ -104,7 +100,7 @@ class SolveBlock(
         }
     }
 
-    private fun getBlocks(operators: ArrayList<String>): ArrayList<String> {
+    private fun getBlocks(operators: List<String>): List<String> {
         val breaks = HashSet<Int>()
         breaks += 0
         operators.forEach { op ->
@@ -118,11 +114,7 @@ class SolveBlock(
         breaks += expression.length
 
         val list = breaks.toList().sorted()
-        val res = ArrayList<String>()
-        for (i in 0..<list.size-1) {
-            res.add(expression.substring(list[i], list[i+1]))
-        }
-        return res
+        return (0..<list.size-1).map { i -> expression.substring(list[i], list[i+1]) }
     }
 
     private val ERROR_EXPRESSION = "ERROR"

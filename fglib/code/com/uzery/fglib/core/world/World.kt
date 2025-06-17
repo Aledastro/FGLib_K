@@ -115,11 +115,7 @@ class World {
     //////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     fun allMatch(predicate: (GameObject) -> Boolean): List<GameObject> {
-        val res = ArrayList<GameObject>()
-        for (room in rooms) {
-            res.addAll(room.objects.filter { obj -> predicate(obj) })
-        }
-        return res
+        return rooms.flatMap { room -> room.objects.filter { obj -> predicate(obj) } }
     }
 
     fun allTagged(tag: String) = allMatch { obj -> obj.tagged(tag) }

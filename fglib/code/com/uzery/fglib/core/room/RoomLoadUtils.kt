@@ -17,8 +17,7 @@ object RoomLoadUtils {
         getter: AbstractClassGetter<GameObject>,
         entry: FGRoomLoadEntry
     ): Room {
-        val objects = ArrayList<GameObject>()
-        entry.room.objs.forEach { e -> objects.add(getter[e]) }
+        val objects = entry.room.objs.map { e -> getter[e] }
         val room = Room(entry.room.name, entry.room.pos, entry.room.size, objects)
         entry.masks.forEach { mask -> mask.apply(room, getter) }
         return room
