@@ -19,9 +19,10 @@ object FileUtils {
     }
 
     fun readLines(filename: String): ArrayList<String> {
-        return getReader(filename).useLines { sequence ->
-            sequence.toCollection(ArrayList())
-        }
+        val text = read(filename)
+        val res = ArrayList(text.split("\n"))
+        if (text.endsWith('\n')) res.add("")
+        return res
     }
 
     fun write(filename: String, write: String, create_dirs: Boolean = false) {

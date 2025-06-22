@@ -34,8 +34,8 @@ object BufferedIOUtils {
 
     fun inFileStream(filename: String): InputStream {
         return try {
-            FileInputStream(File(filename).absolutePath)
-        } catch (e: Exception) {
+            FileInputStream(filename)
+        } catch (e: FileNotFoundException) {
             throw DebugData.error("Can't run stream from: $filename")
         }
     }
