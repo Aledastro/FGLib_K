@@ -20,8 +20,8 @@ object FileUtils {
 
     fun readLines(filename: String): ArrayList<String> {
         val text = read(filename)
-        val res = ArrayList(text.split("\n"))
-        if (text.endsWith('\n')) res.add("")
+        val res = ArrayList(text.split(Regex("\\R")))
+        if (text.endsWith('\n') || text.endsWith('\r')) res.add("")
         return res
     }
 
