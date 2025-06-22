@@ -19,10 +19,7 @@ object FileUtils {
     }
 
     fun readLines(filename: String): ArrayList<String> {
-        val text = read(filename)
-        val res = ArrayList(text.split(Regex("\\R")))
-        if (text.endsWith('\n') || text.endsWith('\r')) res.add("")
-        return res
+        return ArrayList(read(filename).split(Regex("\\R")))
     }
 
     fun write(filename: String, write: String, create_dirs: Boolean = false) {
