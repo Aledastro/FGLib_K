@@ -44,6 +44,12 @@ class GraphicsRender(val pos: PointN, val size: PointN) {
     }
 
     fun childFromLayout(k_pos1: PointN, k_pos2: PointN): GraphicsRender {
-        return childFrom(layout(k_pos1), layout(k_pos2))
+        val p1 = layout(k_pos1)
+        val p2 = layout(k_pos2)
+
+        val min = PointN.transform(p1, p2) { a, b -> min(a, b) }
+        val max = PointN.transform(p1, p2) { a, b -> max(a, b) }
+
+        return GraphicsRender(min, max-min)
     }
 }
