@@ -17,25 +17,25 @@ class ExtensionStats {
     internal val full_transform: AffineTransform
         get() {
             val transform = transform ?: AffineTransform.NEUTRAL
-            val owner = parent ?: return transform
-            return owner.stats.full_transform*transform
+            val parent = parent ?: return transform
+            return parent.stats.full_transform*transform
         }
 
     private val layout_pos: PointN
         get() {
             val s_pos = transform?.pos(pos) ?: pos
 
-            val owner = parent ?: return s_pos
-            val layoutP = (owner.stats.size-size)*layout.value
+            val parent = parent ?: return s_pos
 
-            return layoutP+s_pos
+            val layout_pos = (parent.stats.size-size)*layout.value
+            return layout_pos+s_pos
         }
 
     val real_pos: PointN
         get() {
-            val owner = parent ?: return layout_pos
-            val ownerP = owner.stats.real_pos
-            return ownerP+layout_pos
+            val parent = parent ?: return layout_pos
+
+            return parent.stats.real_pos+layout_pos
         }
 
     internal val render_pos
