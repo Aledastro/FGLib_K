@@ -353,26 +353,31 @@ abstract class Extension(vararg children: Extension) {
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     fun getParent(depth: Int = 1): Extension {
-        var current: Extension = this
-        var d = depth
-        while (true) {
-            if (d == 0) return current
-            d--
+        if (depth < 1) throw DebugData.error("depth should be positive")
 
+        var current: Extension = this
+        var remained = depth
+        while (true) {
             current = current.stats.parent ?: throw DebugData.error("No parent found")
+            remained--
+
+            if (remained == 0) return current
         }
     }
 
     @JvmName("getTypedParent")
     inline fun <reified T: Extension> getParent(depth: Int = 1): T {
+        if (depth < 1) throw DebugData.error("depth should be positive")
+
         var current: Extension = this
-        var d = depth
+        var remained = depth
         while (true) {
-            if (current is T) {
-                if (d == 0) return current
-                d--
-            }
             current = current.stats.parent ?: throw DebugData.error("No parent found")
+
+            if (current is T) {
+                remained--
+                if (remained == 0) return current
+            }
         }
     }
 }
