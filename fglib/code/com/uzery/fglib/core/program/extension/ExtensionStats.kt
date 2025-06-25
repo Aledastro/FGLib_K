@@ -13,11 +13,11 @@ class ExtensionStats {
         bounds?.next()
     }
 
-    var owner: Extension? = null
+    var parent: Extension? = null
     internal val full_transform: AffineTransform
         get() {
             val transform = transform ?: AffineTransform.NEUTRAL
-            val owner = owner ?: return transform
+            val owner = parent ?: return transform
             return owner.stats.full_transform*transform
         }
 
@@ -25,7 +25,7 @@ class ExtensionStats {
         get() {
             val s_pos = transform?.pos(pos) ?: pos
 
-            val owner = owner ?: return s_pos
+            val owner = parent ?: return s_pos
             val layoutP = (owner.stats.size-size)*layout.value
 
             return layoutP+s_pos
@@ -33,7 +33,7 @@ class ExtensionStats {
 
     val real_pos: PointN
         get() {
-            val owner = owner ?: return layout_pos
+            val owner = parent ?: return layout_pos
             val ownerP = owner.stats.real_pos
             return ownerP+layout_pos
         }
@@ -44,7 +44,7 @@ class ExtensionStats {
     /////////////////////////////////////////////////////////////////////////////////////////
 
     fun toGroup() {
-        val st = owner!!.stats
+        val st = parent!!.stats
 
         pos = st.pos
         size = st.size

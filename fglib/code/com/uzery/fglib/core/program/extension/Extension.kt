@@ -5,6 +5,7 @@ import com.uzery.fglib.core.program.DebugTools.countTime
 import com.uzery.fglib.core.program.Platform
 import com.uzery.fglib.core.program.Platform.getGlobalOnTop
 import com.uzery.fglib.core.program.Platform.mouse
+import com.uzery.fglib.utils.data.debug.DebugData
 import com.uzery.fglib.utils.graphics.data.FGColor
 import com.uzery.fglib.utils.graphics.render.GraphicsRender
 import com.uzery.fglib.utils.math.geom.PointN
@@ -133,7 +134,7 @@ abstract class Extension(vararg children: Extension) {
             if (entry.isAdd) toAdd.add(entry.e)
             else toRemove.add(entry.e)
 
-            entry.e.stats.owner = this
+            entry.e.stats.parent = this
         }
         if (with_init) new_children.forEach { it.e.initWithChildren() }
         new_children.clear()
@@ -221,7 +222,7 @@ abstract class Extension(vararg children: Extension) {
     private fun rearrangeWithChildren() {
         rearrange()
 
-        arranged_children.forEach { e -> e.stats.owner = this }
+        arranged_children.forEach { e -> e.stats.parent = this }
         arranged_children.forEach { e -> e.rearrangeWithChildren() }
     }
 
@@ -347,5 +348,30 @@ abstract class Extension(vararg children: Extension) {
 
     fun mouseIn(pos: PointN, size: PointN): Boolean {
         return mouseIn(RectN(pos, size))
+    }
+
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    fun getParent(depth: Int = 1): Extension {
+        var current: Extension = this
+        var d = depth
+        while (true) {
+            if (d == 0) return current
+            d--
+
+            current = current.stats.parent ?: throw DebugData.error("No parent found")
+        }
+    }
+
+    inline fun <reified T: Extension> getParent(depth: Int = 1): T {
+        var current: Extension = this
+        var d = depth
+        while (true) {
+            if (current is T) {
+                if (d == 0) return current
+                d--
+            }
+            current = current.stats.parent ?: throw DebugData.error("No parent found")
+        }
     }
 }
