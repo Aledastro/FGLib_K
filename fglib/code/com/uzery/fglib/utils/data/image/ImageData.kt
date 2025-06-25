@@ -110,6 +110,6 @@ object ImageData: CollectDataClass() {
     }
 
     fun write(image: FGImage, path: String) {
-        packager.image.writeImage(image.source, resolvePath(path))
+        ImageUtils.write(image, resolvePath(path))
     }
 }

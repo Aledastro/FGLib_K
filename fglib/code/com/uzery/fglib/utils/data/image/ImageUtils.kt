@@ -1,5 +1,6 @@
 package com.uzery.fglib.utils.data.image
 
+import com.uzery.fglib.core.program.Platform.packager
 import com.uzery.fglib.utils.graphics.data.FGColor
 import com.uzery.fglib.utils.struct.num.IntI
 import kotlin.math.min
@@ -67,4 +68,7 @@ object ImageUtils {
 
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+    fun write(image: FGImage, path: String) {
+        packager.image.writeImage(image.source, path)
+    }
 }
