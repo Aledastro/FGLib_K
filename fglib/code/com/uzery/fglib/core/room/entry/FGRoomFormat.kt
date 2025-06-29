@@ -100,10 +100,10 @@ object FGRoomFormat: RoomSerialization() {
         return "$prev/$name/"
     }
 
-    private fun getLines(filename: String): LinkedList<String> {
+    private fun getLines(filename: String): ArrayList<String> {
         val lines = FileUtils.readLines(filename)
 
-        val list = LinkedList<String>()
+        val list = ArrayList<String>()
         list.addAll(lines)
 
         list.removeIf { FGUtils.isComment(it) }
