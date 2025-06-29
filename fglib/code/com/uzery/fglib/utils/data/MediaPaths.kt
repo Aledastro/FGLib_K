@@ -1,8 +1,6 @@
 package com.uzery.fglib.utils.data
 
 import com.uzery.fglib.utils.FGUtils
-import com.uzery.fglib.utils.data.file.TextData
-import com.uzery.fglib.utils.file.FileUtils
 
 /**
  * TODO("doc")

@@ -2,21 +2,21 @@
 
 ## Pros:
 
-### * **Easy to Learn, Hard to Master**
+###  * **Easy to Learn, Hard to Master**
 
 > **FGLib** provides intuitive environment, so it's easy to build simple games in it.
 > But it has many advanced features as well
 
-### * **Open-Source and Free**
+###  * **Open-Source and Free**
 
 > Due to it open-source nature, you can change **FGLib** functionality.
 > And it not that hard, because **FGLib** is designed for modifying
 
-### * **Powerful RoomEditor**
+###  * **Powerful RoomEditor**
 
 > Allows you to make levels easily
 
-### * **Technology-Independent**
+###  * **Technology-Independent**
 
 > **FGLib** is technology-independent and more about philosophy about how to make games.
 > There are different realisations for different purposes such as: <p>
@@ -28,13 +28,14 @@
 
 ## **Cons:**
 
-### * Many features are still in development, because I not need them currently
+###  * Many features are still in development, because I not need them currently
 
-### * Lack of documentation
+###  * Lack of documentation
 
-### * Limited in some ways
+###  * Limited in some ways
 
 ## **Developer**:
+
 **Uzery Studio** (Alexander Kandrashkin)
 
 > From one who love coding, to ones who love coding! Join the community and make **FGLib** bigger! <p>
