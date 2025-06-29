@@ -46,9 +46,7 @@ class ExtensionStats {
     fun toGroup() {
         val st = parent!!.stats
 
-        pos = st.pos
         size = st.size
-        layout = st.layout
 
         bounds = null
     }
