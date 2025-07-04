@@ -15,8 +15,7 @@ data class LaunchOptions(
     var title: String = "",
     var icons: List<String> = ArrayList(),
     val style: FGWindowStyle = FGWindowStyle.UNDECORATED,
-    var support_tray: Boolean = false,
-    var tray_icon: String = ""
+    var tray: TraySupport? = null
 ) {
     companion object {
         val default = LaunchOptions(PointN(700, 700))
@@ -27,7 +26,7 @@ data class LaunchOptions(
             title = "FGLib Example",
             icons = listOf("sys|fglib_icon.png"),
             style = FGWindowStyle.UNDECORATED,
-            support_tray = false
+            tray = null
         )
     }
 
@@ -38,8 +37,7 @@ data class LaunchOptions(
         title: String = "",
         icons: List<String> = ArrayList(),
         style: FGWindowStyle = FGWindowStyle.UNDECORATED,
-        support_tray: Boolean = false,
-        tray_icon: String = ""
+        tray: TraySupport?
     ): this(
         size,
         if (fullscreen) FGWindowMode.FULLSCREEN else FGWindowMode.WINDOWED,
@@ -47,7 +45,6 @@ data class LaunchOptions(
         title,
         icons,
         style,
-        support_tray,
-        tray_icon
+        tray
     )
 }
