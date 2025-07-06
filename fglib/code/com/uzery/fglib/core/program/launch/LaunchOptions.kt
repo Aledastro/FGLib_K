@@ -15,6 +15,7 @@ data class LaunchOptions(
     var title: String = "",
     var icons: List<String> = ArrayList(),
     val style: FGWindowStyle = FGWindowStyle.UNDECORATED,
+    var resizable: Boolean = false,
     var tray: TraySupport? = null
 ) {
     companion object {
@@ -26,6 +27,7 @@ data class LaunchOptions(
             title = "FGLib Example",
             icons = listOf("sys|fglib_icon.png"),
             style = FGWindowStyle.UNDECORATED,
+            resizable = false,
             tray = null
         )
     }
@@ -37,6 +39,7 @@ data class LaunchOptions(
         title: String = "",
         icons: List<String> = ArrayList(),
         style: FGWindowStyle = FGWindowStyle.UNDECORATED,
+        resizable: Boolean = false,
         tray: TraySupport?
     ): this(
         size,
@@ -45,6 +48,7 @@ data class LaunchOptions(
         title,
         icons,
         style,
+        resizable,
         tray
     )
 }
