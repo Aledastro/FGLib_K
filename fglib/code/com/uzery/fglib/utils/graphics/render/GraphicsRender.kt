@@ -6,7 +6,7 @@ import com.uzery.fglib.utils.math.geom.shape.RectN
 import kotlin.math.max
 import kotlin.math.min
 
-class GraphicsRender(val pos: PointN, val size: PointN) {
+data class GraphicsRender(val pos: PointN, val size: PointN) {
     val draw_area = RectN(pos, size)
 
     ////////////////////////////////////////////////////////////////////////////////
