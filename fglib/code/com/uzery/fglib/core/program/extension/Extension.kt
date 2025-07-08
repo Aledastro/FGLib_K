@@ -339,7 +339,7 @@ abstract class Extension(vararg children: Extension) {
     }
 
     fun mouseAtTopWithChildren(): Boolean {
-        return Platform.extension_at_top == getOnTop(mouse.pos)
+        return Platform.extension_at_top != null && Platform.extension_at_top == getOnTop(mouse.pos)
     }
 
     fun mouseIn(area: RectN): Boolean {
