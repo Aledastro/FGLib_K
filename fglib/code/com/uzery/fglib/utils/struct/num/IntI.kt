@@ -30,4 +30,5 @@ data class IntI(val x: Int, val y: Int) {
     operator fun times(other: Int) = IntI(x*other, y*other)
     operator fun div(other: Int) = IntI(x/other, y/other)
 
+    operator fun unaryMinus() = IntI(-x, -y)
 }
