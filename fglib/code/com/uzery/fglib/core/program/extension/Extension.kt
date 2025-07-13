@@ -338,7 +338,7 @@ abstract class Extension(vararg children: Extension) {
     fun posInBounds(pos: PointN) = posIn(stats.bounds, pos)
     fun posInBoundsAfter(pos: PointN) = posIn(stats.bounds_after, pos)
 
-    fun posAt(pos: PointN): Boolean {
+    fun posAtLocalTop(pos: PointN): Boolean {
         return getAtTop(pos) == this
     }
 
@@ -366,7 +366,7 @@ abstract class Extension(vararg children: Extension) {
     fun mouseInBounds() = posIn(stats.bounds, mouse.pos)
     fun mouseInBoundsAfter() = posIn(stats.bounds_after, mouse.pos)
 
-    fun mouseAt() = posAt(mouse.pos)
+    fun mouseAtLocalTop() = posAtLocalTop(mouse.pos)
 
     fun mouseAtTop(): Boolean {
         return Platform.extension_at_top == this
