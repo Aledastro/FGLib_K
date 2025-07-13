@@ -248,7 +248,7 @@ abstract class Extension(vararg children: Extension) {
 
     fun only_update() {
         next_mode = MODE.ONLY_UPDATE
-        onOnlyDraw()
+        onOnlyUpdate()
     }
 
     fun switchTo(show: Boolean) {
