@@ -3,10 +3,9 @@ package com.uzery.fglib.core.program.extension
 import com.uzery.fglib.core.component.bounds.Bounds
 import com.uzery.fglib.core.program.DebugTools.countTime
 import com.uzery.fglib.core.program.Platform
-import com.uzery.fglib.core.program.Platform.getGlobalOnTop
+import com.uzery.fglib.core.program.Platform.getGlobalAtTop
 import com.uzery.fglib.core.program.Platform.mouse
 import com.uzery.fglib.utils.data.debug.DebugData
-import com.uzery.fglib.utils.graphics.data.FGColor
 import com.uzery.fglib.utils.graphics.render.GraphicsRender
 import com.uzery.fglib.utils.math.geom.PointN
 import com.uzery.fglib.utils.math.geom.shape.RectN
@@ -151,7 +150,7 @@ abstract class Extension(vararg children: Extension) {
 
     internal fun updateAllWithChildren() {
         rearrangeWithChildren()
-        Platform.extension_at_top = getOnTop(mouse.pos)
+        Platform.extension_at_top = getAtTop(mouse.pos)
         updateTasksWithChildren()
         updateWithChildren()
     }
@@ -279,79 +278,6 @@ abstract class Extension(vararg children: Extension) {
 
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    fun drawBounds(color: FGColor = FGColor.DARK_BLUE) {
-        val save_width = graphics.stroke.width
-        graphics.stroke.width = 1.0
-        graphics.stroke.rect(stats.real_pos, stats.size, color)
-        graphics.stroke.width = save_width
-    }
-
-    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-    fun getOnTop(pos: PointN): Extension? {
-        var res: Extension? = null
-        if (posIn(pos)) res = this
-
-        for (e in arranged_children) {
-            if (!e.is_drawing) continue
-            val e_res = e.getOnTop(pos) ?: continue
-            res = e_res
-        }
-
-        return res
-    }
-
-    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-    fun posIn(pos: PointN): Boolean {
-        return stats.bounds?.into(pos-stats.real_pos) ?: false
-    }
-
-    fun posAt(pos: PointN): Boolean {
-        fun notAtChildren(now: Extension): Boolean {
-            return now.children.all { e -> !e.posIn(pos) && notAtChildren(e) }
-        }
-        return posIn(pos) && notAtChildren(this)
-    }
-
-    fun posAtTop(pos: PointN): Boolean {
-        return getGlobalOnTop(pos) == this
-    }
-
-    fun posAtTopWithChildren(pos: PointN): Boolean {
-        return getGlobalOnTop(pos) == getOnTop(mouse.pos)
-    }
-
-    fun posIn(find: PointN, area: RectN): Boolean {
-        return posIn(find) && area.into(find-stats.real_pos)
-    }
-
-    fun posIn(find: PointN, pos: PointN, size: PointN): Boolean {
-        return posIn(find, RectN(pos, size))
-    }
-
-    fun mousePos() = mouse.pos-stats.real_pos
-
-    fun mouseIn() = posIn(mouse.pos)
-    fun mouseAt() = posAt(mouse.pos)
-    fun mouseAtTop(): Boolean {
-        return Platform.extension_at_top == this
-    }
-
-    fun mouseAtTopWithChildren(): Boolean {
-        return Platform.extension_at_top != null && Platform.extension_at_top == getOnTop(mouse.pos)
-    }
-
-    fun mouseIn(area: RectN): Boolean {
-        return mouseIn() && area.into(mousePos())
-    }
-
-    fun mouseIn(pos: PointN, size: PointN): Boolean {
-        return mouseIn(RectN(pos, size))
-    }
-
-    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
     fun getParent(depth: Int = 1): Extension {
         if (depth < 1) throw DebugData.error("depth should be positive")
 
@@ -380,4 +306,80 @@ abstract class Extension(vararg children: Extension) {
             }
         }
     }
+
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    private fun posIn(bounds: Bounds?, pos: PointN): Boolean {
+        return bounds?.into(pos-stats.real_pos) ?: false
+    }
+
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    fun getAtTop(pos: PointN): Extension? {
+        if (posIn(stats.bounds_after, pos)) return this
+
+        var res: Extension? = null
+
+        if (posIn(stats.bounds, pos)) res = this
+
+        for (child in arranged_children) {
+            if (!child.is_drawing) continue
+            val child_res = child.getAtTop(pos) ?: continue
+            res = child_res
+        }
+
+        return res
+    }
+
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    fun posInBounds(pos: PointN) = posIn(stats.bounds, pos)
+    fun posInBoundsAfter(pos: PointN) = posIn(stats.bounds_after, pos)
+
+    fun posAt(pos: PointN): Boolean {
+        return getAtTop(pos) == this
+    }
+
+    fun posAtTop(pos: PointN): Boolean {
+        return getGlobalAtTop(pos) == this
+    }
+
+    fun posAtTopWithChildren(pos: PointN): Boolean {
+        val global = getGlobalAtTop(pos)
+        return global != null && global == getAtTop(pos)
+    }
+
+    fun posInBounds(find: PointN, area: RectN) = posInBounds(find) && area.into(find-stats.real_pos)
+    fun posInBounds(find: PointN, pos: PointN, size: PointN) = posInBounds(find, RectN(pos, size))
+
+    fun posInBoundsAfter(find: PointN, area: RectN) = posInBoundsAfter(find) && area.into(find-stats.real_pos)
+    fun posInBoundsAfter(find: PointN, pos: PointN, size: PointN) = posInBoundsAfter(find, RectN(pos, size))
+
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    fun mousePos() = mouse.pos-stats.real_pos
+
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    fun mouseInBounds() = posIn(stats.bounds, mouse.pos)
+    fun mouseInBoundsAfter() = posIn(stats.bounds_after, mouse.pos)
+
+    fun mouseAt() = posAt(mouse.pos)
+
+    fun mouseAtTop(): Boolean {
+        return Platform.extension_at_top == this
+    }
+
+    fun mouseAtTopWithChildren(): Boolean {
+        val global = Platform.extension_at_top
+        return global != null && global == getAtTop(mouse.pos)
+    }
+
+    fun mouseInBounds(area: RectN) = mouseInBounds() && area.into(mousePos())
+    fun mouseInBounds(pos: PointN, size: PointN) = mouseInBounds(RectN(pos, size))
+
+    fun mouseInBoundsAfter(area: RectN) = mouseInBoundsAfter() && area.into(mousePos())
+    fun mouseInBoundsAfter(pos: PointN, size: PointN) = mouseInBoundsAfter(RectN(pos, size))
+
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 }

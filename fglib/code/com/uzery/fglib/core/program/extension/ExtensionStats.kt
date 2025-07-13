@@ -11,6 +11,7 @@ import com.uzery.fglib.utils.math.geom.PointN
 class ExtensionStats {
     fun next() {
         bounds?.next()
+        bounds_after?.next()
     }
 
     var parent: Extension? = null
@@ -49,6 +50,7 @@ class ExtensionStats {
         size = st.size
 
         bounds = null
+        bounds_after = null
     }
 
     //for updating
@@ -57,6 +59,7 @@ class ExtensionStats {
     var layout = FGLayout.TOP_LEFT
 
     var bounds: Bounds? = null
+    var bounds_after: Bounds? = null
 
     /////////////////////////////////////////////////////////////////////////////////////////
 

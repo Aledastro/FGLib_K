@@ -19,7 +19,7 @@ object Platform {
     var extension_at_top: Extension? = null
         internal set
 
-    fun getGlobalOnTop(pos: PointN) = Program.core.getOnTop(pos)
+    fun getGlobalAtTop(pos: PointN) = Program.core.getAtTop(pos)
 
     private val program
         get() = realisation.program
