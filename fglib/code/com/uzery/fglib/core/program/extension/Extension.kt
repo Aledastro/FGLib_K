@@ -148,11 +148,13 @@ abstract class Extension(vararg children: Extension) {
         children.addAll(real_children)
     }
 
-    internal fun updateAllWithChildren() {
+    internal fun updateAllWithChildren(): Extension? {
         rearrangeWithChildren()
-        Platform.extension_at_top = getAtTop(mouse.pos)
+        val res = getAtTop(mouse.pos)
         updateTasksWithChildren()
         updateWithChildren()
+
+        return res
     }
 
     private val java_code = this.javaClass.name

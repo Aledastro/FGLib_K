@@ -41,7 +41,7 @@ object Program {
     fun update() {
         updatePaths()
 
-        core.updateAllWithChildren()
+        Platform.extension_at_top = core.updateAllWithChildren()
 
         Platform.update()
         program_time++
