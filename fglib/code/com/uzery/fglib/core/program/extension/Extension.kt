@@ -241,12 +241,12 @@ abstract class Extension(vararg children: Extension) {
         onHide()
     }
 
-    fun only_draw() {
+    fun onlyDraw() {
         next_mode = MODE.ONLY_DRAW
         onOnlyDraw()
     }
 
-    fun only_update() {
+    fun onlyUpdate() {
         next_mode = MODE.ONLY_UPDATE
         onOnlyUpdate()
     }
@@ -260,8 +260,8 @@ abstract class Extension(vararg children: Extension) {
         when (mode) {
             MODE.SHOW -> show()
             MODE.HIDE -> hide()
-            MODE.ONLY_DRAW -> only_draw()
-            MODE.ONLY_UPDATE -> only_update()
+            MODE.ONLY_DRAW -> onlyDraw()
+            MODE.ONLY_UPDATE -> onlyUpdate()
         }
     }
 
