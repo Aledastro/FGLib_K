@@ -14,12 +14,7 @@ import kotlin.math.sign
  * TODO("doc")
  **/
 object Platform {
-    var extension_focused: Extension? = null
-        internal set
-    var extension_at_top: Extension? = null
-        internal set
-
-    fun getGlobalAtTop(pos: PointN) = Program.core.getAtTop(pos)
+    ////////////////////////////////////////////////////////////////////////////////////////
 
     private val program
         get() = realisation.program
@@ -42,6 +37,8 @@ object Platform {
             clipboard.string = value
         }
 
+    ////////////////////////////////////////////////////////////////////////////////////////
+
     var scale: Int = 1
         get() {
             return if (field == -1) {
@@ -56,6 +53,8 @@ object Platform {
             program.setCursor(cursor)
         }
 
+    ////////////////////////////////////////////////////////////////////////////////////////
+
     var options: LaunchOptions = LaunchOptions.default
 
     var render_camera = object: RenderCamera {
@@ -68,6 +67,8 @@ object Platform {
         }
     }
 
+    ////////////////////////////////////////////////////////////////////////////////////////
+
     var on_exit: () -> Unit = {}
     var on_event_exit: () -> Unit = {
         exit()
@@ -78,8 +79,21 @@ object Platform {
         program.exit()
     }
 
+    ////////////////////////////////////////////////////////////////////////////////////////
+
+    var extension_focused: Extension? = null
+        internal set
+    var extension_at_top: Extension? = null
+        internal set
+
+    fun getGlobalAtTop(pos: PointN) = Program.core.getAtTop(pos)
+
+    ////////////////////////////////////////////////////////////////////////////////////////
+
     val charArray
         get() = Array(Char.MAX_VALUE.code) { i -> Char(i) }
+
+    ////////////////////////////////////////////////////////////////////////////////////////
 
     private val updatables = HashSet<PlatformUpdatable>()
     fun addUpdatable(vararg updatable: PlatformUpdatable) {
@@ -92,7 +106,11 @@ object Platform {
         updatables.forEach { it.update() }
     }
 
+    ////////////////////////////////////////////////////////////////////////////////////////
+
     var develop_mode = false
+
+    ////////////////////////////////////////////////////////////////////////////////////////
 
     val WINDOW
         get() = PointN(program.WINDOW_SIZE)
@@ -107,4 +125,6 @@ object Platform {
         get() = RectN(PointN.ZERO, CANVAS)
     val CANVAS_REAL_R
         get() = RectN(PointN.ZERO, CANVAS_REAL)
+
+    ////////////////////////////////////////////////////////////////////////////////////////
 }
