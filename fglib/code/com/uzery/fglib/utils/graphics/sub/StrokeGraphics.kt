@@ -1,5 +1,6 @@
-package com.uzery.fglib.utils.graphics
+package com.uzery.fglib.utils.graphics.sub
 
+import com.uzery.fglib.utils.graphics.AffineGraphics
 import com.uzery.fglib.utils.graphics.data.FGColor
 import com.uzery.fglib.utils.math.geom.PointN
 

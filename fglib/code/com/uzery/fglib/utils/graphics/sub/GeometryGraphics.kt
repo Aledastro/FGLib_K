@@ -1,5 +1,6 @@
-package com.uzery.fglib.utils.graphics
+package com.uzery.fglib.utils.graphics.sub
 
+import com.uzery.fglib.utils.graphics.AffineGraphics
 import com.uzery.fglib.utils.graphics.data.FGColor
 import com.uzery.fglib.utils.math.geom.PointN
 import com.uzery.fglib.utils.math.geom.Shape
@@ -10,7 +11,7 @@ import com.uzery.fglib.utils.math.geom.shape.RectN
 /**
  * TODO("doc")
  **/
-abstract class GeometryGraphics(protected val agc: AffineGraphics) {
+abstract class GeometryGraphics(protected val agc: AffineGraphics): SubGraphics() {
     protected val transform
         get() = agc.global_transform
 

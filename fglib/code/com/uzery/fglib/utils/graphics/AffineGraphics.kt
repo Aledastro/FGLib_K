@@ -6,6 +6,9 @@ import com.uzery.fglib.core.program.Platform.CANVAS_REAL
 import com.uzery.fglib.core.program.Platform.scale
 import com.uzery.fglib.utils.graphics.data.FGColor
 import com.uzery.fglib.utils.graphics.data.FGFont
+import com.uzery.fglib.utils.graphics.sub.FillGraphics
+import com.uzery.fglib.utils.graphics.sub.ImageGraphics
+import com.uzery.fglib.utils.graphics.sub.StrokeGraphics
 import com.uzery.fglib.utils.math.geom.PointN
 
 /**
@@ -28,8 +31,6 @@ abstract class AffineGraphics {
 
     var drawPOS = PointN.ZERO
     var layer = DrawLayer.CAMERA_OFF
-
-    var whole_draw = true
 
     ////////////////////////////////////////////////////////////////////////////////////////
 

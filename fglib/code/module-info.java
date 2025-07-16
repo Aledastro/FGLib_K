@@ -1,7 +1,7 @@
 module fglib {
     requires kotlin.stdlib;
 
-    /// //////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////
 
     exports com.uzery.fglib.core.component;
     exports com.uzery.fglib.core.component.ability;
@@ -55,6 +55,7 @@ module fglib {
     exports com.uzery.fglib.utils.graphics.data;
     exports com.uzery.fglib.utils.graphics.render;
     exports com.uzery.fglib.utils.graphics.shader;
+    exports com.uzery.fglib.utils.graphics.sub;
 
     exports com.uzery.fglib.utils.input;
     exports com.uzery.fglib.utils.input.combination;

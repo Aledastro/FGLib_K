@@ -1,13 +1,14 @@
-package com.uzery.fglib.utils.graphics
+package com.uzery.fglib.utils.graphics.sub
 
 import com.uzery.fglib.utils.data.image.FGImage
 import com.uzery.fglib.utils.data.image.ImageData
+import com.uzery.fglib.utils.graphics.AffineGraphics
 import com.uzery.fglib.utils.math.geom.PointN
 
 /**
  * TODO("doc")
  **/
-abstract class ImageGraphics(private val agc: AffineGraphics) {
+abstract class ImageGraphics(private val agc: AffineGraphics): SubGraphics() {
     protected abstract fun draw0(image: FGImage, pos: PointN, size: PointN, alpha: Double)
 
     protected val transform
