@@ -1,6 +1,7 @@
 package com.uzery.fglib.core.program
 
 import com.uzery.fglib.core.program.Platform.CANVAS
+import com.uzery.fglib.core.program.Platform.mouse
 import com.uzery.fglib.core.program.extension.Extension
 import com.uzery.fglib.utils.audio.AudioData
 import com.uzery.fglib.utils.data.file.TextData
@@ -41,7 +42,10 @@ object Program {
     fun update() {
         updatePaths()
 
-        Platform.extension_at_top = core.updateAllWithChildren()
+        core.rearrangeWithChildren()
+        Platform.extension_at_top = core.getAtTop(mouse.pos)
+        core.updateTasksWithChildren()
+        core.updateWithChildren()
 
         Platform.update()
         program_time++

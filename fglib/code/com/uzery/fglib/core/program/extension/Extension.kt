@@ -148,18 +148,9 @@ abstract class Extension(vararg children: Extension) {
         children.addAll(real_children)
     }
 
-    internal fun updateAllWithChildren(): Extension? {
-        rearrangeWithChildren()
-        val res = getAtTop(mouse.pos)
-        updateTasksWithChildren()
-        updateWithChildren()
-
-        return res
-    }
-
     private val java_code = this.javaClass.name
 
-    private fun updateWithChildren() {
+    internal fun updateWithChildren() {
         stats.next()
 
         countTime("update", java_code) {
@@ -199,7 +190,7 @@ abstract class Extension(vararg children: Extension) {
         draw_time++
     }
 
-    private fun updateTasksWithChildren() {
+    internal fun updateTasksWithChildren() {
         mode = next_mode
 
         countTime("onBackGround", java_code) {
@@ -220,7 +211,7 @@ abstract class Extension(vararg children: Extension) {
         arranged_children.sortBy { it.stats.ui_level.level }
     }
 
-    private fun rearrangeWithChildren() {
+    internal fun rearrangeWithChildren() {
         rearrange()
 
         arranged_children.forEach { e -> e.stats.parent = this }
