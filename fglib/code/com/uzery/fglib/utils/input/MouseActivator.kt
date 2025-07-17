@@ -20,7 +20,7 @@ abstract class MouseActivator: PlatformUpdatable {
 
     final override fun update() {
         scroll = sign(scroll0().Y).toInt()
-        pos = pos0()/Platform.scale
+        pos = Platform.options.resize_method.antiTransform(pos0())
 
         keys.update()
     }

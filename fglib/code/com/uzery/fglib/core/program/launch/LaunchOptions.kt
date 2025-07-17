@@ -9,7 +9,8 @@ import com.uzery.fglib.utils.math.geom.PointN
  * TODO("doc")
  **/
 data class LaunchOptions(
-    val size: PointN,
+    val canvas_size: PointN,
+    val resize_method: ResizeMethod,
     val window_mode: FGWindowMode = FGWindowMode.WINDOWED,
     val fill: FGColor = FGColor.PURE_WHITE,
     var title: String = "",
@@ -19,9 +20,13 @@ data class LaunchOptions(
     var tray: TraySupport? = null
 ) {
     companion object {
-        val default = LaunchOptions(PointN(700, 700))
+        val default = LaunchOptions(
+            canvas_size = PointN(700, 700),
+            resize_method = ResizeMethod.PIXEL_PERFECT(2)
+        )
         val default2 = LaunchOptions(
-            size = PointN(1920, 1080)/2,
+            canvas_size = PointN(1920, 1080)/2,
+            resize_method = ResizeMethod.PIXEL_PERFECT(2),
             window_mode = FGWindowMode.FULLSCREEN,
             fill = FGColor.PURE_WHITE,
             title = "FGLib Example",

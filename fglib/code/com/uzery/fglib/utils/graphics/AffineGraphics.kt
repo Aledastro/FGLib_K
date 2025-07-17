@@ -2,8 +2,8 @@ package com.uzery.fglib.utils.graphics
 
 import com.uzery.fglib.core.obj.DrawLayer
 import com.uzery.fglib.core.program.FGLibSettings.OPTIMISATION_NOT_DRAW_OUT_OF_BOUNDS
+import com.uzery.fglib.core.program.Platform
 import com.uzery.fglib.core.program.Platform.CANVAS_REAL
-import com.uzery.fglib.core.program.Platform.scale
 import com.uzery.fglib.utils.graphics.data.FGColor
 import com.uzery.fglib.utils.graphics.data.FGFont
 import com.uzery.fglib.utils.graphics.sub.FillGraphics
@@ -38,12 +38,10 @@ abstract class AffineGraphics {
 
     init {
         val default_t: (PointN) -> PointN = { p ->
-            var x = (p-drawPOS*layer.z)*scale
-            x *= view_scale*global_view_scale
-            x
+            Platform.options.resize_method.transform(p-drawPOS*layer.z)*view_scale*global_view_scale
         }
         val default_t_size: (PointN) -> PointN = { x ->
-            x*scale*view_scale*global_view_scale
+            Platform.options.resize_method.transformSize(x)*view_scale*global_view_scale
         }
         default_transform = AffineTransform(default_t, default_t_size)
     }

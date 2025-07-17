@@ -39,14 +39,6 @@ object Platform {
 
     ////////////////////////////////////////////////////////////////////////////////////////
 
-    var scale: Int = 1
-        get() {
-            return if (field == -1) {
-                val size = WINDOW/CANVAS
-                min(size.intX, size.intY)
-            } else field
-        }
-
     var cursor = FGCursor.DEFAULT
         set(value) {
             field = value
@@ -115,9 +107,9 @@ object Platform {
     val WINDOW
         get() = PointN(program.WINDOW_SIZE)
     val CANVAS
-        get() = PointN(options.size)
+        get() = PointN(options.canvas_size)
     val CANVAS_REAL
-        get() = CANVAS*scale
+        get() = options.resize_method.transform(CANVAS)
 
     val WINDOW_R
         get() = RectN(PointN.ZERO, WINDOW)
