@@ -31,24 +31,4 @@ data class LaunchOptions(
             tray = null
         )
     }
-
-    constructor(
-        size: PointN,
-        fullscreen: Boolean,
-        fill: FGColor = FGColor.PURE_WHITE,
-        title: String = "",
-        icons: List<String> = ArrayList(),
-        style: FGWindowStyle = FGWindowStyle.UNDECORATED,
-        resizable: Boolean = false,
-        tray: TraySupport?
-    ): this(
-        size,
-        if (fullscreen) FGWindowMode.FULLSCREEN else FGWindowMode.WINDOWED,
-        fill,
-        title,
-        icons,
-        style,
-        resizable,
-        tray
-    )
 }
