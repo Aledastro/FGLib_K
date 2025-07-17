@@ -104,6 +104,8 @@ object Platform {
 
     ////////////////////////////////////////////////////////////////////////////////////////
 
+    val SCREEN
+        get() = PointN(program.SCREEN_SIZE)
     val WINDOW
         get() = PointN(program.WINDOW_SIZE)
     val CANVAS
@@ -111,6 +113,8 @@ object Platform {
     val CANVAS_REAL
         get() = options.resize_method.transform(CANVAS)
 
+    val SCREEN_R
+        get() = RectN(PointN.ZERO, SCREEN)
     val WINDOW_R
         get() = RectN(PointN.ZERO, WINDOW)
     val CANVAS_R

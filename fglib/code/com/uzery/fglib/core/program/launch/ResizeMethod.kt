@@ -8,10 +8,11 @@ sealed class ResizeMethod {
     abstract fun transform(p: PointN): PointN
     abstract fun antiTransform(p: PointN): PointN
     abstract fun transformSize(p: PointN): PointN
+    abstract fun start_size(): PointN
 
     class PIXEL_PERFECT(scale: Int): ResizeMethod() {
         val real_scale = if (scale == -1) {
-            val size = Platform.WINDOW/Platform.CANVAS
+            val size = Platform.SCREEN/Platform.CANVAS
             min(size.intX, size.intY)
         } else scale
 
@@ -26,9 +27,13 @@ sealed class ResizeMethod {
         override fun antiTransform(p: PointN): PointN {
             return p/real_scale
         }
+
+        override fun start_size(): PointN {
+            return Platform.options.canvas_size*real_scale
+        }
     }
 
-    class STRETCH(): ResizeMethod() {
+    class STRETCH(val view_size: PointN): ResizeMethod() {
         val k
             get() = Platform.WINDOW/Platform.CANVAS
         override fun transform(p: PointN): PointN {
@@ -42,9 +47,13 @@ sealed class ResizeMethod {
         override fun antiTransform(p: PointN): PointN {
             return p/k
         }
+
+        override fun start_size(): PointN {
+            return view_size
+        }
     }
 
-    class STRETCH_FIXED(): ResizeMethod() {
+    class STRETCH_FIXED(val view_size: PointN): ResizeMethod() {
         override fun transform(p: PointN): PointN {
             return p //todo
         }
@@ -55,6 +64,10 @@ sealed class ResizeMethod {
 
         override fun antiTransform(p: PointN): PointN {
             return p //todo
+        }
+
+        override fun start_size(): PointN {
+            return view_size
         }
     }
 }

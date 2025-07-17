@@ -8,6 +8,7 @@ import com.uzery.fglib.utils.math.geom.PointN
  * TODO("doc")
  **/
 abstract class FGProgram {
+    abstract var SCREEN_SIZE: PointN
     abstract var WINDOW_SIZE: PointN
 
     abstract fun exit()
