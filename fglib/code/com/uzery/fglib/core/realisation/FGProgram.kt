@@ -1,6 +1,7 @@
 package com.uzery.fglib.core.realisation
 
 import com.uzery.fglib.core.program.FGClipboard
+import com.uzery.fglib.core.program.ProgramWindow
 import com.uzery.fglib.core.program.data.FGCursor
 import com.uzery.fglib.utils.math.geom.PointN
 
@@ -9,10 +10,7 @@ import com.uzery.fglib.utils.math.geom.PointN
  **/
 abstract class FGProgram {
     abstract var SCREEN_SIZE: PointN
-    abstract var WINDOW_SIZE: PointN
 
-    abstract var iconify: Boolean
-    abstract var maximize: Boolean
     abstract fun exit()
 
     abstract fun reRender()
@@ -20,4 +18,6 @@ abstract class FGProgram {
     abstract fun setCursor(cursor: FGCursor)
 
     abstract val clipboard: FGClipboard
+
+    abstract val window: ProgramWindow
 }

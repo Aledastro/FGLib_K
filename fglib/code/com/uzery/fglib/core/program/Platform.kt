@@ -60,16 +60,8 @@ object Platform {
 
     ////////////////////////////////////////////////////////////////////////////////////////
 
-    var iconify: Boolean
-        get() = program.iconify
-        set(value) {
-            program.iconify = value
-        }
-    var maximize: Boolean
-        get() = program.maximize
-        set(value) {
-            program.maximize = value
-        }
+    val window
+        get() = program.window
 
     ////////////////////////////////////////////////////////////////////////////////////////
 
@@ -125,7 +117,7 @@ object Platform {
     val SCREEN
         get() = PointN(program.SCREEN_SIZE)
     val WINDOW
-        get() = PointN(program.WINDOW_SIZE)
+        get() = PointN(window.size)
     val CANVAS
         get() = PointN(options.canvas_size)
     val CANVAS_REAL
