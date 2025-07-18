@@ -7,7 +7,6 @@ import com.uzery.fglib.core.program.launch.PlatformSetup.realisation
 import com.uzery.fglib.utils.graphics.RenderCamera
 import com.uzery.fglib.utils.math.geom.PointN
 import com.uzery.fglib.utils.math.geom.shape.RectN
-import kotlin.math.min
 import kotlin.math.sign
 
 /**
@@ -61,13 +60,16 @@ object Platform {
 
     ////////////////////////////////////////////////////////////////////////////////////////
 
-    fun iconify(iconify: Boolean) {
-        program.iconify(iconify)
-    }
-
-    fun maximize(maximize: Boolean) {
-        program.maximize(maximize)
-    }
+    var iconify: Boolean
+        get() = program.iconify
+        set(value) {
+            program.iconify = value
+        }
+    var maximize: Boolean
+        get() = program.maximize
+        set(value) {
+            program.maximize = value
+        }
 
     ////////////////////////////////////////////////////////////////////////////////////////
 
