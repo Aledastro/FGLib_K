@@ -61,6 +61,16 @@ object Platform {
 
     ////////////////////////////////////////////////////////////////////////////////////////
 
+    fun iconify() {
+        program.iconify()
+    }
+
+    fun maximize(maximize: Boolean) {
+        program.maximize(maximize)
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////////
+
     var on_exit: () -> Unit = {}
     var on_event_exit: () -> Unit = {
         exit()
