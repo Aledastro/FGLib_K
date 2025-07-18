@@ -116,6 +116,8 @@ object Platform {
 
     val SCREEN
         get() = PointN(program.SCREEN_SIZE)
+    val VISUAL_BOUNDS
+        get() = PointN(program.VISUAL_BOUNDS)
     val WINDOW
         get() = PointN(window.size)
     val CANVAS
@@ -125,6 +127,8 @@ object Platform {
 
     val SCREEN_R
         get() = RectN(PointN.ZERO, SCREEN)
+    val VISUAL_BOUNDS_R
+        get() = RectN(PointN.ZERO, VISUAL_BOUNDS)
     val WINDOW_R
         get() = RectN(PointN.ZERO, WINDOW)
     val CANVAS_R

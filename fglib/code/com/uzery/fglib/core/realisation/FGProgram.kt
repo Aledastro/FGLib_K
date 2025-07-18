@@ -10,6 +10,7 @@ import com.uzery.fglib.utils.math.geom.PointN
  **/
 abstract class FGProgram {
     abstract var SCREEN_SIZE: PointN
+    abstract var VISUAL_BOUNDS: PointN
 
     abstract fun exit()
 
