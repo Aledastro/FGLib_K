@@ -14,8 +14,10 @@ abstract class FGProgram {
     abstract var iconify: Boolean
     abstract var maximize: Boolean
     abstract fun exit()
+
+    abstract fun reRender()
+
     abstract fun setCursor(cursor: FGCursor)
 
     abstract val clipboard: FGClipboard
-
 }
