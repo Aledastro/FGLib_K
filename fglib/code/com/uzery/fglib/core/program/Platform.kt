@@ -61,8 +61,8 @@ object Platform {
 
     ////////////////////////////////////////////////////////////////////////////////////////
 
-    fun iconify() {
-        program.iconify()
+    fun iconify(iconify: Boolean) {
+        program.iconify(iconify)
     }
 
     fun maximize(maximize: Boolean) {

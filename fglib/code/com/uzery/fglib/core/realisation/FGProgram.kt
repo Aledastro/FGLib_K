@@ -11,7 +11,7 @@ abstract class FGProgram {
     abstract var SCREEN_SIZE: PointN
     abstract var WINDOW_SIZE: PointN
 
-    abstract fun iconify()
+    abstract fun iconify(iconify: Boolean)
     abstract fun maximize(maximize: Boolean)
     abstract fun exit()
     abstract fun setCursor(cursor: FGCursor)
