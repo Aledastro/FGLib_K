@@ -54,16 +54,18 @@ sealed class ResizeMethod {
     }
 
     class STRETCH_FIXED(val view_size: PointN): ResizeMethod() {
+        val k
+            get() = min(Platform.WINDOW.X/Platform.CANVAS.X, Platform.WINDOW.Y/Platform.CANVAS.Y)
         override fun transform(p: PointN): PointN {
-            return p //todo
+            return p*k
         }
 
         override fun transformSize(p: PointN): PointN {
-            return p
+            return p*k
         }
 
         override fun antiTransform(p: PointN): PointN {
-            return p //todo
+            return p/k
         }
 
         override fun start_size(): PointN {
