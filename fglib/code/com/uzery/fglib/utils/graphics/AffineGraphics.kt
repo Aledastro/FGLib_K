@@ -83,10 +83,12 @@ abstract class AffineGraphics {
 
         val pos1 = global_transform.pos(pos)
         val pos2 = global_transform.pos(pos+size)
+        val canvas = Platform.options.resize_method.transform(CANVAS)
+
         for (i in 0..<pos1.dim) {
             val list = listOf(pos1[i], pos2[i])
 
-            if (list.all { it < 0 } || list.all { it > CANVAS[i] }) {
+            if (list.all { it < 0 } || list.all { it > canvas[i] }) {
                 return true
             }
         }
