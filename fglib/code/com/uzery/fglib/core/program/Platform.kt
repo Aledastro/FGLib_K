@@ -46,7 +46,7 @@ object Platform {
 
     ////////////////////////////////////////////////////////////////////////////////////////
 
-    var options: LaunchOptions = LaunchOptions.default
+    lateinit var options: LaunchOptions
 
     var render_camera = object: RenderCamera {
         override fun get(p: PointN): PointN {

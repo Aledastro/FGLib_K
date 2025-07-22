@@ -18,22 +18,4 @@ data class LaunchOptions(
     val style: FGWindowStyle = FGWindowStyle.UNDECORATED,
     var resizable: Boolean = false,
     var tray: TraySupport? = null
-) {
-    companion object {
-        val default = LaunchOptions(
-            canvas_size = PointN(700, 700),
-            resize_method = ResizeMethod.PIXEL_PERFECT(2)
-        )
-        val default2 = LaunchOptions(
-            canvas_size = PointN(1920, 1080)/2,
-            resize_method = ResizeMethod.PIXEL_PERFECT(2),
-            window_mode = FGWindowMode.FULLSCREEN,
-            fill = FGColor.PURE_WHITE,
-            title = "FGLib Example",
-            icons = listOf("sys|fglib_icon.png"),
-            style = FGWindowStyle.UNDECORATED,
-            resizable = false,
-            tray = null
-        )
-    }
-}
+)
