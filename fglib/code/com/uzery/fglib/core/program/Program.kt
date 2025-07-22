@@ -14,6 +14,11 @@ import com.uzery.fglib.utils.math.geom.PointN
  **/
 object Program {
     internal val core = object: Extension() {
+        override fun update() {
+            stats.pos = PointN(0, 0)
+            stats.size = CANVAS
+        }
+
         override fun draw(render: GraphicsRender) {
             if (FGLibSettings.MANUAL_CLEAR_ON) return
 
@@ -24,8 +29,6 @@ object Program {
     fun init(vararg ets: Extension) {
         core.add(*ets)
 
-        core.stats.pos = PointN(0, 0)
-        core.stats.size = CANVAS
         core.initWithChildren()
     }
 
