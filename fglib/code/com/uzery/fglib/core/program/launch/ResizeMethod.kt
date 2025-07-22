@@ -9,10 +9,14 @@ sealed class ResizeMethod {
     abstract fun antiTransform(p: PointN): PointN
     abstract fun transformSize(p: PointN): PointN
     abstract fun start_size(): PointN
+    open fun adapt(size: PointN): PointN = size
+
+    val CANVAS_SIZE
+        get() = Platform.options.canvas_size
 
     class PIXEL_PERFECT(scale: Int): ResizeMethod() {
         val real_scale = if (scale == -1) {
-            val size = Platform.SCREEN/Platform.CANVAS
+            val size = Platform.SCREEN/CANVAS_SIZE
             min(size.intX, size.intY)
         } else scale
 
@@ -29,23 +33,24 @@ sealed class ResizeMethod {
         }
 
         override fun start_size(): PointN {
-            return Platform.options.canvas_size*real_scale
+            return CANVAS_SIZE*real_scale
         }
     }
 
     class STRETCH(val view_size: PointN): ResizeMethod() {
-        val k
-            get() = Platform.WINDOW/Platform.CANVAS
+        val k_pos
+            get() = Platform.WINDOW/CANVAS_SIZE
+
         override fun transform(p: PointN): PointN {
-            return p*k
+            return p*k_pos
         }
 
         override fun transformSize(p: PointN): PointN {
-            return p*min(k.X, k.Y)
+            return p*min(k_pos.X, k_pos.Y)
         }
 
         override fun antiTransform(p: PointN): PointN {
-            return p/k
+            return p/k_pos
         }
 
         override fun start_size(): PointN {
@@ -55,7 +60,8 @@ sealed class ResizeMethod {
 
     class STRETCH_FIXED(val view_size: PointN): ResizeMethod() {
         val k
-            get() = min(Platform.WINDOW.X/Platform.CANVAS.X, Platform.WINDOW.Y/Platform.CANVAS.Y)
+            get() = min(Platform.WINDOW.X/CANVAS_SIZE.X, Platform.WINDOW.Y/CANVAS_SIZE.Y)
+
         override fun transform(p: PointN): PointN {
             return p*k
         }
@@ -70,6 +76,11 @@ sealed class ResizeMethod {
 
         override fun start_size(): PointN {
             return view_size
+        }
+
+        override fun adapt(size: PointN): PointN {
+            val adapt_k = (Platform.WINDOW/CANVAS_SIZE)/k
+            return size*adapt_k
         }
     }
 }
