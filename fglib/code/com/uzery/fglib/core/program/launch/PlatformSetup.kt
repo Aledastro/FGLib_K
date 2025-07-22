@@ -23,10 +23,6 @@ object PlatformSetup {
         realisation.startProcess(options, *ets)
     }
 
-    fun startProcess(vararg ets: Extension) {
-        startProcess(LaunchOptions.default, *ets)
-    }
-
     fun startProcess(configuration: LaunchConfiguration) {
         configuration.init()
         startProcess(configuration.options, configuration.main)
