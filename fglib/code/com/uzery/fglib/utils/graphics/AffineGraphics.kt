@@ -3,7 +3,7 @@ package com.uzery.fglib.utils.graphics
 import com.uzery.fglib.core.obj.DrawLayer
 import com.uzery.fglib.core.program.FGLibSettings.OPTIMISATION_NOT_DRAW_OUT_OF_BOUNDS
 import com.uzery.fglib.core.program.Platform
-import com.uzery.fglib.core.program.Platform.CANVAS_REAL
+import com.uzery.fglib.core.program.Platform.CANVAS
 import com.uzery.fglib.utils.graphics.data.FGColor
 import com.uzery.fglib.utils.graphics.data.FGFont
 import com.uzery.fglib.utils.graphics.sub.FillGraphics
@@ -86,7 +86,7 @@ abstract class AffineGraphics {
         for (i in 0..<pos1.dim) {
             val list = listOf(pos1[i], pos2[i])
 
-            if (list.all { it < 0 } || list.all { it > CANVAS_REAL[i] }) {
+            if (list.all { it < 0 } || list.all { it > CANVAS[i] }) {
                 return true
             }
         }
