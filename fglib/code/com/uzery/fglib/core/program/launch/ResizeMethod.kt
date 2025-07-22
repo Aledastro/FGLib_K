@@ -14,7 +14,7 @@ sealed class ResizeMethod {
     val CANVAS_SIZE
         get() = Platform.options.canvas_size
 
-    class PIXEL_PERFECT(scale: Int): ResizeMethod() {
+    open class PIXEL_PERFECT(scale: Int): ResizeMethod() {
         val real_scale = if (scale == -1) {
             val size = Platform.SCREEN/CANVAS_SIZE
             min(size.intX, size.intY)
@@ -35,6 +35,8 @@ sealed class ResizeMethod {
         override fun start_size(): PointN {
             return CANVAS_SIZE*real_scale
         }
+
+        class AUTO: PIXEL_PERFECT(scale = -1)
     }
 
     class STRETCH(val view_size: PointN): ResizeMethod() {
