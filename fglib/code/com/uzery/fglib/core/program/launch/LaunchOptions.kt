@@ -11,7 +11,7 @@ import com.uzery.fglib.utils.math.geom.PointN
 data class LaunchOptions(
     val canvas_size: PointN,
     val resize_method: ResizeMethod,
-    val window_mode: FGWindowMode = FGWindowMode.WINDOWED,
+    var window_mode: FGWindowMode = FGWindowMode.WINDOWED,
     val fill: FGColor = FGColor.PURE_WHITE,
     var title: String = "",
     var icons: List<String> = ArrayList(),
