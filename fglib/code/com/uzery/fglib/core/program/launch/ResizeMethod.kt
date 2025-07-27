@@ -39,6 +39,28 @@ sealed class ResizeMethod {
         class AUTO: PIXEL_PERFECT(scale = -1)
     }
 
+    class ADAPT(val scale: Double): ResizeMethod() {
+        override fun transform(p: PointN): PointN {
+            return p*scale
+        }
+
+        override fun transformSize(p: PointN): PointN {
+            return p*scale
+        }
+
+        override fun antiTransform(p: PointN): PointN {
+            return p/scale
+        }
+
+        override fun start_size(): PointN {
+            return CANVAS_SIZE*scale
+        }
+
+        override fun adapt(size: PointN): PointN {
+            return Platform.WINDOW/scale
+        }
+    }
+
     class STRETCH(val view_size: PointN): ResizeMethod() {
         val k_pos
             get() = Platform.WINDOW/CANVAS_SIZE
@@ -60,7 +82,7 @@ sealed class ResizeMethod {
         }
     }
 
-    class STRETCH_FIXED(val view_size: PointN): ResizeMethod() {
+    class STRETCH_ADAPT(val view_size: PointN): ResizeMethod() {
         val k
             get() = min(Platform.WINDOW.X/CANVAS_SIZE.X, Platform.WINDOW.Y/CANVAS_SIZE.Y)
 
