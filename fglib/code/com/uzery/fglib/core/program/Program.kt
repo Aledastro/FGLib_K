@@ -1,7 +1,7 @@
 package com.uzery.fglib.core.program
 
-import com.uzery.fglib.core.program.Platform.CANVAS
 import com.uzery.fglib.core.program.Platform.mouse
+import com.uzery.fglib.core.program.Platform.options
 import com.uzery.fglib.core.program.extension.Extension
 import com.uzery.fglib.utils.audio.AudioData
 import com.uzery.fglib.utils.data.file.TextData
@@ -16,7 +16,7 @@ object Program {
     internal val core = object: Extension() {
         override fun update() {
             stats.pos = PointN(0, 0)
-            stats.size = CANVAS
+            stats.size = Platform.CANVAS
         }
 
         override fun draw(render: GraphicsRender) {
@@ -26,9 +26,14 @@ object Program {
         }
     }
 
-    fun init(vararg ets: Extension) {
-        core.add(*ets)
+    fun setCanvas() {
+        Platform.CANVAS = options.resize_method.adapt(options.canvas_size)
+    }
 
+    fun init(vararg ets: Extension) {
+        setCanvas()
+
+        core.add(*ets)
         core.initWithChildren()
     }
 
@@ -43,6 +48,8 @@ object Program {
     }
 
     fun update() {
+        setCanvas()
+
         updatePaths()
 
         core.rearrangeWithChildren()

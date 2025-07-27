@@ -120,8 +120,7 @@ object Platform {
         get() = PointN(program.VISUAL_BOUNDS)
     val WINDOW
         get() = PointN(window.size)
-    val CANVAS
-        get() = options.resize_method.adapt(options.canvas_size)
+    lateinit var CANVAS: PointN
 
     val SCREEN_R
         get() = RectN(PointN.ZERO, SCREEN)
