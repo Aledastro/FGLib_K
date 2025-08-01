@@ -101,9 +101,10 @@ abstract class Extension(vararg children: Extension) {
 
     open fun onShow() {}
     open fun onHide() {}
-
     open fun onOnlyDraw() {}
     open fun onOnlyUpdate() {}
+
+    open fun onCollapse() {}
 
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -142,7 +143,11 @@ abstract class Extension(vararg children: Extension) {
         real_children.removeAll(toAdd.toSet())
         real_children.addAll(toAdd)
 
-        real_children.removeIf { it.ready_to_collapse }
+        val collapsed_children = real_children
+            .filter { it.ready_to_collapse }
+            .toSet()
+        collapsed_children.forEach { it.onCollapse() }
+        real_children.removeAll(collapsed_children)
 
         children.clear()
         children.addAll(real_children)
