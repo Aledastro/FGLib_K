@@ -57,6 +57,8 @@ module fglib {
     exports com.uzery.fglib.utils.graphics.shader;
     exports com.uzery.fglib.utils.graphics.sub;
 
+    exports com.uzery.fglib.utils.history;
+
     exports com.uzery.fglib.utils.input;
     exports com.uzery.fglib.utils.input.combination;
     exports com.uzery.fglib.utils.input.data;
