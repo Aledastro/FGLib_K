@@ -45,9 +45,10 @@ class ExtensionStats {
     /////////////////////////////////////////////////////////////////////////////////////////
 
     fun toGroup() {
-        val st = parent!!.stats
+        val p_stats = parent!!.stats
 
-        size = st.size
+        pos = PointN(0, 0)
+        size = p_stats.size
 
         bounds = null
         bounds_after = null

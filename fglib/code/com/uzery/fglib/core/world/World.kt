@@ -58,7 +58,7 @@ class World {
                 active_rooms.add(room)
                 last_active[room] = true
             } else {
-                if (last_active[room] == true) controller.onDisappear(this, room)
+                if (last_active[room] ?: false) controller.onDisappear(this, room)
                 last_active[room] = false
             }
         }

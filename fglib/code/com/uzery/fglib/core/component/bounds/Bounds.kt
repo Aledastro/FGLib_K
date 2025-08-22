@@ -34,7 +34,7 @@ class Bounds(vararg els: BoundsElement) {
         get() = elements.isEmpty()
 
     fun into(pos: PointN): Boolean {
-        return elements.any { it.now?.into(pos) == true }
+        return elements.any { it.now?.into(pos) ?: false }
     }
 
     var cover_area: RectN? = null
