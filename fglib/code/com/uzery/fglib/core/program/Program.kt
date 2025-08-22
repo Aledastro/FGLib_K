@@ -35,6 +35,8 @@ object Program {
 
         core.add(*ets)
         core.initWithChildren()
+
+        update()
     }
 
     private fun updatePaths() {
@@ -53,6 +55,7 @@ object Program {
         updatePaths()
 
         core.rearrangeWithChildren()
+        core.updateStatsWithChildren()
         Platform.extension_at_top = core.getAtTop(mouse.pos)
         core.updateTasksWithChildren()
         core.updateWithChildren()
@@ -62,7 +65,7 @@ object Program {
     }
 
     fun draw() {
-        core.drawWithChildren(GraphicsRender(core.stats.pos, core.stats.size))
+        core.drawWithChildren(GraphicsRender(core.stats.real_pos, core.stats.real_size))
     }
 
     var program_time = 0

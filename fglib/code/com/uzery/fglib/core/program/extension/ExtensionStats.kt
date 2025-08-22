@@ -12,6 +12,25 @@ class ExtensionStats {
     fun next() {
         bounds?.next()
         bounds_after?.next()
+
+        layout_pos = getLayoutPos()
+        real_pos = getRealPos()
+        real_size = size
+    }
+
+    private fun getLayoutPos(): PointN {
+        val s_pos = transform?.pos(pos) ?: pos
+
+        val parent = parent ?: return s_pos
+
+        val layout_pos = (parent.stats.size-size)*layout.value
+        return layout_pos+s_pos
+    }
+
+    private fun getRealPos(): PointN {
+        val parent = parent ?: return layout_pos
+
+        return parent.stats.real_pos+layout_pos
     }
 
     var parent: Extension? = null
@@ -22,25 +41,16 @@ class ExtensionStats {
             return parent.stats.full_transform*transform
         }
 
-    private val layout_pos: PointN
-        get() {
-            val s_pos = transform?.pos(pos) ?: pos
+    private var layout_pos = PointN.ZERO
 
-            val parent = parent ?: return s_pos
+    var real_pos = PointN.ZERO
+        private set
 
-            val layout_pos = (parent.stats.size-size)*layout.value
-            return layout_pos+s_pos
-        }
-
-    val real_pos: PointN
-        get() {
-            val parent = parent ?: return layout_pos
-
-            return parent.stats.real_pos+layout_pos
-        }
+    var real_size = PointN.ZERO
+        private set
 
     internal val render_pos
-        get() = layout_pos+draw_pos
+        get() = layout_pos+draw_delta
 
     /////////////////////////////////////////////////////////////////////////////////////////
 
@@ -68,6 +78,5 @@ class ExtensionStats {
 
     var ui_level = UILevel.NEUTRAL
 
-    //delta for drawing
-    var draw_pos = PointN.ZERO
+    var draw_delta = PointN.ZERO
 }

@@ -117,7 +117,9 @@ abstract class Extension(vararg children: Extension) {
         modify(false)
         load()
         rearrange()
+
         arranged_children.forEach { it.initWithChildren() }
+
         initAfter()
 
         inited = true
@@ -155,16 +157,21 @@ abstract class Extension(vararg children: Extension) {
 
     private val java_code = this.javaClass.name
 
-    internal fun updateWithChildren() {
+    internal fun updateStatsWithChildren() {
         stats.next()
 
+        arranged_children.forEach { it.updateStatsWithChildren() }
+    }
+
+    internal fun updateWithChildren() {
         countTime("update", java_code) {
             update()
         }
 
-        arranged_children.filter { it.is_updating }.forEach { e ->
-            e.updateWithChildren()
-        }
+        arranged_children
+            .filter { it.is_updating }
+            .forEach { e -> e.updateWithChildren() }
+
         countTime("update", java_code) {
             updateAfter()
         }
@@ -183,9 +190,11 @@ abstract class Extension(vararg children: Extension) {
             draw(render)
         }
 
-        arranged_children.filter { it.is_drawing }.forEach { e ->
-            e.drawWithChildren(render.child(e.stats.render_pos, e.stats.size))
-        }
+        arranged_children
+            .filter { it.is_drawing }
+            .forEach { e ->
+                e.drawWithChildren(render.child(e.stats.render_pos, e.stats.real_size))
+            }
 
         countTime("draw", java_code) {
             reset()
