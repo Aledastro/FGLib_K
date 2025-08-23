@@ -157,10 +157,10 @@ abstract class Extension(vararg children: Extension) {
 
     private val java_code = this.javaClass.name
 
-    internal fun updateStatsWithChildren() {
-        stats.next()
+    internal fun updateStatsWithChildren(only_new: Boolean) {
+        if (!only_new || full_time == 1) stats.next()
 
-        arranged_children.forEach { it.updateStatsWithChildren() }
+        arranged_children.forEach { it.updateStatsWithChildren(only_new) }
     }
 
     internal fun updateWithChildren() {

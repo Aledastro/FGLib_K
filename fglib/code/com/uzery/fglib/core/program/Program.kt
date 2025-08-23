@@ -26,21 +26,14 @@ object Program {
         }
     }
 
-    fun setCanvas() {
-        Platform.CANVAS = options.resize_method.adapt(options.canvas_size)
-    }
+    var program_time = 0
+        private set
 
     fun init(vararg ets: Extension) {
         setCanvas()
 
         core.add(*ets)
         core.initWithChildren()
-    }
-
-    private fun updatePaths() {
-        ImageData.paths.updatePaths()
-        TextData.paths.updatePaths()
-        AudioData.paths.updatePaths()
     }
 
     init {
@@ -52,12 +45,7 @@ object Program {
 
         updatePaths()
 
-        core.rearrangeWithChildren()
-        core.updateStatsWithChildren()
-        Platform.extension_at_top = core.getAtTop(mouse.pos)
-        core.updateTasksWithChildren()
-        core.updateWithChildren()
-        core.updateStatsWithChildren()
+        updateCore()
 
         Platform.update()
         program_time++
@@ -67,6 +55,25 @@ object Program {
         core.drawWithChildren(GraphicsRender(core.stats.real_pos, core.stats.real_size))
     }
 
-    var program_time = 0
-        private set
+    private fun setCanvas() {
+        Platform.CANVAS = options.resize_method.adapt(options.canvas_size)
+    }
+
+    private fun updatePaths() {
+        ImageData.paths.updatePaths()
+        TextData.paths.updatePaths()
+        AudioData.paths.updatePaths()
+    }
+
+    private fun updateCore() {
+        core.rearrangeWithChildren()
+        core.updateStatsWithChildren(false)
+
+        Platform.extension_at_top = core.getAtTop(mouse.pos)
+
+        core.updateWithChildren()
+        core.updateTasksWithChildren()
+
+        core.updateStatsWithChildren(true)
+    }
 }
