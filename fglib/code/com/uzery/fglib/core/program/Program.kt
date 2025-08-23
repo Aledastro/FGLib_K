@@ -35,8 +35,6 @@ object Program {
 
         core.add(*ets)
         core.initWithChildren()
-
-        update()
     }
 
     private fun updatePaths() {
@@ -59,6 +57,7 @@ object Program {
         Platform.extension_at_top = core.getAtTop(mouse.pos)
         core.updateTasksWithChildren()
         core.updateWithChildren()
+        core.updateStatsWithChildren()
 
         Platform.update()
         program_time++
