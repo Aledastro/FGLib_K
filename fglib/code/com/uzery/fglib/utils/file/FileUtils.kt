@@ -52,18 +52,28 @@ object FileUtils {
         File(filename).delete()
     }
 
+    fun normalizePath(path: String): String {
+        val roots = File.listRoots().map { it.absolutePath }
+        for (root in roots) {
+            if (root.startsWith(path, ignoreCase = true)) {
+                return root
+            }
+        }
+        return path
+    }
+
     fun filesFrom(filename: String): List<String> {
-        val files = File(filename).listFiles()
-        val res = ArrayList<String>()
-        files?.forEach { if (it.isFile) res.add(filename+"/"+it.name) }
-        return res
+        return File(normalizePath(filename)).listFiles()
+            ?.filter { it.isFile }
+            ?.map { it.absolutePath.replace("\\", "/") }
+            ?: emptyList()
     }
 
     fun dirsFrom(filename: String): List<String> {
-        val dirs = File(filename).listFiles()
-        val res = ArrayList<String>()
-        dirs?.forEach { if (it.isDirectory) res.add(filename+"/"+it.name) }
-        return res
+        return File(normalizePath(filename)).listFiles()
+            ?.filter { it.isDirectory }
+            ?.map { it.absolutePath.replace("\\", "/") }
+            ?: emptyList()
     }
 
     ///////////////////////////////////////////////////////////////////

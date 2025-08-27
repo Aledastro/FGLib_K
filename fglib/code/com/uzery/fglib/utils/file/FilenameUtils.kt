@@ -2,13 +2,17 @@ package com.uzery.fglib.utils.file
 
 object FilenameUtils {
     fun fullNameOf(filename: String): String {
-        val id = filename.lastIndexOf('/')
-        return if (id == -1) filename else filename.substring(id+1)
+        val res = filename.replace("\\", "/")
+
+        val id = res.lastIndexOf('/')
+        return if (id == -1) res else res.substring(id+1)
     }
 
     fun dirOf(filename: String): String {
-        val id = filename.lastIndexOf('/')
-        return if (id == -1) "" else filename.substring(0, id+1)
+        val res = filename.replace("\\", "/")
+
+        val id = res.lastIndexOf('/')
+        return if (id == -1) "" else res.substring(0, id+1)
     }
 
     fun nameOf(filename: String): String {
