@@ -179,6 +179,10 @@ data class PointN(private val xs: Array<Double>) {
             return PointN(ArrayUtils.transformWith(p1.xs, p2.xs, 0.0, transform))
         }
 
+        fun create(dim: Int, transform: (i: Int) -> Double): PointN {
+            return PointN(Array(dim) { i -> transform(i) })
+        }
+
         fun isSameDirection(p1: PointN, p2: PointN): Boolean {
             if (p1.dim != p2.dim) throw DebugData.error("WRONG DIM: $p1, $p2")
             var k: Double? = null
