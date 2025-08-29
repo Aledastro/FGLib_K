@@ -23,7 +23,7 @@ abstract class Extension(vararg children: Extension) {
 
     val stats = ExtensionStats()
 
-    val DEFAULT_BOUNDS = Bounds { if (stats.size.isZero()) RectN(stats.size) else null }
+    val DEFAULT_BOUNDS = Bounds { if (!stats.size.isZero()) RectN(stats.size) else null }
 
     protected var full_time = 0
         private set
