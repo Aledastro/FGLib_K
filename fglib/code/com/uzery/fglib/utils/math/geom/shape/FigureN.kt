@@ -66,7 +66,7 @@ open class FigureN(val fields: List<FieldN>): Shape() {
         val dim = fields[0].dim
         if (current_pos.isEmpty()) return PointN(Array(dim) { 1.0 })
 
-        return PointN(Array(dim) { level -> current_pos.minOf { it[level] } })
+        return PointN.create(dim) { level -> current_pos.minOf { it[level] } }
     }
 
     private fun getRP(): PointN {
@@ -75,7 +75,7 @@ open class FigureN(val fields: List<FieldN>): Shape() {
         val dim = fields[0].dim
         if (current_pos.isEmpty()) return PointN(Array(dim) { -1.0 })
 
-        return PointN(Array(dim) { level -> current_pos.maxOf { it[level] } })
+        return PointN.create(dim) { level -> current_pos.maxOf { it[level] } }
     }
 
     override val code = Code.FIGURE

@@ -95,8 +95,8 @@ object ShapeUtils {
     }
 
     fun coverAreaOf(vararg list: Shape): RectN {
-        val minP = PointN(Array(list[0].dim) { i -> list.minOf { p -> p.L[i] } })
-        val maxP = PointN(Array(list[0].dim) { i -> list.maxOf { p -> p.R[i] } })
+        val minP = PointN.create(list[0].dim) { i -> list.minOf { p -> p.L[i] } }
+        val maxP = PointN.create(list[0].dim) { i -> list.maxOf { p -> p.R[i] } }
 
         return RectN.LR(minP, maxP)
     }
