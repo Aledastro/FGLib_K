@@ -15,7 +15,7 @@ import com.uzery.fglib.utils.math.geom.PointN
 object Program {
     internal val core = object: Extension() {
         override fun update() {
-            stats.pos = PointN(0, 0)
+            stats.pos = PointN.ZERO_2D
             stats.size = Platform.CANVAS
         }
 
