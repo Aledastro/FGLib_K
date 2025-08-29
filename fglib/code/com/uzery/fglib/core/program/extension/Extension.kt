@@ -6,6 +6,7 @@ import com.uzery.fglib.core.program.Platform
 import com.uzery.fglib.core.program.Platform.getGlobalAtTop
 import com.uzery.fglib.core.program.Platform.mouse
 import com.uzery.fglib.utils.data.debug.DebugData
+import com.uzery.fglib.utils.data.file.FGLibConst
 import com.uzery.fglib.utils.graphics.render.GraphicsRender
 import com.uzery.fglib.utils.math.geom.PointN
 import com.uzery.fglib.utils.math.geom.shape.RectN
@@ -22,7 +23,7 @@ abstract class Extension(vararg children: Extension) {
 
     val stats = ExtensionStats()
 
-    val DEFAULT_BOUNDS = Bounds { if (stats.size != PointN.ZERO) RectN(stats.size) else null }
+    val DEFAULT_BOUNDS = Bounds { if (stats.size.isZero()) RectN(stats.size) else null }
 
     protected var full_time = 0
         private set

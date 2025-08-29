@@ -41,12 +41,12 @@ class ExtensionStats {
             return parent.stats.full_transform*transform
         }
 
-    private var layout_pos = PointN.ZERO
+    private var layout_pos = PointN.ZERO_2D
 
-    var real_pos = PointN.ZERO
+    var real_pos = PointN.ZERO_2D
         private set
 
-    var real_size = PointN.ZERO
+    var real_size = PointN.ZERO_2D
         private set
 
     internal val render_pos
@@ -57,7 +57,7 @@ class ExtensionStats {
     fun toGroup() {
         val p_stats = parent!!.stats
 
-        pos = PointN(0, 0)
+        pos = PointN.ZERO_2D
         size = p_stats.size
 
         bounds = null
@@ -65,8 +65,8 @@ class ExtensionStats {
     }
 
     //for updating
-    var pos = PointN.ZERO
-    var size = PointN.ZERO
+    var pos = PointN.ZERO_2D
+    var size = PointN.ZERO_2D
     var layout = FGLayout.TOP_LEFT
 
     var bounds: Bounds? = null
@@ -78,5 +78,5 @@ class ExtensionStats {
 
     var ui_level = UILevel.NEUTRAL
 
-    var draw_delta = PointN.ZERO
+    var draw_delta = PointN.ZERO_2D
 }

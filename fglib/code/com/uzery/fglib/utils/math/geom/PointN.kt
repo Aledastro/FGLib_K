@@ -3,6 +3,7 @@ package com.uzery.fglib.utils.math.geom
 import com.uzery.fglib.utils.ArrayUtils
 import com.uzery.fglib.utils.MathUtils
 import com.uzery.fglib.utils.data.debug.DebugData
+import com.uzery.fglib.utils.data.file.FGLibConst
 import com.uzery.fglib.utils.struct.num.IntI
 import kotlin.math.*
 
@@ -158,6 +159,11 @@ data class PointN(private val xs: Array<Double>) {
 
     override fun toString(): String {
         return "PointN${Array(xs.size) { i -> xs[i].toInt() }.toList()}"
+    }
+
+    fun isZero(): Boolean {
+        if (this == ZERO) return true
+        return xs.all { it == 0.0 }
     }
 
     companion object {

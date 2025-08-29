@@ -123,13 +123,13 @@ object Platform {
     lateinit var CANVAS: PointN
 
     val SCREEN_R
-        get() = RectN(PointN.ZERO, SCREEN)
+        get() = RectN(PointN.ZERO_2D, SCREEN)
     val VISUAL_BOUNDS_R
-        get() = RectN(PointN.ZERO, VISUAL_BOUNDS)
+        get() = RectN(PointN.ZERO_2D, VISUAL_BOUNDS)
     val WINDOW_R
-        get() = RectN(PointN.ZERO, WINDOW)
+        get() = RectN(PointN.ZERO_2D, WINDOW)
     val CANVAS_R
-        get() = RectN(PointN.ZERO, CANVAS)
+        get() = RectN(PointN.ZERO_2D, CANVAS)
 
     ////////////////////////////////////////////////////////////////////////////////////////
 }

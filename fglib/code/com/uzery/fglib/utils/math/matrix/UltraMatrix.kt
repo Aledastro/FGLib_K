@@ -41,7 +41,7 @@ class UltraMatrix(data: Array2<Double>): Matrix(data) {
 
     fun copy(pos: PointN): UltraMatrix {
         val res = copyU()
-        if (pos != PointN.ZERO) res.move(pos)
+        if (!pos.isZero()) res.move(pos)
         return res
     }
 

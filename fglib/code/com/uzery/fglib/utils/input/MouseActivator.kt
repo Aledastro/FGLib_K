@@ -12,7 +12,7 @@ import kotlin.math.sign
 abstract class MouseActivator: PlatformUpdatable {
     protected abstract fun pos0(): PointN
     protected abstract fun scroll0(): PointN
-    var pos: PointN = PointN.ZERO
+    var pos: PointN = PointN.ZERO_2D
         private set
 
     var scroll: Int = 0
