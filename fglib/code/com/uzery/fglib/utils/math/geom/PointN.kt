@@ -3,7 +3,6 @@ package com.uzery.fglib.utils.math.geom
 import com.uzery.fglib.utils.ArrayUtils
 import com.uzery.fglib.utils.MathUtils
 import com.uzery.fglib.utils.data.debug.DebugData
-import com.uzery.fglib.utils.data.file.FGLibConst
 import com.uzery.fglib.utils.struct.num.IntI
 import kotlin.math.*
 
@@ -167,10 +166,14 @@ data class PointN(private val xs: Array<Double>) {
     }
 
     companion object {
-        val ZERO = PointN(Array(0) { 0.0 })
-        val ZERO_1D = PointN(0)
-        val ZERO_2D = PointN(0, 0)
-        val ZERO_3D = PointN(0, 0, 0)
+        val ZERO
+            get() = PointN(emptyArray<Double>())
+        val ZERO_1D
+            get() = PointN(0.0)
+        val ZERO_2D
+            get() = PointN(0.0, 0.0)
+        val ZERO_3D
+            get() = PointN(0.0, 0.0, 0.0)
 
         fun transform(p1: PointN, p2: PointN, transform: (x: Double, y: Double) -> Double): PointN {
             return PointN(ArrayUtils.transformWith(p1.xs, p2.xs, 0.0, transform))
