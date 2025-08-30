@@ -3,8 +3,12 @@ package com.uzery.fglib.utils.graphics.data
 /**
  * TODO("doc")
  **/
-data class FGFont(var family: String, var size: Double, var weight: FGFontWeight, var posture: FGFontPosture) {
-    constructor(family: String, size: Double): this(family, size, default_font.weight, default_font.posture)
+data class FGFont(
+    val family: String,
+    val size: Double,
+    val weight: FGFontWeight = default_font.weight,
+    val posture: FGFontPosture = default_font.posture
+) {
     constructor(
         size: Double,
         weight: FGFontWeight = default_font.weight,
@@ -18,6 +22,6 @@ data class FGFont(var family: String, var size: Double, var weight: FGFontWeight
     }
 
     companion object {
-        val default_font = FGFont("arial", 10.0, FGFontWeight.BOLD, FGFontPosture.REGULAR)
+        val default_font = FGFont("arial", 10.0, FGFontWeight.STANDARD, FGFontPosture.REGULAR)
     }
 }
