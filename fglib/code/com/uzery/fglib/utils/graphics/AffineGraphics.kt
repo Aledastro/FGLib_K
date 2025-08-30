@@ -4,6 +4,7 @@ import com.uzery.fglib.core.obj.DrawLayer
 import com.uzery.fglib.core.program.FGLibSettings.OPTIMISATION_NOT_DRAW_OUT_OF_BOUNDS
 import com.uzery.fglib.core.program.Platform
 import com.uzery.fglib.core.program.Platform.CANVAS
+import com.uzery.fglib.utils.SplitUtils
 import com.uzery.fglib.utils.graphics.data.FGColor
 import com.uzery.fglib.utils.graphics.data.FGFont
 import com.uzery.fglib.utils.graphics.sub.FillGraphics
@@ -71,7 +72,11 @@ abstract class AffineGraphics {
         image.setDefaults()
     }
 
-    abstract fun text_size(text: String, font: FGFont): PointN
+    abstract fun textSizeOf(text: String, font: FGFont): PointN
+
+    fun splitText(text: String, width: Double, font: FGFont): ArrayList<String> {
+        return SplitUtils.splitTextByWidth(text, width) { stroke -> textSizeOf(stroke, font).X }
+    }
 
     abstract val image: ImageGraphics
 

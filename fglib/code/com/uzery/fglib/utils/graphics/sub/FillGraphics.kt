@@ -19,18 +19,10 @@ abstract class FillGraphics(agc: AffineGraphics): GeometryGraphics(agc) {
         font = FGFont.default_font
     }
 
-    fun textSizeOf(text: String, font: FGFont = this.font): PointN {
-        return graphics.text_size(text, font)
-    }
-
-    fun splitText(text: String, width: Double, font: FGFont = this.font): ArrayList<String> {
-        return SplitUtils.splitTextByWidth(text, width) { stroke -> textSizeOf(stroke, font).X }
-    }
-
     ///////////////////////////////////////////////////////////////////////////
 
     fun text(pos: PointN, text: String, color: FGColor, layout: PointN = OF_L) {
-        val size = textSizeOf(text, font)
+        val size = agc.textSizeOf(text, font)
         val layout_pos = pos-size*layout
         val layout_size = size
 
