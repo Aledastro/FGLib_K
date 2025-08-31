@@ -10,7 +10,7 @@ import com.uzery.fglib.utils.math.geom.PointN
 abstract class StrokeGraphics(agc: AffineGraphics): GeometryGraphics(agc) {
     protected abstract fun renderLineTo(pos1: PointN, pos2: PointN, color: FGColor)
 
-    protected abstract fun renderPolyline(points: List<PointN>, color: FGColor)
+    protected abstract fun renderPolyline(points: List<PointN>, color: FGColor, real_pos: PointN, real_size: PointN)
 
     protected abstract fun utilSetWidth(width: Double)
 
@@ -45,7 +45,7 @@ abstract class StrokeGraphics(agc: AffineGraphics): GeometryGraphics(agc) {
         val dp = pos-p_pos
         renderIn(p_pos, p_size, layout) { real_pos, real_size ->
             val transformed_points = points.map { p -> transform.pos(p+dp)+real_pos }
-            renderPolyline(transformed_points, agc.getAlphaColor(color))
+            renderPolyline(transformed_points, agc.getAlphaColor(color), real_pos, real_size)
         }
     }
 

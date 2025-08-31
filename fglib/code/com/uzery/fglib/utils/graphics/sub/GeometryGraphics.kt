@@ -15,7 +15,7 @@ abstract class GeometryGraphics(agc: AffineGraphics): SubGraphics(agc) {
 
     protected abstract fun renderOval(pos: PointN, size: PointN, color: FGColor)
 
-    protected abstract fun renderPolygon(points: List<PointN>, color: FGColor)
+    protected abstract fun renderPolygon(points: List<PointN>, color: FGColor, real_pos: PointN, real_size: PointN)
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -45,7 +45,7 @@ abstract class GeometryGraphics(agc: AffineGraphics): SubGraphics(agc) {
         val dp = pos-p_pos
         renderIn(p_pos, p_size, layout) { real_pos, real_size ->
             val transformed_points = points.map { p -> transform.pos(p+dp)+real_pos }
-            renderPolygon(transformed_points, agc.getAlphaColor(color))
+            renderPolygon(transformed_points, agc.getAlphaColor(color), real_pos, real_size)
         }
     }
 
