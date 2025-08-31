@@ -41,8 +41,12 @@ abstract class StrokeGraphics(agc: AffineGraphics): GeometryGraphics(agc) {
     }
 
     fun polyline(pos: PointN, points: List<PointN>, color: FGColor, layout: PointN = OF_L) {
-        val transformed_points = polyTransform(pos, points, layout) ?: return
-        renderPolyline(transformed_points, agc.getAlphaColor(color))
+        val (p_pos, p_size) = getPolyBounds(pos, points) ?: return
+        val dp = pos-p_pos
+        renderIn(p_pos, p_size, layout) { real_pos, real_size ->
+            val transformed_points = points.map { p -> transform.pos(p+dp)+real_pos }
+            renderPolyline(transformed_points, agc.getAlphaColor(color))
+        }
     }
 
     ///////////////////////////////////////////////////////////////////////////

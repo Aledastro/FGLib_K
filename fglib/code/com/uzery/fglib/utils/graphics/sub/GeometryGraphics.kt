@@ -6,7 +6,6 @@ import com.uzery.fglib.utils.math.geom.PointN
 import com.uzery.fglib.utils.math.geom.Shape
 import com.uzery.fglib.utils.math.geom.shape.OvalN
 import com.uzery.fglib.utils.math.geom.shape.RectN
-import kotlin.math.min
 
 /**
  * TODO("doc")
@@ -32,22 +31,22 @@ abstract class GeometryGraphics(agc: AffineGraphics): SubGraphics(agc) {
         }
     }
 
-    protected fun polyTransform(pos: PointN, points: List<PointN>, layout: PointN): List<PointN>? {
+    protected fun getPolyBounds(pos: PointN, points: List<PointN>): Pair<PointN, PointN>? {
         if (points.size < 2) return null
 
         val minP = PointN.create(2) { i -> points.minOf { p -> p[i] } }
         val maxP = PointN.create(2) { i -> points.maxOf { p -> p[i] } }
-        val size = maxP-minP
-        val layout_pos = pos-size*layout
 
-        if (agc.isOutOfBounds(layout_pos+minP, size)) return null
-
-        return points.map { p -> transform.pos(p+layout_pos) }
+        return Pair(pos+minP, maxP-minP)
     }
 
     fun polygon(pos: PointN, points: List<PointN>, color: FGColor, layout: PointN = OF_L) {
-        val transformed_points = polyTransform(pos, points, layout) ?: return
-        renderPolygon(transformed_points, agc.getAlphaColor(color))
+        val (p_pos, p_size) = getPolyBounds(pos, points) ?: return
+        val dp = pos-p_pos
+        renderIn(p_pos, p_size, layout) { real_pos, real_size ->
+            val transformed_points = points.map { p -> transform.pos(p+dp)+real_pos }
+            renderPolygon(transformed_points, agc.getAlphaColor(color))
+        }
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////
