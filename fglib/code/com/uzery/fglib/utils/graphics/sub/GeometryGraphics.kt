@@ -6,54 +6,30 @@ import com.uzery.fglib.utils.math.geom.PointN
 import com.uzery.fglib.utils.math.geom.Shape
 import com.uzery.fglib.utils.math.geom.shape.OvalN
 import com.uzery.fglib.utils.math.geom.shape.RectN
+import kotlin.math.min
 
 /**
  * TODO("doc")
  **/
-abstract class GeometryGraphics(protected val agc: AffineGraphics): SubGraphics() {
-    protected val transform
-        get() = agc.global_transform
-
+abstract class GeometryGraphics(agc: AffineGraphics): SubGraphics(agc) {
     protected abstract fun renderRect(pos: PointN, size: PointN, color: FGColor)
 
     protected abstract fun renderOval(pos: PointN, size: PointN, color: FGColor)
 
     protected abstract fun renderPolygon(points: List<PointN>, color: FGColor)
 
-    protected var OF_L = PointN(0.0, 0.0)
-    protected var OF_C = PointN(0.5, 0.5)
-    protected var OF_R = PointN(1.0, 1.0)
-
-    protected var OF_TL = PointN(0.0, 0.0)
-    protected var OF_TC = PointN(0.5, 0.0)
-    protected var OF_TR = PointN(1.0, 0.0)
-
     ////////////////////////////////////////////////////////////////////////////////////////////////////
 
     fun rect(pos: PointN, size: PointN, color: FGColor, layout: PointN = OF_L) {
-        val layout_pos = pos-size*layout
-        val layout_size = size
-
-        if (agc.isOutOfBounds(layout_pos, layout_size)) return
-
-        renderRect(
-            pos = transform.pos(layout_pos),
-            size = transform.size(layout_pos, layout_size),
-            color = agc.getAlphaColor(color)
-        )
+        renderIn(pos, size, layout) { real_pos, real_size ->
+            renderRect(real_pos, real_size, agc.getAlphaColor(color))
+        }
     }
 
     fun oval(pos: PointN, size: PointN, color: FGColor, layout: PointN = OF_L) {
-        val layout_pos = pos-size*layout
-        val layout_size = size
-
-        if (agc.isOutOfBounds(layout_pos, layout_size)) return
-
-        renderOval(
-            pos = transform.pos(layout_pos),
-            size = transform.size(layout_pos, layout_size),
-            color = agc.getAlphaColor(color)
-        )
+        renderIn(pos, size, layout) { real_pos, real_size ->
+            renderOval(real_pos, real_size, agc.getAlphaColor(color))
+        }
     }
 
     protected fun polyTransform(pos: PointN, points: List<PointN>, layout: PointN): List<PointN>? {

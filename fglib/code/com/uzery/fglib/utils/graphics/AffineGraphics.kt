@@ -11,6 +11,7 @@ import com.uzery.fglib.utils.graphics.sub.FillGraphics
 import com.uzery.fglib.utils.graphics.sub.ImageGraphics
 import com.uzery.fglib.utils.graphics.sub.StrokeGraphics
 import com.uzery.fglib.utils.math.geom.PointN
+import com.uzery.fglib.utils.math.geom.shape.RectN
 
 /**
  * TODO("doc")
@@ -25,6 +26,8 @@ abstract class AffineGraphics {
     var global_alpha = DEFAULT_ALPHA
 
     var global_transform = AffineTransform.NEUTRAL
+
+    var global_clip: RectN? = null
 
     var rotate = DEFAULT_ROTATE
     var view_scale = DEFAULT_VIEW_SCALE
@@ -57,6 +60,7 @@ abstract class AffineGraphics {
         global_alpha = DEFAULT_ALPHA
 
         global_transform = AffineTransform.NEUTRAL
+        global_clip = null
     }
 
     fun setDefaults() {
