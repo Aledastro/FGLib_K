@@ -23,17 +23,14 @@ abstract class FillGraphics(agc: AffineGraphics): GeometryGraphics(agc) {
 
     fun text(pos: PointN, text: String, color: FGColor, layout: PointN = OF_L) {
         val size = agc.textSizeOf(text, font)
-        val layout_pos = pos-size*layout
-        val layout_size = size
-
-        if (agc.isOutOfBounds(layout_pos, layout_size)) return
-
-        renderText(
-            pos = transform.pos(layout_pos),
-            text = text,
-            font = font.resize(transform.t_size(PointN(font.size)).X),
-            color = agc.getAlphaColor(color)
-        )
+        renderIn(pos, size, layout) { real_pos, real_size ->
+            renderText(
+                pos = real_pos,
+                text = text,
+                font = font.resize(transform.t_size(PointN(font.size)).X),
+                color = agc.getAlphaColor(color)
+            )
+        }
     }
 
     ///////////////////////////////////////////////////////////////////////////

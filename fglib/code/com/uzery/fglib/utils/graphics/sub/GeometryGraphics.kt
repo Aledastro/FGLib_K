@@ -33,7 +33,7 @@ abstract class GeometryGraphics(agc: AffineGraphics): SubGraphics(agc) {
     }
 
     protected fun polyTransform(pos: PointN, points: List<PointN>, layout: PointN): List<PointN>? {
-        if (points.size < 3) return null
+        if (points.size < 2) return null
 
         val minP = PointN.create(2) { i -> points.minOf { p -> p[i] } }
         val maxP = PointN.create(2) { i -> points.maxOf { p -> p[i] } }

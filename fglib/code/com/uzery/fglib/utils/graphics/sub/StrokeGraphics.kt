@@ -30,10 +30,14 @@ abstract class StrokeGraphics(agc: AffineGraphics): GeometryGraphics(agc) {
 
     ///////////////////////////////////////////////////////////////////////////
 
-    fun lineTo(pos1: PointN, pos2: PointN, color: FGColor) {
-        if (agc.isOutOfBounds(pos1, pos2-pos1)) return
+    fun line(pos: PointN, size: PointN, color: FGColor, layout: PointN = OF_L) {
+        renderIn(pos, size, layout) { real_pos, real_size ->
+            renderLineTo(real_pos, real_pos+real_size, agc.getAlphaColor(color))
+        }
+    }
 
-        renderLineTo(transform.pos(pos1), transform.pos(pos2), agc.getAlphaColor(color))
+    fun lineTo(pos1: PointN, pos2: PointN, color: FGColor, layout: PointN = OF_L) {
+        line(pos1, pos2-pos1, color, layout)
     }
 
     fun polyline(pos: PointN, points: List<PointN>, color: FGColor, layout: PointN = OF_L) {
@@ -42,12 +46,6 @@ abstract class StrokeGraphics(agc: AffineGraphics): GeometryGraphics(agc) {
     }
 
     ///////////////////////////////////////////////////////////////////////////
-    fun line(pos: PointN, size: PointN, color: FGColor, layout: PointN = OF_L) {
-        val layout_pos = pos-size*layout
-        val layout_size = size
-
-        lineTo(layout_pos, layout_pos+layout_size, color)
-    }
 
     fun lineL(pos: PointN, size: PointN, color: FGColor) = line(pos, size, color, layout = OF_L)
     fun lineC(pos: PointN, size: PointN, color: FGColor) = line(pos, size, color, layout = OF_C)
