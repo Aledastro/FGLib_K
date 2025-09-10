@@ -60,21 +60,21 @@ object FileUtils {
 
     fun walk(filename: String, f: (String) -> Unit) {
         getFile(filename).walk().forEach { file ->
-            f(file.absolutePath.replace("\\", "/"))
+            f(file.invariantSeparatorsPath)
         }
     }
 
     fun filesFrom(filename: String): List<String> {
         return getFile(filename).listFiles()
             ?.filter { it.isFile }
-            ?.map { it.absolutePath.replace("\\", "/") }
+            ?.map { it.invariantSeparatorsPath }
             ?: emptyList()
     }
 
     fun dirsFrom(filename: String): List<String> {
         return getFile(filename).listFiles()
             ?.filter { it.isDirectory }
-            ?.map { it.absolutePath.replace("\\", "/") }
+            ?.map { it.invariantSeparatorsPath }
             ?: emptyList()
     }
 
