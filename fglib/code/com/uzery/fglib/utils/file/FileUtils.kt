@@ -24,23 +24,15 @@ object FileUtils {
         return ArrayList(read(filename).split(Regex("\\R")))
     }
 
-    fun write(filename: String, write: String, create_dirs: Boolean = false) {
+    fun write(filename: String, content: String, create_dirs: Boolean = false) {
         if (create_dirs) {
-            val path = filename.substringBeforeLast(SEPARATOR)
-            val pathDirs = path.split(SEPARATOR)
-
-            var current = ""
-            for (dir in pathDirs) {
-                current += "$dir$SEPARATOR"
-                val file = File(current)
-                if (!file.exists()) file.mkdir()
-            }
+            getFile(filename).parentFile?.mkdirs()
         }
 
-        val wr = getWriter(filename)
         try {
-            wr.write(write)
-            wr.close()
+            getWriter(filename).use { writer ->
+                writer.write(content)
+            }
         } catch (e: IOException) {
             throw DebugData.error("[ERROR] FilesData in write(): filename=$filename")
         }
@@ -48,7 +40,7 @@ object FileUtils {
 
     ////////////////////////////////////////////////////////////////////////////////////
 
-    fun existFile(filename: String): Boolean {
+    fun existsFile(filename: String): Boolean {
         return getFile(filename).exists()
     }
 
@@ -59,7 +51,7 @@ object FileUtils {
     ////////////////////////////////////////////////////////////////////////////////////
 
     fun walk(filename: String, f: (String) -> Unit) {
-        getFile(filename).walk().forEach { file ->
+        for (file in getFile(filename).walkTopDown()) {
             f(file.invariantSeparatorsPath)
         }
     }
@@ -83,7 +75,7 @@ object FileUtils {
     private fun getFile(filename: String) = File(normalizePath(filename))
 
     private fun normalizePath(path: String): String {
-        val roots = File.listRoots().map { it.absolutePath }
+        val roots = File.listRoots().map { it.invariantSeparatorsPath }
         for (root in roots) {
             if (root.startsWith(path, ignoreCase = true)) {
                 return root

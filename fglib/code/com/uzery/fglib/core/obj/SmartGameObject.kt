@@ -23,7 +23,7 @@ abstract class SmartGameObject<Type>: GameObject() {
     }
 
     private fun start() {
-        val data = if (TextData.existFile(filename)) TextData[filename] else ArrayList()
+        val data = if (TextData.existsFile(filename)) TextData[filename] else ArrayList()
 
         for (next in data) {
             if (FGUtils.isComment(next)) continue

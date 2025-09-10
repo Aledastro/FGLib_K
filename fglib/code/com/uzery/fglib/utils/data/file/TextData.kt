@@ -16,7 +16,7 @@ object TextData: CollectDataClass() {
         FileUtils.write(resolvePath(filename), write, create_dirs)
     }
 
-    fun existFile(filename: String) = FileUtils.existFile(resolvePath(filename))
+    fun existsFile(filename: String) = FileUtils.existsFile(resolvePath(filename))
     fun removeFile(filename: String) = FileUtils.removeFile(resolvePath(filename))
 
     fun filesFrom(filename: String): List<String> {
