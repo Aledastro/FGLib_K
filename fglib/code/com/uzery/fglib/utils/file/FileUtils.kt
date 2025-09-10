@@ -12,6 +12,8 @@ import java.io.IOException
 object FileUtils {
     val SEPARATOR = '/'
 
+    ////////////////////////////////////////////////////////////////////////////////////
+
     fun read(filename: String): String {
         getReader(filename).use { r ->
             return r.readText()
@@ -44,15 +46,43 @@ object FileUtils {
         }
     }
 
+    ////////////////////////////////////////////////////////////////////////////////////
+
     fun existFile(filename: String): Boolean {
-        return File(filename).exists()
+        return getFile(filename).exists()
     }
 
     fun removeFile(filename: String) {
-        File(filename).delete()
+        getFile(filename).delete()
     }
 
-    fun normalizePath(path: String): String {
+    ////////////////////////////////////////////////////////////////////////////////////
+
+    fun walk(filename: String, f: (String) -> Unit) {
+        getFile(filename).walk().forEach { file ->
+            f(file.absolutePath.replace("\\", "/"))
+        }
+    }
+
+    fun filesFrom(filename: String): List<String> {
+        return getFile(filename).listFiles()
+            ?.filter { it.isFile }
+            ?.map { it.absolutePath.replace("\\", "/") }
+            ?: emptyList()
+    }
+
+    fun dirsFrom(filename: String): List<String> {
+        return getFile(filename).listFiles()
+            ?.filter { it.isDirectory }
+            ?.map { it.absolutePath.replace("\\", "/") }
+            ?: emptyList()
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////
+
+    private fun getFile(filename: String) = File(normalizePath(filename))
+
+    private fun normalizePath(path: String): String {
         val roots = File.listRoots().map { it.absolutePath }
         for (root in roots) {
             if (root.startsWith(path, ignoreCase = true)) {
@@ -62,19 +92,5 @@ object FileUtils {
         return path
     }
 
-    fun filesFrom(filename: String): List<String> {
-        return File(normalizePath(filename)).listFiles()
-            ?.filter { it.isFile }
-            ?.map { it.absolutePath.replace("\\", "/") }
-            ?: emptyList()
-    }
-
-    fun dirsFrom(filename: String): List<String> {
-        return File(normalizePath(filename)).listFiles()
-            ?.filter { it.isDirectory }
-            ?.map { it.absolutePath.replace("\\", "/") }
-            ?: emptyList()
-    }
-
-    ///////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////////
 }
