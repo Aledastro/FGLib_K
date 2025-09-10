@@ -51,13 +51,13 @@ object FileUtils {
     ////////////////////////////////////////////////////////////////////////////////////
 
     fun walk(filename: String, f: (String) -> Unit) {
-        for (file in walkSequence(filename)) {
+        for (file in getFile(filename).walkTopDown()) {
             f(file.invariantSeparatorsPath)
         }
     }
 
-    fun walkSequence(filename: String): Sequence<File> {
-        return getFile(filename).walkTopDown()
+    fun walkSequence(filename: String): Sequence<String> {
+        return getFile(filename).walkTopDown().map { it.invariantSeparatorsPath }
     }
 
     fun filesFrom(filename: String): List<String> {
