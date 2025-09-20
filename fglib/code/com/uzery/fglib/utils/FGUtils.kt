@@ -10,6 +10,7 @@ import java.time.LocalTime
  **/
 object FGUtils {
     val project_dir: String = System.getProperty("user.dir").replace("\\", "/")
+    val user_home_dir: String = System.getProperty("user.home").replace("\\", "/")
 
     fun hours(): Int = LocalTime.now().hour
     fun minutes(): Int = LocalTime.now().minute
