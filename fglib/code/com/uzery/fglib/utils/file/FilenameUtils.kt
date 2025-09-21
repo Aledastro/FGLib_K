@@ -12,7 +12,7 @@ object FilenameUtils {
         val res = filename.replace("\\", "/")
 
         val id = res.lastIndexOf('/')
-        return if (id == -1) "" else res.substring(0, id+1)
+        return if (id == -1) "" else res.substring(0, id)
     }
 
     fun nameOf(filename: String): String {
