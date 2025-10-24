@@ -76,7 +76,12 @@ abstract class AffineGraphics {
         image.setDefaults()
     }
 
-    abstract fun textSizeOf(text: String, font: FGFont): PointN
+    protected abstract fun getRenderTextSizeOf(text: String, font: FGFont): PointN
+
+    fun textSizeOf(text: String, font: FGFont): PointN {
+        val real_font = font.resize(global_transform.t_size(PointN(font.size)).X)
+        return getRenderTextSizeOf(text, real_font)/real_font.size*font.size
+    }
 
     fun splitText(text: String, width: Double, font: FGFont): ArrayList<String> {
         return SplitUtils.splitTextByWidth(text, width) { stroke -> textSizeOf(stroke, font).X }
