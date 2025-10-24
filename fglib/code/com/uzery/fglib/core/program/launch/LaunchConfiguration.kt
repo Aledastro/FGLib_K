@@ -13,10 +13,10 @@ abstract class LaunchConfiguration {
     abstract val main: Extension
     abstract val options: LaunchOptions
 
-    fun init() {
+    internal fun initConfig() {
         updatePathDirs()
         updatePaths()
-        init0()
+        init()
     }
 
     protected open fun updatePathDirs() {
@@ -27,5 +27,5 @@ abstract class LaunchConfiguration {
     }
 
     protected open fun updatePaths() {}
-    protected open fun init0() {}
+    protected open fun init() {}
 }

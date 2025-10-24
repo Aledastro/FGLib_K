@@ -24,7 +24,7 @@ object PlatformSetup {
     }
 
     fun startProcess(configuration: LaunchConfiguration) {
-        configuration.init()
+        configuration.initConfig()
         startProcess(configuration.options, configuration.main)
     }
 }
