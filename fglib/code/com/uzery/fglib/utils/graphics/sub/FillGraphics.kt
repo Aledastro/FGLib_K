@@ -11,7 +11,7 @@ import com.uzery.fglib.utils.math.geom.PointN
  * TODO("doc")
  **/
 abstract class FillGraphics(agc: AffineGraphics): GeometryGraphics(agc) {
-    protected abstract fun renderText(pos: PointN, text: String, font: FGFont, color: FGColor)
+    protected abstract fun renderText(pos: PointN, text: String, font: FGFont, color: FGColor, layout: PointN)
 
     var font = FGFont.default_font
 
@@ -22,15 +22,13 @@ abstract class FillGraphics(agc: AffineGraphics): GeometryGraphics(agc) {
     ///////////////////////////////////////////////////////////////////////////
 
     fun text(pos: PointN, text: String, color: FGColor, layout: PointN = OF_L) {
-        val size = agc.textSizeOf(text, font)
-        renderIn(pos, size, layout) { real_pos, real_size ->
-            renderText(
-                pos = real_pos,
-                text = text,
-                font = font.resize(transform.t_size(PointN(font.size)).X),
-                color = agc.getAlphaColor(color)
-            )
-        }
+        renderText(
+            pos = transform.pos(pos),
+            text = text,
+            font = font.resize(transform.t_size(PointN(font.size)).X),
+            color = agc.getAlphaColor(color),
+            layout = layout
+        )
     }
 
     ///////////////////////////////////////////////////////////////////////////
