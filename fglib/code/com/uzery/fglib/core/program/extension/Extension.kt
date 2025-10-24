@@ -6,7 +6,6 @@ import com.uzery.fglib.core.program.Platform
 import com.uzery.fglib.core.program.Platform.getGlobalAtTop
 import com.uzery.fglib.core.program.Platform.mouse
 import com.uzery.fglib.utils.data.debug.DebugData
-import com.uzery.fglib.utils.data.file.FGLibConst
 import com.uzery.fglib.utils.graphics.render.GraphicsRender
 import com.uzery.fglib.utils.math.geom.PointN
 import com.uzery.fglib.utils.math.geom.shape.RectN
